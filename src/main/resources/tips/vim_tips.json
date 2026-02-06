@@ -1,0 +1,187 @@
+[
+  {
+    "category": "Movement",
+    "summary": "Move by word with w/b/e.",
+    "details": "w jumps to the next word start, b goes back, e goes to the word end. Counts work: 3w."
+  },
+  {
+    "category": "Movement",
+    "summary": "Jump to line ends with 0, ^, $.",
+    "details": "0 goes to column 1, ^ goes to first non-blank, $ goes to end."
+  },
+  {
+    "category": "Movement",
+    "summary": "Jump to file edges with gg and G.",
+    "details": "gg goes to the first line, G to the last. Use 42gg for line 42."
+  },
+  {
+    "category": "Movement",
+    "summary": "Find characters on the line with f/F.",
+    "details": "f{char} jumps forward, F{char} goes backward. Repeat with ; and ,."
+  },
+  {
+    "category": "Movement",
+    "summary": "Jump between matching pairs with %.",
+    "details": "Works for (), {}, and [] when the cursor is on a pair."
+  },
+  {
+    "category": "Movement",
+    "summary": "Keep the cursor centered with zz.",
+    "details": "zz recenters the view; zt puts the line at top, zb at bottom."
+  },
+  {
+    "category": "Editing basics",
+    "summary": "Delete lines fast with dd.",
+    "details": "dd deletes the current line; 3dd deletes three lines."
+  },
+  {
+    "category": "Editing basics",
+    "summary": "Change a word with ciw.",
+    "details": "ciw is \"change inner word\": delete the word and enter insert mode."
+  },
+  {
+    "category": "Editing basics",
+    "summary": "Change to end of line with C.",
+    "details": "C deletes from the cursor to line end and enters insert mode."
+  },
+  {
+    "category": "Editing basics",
+    "summary": "Open new lines with o/O.",
+    "details": "o opens below, O opens above, both enter insert mode."
+  },
+  {
+    "category": "Editing basics",
+    "summary": "Replace one character with r.",
+    "details": "r{char} replaces the char under the cursor without insert mode."
+  },
+  {
+    "category": "Editing basics",
+    "summary": "Repeat last change with .",
+    "details": ". repeats the last edit, a huge time-saver."
+  },
+  {
+    "category": "Yank, paste, and registers",
+    "summary": "Yank and paste lines with yy and p/P.",
+    "details": "yy yanks a line; p pastes after, P pastes before."
+  },
+  {
+    "category": "Yank, paste, and registers",
+    "summary": "Use the system clipboard with \"+y and \"+p.",
+    "details": "\"+y yanks to clipboard; \"+p pastes from it."
+  },
+  {
+    "category": "Yank, paste, and registers",
+    "summary": "See what is stored with :reg.",
+    "details": ":reg shows register contents, including yanks and deletes."
+  },
+  {
+    "category": "Search",
+    "summary": "Search with / and ?.",
+    "details": "/pattern searches forward, ?pattern searches backward. Use n and N to repeat."
+  },
+  {
+    "category": "Search",
+    "summary": "Search word under cursor with * and #.",
+    "details": "* searches forward for the word, # searches backward."
+  },
+  {
+    "category": "Search",
+    "summary": "Clear highlights with :noh.",
+    "details": ":noh removes the search highlight when you are done."
+  },
+  {
+    "category": "Replace",
+    "summary": "Replace in a line with :s/old/new/g.",
+    "details": "Replaces all matches in the current line."
+  },
+  {
+    "category": "Replace",
+    "summary": "Replace in a file with :%s/old/new/g.",
+    "details": "Replaces all matches in the file."
+  },
+  {
+    "category": "Replace",
+    "summary": "Confirm replacements with :%s/old/new/gc.",
+    "details": "Adds a confirm prompt per match."
+  },
+  {
+    "category": "Undo and redo",
+    "summary": "Undo and redo with u and Ctrl+r.",
+    "details": "u undoes one change; Ctrl+r redoes it."
+  },
+  {
+    "category": "Visual and text objects",
+    "summary": "Select inside quotes with vi\".",
+    "details": "vi\" selects inside quotes; ci\" changes inside."
+  },
+  {
+    "category": "Visual and text objects",
+    "summary": "Select inside parentheses with vi).",
+    "details": "vi) selects inside (); ci) changes inside."
+  },
+  {
+    "category": "Visual and text objects",
+    "summary": "Select a paragraph with vip/vap.",
+    "details": "vip selects a paragraph; vap includes blank lines."
+  },
+  {
+    "category": "Visual and text objects",
+    "summary": "Indent selection with > and <.",
+    "details": "Use in Visual mode to indent or outdent."
+  },
+  {
+    "category": "Indent and format",
+    "summary": "Auto-indent with =.",
+    "details": "=ip indents a paragraph; == indents the current line."
+  },
+  {
+    "category": "Buffers, windows, tabs",
+    "summary": "Switch buffers with :ls and :bnext/:bprev.",
+    "details": ":ls lists buffers; :bnext and :bprev move between them."
+  },
+  {
+    "category": "Buffers, windows, tabs",
+    "summary": "Close a buffer with :bd.",
+    "details": ":bd closes the current buffer without closing the window."
+  },
+  {
+    "category": "Buffers, windows, tabs",
+    "summary": "Split windows with :split or :vsplit.",
+    "details": "Use Ctrl+w then arrow or hjkl to move between splits."
+  },
+  {
+    "category": "Buffers, windows, tabs",
+    "summary": "Use tabs with :tabnew, gt, gT.",
+    "details": ":tabnew opens a tab; gt/gT move between tabs."
+  },
+  {
+    "category": "Files and help",
+    "summary": "Save and quit with :w, :q, :wq.",
+    "details": ":w saves, :q quits, :wq saves and quits."
+  },
+  {
+    "category": "Files and help",
+    "summary": "Open a file with :e.",
+    "details": ":e path/to/file edits a file in the current window."
+  },
+  {
+    "category": "Files and help",
+    "summary": "Insert file or command output with :r.",
+    "details": ":r file inserts a file; :r !cmd inserts output."
+  },
+  {
+    "category": "Files and help",
+    "summary": "Learn built-in help with :help.",
+    "details": ":help {topic} opens help, e.g., :help motions."
+  },
+  {
+    "category": "Macros",
+    "summary": "Record a macro with q{reg}.",
+    "details": "q{reg} starts recording, q stops, @{reg} replays."
+  },
+  {
+    "category": "Macros",
+    "summary": "Repeat a macro with @@.",
+    "details": "@@ replays the last macro again."
+  }
+]
