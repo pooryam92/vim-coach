@@ -1,8 +1,8 @@
 package com.github.pooryam92.plugin.notifications
 
 import com.github.pooryam92.plugin.MyBundle
-import com.github.pooryam92.plugin.services.VimTipService.VimTip
-import com.github.pooryam92.plugin.services.TipProvider
+import com.github.pooryam92.plugin.services.VimTip
+import com.github.pooryam92.plugin.services.VimTipProvider
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
@@ -10,11 +10,11 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
 
 class VimTipNotifier(
-    private val tipService: TipProvider
+    private val tipProvider: VimTipProvider
 ) {
 
     fun showRandomTip(project: Project) {
-        showTip(project, tipService.getRandomTip())
+        showTip(project, tipProvider.getRandomTip())
     }
 
     private fun showTip(project: Project, tip: VimTip) {
@@ -31,7 +31,7 @@ class VimTipNotifier(
         )
         notification.addAction(NotificationAction.createSimple(MyBundle.message(TIP_NEXT_ACTION_KEY)) {
             notification.expire()
-            showTip(project, tipService.getRandomTip())
+            showTip(project, tipProvider.getRandomTip())
         })
         notification.addAction(NotificationAction.createSimple(MyBundle.message(TIP_MORE_ACTION_KEY)) {
             Messages.showInfoMessage(project, tip.details, MyBundle.message(TIP_MORE_TITLE_KEY))

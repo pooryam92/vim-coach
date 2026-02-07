@@ -5,5 +5,4 @@ object VimTipConfig {
         "https://raw.githubusercontent.com/pooryam92/plugin/main/src/main/resources/tips/vim_tips.json"
     const val CONNECT_TIMEOUT_MS = 1000
     const val READ_TIMEOUT_MS = 1500
-    const val LOCAL_RESOURCE_PATH = "tips/vim_tips.json"
 }
