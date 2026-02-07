@@ -1,4 +1,4 @@
-package com.github.pooryam92.plugin
+package com.github.pooryam92.vimcoach
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls

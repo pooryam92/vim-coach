@@ -1,4 +1,4 @@
-package com.github.pooryam92.plugin.services
+package com.github.pooryam92.vimcoach.services
 
 data class VimTip(
     var summary: String = "",

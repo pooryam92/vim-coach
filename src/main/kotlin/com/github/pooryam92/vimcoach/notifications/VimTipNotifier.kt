@@ -1,8 +1,8 @@
-package com.github.pooryam92.plugin.notifications
+package com.github.pooryam92.vimcoach.notifications
 
-import com.github.pooryam92.plugin.MyBundle
-import com.github.pooryam92.plugin.services.VimTip
-import com.github.pooryam92.plugin.services.VimTipProvider
+import com.github.pooryam92.vimcoach.MyBundle
+import com.github.pooryam92.vimcoach.services.VimTip
+import com.github.pooryam92.vimcoach.services.VimTipProvider
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType

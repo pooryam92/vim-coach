@@ -1,4 +1,4 @@
-package com.github.pooryam92.plugin.config
+package com.github.pooryam92.vimcoach.config
 
 object VimTipConfig {
     const val REMOTE_URL =

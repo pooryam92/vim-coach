@@ -1,5 +1,8 @@
 package com.github.pooryam92.plugin.services
 
+import com.github.pooryam92.vimcoach.services.VimTip
+import com.github.pooryam92.vimcoach.services.VimTipProvider
+import com.github.pooryam92.vimcoach.services.VimTips
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 

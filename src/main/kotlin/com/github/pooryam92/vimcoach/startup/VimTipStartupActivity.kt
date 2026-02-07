@@ -1,8 +1,8 @@
-package com.github.pooryam92.plugin.startup
+package com.github.pooryam92.vimcoach.startup
 
-import com.github.pooryam92.plugin.notifications.VimTipNotifier
-import com.github.pooryam92.plugin.services.VimTipProvider
-import com.github.pooryam92.plugin.services.TipLoader
+import com.github.pooryam92.vimcoach.notifications.VimTipNotifier
+import com.github.pooryam92.vimcoach.services.VimTipProvider
+import com.github.pooryam92.vimcoach.services.TipLoader
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.startup.ProjectActivity

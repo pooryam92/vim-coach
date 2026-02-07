@@ -1,6 +1,6 @@
-package com.github.pooryam92.plugin.services
+package com.github.pooryam92.vimcoach.services
 
-import com.github.pooryam92.plugin.config.VimTipConfig
+import com.github.pooryam92.vimcoach.config.VimTipConfig
 import com.google.gson.Gson
 import com.intellij.openapi.components.Service
 import java.io.InputStream
