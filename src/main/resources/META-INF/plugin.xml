@@ -28,7 +28,7 @@
             class="com.github.pooryam92.vimcoach.actions.ShowVimTipAction"
             text="Show Vim Tip"
             description="Show a Vim tip notification">
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift V"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift T" second-keystroke="T"/>
         </action>
     </actions>
 </idea-plugin>

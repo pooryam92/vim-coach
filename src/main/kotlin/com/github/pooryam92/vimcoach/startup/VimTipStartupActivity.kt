@@ -17,8 +17,8 @@ class VimTipStartupActivity : ProjectActivity {
         val notifier = VimTipNotifier(project.service<VimTipService>())
         object : Task.Backgroundable(project, "Loading Vim tips", false) {
             override fun run(indicator: ProgressIndicator) {
-                loader.loadTips()
                 ApplicationManager.getApplication().invokeLater {
+                    loader.loadTips()
                     notifier.showRandomTip(project)
                 }
             }
