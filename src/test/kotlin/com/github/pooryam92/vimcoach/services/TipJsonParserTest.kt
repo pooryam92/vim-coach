@@ -8,12 +8,18 @@ class TipJsonParserTest : BasePlatformTestCase() {
     fun testParseTipsJsonFiltersInvalidEntries() {
         // Arrange
         val json = """
-            [
-              {"summary":"  summary-1  ","details":"details-1","category":"  category-1  "},
-              {"summary":"  ","details":"details-2","category":"category-2"},
-              {"summary":"summary-3","details":"  ","category":"category-3"},
-              {"summary":"summary-4","details":"details-4","category":""}
-            ]
+            {
+              "  category-1  ": [
+                {"summary":"  summary-1  ","details":"details-1","mode":"  normal  "},
+                {"summary":"  ","details":"details-2"}
+              ],
+              "": [
+                {"summary":"summary-3","details":"details-3"}
+              ],
+              "category-4": [
+                {"summary":"summary-4","details":"  "}
+              ]
+            }
         """.trimIndent()
 
         // Act
@@ -26,8 +32,10 @@ class TipJsonParserTest : BasePlatformTestCase() {
         assertEquals("summary-1", tips[0].summary)
         assertEquals("details-1", tips[0].details)
         assertEquals("category-1", tips[0].category)
-        assertEquals("summary-4", tips[1].summary)
-        assertEquals("details-4", tips[1].details)
+        assertEquals("normal", tips[0].mode)
+        assertEquals("summary-3", tips[1].summary)
+        assertEquals("details-3", tips[1].details)
         assertEquals(null, tips[1].category)
+        assertEquals(null, tips[1].mode)
     }
 }
