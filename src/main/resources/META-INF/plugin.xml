@@ -11,6 +11,15 @@
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="Vim Tips" displayType="BALLOON" isLogByDefault="false" />
         <postStartupActivity implementation="com.github.pooryam92.vimcoach.startup.VimTipStartupActivity" />
+        <projectService
+            serviceInterface="com.github.pooryam92.vimcoach.services.VimTipService"
+            serviceImplementation="com.github.pooryam92.vimcoach.services.VimTipServiceImpl" />
+        <projectService
+            serviceInterface="com.github.pooryam92.vimcoach.services.RemoteTipSourceService"
+            serviceImplementation="com.github.pooryam92.vimcoach.services.RemoteTipSourceServiceImpl" />
+        <projectService
+            serviceInterface="com.github.pooryam92.vimcoach.services.TipLoaderService"
+            serviceImplementation="com.github.pooryam92.vimcoach.services.TipLoaderServiceImpl" />
     </extensions>
 
     <actions>

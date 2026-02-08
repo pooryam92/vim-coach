@@ -2,7 +2,7 @@ package com.github.pooryam92.vimcoach.notifications
 
 import com.github.pooryam92.vimcoach.MyBundle
 import com.github.pooryam92.vimcoach.services.VimTip
-import com.github.pooryam92.vimcoach.services.VimTipProvider
+import com.github.pooryam92.vimcoach.services.VimTipService
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
@@ -10,11 +10,11 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
 
 class VimTipNotifier(
-    private val tipProvider: VimTipProvider
+    private val tipService: VimTipService
 ) {
 
     fun showRandomTip(project: Project) {
-        showTip(project, tipProvider.getRandomTip())
+        showTip(project, tipService.getRandomTip())
     }
 
     private fun showTip(project: Project, tip: VimTip) {
@@ -31,7 +31,7 @@ class VimTipNotifier(
         )
         notification.addAction(NotificationAction.createSimple(MyBundle.message(TIP_NEXT_ACTION_KEY)) {
             notification.expire()
-            showTip(project, tipProvider.getRandomTip())
+            showTip(project, tipService.getRandomTip())
         })
         notification.addAction(NotificationAction.createSimple(MyBundle.message(TIP_MORE_ACTION_KEY)) {
             Messages.showInfoMessage(project, tip.details, MyBundle.message(TIP_MORE_TITLE_KEY))
