@@ -1,21 +1,15 @@
 package com.github.pooryam92.vimcoach.services
 
 import com.github.pooryam92.vimcoach.config.VimTipConfig
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.URI
+import com.intellij.util.io.HttpRequests
 
 class RemoteTipSourceServiceImpl : RemoteTipSourceService {
     override fun loadTips(): List<VimTip>? {
-        val remoteUrl = VimTipConfig.REMOTE_URL
-        return runCatching {
-            val connection = URI(remoteUrl).toURL().openConnection() as HttpURLConnection
-            connection.connectTimeout = VimTipConfig.CONNECT_TIMEOUT_MS
-            connection.readTimeout = VimTipConfig.READ_TIMEOUT_MS
-            connection.requestMethod = "GET"
-            connection.inputStream.use { stream ->
-                TipJsonParser.parseTipsJson(stream)
+        return HttpRequests.request(VimTipConfig.REMOTE_URL)
+            .connectTimeout(VimTipConfig.CONNECT_TIMEOUT_MS)
+            .readTimeout(VimTipConfig.READ_TIMEOUT_MS)
+            .connect { request ->
+                TipJsonParser.parseTipsJson(request.inputStream)
             }
-        }.getOrNull()
     }
 }

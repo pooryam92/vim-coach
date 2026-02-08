@@ -3,7 +3,7 @@ package com.github.pooryam92.vimcoach.services
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import java.io.ByteArrayInputStream
 
-class RemoteTipSourceServiceImplTest : BasePlatformTestCase() {
+class TipJsonParserTest : BasePlatformTestCase() {
 
     fun testParseTipsJsonFiltersInvalidEntries() {
         // Arrange
