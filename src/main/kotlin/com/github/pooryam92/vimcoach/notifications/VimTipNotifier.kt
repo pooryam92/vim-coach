@@ -26,17 +26,17 @@ class VimTipNotifier(
     }
 
     internal fun createNotification(tip: VimTip): Notification {
-        val modeLabel = formatModeLabel(tip.mode)
-        val detailsHtml = tip.details.replace("\n", "<br/>")
+        val summaryHtml = formatInlineCode(tip.summary)
+        val detailsHtml = formatInlineCode(tip.details).replace("\n", "<br/>")
         val content = buildString {
             append("<html>")
-            append(tip.summary)
+            append("<b>")
+            append(summaryHtml)
+            append("</b>")
             append("<br/><br/>")
+            append("<div style=\"color:#6b6b6b;\">")
             append(detailsHtml)
-            if (modeLabel != null) {
-                append("<br/><br/>Mode: ")
-                append(modeLabel)
-            }
+            append("</div>")
             append("</html>")
         }
         val notification = Notification(
@@ -48,8 +48,10 @@ class VimTipNotifier(
         return notification
     }
 
-    private fun formatModeLabel(mode: String?): String? {
-        return mode?.trim()?.ifBlank { null }
+    private fun formatInlineCode(text: String): String {
+        return text.replace(Regex("`([^`]+)`")) { match ->
+            "<code>${match.groupValues[1]}</code>"
+        }
     }
 
     companion object {

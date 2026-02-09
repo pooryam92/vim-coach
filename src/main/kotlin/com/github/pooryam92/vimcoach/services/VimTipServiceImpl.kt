@@ -26,8 +26,7 @@ class VimTipServiceImpl : VimTipService {
         if (state.tips.isEmpty()) {
             return VimTip(
                 "No tips found.",
-                "Tips have not been loaded yet.",
-                null
+                "Tips have not been loaded yet."
             )
         }
         return state.tips.random()
