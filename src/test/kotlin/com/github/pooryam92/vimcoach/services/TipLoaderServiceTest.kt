@@ -8,10 +8,10 @@ class TipLoaderServiceTest : BasePlatformTestCase() {
     fun testLoadTipsSkipsWhenTipsAlreadyPresent() {
         // Arrange
         val tipService = project.service<VimTipService>()
-        tipService.saveTips(listOf(VimTip("summary", "details", "category", "normal")))
+        tipService.saveTips(listOf(VimTip("summary", "details")))
 
         val fakeRemote = FakeRemoteTipSource(
-            listOf(VimTip("remote-summary", "remote-details", "remote-category", "normal"))
+            listOf(VimTip("remote-summary", "remote-details"))
         )
 
         val loader = registerLoader(fakeRemote)
@@ -30,8 +30,8 @@ class TipLoaderServiceTest : BasePlatformTestCase() {
         tipService.saveTips(emptyList())
 
         val remoteTips = listOf(
-            VimTip("summary-1", "details-1", "category-1", "normal"),
-            VimTip("summary-2", "details-2", "category-2", "visual")
+            VimTip("summary-1", "details-1"),
+            VimTip("summary-2", "details-2")
         )
         val fakeRemote = FakeRemoteTipSource(remoteTips)
         val loader = registerLoader(fakeRemote)

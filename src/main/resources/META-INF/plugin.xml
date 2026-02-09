@@ -1,6 +1,6 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.pooryam92.vim-coach</id>
+    <id>com.github.pooryam92.vimcoach</id>
     <name>Vim Coach</name>
     <vendor>pooryam92</vendor>
 

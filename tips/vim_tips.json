@@ -1,835 +1,665 @@
 {
-  "beginner": [
+  "tips": [
     {
-      "summary": "Move by character with h/j/k/l.",
-      "details": "h left • j down • k up • l right.\nCounts work: 5j moves 5 lines.",
-      "mode": "normal"
+      "summary": "Move by character with h/j/k/l",
+      "details": "h left j down k up l right\nCounts work: 5j moves 5 lines"
     },
     {
-      "summary": "Move by word with w/b/e.",
-      "details": "w next word start • b previous word start • e word end.\nTry: 3w to jump three words.",
-      "mode": "normal"
+      "summary": "Move by word with w/b/e",
+      "details": "w next word start b previous word start e word end\nTry: 3w to jump three words"
     },
     {
-      "summary": "Move by WORD with W/B/E.",
-      "details": "WORDs are whitespace-separated (punctuation stays with the WORD).\nUse when navigating paths or tokens.",
-      "mode": "normal"
+      "summary": "Move by WORD with W/B/E",
+      "details": "WORDs are whitespace-separated (punctuation stays with the WORD)\nUse when navigating paths or tokens"
     },
     {
-      "summary": "Jump within a line with 0, ^, and $.",
-      "details": "0 column 1 • ^ first non-blank • $ end of line.\nUse ^ a lot in indented code.",
-      "mode": "normal"
+      "summary": "Jump within a line with 0, ^, and $",
+      "details": "0 column 1 ^ first non-blank $ end of line\nUse ^ a lot in indented code"
     },
     {
-      "summary": "Jump to file edges with gg and G.",
-      "details": "gg first line • G last line.\nUse 42G to jump to line 42.",
-      "mode": "normal"
+      "summary": "Jump to file edges with gg and G",
+      "details": "gg first line G last line\nUse 42G to jump to line 42"
     },
     {
-      "summary": "Move to screen top/middle/bottom with H/M/L.",
-      "details": "H top visible line • M middle • L bottom.\nGreat for fast viewport navigation.",
-      "mode": "normal"
+      "summary": "Move to screen top/middle/bottom with H/M/L",
+      "details": "H top visible line M middle L bottom\nGreat for fast viewport navigation"
     },
     {
-      "summary": "Scroll half a page with Ctrl-d/Ctrl-u.",
-      "details": "Ctrl-d scroll down half-screen • Ctrl-u up half-screen.\nCursor position changes with the screen.",
-      "mode": "normal"
+      "summary": "Scroll half a page with Ctrl-d/Ctrl-u",
+      "details": "Ctrl-d scroll down half-screen Ctrl-u up half-screen\nCursor position changes with the screen"
     },
     {
-      "summary": "Scroll without moving the cursor with Ctrl-e/Ctrl-y.",
-      "details": "Ctrl-e scroll window down one line • Ctrl-y up one line.\nCursor stays on the same buffer position.",
-      "mode": "normal"
+      "summary": "Scroll without moving the cursor with Ctrl-e/Ctrl-y",
+      "details": "Ctrl-e scroll window down one line Ctrl-y up one line\nCursor stays on the same buffer position"
     },
     {
-      "summary": "Jump by paragraphs with { and }.",
-      "details": "{ previous paragraph • } next paragraph.\nParagraphs are separated by blank lines.",
-      "mode": "normal"
+      "summary": "Jump by paragraphs with { and }",
+      "details": "{ previous paragraph } next paragraph\nParagraphs are separated by blank lines"
     },
     {
-      "summary": "Jump by sentences with ( and ).",
-      "details": "( previous sentence • ) next sentence.\nUseful for prose editing.",
-      "mode": "normal"
+      "summary": "Jump by sentences with ( and )",
+      "details": "( previous sentence ) next sentence\nUseful for prose editing"
     },
     {
-      "summary": "Find a character on the line with f/F.",
-      "details": "f{c} forward to char • F{c} backward.\nRepeat with ; and reverse with ,.",
-      "mode": "normal"
+      "summary": "Find a character on the line with f/F",
+      "details": "f{c} forward to char F{c} backward\nRepeat with ; and reverse with ,"
     },
     {
-      "summary": "Find-till a character with t/T.",
-      "details": "t{c} forward stopping *before* char • T{c} backward.\nRepeat with ; and ,.",
-      "mode": "normal"
+      "summary": "Find-till a character with t/T",
+      "details": "t{c} forward stopping before char T{c} backward\nRepeat with ; and ,"
     },
     {
-      "summary": "Use counts to speed up motions.",
-      "details": "Most motions accept a numeric prefix.\nExamples: 5j, 3w, 10G.",
-      "mode": "normal"
+      "summary": "Use counts to speed up motions",
+      "details": "Most motions accept a numeric prefix\nExamples: 5j, 3w, 10G"
     },
     {
-      "summary": "Enter Insert mode with i and a.",
-      "details": "i inserts before cursor • a inserts after cursor.\nUse Esc (or Ctrl-[) to return to Normal mode.",
-      "mode": "normal"
+      "summary": "Enter Insert mode with i and a",
+      "details": "i inserts before cursor a inserts after cursor\nUse Esc (or Ctrl-[) to return to Normal mode"
     },
     {
-      "summary": "Insert at start/end with I and A.",
-      "details": "I goes to first non-blank then inserts.\nA goes to end of line then inserts.",
-      "mode": "normal"
+      "summary": "Insert at start/end with I and A",
+      "details": "I goes to first non-blank then inserts\nA goes to end of line then inserts"
     },
     {
-      "summary": "Open lines with o and O.",
-      "details": "o opens below • O opens above.\nVim enters Insert mode automatically.",
-      "mode": "normal"
+      "summary": "Open lines with o and O",
+      "details": "o opens below O opens above\nVim enters Insert mode automatically"
     },
     {
-      "summary": "Exit Insert mode with Esc or Ctrl-[.",
-      "details": "Ctrl-[ is the same as Esc.\nOften faster on keyboards where Esc is far.",
-      "mode": "insert"
+      "summary": "Exit Insert mode with Esc or Ctrl-[",
+      "details": "Ctrl-[ is the same as Esc\nOften faster on keyboards where Esc is far"
     },
     {
-      "summary": "Delete a character with x and X.",
-      "details": "x deletes under cursor • X deletes before cursor.\nCounts work: 5x.",
-      "mode": "normal"
+      "summary": "Delete a character with x and X",
+      "details": "x deletes under cursor X deletes before cursor\nCounts work: 5x"
     },
     {
-      "summary": "Delete the current line with dd.",
-      "details": "dd deletes the whole line.\n3dd deletes three lines.",
-      "mode": "normal"
+      "summary": "Delete the current line with dd",
+      "details": "dd deletes the whole line\n3dd deletes three lines"
     },
     {
-      "summary": "Delete word-ish text with dw and de.",
-      "details": "dw deletes to next word start.\nde deletes to end of word.\nTry both to feel the difference.",
-      "mode": "normal"
+      "summary": "Delete word-ish text with dw and de",
+      "details": "dw deletes to next word start\nde deletes to end of word\nTry both to feel the difference"
     },
     {
-      "summary": "Delete a whole word with daw.",
-      "details": "daw deletes the word plus surrounding whitespace.\nGreat for editing lists and arguments.",
-      "mode": "normal"
+      "summary": "Delete a whole word with daw",
+      "details": "daw deletes the word plus surrounding whitespace\nGreat for editing lists and arguments"
     },
     {
-      "summary": "Change a word with ciw.",
-      "details": "ciw changes the inner word (deletes it and enters Insert mode).\nThen press . to repeat on another word.",
-      "mode": "normal"
+      "summary": "Change a word with ciw",
+      "details": "ciw changes the inner word (deletes it and enters Insert mode)\nThen press . to repeat on another word"
     },
     {
-      "summary": "Change to end of line with C.",
-      "details": "C deletes from cursor to end of line and enters Insert mode.\nEquivalent to c$.",
-      "mode": "normal"
+      "summary": "Change to end of line with C",
+      "details": "C deletes from cursor to end of line and enters Insert mode\nEquivalent to c$"
     },
     {
-      "summary": "Delete to end of line with D.",
-      "details": "D deletes from cursor to end of line.\nEquivalent to d$.",
-      "mode": "normal"
+      "summary": "Delete to end of line with D",
+      "details": "D deletes from cursor to end of line\nEquivalent to d$"
     },
     {
-      "summary": "Change the whole line with cc (or S).",
-      "details": "cc changes the whole line.\nS is a shortcut for cc.",
-      "mode": "normal"
+      "summary": "Change the whole line with cc (or S)",
+      "details": "cc changes the whole line\nS is a shortcut for cc"
     },
     {
-      "summary": "Replace one character with r{c}.",
-      "details": "r{c} replaces the character under cursor.\nStays in Normal mode.",
-      "mode": "normal"
+      "summary": "Replace one character with r{c}",
+      "details": "r{c} replaces the character under cursor\nStays in Normal mode"
     },
     {
-      "summary": "Replace multiple characters with R.",
-      "details": "R enters Replace mode (type over text).\nEsc leaves Replace mode.",
-      "mode": "normal"
+      "summary": "Replace multiple characters with R",
+      "details": "R enters Replace mode (type over text)\nEsc leaves Replace mode"
     },
     {
-      "summary": "Join lines with J.",
-      "details": "J joins the current line with the next line (inserts a space).\nUseful for unwrapping text.",
-      "mode": "normal"
+      "summary": "Join lines with J",
+      "details": "J joins the current line with the next line (adds a space)\nUseful for unwrapping text"
     },
     {
-      "summary": "Join lines without extra space with gJ.",
-      "details": "gJ joins current line with next without inserting a space.\nUseful for code concatenation.",
-      "mode": "normal"
+      "summary": "Join lines without extra space with gJ",
+      "details": "gJ joins current line with next without inserting a space\nUseful for code concatenation"
     },
     {
       "summary": "Repeat the last change with .",
-      "details": ". repeats your last edit.\nCombine with a motion for huge speedups.",
-      "mode": "normal"
+      "details": ". repeats your last edit\nCombine with a motion for huge speedups"
     },
     {
-      "summary": "Undo and redo with u and Ctrl-r.",
-      "details": "u undo • Ctrl-r redo.\nUndo is per change, not per keystroke.",
-      "mode": "normal"
+      "summary": "Undo and redo with u and Ctrl-r",
+      "details": "u undo Ctrl-r redo\nUndo is per change, not per keystroke"
     },
     {
-      "summary": "Yank (copy) a line with yy.",
-      "details": "yy yanks the whole line.\n3yy yanks three lines.",
-      "mode": "normal"
+      "summary": "Yank (copy) a line with yy",
+      "details": "yy yanks the whole line\n3yy yanks three lines"
     },
     {
-      "summary": "Paste with p and P.",
-      "details": "p pastes after cursor/line • P before.\nAfter dd, p puts the line back below.",
-      "mode": "normal"
+      "summary": "Paste with p and P",
+      "details": "p pastes after cursor/line P before\nAfter dd, p puts the line back below"
     },
     {
-      "summary": "Search with / and ?.",
-      "details": "/pattern searches forward • ?pattern backward.\nUse n for next match and N for previous.",
-      "mode": "normal"
+      "summary": "Search with / and ?",
+      "details": "/pattern searches forward ?pattern backward\nUse n for next match and N for previous"
     },
     {
-      "summary": "Search the word under cursor with * and #.",
-      "details": "* searches forward for whole word.\n# searches backward.\nUse g* / g# for partial matches.",
-      "mode": "normal"
+      "summary": "Search the word under cursor with * and #",
+      "details": "* searches forward for whole word\n# searches backward\nUse g* / g# for partial matches"
     },
     {
-      "summary": "Clear search highlighting with :noh.",
-      "details": ":noh clears highlight (the pattern remains).\nGood to bind to a key if you use it often.",
-      "mode": "normal"
+      "summary": "Clear search highlighting with :noh",
+      "details": ":noh clears highlight (the pattern remains)\nGood to bind to a key if you use it often"
     },
     {
-      "summary": "Enter Visual mode with v and V.",
-      "details": "v selects characters • V selects whole lines.\nThen run d/y/>/< on the selection.",
-      "mode": "normal"
+      "summary": "Enter Visual mode with v and V",
+      "details": "v selects characters V selects whole lines\nThen run d/y/>/< on the selection"
     },
     {
-      "summary": "Use Visual Block mode with Ctrl-v.",
-      "details": "Ctrl-v selects a rectangular block.\nGreat for editing columns.",
-      "mode": "normal"
+      "summary": "Use Visual Block mode with Ctrl-v",
+      "details": "Ctrl-v selects a rectangular block\nGreat for editing columns"
     },
     {
-      "summary": "Indent/outdent a selection with > and <.",
-      "details": "In Visual mode: > shifts right • < shifts left.\nUse . to repeat the last shift.",
-      "mode": "visual"
+      "summary": "Indent/outdent a selection with > and <",
+      "details": "In Visual mode: > shifts right < shifts left\nUse . to repeat the last shift"
     },
     {
-      "summary": "Reselect the last Visual selection with gv.",
-      "details": "gv reselects your previous Visual area.\nUseful for applying multiple actions.",
-      "mode": "normal"
+      "summary": "Reselect the last Visual selection with gv",
+      "details": "gv reselects your previous Visual area\nUseful for applying multiple actions"
     },
     {
-      "summary": "Jump to matching pairs with %.",
-      "details": "On (), {}, [], press % to jump to the match.\n(Keyword matching needs matchit plugin.)",
-      "mode": "normal"
+      "summary": "Jump to matching pairs with %",
+      "details": "On (), {}, [], press % to jump to the match\n(Keyword matching needs matchit plugin)"
     },
     {
-      "summary": "Center the cursor line with zz.",
-      "details": "zz scrolls so the cursor line is centered.\nGreat after big jumps.",
-      "mode": "normal"
+      "summary": "Center the cursor line with zz",
+      "details": "zz scrolls so the cursor line is centered\nGreat after big jumps"
     },
     {
-      "summary": "Scroll so cursor is at top/bottom with zt/zb.",
-      "details": "zt places cursor line at top • zb at bottom.\nUse when reading context.",
-      "mode": "normal"
+      "summary": "Scroll so cursor is at top/bottom with zt/zb",
+      "details": "zt places cursor line at top zb at bottom\nUse when reading context"
     },
     {
-      "summary": "Move to first non-blank on next/prev line with + and -.",
-      "details": "+ moves to first non-blank next line.\n- moves to first non-blank previous line.",
-      "mode": "normal"
+      "summary": "Move to first non-blank on next/prev line with + and -",
+      "details": "+ moves to first non-blank next line\n- moves to first non-blank previous line"
     },
     {
-      "summary": "Go to a specific screen column with |.",
-      "details": "80| goes to column 80.\nHelpful for checking line length.",
-      "mode": "normal"
+      "summary": "Go to a specific screen column with |",
+      "details": "80| goes to column 80\nHelpful for checking line length"
     },
     {
-      "summary": "Toggle case of character(s) with ~.",
-      "details": "~ toggles case under cursor.\nCounts work: 5~ toggles 5 chars.",
-      "mode": "normal"
+      "summary": "Toggle case of character(s) with ~",
+      "details": "~ toggles case under cursor\nCounts work: 5~ toggles 5 chars"
     },
     {
-      "summary": "Show file info with Ctrl-g.",
-      "details": "Displays file name, line/col, and percent through file.\nGood quick orientation.",
-      "mode": "normal"
+      "summary": "Show file info with Ctrl-g",
+      "details": "Displays file name, line/col, and percent through file\nGood quick orientation"
     },
     {
-      "summary": "Write file with :w.",
-      "details": ":w saves current buffer.\nUse :w {path} to write to a new file.",
-      "mode": "normal"
+      "summary": "Write file with :w",
+      "details": ":w saves current buffer\nUse :w {path} to write to a new file"
     },
     {
-      "summary": "Quit with :q (and force with :q!).",
-      "details": ":q quits if no changes.\n:q! discards changes and quits.",
-      "mode": "normal"
+      "summary": "Quit with :q (and force with :q!)",
+      "details": ":q quits if no changes\n:q! discards changes and quits"
     },
     {
-      "summary": "Save and quit with :wq or :x.",
-      "details": ":wq always writes.\n:x writes only if the buffer changed.",
-      "mode": "normal"
+      "summary": "Save and quit with :wq or :x",
+      "details": ":wq always writes\n:x writes only if the buffer changed"
     },
     {
-      "summary": "Save and quit quickly with ZZ.",
-      "details": "ZZ exits and writes the file if it was modified.\nIf unmodified, it just exits.",
-      "mode": "normal"
+      "summary": "Save and quit quickly with ZZ",
+      "details": "ZZ exits and writes the file if it was modified\nIf unmodified, it just exits"
     },
     {
-      "summary": "Open or reload a file with :e and :e!.",
-      "details": ":e {file} opens.\n:e! reloads from disk (drops local changes).",
-      "mode": "normal"
+      "summary": "Open or reload a file with :e and :e!",
+      "details": ":e {file} opens\n:e! reloads from disk (drops local changes)"
     },
     {
-      "summary": "Read a file into the buffer with :r.",
-      "details": ":r {file} inserts the file below the cursor.\nUseful for templates/snippets.",
-      "mode": "normal"
+      "summary": "Read a file into the buffer with :r",
+      "details": ":r {file} inserts the file below the cursor\nUseful for templates/snippets"
     },
     {
-      "summary": "Insert shell command output with :r !cmd.",
-      "details": ":r !date inserts the output of date below cursor.\nGood for quick stamps.",
-      "mode": "normal"
+      "summary": "Insert shell command output with :r !cmd",
+      "details": ":r !date inserts the output of date below cursor\nGood for quick stamps"
     },
     {
-      "summary": "Use built-in help with :help.",
-      "details": ":help {topic} opens docs (try :help motion.txt).\nCtrl-] follows a help link; Ctrl-o goes back.",
-      "mode": "normal"
+      "summary": "Use built-in help with :help",
+      "details": ":help {topic} opens docs (try :help motion.txt)\nCtrl-] follows a help link; Ctrl-o goes back"
     },
     {
-      "summary": "Use Tab completion on : commands (wildmenu).",
-      "details": "Tab completes commands/paths.\nFor a nicer UI, enable :set wildmenu (and wildmode).",
-      "mode": "normal"
+      "summary": "Use Tab completion on : commands (wildmenu)",
+      "details": "Tab completes commands/paths\nFor a nicer UI, enable :set wildmenu (and wildmode)"
     },
     {
-      "summary": "Print character info with ga.",
-      "details": "ga shows info/codepoint for char under cursor.\nHelpful for debugging weird characters.",
-      "mode": "normal"
-    }
-  ],
-
-  "intermediate": [
+      "summary": "Print character info with ga",
+      "details": "ga shows info/codepoint for char under cursor\nHelpful for debugging weird characters"
+    },
     {
-      "summary": "Use text objects: iw and aw.",
-      "details": "ciw changes inner word.\ndaw deletes around word (incl. space).",
-      "mode": "normal"
+      "summary": "Use text objects: iw and aw",
+      "details": "ciw changes inner word\ndaw deletes around word (incl. space)"
     },
     {
-      "summary": "Use text objects: i\" and a\".",
-      "details": "ci\" changes inside quotes.\nda\" deletes including quotes.",
-      "mode": "normal"
+      "summary": "Use text objects: i\" and a\"",
+      "details": "ci\" changes inside quotes\nda\" deletes including quotes"
     },
     {
-      "summary": "Use text objects: i' and a'.",
-      "details": "ci' changes inside single quotes.\nva' selects including quotes.",
-      "mode": "normal"
+      "summary": "Use text objects: i' and a'",
+      "details": "ci' changes inside single quotes\nva' selects including quotes"
     },
     {
-      "summary": "Use text objects: i( a(  i{ a{  i[ a[.",
-      "details": "Operate inside/around pairs: di{, ci(, va[.\nGreat for refactoring arguments/blocks.",
-      "mode": "normal"
+      "summary": "Use text objects: i( a( i{ a{ i[ a[",
+      "details": "Operate inside/around pairs: di{, ci(, va[\nGreat for refactoring arguments/blocks"
     },
     {
-      "summary": "Use tag text objects: it and at.",
-      "details": "In HTML/XML: cit changes inside a tag.\ndat deletes the tag and its contents.",
-      "mode": "normal"
+      "summary": "Use tag text objects: it and at",
+      "details": "In HTML/XML: cit changes inside a tag\ndat deletes the tag and its contents"
     },
     {
-      "summary": "Paragraph objects: ip and ap.",
-      "details": "vip selects a paragraph.\ndap deletes paragraph including surrounding blank lines.",
-      "mode": "normal"
+      "summary": "Paragraph objects: ip and ap",
+      "details": "vip selects a paragraph\ndap deletes paragraph including surrounding blank lines"
     },
     {
-      "summary": "Sentence objects: is and as.",
-      "details": "cis changes a sentence.\ndas deletes the sentence (incl. punctuation).",
-      "mode": "normal"
+      "summary": "Sentence objects: is and as",
+      "details": "cis changes a sentence\ndas deletes the sentence (incl. punctuation)"
     },
     {
-      "summary": "Use operators with motions (the core Vim idea).",
-      "details": "d + motion deletes, c + motion changes, y + motion yanks.\nExamples: d$, cW, yip.",
-      "mode": "normal"
+      "summary": "Use operators with motions (the core Vim idea)",
+      "details": "d + motion deletes, c + motion changes, y + motion yanks\nExamples: d$, cW, yip"
     },
     {
-      "summary": "Upper/lowercase with gU/gu + motion.",
-      "details": "gUw uppercases a word.\nguip lowercases a paragraph.",
-      "mode": "normal"
+      "summary": "Upper/lowercase with gU/gu + motion",
+      "details": "gUw uppercases a word\nguip lowercases a paragraph"
     },
     {
-      "summary": "Toggle case with g~ + motion.",
-      "details": "g~iw toggles case for the word under cursor.\nGreat for quick style fixes.",
-      "mode": "normal"
+      "summary": "Toggle case with g~ + motion",
+      "details": "g~iw toggles case for the word under cursor\nGreat for quick style fixes"
     },
     {
-      "summary": "Swap two characters with xp.",
-      "details": "x deletes current char, p pastes it after.\nQuick fix for adjacent typos.",
-      "mode": "normal"
+      "summary": "Swap two characters with xp",
+      "details": "x deletes current char, p pastes it after\nQuick fix for adjacent typos"
     },
     {
-      "summary": "Jump to previous/next occurrence of the current word with * then n/N.",
-      "details": "* sets the search to the word under cursor.\nUse n/N to hop matches.",
-      "mode": "normal"
+      "summary": "Jump to previous/next occurrence of the current word with * then n/N",
+      "details": "* sets the search to the word under cursor\nUse n/N to hop matches"
     },
     {
-      "summary": "Select next match with gn, then edit with cgn.",
-      "details": "After /search: gn selects next match.\ncgn changes it, then you can press n and . to repeat.",
-      "mode": "normal"
+      "summary": "Select next match with gn, then edit with cgn",
+      "details": "After /search: gn selects next match\ncgn changes it, then you can press n and . to repeat"
     },
     {
-      "summary": "Repeat your last :substitute with &.",
-      "details": "& repeats the last :s on the current line.\n:%& repeats it over the whole file.",
-      "mode": "normal"
+      "summary": "Repeat your last :substitute with &",
+      "details": "& repeats the last :s on the current line\n:%& repeats it over the whole file"
     },
     {
-      "summary": "Repeat the last substitution with :&& (keeps flags).",
-      "details": ":&& repeats the last :substitute and preserves flags like g/c.\nUseful after a confirmed substitution.",
-      "mode": "normal"
+      "summary": "Repeat the last substitution with :&& (keeps flags)",
+      "details": ":&& repeats the last :substitute and preserves flags like g/c\nUseful after a confirmed substitution"
     },
     {
-      "summary": "Use very-magic regex with \\v.",
-      "details": "\\v makes most characters 'magic' so you escape less.\nExample: :%s/\\v(foo|bar)/baz/g",
-      "mode": "normal"
+      "summary": "Use very-magic regex with \\v",
+      "details": "\\v makes most characters magic so you escape less\nExample: :%s/\\v(foo|bar)/baz/g"
     },
     {
-      "summary": "Match whole words with \\< and \\>.",
-      "details": ":%s/\\<foo\\>/bar/g replaces whole-word foo.\nPrevents partial replacements.",
-      "mode": "normal"
+      "summary": "Match whole words with \\< and \\>",
+      "details": ":%s/\\<foo\\>/bar/g replaces whole-word foo\nPrevents partial replacements"
     },
     {
-      "summary": "Use confirmation in substitutions with the c flag.",
-      "details": ":%s/old/new/gc prompts on each match.\nSafer for big edits.",
-      "mode": "normal"
+      "summary": "Use confirmation in substitutions with the c flag",
+      "details": ":%s/old/new/gc prompts on each match\nSafer for big edits"
     },
     {
-      "summary": "Use the black-hole register to avoid clobbering yanks.",
-      "details": "\"_d deletes without overwriting what you yanked.\nGreat when pasting the same thing repeatedly.",
-      "mode": "normal"
+      "summary": "Use the black-hole register to avoid clobbering yanks",
+      "details": "\"_d deletes without overwriting what you yanked\nGreat when pasting the same thing repeatedly"
     },
     {
-      "summary": "Inspect registers with :reg.",
-      "details": ":reg shows register contents (yanks, deletes, macros).\nHelps you paste intentionally.",
-      "mode": "normal"
+      "summary": "Inspect registers with :reg",
+      "details": ":reg shows register contents (yanks, deletes, macros)\nHelps you paste intentionally"
     },
     {
-      "summary": "Paste from a specific register with \"{reg}p.",
-      "details": "\"ap pastes from register a.\n\"0p pastes the last yank (register 0).",
-      "mode": "normal"
+      "summary": "Paste from a specific register with \"{reg}p",
+      "details": "\"ap pastes from register a\n\"0p pastes the last yank (register 0)"
     },
     {
-      "summary": "Use the system clipboard with \"+ (when available).",
-      "details": "\"+y copies to OS clipboard.\n\"+p pastes from it.\nRequires clipboard support/provider.",
-      "mode": "normal"
+      "summary": "Use the system clipboard with \"+ (when available)",
+      "details": "\"+y copies to OS clipboard\n\"+p pastes from it\nRequires clipboard support/provider"
     },
     {
-      "summary": "Jump to where Insert mode last ended with `^.",
-      "details": "`^ goes to the position where you last exited Insert mode.\nUse gi to also re-enter Insert mode.",
-      "mode": "normal"
+      "summary": "Jump to where Insert mode last ended with `^",
+      "details": "`^ goes to the position where you last exited Insert mode\nUse gi to also re-enter Insert mode"
     },
     {
-      "summary": "Return to last insert location and enter Insert with gi.",
-      "details": "gi jumps to the last insertion point and enters Insert mode.\nGreat after navigating around.",
-      "mode": "normal"
+      "summary": "Return to last insert location and enter Insert with gi",
+      "details": "gi jumps to the last insertion point and enters Insert mode\nGreat after navigating around"
     },
     {
-      "summary": "Navigate the change list with g; and g,.",
-      "details": "g; jumps to an older change location.\ng, jumps forward to a newer change.",
-      "mode": "normal"
+      "summary": "Navigate the change list with g; and g,",
+      "details": "g; jumps to an older change location\ng, jumps forward to a newer change"
     },
     {
-      "summary": "List change locations with :changes.",
-      "details": ":changes shows the change list for the buffer.\nPairs well with g; and g,.",
-      "mode": "normal"
+      "summary": "List change locations with :changes",
+      "details": ":changes shows the change list for the buffer\nPairs well with g; and g,"
     },
     {
-      "summary": "Use marks: m{a}, then 'a or `a.",
-      "details": "ma sets mark a.\n'a jumps to the line; `a jumps to exact column.",
-      "mode": "normal"
+      "summary": "Use marks: m{a}, then 'a or `a",
+      "details": "ma sets mark a\n'a jumps to the line; `a jumps to exact column"
     },
     {
-      "summary": "Use global marks with uppercase letters.",
-      "details": "mA sets a global mark.\n'A jumps there even from another file.",
-      "mode": "normal"
+      "summary": "Use global marks with uppercase letters",
+      "details": "mA sets a global mark\n'A jumps there even from another file"
     },
     {
-      "summary": "See marks with :marks.",
-      "details": ":marks lists marks in the current buffer.\nUseful when juggling multiple points.",
-      "mode": "normal"
+      "summary": "See marks with :marks",
+      "details": ":marks lists marks in the current buffer\nUseful when juggling multiple points"
     },
     {
-      "summary": "Jump list navigation with Ctrl-o and Ctrl-i.",
-      "details": "Ctrl-o goes back in jump history.\nCtrl-i goes forward.",
-      "mode": "normal"
+      "summary": "Jump list navigation with Ctrl-o and Ctrl-i",
+      "details": "Ctrl-o goes back in jump history\nCtrl-i goes forward"
     },
     {
-      "summary": "Reindent current line with ==.",
-      "details": "== applies indentation rules for the filetype.\nGood after editing braces.",
-      "mode": "normal"
+      "summary": "Reindent current line with ==",
+      "details": "== applies indentation rules for the filetype\nGood after editing braces"
     },
     {
-      "summary": "Reindent a paragraph with =ip.",
-      "details": "=ip reindents the current paragraph/block.\nUseful after pasting code.",
-      "mode": "normal"
+      "summary": "Reindent a paragraph with =ip",
+      "details": "=ip reindents the current paragraph/block\nUseful after pasting code"
     },
     {
-      "summary": "Reindent whole file with gg=G.",
-      "details": "gg=G reindents the entire buffer.\nUse carefully (depends on filetype indent rules).",
-      "mode": "normal"
+      "summary": "Reindent whole file with gg=G",
+      "details": "gg=G reindents the entire buffer\nUse carefully (depends on filetype indent rules)"
     },
     {
-      "summary": "Format text with gq{motion}.",
-      "details": "gqap formats a paragraph using textwidth/formatoptions.\nGreat for comments and prose.",
-      "mode": "normal"
+      "summary": "Format text with gq{motion}",
+      "details": "gqap formats a paragraph using textwidth/formatoptions\nGreat for comments and prose"
     },
     {
-      "summary": "Format (wrap) without changing as much with gw{motion}.",
-      "details": "gw can be a gentler wrapper depending on settings.\nTry gwap on a paragraph.",
-      "mode": "normal"
+      "summary": "Format (wrap) without changing as much with gw{motion}",
+      "details": "gw can be a gentler wrapper depending on settings\nTry gwap on a paragraph"
     },
     {
-      "summary": "Enable spelling with :set spell.",
-      "details": ":set spell turns on spellcheck.\nUse ]s/[s to jump misspellings.",
-      "mode": "normal"
+      "summary": "Enable spelling with :set spell",
+      "details": ":set spell turns on spellcheck\nUse ]s/[s to jump misspellings"
     },
     {
-      "summary": "Fix spelling with z=.",
-      "details": "z= shows suggestions for the word under cursor.\nChoose a number to replace.",
-      "mode": "normal"
+      "summary": "Fix spelling with z=",
+      "details": "z= shows suggestions for the word under cursor\nChoose a number to replace"
     },
     {
-      "summary": "Add word to dictionary with zg.",
-      "details": "zg marks the word as good (adds to spellfile).\nzw marks as wrong.",
-      "mode": "normal"
+      "summary": "Add word to dictionary with zg",
+      "details": "zg marks the word as good (adds to spellfile)\nzw marks as wrong"
     },
     {
-      "summary": "Split windows with :split and :vsplit.",
-      "details": ":split horizontal • :vsplit vertical.\nThen move with Ctrl-w h/j/k/l.",
-      "mode": "normal"
+      "summary": "Split windows with :split and :vsplit",
+      "details": ":split horizontal :vsplit vertical\nThen move with Ctrl-w h/j/k/l"
     },
     {
-      "summary": "Move between windows with Ctrl-w h/j/k/l.",
-      "details": "Ctrl-w then direction moves focus.\nCtrl-w w cycles windows.",
-      "mode": "normal"
+      "summary": "Move between windows with Ctrl-w h/j/k/l",
+      "details": "Ctrl-w then direction moves focus\nCtrl-w w cycles windows"
     },
     {
-      "summary": "Close a window with :close.",
-      "details": "Closes the current split window.\nDoes not necessarily wipe the buffer.",
-      "mode": "normal"
+      "summary": "Close a window with :close",
+      "details": "Closes the current split window\nDoes not necessarily wipe the buffer"
     },
     {
-      "summary": "Keep only one window with :only.",
-      "details": "Closes other windows but keeps buffers loaded.\nNice for focus.",
-      "mode": "normal"
+      "summary": "Keep only one window with :only",
+      "details": "Closes other windows but keeps buffers loaded\nNice for focus"
     },
     {
-      "summary": "Equalize splits with Ctrl-w =.",
-      "details": "Makes all windows the same size.\nGreat after lots of resizing.",
-      "mode": "normal"
+      "summary": "Equalize splits with Ctrl-w =",
+      "details": "Makes all windows the same size\nGreat after lots of resizing"
     },
     {
-      "summary": "Resize windows with Ctrl-w + / - / < / >.",
-      "details": "Ctrl-w + and Ctrl-w - change height.\nCtrl-w < and Ctrl-w > change width.",
-      "mode": "normal"
+      "summary": "Resize windows with Ctrl-w + / - / < / >",
+      "details": "Ctrl-w + and Ctrl-w - change height\nCtrl-w < and Ctrl-w > change width"
     },
     {
-      "summary": "Use tabs with :tabnew, gt, and gT.",
-      "details": ":tabnew opens a new tab page.\ngt next tab • gT previous tab.",
-      "mode": "normal"
+      "summary": "Use tabs with :tabnew, gt, and gT",
+      "details": ":tabnew opens a new tab page\ngt next tab gT previous tab"
     },
     {
-      "summary": "List buffers with :ls (or :buffers).",
-      "details": "Shows buffer numbers and status.\nUse :b {N} to jump to one.",
-      "mode": "normal"
+      "summary": "List buffers with :ls (or :buffers)",
+      "details": "Shows buffer numbers and status\nUse :b {N} to jump to one"
     },
     {
-      "summary": "Navigate buffers with :bnext and :bprev.",
-      "details": ":bnext and :bprev cycle buffers.\n:b# switches to alternate buffer.",
-      "mode": "normal"
+      "category": "normal",
+      "summary": "Navigate buffers with :bnext and :bprev",
+      "details": ":bnext and :bprev cycle buffers\n:b# switches to alternate buffer"
     },
     {
-      "summary": "Close a buffer with :bd.",
-      "details": ":bd deletes the buffer (unloads file).\nYour window stays open (usually shows another buffer).",
-      "mode": "normal"
+      "summary": "Close a buffer with :bd",
+      "details": ":bd deletes the buffer (unloads file)\nYour window stays open (usually shows another buffer)"
     },
     {
-      "summary": "Write all modified buffers with :wa.",
-      "details": ":wa writes all changed buffers.\nGood before running builds/tests.",
-      "mode": "normal"
+      "summary": "Write all modified buffers with :wa",
+      "details": ":wa writes all changed buffers\nGood before running builds/tests"
     },
     {
-      "summary": "Run a shell command with :!cmd.",
-      "details": ":!make or :!ls runs an external command.\nPress Enter to return to Vim.",
-      "mode": "normal"
+      "summary": "Run a shell command with :!cmd",
+      "details": ":!make or :!ls runs an external command\nPress Enter to return to Vim"
     },
     {
-      "summary": "Filter text through a shell command with !{motion}.",
-      "details": "!{motion}{cmd} pipes text through cmd.\nExample: !!sort filters the current line through sort.\nExample: !ipfmt formats a paragraph via fmt.",
-      "mode": "normal"
+      "summary": "Filter text through a shell command with !{motion}",
+      "details": "!{motion}{cmd} pipes text through cmd\nExample: !!sort filters the current line through sort\nExample: !ipfmt formats a paragraph via fmt"
     },
     {
-      "summary": "Insert a register in Insert mode with Ctrl-r.",
-      "details": "In Insert mode: Ctrl-r {reg} inserts register contents.\nExample: Ctrl-r % inserts current filename.",
-      "mode": "insert"
+      "summary": "Insert a register in Insert mode with Ctrl-r",
+      "details": "In Insert mode: Ctrl-r {reg} inserts register contents\nExample: Ctrl-r % inserts current filename"
     },
     {
-      "summary": "Complete words in Insert mode with Ctrl-n/Ctrl-p.",
-      "details": "Ctrl-n next completion • Ctrl-p previous.\nWorks with words found in current buffers.",
-      "mode": "insert"
+      "summary": "Complete words in Insert mode with Ctrl-n/Ctrl-p",
+      "details": "Ctrl-n next completion Ctrl-p previous\nWorks with words found in current buffers"
     },
     {
-      "summary": "Toggle line numbers with :set number.",
-      "details": ":set number shows absolute line numbers.\n:set nonumber hides them.",
-      "mode": "normal"
+      "summary": "Toggle line numbers with :set number",
+      "details": ":set number shows absolute line numbers\n:set nonumber hides them"
     },
     {
-      "summary": "Use relative numbers with :set relativenumber.",
-      "details": "Shows distances from cursor line.\nGreat for motions like 5j/7k.",
-      "mode": "normal"
+      "summary": "Use relative numbers with :set relativenumber",
+      "details": "Shows distances from cursor line\nGreat for motions like 5j/7k"
     },
     {
-      "summary": "Show whitespace with :set list.",
-      "details": ":set list reveals tabs/trailing spaces (configured by listchars).\n:set nolist hides it.",
-      "mode": "normal"
+      "summary": "Show whitespace with :set list",
+      "details": ":set list reveals tabs/trailing spaces (configured by listchars)\n:set nolist hides it"
     },
     {
-      "summary": "Strip trailing whitespace with a safe substitute.",
-      "details": ":%s/\\s\\+$//e removes trailing spaces.\nThe e flag suppresses errors if no match.",
-      "mode": "normal"
+      "summary": "Strip trailing whitespace with a safe substitute",
+      "details": ":%s/\\s\\+$//e removes trailing spaces\nThe e flag suppresses errors if no match"
     },
     {
-      "summary": "Use :set hlsearch and :set incsearch.",
-      "details": "hlsearch highlights matches.\nincsearch shows matches while typing /pattern.",
-      "mode": "normal"
-    }
-  ],
-
-  "advanced": [
+      "summary": "Use :set hlsearch and :set incsearch",
+      "details": "hlsearch highlights matches\nincsearch shows matches while typing /pattern"
+    },
     {
-      "summary": "Record a macro with q{reg} and stop with q.",
-      "details": "qa starts recording into register a.\nPress q again to stop.",
-      "mode": "normal"
+      "summary": "Record a macro with q{reg} and stop with q",
+      "details": "qa starts recording into register a\nPress q again to stop"
     },
     {
-      "summary": "Replay a macro with @{reg}.",
-      "details": "@a runs macro a once.\n10@a runs it ten times.",
-      "mode": "normal"
+      "summary": "Replay a macro with @{reg}",
+      "details": "@a runs macro a once\n10@a runs it ten times"
     },
     {
-      "summary": "Repeat the last executed macro with @@.",
-      "details": "@@ replays the most recent macro.\nGreat when stepping line-by-line.",
-      "mode": "normal"
+      "summary": "Repeat the last executed macro with @@",
+      "details": "@@ replays the most recent macro\nGreat when stepping line-by-line"
     },
     {
-      "summary": "Append to a macro with qA.",
-      "details": "qA appends new keystrokes to macro register a.\nUseful for refining without re-recording.",
-      "mode": "normal"
+      "summary": "Append to a macro with qA",
+      "details": "qA appends new keystrokes to macro register a\nUseful for refining without re-recording"
     },
     {
-      "summary": "Run a macro on selected lines with :normal @a.",
-      "details": "Visual-select lines, then :normal @a.\nApplies the macro to each selected line.",
-      "mode": "visual"
+      "summary": "Run a macro on selected lines with :normal @a",
+      "details": "Visual-select lines, then :normal @a\nApplies the macro to each selected line"
     },
     {
-      "summary": "Run a Normal command across a range with :normal.",
-      "details": "Example: :'<,'>normal! I// adds // at start of each selected line.\nUse :normal! to ignore mappings.",
-      "mode": "normal"
+      "summary": "Run a Normal command across a range with :normal",
+      "details": "Example: :'<,'>normal! I// adds // at start of each selected line\nUse :normal! to ignore mappings"
     },
     {
-      "summary": "Target matching lines with :global.",
-      "details": ":g/pat/d deletes matching lines.\n:g/pat/normal! {cmd} runs Normal keys on matches.",
-      "mode": "normal"
+      "summary": "Target matching lines with :global",
+      "details": ":g/pat/d deletes matching lines\n:g/pat/normal! {cmd} runs Normal keys on matches"
     },
     {
-      "summary": "Target non-matching lines with :vglobal.",
-      "details": ":v/pat/d deletes lines that do NOT match the pattern.\nUseful for filtering lists.",
-      "mode": "normal"
+      "summary": "Target non-matching lines with :vglobal",
+      "details": ":v/pat/d deletes lines that do NOT match the pattern\nUseful for filtering lists"
     },
     {
-      "summary": "Project edits across args list with :argdo.",
-      "details": "Build args (e.g., :args **/*.py) then :argdo %s/old/new/ge | update.\nControlled multi-file changes.",
-      "mode": "normal"
+      "summary": "Project edits across args list with :argdo",
+      "details": "Build args (e.g., :args **/*.py) then :argdo %s/old/new/ge | update\nControlled multi-file changes"
     },
     {
-      "summary": "Run commands across loaded buffers with :bufdo.",
-      "details": ":bufdo %s/old/new/ge | update applies per buffer.\nBe careful: it touches everything loaded.",
-      "mode": "normal"
+      "summary": "Run commands across loaded buffers with :bufdo",
+      "details": ":bufdo %s/old/new/ge | update applies per buffer\nBe careful: it touches everything loaded"
     },
     {
-      "summary": "Run a command in every window with :windo.",
-      "details": ":windo set number applies to all windows.\nGreat for window-local options.",
-      "mode": "normal"
+      "summary": "Run a command in every window with :windo",
+      "details": ":windo set number applies to all windows\nGreat for window-local options"
     },
     {
-      "summary": "Run a command in every tab page with :tabdo.",
-      "details": ":tabdo windo set cursorline applies across tabs.\nUseful for layout-wide changes.",
-      "mode": "normal"
+      "summary": "Run a command in every tab page with :tabdo",
+      "details": ":tabdo windo set cursorline applies across tabs\nUseful for layout-wide changes"
     },
     {
-      "summary": "Populate quickfix with :vimgrep.",
-      "details": ":vimgrep /pattern/ **/* fills the quickfix list.\nThen :copen and :cnext to jump matches.",
-      "mode": "normal"
+      "summary": "Populate quickfix with :vimgrep",
+      "details": ":vimgrep /pattern/ **/* fills the quickfix list\nThen :copen and :cnext to jump matches"
     },
     {
-      "summary": "Open/close quickfix with :copen and :cclose.",
-      "details": ":copen shows results/errors.\n:cclose closes the quickfix window.",
-      "mode": "normal"
+      "summary": "Open/close quickfix with :copen and :cclose",
+      "details": ":copen shows results/errors\n:cclose closes the quickfix window"
     },
     {
-      "summary": "Navigate quickfix with :cnext/:cprev.",
-      "details": ":cnext jumps to next item.\n:cprev jumps to previous item.",
-      "mode": "normal"
+      "summary": "Navigate quickfix with :cnext/:cprev",
+      "details": ":cnext jumps to next item\n:cprev jumps to previous item"
     },
     {
-      "summary": "Jump to first/last quickfix item with :cfirst/:clast.",
-      "details": ":cfirst goes to first entry.\n:clast goes to last entry.",
-      "mode": "normal"
+      "summary": "Jump to first/last quickfix item with :cfirst/:clast",
+      "details": ":cfirst goes to first entry\n:clast goes to last entry"
     },
     {
-      "summary": "Apply an Ex command per quickfix entry with :cdo.",
-      "details": ":cdo {cmd} runs {cmd} for each quickfix item.\nOften paired with | update to save changes.",
-      "mode": "normal"
+      "summary": "Apply an Ex command per quickfix entry with :cdo",
+      "details": ":cdo {cmd} runs {cmd} for each quickfix item\nOften paired with | update to save changes"
     },
     {
-      "summary": "Use location list for window-local results.",
-      "details": ":lopen opens the location list.\nUse :lnext/:lprev to navigate.",
-      "mode": "normal"
+      "summary": "Use location list for window-local results",
+      "details": ":lopen opens the location list\nUse :lnext/:lprev to navigate"
     },
     {
-      "summary": "Run a command per location entry with :ldo.",
-      "details": ":ldo {cmd} runs {cmd} for each location list item.\nLike :cdo but per-window.",
-      "mode": "normal"
+      "summary": "Run a command per location entry with :ldo",
+      "details": ":ldo {cmd} runs {cmd} for each location list item\nLike :cdo but per-window"
     },
     {
-      "summary": "Edit command history in the command-line window with q:.",
-      "details": "q: opens a buffer-like window for past :commands.\nEdit, then press Enter to run.",
-      "mode": "normal"
+      "summary": "Edit command history in the command-line window with q:",
+      "details": "q: opens a buffer-like window for past :commands\nEdit, then press Enter to run"
     },
     {
-      "summary": "Edit search history with q/.",
-      "details": "q/ opens search history.\nUseful for fixing long regex searches.",
-      "mode": "normal"
+      "summary": "Edit search history with q/",
+      "details": "q/ opens search history\nUseful for fixing long regex searches"
     },
     {
-      "summary": "Open command-line window while typing : with Ctrl-f.",
-      "details": "While entering a :command, press Ctrl-f to edit it in a window.\n(You can return with Enter.)",
-      "mode": "normal"
+      "summary": "Open command-line window while typing : with Ctrl-f",
+      "details": "While entering a :command, press Ctrl-f to edit it in a window\n(You can return with Enter)"
     },
     {
-      "summary": "Repeat the last Ex command with @:.",
-      "details": "@: re-runs the last :command.\nGood for repeating a substitution or write command.",
-      "mode": "normal"
+      "summary": "Repeat the last Ex command with @:",
+      "details": "@: re-runs the last :command\nGood for repeating a substitution or write command"
     },
     {
-      "summary": "Use :execute to build dynamic commands.",
-      "details": ":execute 'normal! ' . 'gg=G' builds and runs a command string.\nUseful in scripts and mappings.",
-      "mode": "normal"
+      "summary": "Use :execute to build dynamic commands",
+      "details": ":execute 'normal! ' . 'gg=G' builds and runs a command string\nUseful in scripts and mappings"
     },
     {
-      "summary": "Use :normal! to ignore mappings.",
-      "details": ":normal! runs raw keystrokes.\nHelps make macros/scripts predictable.",
-      "mode": "normal"
+      "summary": "Use :normal! to ignore mappings",
+      "details": ":normal! runs raw keystrokes\nHelps make macros/scripts predictable"
     },
     {
-      "summary": "Silence noisy commands with :silent.",
-      "details": ":silent %s/old/new/g reduces output.\nGreat in batch operations.",
-      "mode": "normal"
+      "summary": "Silence noisy commands with :silent",
+      "details": ":silent %s/old/new/g reduces output\nGreat in batch operations"
     },
     {
-      "summary": "Preserve your jump list with :keepjumps.",
-      "details": ":keepjumps {cmd} runs without adding to jump list.\nNice for big automated edits.",
-      "mode": "normal"
+      "summary": "Preserve your jump list with :keepjumps",
+      "details": ":keepjumps {cmd} runs without adding to jump list\nNice for big automated edits"
     },
     {
-      "summary": "Preserve your search pattern with :keeppatterns.",
-      "details": ":keeppatterns {cmd} avoids overwriting your last / search.\nHelpful in scripts.",
-      "mode": "normal"
+      "summary": "Preserve your search pattern with :keeppatterns",
+      "details": ":keeppatterns {cmd} avoids overwriting your last / search\nHelpful in scripts"
     },
     {
-      "summary": "Use persistent undo with :set undofile.",
-      "details": "Keeps undo history across restarts.\nAlso set an undodir path in config.",
-      "mode": "normal"
+      "summary": "Use persistent undo with :set undofile",
+      "details": "Keeps undo history across restarts\nAlso set an undodir path in config"
     },
     {
-      "summary": "Time-travel undo with :earlier and :later.",
-      "details": ":earlier 10m goes to the state 10 minutes ago.\n:later 5m moves forward again.",
-      "mode": "normal"
+      "summary": "Time-travel undo with :earlier and :later",
+      "details": ":earlier 10m goes to the state 10 minutes ago\n:later 5m moves forward again"
     },
     {
-      "summary": "Use :set paste when pasting problematic text.",
-      "details": ":set paste disables autoindent side-effects while pasting.\nRemember :set nopaste afterwards.",
-      "mode": "normal"
+      "summary": "Use :set paste when pasting problematic text",
+      "details": ":set paste disables autoindent side-effects while pasting\nRemember :set nopaste afterwards"
     },
     {
-      "summary": "Increment/decrement numbers with Ctrl-a/Ctrl-x.",
-      "details": "Ctrl-a increments number under cursor.\nCtrl-x decrements.\nCounts work: 10 Ctrl-a.",
-      "mode": "normal"
+      "summary": "Increment/decrement numbers with Ctrl-a/Ctrl-x",
+      "details": "Ctrl-a increments number under cursor\nCtrl-x decrements\nCounts work: 10 Ctrl-a"
     },
     {
-      "summary": "Create folds with zf{motion}.",
-      "details": "zfip folds a paragraph.\nFolds help manage large files.",
-      "mode": "normal"
+      "summary": "Create folds with zf{motion}",
+      "details": "zfip folds a paragraph\nFolds help manage large files"
     },
     {
-      "summary": "Open/close folds with zo/zc and toggle with za.",
-      "details": "zo open fold • zc close fold • za toggle.\nUse zR/zM to open/close all.",
-      "mode": "normal"
+      "summary": "Open/close folds with zo/zc and toggle with za",
+      "details": "zo open fold zc close fold za toggle\nUse zR/zM to open/close all"
     },
     {
-      "summary": "Open all / close all folds with zR and zM.",
-      "details": "zR opens all folds.\nzM closes all folds.",
-      "mode": "normal"
+      "summary": "Open all / close all folds with zR and zM",
+      "details": "zR opens all folds\nzM closes all folds"
     },
     {
-      "summary": "Enable syntax folds with :set foldmethod=syntax.",
-      "details": "Uses syntax rules to create folds.\nDepends on filetype/syntax support.",
-      "mode": "normal"
+      "summary": "Enable syntax folds with :set foldmethod=syntax",
+      "details": "Uses syntax rules to create folds\nDepends on filetype/syntax support"
     },
     {
-      "summary": "Save and restore a session with :mksession.",
-      "details": ":mksession! Session.vim saves layout.\n:source Session.vim restores tabs/windows/buffers.",
-      "mode": "normal"
+      "summary": "Save and restore a session with :mksession",
+      "details": ":mksession! Session.vim saves layout\n:source Session.vim restores tabs/windows/buffers"
     },
     {
-      "summary": "Save/restore views (cursor/folds) with :mkview/:loadview.",
-      "details": ":mkview stores view data.\n:loadview restores it for the file.",
-      "mode": "normal"
+      "summary": "Save/restore views (cursor/folds) with :mkview/:loadview",
+      "details": ":mkview stores view data\n:loadview restores it for the file"
     },
     {
-      "summary": "Run external grep into quickfix with :grep (config-dependent).",
-      "details": ":grep uses 'grepprg' (often set to grep/rg).\nAfter :grep, use :copen and :cnext.",
-      "mode": "normal"
+      "summary": "Run external grep into quickfix with :grep (config-dependent)",
+      "details": ":grep uses 'grepprg' (often set to grep/rg)\nAfter :grep, use :copen and :cnext"
     },
     {
-      "summary": "Use :make to fill quickfix with build errors.",
-      "details": ":make runs makeprg and populates quickfix.\nThen :cnext to jump errors.",
-      "mode": "normal"
+      "summary": "Use :make to fill quickfix with build errors",
+      "details": ":make runs makeprg and populates quickfix\nThen :cnext to jump errors"
     },
     {
-      "summary": "Customize builds with :set makeprg.",
-      "details": "Example: :set makeprg=pytest\\ -q\nThen :make runs that command.",
-      "mode": "normal"
+      "summary": "Customize builds with :set makeprg",
+      "details": "Example: :set makeprg=pytest\\ -q\nThen :make runs that command"
     },
     {
-      "summary": "Diff files with :diffsplit.",
-      "details": ":diffsplit {file} opens a diff view.\nUse ]c/[c to jump changes.",
-      "mode": "normal"
+      "summary": "Diff files with :diffsplit",
+      "details": ":diffsplit {file} opens a diff view\nUse ]c/[c to jump changes"
     },
     {
-      "summary": "Jump between diff hunks with ]c and [c.",
-      "details": "]c next diff chunk • [c previous.\nWorks in diff mode.",
-      "mode": "normal"
+      "summary": "Jump between diff hunks with ]c and [c",
+      "details": "]c next diff chunk [c previous\nWorks in diff mode"
     },
     {
-      "summary": "Use diffget/diffput with do and dp.",
-      "details": "do = diffget (take other side).\ndp = diffput (push to other side).\nIn diff mode only.",
-      "mode": "normal"
+      "summary": "Use diffget/diffput with do and dp",
+      "details": "do = diffget (take other side)\ndp = diffput (push to other side)\nIn diff mode only"
     },
     {
-      "summary": "Create Insert-mode abbreviations with :iabbrev.",
-      "details": ":iabbrev teh the fixes a common typo while typing.\nAbbreviations expand in Insert mode.",
-      "mode": "normal"
+      "summary": "Create Insert-mode abbreviations with :iabbrev",
+      "details": ":iabbrev teh the fixes a common typo while typing\nAbbreviations expand in Insert mode"
     },
     {
-      "summary": "Create safe mappings with :nnoremap.",
-      "details": "Prefer noremap variants to avoid recursive mappings.\nExample: :nnoremap <leader>w :w<CR>",
-      "mode": "normal"
+      "summary": "Create safe mappings with :nnoremap",
+      "details": "Prefer noremap variants to avoid recursive mappings\nExample: :nnoremap <leader>w :w<CR>"
     },
     {
-      "summary": "Use a leader key for custom shortcuts.",
-      "details": "Set mapleader (often space).\nThen map <leader> combos to frequent actions.",
-      "mode": "normal"
+      "summary": "Use a leader key for custom shortcuts",
+      "details": "Set mapleader (often space)\nThen map <leader> combos to frequent actions"
     },
     {
-      "summary": "Show invisible characters via listchars.",
-      "details": "Configure listchars and toggle with :set list.\nHelps spot tabs and trailing spaces.",
-      "mode": "normal"
+      "summary": "Show invisible characters via listchars",
+      "details": "Configure listchars and toggle with :set list\nHelps spot tabs and trailing spaces"
     },
     {
-      "summary": "Use :set formatoptions to control comment wrapping.",
-      "details": "formatoptions influences gq behavior and auto-commenting.\nTune it per filetype if needed.",
-      "mode": "normal"
+      "summary": "Use :set formatoptions to control comment wrapping",
+      "details": "formatoptions influences gq behavior and auto-commenting\nTune it per filetype if needed"
     },
     {
-      "summary": "Use K to open keyword help (man/keywordprg).",
-      "details": "K runs 'keywordprg' on word under cursor (often man).\nDepends on filetype and environment.",
-      "mode": "normal"
+      "summary": "Use K to open keyword help (man/keywordprg)",
+      "details": "K runs 'keywordprg' on word under cursor (often man)\nDepends on filetype and environment"
     }
   ]
 }

@@ -14,7 +14,7 @@ object TipJsonParser {
 
         if (root.isJsonArray) {
             val tips = gson.fromJson(root, Array<VimTip>::class.java) ?: return emptyList()
-            return tips.mapNotNull { normalizeTip(it, null) }
+            return tips.mapNotNull { normalizeTip(it) }
         }
 
         if (!root.isJsonObject) {
@@ -22,26 +22,22 @@ object TipJsonParser {
         }
 
         val normalizedTips = mutableListOf<VimTip>()
-        root.asJsonObject.entrySet().forEach { (categoryKey, tipsElement) ->
+        root.asJsonObject.entrySet().forEach { (_, tipsElement) ->
             if (!tipsElement.isJsonArray) {
                 return@forEach
             }
-            val category = categoryKey.trim().ifBlank { null }
             val tips = gson.fromJson(tipsElement, Array<VimTip>::class.java) ?: emptyArray()
-            tips.mapNotNullTo(normalizedTips) { normalizeTip(it, category) }
+            tips.mapNotNullTo(normalizedTips) { normalizeTip(it) }
         }
         return normalizedTips
     }
 
-    private fun normalizeTip(tip: VimTip, categoryOverride: String?): VimTip? {
+    private fun normalizeTip(tip: VimTip): VimTip? {
         val summary = (tip.summary as String?)?.trim().orEmpty()
         val details = (tip.details as String?)?.trim().orEmpty()
-        val mode = (tip.mode )?.trim()?.ifBlank { null }
-        val category = categoryOverride
-            ?: (tip.category )?.trim()?.ifBlank { null }
         if (summary.isBlank() || details.isBlank()) {
             return null
         }
-        return VimTip(summary, details, category, mode)
+        return VimTip(summary, details)
     }
 }

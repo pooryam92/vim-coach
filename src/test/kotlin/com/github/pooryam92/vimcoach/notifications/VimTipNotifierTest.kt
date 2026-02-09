@@ -10,9 +10,7 @@ class VimTipNotifierTest : BasePlatformTestCase() {
         val notifier = VimTipNotifier(VimTipServiceImpl())
         val tip = VimTip(
             summary = "Move by word with w/b/e.",
-            details = "w next word start.",
-            category = "beginner",
-            mode = "normal"
+            details = "w next word start."
         )
 
         val notification = notifier.createNotification(tip)
@@ -20,6 +18,5 @@ class VimTipNotifierTest : BasePlatformTestCase() {
         assertEquals("Vim Coach", notification.title)
         assertTrue(notification.content.contains("Move by word with w/b/e."))
         assertTrue(notification.content.contains("w next word start."))
-        assertTrue(notification.content.contains("Mode: normal"))
     }
 }
