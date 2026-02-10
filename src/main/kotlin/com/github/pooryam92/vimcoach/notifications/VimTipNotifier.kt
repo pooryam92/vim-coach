@@ -7,6 +7,7 @@ import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.IconLoader
 
 class VimTipNotifier(
     private val tipService: VimTipService
@@ -30,12 +31,13 @@ class VimTipNotifier(
         val detailsHtml = formatInlineCode(tip.details).replace("\n", "<br/>")
         val content = buildString {
             append("<html>")
+            append("<div style=\"margin:6px 0 4px 0; line-height:1.45;\">")
             append("<b>")
             append(summaryHtml)
             append("</b>")
-            append("<br/><br/>")
-            append("<div style=\"color:#6b6b6b;\">")
+            append("<div style=\"margin-top:6px;\">")
             append(detailsHtml)
+            append("</div>")
             append("</div>")
             append("</html>")
         }
@@ -45,6 +47,7 @@ class VimTipNotifier(
             content,
             NotificationType.INFORMATION
         )
+        notification.setIcon(TIP_ICON)
         return notification
     }
 
@@ -58,5 +61,6 @@ class VimTipNotifier(
         private const val APP_TITLE = "Vim Coach"
         const val NOTIFICATION_GROUP_ID = "Vim Tips"
         private const val TIP_NEXT_ACTION_KEY = "tipNextAction"
+        private val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", VimTipNotifier::class.java)
     }
 }
