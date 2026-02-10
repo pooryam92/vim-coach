@@ -27,8 +27,8 @@ class VimTipNotifier(
     }
 
     internal fun createNotification(tip: VimTip): Notification {
-        val summaryHtml = formatInlineCode(tip.summary)
-        val detailsHtml = formatInlineCode(tip.details).replace("\n", "<br/>")
+        val summaryHtml = tip.summary
+        val detailsHtml = tip.details
         val content = buildString {
             append("<html>")
             append("<div style=\"margin:6px 0 4px 0; line-height:1.45;\">")
@@ -47,14 +47,8 @@ class VimTipNotifier(
             content,
             NotificationType.INFORMATION
         )
-        notification.setIcon(TIP_ICON)
+        notification.icon = TIP_ICON
         return notification
-    }
-
-    private fun formatInlineCode(text: String): String {
-        return text.replace(Regex("`([^`]+)`")) { match ->
-            "<code>${match.groupValues[1]}</code>"
-        }
     }
 
     companion object {
