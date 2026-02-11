@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.pooryam92.plugin</id>
-    <name>plugin</name>
+    <id>com.github.pooryam92.vimcoach</id>
+    <name>Vim Coach</name>
     <vendor>pooryam92</vendor>
 
     <depends>com.intellij.modules.platform</depends>
@@ -9,7 +9,26 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.pooryam92.plugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.pooryam92.plugin.startup.MyProjectActivity" />
+        <notificationGroup id="Vim Tips" displayType="BALLOON" isLogByDefault="false" />
+        <postStartupActivity implementation="com.github.pooryam92.vimcoach.startup.VimTipStartupActivity" />
+        <projectService
+            serviceInterface="com.github.pooryam92.vimcoach.services.VimTipService"
+            serviceImplementation="com.github.pooryam92.vimcoach.services.VimTipServiceImpl" />
+        <projectService
+            serviceInterface="com.github.pooryam92.vimcoach.services.RemoteTipSourceService"
+            serviceImplementation="com.github.pooryam92.vimcoach.services.RemoteTipSourceServiceImpl" />
+        <projectService
+            serviceInterface="com.github.pooryam92.vimcoach.services.TipLoaderService"
+            serviceImplementation="com.github.pooryam92.vimcoach.services.TipLoaderServiceImpl" />
     </extensions>
+
+    <actions>
+        <action
+            id="com.github.pooryam92.vimcoach.actions.ShowVimTipAction"
+            class="com.github.pooryam92.vimcoach.actions.ShowVimTipAction"
+            text="Show Vim Tip"
+            description="Show a Vim tip notification">
+            <keyboard-shortcut keymap="$default" first-keystroke="shift T" second-keystroke="T"/>
+        </action>
+    </actions>
 </idea-plugin>
