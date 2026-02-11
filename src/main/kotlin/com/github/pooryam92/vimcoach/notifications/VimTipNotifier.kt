@@ -31,11 +31,11 @@ class VimTipNotifier(
         val detailsHtml = tip.details
         val content = buildString {
             append("<html>")
-            append("<div style=\"margin:6px 0 4px 0; line-height:1.45;\">")
+            append("<div>")
             append("<b>")
             append(summaryHtml)
             append("</b>")
-            append("<div style=\"margin-top:6px;\">")
+            append("<div style=\"margin-top:11px;\">")
             append(detailsHtml)
             append("</div>")
             append("</div>")
