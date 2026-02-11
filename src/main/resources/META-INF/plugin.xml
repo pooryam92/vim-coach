@@ -30,5 +30,11 @@
             description="Show a Vim tip notification">
             <keyboard-shortcut keymap="$default" first-keystroke="shift T" second-keystroke="T"/>
         </action>
+        <action
+            id="com.github.pooryam92.vimcoach.actions.RefetchVimTipsAction"
+            class="com.github.pooryam92.vimcoach.actions.RefetchVimTipsAction"
+            text="Refetch Vim Tips from Remote"
+            description="Reload Vim tips from remote source">
+        </action>
     </actions>
 </idea-plugin>
