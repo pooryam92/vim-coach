@@ -1,8 +1,8 @@
 # Vim Coach
 
 ![Build](https://github.com/pooryam92/vim-coach/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
+[![Version](https://img.shields.io/jetbrains/plugin/v/30148.svg)](https://plugins.jetbrains.com/plugin/30148)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/30148.svg)](https://plugins.jetbrains.com/plugin/30148)
 
 An IntelliJ Platform plugin that helps you master Vim keybindings through interactive tips and coaching. Learn Vim commands while coding!
 
@@ -34,6 +34,7 @@ Once installed, you can:
 1. **Show a Vim Tip on Demand**: Press `Shift+T` twice to display a random Vim tip
 2. **Learn at Startup**: Tips will appear automatically when you open a project (configurable)
 3. **Browse Tips**: Each tip includes a summary and detailed explanation with examples
+4. **Refetch Tips from Remote**: Use the "Refetch Vim Tips from Remote" action to update your tips library from the remote source
 
 ## Contributing
 

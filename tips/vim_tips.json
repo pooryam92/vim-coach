@@ -1,104 +1,196 @@
 {
   "tips": [
     {
+      "summary": "Normal mode is home (Esc gets you there)",
+      "details": "Most commands work in Normal mode<br/>Use Esc (or Ctrl-[) to leave Insert/Visual"
+    },
+    {
       "summary": "Move by character with h/j/k/l",
       "details": "h left j down k up l right<br/>Counts work: 5j moves 5 lines"
     },
     {
-      "summary": "Move by word with w/b/e",
-      "details": "w next word start b previous word start e word end<br/>Try: 3w to jump three words"
-    },
-    {
-      "summary": "Move by WORD with W/B/E",
-      "details": "WORDs are whitespace-separated (punctuation stays with the WORD)<br/>Use when navigating paths or tokens"
-    },
-    {
-      "summary": "Jump within a line with 0, ^, and $",
-      "details": "0 column 1 ^ first non-blank $ end of line<br/>Use ^ a lot in indented code"
-    },
-    {
-      "summary": "Jump to file edges with gg and G",
-      "details": "gg first line G last line<br/>Use 42G to jump to line 42"
-    },
-    {
-      "summary": "Move to screen top/middle/bottom with H/M/L",
-      "details": "H top visible line M middle L bottom<br/>Great for fast viewport navigation"
-    },
-    {
-      "summary": "Scroll half a page with Ctrl-d/Ctrl-u",
-      "details": "Ctrl-d scroll down half-screen Ctrl-u up half-screen<br/>Cursor position changes with the screen"
-    },
-    {
-      "summary": "Scroll without moving the cursor with Ctrl-e/Ctrl-y",
-      "details": "Ctrl-e scroll window down one line Ctrl-y up one line<br/>Cursor stays on the same buffer position"
-    },
-    {
-      "summary": "Jump by paragraphs with { and }",
-      "details": "{ previous paragraph } next paragraph<br/>Paragraphs are separated by blank lines"
-    },
-    {
-      "summary": "Jump by sentences with ( and )",
-      "details": "( previous sentence ) next sentence<br/>Useful for prose editing"
-    },
-    {
-      "summary": "Find a character on the line with f/F",
-      "details": "f{c} forward to char F{c} backward<br/>Repeat with ; and reverse with ,"
-    },
-    {
-      "summary": "Find-till a character with t/T",
-      "details": "t{c} forward stopping before char T{c} backward<br/>Repeat with ; and ,"
-    },
-    {
-      "summary": "Use counts to speed up motions",
+      "summary": "Use counts to go faster",
       "details": "Most motions accept a numeric prefix<br/>Examples: 5j, 3w, 10G"
     },
     {
-      "summary": "Enter Insert mode with i and a",
-      "details": "i inserts before cursor a inserts after cursor<br/>Use Esc (or Ctrl-[) to return to Normal mode"
+      "summary": "Move by word with w/b/e",
+      "details": "w next word start, b previous word start, e word end<br/>Try: 3w to jump three words"
+    },
+    {
+      "summary": "Move by WORD with W/B/E",
+      "details": "WORDs are whitespace-separated (punctuation stays attached)<br/>Great for paths or long tokens"
+    },
+    {
+      "summary": "Hop to the previous word end with ge (and gE)",
+      "details": "ge moves to end of previous word<br/>gE does the same for WORDs"
+    },
+    {
+      "summary": "Jump within a line with 0, ^, and $",
+      "details": "0 start of line, ^ first non-blank, $ end of line<br/>^ is gold in indented code"
+    },
+    {
+      "summary": "Wrapped lines: use g0 / g^ / g$",
+      "details": "g0 start of screen line, g^ first non-blank screen line, g$ end of screen line<br/>Useful with soft wraps"
+    },
+    {
+      "summary": "Go to first non-blank on next/prev line with + and -",
+      "details": "+ moves to first non-blank next line<br/>- moves to first non-blank previous line"
+    },
+    {
+      "summary": "Go to last non-blank character with g_",
+      "details": "g_ moves to the last non-whitespace char on the line<br/>Nice for editing trailing ) ; } etc."
+    },
+    {
+      "summary": "Go to a specific column with |",
+      "details": "80| goes to column 80<br/>Useful for line-length checks"
+    },
+    {
+      "summary": "Go to a specific line with gg / G",
+      "details": "gg first line, G last line<br/>Use 42G to jump to line 42"
+    },
+    {
+      "summary": "Show file info with Ctrl-g",
+      "details": "Shows file name, line/col, and % through file<br/>Nice quick orientation"
+    },
+    {
+      "summary": "Move to screen top/middle/bottom with H/M/L",
+      "details": "H top visible line, M middle, L bottom<br/>Fast viewport navigation"
+    },
+    {
+      "summary": "Scroll half a page with Ctrl-d / Ctrl-u",
+      "details": "Ctrl-d down half-screen, Ctrl-u up half-screen<br/>Cursor moves with the window"
+    },
+    {
+      "summary": "Scroll a full page with Ctrl-f / Ctrl-b",
+      "details": "Ctrl-f forward (down), Ctrl-b back (up)<br/>Good for big scans"
+    },
+    {
+      "summary": "Scroll without moving the cursor with Ctrl-e / Ctrl-y",
+      "details": "Ctrl-e scroll window down one line, Ctrl-y up one line<br/>Cursor stays on the same text"
+    },
+    {
+      "summary": "Recenter/top/bottom the cursor line with zz / zt / zb",
+      "details": "zz centers, zt puts cursor line at top, zb at bottom<br/>Great after big jumps"
+    },
+    {
+      "summary": "Keep search jumps centered with nzz / Nzz",
+      "details": "After searching, use nzz to jump and recenter<br/>Same idea for Nzz"
+    },
+    {
+      "summary": "Jump by paragraphs with { and }",
+      "details": "{ previous paragraph, } next paragraph<br/>Paragraphs are separated by blank lines"
+    },
+    {
+      "summary": "Jump by sentences with ( and )",
+      "details": "( previous sentence, ) next sentence<br/>More useful in prose/comments than code"
+    },
+    {
+      "summary": "Jump to matching pairs with %",
+      "details": "On (), {}, [], press % to jump to the match<br/>Huge for braces"
+    },
+    {
+      "summary": "Return to the previous place with `` and ''",
+      "details": "`` returns to the exact previous cursor position<br/>'' returns to the previous line (column may change)"
+    },
+    {
+      "summary": "Find a character on the line with f/F",
+      "details": "f{c} forward to char, F{c} backward<br/>Repeat with ; and reverse with ,"
+    },
+    {
+      "summary": "Find-till a character with t/T",
+      "details": "t{c} forward stopping before char, T{c} backward<br/>Repeat with ; and reverse with ,"
+    },
+    {
+      "summary": "Repeat the last f/t with ; and reverse with ,",
+      "details": "; repeats your last f/F/t/T<br/>, reverses the direction"
+    },
+    {
+      "summary": "Search with / and ?",
+      "details": "/pattern forward, ?pattern backward<br/>Use n for next and N for previous"
+    },
+    {
+      "summary": "Next/previous search match with n/N",
+      "details": "n goes to next match in the current direction<br/>N goes to the opposite direction"
+    },
+    {
+      "summary": "Search the word under cursor with * and #",
+      "details": "* searches forward for whole word, # backward<br/>Then use n/N to hop"
+    },
+    {
+      "summary": "Partial word search with g* and g#",
+      "details": "g* searches forward for partial matches, g# backward<br/>Useful on camelCase and long tokens"
+    },
+    {
+      "summary": "Case-sensitive search toggles: \\c and \\C",
+      "details": "/foo\\c makes the search case-insensitive<br/>/foo\\C forces case-sensitive"
+    },
+    {
+      "summary": "Clear search highlighting with :noh",
+      "details": ":noh clears highlight (pattern remains active)<br/>Nice to map if you search a lot"
+    },
+    {
+      "summary": "Use search as a motion: d/… and c/…",
+      "details": "d/pat deletes up to the next match<br/>c?pat changes back to the previous match"
+    },
+    {
+      "summary": "Use f/t as a motion: df, / ct)",
+      "details": "df, deletes through the next comma<br/>ct) changes up to (but not including) the next )"
+    },
+    {
+      "summary": "Enter Insert mode with i/a",
+      "details": "i inserts before cursor, a inserts after cursor<br/>Esc returns to Normal mode"
     },
     {
       "summary": "Insert at start/end with I and A",
       "details": "I goes to first non-blank then inserts<br/>A goes to end of line then inserts"
     },
     {
-      "summary": "Open lines with o and O",
-      "details": "o opens below O opens above<br/>Vim enters Insert mode automatically"
+      "summary": "Open new lines with o and O",
+      "details": "o opens below, O opens above<br/>Enters Insert mode automatically"
     },
     {
-      "summary": "Exit Insert mode with Esc or Ctrl-[",
-      "details": "Ctrl-[ is the same as Esc<br/>Often faster on keyboards where Esc is far"
+      "summary": "Return to your last insert point with gi",
+      "details": "gi jumps to the last insertion point and enters Insert mode<br/>Great after navigating around"
     },
     {
-      "summary": "Delete a character with x and X",
-      "details": "x deletes under cursor X deletes before cursor<br/>Counts work: 5x"
+      "summary": "Jump to where Insert mode last ended with `^",
+      "details": "`^ (backtick + caret) jumps to where you last exited Insert mode<br/>Use gi to jump and insert"
     },
     {
-      "summary": "Delete the current line with dd",
-      "details": "dd deletes the whole line<br/>3dd deletes three lines"
+      "summary": "Ctrl-[ is the same as Esc",
+      "details": "Ctrl-[ exits Insert/Visual like Esc<br/>Often easier on keyboards"
     },
     {
-      "summary": "Delete word-ish text with dw and de",
-      "details": "dw deletes to next word start<br/>de deletes to end of word<br/>Try both to feel the difference"
+      "summary": "Run one Normal command from Insert with Ctrl-o",
+      "details": "In Insert mode: Ctrl-o then a Normal command<br/>Example: Ctrl-o dw deletes a word, then back to Insert"
     },
     {
-      "summary": "Delete a whole word with daw",
-      "details": "daw deletes the word plus surrounding whitespace<br/>Great for editing lists and arguments"
+      "summary": "Delete previous word in Insert mode with Ctrl-w",
+      "details": "While typing, Ctrl-w deletes the word before the cursor<br/>Great for quick cleanup without leaving Insert"
     },
     {
-      "summary": "Change a word with ciw",
-      "details": "ciw changes the inner word (deletes it and enters Insert mode)<br/>Then press . to repeat on another word"
+      "summary": "Delete to start of line in Insert mode with Ctrl-u",
+      "details": "Ctrl-u deletes from cursor back to start of the line (in Insert)<br/>Fast way to rewrite a line"
     },
     {
-      "summary": "Change to end of line with C",
-      "details": "C deletes from cursor to end of line and enters Insert mode<br/>Equivalent to c$"
+      "summary": "Insert a register in Insert mode with Ctrl-r {reg}",
+      "details": "Ctrl-r 0 inserts last yank, Ctrl-r + inserts system clipboard<br/>Good for dropping snippets mid-typing"
     },
     {
-      "summary": "Delete to end of line with D",
-      "details": "D deletes from cursor to end of line<br/>Equivalent to d$"
+      "summary": "Delete a character with x (or X)",
+      "details": "x deletes under cursor, X deletes before cursor<br/>Counts work: 5x"
     },
     {
-      "summary": "Change the whole line with cc (or S)",
-      "details": "cc changes the whole line<br/>S is a shortcut for cc"
+      "summary": "Substitute one char and enter Insert with s (or whole line with S)",
+      "details": "s deletes the char under cursor and enters Insert<br/>S is like cc (change whole line)"
+    },
+    {
+      "summary": "Delete/change a line with dd / cc",
+      "details": "dd deletes the line<br/>cc changes the whole line (deletes it and enters Insert)"
+    },
+    {
+      "summary": "Delete/change to end of line with D / C",
+      "details": "D = d$ (delete to end of line)<br/>C = c$ (change to end of line)"
     },
     {
       "summary": "Replace one character with r{c}",
@@ -106,162 +198,202 @@
     },
     {
       "summary": "Replace multiple characters with R",
-      "details": "R enters Replace mode (type over text)<br/>Esc leaves Replace mode"
+      "details": "R enters Replace mode (type over text)<br/>Esc exits Replace mode"
     },
     {
       "summary": "Join lines with J",
-      "details": "J joins the current line with the next line (adds a space)<br/>Useful for unwrapping text"
+      "details": "J joins current line with the next (adds a space)<br/>Great for unwrapping text"
     },
     {
       "summary": "Join lines without extra space with gJ",
-      "details": "gJ joins current line with next without inserting a space<br/>Useful for code concatenation"
+      "details": "gJ joins without inserting a space<br/>Useful for code concatenation"
     },
     {
-      "summary": "Repeat the last change with .",
-      "details": ". repeats your last edit<br/>Combine with a motion for huge speedups"
+      "summary": "Swap two adjacent characters with xp",
+      "details": "x deletes current char, p pastes it after<br/>Quick fix for adjacent typos"
+    },
+    {
+      "summary": "Duplicate a line quickly with yyp (or yyP)",
+      "details": "yyp duplicates the current line below<br/>yyP duplicates it above"
+    },
+    {
+      "summary": "Move a line down with ddp",
+      "details": "dd cuts the line, p puts it below the next line<br/>Repeat with . to keep moving down"
+    },
+    {
+      "summary": "Move a line up with ddkP",
+      "details": "dd cuts the line, k moves up, P puts it above<br/>Nice for quick reordering"
     },
     {
       "summary": "Undo and redo with u and Ctrl-r",
-      "details": "u undo Ctrl-r redo<br/>Undo is per change, not per keystroke"
+      "details": "u undo, Ctrl-r redo<br/>Undo is per change, not per keystroke"
     },
     {
-      "summary": "Yank (copy) a line with yy",
+      "summary": "Repeat the last change with .",
+      "details": ". repeats your last edit<br/>One of the biggest speed multipliers in Vim"
+    },
+    {
+      "summary": "The core idea: operators + motions",
+      "details": "d + motion deletes, c + motion changes, y + motion yanks<br/>Examples: d$, cw, yip"
+    },
+    {
+      "summary": "Yank (copy) with y + a motion",
+      "details": "Examples: yw (word), y$ (to end of line), yip (paragraph)<br/>Then paste with p/P"
+    },
+    {
+      "summary": "Yank whole lines with yy",
       "details": "yy yanks the whole line<br/>3yy yanks three lines"
     },
     {
+      "summary": "Yank to end/start of line with y$ and y0",
+      "details": "y$ yanks from cursor to end of line<br/>y0 yanks from cursor to start of line"
+    },
+    {
       "summary": "Paste with p and P",
-      "details": "p pastes after cursor/line P before<br/>After dd, p puts the line back below"
+      "details": "p pastes after cursor/line, P pastes before<br/>After dd, p puts the line back below"
     },
     {
-      "summary": "Search with / and ?",
-      "details": "/pattern searches forward ?pattern backward<br/>Use n for next match and N for previous"
+      "summary": "Paste and keep cursor after the pasted text with gp/gP",
+      "details": "gp pastes after and leaves cursor at end<br/>gP pastes before and leaves cursor at end"
     },
     {
-      "summary": "Search the word under cursor with * and #",
-      "details": "* searches forward for whole word<br/># searches backward<br/>Use g* / g# for partial matches"
+      "summary": "Visual paste with P (replaces selection)",
+      "details": "In Visual mode, P replaces the selection with your yank<br/>Tip: use \"_dP to avoid clobbering the yank"
     },
     {
-      "summary": "Clear search highlighting with :noh",
-      "details": ":noh clears highlight (the pattern remains)<br/>Good to bind to a key if you use it often"
+      "summary": "Paste over a selection without losing your yank",
+      "details": "In Visual mode: \"_dP replaces selection using the black-hole register<br/>Your yank stays intact"
+    },
+    {
+      "summary": "Use named registers \"a, \"b, ...",
+      "details": "\"ay yanks into register a<br/>\"ap pastes from register a"
+    },
+    {
+      "summary": "Paste the last yank from register 0 with \"0p",
+      "details": "Register 0 holds the most recent yank (not delete)<br/>\"0p is great after lots of deleting"
+    },
+    {
+      "summary": "Use the black-hole register to avoid clobbering yanks",
+      "details": "\"_d deletes without overwriting what you yanked<br/>Perfect when pasting the same thing repeatedly"
+    },
+    {
+      "summary": "Use the system clipboard with \"+",
+      "details": "\"+y copies to OS clipboard<br/>\"+p pastes from it"
+    },
+    {
+      "summary": "Inspect registers with :reg",
+      "details": ":reg shows register contents (yanks, deletes, macros)<br/>Helps you paste intentionally"
     },
     {
       "summary": "Enter Visual mode with v and V",
-      "details": "v selects characters V selects whole lines<br/>Then run d/y/>/< on the selection"
+      "details": "v selects characters, V selects whole lines<br/>Then run d/y/>/< on the selection"
     },
     {
       "summary": "Use Visual Block mode with Ctrl-v",
       "details": "Ctrl-v selects a rectangular block<br/>Great for editing columns"
     },
     {
-      "summary": "Indent/outdent a selection with > and <",
-      "details": "In Visual mode: > shifts right < shifts left<br/>Use . to repeat the last shift"
+      "summary": "Swap Visual selection ends with o",
+      "details": "In Visual mode, press o to move the cursor to the other end<br/>Helps adjust selections precisely"
     },
     {
       "summary": "Reselect the last Visual selection with gv",
       "details": "gv reselects your previous Visual area<br/>Useful for applying multiple actions"
     },
     {
-      "summary": "Jump to matching pairs with %",
-      "details": "On (), {}, [], press % to jump to the match<br/>(Keyword matching needs matchit plugin)"
+      "summary": "Visual Block column insert with I (or A) then Esc",
+      "details": "Ctrl-v select rows/column, press I, type text, then Esc<br/>Applies to every selected line"
     },
     {
-      "summary": "Center the cursor line with zz",
-      "details": "zz scrolls so the cursor line is centered<br/>Great after big jumps"
+      "summary": "Indent/outdent a Visual selection with > and <",
+      "details": "In Visual mode: > shifts right, < shifts left<br/>Use . to repeat the last shift"
     },
     {
-      "summary": "Scroll so cursor is at top/bottom with zt/zb",
-      "details": "zt places cursor line at top zb at bottom<br/>Use when reading context"
+      "summary": "Indent lines quickly with >> and <<",
+      "details": ">> indent line, << outdent line<br/>Counts work: 3>> indents three lines"
     },
     {
-      "summary": "Move to first non-blank on next/prev line with + and -",
-      "details": "+ moves to first non-blank next line<br/>- moves to first non-blank previous line"
+      "summary": "Indent using a motion with >{motion} and <{motion}",
+      "details": ">ip indents a paragraph/block, <ap outdents around paragraph<br/>Great for moving blocks"
     },
     {
-      "summary": "Go to a specific screen column with |",
-      "details": "80| goes to column 80<br/>Helpful for checking line length"
+      "summary": "Reindent the current line with ==",
+      "details": "== reindents using filetype rules<br/>Nice after editing braces"
     },
     {
-      "summary": "Toggle case of character(s) with ~",
+      "summary": "Reindent a block/paragraph with =ip",
+      "details": "=ip reindents the current block/paragraph<br/>Useful after pasting code"
+    },
+    {
+      "summary": "Select the whole file with ggVG",
+      "details": "gg go top, V linewise Visual, G go bottom<br/>Now you can indent/format the whole file"
+    },
+    {
+      "summary": "Know the difference: cw vs ciw",
+      "details": "cw changes from cursor to end of word (often keeps prefix)<br/>ciw changes the whole word regardless of cursor position"
+    },
+    {
+      "summary": "Know the difference: dw vs de",
+      "details": "dw deletes to the start of the next word<br/>de deletes to the end of the current word"
+    },
+    {
+      "summary": "Know the difference: diw vs daw",
+      "details": "diw deletes inner word only<br/>daw deletes word + surrounding whitespace (great for args/lists)"
+    },
+    {
+      "summary": "Change a word with ciw / caw",
+      "details": "ciw changes inner word (tight)<br/>caw changes around word (includes trailing space)"
+    },
+    {
+      "summary": "Delete a whole word with daw",
+      "details": "daw deletes the word plus surrounding whitespace<br/>Perfect for editing arguments/lists"
+    },
+    {
+      "summary": "Select “inside/around” a WORD with iW / aW",
+      "details": "ciW changes a WORD (whitespace-delimited)<br/>daW deletes a WORD including punctuation"
+    },
+    {
+      "summary": "Edit inside quotes with ci\" and ci'",
+      "details": "ci\" changes inside double quotes<br/>ci' changes inside single quotes"
+    },
+    {
+      "summary": "Delete around quotes with da\" and da'",
+      "details": "da\" deletes including the quotes<br/>da' deletes including the single quotes"
+    },
+    {
+      "summary": "Edit inside pairs with ci( / ci[ / ci{",
+      "details": "ci( changes inside parentheses, ci[ inside brackets, ci{ inside braces<br/>Amazing for refactoring arguments/blocks"
+    },
+    {
+      "summary": "Delete inside/around pairs with di( / da(",
+      "details": "di( deletes inside parentheses<br/>da( deletes including the parentheses"
+    },
+    {
+      "summary": "Select inside/around pairs with vi( / va{",
+      "details": "vi( selects inside parentheses<br/>va{ selects including braces"
+    },
+    {
+      "summary": "Angle-bracket text objects: i< and a<",
+      "details": "ci< changes inside <...>, da< deletes including the brackets<br/>If it doesn't work, add <:> to matchpairs"
+    },
+    {
+      "summary": "Paragraph text objects: ip and ap",
+      "details": "vip selects a paragraph<br/>ap includes surrounding blank lines"
+    },
+    {
+      "summary": "Operators + paragraph: dip / cip / yip",
+      "details": "dip deletes paragraph, cip changes it, yip yanks it<br/>A fast way to edit blocks"
+    },
+    {
+      "summary": "Toggle case quickly with ~",
       "details": "~ toggles case under cursor<br/>Counts work: 5~ toggles 5 chars"
     },
     {
-      "summary": "Show file info with Ctrl-g",
-      "details": "Displays file name, line/col, and percent through file<br/>Good quick orientation"
+      "summary": "Lower/UPPER-case a whole line with guu / gUU",
+      "details": "guu lowercases the current line<br/>gUU uppercases the current line"
     },
     {
-      "summary": "Write file with :w",
-      "details": ":w saves current buffer<br/>Use :w {path} to write to a new file"
-    },
-    {
-      "summary": "Quit with :q (and force with :q!)",
-      "details": ":q quits if no changes<br/>:q! discards changes and quits"
-    },
-    {
-      "summary": "Save and quit with :wq or :x",
-      "details": ":wq always writes<br/>:x writes only if the buffer changed"
-    },
-    {
-      "summary": "Save and quit quickly with ZZ",
-      "details": "ZZ exits and writes the file if it was modified<br/>If unmodified, it just exits"
-    },
-    {
-      "summary": "Open or reload a file with :e and :e!",
-      "details": ":e {file} opens<br/>:e! reloads from disk (drops local changes)"
-    },
-    {
-      "summary": "Read a file into the buffer with :r",
-      "details": ":r {file} inserts the file below the cursor<br/>Useful for templates/snippets"
-    },
-    {
-      "summary": "Insert shell command output with :r !cmd",
-      "details": ":r !date inserts the output of date below cursor<br/>Good for quick stamps"
-    },
-    {
-      "summary": "Use built-in help with :help",
-      "details": ":help {topic} opens docs (try :help motion.txt)<br/>Ctrl-] follows a help link; Ctrl-o goes back"
-    },
-    {
-      "summary": "Use Tab completion on : commands (wildmenu)",
-      "details": "Tab completes commands/paths<br/>For a nicer UI, enable :set wildmenu (and wildmode)"
-    },
-    {
-      "summary": "Print character info with ga",
-      "details": "ga shows info/codepoint for char under cursor<br/>Helpful for debugging weird characters"
-    },
-    {
-      "summary": "Use text objects: iw and aw",
-      "details": "ciw changes inner word<br/>daw deletes around word (incl. space)"
-    },
-    {
-      "summary": "Use text objects: i\" and a\"",
-      "details": "ci\" changes inside quotes<br/>da\" deletes including quotes"
-    },
-    {
-      "summary": "Use text objects: i' and a'",
-      "details": "ci' changes inside single quotes<br/>va' selects including quotes"
-    },
-    {
-      "summary": "Use text objects: i( a( i{ a{ i[ a[",
-      "details": "Operate inside/around pairs: di{, ci(, va[<br/>Great for refactoring arguments/blocks"
-    },
-    {
-      "summary": "Use tag text objects: it and at",
-      "details": "In HTML/XML: cit changes inside a tag<br/>dat deletes the tag and its contents"
-    },
-    {
-      "summary": "Paragraph objects: ip and ap",
-      "details": "vip selects a paragraph<br/>dap deletes paragraph including surrounding blank lines"
-    },
-    {
-      "summary": "Sentence objects: is and as",
-      "details": "cis changes a sentence<br/>das deletes the sentence (incl. punctuation)"
-    },
-    {
-      "summary": "Use operators with motions (the core Vim idea)",
-      "details": "d + motion deletes, c + motion changes, y + motion yanks<br/>Examples: d$, cW, yip"
-    },
-    {
-      "summary": "Upper/lowercase with gU/gu + motion",
+      "summary": "Uppercase/lowercase with gU/gu + motion",
       "details": "gUw uppercases a word<br/>guip lowercases a paragraph"
     },
     {
@@ -269,16 +401,40 @@
       "details": "g~iw toggles case for the word under cursor<br/>Great for quick style fixes"
     },
     {
-      "summary": "Swap two characters with xp",
-      "details": "x deletes current char, p pastes it after<br/>Quick fix for adjacent typos"
+      "summary": "Increment/decrement numbers with Ctrl-a / Ctrl-x",
+      "details": "Ctrl-a increments number under cursor, Ctrl-x decrements<br/>Works great for loops, versions, ports, etc."
     },
     {
-      "summary": "Jump to previous/next occurrence of the current word with * then n/N",
-      "details": "* sets the search to the word under cursor<br/>Use n/N to hop matches"
+      "summary": "Make Ctrl-a smarter with :set nrformats",
+      "details": ":set nrformats+=hex lets Ctrl-a increment hex numbers<br/>Useful for colors, bitmasks, ids"
     },
     {
-      "summary": "Select next match with gn, then edit with cgn",
-      "details": "After /search: gn selects next match<br/>cgn changes it, then you can press n and . to repeat"
+      "summary": "Inspect a character with ga",
+      "details": "ga shows info/codepoint for the character under the cursor<br/>Useful for debugging weird whitespace"
+    },
+    {
+      "summary": "Substitute on the current line with :s",
+      "details": ":s/old/new/ replaces the first match on the line<br/>Add g for all matches: :s/old/new/g"
+    },
+    {
+      "summary": "Substitute across the whole file with :%s",
+      "details": ":%s/old/new/g replaces everywhere in the file<br/>Add c to confirm: :%s/old/new/gc"
+    },
+    {
+      "summary": "Use confirmation in substitutions with the c flag",
+      "details": ":%s/old/new/gc prompts on each match<br/>Safer for big edits"
+    },
+    {
+      "summary": "Match whole words with \\< and \\>",
+      "details": ":%s/\\<foo\\>/bar/g replaces whole-word foo<br/>Prevents partial replacements"
+    },
+    {
+      "summary": "Use very-magic regex with \\v",
+      "details": "\\v makes most characters magic so you escape less<br/>Example: :%s/\\v(foo|bar)/baz/g"
+    },
+    {
+      "summary": "Reuse your last /search in :s with //",
+      "details": ":%s//replacement/g uses the most recent search pattern<br/>Nice for chaining operations"
     },
     {
       "summary": "Repeat your last :substitute with &",
@@ -289,40 +445,32 @@
       "details": ":&& repeats the last :substitute and preserves flags like g/c<br/>Useful after a confirmed substitution"
     },
     {
-      "summary": "Use very-magic regex with \\v",
-      "details": "\\v makes most characters magic so you escape less<br/>Example: :%s/\\v(foo|bar)/baz/g"
+      "summary": "Make :substitute global by default with :set gdefault",
+      "details": ":set gdefault makes :s replace all matches unless you add 'g' explicitly"
     },
     {
-      "summary": "Match whole words with \\< and \\>",
-      "details": ":%s/\\<foo\\>/bar/g replaces whole-word foo<br/>Prevents partial replacements"
+      "summary": "Select next match with gn, then edit with cgn",
+      "details": "After /search: cgn changes the next match<br/>Then use n and . to repeat on the next ones"
     },
     {
-      "summary": "Use confirmation in substitutions with the c flag",
-      "details": ":%s/old/new/gc prompts on each match<br/>Safer for big edits"
+      "summary": "Repeat match-editing with n and .",
+      "details": "Do cgn once, then n to next match and . to repeat the change<br/>Great for quick multi-occurrence edits"
     },
     {
-      "summary": "Use the black-hole register to avoid clobbering yanks",
-      "details": "\"_d deletes without overwriting what you yanked<br/>Great when pasting the same thing repeatedly"
+      "summary": "Marks: m{a}, then jump with `a or 'a",
+      "details": "ma sets mark a<br/>`a jumps to exact spot, 'a jumps to the line"
     },
     {
-      "summary": "Inspect registers with :reg",
-      "details": ":reg shows register contents (yanks, deletes, macros)<br/>Helps you paste intentionally"
+      "summary": "Global marks with uppercase letters",
+      "details": "mA sets a global mark<br/>With IdeaVim, global marks can sync with IDE bookmarks via :set ideamarks"
     },
     {
-      "summary": "Paste from a specific register with \"{reg}p",
-      "details": "\"ap pastes from register a<br/>\"0p pastes the last yank (register 0)"
+      "summary": "List marks with :marks",
+      "details": ":marks lists marks in the current buffer<br/>Great when juggling multiple locations"
     },
     {
-      "summary": "Use the system clipboard with \"+ (when available)",
-      "details": "\"+y copies to OS clipboard<br/>\"+p pastes from it<br/>Requires clipboard support/provider"
-    },
-    {
-      "summary": "Jump to where Insert mode last ended with `^",
-      "details": "`^ goes to the position where you last exited Insert mode<br/>Use gi to also re-enter Insert mode"
-    },
-    {
-      "summary": "Return to last insert location and enter Insert with gi",
-      "details": "gi jumps to the last insertion point and enters Insert mode<br/>Great after navigating around"
+      "summary": "Jump list navigation with Ctrl-o and Ctrl-i",
+      "details": "Ctrl-o goes back in jump history<br/>Ctrl-i goes forward"
     },
     {
       "summary": "Navigate the change list with g; and g,",
@@ -333,333 +481,253 @@
       "details": ":changes shows the change list for the buffer<br/>Pairs well with g; and g,"
     },
     {
-      "summary": "Use marks: m{a}, then 'a or `a",
-      "details": "ma sets mark a<br/>'a jumps to the line; `a jumps to exact column"
+      "summary": "Jump to the last change with `.",
+      "details": "`. jumps to the exact position of the last change<br/>' . jumps to the line of the last change"
     },
     {
-      "summary": "Use global marks with uppercase letters",
-      "details": "mA sets a global mark<br/>'A jumps there even from another file"
-    },
-    {
-      "summary": "See marks with :marks",
-      "details": ":marks lists marks in the current buffer<br/>Useful when juggling multiple points"
-    },
-    {
-      "summary": "Jump list navigation with Ctrl-o and Ctrl-i",
-      "details": "Ctrl-o goes back in jump history<br/>Ctrl-i goes forward"
-    },
-    {
-      "summary": "Reindent current line with ==",
-      "details": "== applies indentation rules for the filetype<br/>Good after editing braces"
-    },
-    {
-      "summary": "Reindent a paragraph with =ip",
-      "details": "=ip reindents the current paragraph/block<br/>Useful after pasting code"
-    },
-    {
-      "summary": "Reindent whole file with gg=G",
-      "details": "gg=G reindents the entire buffer<br/>Use carefully (depends on filetype indent rules)"
-    },
-    {
-      "summary": "Format text with gq{motion}",
-      "details": "gqap formats a paragraph using textwidth/formatoptions<br/>Great for comments and prose"
-    },
-    {
-      "summary": "Format (wrap) without changing as much with gw{motion}",
-      "details": "gw can be a gentler wrapper depending on settings<br/>Try gwap on a paragraph"
-    },
-    {
-      "summary": "Enable spelling with :set spell",
-      "details": ":set spell turns on spellcheck<br/>Use ]s/[s to jump misspellings"
-    },
-    {
-      "summary": "Fix spelling with z=",
-      "details": "z= shows suggestions for the word under cursor<br/>Choose a number to replace"
-    },
-    {
-      "summary": "Add word to dictionary with zg",
-      "details": "zg marks the word as good (adds to spellfile)<br/>zw marks as wrong"
-    },
-    {
-      "summary": "Split windows with :split and :vsplit",
-      "details": ":split horizontal :vsplit vertical<br/>Then move with Ctrl-w h/j/k/l"
-    },
-    {
-      "summary": "Move between windows with Ctrl-w h/j/k/l",
-      "details": "Ctrl-w then direction moves focus<br/>Ctrl-w w cycles windows"
-    },
-    {
-      "summary": "Close a window with :close",
-      "details": "Closes the current split window<br/>Does not necessarily wipe the buffer"
-    },
-    {
-      "summary": "Keep only one window with :only",
-      "details": "Closes other windows but keeps buffers loaded<br/>Nice for focus"
-    },
-    {
-      "summary": "Equalize splits with Ctrl-w =",
-      "details": "Makes all windows the same size<br/>Great after lots of resizing"
-    },
-    {
-      "summary": "Resize windows with Ctrl-w + / - / < / >",
-      "details": "Ctrl-w + and Ctrl-w - change height<br/>Ctrl-w < and Ctrl-w > change width"
-    },
-    {
-      "summary": "Use tabs with :tabnew, gt, and gT",
-      "details": ":tabnew opens a new tab page<br/>gt next tab gT previous tab"
-    },
-    {
-      "summary": "List buffers with :ls (or :buffers)",
-      "details": "Shows buffer numbers and status<br/>Use :b {N} to jump to one"
-    },
-    {
-      "category": "normal",
-      "summary": "Navigate buffers with :bnext and :bprev",
-      "details": ":bnext and :bprev cycle buffers<br/>:b# switches to alternate buffer"
-    },
-    {
-      "summary": "Close a buffer with :bd",
-      "details": ":bd deletes the buffer (unloads file)<br/>Your window stays open (usually shows another buffer)"
-    },
-    {
-      "summary": "Write all modified buffers with :wa",
-      "details": ":wa writes all changed buffers<br/>Good before running builds/tests"
-    },
-    {
-      "summary": "Run a shell command with :!cmd",
-      "details": ":!make or :!ls runs an external command<br/>Press Enter to return to Vim"
-    },
-    {
-      "summary": "Filter text through a shell command with !{motion}",
-      "details": "!{motion}{cmd} pipes text through cmd<br/>Example: !!sort filters the current line through sort<br/>Example: !ipfmt formats a paragraph via fmt"
-    },
-    {
-      "summary": "Insert a register in Insert mode with Ctrl-r",
-      "details": "In Insert mode: Ctrl-r {reg} inserts register contents<br/>Example: Ctrl-r % inserts current filename"
-    },
-    {
-      "summary": "Complete words in Insert mode with Ctrl-n/Ctrl-p",
-      "details": "Ctrl-n next completion Ctrl-p previous<br/>Works with words found in current buffers"
-    },
-    {
-      "summary": "Toggle line numbers with :set number",
-      "details": ":set number shows absolute line numbers<br/>:set nonumber hides them"
-    },
-    {
-      "summary": "Use relative numbers with :set relativenumber",
-      "details": "Shows distances from cursor line<br/>Great for motions like 5j/7k"
-    },
-    {
-      "summary": "Show whitespace with :set list",
-      "details": ":set list reveals tabs/trailing spaces (configured by listchars)<br/>:set nolist hides it"
-    },
-    {
-      "summary": "Strip trailing whitespace with a safe substitute",
-      "details": ":%s/\\s\\+$//e removes trailing spaces<br/>The e flag suppresses errors if no match"
-    },
-    {
-      "summary": "Use :set hlsearch and :set incsearch",
-      "details": "hlsearch highlights matches<br/>incsearch shows matches while typing /pattern"
+      "summary": "Jump to start/end of last change or yank with '[ and ']'",
+      "details": "'[ goes to the start, '] goes to the end<br/>Super helpful after big edits"
     },
     {
       "summary": "Record a macro with q{reg} and stop with q",
       "details": "qa starts recording into register a<br/>Press q again to stop"
     },
     {
-      "summary": "Replay a macro with @{reg}",
-      "details": "@a runs macro a once<br/>10@a runs it ten times"
+      "summary": "Replay macros with @{reg} and @@",
+      "details": "@a runs macro a once (10@a runs it ten times)<br/>@@ repeats the last executed macro"
     },
     {
-      "summary": "Repeat the last executed macro with @@",
-      "details": "@@ replays the most recent macro<br/>Great when stepping line-by-line"
+      "category": "ideavim",
+      "summary": "IdeaVim superpower: run IntelliJ actions with :action",
+      "details": ":action ReformatCode runs an IDE action<br/>Use :actionlist to browse actions by keyword"
     },
     {
-      "summary": "Append to a macro with qA",
-      "details": "qA appends new keystrokes to macro register a<br/>Useful for refining without re-recording"
+      "category": "ideavim",
+      "summary": "Search action IDs with :actionlist {query}",
+      "details": ":actionlist git filters actions matching “git”<br/>Great for finding IDs to map"
     },
     {
-      "summary": "Run a macro on selected lines with :normal @a",
-      "details": "Visual-select lines, then :normal @a<br/>Applies the macro to each selected line"
+      "category": "ideavim",
+      "summary": "Discover action IDs with :set trackactionids",
+      "details": ":set trackactionids shows the ID of actions you invoke in the IDE<br/>Then map them with <Action>(...)"
     },
     {
-      "summary": "Run a Normal command across a range with :normal",
-      "details": "Example: :'<,'>normal! I// adds // at start of each selected line<br/>Use :normal! to ignore mappings"
+      "category": "ideavim",
+      "summary": "Prefer <Action>(...) mappings in ~/.ideavimrc",
+      "details": "Example: map <leader>r <Action>(ReformatCode)<br/>Often more reliable than :action ...<CR>"
     },
     {
-      "summary": "Target matching lines with :global",
-      "details": ":g/pat/d deletes matching lines<br/>:g/pat/normal! {cmd} runs Normal keys on matches"
+      "category": "ideavim",
+      "summary": "Customize IdeaVim via ~/.ideavimrc",
+      "details": "Put your mappings/settings in ~/.ideavimrc<br/>Tip: you can also add: source ~/.vimrc"
     },
     {
-      "summary": "Target non-matching lines with :vglobal",
-      "details": ":v/pat/d deletes lines that do NOT match the pattern<br/>Useful for filtering lists"
+      "category": "ideavim",
+      "summary": "Reload your config with :source ~/.ideavimrc",
+      "details": "After editing ~/.ideavimrc, run :source ~/.ideavimrc<br/>Or run the IDE action “Reload VimRc” if available"
     },
     {
-      "summary": "Project edits across args list with :argdo",
-      "details": "Build args (e.g., :args **/*.py) then :argdo %s/old/new/ge | update<br/>Controlled multi-file changes"
+      "category": "ideavim",
+      "summary": "Resolve key conflicts in Editor | Vim settings",
+      "details": "In JetBrains settings, choose whether a shortcut is handled by Vim or the IDE<br/>Helps when a key “does nothing”"
     },
     {
-      "summary": "Run commands across loaded buffers with :bufdo",
-      "details": ":bufdo %s/old/new/ge | update applies per buffer<br/>Be careful: it touches everything loaded"
+      "summary": "Make search feel \"pro\" with :set options",
+      "details": ":set hlsearch incsearch shows matches while typing<br/>:set ignorecase smartcase makes case smarter<br/>:set wrapscan makes search wrap around file"
     },
     {
-      "summary": "Run a command in every window with :windo",
-      "details": ":windo set number applies to all windows<br/>Great for window-local options"
+      "summary": "Show pending keys with :set showcmd",
+      "details": ":set showcmd shows partial commands (like d2w) in the status bar<br/>Great while learning"
     },
     {
-      "summary": "Run a command in every tab page with :tabdo",
-      "details": ":tabdo windo set cursorline applies across tabs<br/>Useful for layout-wide changes"
+      "summary": "Show current mode with :set showmode",
+      "details": ":set showmode shows NORMAL/INSERT/VISUAL in the status bar<br/>Helpful when focus changes"
     },
     {
-      "summary": "Populate quickfix with :vimgrep",
-      "details": ":vimgrep /pattern/ **/* fills the quickfix list<br/>Then :copen and :cnext to jump matches"
+      "summary": "Make mappings feel snappy with :set timeoutlen",
+      "details": ":set timeoutlen=400 (example) reduces delay for multi-key mappings<br/>Useful with <leader> combos"
     },
     {
-      "summary": "Open/close quickfix with :copen and :cclose",
-      "details": ":copen shows results/errors<br/>:cclose closes the quickfix window"
+      "summary": "Control mapping timeouts with :set timeout",
+      "details": ":set timeout enables timeouts for mapped sequences<br/>If you hate delays, keep it on + tune timeoutlen"
     },
     {
-      "summary": "Navigate quickfix with :cnext/:cprev",
-      "details": ":cnext jumps to next item<br/>:cprev jumps to previous item"
+      "summary": "Tune what counts as a “word” with :set iskeyword",
+      "details": ":set iskeyword+=- treats foo-bar as one word for w/b/*<br/>Great for CSS, flags, kebab-case"
     },
     {
-      "summary": "Jump to first/last quickfix item with :cfirst/:clast",
-      "details": ":cfirst goes to first entry<br/>:clast goes to last entry"
+      "summary": "Teach % more pairs with :set matchpairs",
+      "details": ":set matchpairs+=<:> lets % jump between < and ><br/>Helpful for generics and angle pairs"
     },
     {
-      "summary": "Apply an Ex command per quickfix entry with :cdo",
-      "details": ":cdo {cmd} runs {cmd} for each quickfix item<br/>Often paired with | update to save changes"
+      "summary": "Change Ctrl-d/Ctrl-u jump size with :set scroll",
+      "details": ":set scroll=15 changes how many lines Ctrl-u/Ctrl-d scroll<br/>Tune for your monitor size"
     },
     {
-      "summary": "Use location list for window-local results",
-      "details": ":lopen opens the location list<br/>Use :lnext/:lprev to navigate"
+      "summary": "Keep context visible with :set scrolloff",
+      "details": ":set scrolloff=5 keeps 5 lines of context above/below the cursor<br/>Great for reading while moving"
     },
     {
-      "summary": "Run a command per location entry with :ldo",
-      "details": ":ldo {cmd} runs {cmd} for each location list item<br/>Like :cdo but per-window"
+      "summary": "Keep horizontal context with :set sidescrolloff",
+      "details": ":set sidescrolloff=8 keeps columns visible when moving sideways<br/>Nice for long lines"
     },
     {
-      "summary": "Edit command history in the command-line window with q:",
-      "details": "q: opens a buffer-like window for past :commands<br/>Edit, then press Enter to run"
+      "summary": "Stop beeps with :set visualbell",
+      "details": ":set visualbell prevents audible beeps on errors<br/>Better for focus"
     },
     {
-      "summary": "Edit search history with q/",
-      "details": "q/ opens search history<br/>Useful for fixing long regex searches"
+      "category": "ideavim",
+      "summary": "Toggle line numbers (and relative numbers)",
+      "details": ":set number / :set nonumber<br/>:set relativenumber / :set norelativenumber"
     },
     {
-      "summary": "Open command-line window while typing : with Ctrl-f",
-      "details": "While entering a :command, press Ctrl-f to edit it in a window<br/>(You can return with Enter)"
+      "category": "ideavim",
+      "summary": "Show invisible whitespace with :set list",
+      "details": ":set list shows tabs/trailing spaces (IDE display)<br/>:set nolist hides it"
     },
     {
-      "summary": "Repeat the last Ex command with @:",
-      "details": "@: re-runs the last :command<br/>Good for repeating a substitution or write command"
+      "category": "ideavim",
+      "summary": "Toggle soft wraps with :set wrap",
+      "details": ":set wrap enables soft wrap, :set nowrap disables it<br/>Pairs well with g0/g$/gj/gk"
     },
     {
-      "summary": "Use :execute to build dynamic commands",
-      "details": ":execute 'normal! ' . 'gg=G' builds and runs a command string<br/>Useful in scripts and mappings"
+      "category": "ideavim",
+      "summary": "Add a visual guide column with :set colorcolumn",
+      "details": ":set colorcolumn=80 adds a guide at 80 (or any column)<br/>Handy for style limits"
     },
     {
-      "summary": "Use :normal! to ignore mappings",
-      "details": ":normal! runs raw keystrokes<br/>Helps make macros/scripts predictable"
+      "category": "ideavim",
+      "summary": "Highlight the current line with :set cursorline",
+      "details": ":set cursorline highlights the cursor line<br/>:set nocursorline turns it off"
     },
     {
-      "summary": "Silence noisy commands with :silent",
-      "details": ":silent %s/old/new/g reduces output<br/>Great in batch operations"
+      "category": "ideavim",
+      "summary": "Default to system clipboard + IDE paste with :set clipboard",
+      "details": ":set clipboard=unnamedplus,ideaput<br/>unnamedplus uses + by default; ideaput uses IDE paste behavior"
     },
     {
-      "summary": "Preserve your jump list with :keepjumps",
-      "details": ":keepjumps {cmd} runs without adding to jump list<br/>Nice for big automated edits"
+      "category": "ideavim",
+      "summary": "Make :w run \"Save All\" with :set ideawrite",
+      "details": ":set ideawrite=all makes :w behave like :wa (Save All)<br/>Useful for format-on-save tooling"
     },
     {
-      "summary": "Preserve your search pattern with :keeppatterns",
-      "details": ":keeppatterns {cmd} avoids overwriting your last / search<br/>Helpful in scripts"
+      "category": "ideavim",
+      "summary": "Use IntelliJ Smart Join with :set ideajoin",
+      "details": ":set ideajoin makes J use the IDE's Smart Join<br/>Can be language-aware (strings, ifs, etc.)"
     },
     {
-      "summary": "Use persistent undo with :set undofile",
-      "details": "Keeps undo history across restarts<br/>Also set an undodir path in config"
+      "category": "ideavim",
+      "summary": "Sync global marks with IDE bookmarks via :set ideamarks",
+      "details": ":set ideamarks syncs Vim global marks (A-Z) with IDE bookmarks<br/>Use mA and `A across files"
     },
     {
-      "summary": "Time-travel undo with :earlier and :later",
-      "details": ":earlier 10m goes to the state 10 minutes ago<br/>:later 5m moves forward again"
+      "category": "ideavim",
+      "summary": "Control IDE refactor selections with :set idearefactormode",
+      "details": ":set idearefactormode=keep|select|visual controls mode after refactors select text<br/>Useful if refactors kick you into selection unexpectedly"
     },
     {
-      "summary": "Use :set paste when pasting problematic text",
-      "details": ":set paste disables autoindent side-effects while pasting<br/>Remember :set nopaste afterwards"
+      "summary": "List your mappings with :map",
+      "details": ":map shows mappings (Normal/Visual/Operator-pending)<br/>Great for debugging why a key behaves oddly"
     },
     {
-      "summary": "Increment/decrement numbers with Ctrl-a/Ctrl-x",
-      "details": "Ctrl-a increments number under cursor<br/>Ctrl-x decrements<br/>Counts work: 10 Ctrl-a"
+      "category": "plugins",
+      "summary": "Enable vim-surround (ys/cs/ds)",
+      "details": "In ~/.ideavimrc: Plug 'tpope/vim-surround' then set surround<br/>ysiw\" adds quotes, cs\"' swaps quotes, ds\" deletes quotes"
     },
     {
-      "summary": "Create folds with zf{motion}",
-      "details": "zfip folds a paragraph<br/>Folds help manage large files"
+      "category": "plugins",
+      "summary": "Enable vim-commentary for fast commenting (gcc/gc{motion})",
+      "details": "In ~/.ideavimrc: Plug 'tpope/vim-commentary' then set commentary<br/>gcc toggles line comment, gcap comments a paragraph, Visual gc comments selection"
     },
     {
-      "summary": "Open/close folds with zo/zc and toggle with za",
-      "details": "zo open fold zc close fold za toggle<br/>Use zR/zM to open/close all"
+      "category": "plugins",
+      "summary": "Enable vim-sneak for 2-char jumps (s{2chars})",
+      "details": "In ~/.ideavimrc: Plug 'justinmk/vim-sneak'<br/>s{2} forward, S{2} backward, ; and , repeat"
     },
     {
-      "summary": "Open all / close all folds with zR and zM",
-      "details": "zR opens all folds<br/>zM closes all folds"
+      "category": "plugins",
+      "summary": "Enable EasyMotion for labeled jumps",
+      "details": "Install IdeaVim-EasyMotion + AceJump plugins<br/>Then: Plug 'easymotion/vim-easymotion' and set easymotion"
     },
     {
-      "summary": "Enable syntax folds with :set foldmethod=syntax",
-      "details": "Uses syntax rules to create folds<br/>Depends on filetype/syntax support"
+      "category": "plugins",
+      "summary": "EasyMotion: jump to char targets with <leader><leader>f{c}",
+      "details": "Use <leader><leader>f{char} to jump via labels<br/>Great alternative to repeated f;;; sequences"
     },
     {
-      "summary": "Save and restore a session with :mksession",
-      "details": ":mksession! Session.vim saves layout<br/>:source Session.vim restores tabs/windows/buffers"
+      "category": "plugins",
+      "summary": "Enable Which-Key to discover keybindings",
+      "details": "Install the “Which-Key” JetBrains plugin<br/>Then add: set which-key (in ~/.ideavimrc)"
     },
     {
-      "summary": "Save/restore views (cursor/folds) with :mkview/:loadview",
-      "details": ":mkview stores view data<br/>:loadview restores it for the file"
+      "category": "plugins",
+      "summary": "Enable quickscope to make f/F targets pop",
+      "details": "Install the “IdeaVim-Quickscope” JetBrains plugin<br/>Then add: set quickscope (in ~/.ideavimrc)"
     },
     {
-      "summary": "Run external grep into quickfix with :grep (config-dependent)",
-      "details": ":grep uses 'grepprg' (often set to grep/rg)<br/>After :grep, use :copen and :cnext"
+      "category": "plugins",
+      "summary": "Enable argtextobj for function arguments (ia/aa)",
+      "details": "Plug 'vim-scripts/argtextobj.vim' then set argtextobj<br/>cia changes inner argument, daa deletes an argument (handles commas)"
     },
     {
-      "summary": "Use :make to fill quickfix with build errors",
-      "details": ":make runs makeprg and populates quickfix<br/>Then :cnext to jump errors"
+      "category": "plugins",
+      "summary": "Enable FunctionTextObj for functions (if/af)",
+      "details": "Install the “Vim FunctionTextObj” JetBrains plugin<br/>Then add: set functiontextobj<br/>dif deletes inside function, yaf yanks around function"
     },
     {
-      "summary": "Customize builds with :set makeprg",
-      "details": "Example: :set makeprg=pytest\\ -q<br/>Then :make runs that command"
+      "category": "plugins",
+      "summary": "Enable Mini.ai for “any quotes/brackets” objects",
+      "details": "In ~/.ideavimrc: set mini-ai<br/>ciq changes inside any quotes, dab deletes around any bracket pair"
     },
     {
-      "summary": "Diff files with :diffsplit",
-      "details": ":diffsplit {file} opens a diff view<br/>Use ]c/[c to jump changes"
+      "category": "plugins",
+      "summary": "Enable AnyObject for language-aware text objects",
+      "details": "Install the “Vim AnyObject” JetBrains plugin<br/>Then add: set anyobject<br/>Adds objects like arguments/classes/loops/comments (language-aware)"
     },
     {
-      "summary": "Jump between diff hunks with ]c and [c",
-      "details": "]c next diff chunk [c previous<br/>Works in diff mode"
+      "category": "plugins",
+      "summary": "Enable ReplaceWithRegister for safer replacements",
+      "details": "In ~/.ideavimrc: Plug 'vim-scripts/ReplaceWithRegister' then set ReplaceWithRegister<br/>Replaces text with a register without clobbering your yanks"
     },
     {
-      "summary": "Use diffget/diffput with do and dp",
-      "details": "do = diffget (take other side)<br/>dp = diffput (push to other side)<br/>In diff mode only"
+      "category": "plugins",
+      "summary": "Enable Switch (toggle true/false, on/off, etc.)",
+      "details": "Install the “Vim Switch” JetBrains plugin<br/>Then add: set switch<br/>Use :Switch on the word under cursor to cycle alternatives"
     },
     {
-      "summary": "Create Insert-mode abbreviations with :iabbrev",
-      "details": ":iabbrev teh the fixes a common typo while typing<br/>Abbreviations expand in Insert mode"
+      "category": "plugins",
+      "summary": "Enable vim-exchange to swap two regions quickly",
+      "details": "Plug 'tommcdo/vim-exchange' then set exchange<br/>Use cx{motion} then cx{motion} to swap (see plugin docs)"
     },
     {
-      "summary": "Create safe mappings with :nnoremap",
-      "details": "Prefer noremap variants to avoid recursive mappings<br/>Example: :nnoremap <leader>w :w<CR>"
+      "category": "plugins",
+      "summary": "Enable Dial for advanced increment/decrement",
+      "details": "Install the “Vim Dial” JetBrains plugin<br/>Then add: set dial<br/>Cycle booleans/dates/operators, not just numbers"
     },
     {
-      "summary": "Use a leader key for custom shortcuts",
-      "details": "Set mapleader (often space)<br/>Then map <leader> combos to frequent actions"
+      "category": "plugins",
+      "summary": "Enable highlightedyank to see what you copied",
+      "details": "Plug 'machakann/vim-highlightedyank' then set highlightedyank<br/>Briefly highlights yanked text for better feedback"
     },
     {
-      "summary": "Show invisible characters via listchars",
-      "details": "Configure listchars and toggle with :set list<br/>Helps spot tabs and trailing spaces"
+      "category": "plugins",
+      "summary": "Enable textobj-entire (ie/ae for whole file)",
+      "details": "Enable: set textobj-entire<br/>vae selects whole file, die deletes whole file, cie changes whole file"
     },
     {
-      "summary": "Use :set formatoptions to control comment wrapping",
-      "details": "formatoptions influences gq behavior and auto-commenting<br/>Tune it per filetype if needed"
+      "category": "plugins",
+      "summary": "Enable indent-object for indent-based blocks",
+      "details": "Plug 'michaeljsmith/vim-indent-object' then set textobj-indent<br/>Lets you operate on blocks by indentation (handy in Python/YAML)"
     },
     {
-      "summary": "Use K to open keyword help (man/keywordprg)",
-      "details": "K runs 'keywordprg' on word under cursor (often man)<br/>Depends on filetype and environment"
+      "category": "plugins",
+      "summary": "Enable matchit to make % jump keywords too",
+      "details": "Enable: set matchit (or packadd matchit)<br/>Extends % beyond brackets (if/endif, do/end, etc. by language)"
+    },
+    {
+      "category": "plugins",
+      "summary": "Enable multiple-cursors (parallel edits)",
+      "details": "Enable: set multiple-cursors (and configure mappings)<br/>Select next occurrences and edit in parallel"
     }
   ]
 }

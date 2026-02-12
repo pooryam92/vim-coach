@@ -10,3 +10,4 @@
 - Startup activity to show tips when opening projects
 - Comprehensive library of Vim commands and tips
 - Support for remote tip sources
+- Action to refetch tips from remote source for updating the local tip library

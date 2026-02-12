@@ -31,11 +31,11 @@ class VimTipNotifier(
         val detailsHtml = tip.details
         val content = buildString {
             append("<html>")
-            append("<div style=\"margin:6px 0 4px 0; line-height:1.45;\">")
+            append("<div>")
             append("<b>")
             append(summaryHtml)
             append("</b>")
-            append("<div style=\"margin-top:6px;\">")
+            append("<div style=\"margin-top:11px;\">")
             append(detailsHtml)
             append("</div>")
             append("</div>")
@@ -52,9 +52,9 @@ class VimTipNotifier(
     }
 
     companion object {
-        private const val APP_TITLE = "Vim Coach"
+        const val APP_TITLE = "Vim Coach"
         const val NOTIFICATION_GROUP_ID = "Vim Tips"
-        private const val TIP_NEXT_ACTION_KEY = "tipNextAction"
-        private val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", VimTipNotifier::class.java)
+        const val TIP_NEXT_ACTION_KEY = "tipNextAction"
+        val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", VimTipNotifier::class.java)
     }
 }
