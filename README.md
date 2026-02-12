@@ -6,6 +6,9 @@
 
 An IntelliJ Platform plugin that helps you master Vim keybindings through interactive tips and coaching. Learn Vim commands while coding!
 
+<!-- Plugin description -->
+Vim Coach is an IntelliJ Platform plugin designed to help developers learn and master Vim keybindings. The plugin provides bite-sized Vim tips through notifications, making it easy to discover and practice new commands while you code. Whether you're a Vim beginner or looking to expand your knowledge, Vim Coach helps you level up your editing skills one tip at a time.
+
 ## Features
 
 - 🎯 **Smart Vim Tips**: Get contextual Vim tips displayed as notifications
@@ -13,17 +16,6 @@ An IntelliJ Platform plugin that helps you master Vim keybindings through intera
 - 🚀 **Startup Tips**: See a Vim tip when you start your IDE
 - 📚 **Comprehensive Library**: Hundreds of Vim commands covering navigation, editing, searching, and more
 - 🔄 **Remote Updates**: Tips can be loaded from remote sources for fresh content
-
-<!-- Plugin description -->
-Vim Coach is an IntelliJ Platform plugin designed to help developers learn and master Vim keybindings. The plugin provides bite-sized Vim tips through notifications, making it easy to discover and practice new commands while you code. Whether you're a Vim beginner or looking to expand your knowledge, Vim Coach helps you level up your editing skills one tip at a time.
-
-Features include:
-- Random Vim tip display via keyboard shortcut (Shift+T, T)
-- Startup tips when opening projects
-- Extensive library of Vim commands and techniques
-- Support for remote tip sources for up-to-date content
-
-<!-- Plugin description end -->
 
 ## Usage
 
@@ -33,6 +25,7 @@ Once installed, you can:
 2. **Learn at Startup**: Tips will appear automatically when you open a project 
 3. **Browse Tips**: Each tip includes a summary and detailed explanation with examples
 4. **Refetch Tips from Remote**: Use the "Refetch Vim Tips from Remote" action to update your tips library from the remote source
+<!-- Plugin description end -->
 
 ## Contributing
 
