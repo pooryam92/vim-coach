@@ -6,13 +6,11 @@
 
 An IntelliJ Platform plugin that helps you master Vim keybindings through interactive tips and coaching. Learn Vim commands while coding!
 
-> **Note:** For setup and deployment steps, see [SETUP_STEPS.md](./SETUP_STEPS.md)
-
 ## Features
 
 - 🎯 **Smart Vim Tips**: Get contextual Vim tips displayed as notifications
 - ⌨️ **Keyboard Shortcut**: Press `Shift+T` twice to show a random Vim tip
-- 🚀 **Startup Tips**: Optionally see a Vim tip when you start your IDE
+- 🚀 **Startup Tips**: See a Vim tip when you start your IDE
 - 📚 **Comprehensive Library**: Hundreds of Vim commands covering navigation, editing, searching, and more
 - 🔄 **Remote Updates**: Tips can be loaded from remote sources for fresh content
 
@@ -32,7 +30,7 @@ Features include:
 Once installed, you can:
 
 1. **Show a Vim Tip on Demand**: Press `Shift+T` twice to display a random Vim tip
-2. **Learn at Startup**: Tips will appear automatically when you open a project (configurable)
+2. **Learn at Startup**: Tips will appear automatically when you open a project 
 3. **Browse Tips**: Each tip includes a summary and detailed explanation with examples
 4. **Refetch Tips from Remote**: Use the "Refetch Vim Tips from Remote" action to update your tips library from the remote source
 
