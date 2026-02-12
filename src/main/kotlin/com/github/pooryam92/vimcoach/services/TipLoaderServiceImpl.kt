@@ -17,4 +17,11 @@ class TipLoaderServiceImpl(project: Project) : TipLoaderService {
             tipService.saveTips(tips)
         }
     }
+
+    override fun refetchTips() {
+        val tips = remoteSource.loadTips()
+        if (!tips.isNullOrEmpty()) {
+            tipService.saveTips(tips)
+        }
+    }
 }
