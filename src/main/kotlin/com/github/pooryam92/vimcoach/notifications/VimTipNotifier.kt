@@ -52,9 +52,9 @@ class VimTipNotifier(
     }
 
     companion object {
-        private const val APP_TITLE = "Vim Coach"
+        const val APP_TITLE = "Vim Coach"
         const val NOTIFICATION_GROUP_ID = "Vim Tips"
-        private const val TIP_NEXT_ACTION_KEY = "tipNextAction"
-        private val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", VimTipNotifier::class.java)
+        const val TIP_NEXT_ACTION_KEY = "tipNextAction"
+        val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", VimTipNotifier::class.java)
     }
 }

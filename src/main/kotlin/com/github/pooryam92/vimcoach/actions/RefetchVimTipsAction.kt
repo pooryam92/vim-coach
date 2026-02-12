@@ -1,8 +1,9 @@
 package com.github.pooryam92.vimcoach.actions
 
 import com.github.pooryam92.vimcoach.MyBundle
+import com.github.pooryam92.vimcoach.notifications.VimTipNotifier
 import com.github.pooryam92.vimcoach.services.TipLoaderService
-import com.intellij.notification.NotificationGroupManager
+import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -42,10 +43,12 @@ class RefetchVimTipsAction : AnAction() {
     }
 
     private fun showNotification(project: com.intellij.openapi.project.Project, content: String, type: NotificationType) {
-        NotificationGroupManager.getInstance()
-            .getNotificationGroup("Vim Tips")
-            .createNotification(content, type)
-            .notify(project)
+        Notification(
+            VimTipNotifier.NOTIFICATION_GROUP_ID,
+            VimTipNotifier.APP_TITLE,
+            content,
+            type
+        ).notify(project)
     }
 }
 
