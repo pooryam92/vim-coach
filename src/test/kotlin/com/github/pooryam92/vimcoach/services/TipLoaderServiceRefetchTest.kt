@@ -1,5 +1,7 @@
 package com.github.pooryam92.vimcoach.services
 
+import com.github.pooryam92.vimcoach.services.source.TipSourceLoadResult
+import com.github.pooryam92.vimcoach.services.source.TipSourceService
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.testFramework.registerServiceInstance
@@ -15,7 +17,7 @@ class TipLoaderServiceRefetchTest : BasePlatformTestCase() {
             VimTip("new-summary-1", "new-details-1"),
             VimTip("new-summary-2", "new-details-2")
         )
-        val fakeRemote = FakeRemoteTipSource(RemoteTipLoadResult.Success(remoteTips))
+        val fakeRemote = FakeRemoteTipSource(TipSourceLoadResult.Success(remoteTips))
         val loader = registerLoader(fakeRemote)
 
         // Act
@@ -43,7 +45,7 @@ class TipLoaderServiceRefetchTest : BasePlatformTestCase() {
         val updatedTips = listOf(
             VimTip("updated-1", "updated-details-1")
         )
-        val fakeRemote = FakeRemoteTipSource(RemoteTipLoadResult.Success(updatedTips))
+        val fakeRemote = FakeRemoteTipSource(TipSourceLoadResult.Success(updatedTips))
         val loader = registerLoader(fakeRemote)
 
         // Act
@@ -63,7 +65,7 @@ class TipLoaderServiceRefetchTest : BasePlatformTestCase() {
         val initialTips = listOf(VimTip("existing", "existing-details"))
         tipService.saveTips(initialTips)
 
-        val fakeRemote = FakeRemoteTipSource(RemoteTipLoadResult.Failure("connection timeout"))
+        val fakeRemote = FakeRemoteTipSource(TipSourceLoadResult.Failure("connection timeout"))
         val loader = registerLoader(fakeRemote)
 
         // Act
@@ -83,7 +85,7 @@ class TipLoaderServiceRefetchTest : BasePlatformTestCase() {
         val initialTips = listOf(VimTip("existing", "existing-details"))
         tipService.saveTips(initialTips)
 
-        val fakeRemote = FakeRemoteTipSource(RemoteTipLoadResult.Empty)
+        val fakeRemote = FakeRemoteTipSource(TipSourceLoadResult.Empty)
         val loader = registerLoader(fakeRemote)
 
         // Act
@@ -98,20 +100,20 @@ class TipLoaderServiceRefetchTest : BasePlatformTestCase() {
     }
 
     private class FakeRemoteTipSource(
-        private val result: RemoteTipLoadResult
-    ) : RemoteTipSourceService {
+        private val result: TipSourceLoadResult
+    ) : TipSourceService {
         var loadCalls = 0
             private set
 
-        override fun loadTips(): RemoteTipLoadResult {
+        override fun loadTips(): TipSourceLoadResult {
             loadCalls += 1
             return result
         }
     }
 
-    private fun registerLoader(fakeRemote: RemoteTipSourceService): TipLoaderService {
+    private fun registerLoader(fakeRemote: TipSourceService): TipLoaderService {
         project.registerServiceInstance(
-            RemoteTipSourceService::class.java,
+            TipSourceService::class.java,
             fakeRemote
         )
         val loader = TipLoaderServiceImpl(project)

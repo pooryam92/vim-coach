@@ -15,8 +15,8 @@
             serviceInterface="com.github.pooryam92.vimcoach.services.VimTipService"
             serviceImplementation="com.github.pooryam92.vimcoach.services.VimTipServiceImpl" />
         <projectService
-            serviceInterface="com.github.pooryam92.vimcoach.services.RemoteTipSourceService"
-            serviceImplementation="com.github.pooryam92.vimcoach.services.RemoteTipSourceServiceImpl" />
+            serviceInterface="com.github.pooryam92.vimcoach.services.source.TipSourceService"
+            serviceImplementation="com.github.pooryam92.vimcoach.services.source.TipSourceServiceImpl" />
         <projectService
             serviceInterface="com.github.pooryam92.vimcoach.services.TipLoaderService"
             serviceImplementation="com.github.pooryam92.vimcoach.services.TipLoaderServiceImpl" />
