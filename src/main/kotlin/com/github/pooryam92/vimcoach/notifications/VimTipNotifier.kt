@@ -1,10 +1,8 @@
 package com.github.pooryam92.vimcoach.notifications
 
-import com.github.pooryam92.vimcoach.MyBundle
 import com.github.pooryam92.vimcoach.services.VimTip
 import com.github.pooryam92.vimcoach.services.VimTipService
 import com.intellij.notification.Notification
-import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.IconLoader
@@ -19,10 +17,6 @@ class VimTipNotifier(
 
     private fun showTip(project: Project, tip: VimTip) {
         val notification = createNotification(tip)
-        notification.addAction(NotificationAction.createSimple(MyBundle.message(TIP_NEXT_ACTION_KEY)) {
-            notification.expire()
-            showTip(project, tipService.getRandomTip())
-        })
         notification.notify(project)
     }
 
@@ -35,7 +29,7 @@ class VimTipNotifier(
             append("<b>")
             append(summaryHtml)
             append("</b>")
-            append("<div style=\"margin-top:11px;\">")
+            append("<div")
             append(detailsHtml)
             append("</div>")
             append("</div>")
@@ -54,7 +48,6 @@ class VimTipNotifier(
     companion object {
         const val APP_TITLE = "Vim Coach"
         const val NOTIFICATION_GROUP_ID = "Vim Tips"
-        const val TIP_NEXT_ACTION_KEY = "tipNextAction"
         val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", VimTipNotifier::class.java)
     }
 }

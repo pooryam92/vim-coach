@@ -11,11 +11,11 @@ Vim Coach is an IntelliJ Platform plugin designed to help developers learn and m
 
 ## Features
 
-- 🎯 **Smart Vim Tips**: Get contextual Vim tips displayed as notifications
-- ⌨️ **Keyboard Shortcut**: Press `Shift+T` twice to show a random Vim tip
-- 🚀 **Startup Tips**: See a Vim tip when you start your IDE
-- 📚 **Comprehensive Library**: Hundreds of Vim commands covering navigation, editing, searching, and more
-- 🔄 **Remote Updates**: Tips can be loaded from remote sources for fresh content
+-  **Smart Vim Tips**: Get contextual Vim tips displayed as notifications
+-  **Keyboard Shortcut**: Press `Shift+T` twice to show a random Vim tip
+-  **Startup Tips**: See a Vim tip when you start your IDE
+-  **Comprehensive Library**: Hundreds of Vim commands covering navigation, editing, searching, and more
+-  **Remote Updates**: Tips can be loaded from remote sources for fresh content
 
 ## Usage
 
@@ -25,7 +25,18 @@ Once installed, you can:
 2. **Learn at Startup**: Tips will appear automatically when you open a project 
 3. **Browse Tips**: Each tip includes a summary and detailed explanation with examples
 4. **Refetch Tips from Remote**: Use the "Refetch Vim Tips from Remote" action to update your tips library from the remote source
+
+
 <!-- Plugin description end -->
+
+### Development: load tips from local file
+
+Source selection is done with Gradle run tasks:
+
+- `./gradlew runIde` (default remote mode)
+- `./gradlew runIdeWithFileTips` (forces local file mode)
+
+In `file` mode, the loader uses only `vimcoach.tip.file.path` (set by the run task).
 
 ## Contributing
 
