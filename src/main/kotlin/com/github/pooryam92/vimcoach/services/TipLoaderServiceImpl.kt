@@ -7,21 +7,24 @@ class TipLoaderServiceImpl(project: Project) : TipLoaderService {
     private val tipService = project.service<VimTipService>()
     private val remoteSource = project.service<RemoteTipSourceService>()
 
-    override fun loadTips() {
+    override fun loadTips(): TipLoadResult {
         if (tipService.countTips() > 0) {
-            return
+            return TipLoadResult.SkippedAlreadyLoaded
         }
-
-        val tips = remoteSource.loadTips()
-        if (!tips.isNullOrEmpty()) {
-            tipService.saveTips(tips)
-        }
+        return fetchAndSave()
     }
 
-    override fun refetchTips() {
-        val tips = remoteSource.loadTips()
-        if (!tips.isNullOrEmpty()) {
-            tipService.saveTips(tips)
+    override fun refetchTips(): TipLoadResult = fetchAndSave()
+
+    private fun fetchAndSave(): TipLoadResult {
+        return when (val remoteResult = remoteSource.loadTips()) {
+            is RemoteTipLoadResult.Success -> {
+                tipService.saveTips(remoteResult.tips)
+                TipLoadResult.Updated(remoteResult.tips.size)
+            }
+
+            RemoteTipLoadResult.Empty -> TipLoadResult.NoData
+            is RemoteTipLoadResult.Failure -> TipLoadResult.Failed(remoteResult.message, remoteResult.cause)
         }
     }
 }

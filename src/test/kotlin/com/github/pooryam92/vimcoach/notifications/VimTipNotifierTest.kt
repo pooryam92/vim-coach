@@ -19,4 +19,18 @@ class VimTipNotifierTest : BasePlatformTestCase() {
         assertTrue(notification.content.contains("Move by word with w/b/e."))
         assertTrue(notification.content.contains("w next word start."))
     }
+
+    fun testCreateNotificationPreservesHtmlFromTipContent() {
+        val notifier = VimTipNotifier(VimTipServiceImpl())
+        val tip = VimTip(
+            summary = "<code>w</code> motion",
+            details = "line1<br/><em>line2</em>"
+        )
+
+        val notification = notifier.createNotification(tip)
+
+        assertTrue(notification.content.contains("<code>w</code> motion"))
+        assertTrue(notification.content.contains("line1<br/><em>line2</em>"))
+        assertTrue(notification.content.contains("<em>line2</em>"))
+    }
 }
