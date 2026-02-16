@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.notifications
 
+import com.github.pooryam92.vimcoach.MyBundle
 import com.github.pooryam92.vimcoach.services.VimTip
 import com.github.pooryam92.vimcoach.services.VimTipServiceImpl
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
@@ -13,11 +14,13 @@ class VimTipNotifierTest : BasePlatformTestCase() {
             details = "w next word start."
         )
 
-        val notification = notifier.createNotification(tip)
+        val notification = notifier.createNotification(project, tip)
 
         assertEquals("Vim Coach", notification.title)
         assertTrue(notification.content.contains("Move by word with w/b/e."))
-        assertTrue(notification.content.contains("w next word start."))
+        assertFalse(notification.content.contains("w next word start."))
+        assertEquals(1, notification.actions.size)
+        assertEquals(MyBundle.message("tipMoreInfoAction"), notification.actions.single().templateText)
     }
 
     fun testCreateNotificationPreservesHtmlFromTipContent() {
@@ -27,10 +30,10 @@ class VimTipNotifierTest : BasePlatformTestCase() {
             details = "line1<br/><em>line2</em>"
         )
 
-        val notification = notifier.createNotification(tip)
+        val notification = notifier.createNotification(project, tip)
 
         assertTrue(notification.content.contains("<code>w</code> motion"))
-        assertTrue(notification.content.contains("line1<br/><em>line2</em>"))
-        assertTrue(notification.content.contains("<em>line2</em>"))
+        assertFalse(notification.content.contains("line1<br/><em>line2</em>"))
+        assertEquals(MyBundle.message("tipMoreInfoAction"), notification.actions.single().templateText)
     }
 }
