@@ -1,8 +1,6 @@
 package com.github.pooryam92.vimcoach.config
 
 object VimTipConfig {
-    const val REMOTE_URL =
-        "https://raw.githubusercontent.com/pooryam92/vim-coach/main/tips/vim_tips.json"
-    const val CONNECT_TIMEOUT_MS = 1000
-    const val READ_TIMEOUT_MS = 1500
+    const val TIPS_FILE_PATH_PROPERTY = "vimcoach.tip.file.path"
+    const val GITHUB_API_URL = "https://api.github.com/repos/pooryam92/vim-coach/contents/tips/vim_tips.json"
 }

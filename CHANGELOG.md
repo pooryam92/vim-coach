@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+### Added
+
+- Conditional downloads via GitHub API
+- Automatic startup update checks
+
 ## [0.1.3-beta] - 2026-02-12
 
 ### Added

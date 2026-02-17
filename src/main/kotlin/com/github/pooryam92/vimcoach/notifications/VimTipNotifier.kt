@@ -18,12 +18,17 @@ class VimTipNotifier(
     }
 
     private fun showTip(project: Project, tip: VimTip) {
+        val notification = createNotificationWithActions(project, tip)
+        notification.notify(project)
+    }
+
+    internal fun createNotificationWithActions(project: Project, tip: VimTip): Notification {
         val notification = createNotification(tip)
-        notification.addAction(NotificationAction.createSimple(MyBundle.message(TIP_NEXT_ACTION_KEY)) {
+        notification.addAction(NotificationAction.createSimple(TIP_NEXT_ACTION_TEXT) {
             notification.expire()
             showTip(project, tipService.getRandomTip())
         })
-        notification.notify(project)
+        return notification
     }
 
     internal fun createNotification(tip: VimTip): Notification {
@@ -35,7 +40,7 @@ class VimTipNotifier(
             append("<b>")
             append(summaryHtml)
             append("</b>")
-            append("<div style=\"margin-top:11px;\">")
+            append("<div style=\"margin-top:12px;margin-bottom:12px;\">")
             append(detailsHtml)
             append("</div>")
             append("</div>")
@@ -52,9 +57,9 @@ class VimTipNotifier(
     }
 
     companion object {
-        const val APP_TITLE = "Vim Coach"
-        const val NOTIFICATION_GROUP_ID = "Vim Tips"
-        const val TIP_NEXT_ACTION_KEY = "tipNextAction"
+        val APP_TITLE: String = MyBundle.message("appTitle")
+        val NOTIFICATION_GROUP_ID: String = MyBundle.message("notificationGroupId")
+        val TIP_NEXT_ACTION_TEXT: String = MyBundle.message("tipNextAction")
         val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", VimTipNotifier::class.java)
     }
 }
