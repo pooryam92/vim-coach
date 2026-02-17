@@ -9,23 +9,44 @@ class TipLoaderServiceImpl(project: Project) : TipLoaderService {
     private val tipService = project.service<VimTipService>()
     private val tipSource = project.service<TipSourceService>()
 
-    override fun loadTips(): TipLoadResult {
-        if (tipService.countTips() > 0) {
-            return TipLoadResult.SkippedAlreadyLoaded
-        }
-        return fetchAndSave()
+    override fun refetchTips(): TipLoadResult {
+        return fetchAndSave(conditional = false)
     }
 
-    override fun refetchTips(): TipLoadResult = fetchAndSave()
+    override fun checkForUpdates(): TipLoadResult {
+        if (tipService.countTips() == 0) {
+            return fetchAndSave(conditional = false)
+        }
+        
+        return fetchAndSave(conditional = true)
+    }
 
-    private fun fetchAndSave(): TipLoadResult {
-        return when (val sourceResult = tipSource.loadTips()) {
+    private fun fetchAndSave(conditional: Boolean): TipLoadResult {
+        val sourceResult = if (conditional) {
+            val metadata = tipService.getMetadata()
+            tipSource.loadTipsConditional(metadata)
+        } else {
+            tipSource.loadTips()
+        }
+
+        return when (sourceResult) {
             is TipSourceLoadResult.Success -> {
                 tipService.saveTips(sourceResult.tips)
+                tipService.saveMetadata(sourceResult.metadata)
                 TipLoadResult.Updated(sourceResult.tips.size)
             }
-
+            
+            TipSourceLoadResult.NotModified -> {
+                val currentMetadata = tipService.getMetadata()
+                val updatedMetadata = currentMetadata.copy(
+                    lastFetchTimestamp = System.currentTimeMillis()
+                )
+                tipService.saveMetadata(updatedMetadata)
+                TipLoadResult.NotModified
+            }
+            
             TipSourceLoadResult.Empty -> TipLoadResult.NoData
+            
             is TipSourceLoadResult.Failure -> TipLoadResult.Failed(sourceResult.message, sourceResult.cause)
         }
     }

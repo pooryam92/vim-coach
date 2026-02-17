@@ -1,13 +1,18 @@
 package com.github.pooryam92.vimcoach.services.source
 
+import com.github.pooryam92.vimcoach.services.TipMetadata
 import com.github.pooryam92.vimcoach.services.VimTip
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
 class TipSourceServiceTest : BasePlatformTestCase() {
 
     fun testUsesRemoteSourceByDefault() {
-        val fakeRemote = FakeRemoteTipSource(TipSourceLoadResult.Success(listOf(VimTip("r", "d"))))
-        val fakeFile = FakeFileTipSource(TipSourceLoadResult.Success(listOf(VimTip("f", "d"))))
+        val fakeRemote = FakeRemoteTipSource(
+            TipSourceLoadResult.Success(listOf(VimTip("r", "d")), TipMetadata())
+        )
+        val fakeFile = FakeFileTipSource(
+            TipSourceLoadResult.Success(listOf(VimTip("f", "d")), TipMetadata())
+        )
         val sourceService = registerSourceService(fakeRemote, fakeFile, { null })
 
         val result = sourceService.loadTips()
@@ -18,8 +23,12 @@ class TipSourceServiceTest : BasePlatformTestCase() {
     }
 
     fun testUsesFileSourceWhenModeIsFile() {
-        val fakeRemote = FakeRemoteTipSource(TipSourceLoadResult.Success(listOf(VimTip("r", "d"))))
-        val fakeFile = FakeFileTipSource(TipSourceLoadResult.Success(listOf(VimTip("f", "d"))))
+        val fakeRemote = FakeRemoteTipSource(
+            TipSourceLoadResult.Success(listOf(VimTip("r", "d")), TipMetadata())
+        )
+        val fakeFile = FakeFileTipSource(
+            TipSourceLoadResult.Success(listOf(VimTip("f", "d")), TipMetadata())
+        )
         val sourceService = registerSourceService(fakeRemote, fakeFile, { "file" })
 
         val result = sourceService.loadTips()
@@ -44,6 +53,11 @@ class TipSourceServiceTest : BasePlatformTestCase() {
             private set
 
         override fun loadTips(): TipSourceLoadResult {
+            loadCalls += 1
+            return result
+        }
+
+        override fun loadTipsConditional(metadata: TipMetadata): TipSourceLoadResult {
             loadCalls += 1
             return result
         }

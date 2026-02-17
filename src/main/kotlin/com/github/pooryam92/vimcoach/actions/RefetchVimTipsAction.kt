@@ -40,6 +40,14 @@ class RefetchVimTipsAction : AnAction() {
                 )
             }
 
+            TipLoadResult.NotModified -> {
+                showNotification(
+                    project,
+                    MyBundle.message("refetchTipsNotModified"),
+                    NotificationType.INFORMATION
+                )
+            }
+
             TipLoadResult.NoData -> {
                 showNotification(
                     project,
@@ -53,14 +61,6 @@ class RefetchVimTipsAction : AnAction() {
                     project,
                     MyBundle.message("refetchTipsError", result.message),
                     NotificationType.ERROR
-                )
-            }
-
-            TipLoadResult.SkippedAlreadyLoaded -> {
-                showNotification(
-                    project,
-                    MyBundle.message("refetchTipsNoData"),
-                    NotificationType.WARNING
                 )
             }
         }

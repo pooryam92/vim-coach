@@ -2,6 +2,7 @@ package com.github.pooryam92.vimcoach.services.source
 
 import com.github.pooryam92.vimcoach.config.VimTipConfig
 import com.github.pooryam92.vimcoach.services.TipJsonParser
+import com.github.pooryam92.vimcoach.services.TipMetadata
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -16,7 +17,7 @@ class FileTipSourceServiceImpl(
                 if (tips.isEmpty()) {
                     TipSourceLoadResult.Empty
                 } else {
-                    TipSourceLoadResult.Success(tips)
+                    TipSourceLoadResult.Success(tips, TipMetadata())
                 }
             }
         } catch (e: Exception) {

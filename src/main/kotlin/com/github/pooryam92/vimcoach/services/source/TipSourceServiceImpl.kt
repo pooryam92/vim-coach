@@ -1,14 +1,24 @@
 package com.github.pooryam92.vimcoach.services.source
 
+import com.github.pooryam92.vimcoach.services.TipMetadata
+
 class TipSourceServiceImpl(
     private val remoteTipSource: RemoteTipSourceService = RemoteTipSourceServiceImpl(),
     private val fileTipSource: FileTipSourceService = FileTipSourceServiceImpl(),
     private val sourceModeProvider: () -> String? = { System.getProperty(TIP_SOURCE_MODE_PROPERTY) }
 ) : TipSourceService {
+    
     override fun loadTips(): TipSourceLoadResult {
         return when (resolveSourceMode()) {
             TipSourceMode.FILE -> fileTipSource.loadTips()
             TipSourceMode.REMOTE -> remoteTipSource.loadTips()
+        }
+    }
+
+    override fun loadTipsConditional(metadata: TipMetadata): TipSourceLoadResult {
+        return when (resolveSourceMode()) {
+            TipSourceMode.FILE -> fileTipSource.loadTips()
+            TipSourceMode.REMOTE -> remoteTipSource.loadTipsConditional(metadata)
         }
     }
 

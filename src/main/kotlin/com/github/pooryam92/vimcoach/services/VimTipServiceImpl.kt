@@ -31,4 +31,12 @@ class VimTipServiceImpl : VimTipService {
         }
         return state.tips.random()
     }
+
+    override fun getMetadata(): TipMetadata {
+        return state.metadata
+    }
+
+    override fun saveMetadata(metadata: TipMetadata) {
+        state.metadata = metadata
+    }
 }
