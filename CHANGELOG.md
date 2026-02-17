@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [0.2.1-beta] - 2026-02-17
+
 ### Added
 
 - Conditional downloads via GitHub API
@@ -21,5 +23,6 @@
 - Support for remote tip sources
 - Action to refetch tips from remote source for updating the local tip library
 
-[Unreleased]: https://github.com/pooryam92/vim-coach/compare/0.1.3-beta...HEAD
+[Unreleased]: https://github.com/pooryam92/vim-coach/compare/0.2.1-beta...HEAD
+[0.2.1-beta]: https://github.com/pooryam92/vim-coach/compare/0.1.3-beta...0.2.1-beta
 [0.1.3-beta]: https://github.com/pooryam92/vim-coach/commits/0.1.3-beta
