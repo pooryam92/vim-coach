@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.notifications
 
+import com.github.pooryam92.vimcoach.services.TipMetadata
 import com.github.pooryam92.vimcoach.services.VimTip
 import com.github.pooryam92.vimcoach.services.VimTipService
 import com.github.pooryam92.vimcoach.services.VimTipServiceImpl
@@ -97,6 +98,8 @@ class VimTipNotifierTest : BasePlatformTestCase() {
                 callCount++
                 return tips[callCount % tips.size]
             }
+            override fun getMetadata() = TipMetadata()
+            override fun saveMetadata(metadata: TipMetadata) {}
             override fun getState() = VimTipService.State(tips.toMutableList())
             override fun loadState(state: VimTipService.State) {}
         }
@@ -143,6 +146,10 @@ class VimTipNotifierTest : BasePlatformTestCase() {
                 currentIndex++
                 return tip
             }
+
+            override fun getMetadata() = TipMetadata()
+
+            override fun saveMetadata(metadata: TipMetadata) {}
 
             override fun getState() = VimTipService.State(tipList.toMutableList())
 
