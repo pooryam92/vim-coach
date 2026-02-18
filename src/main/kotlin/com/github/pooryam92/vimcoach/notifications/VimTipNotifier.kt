@@ -33,7 +33,7 @@ class VimTipNotifier(
 
     internal fun createNotification(tip: VimTip): Notification {
         val summaryHtml = tip.summary
-        val detailsHtml = tip.details
+        val detailsHtml = tip.details.joinToString("<br/>")
         val content = buildString {
             append("<html>")
             append("<div>")

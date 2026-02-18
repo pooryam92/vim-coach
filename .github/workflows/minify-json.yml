@@ -1,0 +1,66 @@
+name: Minify JSON
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'tips/vim_tips.json'
+  pull_request:
+    paths:
+      - 'tips/vim_tips.json'
+
+jobs:
+  minify:
+    name: Minify vim_tips.json
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      # Check out the current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.head_ref }}
+
+      # Install jq for JSON processing
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      # Check if file needs minification
+      - name: Check if minification needed
+        id: check
+        run: |
+          if [ -f tips/vim_tips.json ]; then
+            # Create minified version
+            jq -c . tips/vim_tips.json > tips/vim_tips.min.json
+            
+            # Compare with original
+            if cmp -s tips/vim_tips.json tips/vim_tips.min.json; then
+              echo "File is already minified"
+              echo "needs_minify=false" >> $GITHUB_OUTPUT
+            else
+              echo "File needs minification"
+              echo "needs_minify=true" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "needs_minify=false" >> $GITHUB_OUTPUT
+          fi
+
+      # Minify the JSON file
+      - name: Minify vim_tips.json
+        if: steps.check.outputs.needs_minify == 'true'
+        run: |
+          jq -c . tips/vim_tips.json > tips/vim_tips.tmp.json
+          mv tips/vim_tips.tmp.json tips/vim_tips.json
+
+      # Commit and push changes
+      - name: Commit minified file
+        if: steps.check.outputs.needs_minify == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add tips/vim_tips.json
+          git commit -m "chore: minify vim_tips.json [skip ci]"
+          git push
+

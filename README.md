@@ -24,7 +24,7 @@ Once installed, you can:
 1. **Show a Vim Tip on Demand**: Press `Shift+T` twice to display a random Vim tip
 2. **Learn at Startup**: Tips will appear automatically when you open a project 
 3. **Browse Tips**: Each tip includes a summary and detailed explanation with examples
-4. **Refetch Tips from Remote**: Use the "Refetch Vim Tips from Remote" action to update your tips library from the remote source
+4. **Refetch Tips from Remote**: Use the `Refetch Vim Tips from Remote` action to update your tips library from the remote source
 
 
 <!-- Plugin description end -->

@@ -12,7 +12,7 @@ class VimTipNotifierTest : BasePlatformTestCase() {
         val notifier = VimTipNotifier(VimTipServiceImpl())
         val tip = VimTip(
             summary = "Move by word with w/b/e.",
-            details = "w next word start."
+            details = listOf("w next word start.")
         )
 
         val notification = notifier.createNotification(tip)
@@ -26,7 +26,7 @@ class VimTipNotifierTest : BasePlatformTestCase() {
         val notifier = VimTipNotifier(VimTipServiceImpl())
         val tip = VimTip(
             summary = "<code>w</code> motion",
-            details = "line1<br/><em>line2</em>"
+            details = listOf("line1", "<em>line2</em>")
         )
 
         val notification = notifier.createNotification(tip)
@@ -38,10 +38,10 @@ class VimTipNotifierTest : BasePlatformTestCase() {
 
     fun testCreateNotificationWithActionsHasNextTipAction() {
         val mockTipService = createMockTipService(
-            VimTip(summary = "Test tip 1", details = "Details 1")
+            VimTip(summary = "Test tip 1", details = listOf("Details 1"))
         )
         val notifier = VimTipNotifier(mockTipService)
-        val tip = VimTip(summary = "Test tip", details = "Test details")
+        val tip = VimTip(summary = "Test tip", details = listOf("Test details"))
 
         val notification = notifier.createNotificationWithActions(project, tip)
 
@@ -52,8 +52,8 @@ class VimTipNotifierTest : BasePlatformTestCase() {
     }
 
     fun testNextTipActionHasCorrectText() {
-        val tip1 = VimTip(summary = "First tip", details = "First details")
-        val tip2 = VimTip(summary = "Second tip", details = "Second details")
+        val tip1 = VimTip(summary = "First tip", details = listOf("First details"))
+        val tip2 = VimTip(summary = "Second tip", details = listOf("Second details"))
         val mockTipService = createMockTipService(tip1, tip2)
         val notifier = VimTipNotifier(mockTipService)
 
@@ -71,7 +71,7 @@ class VimTipNotifierTest : BasePlatformTestCase() {
 
     fun testNextTipActionDisplaysCorrectLabel() {
         val mockTipService = createMockTipService(
-            VimTip(summary = "Test", details = "Test details")
+            VimTip(summary = "Test", details = listOf("Test details"))
         )
         val notifier = VimTipNotifier(mockTipService)
         val tip = mockTipService.getRandomTip()
@@ -87,9 +87,9 @@ class VimTipNotifierTest : BasePlatformTestCase() {
     fun testMultipleNextTipClicksCallsGetRandomTipMultipleTimes() {
         var callCount = 0
         val tips = listOf(
-            VimTip(summary = "Tip 1", details = "Details 1"),
-            VimTip(summary = "Tip 2", details = "Details 2"),
-            VimTip(summary = "Tip 3", details = "Details 3")
+            VimTip(summary = "Tip 1", details = listOf("Details 1")),
+            VimTip(summary = "Tip 2", details = listOf("Details 2")),
+            VimTip(summary = "Tip 3", details = listOf("Details 3"))
         )
         val mockTipService = object : VimTipService {
             override fun countTips() = tips.size
@@ -113,7 +113,7 @@ class VimTipNotifierTest : BasePlatformTestCase() {
 
     fun testNotificationHasCorrectGroupId() {
         val mockTipService = createMockTipService(
-            VimTip(summary = "Test", details = "Test details")
+            VimTip(summary = "Test", details = listOf("Test details"))
         )
         val notifier = VimTipNotifier(mockTipService)
         val notification = notifier.createNotification(mockTipService.getRandomTip())
@@ -123,7 +123,7 @@ class VimTipNotifierTest : BasePlatformTestCase() {
 
     fun testNotificationHasIcon() {
         val mockTipService = createMockTipService(
-            VimTip(summary = "Test", details = "Test details")
+            VimTip(summary = "Test", details = listOf("Test details"))
         )
         val notifier = VimTipNotifier(mockTipService)
         val notification = notifier.createNotification(mockTipService.getRandomTip())

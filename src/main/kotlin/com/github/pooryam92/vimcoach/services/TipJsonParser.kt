@@ -34,8 +34,10 @@ object TipJsonParser {
 
     private fun normalizeTip(tip: VimTip): VimTip? {
         val summary = (tip.summary as String?)?.trim().orEmpty()
-        val details = (tip.details as String?)?.trim().orEmpty()
-        if (summary.isBlank() || details.isBlank()) {
+        val details = tip.details.map {
+            it.trim()
+        }.filter { it.isNotBlank() }
+        if (summary.isBlank() || details.isEmpty()) {
             return null
         }
         return VimTip(summary, details)
