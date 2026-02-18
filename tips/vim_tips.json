@@ -1312,7 +1312,8 @@
         "di( → delete inside parentheses",
         "Keeps the ( )",
         "da( → delete the entire ( ... )",
-        "Removes parentheses and content"
+        "Removes parentheses and content",
+        "Works with (), {}, [], \"\", etc."
       ]
     },
     {
