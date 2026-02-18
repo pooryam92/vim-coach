@@ -1307,10 +1307,12 @@
     },
     {
       "category": ["textobjects"],
-      "summary": "Delete inside vs around pairs (di( / da()",
+      "summary": "Delete inside vs around pairs di( / da(",
       "details": [
-        "di( keeps parentheses, deletes content",
-        "da( removes parentheses too"
+        "di( → delete inside parentheses",
+        "Keeps the ( )",
+        "da( → delete the entire ( ... )",
+        "Removes parentheses and content"
       ]
     },
     {
