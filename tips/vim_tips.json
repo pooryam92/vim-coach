@@ -343,12 +343,6 @@
       "details": ["Lists stored jump locations", "Pair with Ctrl-o / Ctrl-i"]
     },
     {
-      "id": 43,
-      "category": ["cmdline"],
-      "summary": "See your change history (:changes)",
-      "details": ["Lists recent edit locations", "Pair with g; / g,"]
-    },
-    {
       "id": 44,
       "category": ["motions"],
       "summary": "Jump to last edit location (`.)",
