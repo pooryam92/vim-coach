@@ -1498,11 +1498,13 @@
     },
     {
       "id": 183,
-      "category": ["textobjects"],
+      "category": ["text-objects"],
       "summary": "Sentence objects (is / as)",
       "details": [
-        "cis changes inner sentence",
-        "das deletes sentence including trailing space"
+        "Sentence ends with . ! or ?",
+        "is → inner sentence only",
+        "as → sentence + trailing space",
+        "Use c/d/y with is/as (cis, das)"
       ]
     },
     {
