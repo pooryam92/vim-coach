@@ -1079,7 +1079,9 @@
       "category": ["visual"],
       "summary": "Enter Visual mode (v / V / Ctrl-v)",
       "details": [
-        "v characterwise, V linewise, Ctrl-v blockwise",
+        "v  → select characters",
+        "V  → select whole lines",
+        "Ctrl-v → select a text rectangle",
         "Esc returns to Normal"
       ]
     },
