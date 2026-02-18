@@ -72,7 +72,7 @@
       ]
     },
     {
-      "category": ["motions"],
+      "category": ["basics", "motions"],
       "summary": "Home-row movement h j k l",
       "details": [
         "h left, j down, k up, l right",
@@ -91,7 +91,7 @@
       ]
     },
     {
-      "category": ["motions"],
+      "category": ["basics", "motions"],
       "summary": "Jump to a specific line N G",
       "details": [
         "G → go to last line",
@@ -100,7 +100,7 @@
       ]
     },
     {
-      "category": ["motions"],
+      "category": ["basics", "motions"],
       "summary": "Word moves w - b - e",
       "details": [
         "w next word start, b previous word start",
@@ -132,7 +132,7 @@
       ]
     },
     {
-      "category": ["motions"],
+      "category": ["basics", "motions"],
       "summary": "Line start/end 0 - ^ - $",
       "details": ["0 start of line, ^ first non-blank", "$ end of line"]
     },
@@ -149,7 +149,8 @@
       "summary": "First text on next/prev line + / -",
       "details": [
         "+ moves down to first non-blank",
-        "- moves up to first non-blank"
+        "- moves up to first non-blank",
+        "These are motions; use with operators (e.g., d+)"
       ]
     },
     {
@@ -158,17 +159,9 @@
       "details": ["80| jumps to column 80", "Great for line-length edits"]
     },
     {
-      "category": ["motions"],
+      "category": ["basics", "motions"],
       "summary": "File top/bottom gg - G",
       "details": ["gg goes to first line", "G goes to last line"]
-    },
-    {
-      "category": ["motions"],
-      "summary": "Go to a specific line N G",
-      "details": [
-        "Type a number then G (e.g., 120G)",
-        "Fast navigation without searching"
-      ]
     },
     {
       "category": ["motions"],
@@ -219,7 +212,7 @@
       "summary": "Keep horizontal context sidescrolloff",
       "details": [
         "Example: :set sidescrolloff=8",
-        "Helps on long wrapped lines"
+        "Helps on long unwrapped lines"
       ]
     },
     {
@@ -263,7 +256,7 @@
       ]
     },
     {
-      "category": ["motions"],
+      "category": ["basics", "motions"],
       "summary": "Jump to matching pair %",
       "details": [
         "Works on (), {}, [] by default",
@@ -317,16 +310,16 @@
       "category": ["marks", "motions"],
       "summary": "Marks for last change region '[ and ']",
       "details": [
-        "'[ jumps to start of last changed/yanked text",
-        "'] jumps to end of last changed/yanked text"
+        "'[ jumps to start line of last changed/yanked/put text",
+        "'] jumps to end line of last changed/yanked/put text"
       ]
     },
     {
       "category": ["marks", "motions"],
       "summary": "Jump to last put region `[ and `]",
       "details": [
-        "`[ jumps to start of last changed/yanked/put text",
-        "`] jumps to end of last changed/yanked/put text"
+        "`[ jumps to exact start of last changed/yanked/put text",
+        "`] jumps to exact end of last changed/yanked/put text"
       ]
     },
     {
@@ -362,17 +355,21 @@
       ]
     },
     {
-      "category": ["search"],
+      "category": ["basics", "search"],
       "summary": "Search forward/backward / and ?",
-      "details": ["/pattern searches forward", "?pattern searches backward"]
+      "details": [
+        "/pattern searches forward",
+        "?pattern searches backward",
+        "Press Enter to search, Esc to cancel"
+      ]
     },
     {
-      "category": ["search"],
+      "category": ["basics", "search"],
       "summary": "Next/previous search match n - N",
       "details": ["n next match, N previous match", "Works after /, ?, *, #"]
     },
     {
-      "category": ["search"],
+      "category": ["basics", "search"],
       "summary": "Search word under cursor * - #",
       "details": [
         "* searches forward for exact word",
@@ -629,7 +626,10 @@
     {
       "category": ["editing", "motions"],
       "summary": "Delete/change to line start d0 - c0",
-      "details": ["d0 deletes to column 1", "c0 changes to column 1"]
+      "details": [
+        "d0 deletes to absolute line start",
+        "c0 changes to absolute line start"
+      ]
     },
     {
       "category": ["editing", "motions"],
@@ -666,7 +666,7 @@
       ]
     },
     {
-      "category": ["editing"],
+      "category": ["basics", "editing"],
       "summary": "Delete a character x - X",
       "details": [
         "x deletes under cursor",
@@ -674,19 +674,45 @@
       ]
     },
     {
-      "category": ["editing"],
-      "summary": "Substitute quickly s - S",
+      "category": ["basics", "editing"],
+      "summary": "Delete lines dd",
       "details": [
-        "s replaces one char and enters Insert",
-        "S replaces the whole line and enters Insert"
+        "dd deletes the current line",
+        "3dd deletes three lines"
       ]
     },
     {
       "category": ["editing"],
+      "summary": "Substitute quickly s - S",
+      "details": [
+        "s replaces one char and enters Insert",
+        "S replaces the whole line and enters Insert",
+        "S is the same as cc"
+      ]
+    },
+    {
+      "category": ["basics", "editing"],
+      "summary": "Change whole line cc",
+      "details": [
+        "cc clears the line",
+        "Keeps indentation",
+        "Enters Insert (same as S)"
+      ]
+    },
+    {
+      "category": ["basics", "editing"],
       "summary": "Replace a single character r{c}",
       "details": [
         "r. replaces char under cursor with '.'",
         "Stays in Normal mode"
+      ]
+    },
+    {
+      "category": ["basics", "editing"],
+      "summary": "Change/delete a word cw - dw",
+      "details": [
+        "cw changes from cursor to end of word",
+        "dw deletes from cursor to start of next word"
       ]
     },
     {
@@ -700,14 +726,6 @@
       "details": [
         "dd deletes current line",
         "3dd deletes three lines (and yanks them)"
-      ]
-    },
-    {
-      "category": ["editing"],
-      "summary": "Change whole line cc",
-      "details": [
-        "cc deletes line content then enters Insert",
-        "Keeps indentation"
       ]
     },
     {
@@ -789,9 +807,17 @@
       ]
     },
     {
-      "category": ["registers"],
+      "category": ["basics", "registers"],
       "summary": "Yank whole line yy",
       "details": ["yy yanks current line", "5yy yanks five lines"]
+    },
+    {
+      "category": ["basics", "registers"],
+      "summary": "Yank line Y",
+      "details": [
+        "Y yanks the entire line (same as yy)",
+        "Useful for quick copy"
+      ]
     },
     {
       "category": ["registers"],
@@ -804,7 +830,7 @@
       "details": ["y0 yanks to start of line", "y$ yanks to end of line"]
     },
     {
-      "category": ["registers"],
+      "category": ["basics", "registers"],
       "summary": "Paste after/before p - P",
       "details": [
         "p puts after cursor (or below for linewise)",
@@ -858,7 +884,8 @@
       "summary": "System clipboard register \"+",
       "details": [
         "\"+y yanks to OS clipboard (if enabled)",
-        "\"+p pastes from OS clipboard"
+        "\"+p pastes from OS clipboard",
+        "Requires +clipboard (Vim) or IDE clipboard support (IdeaVim)"
       ]
     },
     {
@@ -1049,15 +1076,7 @@
       "details": ["Select lines then :sort", "Add u: :sort u to unique"]
     },
     {
-      "category": ["visual"],
-      "summary": "Paste over selection carefully",
-      "details": [
-        "Default Visual p replaces selection and overwrites yank",
-        "Use \"_dP to keep your yank"
-      ]
-    },
-    {
-      "category": ["visual"],
+      "category": ["basics", "visual"],
       "summary": "Quick select inner word/paragraph viw - vip",
       "details": ["viw selects inner word", "vip selects inner paragraph"]
     },
@@ -1082,7 +1101,8 @@
       "summary": "Join lines with IDE-aware behavior ideajoin",
       "details": [
         "In IdeaVim: :set ideajoin (if you want IDE join)",
-        "Then J uses IDE smart join rules"
+        "Then J uses IDE smart join rules",
+        "Without ideajoin, J uses Vim join rules"
       ]
     },
     {
@@ -1184,11 +1204,19 @@
       ]
     },
     {
-      "category": ["cmdline"],
+      "category": ["basics", "cmdline"],
       "summary": "Quit (:q / :q!)",
       "details": [
         ":q closes if no unsaved changes",
         ":q! forces close/discard (if allowed)"
+      ]
+    },
+    {
+      "category": ["basics", "cmdline"],
+      "summary": "Save and quit :wq",
+      "details": [
+        ":wq writes and quits",
+        ":x writes only if changed"
       ]
     },
     {
@@ -1213,6 +1241,14 @@
       "details": [
         ":map shows all mappings",
         "Use mode-specific maps to debug conflicts"
+      ]
+    },
+    {
+      "category": ["cmdline"],
+      "summary": "Built-in help :help",
+      "details": [
+        ":help {topic} opens docs (e.g., :help text-objects)",
+        "Use Ctrl-] to jump tags, Ctrl-t to jump back"
       ]
     },
     {
@@ -1299,7 +1335,7 @@
     },
     {
       "category": ["textobjects"],
-      "summary": "Edit inside braces ci{) / ciB",
+      "summary": "Edit inside braces ci{ / ciB",
       "details": [
         "ci{ changes inside {}",
         "ciB is an alias for braces in many setups"
@@ -1333,7 +1369,15 @@
       ]
     },
     {
-      "category": ["text-objects"],
+      "category": ["textobjects"],
+      "summary": "Word text objects iw - aw",
+      "details": [
+        "diw deletes inner word",
+        "daw deletes word + surrounding space"
+      ]
+    },
+    {
+      "category": ["textobjects"],
       "summary": "Sentence objects is - as",
       "details": [
         "Sentence ends with . ! or ?",
@@ -1421,7 +1465,8 @@
       "summary": "Toggle last file Ctrl-^",
       "details": [
         "Jumps to alternate file (last buffer)",
-        "Great for back-and-forth edits"
+        "Great for back-and-forth edits",
+        "Ctrl-^ is Ctrl-6 on many keyboards"
       ]
     },
     {
@@ -1465,11 +1510,61 @@
       ]
     },
     {
+      "category": ["ideavim", "motions"],
+      "summary": "Go to definition/declaration gd - gD (IDE)",
+      "details": [
+        "gd goes to definition (IDE action if enabled)",
+        "gD goes to declaration (if IDE provides it)"
+      ]
+    },
+    {
+      "category": ["tabs"],
+      "summary": "Tabs: new/close/switch :tabnew :tabclose gt gT",
+      "details": [
+        ":tabnew opens a new tab",
+        ":tabclose closes current tab",
+        "gt next tab, gT previous tab"
+      ]
+    },
+    {
+      "category": ["tabs"],
+      "summary": "List tabs :tabs",
+      "details": [
+        ":tabs shows all open tabs",
+        ":tabn / :tabp moves next/previous"
+      ]
+    },
+    {
+      "category": ["tabs"],
+      "summary": "Reorder tabs :tabmove",
+      "details": [
+        ":tabmove 0 moves current tab to start",
+        ":tabmove moves to end (no number)"
+      ]
+    },
+    {
       "category": ["ideavim", "workflow"],
       "summary": "Run and map IDE actions :action - <Action>...",
       "details": [
         ":action ReformatCode runs an IDE action",
-        "Find IDs with :actionlist and enable :set trackactionids; map with nnoremap <leader>f <Action>(ReformatCode)"
+        "Use :actionlist to find IDs (enable :set trackactionids if needed)",
+        "Map with nnoremap <leader>f <Action>(ReformatCode)"
+      ]
+    },
+    {
+      "category": ["ideavim", "workflow"],
+      "summary": "Track action IDs :set trackactionids",
+      "details": [
+        ":set trackactionids shows action IDs in the status bar",
+        "Helpful when mapping <Action>(...)"
+      ]
+    },
+    {
+      "category": ["ideavim", "workflow"],
+      "summary": "Toggle IdeaVim on/off :action ToggleIdeaVim",
+      "details": [
+        ":action ToggleIdeaVim enables/disables IdeaVim",
+        "Useful when a plugin conflicts with Vim keys"
       ]
     }
   ]
