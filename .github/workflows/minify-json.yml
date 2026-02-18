@@ -52,7 +52,7 @@ jobs:
         if: steps.check.outputs.needs_minify == 'true'
         run: |
           jq -c . tips/vim_tips.json > tips/vim_tips.tmp.json
-          mv tips/vim_tips.tmp.json tips/vim_tips.json
+          mv tips/vim_tips.tmp.json tips/vim_tips_min.json
 
       # Commit and push changes
       - name: Commit minified file
@@ -60,7 +60,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add tips/vim_tips.json
+          git add tips/vim_tips_min.json
           git commit -m "chore: minify vim_tips.json [skip ci]"
           git push
 
