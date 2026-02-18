@@ -80,11 +80,23 @@
       ]
     },
     {
-      "category": ["motions"],
-      "summary": "Use counts for speed",
+      "category": ["basics"],
+      "summary": "Use counts to repeat actions",
       "details": [
-        "Prefix motions/commands: 5j 3w 12G",
-        "Counts work with operators: 3dw 5>>"
+        "Put a number before a command",
+        "5j → move down 5 lines",
+        "3w → jump forward 3 words",
+        "3dw → delete 3 words",
+        "5>> → indent 5 lines"
+      ]
+    },
+    {
+      "category": ["motions"],
+      "summary": "Jump to a specific line (N G)",
+      "details": [
+        "G → go to last line",
+        "N G → go to line N",
+        "Example: 120G jumps to line 120"
       ]
     },
     {
@@ -156,14 +168,6 @@
       "details": [
         "Type a number then G (e.g., 120G)",
         "Fast navigation without searching"
-      ]
-    },
-    {
-      "category": ["cmdline", "motions"],
-      "summary": "Go to a specific line (:N)",
-      "details": [
-        "Type :120 then Enter to jump",
-        "Useful when line numbers are visible"
       ]
     },
     {
@@ -286,6 +290,15 @@
       "category": ["motions"],
       "summary": "Change list navigation (g; / g,)",
       "details": ["g; older change location", "g, newer change location"]
+    },
+    {
+      "category": ["cmdline"],
+      "summary": "Go to a specific line (:N)",
+      "details": [
+        "Type :N then press Enter",
+        "Example: :120 jumps to line 120",
+        "Uses command-line (Ex) mode"
+      ]
     },
     {
       "category": ["cmdline"],
