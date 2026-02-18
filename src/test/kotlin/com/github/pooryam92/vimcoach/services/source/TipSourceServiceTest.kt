@@ -8,10 +8,10 @@ class TipSourceServiceTest : BasePlatformTestCase() {
 
     fun testUsesRemoteSourceByDefault() {
         val fakeRemote = FakeRemoteTipSource(
-            TipSourceLoadResult.Success(listOf(VimTip("r", "d")), TipMetadata())
+            TipSourceLoadResult.Success(listOf(VimTip("r", listOf("d"))), TipMetadata())
         )
         val fakeFile = FakeFileTipSource(
-            TipSourceLoadResult.Success(listOf(VimTip("f", "d")), TipMetadata())
+            TipSourceLoadResult.Success(listOf(VimTip("f", listOf("d"))), TipMetadata())
         )
         val sourceService = registerSourceService(fakeRemote, fakeFile, { null })
 
@@ -24,10 +24,10 @@ class TipSourceServiceTest : BasePlatformTestCase() {
 
     fun testUsesFileSourceWhenModeIsFile() {
         val fakeRemote = FakeRemoteTipSource(
-            TipSourceLoadResult.Success(listOf(VimTip("r", "d")), TipMetadata())
+            TipSourceLoadResult.Success(listOf(VimTip("r", listOf("d"))), TipMetadata())
         )
         val fakeFile = FakeFileTipSource(
-            TipSourceLoadResult.Success(listOf(VimTip("f", "d")), TipMetadata())
+            TipSourceLoadResult.Success(listOf(VimTip("f", listOf("d"))), TipMetadata())
         )
         val sourceService = registerSourceService(fakeRemote, fakeFile, { "file" })
 
