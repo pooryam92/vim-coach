@@ -196,15 +196,6 @@
       "details": ["50% jumps to middle of file", "10% jumps near the top"]
     },
     {
-      "id": 25,
-      "category": ["motions"],
-      "summary": "Show file position (Ctrl-g)",
-      "details": [
-        "Shows file name, line/col, percent",
-        "Quick orientation check"
-      ]
-    },
-    {
       "id": 26,
       "category": ["motions"],
       "summary": "Viewport anchors (H / M / L)",
