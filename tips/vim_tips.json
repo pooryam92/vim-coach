@@ -217,10 +217,10 @@
     },
     {
       "category": ["config", "motions"],
-      "summary": "Tune half-page size scroll",
+      "summary": "Set scroll for Ctrl-d/Ctrl-u distance",
       "details": [
         "Example: :set scroll=15",
-        "Changes how much Ctrl-d/Ctrl-u moves"
+        "Controls how many lines Ctrl-d/Ctrl-u scroll"
       ]
     },
     {
@@ -308,18 +308,18 @@
     },
     {
       "category": ["marks", "motions"],
-      "summary": "Marks for last change region '[ and ']",
+      "summary": "Linewise bounds of last changed/yanked text '[ and ']",
       "details": [
-        "'[ jumps to start line of last changed/yanked/put text",
-        "'] jumps to end line of last changed/yanked/put text"
+        "'[ jumps to the start line of last changed/yanked text",
+        "'] jumps to the end line of last changed/yanked text"
       ]
     },
     {
       "category": ["marks", "motions"],
-      "summary": "Jump to last put region `[ and `]",
+      "summary": "Exact bounds of last changed/yanked text `[ and `]",
       "details": [
-        "`[ jumps to exact start of last changed/yanked/put text",
-        "`] jumps to exact end of last changed/yanked/put text"
+        "`[ jumps to exact start of last changed/yanked text",
+        "`] jumps to exact end of last changed/yanked text"
       ]
     },
     {
@@ -722,14 +722,6 @@
     },
     {
       "category": ["editing"],
-      "summary": "Delete whole line dd",
-      "details": [
-        "dd deletes current line",
-        "3dd deletes three lines (and yanks them)"
-      ]
-    },
-    {
-      "category": ["editing"],
       "summary": "Join lines J - gJ",
       "details": [
         "J joins and inserts one space",
@@ -761,10 +753,12 @@
     },
     {
       "category": ["editing"],
-      "summary": "Make dot repeat powerful",
+      "summary": "Make dot-repeat predictable",
       "details": [
-        "Prefer operator-based edits (cw, ciw, d}",
-        "Avoid lots of manual cursor moves while changing"
+        "Use operator+motion edits",
+        "Examples: cw, ciw, d}",
+        "Do one change, move, then press .",
+        "Example: ciwfoo<Esc>, n, ."
       ]
     },
     {
@@ -812,14 +806,6 @@
       "details": ["yy yanks current line", "5yy yanks five lines"]
     },
     {
-      "category": ["basics", "registers"],
-      "summary": "Yank line Y",
-      "details": [
-        "Y yanks the entire line (same as yy)",
-        "Useful for quick copy"
-      ]
-    },
-    {
       "category": ["registers"],
       "summary": "Yank by motion y{motion}",
       "details": ["yw yank word, y$ yank to end of line", "Then paste with p/P"]
@@ -863,8 +849,11 @@
     },
     {
       "category": ["registers"],
-      "summary": "Named registers for favorites \"a ...",
-      "details": ["\"ayiw yanks word into register a", "Paste later with \"ap"]
+      "summary": "Named registers for reusable yanks \"a",
+      "details": [
+        "\"ayiw yanks a word into register a",
+        "Paste later with \"ap without losing newer default-register content"
+      ]
     },
     {
       "category": ["registers"],
@@ -1097,7 +1086,7 @@
       ]
     },
     {
-      "category": ["editing"],
+      "category": ["ideavim", "editing"],
       "summary": "Join lines with IDE-aware behavior ideajoin",
       "details": [
         "In IdeaVim: :set ideajoin (if you want IDE join)",
@@ -1136,7 +1125,7 @@
     },
     {
       "category": ["cmdline"],
-      "summary": "Delete a range of lines (:d)",
+      "summary": "Delete a line range :d",
       "details": [
         ":3,10d deletes lines 3–10",
         "Use '<,'> after Visual selection too"
@@ -1192,12 +1181,12 @@
     },
     {
       "category": ["cmdline"],
-      "summary": "Save current file (:w)",
+      "summary": "Save current file :w",
       "details": [":w writes the file", "In IdeaVim, this maps to IDE save"]
     },
     {
       "category": ["cmdline"],
-      "summary": "Save all files (:wa)",
+      "summary": "Save all files :wa",
       "details": [
         ":wa writes all modified buffers",
         "In IDE, typically saves all open editors"
@@ -1205,7 +1194,7 @@
     },
     {
       "category": ["basics", "cmdline"],
-      "summary": "Quit (:q / :q!)",
+      "summary": "Quit :q / :q!",
       "details": [
         ":q closes if no unsaved changes",
         ":q! forces close/discard (if allowed)"
@@ -1237,7 +1226,7 @@
     },
     {
       "category": ["cmdline"],
-      "summary": "Inspect mappings (:map / :nmap / :imap)",
+      "summary": "Inspect mappings :map :nmap :imap",
       "details": [
         ":map shows all mappings",
         "Use mode-specific maps to debug conflicts"
@@ -1399,7 +1388,10 @@
       "summary": "Tag objects cit - dat if supported",
       "details": [
         "cit changes inside HTML/XML tag",
-        "dat deletes tag + content"
+        "dat deletes tag + content",
+        "Requires tag text-object support",
+        "in your IdeaVim setup",
+        "Test quickly on a simple HTML tag"
       ]
     },
     {
@@ -1407,7 +1399,10 @@
       "summary": "Select tag content vit - vat if supported",
       "details": [
         "vit selects inside tag",
-        "vat selects around tag (includes tags)"
+        "vat selects around tag (includes tags)",
+        "If unavailable in your setup,",
+        "use f< / t> motions as fallback",
+        "for nearby tag edits"
       ]
     },
     {
@@ -1428,10 +1423,13 @@
     },
     {
       "category": ["windows"],
-      "summary": "Resize and maximize splits Ctrl-w ...",
+      "summary": "Resize and maximize splits Ctrl-w = _ | + - < >",
       "details": [
         "Ctrl-w = equalizes split sizes",
-        "Ctrl-w _ / | maximize; Ctrl-w + - < > resize (support varies by IDE)"
+        "Ctrl-w _ or Ctrl-w | maximizes size",
+        "Ctrl-w + - < > resizes incrementally",
+        "In some IDE keymaps these keys",
+        "are intercepted, so remap if needed"
       ]
     },
     {
@@ -1471,10 +1469,10 @@
     },
     {
       "category": ["buffers", "tabs"],
-      "summary": "List buffers/editors :ls",
+      "summary": "List buffers :ls",
       "details": [
-        ":ls shows open buffers (IDE tabs)",
-        "Use :buffer {N} to switch"
+        ":ls shows open buffers (often IDE tabs)",
+        "Use :buffer {N} to jump to a buffer by number"
       ]
     },
     {
@@ -1503,10 +1501,10 @@
     },
     {
       "category": ["windows"],
-      "summary": "Navigate splits Ctrl-w ...",
+      "summary": "Navigate splits Ctrl-w w and Ctrl-w h/j/k/l",
       "details": [
-        "Ctrl-w w cycles splits",
-        "Ctrl-w h/j/k/l moves directionally"
+        "Ctrl-w w cycles through splits",
+        "Ctrl-w h/j/k/l moves to split left/down/up/right"
       ]
     },
     {
@@ -1565,6 +1563,41 @@
       "details": [
         ":action ToggleIdeaVim enables/disables IdeaVim",
         "Useful when a plugin conflicts with Vim keys"
+      ]
+    },
+    {
+      "category": ["ideavim", "workflow", "motions"],
+      "summary": "Combine gi with g; and g, for edit loops",
+      "details": [
+        "gi returns to last insert position",
+        "and enters Insert mode",
+        "g; and g, move through",
+        "recent change locations",
+        "Use this loop for repeated",
+        "small edits across matches"
+      ]
+    },
+    {
+      "category": ["ideavim", "cmdline"],
+      "summary": "Repeat last Ex command with @:",
+      "details": [
+        "@: re-runs the most recent : command",
+        "Great after :s, :g, and :normal",
+        "commands",
+        "Check command history first",
+        "if unsure what last : command was"
+      ]
+    },
+    {
+      "category": ["ideavim", "search", "cmdline"],
+      "summary": "Repeat :substitute with previous flags :&&",
+      "details": [
+        ":&& repeats last :s and keeps flags",
+        "like g and c",
+        "Useful when reapplying substitution",
+        "in new ranges",
+        "Use :%&& for file-wide repeat",
+        "or Visual-select lines then :&&"
       ]
     }
   ]
