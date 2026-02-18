@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Improved
+
+- updated tips
+
 ## [0.2.1-beta] - 2026-02-17
 
 ### Added
