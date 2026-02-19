@@ -17,6 +17,10 @@ Vim Coach is an IntelliJ Platform plugin designed to help developers learn and m
 -  **Comprehensive Library**: Hundreds of Vim commands covering navigation, editing, searching, and more
 -  **Remote Updates**: Tips can be loaded from remote sources for fresh content
 
+## Prerequisites
+
+This plugin requires [IdeaVim](https://plugins.jetbrains.com/plugin/164-ideavim) to be installed.
+
 ## Usage
 
 Once installed, you can:

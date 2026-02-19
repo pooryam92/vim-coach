@@ -4,7 +4,6 @@
     <name>Vim Coach</name>
     <vendor>pooryam92</vendor>
     <depends>com.intellij.modules.platform</depends>
-    <depends optional="true" config-file="ideavim-optional.xml">IdeaVIM</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
