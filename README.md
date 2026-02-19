@@ -11,7 +11,7 @@ Vim Coach is an IntelliJ Platform plugin designed to help developers learn and m
 
 ## Features
 
--  **Smart Vim Tips**: Get contextual Vim tips displayed as notifications
+-  **Vim Tips**: Get Vim tips displayed as notifications
 -  **Keyboard Shortcut**: Press `Shift+T` twice to show a random Vim tip
 -  **Startup Tips**: See a Vim tip when you start your IDE
 -  **Comprehensive Library**: Hundreds of Vim commands covering navigation, editing, searching, and more
