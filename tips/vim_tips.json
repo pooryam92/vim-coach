@@ -1,70 +1,61 @@
 {
   "tips": [
     {
-      "id": 1,
       "category": ["basics"],
       "summary": "Exit to Normal mode fast",
       "details": ["Esc leaves Insert/Visual", "Ctrl-[ is an alternative escape"]
     },
     {
-      "id": 2,
       "category": ["basics"],
       "summary": "Insert before/after cursor (i / a)",
       "details": ["i inserts before cursor", "a inserts after cursor"]
     },
     {
-      "id": 3,
       "category": ["basics"],
-      "summary": "Insert at line ends (I / A)",
+      "summary": "Insert at line ends I - A",
       "details": ["I inserts at first non-blank", "A appends at end of line"]
     },
     {
-      "id": 4,
       "category": ["basics"],
-      "summary": "Open new lines (o / O)",
+      "summary": "Open new lines o - O",
       "details": [
         "o opens below and enters Insert",
         "O opens above and enters Insert"
       ]
     },
     {
-      "id": 5,
       "category": ["basics"],
-      "summary": "Resume last insert location (gi)",
+      "summary": "Resume last insert location gi",
       "details": [
         "gi jumps to where you last left Insert",
         "Re-enters Insert automatically"
       ]
     },
     {
-      "id": 6,
       "category": ["basics"],
-      "summary": "One-shot Normal command from Insert (Ctrl-o)",
+      "summary": "One-shot Normal command from Insert Ctrl-o",
       "details": [
         "In Insert: Ctrl-o then one Normal command",
         "Returns to Insert afterward"
       ]
     },
     {
-      "id": 7,
       "category": ["basics"],
-      "summary": "Delete previous word while typing (Insert Ctrl-w)",
+      "summary": "Delete previous word while typing Insert Ctrl-w",
       "details": [
         "Deletes word left of cursor in Insert mode",
         "Faster than Esc + dw for small fixes"
       ]
     },
     {
-      "id": 8,
       "category": ["basics"],
-      "summary": "Clear back while typing (Insert Ctrl-u)",
+      "summary": "Clear back while typing Insert Ctrl-u",
       "details": [
         "Deletes back to start of the insert line",
         "Great for rewriting the current line"
       ]
     },
     {
-      "id": 9,
       "category": ["basics"],
       "summary": "Undo and redo",
       "details": [
@@ -73,310 +64,265 @@
       ]
     },
     {
-      "id": 10,
       "category": ["basics"],
-      "summary": "Repeat last change (.)",
+      "summary": "Repeat last change .",
       "details": [
         "Dot repeats the last text-changing action",
         "Do one clean change, then move and press ."
       ]
     },
     {
-      "id": 11,
-      "category": ["motions"],
-      "summary": "Home-row movement (h j k l)",
+      "category": ["basics", "motions"],
+      "summary": "Home-row movement h j k l",
       "details": [
         "h left, j down, k up, l right",
         "Use counts like 10j to jump"
       ]
     },
     {
-      "id": 12,
-      "category": ["motions"],
-      "summary": "Use counts for speed",
+      "category": ["basics"],
+      "summary": "Use counts to repeat actions",
       "details": [
-        "Prefix motions/commands: 5j 3w 12G",
-        "Counts work with operators: 3dw 5>>"
+        "Put a number before a command",
+        "5j → move down 5 lines",
+        "3w → jump forward 3 words",
+        "3dw → delete 3 words",
+        "5>> → indent 5 lines"
       ]
     },
     {
-      "id": 13,
-      "category": ["motions"],
-      "summary": "Word moves (w / b / e)",
+      "category": ["basics", "motions"],
+      "summary": "Jump to a specific line N G",
+      "details": [
+        "G → go to last line",
+        "N G → go to line N",
+        "Example: 120G jumps to line 120"
+      ]
+    },
+    {
+      "category": ["basics", "motions"],
+      "summary": "Word moves w - b - e",
       "details": [
         "w next word start, b previous word start",
         "e moves to end of word"
       ]
     },
     {
-      "id": 14,
       "category": ["motions"],
-      "summary": "End of previous word (ge)",
+      "summary": "End of previous word ge",
       "details": [
         "ge goes to end of previous word",
         "Nice for edits before punctuation"
       ]
     },
     {
-      "id": 15,
       "category": ["motions"],
-      "summary": "Big WORD moves (W / B / E)",
+      "summary": "Big WORD moves W - B - E",
       "details": [
         "WORDs split on whitespace",
         "Great for paths and long tokens"
       ]
     },
     {
-      "id": 16,
       "category": ["motions"],
-      "summary": "End of previous WORD (gE)",
+      "summary": "End of previous WORD gE",
       "details": [
         "gE goes to end of previous WORD",
         "Useful on URLs / file paths"
       ]
     },
     {
-      "id": 17,
-      "category": ["motions"],
-      "summary": "Line start/end (0 / ^ / $)",
+      "category": ["basics", "motions"],
+      "summary": "Line start/end 0 - ^ - $",
       "details": ["0 start of line, ^ first non-blank", "$ end of line"]
     },
     {
-      "id": 18,
       "category": ["motions"],
-      "summary": "Last non-blank on line (g_)",
+      "summary": "Last non-blank on line g_",
       "details": [
         "g_ jumps to last non-space character",
         "Handy near );}] and trailing spaces"
       ]
     },
     {
-      "id": 19,
       "category": ["motions"],
-      "summary": "First text on next/prev line (+ / -)",
+      "summary": "First text on next/prev line + / -",
       "details": [
         "+ moves down to first non-blank",
-        "- moves up to first non-blank"
+        "- moves up to first non-blank",
+        "These are motions; use with operators (e.g., d+)"
       ]
     },
     {
-      "id": 20,
       "category": ["motions"],
-      "summary": "Jump to a column (|)",
+      "summary": "Jump to a column |",
       "details": ["80| jumps to column 80", "Great for line-length edits"]
     },
     {
-      "id": 21,
-      "category": ["motions"],
-      "summary": "File top/bottom (gg / G)",
+      "category": ["basics", "motions"],
+      "summary": "File top/bottom gg - G",
       "details": ["gg goes to first line", "G goes to last line"]
     },
     {
-      "id": 22,
       "category": ["motions"],
-      "summary": "Go to a specific line (N G)",
-      "details": [
-        "Type a number then G (e.g., 120G)",
-        "Fast navigation without searching"
-      ]
-    },
-    {
-      "id": 23,
-      "category": ["cmdline", "motions"],
-      "summary": "Go to a specific line (:N)",
-      "details": [
-        "Type :120 then Enter to jump",
-        "Useful when line numbers are visible"
-      ]
-    },
-    {
-      "id": 24,
-      "category": ["motions"],
-      "summary": "Jump by file percentage (N%)",
+      "summary": "Jump by file percentage N%",
       "details": ["50% jumps to middle of file", "10% jumps near the top"]
     },
     {
-      "id": 25,
       "category": ["motions"],
-      "summary": "Show file position (Ctrl-g)",
-      "details": [
-        "Shows file name, line/col, percent",
-        "Quick orientation check"
-      ]
-    },
-    {
-      "id": 26,
-      "category": ["motions"],
-      "summary": "Viewport anchors (H / M / L)",
+      "summary": "Viewport anchors H - M - L",
       "details": [
         "H top of screen, M middle, L bottom",
         "Great for fast scanning"
       ]
     },
     {
-      "id": 27,
       "category": ["motions"],
-      "summary": "Recenter cursor line (zt / zz / zb)",
+      "summary": "Recenter cursor line zt - zz - zb",
       "details": [
         "zt top, zz center, zb bottom",
         "Use after searches/jumps to keep context"
       ]
     },
     {
-      "id": 28,
       "category": ["motions"],
-      "summary": "Half-page scroll (Ctrl-d / Ctrl-u)",
+      "summary": "Half-page scroll Ctrl-d - Ctrl-u",
       "details": ["Ctrl-d down half page", "Ctrl-u up half page"]
     },
     {
-      "id": 29,
       "category": ["motions"],
-      "summary": "Full-page scroll (Ctrl-f / Ctrl-b)",
+      "summary": "Full-page scroll Ctrl-f - Ctrl-b",
       "details": ["Ctrl-f forward one page", "Ctrl-b back one page"]
     },
     {
-      "id": 30,
       "category": ["motions"],
-      "summary": "Scroll window without moving cursor (Ctrl-e / Ctrl-y)",
+      "summary": "Scroll window without moving cursor Ctrl-e - Ctrl-y",
       "details": ["Ctrl-e scrolls down 1 line", "Ctrl-y scrolls up 1 line"]
     },
     {
-      "id": 31,
       "category": ["config", "motions"],
-      "summary": "Keep context while moving (scrolloff)",
+      "summary": "Keep context while moving scrolloff",
       "details": [
         "Example: :set scrolloff=5",
         "Keeps lines visible above/below cursor"
       ]
     },
     {
-      "id": 32,
       "category": ["config", "motions"],
-      "summary": "Keep horizontal context (sidescrolloff)",
+      "summary": "Keep horizontal context sidescrolloff",
       "details": [
         "Example: :set sidescrolloff=8",
-        "Helps on long wrapped lines"
+        "Helps on long unwrapped lines"
       ]
     },
     {
-      "id": 33,
       "category": ["config", "motions"],
-      "summary": "Tune half-page size (scroll)",
+      "summary": "Set scroll for Ctrl-d/Ctrl-u distance",
       "details": [
         "Example: :set scroll=15",
-        "Changes how much Ctrl-d/Ctrl-u moves"
+        "Controls how many lines Ctrl-d/Ctrl-u scroll"
       ]
     },
     {
-      "id": 34,
       "category": ["motions"],
-      "summary": "Move by screen lines on wraps (gj / gk)",
+      "summary": "Move by screen lines on wraps gj - gk",
       "details": [
         "gj moves down one displayed line",
         "Use with soft wrap enabled"
       ]
     },
     {
-      "id": 35,
       "category": ["motions"],
-      "summary": "Screen-line start/end on wraps (g0 / g^ / g$)",
+      "summary": "Screen-line start/end on wraps g0 - g^ - g$",
       "details": [
         "g0 screen-line start, g^ first non-blank",
         "g$ screen-line end"
       ]
     },
     {
-      "id": 36,
       "category": ["motions"],
-      "summary": "Jump by paragraphs ({ / })",
+      "summary": "Jump by paragraphs { - }",
       "details": [
         "Moves between blank-line-separated blocks",
         "Great for prose and spaced-out code"
       ]
     },
     {
-      "id": 37,
       "category": ["macros"],
-      "summary": "Record a macro (q{reg})",
+      "summary": "Record a macro q{reg}",
       "details": [
         "qa starts recording into register a",
         "Press q again to stop recording"
       ]
     },
     {
-      "id": 38,
-      "category": ["motions"],
-      "summary": "Jump to matching pair (%)",
+      "category": ["basics", "motions"],
+      "summary": "Jump to matching pair %",
       "details": [
         "Works on (), {}, [] by default",
         "Use to inspect a whole block quickly"
       ]
     },
     {
-      "id": 39,
       "category": ["motions"],
-      "summary": "Return after big jumps (`` / '')",
+      "summary": "Return after big jumps `` - ''",
       "details": [
         "`` returns to exact previous spot",
         "'' returns to previous line (column may change)"
       ]
     },
     {
-      "id": 40,
       "category": ["motions"],
-      "summary": "Jump list navigation (Ctrl-o / Ctrl-i)",
+      "summary": "Jump list navigation Ctrl-o - Ctrl-i",
       "details": [
         "Ctrl-o goes back, Ctrl-i goes forward",
         "Works after searches, gd, and big jumps"
       ]
     },
     {
-      "id": 41,
       "category": ["motions"],
-      "summary": "Change list navigation (g; / g,)",
+      "summary": "Change list navigation g; - g,",
       "details": ["g; older change location", "g, newer change location"]
     },
     {
-      "id": 42,
       "category": ["cmdline"],
-      "summary": "See your jump history (:jumps)",
+      "summary": "Go to a specific line :N",
+      "details": [
+        "Type :N then press Enter",
+        "Example: :120 jumps to line 120",
+        "Uses command-line (Ex) mode"
+      ]
+    },
+    {
+      "category": ["cmdline"],
+      "summary": "See your jump history :jumps",
       "details": ["Lists stored jump locations", "Pair with Ctrl-o / Ctrl-i"]
     },
     {
-      "id": 43,
-      "category": ["cmdline"],
-      "summary": "See your change history (:changes)",
-      "details": ["Lists recent edit locations", "Pair with g; / g,"]
-    },
-    {
-      "id": 44,
       "category": ["motions"],
-      "summary": "Jump to last edit location (`.)",
+      "summary": "Jump to last edit location `.",
       "details": [
         "`. jumps to exact last change",
         "'. jumps to the line of the last change"
       ]
     },
     {
-      "id": 45,
       "category": ["marks", "motions"],
-      "summary": "Marks for last change region ('[ and '])",
+      "summary": "Linewise bounds of last changed/yanked text '[ and ']",
       "details": [
-        "'[ jumps to start of last changed/yanked text",
-        "'] jumps to end of last changed/yanked text"
+        "'[ jumps to the start line of last changed/yanked text",
+        "'] jumps to the end line of last changed/yanked text"
       ]
     },
     {
-      "id": 46,
       "category": ["marks", "motions"],
-      "summary": "Jump to last put region (`[ and `])",
+      "summary": "Exact bounds of last changed/yanked text `[ and `]",
       "details": [
-        "`[ jumps to start of last changed/yanked/put text",
-        "`] jumps to end of last changed/yanked/put text"
+        "`[ jumps to exact start of last changed/yanked text",
+        "`] jumps to exact end of last changed/yanked text"
       ]
     },
     {
-      "id": 47,
       "category": ["config"],
       "summary": "Show absolute/relative line numbers",
       "details": [
@@ -385,136 +331,124 @@
       ]
     },
     {
-      "id": 48,
       "category": ["config"],
-      "summary": "Show current mode (showmode)",
+      "summary": "Show current mode showmode",
       "details": [
         ":set showmode shows NORMAL/INSERT/VISUAL",
         "Helpful while learning"
       ]
     },
     {
-      "id": 49,
       "category": ["config"],
-      "summary": "Show pending keys (showcmd)",
+      "summary": "Show pending keys showcmd",
       "details": [
         ":set showcmd shows partial commands",
         "Great for multi-key sequences"
       ]
     },
     {
-      "id": 50,
       "category": ["config"],
-      "summary": "Show invisible characters (list)",
+      "summary": "Show invisible characters list",
       "details": [
         ":set list shows tabs/trailing spaces",
         ":set nolist hides them"
       ]
     },
     {
-      "id": 51,
-      "category": ["search"],
-      "summary": "Search forward/backward (/ and ?)",
-      "details": ["/pattern searches forward", "?pattern searches backward"]
+      "category": ["basics", "search"],
+      "summary": "Search forward/backward / and ?",
+      "details": [
+        "/pattern searches forward",
+        "?pattern searches backward",
+        "Press Enter to search, Esc to cancel"
+      ]
     },
     {
-      "id": 52,
-      "category": ["search"],
-      "summary": "Next/previous search match (n / N)",
+      "category": ["basics", "search"],
+      "summary": "Next/previous search match n - N",
       "details": ["n next match, N previous match", "Works after /, ?, *, #"]
     },
     {
-      "id": 53,
-      "category": ["search"],
-      "summary": "Search word under cursor (* / #)",
+      "category": ["basics", "search"],
+      "summary": "Search word under cursor * - #",
       "details": [
         "* searches forward for exact word",
         "# searches backward for exact word"
       ]
     },
     {
-      "id": 54,
       "category": ["search"],
-      "summary": "Search partial token (g* / g#)",
+      "summary": "Search partial token g* - g#",
       "details": [
         "Like * and # but allows partial matches",
         "Nice for camelCase / snake_case"
       ]
     },
     {
-      "id": 55,
       "category": ["search", "config"],
-      "summary": "Incremental search feedback (incsearch)",
+      "summary": "Incremental search feedback incsearch",
       "details": [
         ":set incsearch highlights matches while typing",
         "Makes /pattern navigation feel instant"
       ]
     },
     {
-      "id": 56,
       "category": ["search", "config"],
-      "summary": "Persistent highlights (hlsearch)",
+      "summary": "Persistent highlights hlsearch",
       "details": [
         ":set hlsearch keeps matches highlighted",
         "Clear temporarily with :noh"
       ]
     },
     {
-      "id": 57,
       "category": ["search"],
-      "summary": "Clear search highlighting (:noh)",
+      "summary": "Clear search highlighting :noh",
       "details": [
         ":noh (or :nohlsearch) clears highlight",
         "Search pattern remains active"
       ]
     },
     {
-      "id": 58,
       "category": ["search"],
-      "summary": "Case toggle inside a pattern (\\c / \\C)",
+      "summary": "Case toggle inside a pattern \\c - \\C",
       "details": [
         "/foo\\c makes this search case-insensitive",
         "/Foo\\C forces case-sensitive"
       ]
     },
     {
-      "id": 59,
       "category": ["search", "config"],
-      "summary": "Smart case searching (ignorecase + smartcase)",
+      "summary": "Smart case searching ignorecase + smartcase",
       "details": [
         ":set ignorecase smartcase",
         "Uppercase in pattern forces case-sensitive"
       ]
     },
     {
-      "id": 60,
       "category": ["search", "config"],
-      "summary": "Wrap search at EOF (wrapscan)",
+      "summary": "Wrap search at EOF wrapscan",
       "details": [
         ":set wrapscan continues search from top",
         ":set nowrapscan stops at end"
       ]
     },
     {
-      "id": 61,
       "category": ["search"],
-      "summary": "Whole-word boundaries (\\< and \\>)",
+      "summary": "Whole-word boundaries \\< and \\>",
       "details": [
         "/\\<word\\> matches whole words only",
         "Avoids accidental partial matches"
       ]
     },
     {
-      "id": 62,
       "category": ["search"],
-      "summary": "Keep results centered while hopping (nzz)",
+      "summary": "Keep results centered while hopping nzz",
       "details": [
         "After /, press n then zz",
         "Use Nzz to go backward and recenter"
       ]
     },
     {
-      "id": 63,
       "category": ["search"],
       "summary": "Use search as a motion with operators",
       "details": [
@@ -523,7 +457,6 @@
       ]
     },
     {
-      "id": 64,
       "category": ["search"],
       "summary": "Search offsets to land precisely",
       "details": [
@@ -532,7 +465,6 @@
       ]
     },
     {
-      "id": 65,
       "category": ["search"],
       "summary": "Search for literal text with \\V",
       "details": [
@@ -541,7 +473,6 @@
       ]
     },
     {
-      "id": 66,
       "category": ["search"],
       "summary": "Use \\v to reduce escaping in regex",
       "details": [
@@ -550,13 +481,11 @@
       ]
     },
     {
-      "id": 67,
       "category": ["search"],
       "summary": "Reuse last / pattern in :s with //",
       "details": ["After searching /pat", "Use :%s//replacement/g to reuse pat"]
     },
     {
-      "id": 68,
       "category": ["search"],
       "summary": "Alternative delimiters in :s",
       "details": [
@@ -565,31 +494,27 @@
       ]
     },
     {
-      "id": 69,
       "category": ["search"],
       "summary": "Confirm substitutions with c",
       "details": ["Use :%s/old/new/gc", "y/n/a/q/l control each match"]
     },
     {
-      "id": 70,
       "category": ["search"],
-      "summary": "Repeat last substitute on a line (&)",
+      "summary": "Repeat last substitute on a line &",
       "details": [
         "& repeats the last :s on the current line",
         "Useful for applying same :s line-by-line"
       ]
     },
     {
-      "id": 71,
       "category": ["macros"],
-      "summary": "Play and repeat macros (@ / @@)",
+      "summary": "Play and repeat macros @ - @@",
       "details": [
         "@a plays macro in register a",
         "@@ repeats the last played macro"
       ]
     },
     {
-      "id": 72,
       "category": ["search"],
       "summary": "Use \\r to insert a newline in :s",
       "details": [
@@ -598,7 +523,6 @@
       ]
     },
     {
-      "id": 73,
       "category": ["search"],
       "summary": "Use & to reuse the whole match in :s",
       "details": [
@@ -607,7 +531,6 @@
       ]
     },
     {
-      "id": 74,
       "category": ["search"],
       "summary": "Backreferences in :s (\\1, \\2, ...)",
       "details": [
@@ -616,7 +539,6 @@
       ]
     },
     {
-      "id": 75,
       "category": ["search"],
       "summary": "Limit :s to a range",
       "details": [
@@ -625,130 +547,117 @@
       ]
     },
     {
-      "id": 76,
       "category": ["search"],
-      "summary": "From cursor to end (:.,$)",
+      "summary": "From cursor to end :.,$",
       "details": [
         ":.,$s/foo/bar/g starts at current line",
         "Good for partial-file refactors"
       ]
     },
     {
-      "id": 77,
       "category": ["search"],
-      "summary": "Run commands on matching lines (:g)",
+      "summary": "Run commands on matching lines :g",
       "details": [
         ":g/TODO/p prints matching lines",
         ":g/pat/d deletes matching lines"
       ]
     },
     {
-      "id": 78,
       "category": ["search"],
-      "summary": "Invert :global (:v or :g!)",
+      "summary": "Invert :global :v or :g!",
       "details": [
         ":v/pat/d deletes non-matching lines",
         "Great for filtering logs quickly"
       ]
     },
     {
-      "id": 79,
       "category": ["macros", "cmdline"],
-      "summary": "Run a macro many times (count / :normal)",
+      "summary": "Run a macro many times count - :normal",
       "details": [
         "10@a runs macro a ten times",
         "Apply to selected lines with :normal @a"
       ]
     },
     {
-      "id": 80,
       "category": ["search"],
-      "summary": "Fast rename loop (* then cw then n .)",
+      "summary": "Fast rename loop * then cw then n .",
       "details": [
         "Press * to find next occurrence",
         "cw to change, then n . to repeat"
       ]
     },
     {
-      "id": 81,
       "category": ["motions"],
-      "summary": "Find a character forward on the line (f{c})",
+      "summary": "Find a character forward on the line f{c}",
       "details": [
         "f; jumps to next ';' on the line",
         "Great for long parameter lists"
       ]
     },
     {
-      "id": 82,
       "category": ["motions"],
-      "summary": "Find a character backward on the line (F{c})",
+      "summary": "Find a character backward on the line F{c}",
       "details": [
         "F; jumps to previous ';' on the line",
         "Use to move precisely without searching"
       ]
     },
     {
-      "id": 83,
       "category": ["motions"],
-      "summary": "Move till before a character (t{c})",
+      "summary": "Move till before a character t{c}",
       "details": ["t) stops just before ')'", "Perfect for ct) edits"]
     },
     {
-      "id": 84,
       "category": ["motions"],
-      "summary": "Move till after a character backward (T{c})",
+      "summary": "Move till after a character backward T{c}",
       "details": [
         "T) stops just after ')'",
         "Good for edits near opening brackets"
       ]
     },
     {
-      "id": 85,
       "category": ["motions"],
-      "summary": "Repeat last f/F/t/T (; and ,)",
+      "summary": "Repeat last f/F/t/T ; and ,",
       "details": [
         "; repeats in same direction",
         ", repeats in opposite direction"
       ]
     },
     {
-      "id": 86,
       "category": ["editing", "motions"],
-      "summary": "Delete/change to line start (d0 / c0)",
-      "details": ["d0 deletes to column 1", "c0 changes to column 1"]
+      "summary": "Delete/change to line start d0 - c0",
+      "details": [
+        "d0 deletes to absolute line start",
+        "c0 changes to absolute line start"
+      ]
     },
     {
-      "id": 87,
       "category": ["editing", "motions"],
-      "summary": "Delete/change to first non-blank (d^ / c^)",
+      "summary": "Delete/change to first non-blank d^ - c^",
       "details": [
         "d^ deletes to first non-blank",
         "c^ changes to first non-blank"
       ]
     },
     {
-      "id": 88,
       "category": ["editing", "motions"],
-      "summary": "Delete/change to end of line (d$ / c$)",
+      "summary": "Delete/change to end of line d$ - c$",
       "details": ["d$ deletes to end of line", "c$ changes to end of line"]
     },
     {
-      "id": 89,
       "category": ["editing"],
-      "summary": "Shortcut to end-of-line ops (D / C)",
+      "summary": "Shortcut to end-of-line ops D - C",
       "details": ["D is d$ (delete to end)", "C is c$ (change to end)"]
     },
     {
-      "id": 90,
       "category": ["editing"],
-      "summary": "Inspect odd characters (ga)",
+      "summary": "Inspect odd characters ga",
       "details": [
         "Shows codepoint and representation",
         "Great for weird whitespace issues"
       ]
     },
     {
-      "id": 91,
       "category": ["editing"],
       "summary": "Operator + motion is the core pattern",
       "details": [
@@ -757,322 +666,297 @@
       ]
     },
     {
-      "id": 92,
-      "category": ["editing"],
-      "summary": "Delete a character (x / X)",
+      "category": ["basics", "editing"],
+      "summary": "Delete a character x - X",
       "details": [
         "x deletes under cursor",
         "X deletes before cursor (backspace)"
       ]
     },
     {
-      "id": 93,
-      "category": ["editing"],
-      "summary": "Substitute quickly (s / S)",
+      "category": ["basics", "editing"],
+      "summary": "Delete lines dd",
       "details": [
-        "s replaces one char and enters Insert",
-        "S replaces the whole line and enters Insert"
+        "dd deletes the current line",
+        "3dd deletes three lines"
       ]
     },
     {
-      "id": 94,
       "category": ["editing"],
-      "summary": "Replace a single character (r{c})",
+      "summary": "Substitute quickly s - S",
+      "details": [
+        "s replaces one char and enters Insert",
+        "S replaces the whole line and enters Insert",
+        "S is the same as cc"
+      ]
+    },
+    {
+      "category": ["basics", "editing"],
+      "summary": "Change whole line cc",
+      "details": [
+        "cc clears the line",
+        "Keeps indentation",
+        "Enters Insert (same as S)"
+      ]
+    },
+    {
+      "category": ["basics", "editing"],
+      "summary": "Replace a single character r{c}",
       "details": [
         "r. replaces char under cursor with '.'",
         "Stays in Normal mode"
       ]
     },
     {
-      "id": 95,
+      "category": ["basics", "editing"],
+      "summary": "Change/delete a word cw - dw",
+      "details": [
+        "cw changes from cursor to end of word",
+        "dw deletes from cursor to start of next word"
+      ]
+    },
+    {
       "category": ["editing"],
-      "summary": "Replace mode (R)",
+      "summary": "Replace mode R",
       "details": ["Type to overwrite existing text", "Esc leaves Replace mode"]
     },
     {
-      "id": 96,
       "category": ["editing"],
-      "summary": "Delete whole line (dd)",
-      "details": [
-        "dd deletes current line",
-        "3dd deletes three lines (and yanks them)"
-      ]
-    },
-    {
-      "id": 97,
-      "category": ["editing"],
-      "summary": "Change whole line (cc)",
-      "details": [
-        "cc deletes line content then enters Insert",
-        "Keeps indentation"
-      ]
-    },
-    {
-      "id": 98,
-      "category": ["editing"],
-      "summary": "Join lines (J / gJ)",
+      "summary": "Join lines J - gJ",
       "details": [
         "J joins and inserts one space",
         "gJ joins without inserting a space"
       ]
     },
     {
-      "id": 99,
       "category": ["editing"],
-      "summary": "Toggle case of character (~)",
+      "summary": "Toggle case of character ~",
       "details": ["~ toggles case and advances cursor", "Counts work: 5~"]
     },
     {
-      "id": 100,
       "category": ["editing"],
-      "summary": "Change case over a motion (gu / gU)",
+      "summary": "Change case over a motion gu - gU",
       "details": ["gUw uppercases a word", "guap lowercases a paragraph"]
     },
     {
-      "id": 101,
       "category": ["editing"],
-      "summary": "Toggle case over a motion (g~)",
+      "summary": "Toggle case over a motion g~",
       "details": ["g~iw toggles case of current word", "Useful for style fixes"]
     },
     {
-      "id": 102,
       "category": ["editing"],
-      "summary": "Increment/decrement numbers (Ctrl-a / Ctrl-x)",
+      "summary": "Increment/decrement numbers Ctrl-a - Ctrl-x",
       "details": [
         "Ctrl-a increments number under/after cursor",
         "Ctrl-x decrements it (IDE may need key conflict fix)"
       ]
     },
     {
-      "id": 103,
       "category": ["editing"],
-      "summary": "Make dot repeat powerful",
+      "summary": "Make dot-repeat predictable",
       "details": [
-        "Prefer operator-based edits (cw, ciw, d}",
-        "Avoid lots of manual cursor moves while changing"
+        "Use operator+motion edits",
+        "Examples: cw, ciw, d}",
+        "Do one change, move, then press .",
+        "Example: ciwfoo<Esc>, n, ."
       ]
     },
     {
-      "id": 104,
       "category": ["editing"],
-      "summary": "Delete to next word start vs end (dw / de)",
+      "summary": "Delete to next word start vs end dw - de",
       "details": [
         "dw deletes to start of next word",
         "de deletes to end of current/next word"
       ]
     },
     {
-      "id": 105,
       "category": ["textobjects", "editing"],
-      "summary": "Delete inner word (diw)",
+      "summary": "Delete inner word diw",
       "details": ["Deletes only the word", "Leaves surrounding spaces intact"]
     },
     {
-      "id": 106,
       "category": ["textobjects", "editing"],
-      "summary": "Delete a word plus space (daw)",
+      "summary": "Delete a word plus space daw",
       "details": ["Deletes word and trailing space", "Great for list cleanup"]
     },
     {
-      "id": 107,
       "category": ["textobjects", "editing"],
-      "summary": "Change inner word (ciw)",
+      "summary": "Change inner word ciw",
       "details": [
         "Works even if cursor is mid-word",
         "Safer than cw for renames"
       ]
     },
     {
-      "id": 108,
       "category": ["textobjects", "editing"],
-      "summary": "Change a word plus space (caw)",
+      "summary": "Change a word plus space caw",
       "details": ["Changes word and trailing space", "Great for argument swaps"]
     },
     {
-      "id": 109,
       "category": ["textobjects", "registers"],
-      "summary": "Yank inner/around word (yiw / yaw)",
+      "summary": "Yank inner/around word yiw - yaw",
       "details": [
         "yiw copies just the word",
         "yaw copies word plus trailing space"
       ]
     },
     {
-      "id": 110,
-      "category": ["registers"],
-      "summary": "Yank whole line (yy)",
+      "category": ["basics", "registers"],
+      "summary": "Yank whole line yy",
       "details": ["yy yanks current line", "5yy yanks five lines"]
     },
     {
-      "id": 111,
       "category": ["registers"],
-      "summary": "Yank by motion (y{motion})",
+      "summary": "Yank by motion y{motion}",
       "details": ["yw yank word, y$ yank to end of line", "Then paste with p/P"]
     },
     {
-      "id": 112,
       "category": ["registers"],
-      "summary": "Yank line parts (y0 / y$)",
+      "summary": "Yank line parts y0 - y$",
       "details": ["y0 yanks to start of line", "y$ yanks to end of line"]
     },
     {
-      "id": 113,
-      "category": ["registers"],
-      "summary": "Paste after/before (p / P)",
+      "category": ["basics", "registers"],
+      "summary": "Paste after/before p - P",
       "details": [
         "p puts after cursor (or below for linewise)",
         "P puts before cursor (or above for linewise)"
       ]
     },
     {
-      "id": 114,
       "category": ["registers"],
-      "summary": "Paste and leave cursor after (gp / gP)",
+      "summary": "Paste and leave cursor after gp - gP",
       "details": [
         "gp pastes and moves to end of pasted text",
         "gP does the same for paste-before"
       ]
     },
     {
-      "id": 115,
       "category": ["registers"],
-      "summary": "Use the yank register (\"0)",
+      "summary": "Use the yank register \"0",
       "details": [
         "\"0 holds the most recent yank",
         "Paste it with \"0p even after deletes"
       ]
     },
     {
-      "id": 116,
       "category": ["registers"],
-      "summary": "Recover last delete (\"1)",
+      "summary": "Recover last delete \"1",
       "details": [
         "\"1 usually holds the most recent delete",
         "Paste with \"1p after an accidental dd"
       ]
     },
     {
-      "id": 117,
       "category": ["registers"],
-      "summary": "Named registers for favorites (\"a ...)",
-      "details": ["\"ayiw yanks word into register a", "Paste later with \"ap"]
+      "summary": "Named registers for reusable yanks \"a",
+      "details": [
+        "\"ayiw yanks a word into register a",
+        "Paste later with \"ap without losing newer default-register content"
+      ]
     },
     {
-      "id": 118,
       "category": ["registers"],
-      "summary": "Black-hole register (\"_)",
+      "summary": "Black-hole register \"_",
       "details": [
         "\"_d deletes without overwriting your registers",
         "Use before pasting repeatedly"
       ]
     },
     {
-      "id": 119,
       "category": ["registers"],
       "summary": "Visual paste without losing yank",
       "details": ["Select then use \"_dP", "Keeps your previous yank intact"]
     },
     {
-      "id": 120,
       "category": ["registers"],
-      "summary": "System clipboard register (\"+)",
+      "summary": "System clipboard register \"+",
       "details": [
         "\"+y yanks to OS clipboard (if enabled)",
-        "\"+p pastes from OS clipboard"
+        "\"+p pastes from OS clipboard",
+        "Requires +clipboard (Vim) or IDE clipboard support (IdeaVim)"
       ]
     },
     {
-      "id": 121,
       "category": ["registers"],
-      "summary": "Insert register while typing (Insert Ctrl-r)",
+      "summary": "Insert register while typing Insert Ctrl-r",
       "details": [
         "Ctrl-r 0 inserts last yank",
         "Ctrl-r + inserts system clipboard"
       ]
     },
     {
-      "id": 122,
       "category": ["cmdline", "registers"],
-      "summary": "Insert register in command line (Ctrl-r)",
+      "summary": "Insert register in command line Ctrl-r",
       "details": [
         "In : or /, Ctrl-r inserts register content",
         "Great for reusing text in :s"
       ]
     },
     {
-      "id": 123,
       "category": ["cmdline", "registers"],
-      "summary": "Inspect registers (:reg)",
+      "summary": "Inspect registers :reg",
       "details": [
         ":reg shows registers and macros",
         "Useful when you forgot what you yanked"
       ]
     },
     {
-      "id": 124,
       "category": ["registers"],
-      "summary": "Expression register (\"=)",
+      "summary": "Expression register \"=",
       "details": [
         "\"=2+2<CR>p inserts result",
         "Also works in Insert with Ctrl-r ="
       ]
     },
     {
-      "id": 125,
       "category": ["folds"],
-      "summary": "Create a fold (zf{motion})",
+      "summary": "Create a fold zf{motion}",
       "details": [
         "zf{motion} folds a motion (e.g., zfip)",
         "In IdeaVim this uses the IDE folding engine (make sure code folding is enabled)"
       ]
     },
     {
-      "id": 126,
       "category": ["folds"],
-      "summary": "Open/close folds (zo / zc / za)",
+      "summary": "Open/close folds zo - zc - za",
       "details": [
         "zo opens a fold, zc closes a fold",
         "za toggles a fold (IdeaVim: works where IDE folding supports it)"
       ]
     },
     {
-      "id": 127,
       "category": ["editing"],
-      "summary": "Swap two characters (xp)",
+      "summary": "Swap two characters xp",
       "details": [
         "x deletes char under cursor, p puts it after",
         "Fast fix for adjacent typos"
       ]
     },
     {
-      "id": 128,
       "category": ["editing"],
-      "summary": "Indent/outdent lines (>> / <<)",
+      "summary": "Indent/outdent lines >> - <<",
       "details": [">> indents current line, << outdents", "Counts work: 5>>"]
     },
     {
-      "id": 129,
       "category": ["editing"],
-      "summary": "Indent/outdent with motions (> / <)",
+      "summary": "Indent/outdent with motions > - <",
       "details": [">ip indents a paragraph/block", "<} outdents next paragraph"]
     },
     {
-      "id": 130,
       "category": ["editing"],
-      "summary": "Reindent with = (== / =motion)",
+      "summary": "Reindent with = == - =motion",
       "details": [
         "== reindents current line",
         "=ip reindents a block/paragraph"
       ]
     },
     {
-      "id": 131,
       "category": ["editing"],
       "summary": "Format text with gq",
       "details": ["gqap formats a paragraph", "Uses textwidth when set"]
     },
     {
-      "id": 132,
       "category": ["config", "editing"],
       "summary": "Set text width for wrapping",
       "details": [
@@ -1081,103 +965,93 @@
       ]
     },
     {
-      "id": 133,
       "category": ["visual"],
-      "summary": "Enter Visual mode (v / V / Ctrl-v)",
+      "summary": "Enter Visual mode v - V - Ctrl-v",
       "details": [
-        "v characterwise, V linewise, Ctrl-v blockwise",
+        "v  → select characters",
+        "V  → select whole lines",
+        "Ctrl-v → select a text rectangle",
         "Esc returns to Normal"
       ]
     },
     {
-      "id": 134,
       "category": ["visual"],
-      "summary": "Swap Visual selection ends (o)",
+      "summary": "Swap Visual selection ends o",
       "details": [
         "o moves cursor to other end of selection",
         "Great for precise adjustments"
       ]
     },
     {
-      "id": 135,
       "category": ["visual"],
-      "summary": "Swap block selection corner (O)",
+      "summary": "Swap block selection corner O",
       "details": [
         "In blockwise Visual: O swaps horizontal corner",
         "Useful for column edits"
       ]
     },
     {
-      "id": 136,
       "category": ["visual"],
-      "summary": "Reselect last Visual region (gv)",
+      "summary": "Reselect last Visual region gv",
       "details": [
         "gv reselects the last Visual selection",
         "Great for repeated indenting"
       ]
     },
     {
-      "id": 137,
       "category": ["visual"],
-      "summary": "Indent selection in Visual (> / <)",
+      "summary": "Indent selection in Visual > - <",
       "details": [
         "> indents right, < outdents left",
         "Then press . to repeat on next selection/line"
       ]
     },
     {
-      "id": 138,
       "category": ["visual"],
-      "summary": "Case change selection (gu / gU)",
+      "summary": "Case change selection gu - gU",
       "details": ["Select then gu to lowercase", "Select then gU to uppercase"]
     },
     {
-      "id": 139,
       "category": ["visual", "editing"],
-      "summary": "Format selection with gq (Visual)",
+      "summary": "Format selection with gq Visual",
       "details": [
         "Select text then press gq",
         "Great for reflowing comment blocks"
       ]
     },
     {
-      "id": 140,
       "category": ["visual"],
-      "summary": "Block insert (Ctrl-v then I)",
+      "summary": "Block insert Ctrl-v then I",
       "details": [
         "Select a column, press I, type text",
         "Esc applies the insert to all selected lines"
       ]
     },
     {
-      "id": 141,
       "category": ["visual"],
-      "summary": "Block append (Ctrl-v then A)",
+      "summary": "Block append Ctrl-v then A",
       "details": [
         "Select a column, press A, type text",
         "Esc applies the append to all selected lines"
       ]
     },
     {
-      "id": 142,
       "category": ["visual"],
-      "summary": "Block change (Ctrl-v then c)",
+      "summary": "Block change Ctrl-v then c",
       "details": [
         "Select a block, press c, type replacement",
         "Esc applies to all selected lines"
       ]
     },
     {
-      "id": 143,
       "category": ["visual"],
-      "summary": "Block replace with one char (Ctrl-v then r)",
+      "summary": "Block replace with one char Ctrl-v then r",
       "details": [
         "Select block, press r then a char",
         "Replaces all selected chars with that char"
       ]
     },
     {
-      "id": 144,
       "category": ["visual", "cmdline"],
       "summary": "Use Visual range for Ex commands",
       "details": [
@@ -1186,115 +1060,94 @@
       ]
     },
     {
-      "id": 145,
       "category": ["visual", "search"],
-      "summary": "Sort selected lines (:sort)",
+      "summary": "Sort selected lines :sort",
       "details": ["Select lines then :sort", "Add u: :sort u to unique"]
     },
     {
-      "id": 146,
-      "category": ["visual"],
-      "summary": "Paste over selection carefully",
-      "details": [
-        "Default Visual p replaces selection and overwrites yank",
-        "Use \"_dP to keep your yank"
-      ]
-    },
-    {
-      "id": 147,
-      "category": ["visual"],
-      "summary": "Quick select inner word/paragraph (viw / vip)",
+      "category": ["basics", "visual"],
+      "summary": "Quick select inner word/paragraph viw - vip",
       "details": ["viw selects inner word", "vip selects inner paragraph"]
     },
     {
-      "id": 148,
       "category": ["editing"],
-      "summary": "Select whole file quickly (ggVG)",
+      "summary": "Select whole file quickly ggVG",
       "details": [
         "gg to top, V linewise select, G to bottom",
         "Then run =, :sort, or :s on the range"
       ]
     },
     {
-      "id": 149,
       "category": ["editing"],
-      "summary": "Paste and auto-indent (]p / [p)",
+      "summary": "Paste and auto-indent ]p - [p",
       "details": [
         "]p pastes after and reindents",
         "[p pastes before and reindents"
       ]
     },
     {
-      "id": 150,
-      "category": ["editing"],
-      "summary": "Join lines with IDE-aware behavior (ideajoin)",
+      "category": ["ideavim", "editing"],
+      "summary": "Join lines with IDE-aware behavior ideajoin",
       "details": [
         "In IdeaVim: :set ideajoin (if you want IDE join)",
-        "Then J uses IDE smart join rules"
+        "Then J uses IDE smart join rules",
+        "Without ideajoin, J uses Vim join rules"
       ]
     },
     {
-      "id": 151,
       "category": ["editing"],
-      "summary": "Wrap long comments/paragraphs (gqap)",
+      "summary": "Wrap long comments/paragraphs gqap",
       "details": [
         "gqap formats current paragraph",
         "Set textwidth for consistent wrapping"
       ]
     },
     {
-      "id": 152,
       "category": ["editing"],
-      "summary": "Move current line down/up (:m)",
+      "summary": "Move current line down/up :m",
       "details": [":m+1 moves line down one", ":m-2 moves line up one"]
     },
     {
-      "id": 153,
       "category": ["editing"],
-      "summary": "Duplicate current line (:t.)",
+      "summary": "Duplicate current line :t.",
       "details": [
         ":t. copies current line below itself",
         "Works even when y/p is awkward"
       ]
     },
     {
-      "id": 154,
       "category": ["cmdline"],
-      "summary": "Copy a range of lines (:t)",
+      "summary": "Copy a range of lines :t",
       "details": [
         ":1,5t. copies lines 1–5 below cursor",
         "Use ranges + destination for quick duplication"
       ]
     },
     {
-      "id": 155,
       "category": ["cmdline"],
-      "summary": "Delete a range of lines (:d)",
+      "summary": "Delete a line range :d",
       "details": [
         ":3,10d deletes lines 3–10",
         "Use '<,'> after Visual selection too"
       ]
     },
     {
-      "id": 156,
       "category": ["cmdline"],
-      "summary": "Yank a range of lines (:y)",
+      "summary": "Yank a range of lines :y",
       "details": [
         ":3,10y yanks lines 3–10",
         "Great for copying blocks precisely"
       ]
     },
     {
-      "id": 157,
       "category": ["cmdline"],
-      "summary": "Run Normal commands on a range (:normal)",
+      "summary": "Run Normal commands on a range :normal",
       "details": [
         "Example: :%normal A; appends ; to every line",
         "Test on a small range first"
       ]
     },
     {
-      "id": 158,
       "category": ["cmdline", "search"],
       "summary": "Global substitute only on matching lines",
       "details": [
@@ -1303,7 +1156,6 @@
       ]
     },
     {
-      "id": 159,
       "category": ["cmdline", "search"],
       "summary": "Use :g with p before d",
       "details": [
@@ -1312,85 +1164,91 @@
       ]
     },
     {
-      "id": 160,
       "category": ["cmdline"],
-      "summary": "Edit command-line quickly (Ctrl-w / Ctrl-u)",
+      "summary": "Edit command-line quickly Ctrl-w - Ctrl-u",
       "details": [
         "In : prompt: Ctrl-w deletes a word",
         "Ctrl-u clears the whole command line"
       ]
     },
     {
-      "id": 161,
       "category": ["cmdline"],
-      "summary": "Reload file from disk (:e / :e!)",
+      "summary": "Reload file from disk :e - :e!",
       "details": [
         ":e reloads if no changes",
         ":e! discards changes and reloads"
       ]
     },
     {
-      "id": 162,
       "category": ["cmdline"],
-      "summary": "Save current file (:w)",
+      "summary": "Save current file :w",
       "details": [":w writes the file", "In IdeaVim, this maps to IDE save"]
     },
     {
-      "id": 163,
       "category": ["cmdline"],
-      "summary": "Save all files (:wa)",
+      "summary": "Save all files :wa",
       "details": [
         ":wa writes all modified buffers",
         "In IDE, typically saves all open editors"
       ]
     },
     {
-      "id": 164,
-      "category": ["cmdline"],
-      "summary": "Quit (:q / :q!)",
+      "category": ["basics", "cmdline"],
+      "summary": "Quit :q / :q!",
       "details": [
         ":q closes if no unsaved changes",
         ":q! forces close/discard (if allowed)"
       ]
     },
     {
-      "id": 165,
+      "category": ["basics", "cmdline"],
+      "summary": "Save and quit :wq",
+      "details": [
+        ":wq writes and quits",
+        ":x writes only if changed"
+      ]
+    },
+    {
       "category": ["cmdline"],
-      "summary": "Check an option value (:set option?)",
+      "summary": "Check an option value :set option?",
       "details": [
         ":set number? shows current value",
         "Useful when debugging behavior"
       ]
     },
     {
-      "id": 166,
       "category": ["cmdline"],
-      "summary": "Toggle an option (:set invoption)",
+      "summary": "Toggle an option :set invoption",
       "details": [
         ":set invnumber toggles number",
         "Quick way to flip UI settings"
       ]
     },
     {
-      "id": 167,
       "category": ["cmdline"],
-      "summary": "Inspect mappings (:map / :nmap / :imap)",
+      "summary": "Inspect mappings :map :nmap :imap",
       "details": [
         ":map shows all mappings",
         "Use mode-specific maps to debug conflicts"
       ]
     },
     {
-      "id": 168,
       "category": ["cmdline"],
-      "summary": "Prefer non-recursive maps (noremap)",
+      "summary": "Built-in help :help",
+      "details": [
+        ":help {topic} opens docs (e.g., :help text-objects)",
+        "Use Ctrl-] to jump tags, Ctrl-t to jump back"
+      ]
+    },
+    {
+      "category": ["cmdline"],
+      "summary": "Prefer non-recursive maps noremap",
       "details": [
         "nnoremap/vnoremap/inoremap avoid recursion",
         "Makes custom mappings safer"
       ]
     },
     {
-      "id": 169,
       "category": ["cmdline"],
       "summary": "Use <leader> for ergonomic mappings",
       "details": [
@@ -1399,7 +1257,6 @@
       ]
     },
     {
-      "id": 170,
       "category": ["cmdline"],
       "summary": "Hide mapping noise with <silent>",
       "details": [
@@ -1408,25 +1265,22 @@
       ]
     },
     {
-      "id": 171,
       "category": ["textobjects"],
-      "summary": "Text objects: inside vs around (i / a)",
+      "summary": "Text objects: inside vs around i - a",
       "details": [
         "i{obj} excludes delimiters, a{obj} includes them",
         "Works with d/c/y/v"
       ]
     },
     {
-      "id": 172,
       "category": ["textobjects"],
-      "summary": "Edit inside double quotes (ci\")",
+      "summary": "Edit inside double quotes ci\"",
       "details": [
         "ci\" changes inside quotes",
         "Cursor can be anywhere inside string"
       ]
     },
     {
-      "id": 173,
       "category": ["textobjects"],
       "summary": "Edit around double quotes (ca\")",
       "details": [
@@ -1435,234 +1289,315 @@
       ]
     },
     {
-      "id": 174,
       "category": ["textobjects"],
-      "summary": "Delete around double quotes (da\")",
+      "summary": "Delete around double quotes da\"",
       "details": ["da\" removes quotes + content", "Fast string removal"]
     },
     {
-      "id": 175,
       "category": ["textobjects"],
-      "summary": "Edit inside single quotes (ci')",
+      "summary": "Edit inside single quotes ci'",
       "details": [
         "ci' changes inside single quotes",
         "Great for quick string edits"
       ]
     },
     {
-      "id": 176,
       "category": ["textobjects"],
-      "summary": "Edit inside backticks (ci`)",
+      "summary": "Edit inside backticks ci`",
       "details": [
         "ci` changes inside backticks",
         "Handy in Markdown and JS templates"
       ]
     },
     {
-      "id": 177,
       "category": ["textobjects"],
-      "summary": "Edit inside parentheses (ci() / cib)",
+      "summary": "Edit inside parentheses ci() / cib",
       "details": [
         "ci( changes inside ()",
         "cib is an alias for parentheses in many Vim setups"
       ]
     },
     {
-      "id": 178,
       "category": ["textobjects"],
-      "summary": "Edit inside brackets (ci[)",
+      "summary": "Edit inside brackets ci[",
       "details": ["ci[ changes inside []", "Good for array/index edits"]
     },
     {
-      "id": 179,
       "category": ["textobjects"],
-      "summary": "Edit inside braces (ci{) / ciB",
+      "summary": "Edit inside braces ci{ / ciB",
       "details": [
         "ci{ changes inside {}",
         "ciB is an alias for braces in many setups"
       ]
     },
     {
-      "id": 180,
       "category": ["textobjects"],
-      "summary": "Delete inside vs around pairs (di( / da()",
+      "summary": "Delete inside vs around pairs di( - da(",
       "details": [
-        "di( keeps parentheses, deletes content",
-        "da( removes parentheses too"
+        "di( → delete inside parentheses",
+        "Keeps the ( )",
+        "da( → delete the entire ( ... )",
+        "Removes parentheses and content",
+        "Works with (), {}, [], \"\", etc."
       ]
     },
     {
-      "id": 181,
       "category": ["textobjects"],
-      "summary": "Select inside/around pairs (vi( / va{)",
+      "summary": "Select inside/around pairs vi( - va{",
       "details": [
         "vi( selects inside parentheses",
         "va{ selects including braces"
       ]
     },
     {
-      "id": 182,
       "category": ["textobjects"],
-      "summary": "Paragraph objects (ip / ap)",
+      "summary": "Paragraph objects ip - ap",
       "details": [
         "vip selects inner paragraph",
         "vap includes surrounding blank lines"
       ]
     },
     {
-      "id": 183,
       "category": ["textobjects"],
-      "summary": "Sentence objects (is / as)",
+      "summary": "Word text objects iw - aw",
       "details": [
-        "cis changes inner sentence",
-        "das deletes sentence including trailing space"
+        "diw deletes inner word",
+        "daw deletes word + surrounding space"
       ]
     },
     {
-      "id": 184,
+      "category": ["textobjects"],
+      "summary": "Sentence objects is - as",
+      "details": [
+        "Sentence ends with . ! or ?",
+        "is → inner sentence only",
+        "as → sentence + trailing space",
+        "Use c/d/y with is/as (cis, das)"
+      ]
+    },
+    {
       "category": ["folds"],
-      "summary": "Fold all / unfold all (zM / zR)",
+      "summary": "Fold all / unfold all zM - zR",
       "details": [
         "zM closes all folds in view",
         "zR opens all folds (IdeaVim: depends on IDE folding support)"
       ]
     },
     {
-      "id": 185,
       "category": ["textobjects"],
-      "summary": "Tag objects (cit / dat) if supported",
+      "summary": "Tag objects cit - dat if supported",
       "details": [
         "cit changes inside HTML/XML tag",
-        "dat deletes tag + content"
+        "dat deletes tag + content",
+        "Requires tag text-object support",
+        "in your IdeaVim setup",
+        "Test quickly on a simple HTML tag"
       ]
     },
     {
-      "id": 186,
       "category": ["textobjects"],
-      "summary": "Select tag content (vit / vat) if supported",
+      "summary": "Select tag content vit - vat if supported",
       "details": [
         "vit selects inside tag",
-        "vat selects around tag (includes tags)"
+        "vat selects around tag (includes tags)",
+        "If unavailable in your setup,",
+        "use f< / t> motions as fallback",
+        "for nearby tag edits"
       ]
     },
     {
-      "id": 187,
       "category": ["windows"],
-      "summary": "Close current split (Ctrl-w q)",
+      "summary": "Close current split Ctrl-w q",
       "details": [
         "Closes the active split/window",
         "Use when you want to keep other splits"
       ]
     },
     {
-      "id": 188,
       "category": ["windows"],
-      "summary": "Close all other splits (Ctrl-w o)",
+      "summary": "Close all other splits Ctrl-w o",
       "details": [
         "Makes the current split the only one",
         "Great for focus while editing"
       ]
     },
     {
-      "id": 189,
       "category": ["windows"],
-      "summary": "Resize and maximize splits (Ctrl-w ...)",
+      "summary": "Resize and maximize splits Ctrl-w = _ | + - < >",
       "details": [
         "Ctrl-w = equalizes split sizes",
-        "Ctrl-w _ / | maximize; Ctrl-w + - < > resize (support varies by IDE)"
+        "Ctrl-w _ or Ctrl-w | maximizes size",
+        "Ctrl-w + - < > resizes incrementally",
+        "In some IDE keymaps these keys",
+        "are intercepted, so remap if needed"
       ]
     },
     {
-      "id": 190,
       "category": ["workflow"],
       "summary": "Use marks before exploring",
       "details": ["ma sets a mark, then go explore", "Use `a to return exactly"]
     },
     {
-      "id": 191,
       "category": ["marks"],
-      "summary": "Set a mark (m{a})",
+      "summary": "Set a mark m{a}",
       "details": [
         "ma sets mark a in this file",
         "Use mA for a global mark (IdeaVim can sync via ideamarks)"
       ]
     },
     {
-      "id": 192,
       "category": ["marks", "motions"],
-      "summary": "Jump to a mark (`a / 'a)",
+      "summary": "Jump to a mark `a - 'a",
       "details": [
         "`a jumps to exact position",
         "'a jumps to the line (first non-blank)"
       ]
     },
     {
-      "id": 193,
       "category": ["marks", "cmdline"],
-      "summary": "List marks (:marks)",
+      "summary": "List marks :marks",
       "details": [":marks shows active marks", "Overwrite a mark to update it"]
     },
     {
-      "id": 194,
       "category": ["buffers"],
-      "summary": "Toggle last file (Ctrl-^)",
+      "summary": "Toggle last file Ctrl-^",
       "details": [
         "Jumps to alternate file (last buffer)",
-        "Great for back-and-forth edits"
+        "Great for back-and-forth edits",
+        "Ctrl-^ is Ctrl-6 on many keyboards"
       ]
     },
     {
-      "id": 195,
       "category": ["buffers", "tabs"],
-      "summary": "List buffers/editors (:ls)",
+      "summary": "List buffers :ls",
       "details": [
-        ":ls shows open buffers (IDE tabs)",
-        "Use :buffer {N} to switch"
+        ":ls shows open buffers (often IDE tabs)",
+        "Use :buffer {N} to jump to a buffer by number"
       ]
     },
     {
-      "id": 196,
       "category": ["buffers", "tabs"],
-      "summary": "Next/previous buffer (:bn / :bp)",
+      "summary": "Next/previous buffer :bn - :bp",
       "details": [
         ":bn goes to next buffer (often next IDE tab)",
         ":bp goes to previous buffer"
       ]
     },
     {
-      "id": 197,
       "category": ["buffers", "tabs"],
-      "summary": "Close current buffer (:bd)",
+      "summary": "Close current buffer :bd",
       "details": [
         ":bd closes the current buffer/editor tab",
         "Use when you want to keep splits but close a file"
       ]
     },
     {
-      "id": 198,
       "category": ["windows"],
-      "summary": "Split windows (:split / :vsplit)",
+      "summary": "Split windows :split - :vsplit",
       "details": [
         ":split makes a horizontal split",
         ":vsplit makes a vertical split"
       ]
     },
     {
-      "id": 199,
       "category": ["windows"],
-      "summary": "Navigate splits (Ctrl-w ...)",
+      "summary": "Navigate splits Ctrl-w w and Ctrl-w h/j/k/l",
       "details": [
-        "Ctrl-w w cycles splits",
-        "Ctrl-w h/j/k/l moves directionally"
+        "Ctrl-w w cycles through splits",
+        "Ctrl-w h/j/k/l moves to split left/down/up/right"
       ]
     },
     {
-      "id": 200,
+      "category": ["ideavim", "motions"],
+      "summary": "Go to definition/declaration gd - gD (IDE)",
+      "details": [
+        "gd goes to definition (IDE action if enabled)",
+        "gD goes to declaration (if IDE provides it)"
+      ]
+    },
+    {
+      "category": ["tabs"],
+      "summary": "Tabs: new/close/switch :tabnew :tabclose gt gT",
+      "details": [
+        ":tabnew opens a new tab",
+        ":tabclose closes current tab",
+        "gt next tab, gT previous tab"
+      ]
+    },
+    {
+      "category": ["tabs"],
+      "summary": "List tabs :tabs",
+      "details": [
+        ":tabs shows all open tabs",
+        ":tabn / :tabp moves next/previous"
+      ]
+    },
+    {
+      "category": ["tabs"],
+      "summary": "Reorder tabs :tabmove",
+      "details": [
+        ":tabmove 0 moves current tab to start",
+        ":tabmove moves to end (no number)"
+      ]
+    },
+    {
       "category": ["ideavim", "workflow"],
-      "summary": "Run and map IDE actions (:action / <Action>(...))",
+      "summary": "Run and map IDE actions :action - <Action>...",
       "details": [
         ":action ReformatCode runs an IDE action",
-        "Find IDs with :actionlist and enable :set trackactionids; map with nnoremap <leader>f <Action>(ReformatCode)"
+        "Use :actionlist to find IDs (enable :set trackactionids if needed)",
+        "Map with nnoremap <leader>f <Action>(ReformatCode)"
+      ]
+    },
+    {
+      "category": ["ideavim", "workflow"],
+      "summary": "Track action IDs :set trackactionids",
+      "details": [
+        ":set trackactionids shows action IDs in the status bar",
+        "Helpful when mapping <Action>(...)"
+      ]
+    },
+    {
+      "category": ["ideavim", "workflow"],
+      "summary": "Toggle IdeaVim on/off :action ToggleIdeaVim",
+      "details": [
+        ":action ToggleIdeaVim enables/disables IdeaVim",
+        "Useful when a plugin conflicts with Vim keys"
+      ]
+    },
+    {
+      "category": ["ideavim", "workflow", "motions"],
+      "summary": "Combine gi with g; and g, for edit loops",
+      "details": [
+        "gi returns to last insert position",
+        "and enters Insert mode",
+        "g; and g, move through",
+        "recent change locations",
+        "Use this loop for repeated",
+        "small edits across matches"
+      ]
+    },
+    {
+      "category": ["ideavim", "cmdline"],
+      "summary": "Repeat last Ex command with @:",
+      "details": [
+        "@: re-runs the most recent : command",
+        "Great after :s, :g, and :normal",
+        "commands",
+        "Check command history first",
+        "if unsure what last : command was"
+      ]
+    },
+    {
+      "category": ["ideavim", "search", "cmdline"],
+      "summary": "Repeat :substitute with previous flags :&&",
+      "details": [
+        ":&& repeats last :s and keeps flags",
+        "like g and c",
+        "Useful when reapplying substitution",
+        "in new ranges",
+        "Use :%&& for file-wide repeat",
+        "or Visual-select lines then :&&"
       ]
     }
   ]
