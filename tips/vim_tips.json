@@ -945,10 +945,10 @@
     },
     {
       "category": ["editing"],
-      "summary": "Reindent with = == • =motion",
+      "summary": "Fix indentation with = (use a motion)",
       "details": [
-        "== reindents current line",
-        "=ip reindents a block/paragraph"
+        "`==` fixes indentation on the current line",
+        "`=ip` fixes indentation for the current paragraph"
       ]
     },
     {
@@ -1261,7 +1261,7 @@
       "summary": "Hide mapping noise with <silent>",
       "details": [
         "nnoremap <silent> ... keeps command line clean",
-        "Good for <Action>(...) mappings"
+        "For <Action>(...), prefer map <silent> (not noremap)"
       ]
     },
     {
@@ -1546,7 +1546,7 @@
       "details": [
         ":action ReformatCode runs an IDE action",
         "Use :actionlist to find IDs (enable :set trackactionids if needed)",
-        "Map with nnoremap <leader>f <Action>(ReformatCode)"
+        "Map with map <leader>f <Action>(ReformatCode)"
       ]
     },
     {
@@ -1598,6 +1598,52 @@
         "in new ranges",
         "Use :%&& for file-wide repeat",
         "or Visual-select lines then :&&"
+      ]
+    },
+    {
+      "category": ["ideavim", "folds"],
+      "summary": "Fold depth and toggles zA • zr • zm • :set foldlevel",
+      "details": [
+        "zA toggles a fold recursively",
+        "zr opens folds one level, zm closes one level",
+        ":set foldlevel=99 opens most folds",
+        ":set foldlevel=0 closes folds quickly"
+      ]
+    },
+    {
+      "category": ["ideavim", "cmdline"],
+      "summary": "Read shell output into buffer :read!",
+      "details": [
+        ":read! {cmd} inserts command output below cursor",
+        "Example: :read! git branch --show-current",
+        "Great for notes, snippets, and diagnostics"
+      ]
+    },
+    {
+      "category": ["ideavim", "textobjects"],
+      "summary": "Underscore text objects i_ • a_",
+      "details": [
+        "ci_ changes inside underscore-delimited token",
+        "da_ deletes the full underscore-delimited segment",
+        "Useful for fast snake_case edits"
+      ]
+    },
+    {
+      "category": ["ideavim", "workflow", "cmdline"],
+      "summary": "Use environment vars in mappings",
+      "details": [
+        "You can use $HOME and other env vars in mappings",
+        "Example: nnoremap <leader>vc :e $HOME/.ideavimrc<CR>",
+        "Helps keep mappings portable across machines"
+      ]
+    },
+    {
+      "category": ["ideavim", "workflow", "motions"],
+      "summary": "Show hover info with gH (IDE)",
+      "details": [
+        "gH triggers IDE hover/documentation at caret",
+        "Useful for quick type or symbol context",
+        "If key is intercepted, remap it in IdeaVim"
       ]
     }
   ]
