@@ -39,6 +39,21 @@ class VimTipNotifierTest : BasePlatformTestCase() {
         assertTrue(notification.content.contains("&quot;")) // " becomes &quot;
     }
 
+    fun testCreateNotificationKeepsUnicodeLiteralsAndEscapesHtmlOnly() {
+        val notifier = VimTipNotifier(VimTipServiceImpl())
+        val tip = VimTip(
+            summary = "Repeat last change .",
+            details = listOf("5j → move down 5 lines", "literal <tag>")
+        )
+
+        val notification = notifier.createNotification(tip)
+
+        assertTrue(notification.content.contains("Repeat last change ."))
+        assertTrue(notification.content.contains("5j → move down 5 lines"))
+        assertTrue(notification.content.contains("literal &lt;tag&gt;"))
+        assertFalse(notification.content.contains("literal <tag>"))
+    }
+
     fun testCreateNotificationWithActionsHasNextTipAction() {
         val mockTipService = createMockTipService(
             VimTip(summary = "Test tip 1", details = listOf("Details 1"))
