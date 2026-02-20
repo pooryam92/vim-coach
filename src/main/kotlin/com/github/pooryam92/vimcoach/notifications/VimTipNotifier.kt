@@ -32,8 +32,8 @@ class VimTipNotifier(
     }
 
     internal fun createNotification(tip: VimTip): Notification {
-        val summaryHtml = tip.summary
-        val detailsHtml = tip.details.joinToString("<br/>")
+        val summaryHtml = escapeHtml(tip.summary)
+        val detailsHtml = tip.details.joinToString("<br/>") { escapeHtml(it) }
         val content = buildString {
             append("<html>")
             append("<div>")
@@ -54,6 +54,15 @@ class VimTipNotifier(
         )
         notification.icon = TIP_ICON
         return notification
+    }
+
+    private fun escapeHtml(text: String): String {
+        return text
+            .replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+            .replace("\"", "&quot;")
+            .replace("'", "&#39;")
     }
 
     companion object {

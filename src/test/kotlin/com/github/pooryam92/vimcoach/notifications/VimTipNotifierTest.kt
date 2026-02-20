@@ -22,18 +22,36 @@ class VimTipNotifierTest : BasePlatformTestCase() {
         assertTrue(notification.content.contains("w next word start."))
     }
 
-    fun testCreateNotificationPreservesHtmlFromTipContent() {
+    fun testCreateNotificationEscapesHtmlInTipContent() {
         val notifier = VimTipNotifier(VimTipServiceImpl())
         val tip = VimTip(
-            summary = "<code>w</code> motion",
-            details = listOf("line1", "<em>line2</em>")
+            summary = "Indent/outdent lines >> - <<",
+            details = listOf(">> indents current line, << outdents", "<em>test</em> & \"quotes\"")
         )
 
         val notification = notifier.createNotification(tip)
 
-        assertTrue(notification.content.contains("<code>w</code> motion"))
-        assertTrue(notification.content.contains("line1<br/><em>line2</em>"))
-        assertTrue(notification.content.contains("<em>line2</em>"))
+        // Verify HTML special characters are escaped
+        assertTrue(notification.content.contains("&gt;&gt;")) // >> becomes &gt;&gt;
+        assertTrue(notification.content.contains("&lt;&lt;")) // << becomes &lt;&lt;
+        assertTrue(notification.content.contains("&lt;em&gt;")) // <em> becomes &lt;em&gt;
+        assertTrue(notification.content.contains("&amp;")) // & becomes &amp;
+        assertTrue(notification.content.contains("&quot;")) // " becomes &quot;
+    }
+
+    fun testCreateNotificationKeepsUnicodeLiteralsAndEscapesHtmlOnly() {
+        val notifier = VimTipNotifier(VimTipServiceImpl())
+        val tip = VimTip(
+            summary = "Repeat last change .",
+            details = listOf("5j → move down 5 lines", "literal <tag>")
+        )
+
+        val notification = notifier.createNotification(tip)
+
+        assertTrue(notification.content.contains("Repeat last change ."))
+        assertTrue(notification.content.contains("5j → move down 5 lines"))
+        assertTrue(notification.content.contains("literal &lt;tag&gt;"))
+        assertFalse(notification.content.contains("literal <tag>"))
     }
 
     fun testCreateNotificationWithActionsHasNextTipAction() {
