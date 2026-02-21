@@ -1938,13 +1938,13 @@
       "category": [
         "textobjects"
       ],
-      "summary": "Select tag content vit / vat",
+      "summary": "Select HTML/XML tag text vit/vat",
       "details": [
-        "vit selects inside tag",
-        "vat selects around tag (includes tags)",
-        "If unavailable in your setup,",
-        "use f< / t> motions as fallback",
-        "for nearby tag edits"
+        "vit selects inner text of tag",
+        "vat selects tag + inner text",
+        "Example: <p>hi</p>",
+        "vit => hi",
+        "vat => <p>hi</p>"
       ]
     },
     {
