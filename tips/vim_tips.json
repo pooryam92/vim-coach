@@ -1830,10 +1830,26 @@
       "category": [
         "textobjects"
       ],
-      "summary": "Edit inside parentheses ci() / cib",
+      "summary": "Text objects: types + usage",
       "details": [
-        "ci( changes inside ()",
-        "cib is an alias for parentheses in many Vim setups"
+        "Text objects are edit units",
+        "Types: words, quotes, tags",
+        "Blocks: (), {}, []",
+        "Use i=inside, a=around",
+        "Use with c/d/y, e.g. ciw"
+      ]
+    },
+    {
+      "category": [
+        "textobjects"
+      ],
+      "summary": "Edit inside () with ci( / cib",
+      "details": [
+        "ci( changes inner text in ()",
+        "cib is alias for () textobj",
+        "Example: (hi)",
+        "ci( => hi",
+        "cib => hi"
       ]
     },
     {
