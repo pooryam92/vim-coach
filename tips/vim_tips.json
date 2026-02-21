@@ -297,21 +297,11 @@
         "config",
         "motions"
       ],
-      "summary": "Keep context while moving scrolloff",
+      "summary": "Keep space around the cursor",
       "details": [
-        "Example: :set scrolloff=5",
-        "Keeps lines visible above/below cursor"
-      ]
-    },
-    {
-      "category": [
-        "config",
-        "motions"
-      ],
-      "summary": "Keep horizontal context sidescrolloff",
-      "details": [
-        "Example: :set sidescrolloff=8",
-        "Helps on long unwrapped lines"
+        ":set scrolloff=5",
+        ":set sidescrolloff=5",
+        "Default values are 0"
       ]
     },
     {
