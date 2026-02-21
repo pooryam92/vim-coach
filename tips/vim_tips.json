@@ -1760,20 +1760,13 @@
       "category": [
         "textobjects"
       ],
-      "summary": "Text objects: inside vs around i / a",
+      "summary": "Text objects: types + inside/around",
       "details": [
-        "i{obj} excludes delimiters, a{obj} includes them",
-        "Works with d/c/y/v"
-      ]
-    },
-    {
-      "category": [
-        "textobjects"
-      ],
-      "summary": "Edit inside double quotes ci\"",
-      "details": [
-        "ci\" changes inside quotes",
-        "Cursor can be anywhere inside string"
+        "Words, quotes, tags",
+        "Blocks: (), {}, []",
+        "Also sentences, paragraphs",
+        "i{obj} = inside, a{obj} = around",
+        "Use with c/d/y/v, e.g. ciw"
       ]
     },
     {
@@ -1814,19 +1807,6 @@
       "details": [
         "ci` changes inside backticks",
         "Handy in Markdown and JS templates"
-      ]
-    },
-    {
-      "category": [
-        "textobjects"
-      ],
-      "summary": "Text objects: types + usage",
-      "details": [
-        "Text objects are edit units",
-        "Types: words, quotes, tags",
-        "Blocks: (), {}, []",
-        "Use i=inside, a=around",
-        "Use with c/d/y, e.g. ciw"
       ]
     },
     {
