@@ -2161,10 +2161,11 @@
         "ideavim",
         "workflow"
       ],
-      "summary": "Track action IDs :set trackactionids",
+      "summary": "Show IDE action IDs",
       "details": [
-        ":set trackactionids shows action IDs in the status bar",
-        "Helpful when mapping <Action>(...)"
+        "Use :set trackactionids",
+        "Action IDs show as notifications",
+        "Helpful for mapping <Action>(...)"
       ]
     },
     {
