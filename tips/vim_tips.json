@@ -64,6 +64,30 @@
       "category": [
         "basics"
       ],
+      "summary": "Start IdeaVim Tutor from the status-bar Vim icon",
+      "details": [
+        "Click the bottom-right Vim indicator in the IDE status bar",
+        "Choose Tutor from that menu"
+      ]
+    },
+    {
+      "category": [
+        "basics",
+        "workflow"
+      ],
+      "summary": "Map CapsLock as a dual-role Esc/Ctrl key",
+      "details": [
+        "Set CapsLock to dual-role: tap for Esc, hold for Ctrl",
+        "Windows: Dual Key Remap / Kanata",
+        "macOS: Karabiner-Elements",
+        "Linux: keyd",
+        "Reduces hand movement and makes Vim commands faster"
+      ]
+    },
+    {
+      "category": [
+        "basics"
+      ],
       "summary": "Delete previous word while typing Insert Ctrl-w",
       "details": [
         "Deletes word left of cursor in Insert mode",
@@ -331,7 +355,8 @@
       ],
       "summary": "Screen-line start/end on wraps g0 / g^ / g$",
       "details": [
-        "g0 screen-line start, g^ first non-blank",
+        "g0 screen-line start",
+        "g^ first non-blank",
         "g$ screen-line end"
       ]
     },
@@ -339,7 +364,7 @@
       "category": [
         "motions"
       ],
-      "summary": "Jump by paragraphs { / }",
+      "summary": "Jump by paragraphs { and }",
       "details": [
         "{ goes to previous paragraph",
         "} goes to next paragraph",
@@ -1229,6 +1254,18 @@
         "\"+y yanks to OS clipboard (if enabled)",
         "\"+p pastes from OS clipboard",
         "Requires +clipboard (Vim) or IDE clipboard support (IdeaVim)"
+      ]
+    },
+    {
+      "category": [
+        "basics",
+        "config",
+        "registers"
+      ],
+      "summary": "Use clipboard+=unnamedplus for default clipboard ops",
+      "details": [
+        ":set clipboard+=unnamedplus",
+        "Use the system clipboard by default for yank/paste"
       ]
     },
     {
