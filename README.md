@@ -12,7 +12,7 @@ Vim Coach is an IntelliJ Platform plugin designed to help developers learn and m
 ## Features
 
 -  **Vim Tips**: Get Vim tips displayed as notifications
--  **Keyboard Shortcut**: Press `Shift+T` twice to show a random Vim tip
+-  **On-Demand Action**: Run `Show Vim Tip` from Find Action (`Ctrl+Shift+A`)
 -  **Startup Tips**: See a Vim tip when you start your IDE
 -  **Comprehensive Library**: Hundreds of Vim commands covering navigation, editing, searching, and more
 -  **Remote Updates**: Tips can be loaded from remote sources for fresh content
@@ -25,11 +25,19 @@ This plugin requires [IdeaVim](https://plugins.jetbrains.com/plugin/164-ideavim)
 
 Once installed, you can:
 
-1. **Show a Vim Tip on Demand**: Press `Shift+T` twice to display a random Vim tip
+1. **Show a Vim Tip on Demand**: Run `Show Vim Tip` from Find Action (`Ctrl+Shift+A`)
 2. **Learn at Startup**: Tips will appear automatically when you open a project 
 3. **Browse Tips**: Each tip includes a summary and detailed explanation with examples
 4. **Refetch Tips from Remote**: Use the `Refetch Vim Tips from Remote` action to update your tips library from the remote source
 
+### IdeaVim mapping with `<leader>`
+
+If you use IdeaVim, you can map Vim Coach actions in your `~/.ideavimrc`:
+
+```vim
+let mapleader = " "
+map <leader>tt <Action>(com.github.pooryam92.vimcoach.actions.ShowVimTipAction)
+```
 
 <!-- Plugin description end -->
 

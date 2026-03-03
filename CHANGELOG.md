@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Removed
+
+- Removed the plugin's default keymap binding for `Show Vim Tip` to avoid conflicts.
+
 ## [0.3.0-beta] - 2026-02-18
 
 ### Improved
