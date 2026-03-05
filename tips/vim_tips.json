@@ -2301,19 +2301,6 @@
         "Example: nnoremap <leader>vc :e $HOME/.ideavimrc<CR>",
         "Helps keep mappings portable across machines"
       ]
-    },
-    {
-      "category": [
-        "ideavim",
-        "workflow",
-        "motions"
-      ],
-      "summary": "Show hover info with gH (IDE)",
-      "details": [
-        "gH triggers IDE hover/documentation at caret",
-        "Useful for quick type or symbol context",
-        "If key is intercepted, remap it in IdeaVim"
-      ]
     }
   ]
 }
