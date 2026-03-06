@@ -1,10 +1,11 @@
-package com.github.pooryam92.vimcoach.features.tips.state
+package com.github.pooryam92.vimcoach.features.tips.integration.state
 
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
-class VimTipServiceTest : BasePlatformTestCase() {
+class VimTipServiceIntTest : BasePlatformTestCase() {
 
     override fun setUp() {
         super.setUp()

@@ -1,12 +1,14 @@
-package com.github.pooryam92.vimcoach.features.tips.source.infra.parsing
+package com.github.pooryam92.vimcoach.features.tips.unit.source.infra.parsing
 
-import com.intellij.testFramework.fixtures.BasePlatformTestCase
+import com.github.pooryam92.vimcoach.features.tips.source.infra.parsing.TipJsonParser
+import org.junit.Assert.assertEquals
+import org.junit.Test
 import java.io.ByteArrayInputStream
 
-class TipJsonParserTest : BasePlatformTestCase() {
+class TipJsonParserUnitTest {
 
-    fun testParseTipsJsonFiltersInvalidEntries() {
-        // Arrange
+    @Test
+    fun parseTipsJsonFiltersInvalidEntries() {
         val json = """
             [
               {"summary":"  summary-1  ","details":["details-1"]},
@@ -16,12 +18,10 @@ class TipJsonParserTest : BasePlatformTestCase() {
             ]
         """.trimIndent()
 
-        // Act
         val tips = TipJsonParser.parseTipsJson(
             ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
         )
 
-        // Assert
         assertEquals(2, tips.size)
         assertEquals("summary-1", tips[0].summary)
         assertEquals(listOf("details-1"), tips[0].details)

@@ -1,22 +1,27 @@
-package com.github.pooryam92.vimcoach.features.tips.source.application
+package com.github.pooryam92.vimcoach.features.tips.unit.source.application
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceService
+import com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceServiceImpl
 import com.github.pooryam92.vimcoach.features.tips.source.domain.TipSourceLoadResult
 import com.github.pooryam92.vimcoach.features.tips.source.infra.file.FileTipSourceService
 import com.github.pooryam92.vimcoach.features.tips.source.infra.remote.RemoteTipSourceService
-import com.intellij.testFramework.fixtures.BasePlatformTestCase
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Test
 
-class TipSourceServiceTest : BasePlatformTestCase() {
+class TipSourceServiceUnitTest {
 
-    fun testUsesRemoteSourceByDefault() {
+    @Test
+    fun usesRemoteSourceByDefault() {
         val fakeRemote = FakeRemoteTipSource(
             TipSourceLoadResult.Success(listOf(VimTip("r", listOf("d"))), TipMetadata())
         )
         val fakeFile = FakeFileTipSource(
             TipSourceLoadResult.Success(listOf(VimTip("f", listOf("d"))), TipMetadata())
         )
-        val sourceService = registerSourceService(fakeRemote, fakeFile, { null })
+        val sourceService = createSourceService(fakeRemote, fakeFile) { null }
 
         val result = sourceService.loadTips()
 
@@ -25,14 +30,15 @@ class TipSourceServiceTest : BasePlatformTestCase() {
         assertEquals(0, fakeFile.loadCalls)
     }
 
-    fun testUsesFileSourceWhenModeIsFile() {
+    @Test
+    fun usesFileSourceWhenModeIsFile() {
         val fakeRemote = FakeRemoteTipSource(
             TipSourceLoadResult.Success(listOf(VimTip("r", listOf("d"))), TipMetadata())
         )
         val fakeFile = FakeFileTipSource(
             TipSourceLoadResult.Success(listOf(VimTip("f", listOf("d"))), TipMetadata())
         )
-        val sourceService = registerSourceService(fakeRemote, fakeFile, { "file" })
+        val sourceService = createSourceService(fakeRemote, fakeFile) { "file" }
 
         val result = sourceService.loadTips()
 
@@ -41,7 +47,7 @@ class TipSourceServiceTest : BasePlatformTestCase() {
         assertEquals(1, fakeFile.loadCalls)
     }
 
-    private fun registerSourceService(
+    private fun createSourceService(
         fakeRemote: RemoteTipSourceService,
         fakeFile: FileTipSourceService,
         modeProvider: () -> String?

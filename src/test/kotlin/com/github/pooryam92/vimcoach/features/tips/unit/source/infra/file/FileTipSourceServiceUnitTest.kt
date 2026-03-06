@@ -1,13 +1,17 @@
-package com.github.pooryam92.vimcoach.features.tips.source.infra.file
+package com.github.pooryam92.vimcoach.features.tips.unit.source.infra.file
 
 import com.github.pooryam92.vimcoach.features.tips.source.domain.TipSourceLoadResult
-import com.intellij.testFramework.fixtures.BasePlatformTestCase
+import com.github.pooryam92.vimcoach.features.tips.source.infra.file.FileTipSourceServiceImpl
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Test
 import java.nio.file.Files
 import java.nio.file.Path
 
-class FileTipSourceServiceTest : BasePlatformTestCase() {
+class FileTipSourceServiceUnitTest {
 
-    fun testLoadsTipsFromJsonFile() {
+    @Test
+    fun loadsTipsFromJsonFile() {
         val tipsFile = createTipsFile(
             """
             [
@@ -26,7 +30,8 @@ class FileTipSourceServiceTest : BasePlatformTestCase() {
         assertEquals("summary-1", result.tips[0].summary)
     }
 
-    fun testReturnsFailureWhenFileDoesNotExist() {
+    @Test
+    fun returnsFailureWhenFileDoesNotExist() {
         val missingFile = Path.of("/tmp/missing-vimcoach-tips.json")
         val service = FileTipSourceServiceImpl { missingFile }
 
