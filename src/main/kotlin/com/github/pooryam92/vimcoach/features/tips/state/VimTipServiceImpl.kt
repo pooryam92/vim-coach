@@ -8,7 +8,7 @@ import com.intellij.util.xmlb.XmlSerializerUtil
 
 @State(name = "VimTipCache", storages = [Storage("vim-tip-cache.xml")])
 class VimTipServiceImpl : VimTipService {
-    private var state: VimTipService.State = VimTipService.State()
+    private var state = VimTipService.State()
 
     override fun getState(): VimTipService.State = state
 
@@ -17,7 +17,7 @@ class VimTipServiceImpl : VimTipService {
     }
 
     override fun countTips(): Int {
-        return state.tips.count()
+        return state.tips.size
     }
 
     override fun saveTips(tips: List<VimTip>) {
@@ -26,10 +26,7 @@ class VimTipServiceImpl : VimTipService {
 
     override fun getRandomTip(): VimTip {
         if (state.tips.isEmpty()) {
-            return VimTip(
-                "No tips found.",
-                listOf("Tips have not been loaded yet.")
-            )
+            return FALLBACK_TIP
         }
         return state.tips.random()
     }
@@ -40,5 +37,12 @@ class VimTipServiceImpl : VimTipService {
 
     override fun saveMetadata(metadata: TipMetadata) {
         state.metadata = metadata
+    }
+
+    private companion object {
+        val FALLBACK_TIP = VimTip(
+            summary = "No tips found.",
+            details = listOf("Tips have not been loaded yet.")
+        )
     }
 }

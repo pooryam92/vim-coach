@@ -32,28 +32,31 @@ class VimTipNotifier(
     }
 
     internal fun createNotification(tip: VimTip): Notification {
-        val summaryHtml = escapeHtml(tip.summary)
-        val detailsHtml = tip.details.joinToString("<br/>") { escapeHtml(it) }
-        val content = buildString {
-            append("<html>")
-            append("<div>")
-            append("<b>")
-            append(summaryHtml)
-            append("</b>")
-            append("<div style=\"margin-top:12px;margin-bottom:12px;\">")
-            append(detailsHtml)
-            append("</div>")
-            append("</div>")
-            append("</html>")
-        }
-        val notification = Notification(
+        return Notification(
             NOTIFICATION_GROUP_ID,
             APP_TITLE,
-            content,
+            renderTipAsHtml(tip),
             NotificationType.INFORMATION
-        )
-        notification.icon = TIP_ICON
-        return notification
+        ).apply {
+            icon = TIP_ICON
+        }
+    }
+
+    private fun renderTipAsHtml(tip: VimTip): String {
+        val summaryHtml = escapeHtml(tip.summary)
+        val detailsHtml = tip.details.joinToString(DETAILS_SEPARATOR) { escapeHtml(it) }
+        return buildString {
+            append(HTML_OPEN)
+            append(WRAPPER_OPEN)
+            append(SUMMARY_OPEN)
+            append(summaryHtml)
+            append(SUMMARY_CLOSE)
+            append(DETAILS_OPEN)
+            append(detailsHtml)
+            append(DETAILS_CLOSE)
+            append(WRAPPER_CLOSE)
+            append(HTML_CLOSE)
+        }
     }
 
     private fun escapeHtml(text: String): String {
@@ -70,5 +73,15 @@ class VimTipNotifier(
         val NOTIFICATION_GROUP_ID: String = MyBundle.message("notificationGroupId")
         val TIP_NEXT_ACTION_TEXT: String = MyBundle.message("tipNextAction")
         val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", VimTipNotifier::class.java)
+
+        private const val DETAILS_SEPARATOR = "<br/>"
+        private const val HTML_OPEN = "<html>"
+        private const val HTML_CLOSE = "</html>"
+        private const val WRAPPER_OPEN = "<div>"
+        private const val WRAPPER_CLOSE = "</div>"
+        private const val SUMMARY_OPEN = "<b>"
+        private const val SUMMARY_CLOSE = "</b>"
+        private const val DETAILS_OPEN = "<div style=\"margin-top:12px;margin-bottom:12px;\">"
+        private const val DETAILS_CLOSE = "</div>"
     }
 }

@@ -28,4 +28,27 @@ class TipJsonParserUnitTest {
         assertEquals("summary-3", tips[1].summary)
         assertEquals(listOf("details-3"), tips[1].details)
     }
+
+    @Test
+    fun parseTipsJsonReadsGroupedTipPayloads() {
+        val json = """
+            {
+              "movement": [
+                {"summary":"jump", "details":["use %"]},
+                {"summary":"", "details":["invalid"]}
+              ],
+              "editing": [
+                {"summary":"change", "details":["use ciw"]}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(2, tips.size)
+        assertEquals("jump", tips[0].summary)
+        assertEquals("change", tips[1].summary)
+    }
 }

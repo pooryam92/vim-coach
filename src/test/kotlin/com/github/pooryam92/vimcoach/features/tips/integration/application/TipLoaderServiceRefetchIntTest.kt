@@ -1,12 +1,12 @@
 package com.github.pooryam92.vimcoach.features.tips.integration.application
 
+import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
+import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderServiceImpl
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
-import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
-import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderServiceImpl
-import com.github.pooryam92.vimcoach.features.tips.source.domain.TipSourceLoadResult
 import com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceService
+import com.github.pooryam92.vimcoach.features.tips.source.domain.TipSourceLoadResult
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
@@ -15,7 +15,6 @@ import com.intellij.testFramework.registerServiceInstance
 class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
 
     fun testRefetchTipsReloadsEvenWhenTipsExist() {
-        // Arrange
         val tipService = project.service<VimTipService>()
         tipService.saveTips(listOf(VimTip("old-summary", listOf("old-details"))))
 
@@ -23,231 +22,209 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
             VimTip("new-summary-1", listOf("new-details-1")),
             VimTip("new-summary-2", listOf("new-details-2"))
         )
-        val fakeRemote = FakeRemoteTipSource(
+        val fakeTipSource = FakeTipSource(
             TipSourceLoadResult.Success(remoteTips, TipMetadata())
         )
-        val loader = registerLoader(fakeRemote)
+        val loader = registerLoader(fakeTipSource)
 
-        // Act
         val result = loader.refetchTips()
 
-        // Assert
-        assertEquals(1, fakeRemote.loadCalls)
+        assertEquals(1, fakeTipSource.loadTipsCalls)
+        assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.Updated(2), result)
         assertEquals(2, tipService.countTips())
-        val randomTip = tipService.getRandomTip()
-        assertTrue(remoteTips.contains(randomTip))
+        assertTrue(remoteTips.contains(tipService.getRandomTip()))
     }
 
     fun testRefetchTipsUpdatesExistingTips() {
-        // Arrange
         val tipService = project.service<VimTipService>()
-        val initialTips = listOf(
-            VimTip("initial-1", listOf("initial-details-1")),
-            VimTip("initial-2", listOf("initial-details-2")),
-            VimTip("initial-3", listOf("initial-details-3"))
+        tipService.saveTips(
+            listOf(
+                VimTip("initial-1", listOf("initial-details-1")),
+                VimTip("initial-2", listOf("initial-details-2")),
+                VimTip("initial-3", listOf("initial-details-3"))
+            )
         )
-        tipService.saveTips(initialTips)
         assertEquals(3, tipService.countTips())
 
-        val updatedTips = listOf(
-            VimTip("updated-1", listOf("updated-details-1"))
-        )
-        val fakeRemote = FakeRemoteTipSource(
+        val updatedTips = listOf(VimTip("updated-1", listOf("updated-details-1")))
+        val fakeTipSource = FakeTipSource(
             TipSourceLoadResult.Success(updatedTips, TipMetadata())
         )
-        val loader = registerLoader(fakeRemote)
+        val loader = registerLoader(fakeTipSource)
 
-        // Act
         val result = loader.refetchTips()
 
-        // Assert
-        assertEquals(1, fakeRemote.loadCalls)
+        assertEquals(1, fakeTipSource.loadTipsCalls)
+        assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.Updated(1), result)
         assertEquals(1, tipService.countTips())
-        val tip = tipService.getRandomTip()
-        assertEquals("updated-1", tip.summary)
+        assertEquals("updated-1", tipService.getRandomTip().summary)
     }
 
     fun testRefetchTipsDoesNotSaveWhenRemoteReturnsFailure() {
-        // Arrange
         val tipService = project.service<VimTipService>()
-        val initialTips = listOf(VimTip("existing", listOf("existing-details")))
-        tipService.saveTips(initialTips)
+        tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
 
-        val fakeRemote = FakeRemoteTipSource(TipSourceLoadResult.Failure("connection timeout"))
-        val loader = registerLoader(fakeRemote)
+        val fakeTipSource = FakeTipSource(TipSourceLoadResult.Failure("connection timeout"))
+        val loader = registerLoader(fakeTipSource)
 
-        // Act
         val result = loader.refetchTips()
 
-        // Assert
-        assertEquals(1, fakeRemote.loadCalls)
+        assertEquals(1, fakeTipSource.loadTipsCalls)
+        assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.Failed("connection timeout"), result)
         assertEquals(1, tipService.countTips())
-        val tip = tipService.getRandomTip()
-        assertEquals("existing", tip.summary)
+        assertEquals("existing", tipService.getRandomTip().summary)
     }
 
     fun testRefetchTipsDoesNotSaveWhenRemoteReturnsEmpty() {
-        // Arrange
         val tipService = project.service<VimTipService>()
-        val initialTips = listOf(VimTip("existing", listOf("existing-details")))
-        tipService.saveTips(initialTips)
+        tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
 
-        val fakeRemote = FakeRemoteTipSource(TipSourceLoadResult.Empty)
-        val loader = registerLoader(fakeRemote)
+        val fakeTipSource = FakeTipSource(TipSourceLoadResult.Empty)
+        val loader = registerLoader(fakeTipSource)
 
-        // Act
         val result = loader.refetchTips()
 
-        // Assert
-        assertEquals(1, fakeRemote.loadCalls)
+        assertEquals(1, fakeTipSource.loadTipsCalls)
+        assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.NoData, result)
         assertEquals(1, tipService.countTips())
-        val tip = tipService.getRandomTip()
-        assertEquals("existing", tip.summary)
+        assertEquals("existing", tipService.getRandomTip().summary)
     }
 
     fun testRefetchTipsReturnsNotModifiedWhenNoChanges() {
-        // Arrange
         val tipService = project.service<VimTipService>()
-        val initialTips = listOf(VimTip("existing", listOf("existing-details")))
-        tipService.saveTips(initialTips)
+        tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
 
-        val fakeRemote = FakeRemoteTipSource(TipSourceLoadResult.NotModified)
-        val loader = registerLoader(fakeRemote)
+        val fakeTipSource = FakeTipSource(TipSourceLoadResult.NotModified)
+        val loader = registerLoader(fakeTipSource)
 
-        // Act
         val result = loader.refetchTips()
 
-        // Assert
-        assertEquals(1, fakeRemote.loadCalls)
+        assertEquals(1, fakeTipSource.loadTipsCalls)
+        assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.NotModified, result)
         assertEquals(1, tipService.countTips())
-        val tip = tipService.getRandomTip()
-        assertEquals("existing", tip.summary)
+        assertEquals("existing", tipService.getRandomTip().summary)
     }
 
     fun testRefetchTipsAlwaysForcesReload() {
-        // Arrange: Setup tips with metadata indicating they were just fetched
         val tipService = project.service<VimTipService>()
-        val initialTips = listOf(VimTip("existing", listOf("existing-details")))
-        tipService.saveTips(initialTips)
-        tipService.saveMetadata(TipMetadata(
-            etag = "abc123",
-            githubSha = "def456",
-            lastFetchTimestamp = System.currentTimeMillis()
-        ))
+        tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
+        tipService.saveMetadata(
+            TipMetadata(
+                etag = "abc123",
+                githubSha = "def456",
+                lastFetchTimestamp = System.currentTimeMillis()
+            )
+        )
 
         val updatedTips = listOf(VimTip("new", listOf("new-details")))
-        val fakeRemote = FakeRemoteTipSource(
+        val fakeTipSource = FakeTipSource(
             TipSourceLoadResult.Success(updatedTips, TipMetadata())
         )
-        val loader = registerLoader(fakeRemote)
+        val loader = registerLoader(fakeTipSource)
 
-        // Act: Refetch should always force reload
         val result = loader.refetchTips()
 
-        // Assert: Should call loadTips (not loadTipsConditional) and update
-        assertEquals(1, fakeRemote.loadCalls)
+        assertEquals(1, fakeTipSource.loadTipsCalls)
+        assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.Updated(1), result)
         assertEquals(1, tipService.countTips())
-        val tip = tipService.getRandomTip()
-        assertEquals("new", tip.summary)
+        assertEquals("new", tipService.getRandomTip().summary)
     }
 
     fun testCheckForUpdatesLoadsWhenNoTipsExist() {
-        // Arrange
         val tipService = project.service<VimTipService>()
         tipService.saveTips(emptyList())
 
-        val remoteTips = listOf(VimTip("new-tip", listOf("new-details")))
-        val fakeRemote = FakeRemoteTipSource(
-            TipSourceLoadResult.Success(remoteTips, TipMetadata())
+        val fakeTipSource = FakeTipSource(
+            TipSourceLoadResult.Success(listOf(VimTip("new-tip", listOf("new-details"))), TipMetadata())
         )
-        val loader = registerLoader(fakeRemote)
+        val loader = registerLoader(fakeTipSource)
 
-        // Act
         val result = loader.checkForUpdates()
 
-        // Assert
-        assertEquals(1, fakeRemote.loadCalls)
+        assertEquals(1, fakeTipSource.loadTipsCalls)
+        assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.Updated(1), result)
         assertEquals(1, tipService.countTips())
     }
 
     fun testCheckForUpdatesUsesConditionalWhenTipsExist() {
-        // Arrange
         val tipService = project.service<VimTipService>()
-        val initialTips = listOf(VimTip("existing", listOf("existing-details")))
-        tipService.saveTips(initialTips)
-        tipService.saveMetadata(TipMetadata(
-            etag = "abc123",
-            githubSha = "def456",
-            lastFetchTimestamp = System.currentTimeMillis() - 3600000 // 1 hour ago
-        ))
+        tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
+        tipService.saveMetadata(
+            TipMetadata(
+                etag = "abc123",
+                githubSha = "def456",
+                lastFetchTimestamp = System.currentTimeMillis() - 3_600_000
+            )
+        )
 
-        val fakeRemote = FakeRemoteTipSource(TipSourceLoadResult.NotModified)
-        val loader = registerLoader(fakeRemote)
+        val fakeTipSource = FakeTipSource(TipSourceLoadResult.NotModified)
+        val loader = registerLoader(fakeTipSource)
 
-        // Act
         val result = loader.checkForUpdates()
 
-        // Assert: Should use conditional loading and return NotModified
-        assertEquals(1, fakeRemote.loadCalls)
+        assertEquals(0, fakeTipSource.loadTipsCalls)
+        assertEquals(1, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.NotModified, result)
         assertEquals(1, tipService.countTips())
-        val tip = tipService.getRandomTip()
-        assertEquals("existing", tip.summary)
+        assertEquals("existing", tipService.getRandomTip().summary)
+    }
+
+    fun testCheckForUpdatesNotModifiedRefreshesLastFetchTimestamp() {
+        val tipService = project.service<VimTipService>()
+        tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
+        val initialTimestamp = 1_000L
+        tipService.saveMetadata(
+            TipMetadata(
+                etag = "etag",
+                githubSha = "sha",
+                lastFetchTimestamp = initialTimestamp
+            )
+        )
+
+        val fakeTipSource = FakeTipSource(TipSourceLoadResult.NotModified)
+        val loader = registerLoader(fakeTipSource)
+
+        val result = loader.checkForUpdates()
+
+        assertEquals(TipLoadResult.NotModified, result)
+        assertEquals(0, fakeTipSource.loadTipsCalls)
+        assertEquals(1, fakeTipSource.loadTipsConditionalCalls)
+        assertTrue(tipService.getMetadata().lastFetchTimestamp > initialTimestamp)
     }
 
     fun testCheckForUpdatesUpdatesWhenChangesDetected() {
-        // Arrange
         val tipService = project.service<VimTipService>()
-        val initialTips = listOf(VimTip("old", listOf("old-details")))
-        tipService.saveTips(initialTips)
+        tipService.saveTips(listOf(VimTip("old", listOf("old-details"))))
         tipService.saveMetadata(TipMetadata(etag = "old-etag"))
 
         val updatedTips = listOf(
             VimTip("new-1", listOf("new-details-1")),
-            VimTip("new-2", listOf(("new-details-2")))
+            VimTip("new-2", listOf("new-details-2"))
         )
-        val fakeRemote = FakeRemoteTipSource(
+        val fakeTipSource = FakeTipSource(
             TipSourceLoadResult.Success(updatedTips, TipMetadata(etag = "new-etag"))
         )
-        val loader = registerLoader(fakeRemote)
+        val loader = registerLoader(fakeTipSource)
 
-        // Act
         val result = loader.checkForUpdates()
 
-        // Assert
-        assertEquals(1, fakeRemote.loadCalls)
+        assertEquals(0, fakeTipSource.loadTipsCalls)
+        assertEquals(1, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.Updated(2), result)
         assertEquals(2, tipService.countTips())
     }
 
-    private class FakeRemoteTipSource(
-        private val result: TipSourceLoadResult
-    ) : TipSourceService {
-        var loadCalls = 0
-            private set
-
-        override fun loadTips(): TipSourceLoadResult {
-            loadCalls += 1
-            return result
-        }
-
-        override fun loadTipsConditional(metadata: TipMetadata): TipSourceLoadResult {
-            loadCalls += 1
-            return result
-        }
-    }
-
-    private fun registerLoader(fakeRemote: TipSourceService): TipLoaderService {
+    private fun registerLoader(fakeTipSource: TipSourceService): TipLoaderService {
         project.registerServiceInstance(
             TipSourceService::class.java,
-            fakeRemote
+            fakeTipSource
         )
         val loader = TipLoaderServiceImpl(project)
         project.registerServiceInstance(
@@ -255,5 +232,25 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
             loader
         )
         return loader
+    }
+
+    private class FakeTipSource(
+        private val result: TipSourceLoadResult
+    ) : TipSourceService {
+        var loadTipsCalls = 0
+            private set
+
+        var loadTipsConditionalCalls = 0
+            private set
+
+        override fun loadTips(): TipSourceLoadResult {
+            loadTipsCalls += 1
+            return result
+        }
+
+        override fun loadTipsConditional(metadata: TipMetadata): TipSourceLoadResult {
+            loadTipsConditionalCalls += 1
+            return result
+        }
     }
 }

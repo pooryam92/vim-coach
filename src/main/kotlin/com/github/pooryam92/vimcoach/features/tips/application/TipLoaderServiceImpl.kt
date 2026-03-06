@@ -16,40 +16,46 @@ class TipLoaderServiceImpl(project: Project) : TipLoaderService {
     }
 
     override fun checkForUpdates(): TipLoadResult {
-        if (tipService.countTips() == 0) {
-            return fetchAndSave(conditional = false)
-        }
-        
-        return fetchAndSave(conditional = true)
+        return fetchAndSave(conditional = hasCachedTips())
     }
 
     private fun fetchAndSave(conditional: Boolean): TipLoadResult {
-        val sourceResult = if (conditional) {
-            val metadata = tipService.getMetadata()
-            tipSource.loadTipsConditional(metadata)
+        val sourceResult = loadFromSource(conditional)
+        return toTipLoadResult(sourceResult)
+    }
+
+    private fun hasCachedTips(): Boolean {
+        return tipService.countTips() > 0
+    }
+
+    private fun loadFromSource(conditional: Boolean): TipSourceLoadResult {
+        return if (conditional) {
+            tipSource.loadTipsConditional(tipService.getMetadata())
         } else {
             tipSource.loadTips()
         }
+    }
 
+    private fun toTipLoadResult(sourceResult: TipSourceLoadResult): TipLoadResult {
         return when (sourceResult) {
-            is TipSourceLoadResult.Success -> {
-                tipService.saveTips(sourceResult.tips)
-                tipService.saveMetadata(sourceResult.metadata)
-                TipLoadResult.Updated(sourceResult.tips.size)
-            }
-            
-            TipSourceLoadResult.NotModified -> {
-                val currentMetadata = tipService.getMetadata()
-                val updatedMetadata = currentMetadata.copy(
-                    lastFetchTimestamp = System.currentTimeMillis()
-                )
-                tipService.saveMetadata(updatedMetadata)
-                TipLoadResult.NotModified
-            }
-            
+            is TipSourceLoadResult.Success -> saveFetchedTips(sourceResult)
+            TipSourceLoadResult.NotModified -> markRefreshTimestamp()
             TipSourceLoadResult.Empty -> TipLoadResult.NoData
-            
             is TipSourceLoadResult.Failure -> TipLoadResult.Failed(sourceResult.message, sourceResult.cause)
         }
+    }
+
+    private fun saveFetchedTips(sourceResult: TipSourceLoadResult.Success): TipLoadResult {
+        tipService.saveTips(sourceResult.tips)
+        tipService.saveMetadata(sourceResult.metadata)
+        return TipLoadResult.Updated(sourceResult.tips.size)
+    }
+
+    private fun markRefreshTimestamp(): TipLoadResult {
+        val updatedMetadata = tipService.getMetadata().copy(
+            lastFetchTimestamp = System.currentTimeMillis()
+        )
+        tipService.saveMetadata(updatedMetadata)
+        return TipLoadResult.NotModified
     }
 }

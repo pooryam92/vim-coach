@@ -26,7 +26,8 @@ class TipSourceServiceUnitTest {
         val result = sourceService.loadTips()
 
         assertTrue(result is TipSourceLoadResult.Success)
-        assertEquals(1, fakeRemote.loadCalls)
+        assertEquals(1, fakeRemote.loadTipsCalls)
+        assertEquals(0, fakeRemote.loadTipsConditionalCalls)
         assertEquals(0, fakeFile.loadCalls)
     }
 
@@ -43,7 +44,34 @@ class TipSourceServiceUnitTest {
         val result = sourceService.loadTips()
 
         assertTrue(result is TipSourceLoadResult.Success)
-        assertEquals(0, fakeRemote.loadCalls)
+        assertEquals(0, fakeRemote.loadTipsCalls)
+        assertEquals(0, fakeRemote.loadTipsConditionalCalls)
+        assertEquals(1, fakeFile.loadCalls)
+    }
+
+    @Test
+    fun conditionalLoadUsesRemoteByDefault() {
+        val fakeRemote = FakeRemoteTipSource(TipSourceLoadResult.Empty)
+        val fakeFile = FakeFileTipSource(TipSourceLoadResult.Empty)
+        val sourceService = createSourceService(fakeRemote, fakeFile) { null }
+
+        sourceService.loadTipsConditional(TipMetadata(etag = "etag"))
+
+        assertEquals(0, fakeRemote.loadTipsCalls)
+        assertEquals(1, fakeRemote.loadTipsConditionalCalls)
+        assertEquals(0, fakeFile.loadCalls)
+    }
+
+    @Test
+    fun conditionalLoadUsesFileWhenModeIsFile() {
+        val fakeRemote = FakeRemoteTipSource(TipSourceLoadResult.Empty)
+        val fakeFile = FakeFileTipSource(TipSourceLoadResult.Empty)
+        val sourceService = createSourceService(fakeRemote, fakeFile) { "file" }
+
+        sourceService.loadTipsConditional(TipMetadata(etag = "etag"))
+
+        assertEquals(0, fakeRemote.loadTipsCalls)
+        assertEquals(0, fakeRemote.loadTipsConditionalCalls)
         assertEquals(1, fakeFile.loadCalls)
     }
 
@@ -58,16 +86,19 @@ class TipSourceServiceUnitTest {
     private class FakeRemoteTipSource(
         private val result: TipSourceLoadResult
     ) : RemoteTipSourceService {
-        var loadCalls = 0
+        var loadTipsCalls = 0
+            private set
+
+        var loadTipsConditionalCalls = 0
             private set
 
         override fun loadTips(): TipSourceLoadResult {
-            loadCalls += 1
+            loadTipsCalls += 1
             return result
         }
 
         override fun loadTipsConditional(metadata: TipMetadata): TipSourceLoadResult {
-            loadCalls += 1
+            loadTipsConditionalCalls += 1
             return result
         }
     }

@@ -3,6 +3,7 @@ package com.github.pooryam92.vimcoach.features.tips.source.infra.remote
 import com.github.pooryam92.vimcoach.features.tips.source.infra.config.VimTipConfig
 import com.github.pooryam92.vimcoach.features.tips.source.infra.parsing.TipJsonParser
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
+import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.source.domain.TipSourceLoadResult
 import com.google.gson.Gson
 import com.intellij.util.io.HttpRequests
@@ -10,76 +11,87 @@ import java.net.HttpURLConnection
 import java.util.Base64
 
 class RemoteTipSourceServiceImpl : RemoteTipSourceService {
-    
+    private val gson = Gson()
+
     override fun loadTips(): TipSourceLoadResult {
         return loadTipsConditional(TipMetadata())
     }
 
     override fun loadTipsConditional(metadata: TipMetadata): TipSourceLoadResult {
         return try {
-            var responseETag: String? = null
-            var notModified = false
-            var githubSha: String? = null
-
-            val tips = HttpRequests.request(VimTipConfig.GITHUB_API_URL)
-                .tuner { connection ->
-                    connection.setRequestProperty("Accept", "application/vnd.github.v3+json")
-                    
-                    // Add conditional request header if we have ETag from previous fetch
-                    metadata.etag?.let { etag ->
-                        connection.setRequestProperty("If-None-Match", etag)
-                    }
-                }
-                .connect { request ->
-                    val connection = request.connection as? HttpURLConnection
-
-                    // Check if GitHub returned 304 Not Modified
-                    if (connection?.responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
-                        notModified = true
-                        return@connect emptyList()
-                    }
-
-                    // Capture ETag for future conditional requests
-                    responseETag = connection?.getHeaderField("ETag")
-
-                    // Parse GitHub API response
-                    val gson = Gson()
-                    val apiResponse = gson.fromJson(
-                        request.reader,
-                        GitHubApiResponse::class.java
-                    )
-
-                    githubSha = apiResponse.sha
-
-                    // Check if SHA matches (additional check even if ETag is different)
-                    if (metadata.githubSha != null && metadata.githubSha == githubSha) {
-                        notModified = true
-                        return@connect emptyList()
-                    }
-
-                    // Decode base64 content
-                    val decodedContent = Base64.getDecoder().decode(
-                        apiResponse.content.replace("\n", "").replace("\r", "")
-                    )
-
-                    // Parse tips from decoded JSON
-                    TipJsonParser.parseTipsJson(decodedContent.inputStream())
-                }
-
-            when {
-                notModified -> TipSourceLoadResult.NotModified
-                tips.isEmpty() -> TipSourceLoadResult.Empty
-                else -> {
-                    val newMetadata = TipMetadata(
-                        etag = responseETag,
-                        githubSha = githubSha,
-                        lastFetchTimestamp = System.currentTimeMillis()
-                    )
-                    TipSourceLoadResult.Success(tips, newMetadata)
-                }
-            }
+            val context = RequestContext()
+            val tips = fetchTipsFromRemote(metadata, context)
+            toLoadResult(tips, context)
         } catch (e: Exception) {
             TipSourceLoadResult.Failure(e.message ?: "Unknown error", e)
         }
+    }
+
+    private fun fetchTipsFromRemote(metadata: TipMetadata, context: RequestContext): List<VimTip> {
+        return HttpRequests.request(VimTipConfig.GITHUB_API_URL)
+            .tuner { connection ->
+                connection.setRequestProperty(HEADER_ACCEPT, ACCEPT_GITHUB_V3_JSON)
+                metadata.etag?.let { connection.setRequestProperty(HEADER_IF_NONE_MATCH, it) }
+            }
+            .connect { request ->
+                val connection = request.connection as? HttpURLConnection
+                if (connection?.responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
+                    context.notModified = true
+                    return@connect emptyList()
+                }
+
+                context.responseETag = connection?.getHeaderField(HEADER_ETAG)
+
+                val apiResponse = gson.fromJson(request.reader, GitHubApiResponse::class.java)
+                context.githubSha = apiResponse.sha
+
+                if (isSameSha(metadata, context.githubSha)) {
+                    context.notModified = true
+                    return@connect emptyList()
+                }
+
+                parseTipsFromApiResponse(apiResponse)
+            }
+    }
+
+    private fun parseTipsFromApiResponse(apiResponse: GitHubApiResponse): List<VimTip> {
+        val decodedContent = Base64.getDecoder().decode(
+            apiResponse.content
+                .replace("\n", "")
+                .replace("\r", "")
+        )
+        return TipJsonParser.parseTipsJson(decodedContent.inputStream())
+    }
+
+    private fun toLoadResult(tips: List<VimTip>, context: RequestContext): TipSourceLoadResult {
+        if (context.notModified) {
+            return TipSourceLoadResult.NotModified
+        }
+        if (tips.isEmpty()) {
+            return TipSourceLoadResult.Empty
+        }
+        val newMetadata = TipMetadata(
+            etag = context.responseETag,
+            githubSha = context.githubSha,
+            lastFetchTimestamp = System.currentTimeMillis()
+        )
+        return TipSourceLoadResult.Success(tips, newMetadata)
+    }
+
+    private fun isSameSha(metadata: TipMetadata, githubSha: String?): Boolean {
+        return metadata.githubSha != null && metadata.githubSha == githubSha
+    }
+
+    private data class RequestContext(
+        var responseETag: String? = null,
+        var githubSha: String? = null,
+        var notModified: Boolean = false
+    )
+
+    private companion object {
+        const val HEADER_ACCEPT = "Accept"
+        const val HEADER_IF_NONE_MATCH = "If-None-Match"
+        const val HEADER_ETAG = "ETag"
+        const val ACCEPT_GITHUB_V3_JSON = "application/vnd.github.v3+json"
     }
 }

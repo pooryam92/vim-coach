@@ -31,39 +31,8 @@ class RefetchVimTipsAction : AnAction() {
     }
 
     private fun showResultNotification(project: Project, result: TipLoadResult) {
-        when (result) {
-            is TipLoadResult.Updated -> {
-                showNotification(
-                    project,
-                    MyBundle.message("refetchTipsSuccess", result.tipCount),
-                    NotificationType.INFORMATION
-                )
-            }
-
-            TipLoadResult.NotModified -> {
-                showNotification(
-                    project,
-                    MyBundle.message("refetchTipsNotModified"),
-                    NotificationType.INFORMATION
-                )
-            }
-
-            TipLoadResult.NoData -> {
-                showNotification(
-                    project,
-                    MyBundle.message("refetchTipsNoData"),
-                    NotificationType.WARNING
-                )
-            }
-
-            is TipLoadResult.Failed -> {
-                showNotification(
-                    project,
-                    MyBundle.message("refetchTipsError", result.message),
-                    NotificationType.ERROR
-                )
-            }
-        }
+        val notification = buildResultNotification(result)
+        showNotification(project, notification.content, notification.type)
     }
 
     private fun showNotification(project: Project, content: String, type: NotificationType) {
@@ -74,4 +43,33 @@ class RefetchVimTipsAction : AnAction() {
             type
         ).notify(project)
     }
+
+    private fun buildResultNotification(result: TipLoadResult): ActionResultNotification {
+        return when (result) {
+            is TipLoadResult.Updated -> ActionResultNotification(
+                content = MyBundle.message("refetchTipsSuccess", result.tipCount),
+                type = NotificationType.INFORMATION
+            )
+
+            TipLoadResult.NotModified -> ActionResultNotification(
+                content = MyBundle.message("refetchTipsNotModified"),
+                type = NotificationType.INFORMATION
+            )
+
+            TipLoadResult.NoData -> ActionResultNotification(
+                content = MyBundle.message("refetchTipsNoData"),
+                type = NotificationType.WARNING
+            )
+
+            is TipLoadResult.Failed -> ActionResultNotification(
+                content = MyBundle.message("refetchTipsError", result.message),
+                type = NotificationType.ERROR
+            )
+        }
+    }
+
+    private data class ActionResultNotification(
+        val content: String,
+        val type: NotificationType
+    )
 }

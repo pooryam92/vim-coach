@@ -1,8 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.ui.notifications
 
-import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
-import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
+import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeVimTipService
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.VimTipNotifier
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -14,7 +13,7 @@ class VimTipNotifierUnitTest {
 
     @Test
     fun createNotificationUsesAppTitleAndContent() {
-        val notifier = VimTipNotifier(createMockTipService())
+        val notifier = VimTipNotifier(FakeVimTipService())
         val tip = VimTip(
             summary = "Move by word with w/b/e.",
             details = listOf("w next word start.")
@@ -29,7 +28,7 @@ class VimTipNotifierUnitTest {
 
     @Test
     fun createNotificationEscapesHtmlInTipContent() {
-        val notifier = VimTipNotifier(createMockTipService())
+        val notifier = VimTipNotifier(FakeVimTipService())
         val tip = VimTip(
             summary = "Indent/outdent lines >> - <<",
             details = listOf(">> indents current line, << outdents", "<em>test</em> & \"quotes\"")
@@ -46,7 +45,7 @@ class VimTipNotifierUnitTest {
 
     @Test
     fun createNotificationKeepsUnicodeLiteralsAndEscapesHtmlOnly() {
-        val notifier = VimTipNotifier(createMockTipService())
+        val notifier = VimTipNotifier(FakeVimTipService())
         val tip = VimTip(
             summary = "Repeat last change .",
             details = listOf("5j → move down 5 lines", "literal <tag>")
@@ -63,42 +62,12 @@ class VimTipNotifierUnitTest {
     @Test
     fun notificationHasCorrectGroupIdAndIcon() {
         val tip = VimTip(summary = "Test", details = listOf("Test details"))
-        val notifier = VimTipNotifier(createMockTipService(tip))
+        val notifier = VimTipNotifier(FakeVimTipService(initialTips = listOf(tip)))
 
         val notification = notifier.createNotification(tip)
 
         assertEquals(VimTipNotifier.NOTIFICATION_GROUP_ID, notification.groupId)
         assertNotNull(notification.icon)
         assertEquals(VimTipNotifier.TIP_ICON, notification.icon)
-    }
-
-    private fun createMockTipService(vararg tips: VimTip): VimTipService {
-        val tipList = if (tips.isEmpty()) {
-            listOf(VimTip("fallback", listOf("fallback-details")))
-        } else {
-            tips.toList()
-        }
-
-        return object : VimTipService {
-            private var currentIndex = 0
-
-            override fun countTips() = tipList.size
-
-            override fun saveTips(tips: List<VimTip>) = Unit
-
-            override fun getRandomTip(): VimTip {
-                val tip = tipList[currentIndex % tipList.size]
-                currentIndex += 1
-                return tip
-            }
-
-            override fun getMetadata() = TipMetadata()
-
-            override fun saveMetadata(metadata: TipMetadata) = Unit
-
-            override fun getState() = VimTipService.State(tipList.toMutableList())
-
-            override fun loadState(state: VimTipService.State) = Unit
-        }
     }
 }

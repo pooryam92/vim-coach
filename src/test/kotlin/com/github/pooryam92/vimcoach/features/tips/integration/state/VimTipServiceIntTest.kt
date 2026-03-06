@@ -9,64 +9,44 @@ class VimTipServiceIntTest : BasePlatformTestCase() {
 
     override fun setUp() {
         super.setUp()
-        project.service<VimTipService>().saveTips(emptyList())
+        service().saveTips(emptyList())
     }
 
     fun testCountTipsAfterSave() {
-        // Arrange
-        val service = project.service<VimTipService>()
         val tips = listOf(
             VimTip("summary-1", listOf("details-1")),
             VimTip("summary-2", listOf("details-2"))
         )
-        service.saveTips(tips)
+        service().saveTips(tips)
 
-        // Act
-        val count = service.countTips()
-
-        // Assert
-        assertEquals(2, count)
+        assertEquals(2, service().countTips())
     }
 
     fun testGetRandomTipReturnsSavedTip() {
-        // Arrange
-        val service = project.service<VimTipService>()
         val tips = listOf(
             VimTip("summary-1", listOf("details-1")),
             VimTip("summary-2", listOf("details-2"))
         )
-        service.saveTips(tips)
+        service().saveTips(tips)
 
-        // Act
-        val randomTip = service.getRandomTip()
-
-        // Assert
-        assertTrue(tips.contains(randomTip))
+        assertTrue(tips.contains(service().getRandomTip()))
     }
 
     fun testLoadStateReplacesTips() {
-        // Arrange
-        val service = project.service<VimTipService>()
+        val service = service()
         service.saveTips(listOf(VimTip("old-summary", listOf("old-details"))))
 
-        val newTip = VimTip("new-summary", listOf("new-details"))
+        service.loadState(VimTipService.State(mutableListOf(VimTip("new-summary", listOf("new-details")))))
 
-        // Act
-        service.loadState(VimTipService.State(mutableListOf(newTip)))
-
-        // Assert
         assertEquals(1, service.countTips())
     }
 
-
     fun testGetRandomTipReturnsEmptyMessageWhenEmpty() {
-        // Arrange
-        val service = project.service<VimTipService>()
+        val randomTip = service().getRandomTip()
 
-        // Act
-        val randomTip = service.getRandomTip()
-
-        // Assert
+        assertEquals("No tips found.", randomTip.summary)
         assertEquals("Tips have not been loaded yet.", randomTip.details.single())
     }
+
+    private fun service(): VimTipService = project.service()
 }
