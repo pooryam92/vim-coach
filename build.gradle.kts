@@ -1,6 +1,7 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.gradle.api.tasks.testing.Test
 
 plugins {
     id("java") // Java support
@@ -136,6 +137,58 @@ tasks {
     publishPlugin {
         dependsOn(patchChangelog)
     }
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnit()
+}
+
+val requestedTasks = gradle.startParameter.taskNames
+val requestedLayerTasks = requestedTasks.map { it.substringAfterLast(':') }
+    .filter { it in setOf("unitTest", "integrationTest", "uiTest") }
+val activeLayerTask = if (requestedTasks.size == 1 && requestedLayerTasks.size == 1) {
+    requestedLayerTasks.single()
+} else {
+    null
+}
+
+tasks.test {
+    description = "Runs unit and integration tests."
+    when (activeLayerTask) {
+        "unitTest" -> {
+            include("**/*UnitTest.class")
+        }
+
+        "integrationTest" -> {
+            include("**/*IntTest.class")
+        }
+
+        "uiTest" -> {
+            include("**/*UiTest.class")
+        }
+
+        else -> {
+            exclude("**/*UiTest.class")
+        }
+    }
+}
+
+tasks.register("unitTest") {
+    description = "Runs fast unit tests."
+    group = "verification"
+    dependsOn(tasks.test)
+}
+
+tasks.register("integrationTest") {
+    description = "Runs IntelliJ platform integration tests."
+    group = "verification"
+    dependsOn(tasks.test)
+}
+
+tasks.register("uiTest") {
+    description = "Runs UI-level headless flow tests."
+    group = "verification"
+    dependsOn(tasks.test)
 }
 
 intellijPlatformTesting {

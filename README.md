@@ -41,6 +41,8 @@ map <leader>tt <Action>(com.github.pooryam92.vimcoach.actions.ShowVimTipAction)
 
 <!-- Plugin description end -->
 
+Architecture documentation is available in [`ARCHITECTURE.md`](ARCHITECTURE.md).
+
 ### Development: load tips from local file
 
 Source selection is done with Gradle run tasks:

@@ -9,28 +9,28 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="Vim Tips" displayType="BALLOON" isLogByDefault="true" />
-        <postStartupActivity implementation="com.github.pooryam92.vimcoach.startup.VimTipStartupActivity" />
+        <postStartupActivity implementation="com.github.pooryam92.vimcoach.features.tips.entrypoints.startup.VimTipStartupActivity" />
         <projectService
-            serviceInterface="com.github.pooryam92.vimcoach.services.VimTipService"
-            serviceImplementation="com.github.pooryam92.vimcoach.services.VimTipServiceImpl" />
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.state.VimTipService"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.state.VimTipServiceImpl" />
         <projectService
-            serviceInterface="com.github.pooryam92.vimcoach.services.source.TipSourceService"
-            serviceImplementation="com.github.pooryam92.vimcoach.services.source.TipSourceServiceImpl" />
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceService"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceServiceImpl" />
         <projectService
-            serviceInterface="com.github.pooryam92.vimcoach.services.TipLoaderService"
-            serviceImplementation="com.github.pooryam92.vimcoach.services.TipLoaderServiceImpl" />
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.TipLoaderServiceImpl" />
     </extensions>
 
     <actions>
         <action
             id="com.github.pooryam92.vimcoach.actions.ShowVimTipAction"
-            class="com.github.pooryam92.vimcoach.actions.ShowVimTipAction"
+            class="com.github.pooryam92.vimcoach.features.tips.entrypoints.actions.ShowVimTipAction"
             text="Show Vim Tip"
             description="Show a Vim tip notification">
         </action>
         <action
             id="com.github.pooryam92.vimcoach.actions.RefetchVimTipsAction"
-            class="com.github.pooryam92.vimcoach.actions.RefetchVimTipsAction"
+            class="com.github.pooryam92.vimcoach.features.tips.entrypoints.actions.RefetchVimTipsAction"
             text="Refetch Vim Tips from Remote"
             description="Reload Vim tips from remote source">
         </action>
