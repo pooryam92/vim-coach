@@ -16,11 +16,11 @@ The codebase is organized by plugin capability, centered on the `tips` feature.
 
 - `core/shared/i18n`: shared bundle access (`MyBundle`)
 - `features/tips/domain`: tip models and result types
-- `features/tips/state`: persistent project state service for cached tips/metadata
+- `features/tips/state`: persistent state services for tip cache/metadata and user startup preferences
 - `features/tips/source`: source selection and integrations (remote/file/parsing)
 - `features/tips/application`: tip loading/update orchestration
 - `features/tips/ui`: notification rendering and interactions
-- `features/tips/entrypoints`: IntelliJ actions and startup activity
+- `features/tips/entrypoints`: IntelliJ actions, startup activity, and settings configurable
 
 ## IntelliJ Registration Notes
 
