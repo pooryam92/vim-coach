@@ -2,6 +2,7 @@ package com.github.pooryam92.vimcoach.features.tips.integration.state
 
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
+import com.github.pooryam92.vimcoach.features.tips.state.store.VimTipStore
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
@@ -36,7 +37,7 @@ class VimTipServiceIntTest : BasePlatformTestCase() {
         val service = tipService()
         service.saveTips(listOf(VimTip("old-summary", listOf("old-details"))))
 
-        service.loadState(VimTipService.State(mutableListOf(VimTip("new-summary", listOf("new-details")))))
+        tipStore().loadState(VimTipStore.State(mutableListOf(VimTip("new-summary", listOf("new-details")))))
 
         assertEquals(1, service.countTips())
     }
@@ -49,4 +50,6 @@ class VimTipServiceIntTest : BasePlatformTestCase() {
     }
 
     private fun tipService(): VimTipService = service()
+
+    private fun tipStore(): VimTipStore = service()
 }

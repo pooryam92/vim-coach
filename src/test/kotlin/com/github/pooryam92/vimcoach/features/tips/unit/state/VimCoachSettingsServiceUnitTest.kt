@@ -2,6 +2,8 @@ package com.github.pooryam92.vimcoach.features.tips.unit.state
 
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsServiceImpl
+import com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsStore
+import com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsStoreImpl
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -10,14 +12,14 @@ class VimCoachSettingsServiceUnitTest {
 
     @Test
     fun showTipsOnStartupIsEnabledByDefault() {
-        val service = VimCoachSettingsServiceImpl()
+        val service = createService()
 
         assertTrue(service.isShowTipsOnStartupEnabled())
     }
 
     @Test
     fun setShowTipsOnStartupEnabledUpdatesState() {
-        val service = VimCoachSettingsServiceImpl()
+        val service = createService()
 
         service.setShowTipsOnStartupEnabled(false)
 
@@ -26,11 +28,18 @@ class VimCoachSettingsServiceUnitTest {
 
     @Test
     fun loadStateRestoresShowTipsOnStartupValue() {
-        val service = VimCoachSettingsServiceImpl()
-        val persistedState = VimCoachSettingsService.State(showTipsOnStartup = false)
+        val store = VimCoachSettingsStoreImpl()
+        val service = createService(store)
+        val persistedState = VimCoachSettingsStore.State(showTipsOnStartup = false)
 
-        service.loadState(persistedState)
+        store.loadState(persistedState)
 
         assertFalse(service.isShowTipsOnStartupEnabled())
+    }
+
+    private fun createService(
+        store: VimCoachSettingsStore = VimCoachSettingsStoreImpl()
+    ): VimCoachSettingsService {
+        return VimCoachSettingsServiceImpl(store)
     }
 }

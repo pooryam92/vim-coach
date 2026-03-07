@@ -2,29 +2,23 @@ package com.github.pooryam92.vimcoach.features.tips.state
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
-import com.intellij.openapi.components.State
-import com.intellij.openapi.components.Storage
-import com.intellij.util.xmlb.XmlSerializerUtil
+import com.github.pooryam92.vimcoach.features.tips.state.store.VimTipStore
+import com.intellij.openapi.components.service
 
-@State(name = "VimTipCache", storages = [Storage("vim-tip-cache.xml")])
-class VimTipServiceImpl : VimTipService {
-    private var state = VimTipService.State()
-
-    override fun getState(): VimTipService.State = state
-
-    override fun loadState(state: VimTipService.State) {
-        XmlSerializerUtil.copyBean(state, this.state)
-    }
+class VimTipServiceImpl(
+    private val tipStore: VimTipStore = service()
+) : VimTipService {
 
     override fun countTips(): Int {
-        return state.tips.size
+        return currentState().tips.size
     }
 
     override fun saveTips(tips: List<VimTip>) {
-        state.tips = tips.toMutableList()
+        currentState().tips = tips.toMutableList()
     }
 
     override fun getRandomTip(): VimTip {
+        val state = currentState()
         if (state.tips.isEmpty()) {
             return FALLBACK_TIP
         }
@@ -32,11 +26,15 @@ class VimTipServiceImpl : VimTipService {
     }
 
     override fun getMetadata(): TipMetadata {
-        return state.metadata
+        return currentState().metadata
     }
 
     override fun saveMetadata(metadata: TipMetadata) {
-        state.metadata = metadata
+        currentState().metadata = metadata
+    }
+
+    private fun currentState(): VimTipStore.State {
+        return tipStore.state ?: VimTipStore.State().also(tipStore::loadState)
     }
 
     private companion object {
