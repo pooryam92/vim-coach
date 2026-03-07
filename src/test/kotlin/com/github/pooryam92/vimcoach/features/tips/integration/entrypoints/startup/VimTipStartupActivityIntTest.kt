@@ -9,6 +9,7 @@ import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipServiceImpl
 import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeVimTipService
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.PlatformTestUtil
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
@@ -27,7 +28,7 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
     override fun tearDown() {
         try {
             settingsService().setShowTipsOnStartupEnabled(true)
-            project.registerServiceInstance(VimTipService::class.java, VimTipServiceImpl())
+            ApplicationManager.getApplication().registerServiceInstance(VimTipService::class.java, VimTipServiceImpl())
             project.registerServiceInstance(TipLoaderService::class.java, TipLoaderServiceImpl(project))
         } finally {
             super.tearDown()
@@ -68,7 +69,7 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
         val fakeTipService = FakeVimTipService(
             initialTips = listOf(VimTip("startup-tip", listOf("startup-details")))
         )
-        project.registerServiceInstance(
+        ApplicationManager.getApplication().registerServiceInstance(
             VimTipService::class.java,
             fakeTipService
         )

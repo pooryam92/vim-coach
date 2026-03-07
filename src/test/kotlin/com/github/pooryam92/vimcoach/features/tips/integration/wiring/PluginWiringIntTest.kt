@@ -10,18 +10,18 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase
 class PluginWiringIntTest : BasePlatformTestCase() {
 
     fun testProjectServicesAreRegistered() {
-        val tipService = project.service<VimTipService>()
         val sourceService = project.service<TipSourceService>()
         val loaderService = project.service<TipLoaderService>()
 
-        assertNotNull(tipService)
         assertNotNull(sourceService)
         assertNotNull(loaderService)
     }
 
     fun testApplicationServicesAreRegistered() {
+        val tipService = service<VimTipService>()
         val settingsService = service<VimCoachSettingsService>()
 
+        assertNotNull(tipService)
         assertNotNull(settingsService)
     }
 }

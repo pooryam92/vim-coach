@@ -8,7 +8,7 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 
 class TipLoaderServiceImpl(project: Project) : TipLoaderService {
-    private val tipService = project.service<VimTipService>()
+    private val tipService = service<VimTipService>()
     private val tipSource = project.service<TipSourceService>()
 
     override fun refetchTips(): TipLoadResult {

@@ -18,7 +18,7 @@
             parentId="tools"
             displayName="Vim Coach"
             instance="com.github.pooryam92.vimcoach.features.tips.entrypoints.settings.VimCoachSettingsConfigurable" />
-        <projectService
+        <applicationService
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.state.VimTipService"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.state.VimTipServiceImpl" />
         <projectService

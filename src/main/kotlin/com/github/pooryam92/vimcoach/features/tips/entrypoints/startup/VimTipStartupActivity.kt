@@ -16,7 +16,7 @@ class VimTipStartupActivity : ProjectActivity {
     override suspend fun execute(project: Project) {
         val settingsService = ApplicationManager.getApplication().service<VimCoachSettingsService>()
         val loader = project.service<TipLoaderService>()
-        val notifier = VimTipNotifier(project.service<VimTipService>())
+        val notifier = VimTipNotifier(service<VimTipService>())
         object : Task.Backgroundable(project, "Checking for Vim tips updates", false) {
             override fun run(indicator: ProgressIndicator) {
                 loader.checkForUpdates()
