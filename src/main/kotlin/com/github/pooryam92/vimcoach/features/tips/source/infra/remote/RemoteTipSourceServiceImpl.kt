@@ -6,6 +6,7 @@ import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.source.domain.TipSourceLoadResult
 import com.google.gson.Gson
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.util.io.HttpRequests
 import java.net.HttpURLConnection
 import java.util.Base64
@@ -14,15 +15,20 @@ class RemoteTipSourceServiceImpl : RemoteTipSourceService {
     private val gson = Gson()
 
     override fun loadTips(): TipSourceLoadResult {
+        logger.info("Loading Vim tips from remote source (unconditional)")
         return loadTipsConditional(TipMetadata())
     }
 
     override fun loadTipsConditional(metadata: TipMetadata): TipSourceLoadResult {
+        logger.info(
+            "Loading Vim tips from remote source (conditional=true, hasEtag=${metadata.etag != null}, hasSha=${metadata.githubSha != null})"
+        )
         return try {
             val context = RequestContext()
             val tips = fetchTipsFromRemote(metadata, context)
             toLoadResult(tips, context)
         } catch (e: Exception) {
+            logger.warn("Remote tip source failed", e)
             TipSourceLoadResult.Failure(e.message ?: "Unknown error", e)
         }
     }
@@ -36,6 +42,7 @@ class RemoteTipSourceServiceImpl : RemoteTipSourceService {
             .connect { request ->
                 val connection = request.connection as? HttpURLConnection
                 if (connection?.responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
+                    logger.info("Remote tip source responded with 304 Not Modified")
                     context.notModified = true
                     return@connect emptyList()
                 }
@@ -46,6 +53,7 @@ class RemoteTipSourceServiceImpl : RemoteTipSourceService {
                 context.githubSha = apiResponse.sha
 
                 if (isSameSha(metadata, context.githubSha)) {
+                    logger.info("Remote tip source SHA unchanged; treating as not modified")
                     context.notModified = true
                     return@connect emptyList()
                 }
@@ -68,8 +76,10 @@ class RemoteTipSourceServiceImpl : RemoteTipSourceService {
             return TipSourceLoadResult.NotModified
         }
         if (tips.isEmpty()) {
+            logger.info("Remote tip source returned no valid tips")
             return TipSourceLoadResult.Empty
         }
+        logger.info("Remote tip source returned ${tips.size} tips")
         val newMetadata = TipMetadata(
             etag = context.responseETag,
             githubSha = context.githubSha,
@@ -93,5 +103,6 @@ class RemoteTipSourceServiceImpl : RemoteTipSourceService {
         const val HEADER_IF_NONE_MATCH = "If-None-Match"
         const val HEADER_ETAG = "ETag"
         const val ACCEPT_GITHUB_V3_JSON = "application/vnd.github.v3+json"
+        val logger = Logger.getInstance(RemoteTipSourceServiceImpl::class.java)
     }
 }

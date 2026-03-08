@@ -10,7 +10,21 @@
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="Vim Tips" displayType="BALLOON" isLogByDefault="true" />
         <postStartupActivity implementation="com.github.pooryam92.vimcoach.features.tips.entrypoints.startup.VimTipStartupActivity" />
-        <projectService
+        <applicationService
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsStore"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsStoreImpl" />
+        <applicationService
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsServiceImpl" />
+        <applicationConfigurable
+            id="com.github.pooryam92.vimcoach.settings"
+            parentId="tools"
+            displayName="Vim Coach"
+            instance="com.github.pooryam92.vimcoach.features.tips.entrypoints.settings.VimCoachSettingsConfigurable" />
+        <applicationService
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.state.store.VimTipStore"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.state.store.VimTipStoreImpl" />
+        <applicationService
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.state.VimTipService"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.state.VimTipServiceImpl" />
         <projectService

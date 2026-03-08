@@ -15,7 +15,7 @@ import com.intellij.testFramework.registerServiceInstance
 class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
 
     fun testRefetchTipsReloadsEvenWhenTipsExist() {
-        val tipService = project.service<VimTipService>()
+        val tipService = service<VimTipService>()
         tipService.saveTips(listOf(VimTip("old-summary", listOf("old-details"))))
 
         val remoteTips = listOf(
@@ -37,7 +37,7 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
     }
 
     fun testRefetchTipsUpdatesExistingTips() {
-        val tipService = project.service<VimTipService>()
+        val tipService = service<VimTipService>()
         tipService.saveTips(
             listOf(
                 VimTip("initial-1", listOf("initial-details-1")),
@@ -63,7 +63,7 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
     }
 
     fun testRefetchTipsDoesNotSaveWhenRemoteReturnsFailure() {
-        val tipService = project.service<VimTipService>()
+        val tipService = service<VimTipService>()
         tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
 
         val fakeTipSource = FakeTipSource(TipSourceLoadResult.Failure("connection timeout"))
@@ -79,7 +79,7 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
     }
 
     fun testRefetchTipsDoesNotSaveWhenRemoteReturnsEmpty() {
-        val tipService = project.service<VimTipService>()
+        val tipService = service<VimTipService>()
         tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
 
         val fakeTipSource = FakeTipSource(TipSourceLoadResult.Empty)
@@ -95,7 +95,7 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
     }
 
     fun testRefetchTipsReturnsNotModifiedWhenNoChanges() {
-        val tipService = project.service<VimTipService>()
+        val tipService = service<VimTipService>()
         tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
 
         val fakeTipSource = FakeTipSource(TipSourceLoadResult.NotModified)
@@ -111,7 +111,7 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
     }
 
     fun testRefetchTipsAlwaysForcesReload() {
-        val tipService = project.service<VimTipService>()
+        val tipService = service<VimTipService>()
         tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
         tipService.saveMetadata(
             TipMetadata(
@@ -137,7 +137,7 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
     }
 
     fun testCheckForUpdatesLoadsWhenNoTipsExist() {
-        val tipService = project.service<VimTipService>()
+        val tipService = service<VimTipService>()
         tipService.saveTips(emptyList())
 
         val fakeTipSource = FakeTipSource(
@@ -154,7 +154,7 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
     }
 
     fun testCheckForUpdatesUsesConditionalWhenTipsExist() {
-        val tipService = project.service<VimTipService>()
+        val tipService = service<VimTipService>()
         tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
         tipService.saveMetadata(
             TipMetadata(
@@ -177,7 +177,7 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
     }
 
     fun testCheckForUpdatesNotModifiedRefreshesLastFetchTimestamp() {
-        val tipService = project.service<VimTipService>()
+        val tipService = service<VimTipService>()
         tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
         val initialTimestamp = 1_000L
         tipService.saveMetadata(
@@ -200,7 +200,7 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
     }
 
     fun testCheckForUpdatesUpdatesWhenChangesDetected() {
-        val tipService = project.service<VimTipService>()
+        val tipService = service<VimTipService>()
         tipService.saveTips(listOf(VimTip("old", listOf("old-details"))))
         tipService.saveMetadata(TipMetadata(etag = "old-etag"))
 

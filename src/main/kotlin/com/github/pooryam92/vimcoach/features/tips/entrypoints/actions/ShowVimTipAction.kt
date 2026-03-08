@@ -10,7 +10,7 @@ class ShowVimTipAction : AnAction() {
 
     override fun actionPerformed(event: AnActionEvent) {
         val project = event.project ?: return
-        val notifier = VimTipNotifier(project.service<VimTipService>())
+        val notifier = VimTipNotifier(service<VimTipService>())
         notifier.showRandomTip(project)
     }
 }

@@ -17,7 +17,7 @@ This plugin uses a simple 3-layer test pyramid with naming and folder convention
 - Purpose: plugin behavior that needs IntelliJ Platform test infrastructure.
 - Uses `BasePlatformTestCase` when project/services/plugin wiring are involved.
 - Examples in this repo:
-  - Project service state (`VimTipService`)
+  - Application service + store-backed state behavior (`VimTipService`, `VimTipStore`)
   - Loader + source + service interactions (`TipLoaderService`)
   - Service registration wiring from `plugin.xml`
 
