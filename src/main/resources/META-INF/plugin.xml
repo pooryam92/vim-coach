@@ -20,7 +20,7 @@
             id="com.github.pooryam92.vimcoach.settings"
             parentId="tools"
             displayName="Vim Coach"
-            instance="com.github.pooryam92.vimcoach.features.tips.entrypoints.settings.VimCoachSettingsConfigurable" />
+            instance="com.github.pooryam92.vimcoach.features.tips.ui.settings.VimCoachSettingsConfigurable" />
         <applicationService
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.state.store.VimTipStore"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.state.store.VimTipStoreImpl" />

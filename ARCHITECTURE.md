@@ -22,7 +22,8 @@ The codebase is organized by plugin capability, centered on the `tips` feature.
 - `features/tips/source`: source selection and integrations (remote/file/parsing)
 - `features/tips/application`: tip loading/update orchestration
 - `features/tips/ui`: notification rendering and interactions
-- `features/tips/entrypoints`: IntelliJ actions, startup activity, and settings configurable
+- `features/tips/entrypoints`: IntelliJ actions and startup activity
+- `features/tips/ui/settings`: settings configurable and per-setting UI components
 
 ## IntelliJ Registration Notes
 

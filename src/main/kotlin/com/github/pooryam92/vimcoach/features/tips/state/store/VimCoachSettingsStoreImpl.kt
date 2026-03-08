@@ -8,9 +8,22 @@ import com.intellij.openapi.components.Storage
 class VimCoachSettingsStoreImpl :
     SerializablePersistentStateComponent<VimCoachSettingsStore.State>(VimCoachSettingsStore.State()),
     VimCoachSettingsStore {
+
     override fun setShowTipsOnStartup(enabled: Boolean) {
         updateState { currentState ->
             currentState.copy(showTipsOnStartup = enabled)
+        }
+    }
+
+    override fun setPeriodicTipsEnabled(enabled: Boolean) {
+        updateState { currentState ->
+            currentState.copy(periodicTipsEnabled = enabled)
+        }
+    }
+
+    override fun setTipIntervalHours(hours: Int) {
+        updateState { currentState ->
+            currentState.copy(tipIntervalHours = hours)
         }
     }
 }
