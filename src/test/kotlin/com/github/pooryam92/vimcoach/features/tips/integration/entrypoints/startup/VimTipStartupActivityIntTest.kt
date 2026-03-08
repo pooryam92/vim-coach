@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.integration.entrypoints.startup
 
+import com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerService
 import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
 import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderServiceImpl
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
@@ -37,32 +38,52 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
 
     fun testExecuteShowsTipWhenStartupSettingIsEnabled() {
         settingsService().setShowTipsOnStartupEnabled(true)
+        settingsService().setPeriodicTipsEnabled(true)
 
         val fakeTipService = registerFakeTipService()
         val fakeLoader = registerFakeLoader()
+        val fakePeriodicScheduler = registerFakePeriodicScheduler()
 
         runBlocking {
             VimTipStartupActivity().execute(project)
         }
 
         assertTrue(fakeLoader.awaitCheckForUpdatesCall())
+        assertTrue(fakePeriodicScheduler.awaitStartCall())
         waitForTipRequests(fakeTipService, expectedCalls = 1)
     }
 
     fun testExecuteDoesNotShowTipWhenStartupSettingIsDisabled() {
         settingsService().setShowTipsOnStartupEnabled(false)
+        settingsService().setPeriodicTipsEnabled(true)
 
         val fakeTipService = registerFakeTipService()
         val fakeLoader = registerFakeLoader()
+        val fakePeriodicScheduler = registerFakePeriodicScheduler()
 
         runBlocking {
             VimTipStartupActivity().execute(project)
         }
 
         assertTrue(fakeLoader.awaitCheckForUpdatesCall())
+        assertTrue(fakePeriodicScheduler.awaitStartCall())
         Thread.sleep(NO_TIP_WAIT_MS)
         PlatformTestUtil.dispatchAllEventsInIdeEventQueue()
         assertEquals(0, fakeTipService.getRandomTipCalls)
+    }
+
+    fun testExecuteDoesNotStartPeriodicSchedulerWhenPeriodicTipsAreDisabled() {
+        settingsService().setPeriodicTipsEnabled(false)
+
+        val fakeLoader = registerFakeLoader()
+        val fakePeriodicScheduler = registerFakePeriodicScheduler()
+
+        runBlocking {
+            VimTipStartupActivity().execute(project)
+        }
+
+        assertTrue(fakeLoader.awaitCheckForUpdatesCall())
+        assertFalse(fakePeriodicScheduler.awaitStartCall(timeoutMs = NO_TIP_WAIT_MS))
     }
 
     private fun registerFakeTipService(): FakeVimTipService {
@@ -83,6 +104,15 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
             fakeLoader
         )
         return fakeLoader
+    }
+
+    private fun registerFakePeriodicScheduler(): FakePeriodicTipSchedulerService {
+        val fakePeriodicScheduler = FakePeriodicTipSchedulerService()
+        project.registerServiceInstance(
+            PeriodicTipSchedulerService::class.java,
+            fakePeriodicScheduler
+        )
+        return fakePeriodicScheduler
     }
 
     private fun waitForTipRequests(fakeTipService: FakeVimTipService, expectedCalls: Int) {
@@ -113,6 +143,22 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
 
         fun awaitCheckForUpdatesCall(): Boolean {
             return checkForUpdatesCalled.await(CHECK_FOR_UPDATES_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+        }
+    }
+
+    private class FakePeriodicTipSchedulerService : PeriodicTipSchedulerService {
+        private val startCalled = CountDownLatch(1)
+
+        override fun start() {
+            startCalled.countDown()
+        }
+
+        override fun onSettingsChanged() {
+            // No-op for startup flow tests.
+        }
+
+        fun awaitStartCall(timeoutMs: Long = CHECK_FOR_UPDATES_TIMEOUT_SECONDS * 1_000): Boolean {
+            return startCalled.await(timeoutMs, TimeUnit.MILLISECONDS)
         }
     }
 

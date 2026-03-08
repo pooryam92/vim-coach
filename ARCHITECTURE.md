@@ -31,4 +31,4 @@ The codebase is organized by plugin capability, centered on the `tips` feature.
 
 Current service scopes:
 - `VimTipStore`, `VimTipService`, `VimCoachSettingsStore`, `VimCoachSettingsService`: application services
-- `TipSourceService`, `TipLoaderService`: project services
+- `TipSourceService`, `TipLoaderService`, `PeriodicTipSchedulerService`: project services

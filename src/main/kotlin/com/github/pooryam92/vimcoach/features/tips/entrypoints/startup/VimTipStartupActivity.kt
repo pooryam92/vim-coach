@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.entrypoints.startup
 
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.VimTipNotifier
+import com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerService
 import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
@@ -15,8 +16,12 @@ class VimTipStartupActivity : ProjectActivity {
 
     override suspend fun execute(project: Project) {
         val settingsService = ApplicationManager.getApplication().service<VimCoachSettingsService>()
+        val periodicScheduler = project.service<PeriodicTipSchedulerService>()
         val loader = project.service<TipLoaderService>()
         val notifier = VimTipNotifier(service<VimTipService>())
+        if (settingsService.isPeriodicTipsEnabled()) {
+            periodicScheduler.start()
+        }
         object : Task.Backgroundable(project, "Checking for Vim tips updates", false) {
             override fun run(indicator: ProgressIndicator) {
                 loader.checkForUpdates()

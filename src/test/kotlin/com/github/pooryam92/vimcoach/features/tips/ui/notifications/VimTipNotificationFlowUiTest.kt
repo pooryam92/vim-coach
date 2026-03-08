@@ -6,6 +6,19 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
 class VimTipNotificationFlowUiTest : BasePlatformTestCase() {
 
+    override fun setUp() {
+        super.setUp()
+        VimTipNotifier.activeTipNotifications.clear()
+    }
+
+    override fun tearDown() {
+        try {
+            VimTipNotifier.activeTipNotifications.clear()
+        } finally {
+            super.tearDown()
+        }
+    }
+
     fun testNotificationAddsNextTipAction() {
         val mockTipService = FakeVimTipService(
             initialTips = listOf(
@@ -30,5 +43,26 @@ class VimTipNotificationFlowUiTest : BasePlatformTestCase() {
         notifier.showRandomTip(project)
 
         assertEquals(1, mockTipService.getRandomTipCalls)
+    }
+
+    fun testShowRandomTipReplacesPreviousTipNotificationForProject() {
+        val mockTipService = FakeVimTipService(
+            initialTips = listOf(
+                VimTip("Tip 1", listOf("Details 1")),
+                VimTip("Tip 2", listOf("Details 2"))
+            )
+        )
+        val notifier = VimTipNotifier(mockTipService)
+
+        notifier.showRandomTip(project)
+        val firstNotification = VimTipNotifier.activeTipNotifications[project]
+        notifier.showRandomTip(project)
+        val secondNotification = VimTipNotifier.activeTipNotifications[project]
+
+        assertNotNull(firstNotification)
+        assertNotNull(secondNotification)
+        assertEquals(1, VimTipNotifier.activeTipNotifications.size)
+        assertTrue(firstNotification!!.isExpired)
+        assertFalse(secondNotification!!.isExpired)
     }
 }

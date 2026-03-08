@@ -49,8 +49,11 @@ Source selection is done with Gradle run tasks:
 
 - `./gradlew runIde` (default remote mode)
 - `./gradlew runIdeWithFileTips` (forces local file mode)
+- `./gradlew runIdeWithMinuteTipSchedule` (keeps the setting UI in hours, but treats the configured value as minutes for faster testing)
 
 In `file` mode, the loader uses only `vimcoach.tip.file.path` (set by the run task).
+
+For periodic-tip testing, development mode also supports the JVM property `vimcoach.tip.interval.unit=minutes`.
 
 ## Contributing
 

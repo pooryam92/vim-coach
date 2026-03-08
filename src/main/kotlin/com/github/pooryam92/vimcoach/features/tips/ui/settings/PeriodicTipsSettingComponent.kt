@@ -39,8 +39,17 @@ class PeriodicTipsSettingComponent(
     }
 
     override fun apply() {
-        settingsService.setPeriodicTipsEnabled(checkBox.isSelected)
-        settingsService.setTipIntervalHours(spinnerValue())
+        val enabled = checkBox.isSelected
+        val intervalHours = spinnerValue()
+
+        if (enabled) {
+            settingsService.setTipIntervalHours(intervalHours)
+            settingsService.setPeriodicTipsEnabled(true)
+            return
+        }
+
+        settingsService.setPeriodicTipsEnabled(false)
+        settingsService.setTipIntervalHours(intervalHours)
     }
 
     override fun reset() {

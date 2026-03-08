@@ -33,6 +33,9 @@
         <projectService
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.TipLoaderServiceImpl" />
+        <projectService
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerService"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerServiceImpl" />
     </extensions>
 
     <actions>

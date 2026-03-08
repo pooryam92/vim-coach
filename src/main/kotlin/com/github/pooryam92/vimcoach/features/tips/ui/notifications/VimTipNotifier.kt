@@ -8,6 +8,8 @@ import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.IconLoader
+import java.util.Collections
+import java.util.WeakHashMap
 
 class VimTipNotifier(
     private val tipService: VimTipService
@@ -19,6 +21,7 @@ class VimTipNotifier(
 
     private fun showTip(project: Project, tip: VimTip) {
         val notification = createNotificationWithActions(project, tip)
+        replaceActiveTipNotification(project, notification)
         notification.notify(project)
     }
 
@@ -68,11 +71,27 @@ class VimTipNotifier(
             .replace("'", "&#39;")
     }
 
+    private fun replaceActiveTipNotification(project: Project, notification: Notification) {
+        synchronized(activeTipNotifications) {
+            activeTipNotifications.remove(project)?.expire()
+            activeTipNotifications[project] = notification
+        }
+        notification.whenExpired {
+            synchronized(activeTipNotifications) {
+                if (activeTipNotifications[project] === notification) {
+                    activeTipNotifications.remove(project)
+                }
+            }
+        }
+    }
+
     companion object {
         val APP_TITLE: String = MyBundle.message("appTitle")
         val NOTIFICATION_GROUP_ID: String = MyBundle.message("notificationGroupId")
         val TIP_NEXT_ACTION_TEXT: String = MyBundle.message("tipNextAction")
         val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", VimTipNotifier::class.java)
+        val activeTipNotifications: MutableMap<Project, Notification> =
+            Collections.synchronizedMap(WeakHashMap())
 
         private const val DETAILS_SEPARATOR = "<br/>"
         private const val HTML_OPEN = "<html>"

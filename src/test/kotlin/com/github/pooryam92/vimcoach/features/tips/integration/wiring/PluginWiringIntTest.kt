@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.integration.wiring
 
 import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
+import com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerService
 import com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceService
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
@@ -14,9 +15,11 @@ class PluginWiringIntTest : BasePlatformTestCase() {
     fun testProjectServicesAreRegistered() {
         val sourceService = project.service<TipSourceService>()
         val loaderService = project.service<TipLoaderService>()
+        val periodicSchedulerService = project.service<PeriodicTipSchedulerService>()
 
         assertNotNull(sourceService)
         assertNotNull(loaderService)
+        assertNotNull(periodicSchedulerService)
     }
 
     fun testApplicationServicesAreRegistered() {
