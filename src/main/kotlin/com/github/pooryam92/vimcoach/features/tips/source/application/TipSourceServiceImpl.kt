@@ -6,6 +6,7 @@ import com.github.pooryam92.vimcoach.features.tips.source.infra.file.FileTipSour
 import com.github.pooryam92.vimcoach.features.tips.source.infra.file.FileTipSourceServiceImpl
 import com.github.pooryam92.vimcoach.features.tips.source.infra.remote.RemoteTipSourceService
 import com.github.pooryam92.vimcoach.features.tips.source.infra.remote.RemoteTipSourceServiceImpl
+import com.intellij.openapi.diagnostic.Logger
 
 class TipSourceServiceImpl(
     private val remoteTipSource: RemoteTipSourceService = RemoteTipSourceServiceImpl(),
@@ -31,7 +32,9 @@ class TipSourceServiceImpl(
         loadFromFile: () -> TipSourceLoadResult,
         loadFromRemote: () -> TipSourceLoadResult
     ): TipSourceLoadResult {
-        return when (resolveSourceMode()) {
+        val sourceMode = resolveSourceMode()
+        logger.info("Selected Vim tip source mode: $sourceMode")
+        return when (sourceMode) {
             TipSourceMode.FILE -> loadFromFile()
             TipSourceMode.REMOTE -> loadFromRemote()
         }
@@ -52,5 +55,6 @@ class TipSourceServiceImpl(
     private companion object {
         const val MODE_FILE = "file"
         const val TIP_SOURCE_MODE_PROPERTY = "vimcoach.tip.source"
+        val logger = Logger.getInstance(TipSourceServiceImpl::class.java)
     }
 }
