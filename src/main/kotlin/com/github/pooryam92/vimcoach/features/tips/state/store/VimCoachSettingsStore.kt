@@ -6,4 +6,6 @@ interface VimCoachSettingsStore : PersistentStateComponent<VimCoachSettingsStore
     data class State(
         var showTipsOnStartup: Boolean = true
     )
+
+    fun setShowTipsOnStartup(enabled: Boolean)
 }

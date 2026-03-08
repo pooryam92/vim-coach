@@ -1,16 +1,27 @@
 package com.github.pooryam92.vimcoach.features.tips.state.store
 
+import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
+import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.intellij.openapi.components.RoamingType
 import com.intellij.openapi.components.State
+import com.intellij.openapi.components.SerializablePersistentStateComponent
 import com.intellij.openapi.components.Storage
-import com.intellij.util.xmlb.XmlSerializerUtil
+import com.intellij.openapi.components.StoragePathMacros
 
-@State(name = "VimTipCache", storages = [Storage("vim-tip-cache.xml")])
-class VimTipStoreImpl : VimTipStore {
-    private var state = VimTipStore.State()
+@State(name = "VimTipCache",
+    storages = [Storage(StoragePathMacros.CACHE_FILE, roamingType = RoamingType.DISABLED)])
+class VimTipStoreImpl :
+    SerializablePersistentStateComponent<VimTipStore.State>(VimTipStore.State()),
+    VimTipStore {
+    override fun setTips(tips: List<VimTip>) {
+        updateState { currentState ->
+            currentState.copy(tips = tips.toList())
+        }
+    }
 
-    override fun getState(): VimTipStore.State = state
-
-    override fun loadState(state: VimTipStore.State) {
-        XmlSerializerUtil.copyBean(state, this.state)
+    override fun setMetadata(metadata: TipMetadata) {
+        updateState { currentState ->
+            currentState.copy(metadata = metadata.copy())
+        }
     }
 }

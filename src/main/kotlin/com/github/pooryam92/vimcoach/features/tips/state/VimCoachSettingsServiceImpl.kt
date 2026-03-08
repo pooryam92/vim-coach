@@ -12,10 +12,10 @@ class VimCoachSettingsServiceImpl(
     }
 
     override fun setShowTipsOnStartupEnabled(enabled: Boolean) {
-        currentState().showTipsOnStartup = enabled
+        settingsStore.setShowTipsOnStartup(enabled)
     }
 
     private fun currentState(): VimCoachSettingsStore.State {
-        return settingsStore.state ?: VimCoachSettingsStore.State().also(settingsStore::loadState)
+        return settingsStore.state ?: VimCoachSettingsStore.State()
     }
 }

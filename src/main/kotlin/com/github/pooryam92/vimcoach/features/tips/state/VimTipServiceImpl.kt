@@ -14,7 +14,7 @@ class VimTipServiceImpl(
     }
 
     override fun saveTips(tips: List<VimTip>) {
-        currentState().tips = tips.toMutableList()
+        tipStore.setTips(tips)
     }
 
     override fun getRandomTip(): VimTip {
@@ -30,11 +30,11 @@ class VimTipServiceImpl(
     }
 
     override fun saveMetadata(metadata: TipMetadata) {
-        currentState().metadata = metadata
+        tipStore.setMetadata(metadata)
     }
 
     private fun currentState(): VimTipStore.State {
-        return tipStore.state ?: VimTipStore.State().also(tipStore::loadState)
+        return tipStore.state ?: VimTipStore.State()
     }
 
     private companion object {

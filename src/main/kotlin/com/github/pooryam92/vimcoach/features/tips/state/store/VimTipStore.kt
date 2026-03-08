@@ -6,7 +6,10 @@ import com.intellij.openapi.components.PersistentStateComponent
 
 interface VimTipStore : PersistentStateComponent<VimTipStore.State> {
     data class State(
-        var tips: MutableList<VimTip> = mutableListOf(),
+        var tips: List<VimTip> = emptyList(),
         var metadata: TipMetadata = TipMetadata()
     )
+
+    fun setTips(tips: List<VimTip>)
+    fun setMetadata(metadata: TipMetadata)
 }
