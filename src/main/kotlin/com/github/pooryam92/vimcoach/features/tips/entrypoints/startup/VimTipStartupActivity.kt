@@ -1,10 +1,9 @@
 package com.github.pooryam92.vimcoach.features.tips.entrypoints.startup
 
-import com.github.pooryam92.vimcoach.features.tips.ui.notifications.VimTipNotifier
 import com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerService
+import com.github.pooryam92.vimcoach.features.tips.application.TipNotificationService
 import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
-import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.intellij.openapi.components.service
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.progress.ProgressIndicator
@@ -18,7 +17,7 @@ class VimTipStartupActivity : ProjectActivity {
         val settingsService = ApplicationManager.getApplication().service<VimCoachSettingsService>()
         val periodicScheduler = project.service<PeriodicTipSchedulerService>()
         val loader = service<TipLoaderService>()
-        val notifier = VimTipNotifier(service<VimTipService>())
+        val tipNotificationService = project.service<TipNotificationService>()
         if (settingsService.isPeriodicTipsEnabled()) {
             periodicScheduler.start()
         }
@@ -27,7 +26,7 @@ class VimTipStartupActivity : ProjectActivity {
                 loader.checkForUpdates()
                 if (settingsService.isShowTipsOnStartupEnabled()) {
                     ApplicationManager.getApplication().invokeLater {
-                        notifier.showRandomTip(project)
+                        tipNotificationService.showRandomTip()
                     }
                 }
             }

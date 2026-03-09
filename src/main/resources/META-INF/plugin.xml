@@ -36,6 +36,9 @@
         <projectService
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerService"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerServiceImpl" />
+        <projectService
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.TipNotificationService"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.TipNotificationServiceImpl" />
     </extensions>
 
     <actions>

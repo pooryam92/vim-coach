@@ -1,7 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.entrypoints.actions
 
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
-import com.github.pooryam92.vimcoach.features.tips.ui.notifications.VimTipNotifier
+import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationFactory
 import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
 import com.intellij.notification.Notification
@@ -37,8 +37,8 @@ class RefetchVimTipsAction : AnAction() {
 
     private fun showNotification(project: Project, content: String, type: NotificationType) {
         Notification(
-            VimTipNotifier.NOTIFICATION_GROUP_ID,
-            VimTipNotifier.APP_TITLE,
+            TipNotificationFactory.NOTIFICATION_GROUP_ID,
+            TipNotificationFactory.APP_TITLE,
             content,
             type
         ).notify(project)

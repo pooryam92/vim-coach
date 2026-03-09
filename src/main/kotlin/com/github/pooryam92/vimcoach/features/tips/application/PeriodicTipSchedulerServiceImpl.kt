@@ -2,8 +2,6 @@ package com.github.pooryam92.vimcoach.features.tips.application
 
 import com.github.pooryam92.vimcoach.features.tips.source.infra.config.VimTipConfig
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
-import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
-import com.github.pooryam92.vimcoach.features.tips.ui.notifications.VimTipNotifier
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
@@ -77,7 +75,7 @@ class PeriodicTipSchedulerServiceImpl(
         }
     }
 
-    private fun showPeriodicTipIfEnabled() {
+    internal fun showPeriodicTipIfEnabled() {
         if (!isSchedulingEnabled()) {
             return
         }
@@ -87,12 +85,16 @@ class PeriodicTipSchedulerServiceImpl(
             return
         }
 
-        val notifier = VimTipNotifier(tipService())
+        val tipNotificationService = project.service<TipNotificationService>()
         ApplicationManager.getApplication().invokeLater {
             try {
                 if (!project.isDisposed && isSchedulingEnabled()) {
-                    logger.info("Showing periodic Vim tip for project '${project.name}'")
-                    notifier.showRandomTipIfNoneActive(project)
+                    val shown = tipNotificationService.showRandomTipIfNoneActive()
+                    if (shown) {
+                        logger.info("Shown periodic Vim tip for project '${project.name}'")
+                    } else {
+                        logger.info("Skipped periodic Vim tip for project '${project.name}' because another tip is still active")
+                    }
                 }
             } catch (t: Throwable) {
                 logger.warn("Failed to show periodic Vim tip for project '${project.name}'", t)
@@ -139,8 +141,6 @@ class PeriodicTipSchedulerServiceImpl(
     }
 
     private fun settingsService(): VimCoachSettingsService = service()
-
-    private fun tipService(): VimTipService = service()
 
     private data class ScheduleConfig(
         val intervalValue: Long,
