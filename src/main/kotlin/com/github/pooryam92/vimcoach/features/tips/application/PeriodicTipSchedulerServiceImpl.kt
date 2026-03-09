@@ -4,24 +4,21 @@ import com.github.pooryam92.vimcoach.features.tips.source.infra.config.VimTipCon
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.VimTipNotifier
+import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
+import com.intellij.util.concurrency.AppExecutorUtil
+import java.util.concurrent.ScheduledFuture
+import java.util.concurrent.TimeUnit
 
 class PeriodicTipSchedulerServiceImpl(
-    private val project: Project,
-    private val cs: CoroutineScope
-) : PeriodicTipSchedulerService {
+    private val project: Project
+) : PeriodicTipSchedulerService, Disposable {
 
     private val lock = Any()
-    private var schedulerJob: Job? = null
+    private var scheduledTask: ScheduledFuture<*>? = null
 
     override fun start() {
         logger.info("Starting periodic tip scheduler for project '${project.name}'")
@@ -35,43 +32,48 @@ class PeriodicTipSchedulerServiceImpl(
 
     private fun reschedule() {
         synchronized(lock) {
-            schedulerJob?.cancel()
-            schedulerJob = null
+            scheduledTask?.cancel(false)
+            scheduledTask = null
 
-            val intervalMs = intervalMsOrNull()
-            if (intervalMs == null) {
+            val scheduleConfig = resolveScheduleConfigOrNull()
+            if (scheduleConfig == null) {
                 logger.info("Periodic tip scheduler disabled for project '${project.name}'")
                 return
             }
 
             logger.info(
-                "Periodic tip scheduler armed for project '${project.name}' with interval=${settingsService().getTipIntervalHours()} ${intervalUnitLabel()}"
+                "Periodic tip scheduler armed for project '${project.name}' with interval=${scheduleConfig.intervalValue} ${scheduleConfig.intervalLabel}"
             )
-            schedulerJob = scheduleLoop(intervalMs)
+            scheduledTask = scheduleNextRun(scheduleConfig.intervalSeconds)
         }
     }
 
-    private fun scheduleLoop(intervalMs: Long): Job {
-        return cs.launch {
-            while (isActive) {
-                logger.info("Periodic tip scheduler waiting ${intervalMs}ms for project '${project.name}'")
-                delay(intervalMs)
-                if (!isActive) {
-                    return@launch
-                }
-
+    private fun scheduleNextRun(intervalSeconds: Long): ScheduledFuture<*> {
+        logger.info("Periodic tip scheduler waiting ${intervalSeconds}s for project '${project.name}'")
+        return AppExecutorUtil.getAppScheduledExecutorService().schedule(
+            {
                 runCatchingSchedulerTick()
-            }
-        }
+                if (isSchedulingEnabled()) {
+                    reschedule()
+                }
+            },
+            intervalSeconds,
+            TimeUnit.SECONDS
+        )
     }
 
     private fun runCatchingSchedulerTick() {
         try {
             showPeriodicTipIfEnabled()
-        } catch (e: CancellationException) {
-            throw e
         } catch (t: Throwable) {
             logger.warn("Periodic tip scheduler tick failed for project '${project.name}'", t)
+        }
+    }
+
+    override fun dispose() {
+        synchronized(lock) {
+            scheduledTask?.cancel(false)
+            scheduledTask = null
         }
     }
 
@@ -90,7 +92,7 @@ class PeriodicTipSchedulerServiceImpl(
             try {
                 if (!project.isDisposed && isSchedulingEnabled()) {
                     logger.info("Showing periodic Vim tip for project '${project.name}'")
-                    notifier.showRandomTip(project)
+                    notifier.showRandomTipIfNoneActive(project)
                 }
             } catch (t: Throwable) {
                 logger.warn("Failed to show periodic Vim tip for project '${project.name}'", t)
@@ -99,25 +101,33 @@ class PeriodicTipSchedulerServiceImpl(
     }
 
     private fun isSchedulingEnabled(): Boolean {
-        return !project.isDisposed && settingsService().isPeriodicTipsEnabled() && intervalMs() > 0L
+        return resolveScheduleConfigOrNull() != null
     }
 
-    private fun intervalMsOrNull(): Long? {
-        if (!isSchedulingEnabled()) {
+    private fun resolveScheduleConfigOrNull(): ScheduleConfig? {
+        if (project.isDisposed) {
             return null
         }
-        return intervalMs()
+        val settingsService = settingsService()
+        if (!settingsService.isPeriodicTipsEnabled()) {
+            return null
+        }
+        val intervalValue = settingsService.getTipIntervalHours().toLong().coerceIn(0L, MAX_INTERVAL_HOURS)
+        val intervalSeconds = intervalValue * intervalUnitSeconds()
+        if (intervalSeconds <= 0L) {
+            return null
+        }
+        return ScheduleConfig(
+            intervalValue = intervalValue,
+            intervalSeconds = intervalSeconds,
+            intervalLabel = intervalUnitLabel()
+        )
     }
 
-    private fun intervalMs(): Long {
-        val hours = settingsService().getTipIntervalHours().toLong().coerceIn(0L, MAX_INTERVAL_HOURS)
-        return hours * intervalUnitMs()
-    }
-
-    private fun intervalUnitMs(): Long {
+    private fun intervalUnitSeconds(): Long {
         return when (System.getProperty(VimTipConfig.TIP_INTERVAL_UNIT_PROPERTY)?.lowercase()) {
-            "minutes" -> MILLIS_PER_MINUTE
-            else -> MILLIS_PER_HOUR
+            "minutes" -> SECONDS_PER_MINUTE
+            else -> SECONDS_PER_HOUR
         }
     }
 
@@ -132,10 +142,16 @@ class PeriodicTipSchedulerServiceImpl(
 
     private fun tipService(): VimTipService = service()
 
+    private data class ScheduleConfig(
+        val intervalValue: Long,
+        val intervalSeconds: Long,
+        val intervalLabel: String
+    )
+
     private companion object {
         val logger = Logger.getInstance(PeriodicTipSchedulerServiceImpl::class.java)
-        const val MILLIS_PER_MINUTE = 60L * 1000L
-        const val MILLIS_PER_HOUR = 60L * 60L * 1000L
+        const val SECONDS_PER_MINUTE = 60L
+        const val SECONDS_PER_HOUR = 60L * 60L
         const val MAX_INTERVAL_HOURS = 24L * 7L
     }
 }
