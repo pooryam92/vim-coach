@@ -10,29 +10,49 @@
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="Vim Tips" displayType="BALLOON" isLogByDefault="true" />
         <postStartupActivity implementation="com.github.pooryam92.vimcoach.features.tips.entrypoints.startup.VimTipStartupActivity" />
-        <projectService
+        <applicationService
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsStore"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsStoreImpl" />
+        <applicationService
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsServiceImpl" />
+        <applicationConfigurable
+            id="com.github.pooryam92.vimcoach.settings"
+            parentId="tools"
+            displayName="Vim Coach"
+            instance="com.github.pooryam92.vimcoach.features.tips.ui.settings.VimCoachSettingsConfigurable" />
+        <applicationService
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.state.store.VimTipStore"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.state.store.VimTipStoreImpl" />
+        <applicationService
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.state.VimTipService"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.state.VimTipServiceImpl" />
-        <projectService
+        <applicationService
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceService"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceServiceImpl" />
-        <projectService
+        <applicationService
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.TipLoaderServiceImpl" />
+        <projectService
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerService"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerServiceImpl" />
+        <projectService
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.TipNotificationService"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.TipNotificationServiceImpl" />
     </extensions>
 
     <actions>
         <action
             id="com.github.pooryam92.vimcoach.actions.ShowVimTipAction"
             class="com.github.pooryam92.vimcoach.features.tips.entrypoints.actions.ShowVimTipAction"
-            text="Show Vim Tip"
-            description="Show a Vim tip notification">
+            text="Vim Coach: Show Tip"
+            description="Show a Vim Coach tip notification">
         </action>
         <action
             id="com.github.pooryam92.vimcoach.actions.RefetchVimTipsAction"
             class="com.github.pooryam92.vimcoach.features.tips.entrypoints.actions.RefetchVimTipsAction"
-            text="Refetch Vim Tips from Remote"
-            description="Reload Vim tips from remote source">
+            text="Vim Coach: Refresh Tips"
+            description="Refresh Vim Coach tips from the remote source">
         </action>
     </actions>
 </idea-plugin>

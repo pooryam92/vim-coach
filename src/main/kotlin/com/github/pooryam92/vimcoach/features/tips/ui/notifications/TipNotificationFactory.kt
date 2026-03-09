@@ -2,31 +2,17 @@ package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
-import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
-import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.IconLoader
 
-class VimTipNotifier(
-    private val tipService: VimTipService
-) {
+class TipNotificationFactory {
 
-    fun showRandomTip(project: Project) {
-        showTip(project, tipService.getRandomTip())
-    }
-
-    private fun showTip(project: Project, tip: VimTip) {
-        val notification = createNotificationWithActions(project, tip)
-        notification.notify(project)
-    }
-
-    internal fun createNotificationWithActions(project: Project, tip: VimTip): Notification {
+    internal fun createNotificationWithActions(tip: VimTip, onShowNextTip: () -> Unit): Notification {
         val notification = createNotification(tip)
         notification.addAction(NotificationAction.createSimple(TIP_NEXT_ACTION_TEXT) {
-            notification.expire()
-            showTip(project, tipService.getRandomTip())
+            onShowNextTip()
         })
         return notification
     }
@@ -72,7 +58,7 @@ class VimTipNotifier(
         val APP_TITLE: String = MyBundle.message("appTitle")
         val NOTIFICATION_GROUP_ID: String = MyBundle.message("notificationGroupId")
         val TIP_NEXT_ACTION_TEXT: String = MyBundle.message("tipNextAction")
-        val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", VimTipNotifier::class.java)
+        val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", TipNotificationFactory::class.java)
 
         private const val DETAILS_SEPARATOR = "<br/>"
         private const val HTML_OPEN = "<html>"

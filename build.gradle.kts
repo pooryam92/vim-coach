@@ -207,6 +207,16 @@ intellijPlatformTesting {
             }
         }
 
+        register("runIdeWithMinuteTipSchedule") {
+            task {
+                description = "Run IDE with periodic tip interval interpreted as minutes"
+                group = "ide"
+                jvmArgumentProviders += CommandLineArgumentProvider {
+                    listOf("-Dvimcoach.tip.interval.unit=minutes")
+                }
+            }
+        }
+
         register("runIdeForUiTests") {
             task {
                 jvmArgumentProviders += CommandLineArgumentProvider {

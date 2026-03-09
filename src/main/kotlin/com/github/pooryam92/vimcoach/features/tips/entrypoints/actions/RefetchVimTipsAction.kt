@@ -1,13 +1,14 @@
 package com.github.pooryam92.vimcoach.features.tips.entrypoints.actions
 
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
-import com.github.pooryam92.vimcoach.features.tips.ui.notifications.VimTipNotifier
+import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationFactory
 import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.progress.ProgressIndicator
@@ -16,9 +17,11 @@ import com.intellij.openapi.project.Project
 
 class RefetchVimTipsAction : AnAction() {
 
+    override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
+
     override fun actionPerformed(event: AnActionEvent) {
         val project = event.project ?: return
-        val loader = project.service<TipLoaderService>()
+        val loader = service<TipLoaderService>()
 
         object : Task.Backgroundable(project, MyBundle.message("refetchTipsProgress"), false) {
             override fun run(indicator: ProgressIndicator) {
@@ -37,8 +40,8 @@ class RefetchVimTipsAction : AnAction() {
 
     private fun showNotification(project: Project, content: String, type: NotificationType) {
         Notification(
-            VimTipNotifier.NOTIFICATION_GROUP_ID,
-            VimTipNotifier.APP_TITLE,
+            TipNotificationFactory.NOTIFICATION_GROUP_ID,
+            TipNotificationFactory.APP_TITLE,
             content,
             type
         ).notify(project)

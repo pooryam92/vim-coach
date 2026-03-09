@@ -40,19 +40,6 @@ class FakeVimTipService(
         this.metadata = metadata
     }
 
-    override fun getState(): VimTipService.State {
-        return VimTipService.State(
-            tips = tips.toMutableList(),
-            metadata = metadata
-        )
-    }
-
-    override fun loadState(state: VimTipService.State) {
-        tips = state.tips.toMutableList()
-        metadata = state.metadata
-        currentIndex = 0
-    }
-
     private companion object {
         val DEFAULT_TIP = VimTip(
             summary = "fallback",
