@@ -45,14 +45,14 @@
         <action
             id="com.github.pooryam92.vimcoach.actions.ShowVimTipAction"
             class="com.github.pooryam92.vimcoach.features.tips.entrypoints.actions.ShowVimTipAction"
-            text="Show Vim Tip"
-            description="Show a Vim tip notification">
+            text="Vim Coach: Show Tip"
+            description="Show a Vim Coach tip notification">
         </action>
         <action
             id="com.github.pooryam92.vimcoach.actions.RefetchVimTipsAction"
             class="com.github.pooryam92.vimcoach.features.tips.entrypoints.actions.RefetchVimTipsAction"
-            text="Refetch Vim Tips from Remote"
-            description="Reload Vim tips from remote source">
+            text="Vim Coach: Refresh Tips"
+            description="Refresh Vim Coach tips from the remote source">
         </action>
     </actions>
 </idea-plugin>

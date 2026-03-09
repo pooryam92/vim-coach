@@ -21,8 +21,8 @@
 - `features/tips/state`: business services and settings/tip state logic
 - `features/tips/state/store`: `PersistentStateComponent` stores
 - `features/tips/source`: source selection and integrations
-- `features/tips/application`: loading/update orchestration
-- `features/tips/ui`: notifications, settings UI, and interactions
+- `features/tips/application`: loading, scheduling, and notification orchestration
+- `features/tips/ui`: notification presentation and settings UI
 - `features/tips/entrypoints`: actions and startup activity
 
 ## IntelliJ Guardrails
@@ -34,7 +34,7 @@
 
 Current service scopes:
 - Application services: `VimTipStore`, `VimTipService`, `VimCoachSettingsStore`, `VimCoachSettingsService`, `TipSourceService`, `TipLoaderService`
-- Project services: `PeriodicTipSchedulerService`
+- Project services: `PeriodicTipSchedulerService`, `TipNotificationService`
 
 ## Testing Guidance
 - Use the lowest test layer that proves the behavior.

@@ -12,8 +12,10 @@ Vim Coach is an IntelliJ Platform plugin designed to help developers learn and m
 ## Features
 
 -  **Vim Tips**: Get Vim tips displayed as notifications
--  **On-Demand Action**: Run `Show Vim Tip` from Find Action (`Ctrl+Shift+A`)
+-  **On-Demand Action**: Run `Vim Coach: Show Tip` from Find Action (`Ctrl+Shift+A`)
 -  **Startup Tips**: See a Vim tip when you start your IDE
+-  **Periodic Tips**: Schedule reminder tips from the plugin settings
+-  **Settings UI**: Control startup tips and periodic reminders from `Settings | Tools | Vim Coach`
 -  **Comprehensive Library**: Hundreds of Vim commands covering navigation, editing, searching, and more
 -  **Remote Updates**: Tips can be loaded from remote sources for fresh content
 
@@ -25,10 +27,11 @@ This plugin requires [IdeaVim](https://plugins.jetbrains.com/plugin/164-ideavim)
 
 Once installed, you can:
 
-1. **Show a Vim Tip on Demand**: Run `Show Vim Tip` from Find Action (`Ctrl+Shift+A`)
+1. **Show a Vim Tip on Demand**: Run `Vim Coach: Show Tip` from Find Action (`Ctrl+Shift+A`)
 2. **Learn at Startup**: Tips will appear automatically when you open a project 
-3. **Browse Tips**: Each tip includes a summary and detailed explanation with examples
-4. **Refetch Tips from Remote**: Use the `Refetch Vim Tips from Remote` action to update your tips library from the remote source
+3. **Schedule Periodic Tips**: Open `Settings | Tools | Vim Coach` and enable recurring reminders
+4. **Browse Tips**: Each tip includes a summary and detailed explanation with examples
+5. **Refresh Tips from Remote**: Use the `Vim Coach: Refresh Tips` action to update your tips library from the remote source
 
 ### IdeaVim mapping with `<leader>`
 
@@ -38,6 +41,8 @@ If you use IdeaVim, you can map Vim Coach actions in your `~/.ideavimrc`:
 let mapleader = " "
 map <leader>tt <Action>(com.github.pooryam92.vimcoach.actions.ShowVimTipAction)
 ```
+
+Vim Coach no longer installs a default key binding for `Vim Coach: Show Tip`, so custom IdeaVim mappings are the preferred way to add a shortcut without conflicting with existing IDE shortcuts.
 
 <!-- Plugin description end -->
 
