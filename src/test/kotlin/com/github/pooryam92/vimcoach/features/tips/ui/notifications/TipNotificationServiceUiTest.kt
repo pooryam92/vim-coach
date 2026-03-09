@@ -3,7 +3,9 @@ package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 import com.github.pooryam92.vimcoach.features.tips.application.TipNotificationServiceImpl
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeVimTipService
+import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
+import java.lang.reflect.Proxy
 
 class TipNotificationServiceUiTest : BasePlatformTestCase() {
 
@@ -74,6 +76,7 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
 
         controller.showRandomTip()
         val firstNotification = controller.activeNotification
+        firstNotification!!.setBalloon(createVisibleBalloon())
 
         val shown = controller.showRandomTipIfNoneActive()
         val secondNotification = controller.activeNotification
@@ -81,7 +84,7 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
         assertFalse(shown)
         assertEquals(1, mockTipService.getRandomTipCalls)
         assertSame(firstNotification, secondNotification)
-        assertFalse(firstNotification!!.isExpired)
+        assertFalse(firstNotification.isExpired)
     }
 
     fun testShowRandomTipIfNoneActiveShowsAfterTrackedNotificationExpires() {
@@ -127,5 +130,32 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
         assertNotNull(secondNotification)
         assertNotSame(firstNotification, secondNotification)
         assertFalse(secondNotification!!.isExpired)
+    }
+
+    private fun createVisibleBalloon(): Balloon {
+        return Proxy.newProxyInstance(
+            Balloon::class.java.classLoader,
+            arrayOf(Balloon::class.java)
+        ) { _, method, _ ->
+            when (method.name) {
+                "isDisposed" -> false
+                "addListener" -> null
+                else -> defaultValue(method.returnType)
+            }
+        } as Balloon
+    }
+
+    private fun defaultValue(returnType: Class<*>): Any? {
+        return when (returnType) {
+            java.lang.Boolean.TYPE -> false
+            java.lang.Integer.TYPE -> 0
+            java.lang.Long.TYPE -> 0L
+            java.lang.Float.TYPE -> 0f
+            java.lang.Double.TYPE -> 0.0
+            java.lang.Short.TYPE -> 0.toShort()
+            java.lang.Byte.TYPE -> 0.toByte()
+            java.lang.Character.TYPE -> 0.toChar()
+            else -> null
+        }
     }
 }

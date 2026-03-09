@@ -4,70 +4,99 @@ import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.intellij.openapi.components.service
 import com.intellij.openapi.options.SearchableConfigurable
-import com.intellij.util.ui.JBUI
-import java.awt.BorderLayout
-import javax.swing.Box
+import com.intellij.ui.dsl.builder.AlignX
+import com.intellij.ui.dsl.builder.panel
+import com.intellij.ui.dsl.builder.selected
 import javax.swing.JComponent
-import javax.swing.JPanel
+import javax.swing.JCheckBox
+import javax.swing.JSpinner
+import javax.swing.SpinnerNumberModel
 
 class VimCoachSettingsConfigurable : SearchableConfigurable {
-    private var rootPanel: JPanel? = null
-    private var startupSetting: VimCoachSettingComponent? = null
-    private var periodicSetting: VimCoachSettingComponent? = null
+    private var startupCheckBox: JCheckBox? = null
+    private var periodicCheckBox: JCheckBox? = null
+    private var intervalSpinner: JSpinner? = null
 
     override fun getId(): String = ID
 
     override fun getDisplayName(): String = MyBundle.message("settingsDisplayName")
 
     override fun createComponent(): JComponent {
-        val settingsService = settingsService()
-        val startup = StartupTipSettingComponent(settingsService)
-        val periodic = PeriodicTipsSettingComponent(settingsService)
-        startupSetting = startup
-        periodicSetting = periodic
+        val periodicCheckBoxCell = arrayOfNulls<com.intellij.ui.dsl.builder.Cell<JCheckBox>>(1)
 
-        return JPanel(BorderLayout()).apply {
-            border = JBUI.Borders.empty(8)
-            add(createContentPanel(startup.component(), periodic.component()), BorderLayout.NORTH)
-        }.also { rootPanel = it }
+        return panel {
+            row {
+                startupCheckBox = checkBox(MyBundle.message("settingsShowTipOnStartup"))
+                    .align(AlignX.LEFT)
+                    .component
+            }
+            row {
+                periodicCheckBox = checkBox(MyBundle.message("settingsEnableTipsEvery"))
+                    .align(AlignX.LEFT)
+                    .also { periodicCheckBoxCell[0] = it }
+                    .component
+                intervalSpinner = cell(
+                    JSpinner(
+                        SpinnerNumberModel(
+                            settingsService().getTipIntervalHours(),
+                            MIN_TIP_INTERVAL_HOURS,
+                            MAX_TIP_INTERVAL_HOURS,
+                            1
+                        )
+                    )
+                )
+                    .enabledIf(periodicCheckBoxCell[0]!!.selected)
+                    .component
+                label(MyBundle.message("settingsTipIntervalSuffix"))
+            }
+        }.also { reset() }
     }
 
     override fun isModified(): Boolean {
-        return (startupSetting?.isModified() ?: false) ||
-            (periodicSetting?.isModified() ?: false)
+        val startupModified = startupCheckBox?.isSelected != settingsService().isShowTipsOnStartupEnabled()
+        val periodicModified = periodicCheckBox?.isSelected != settingsService().isPeriodicTipsEnabled()
+        val intervalModified = currentIntervalValue() != settingsService().getTipIntervalHours()
+        return startupModified || periodicModified || intervalModified
     }
 
     override fun apply() {
-        startupSetting?.apply()
-        periodicSetting?.apply()
+        val settingsService = settingsService()
+        val showOnStartup = startupCheckBox?.isSelected ?: return
+        val periodicEnabled = periodicCheckBox?.isSelected ?: return
+        val intervalHours = currentIntervalValue()
+
+        settingsService.setShowTipsOnStartupEnabled(showOnStartup)
+        if (periodicEnabled) {
+            settingsService.setTipIntervalHours(intervalHours)
+            settingsService.setPeriodicTipsEnabled(true)
+        } else {
+            settingsService.setPeriodicTipsEnabled(false)
+            settingsService.setTipIntervalHours(intervalHours)
+        }
     }
 
     override fun reset() {
-        startupSetting?.reset()
-        periodicSetting?.reset()
+        val settingsService = settingsService()
+        startupCheckBox?.isSelected = settingsService.isShowTipsOnStartupEnabled()
+        periodicCheckBox?.isSelected = settingsService.isPeriodicTipsEnabled()
+        intervalSpinner?.value = settingsService.getTipIntervalHours()
     }
 
     override fun disposeUIResources() {
-        rootPanel = null
-        startupSetting = null
-        periodicSetting = null
+        startupCheckBox = null
+        periodicCheckBox = null
+        intervalSpinner = null
     }
 
     private fun settingsService(): VimCoachSettingsService = service()
 
-    private fun createContentPanel(startupComponent: JComponent, periodicComponent: JComponent): JPanel {
-        startupComponent.alignmentX = JComponent.LEFT_ALIGNMENT
-        periodicComponent.alignmentX = JComponent.LEFT_ALIGNMENT
-
-        return JPanel().apply {
-            layout = javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS)
-            add(startupComponent)
-            add(Box.createVerticalStrut(8))
-            add(periodicComponent)
-        }
+    private fun currentIntervalValue(): Int {
+        return (intervalSpinner?.value as? Number)?.toInt() ?: settingsService().getTipIntervalHours()
     }
 
     private companion object {
         const val ID = "com.github.pooryam92.vimcoach.settings"
+        const val MIN_TIP_INTERVAL_HOURS = 1
+        const val MAX_TIP_INTERVAL_HOURS = 24 * 7
     }
 }
