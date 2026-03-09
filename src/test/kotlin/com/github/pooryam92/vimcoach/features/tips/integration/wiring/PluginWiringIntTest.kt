@@ -13,12 +13,8 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase
 class PluginWiringIntTest : BasePlatformTestCase() {
 
     fun testProjectServicesAreRegistered() {
-        val sourceService = project.service<TipSourceService>()
-        val loaderService = project.service<TipLoaderService>()
         val periodicSchedulerService = project.service<PeriodicTipSchedulerService>()
 
-        assertNotNull(sourceService)
-        assertNotNull(loaderService)
         assertNotNull(periodicSchedulerService)
     }
 
@@ -27,10 +23,14 @@ class PluginWiringIntTest : BasePlatformTestCase() {
         val settingsStore = service<VimCoachSettingsStore>()
         val tipService = service<VimTipService>()
         val settingsService = service<VimCoachSettingsService>()
+        val sourceService = service<TipSourceService>()
+        val loaderService = service<TipLoaderService>()
 
         assertNotNull(tipStore)
         assertNotNull(settingsStore)
         assertNotNull(tipService)
         assertNotNull(settingsService)
+        assertNotNull(sourceService)
+        assertNotNull(loaderService)
     }
 }

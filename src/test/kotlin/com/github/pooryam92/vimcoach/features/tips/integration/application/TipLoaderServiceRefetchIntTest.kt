@@ -10,7 +10,6 @@ import com.github.pooryam92.vimcoach.features.tips.source.domain.TipSourceLoadRe
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
-import com.intellij.testFramework.registerServiceInstance
 
 class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
 
@@ -221,17 +220,25 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
         assertEquals(2, tipService.countTips())
     }
 
+    fun testCheckForUpdatesRunsOnlyOncePerLoaderInstance() {
+        val tipService = service<VimTipService>()
+        tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
+        val fakeTipSource = FakeTipSource(TipSourceLoadResult.NotModified)
+        val loader = registerLoader(fakeTipSource)
+
+        val firstResult = loader.checkForUpdates()
+        val secondResult = loader.checkForUpdates()
+
+        assertEquals(TipLoadResult.NotModified, firstResult)
+        assertEquals(TipLoadResult.NotModified, secondResult)
+        assertEquals(0, fakeTipSource.loadTipsCalls)
+        assertEquals(1, fakeTipSource.loadTipsConditionalCalls)
+    }
+
     private fun registerLoader(fakeTipSource: TipSourceService): TipLoaderService {
-        project.registerServiceInstance(
-            TipSourceService::class.java,
-            fakeTipSource
+        return TipLoaderServiceImpl(
+            tipSource = fakeTipSource
         )
-        val loader = TipLoaderServiceImpl(project)
-        project.registerServiceInstance(
-            TipLoaderService::class.java,
-            loader
-        )
-        return loader
     }
 
     private class FakeTipSource(

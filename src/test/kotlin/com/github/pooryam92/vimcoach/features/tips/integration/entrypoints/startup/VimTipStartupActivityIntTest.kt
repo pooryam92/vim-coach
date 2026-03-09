@@ -30,7 +30,7 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
         try {
             settingsService().setShowTipsOnStartupEnabled(true)
             ApplicationManager.getApplication().registerServiceInstance(VimTipService::class.java, VimTipServiceImpl())
-            project.registerServiceInstance(TipLoaderService::class.java, TipLoaderServiceImpl(project))
+            ApplicationManager.getApplication().registerServiceInstance(TipLoaderService::class.java, TipLoaderServiceImpl())
         } finally {
             super.tearDown()
         }
@@ -99,7 +99,7 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
 
     private fun registerFakeLoader(): FakeTipLoaderService {
         val fakeLoader = FakeTipLoaderService()
-        project.registerServiceInstance(
+        ApplicationManager.getApplication().registerServiceInstance(
             TipLoaderService::class.java,
             fakeLoader
         )

@@ -27,10 +27,10 @@
         <applicationService
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.state.VimTipService"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.state.VimTipServiceImpl" />
-        <projectService
+        <applicationService
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceService"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceServiceImpl" />
-        <projectService
+        <applicationService
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.TipLoaderServiceImpl" />
         <projectService

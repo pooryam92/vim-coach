@@ -9,7 +9,6 @@ import com.github.pooryam92.vimcoach.features.tips.source.infra.remote.RemoteTip
 import com.intellij.openapi.diagnostic.Logger
 
 class TipSourceServiceImpl(
-    // TODO: Move remote loading orchestration to an application-level service and keep this source service focused on source selection.
     private val remoteTipSource: RemoteTipSourceService = RemoteTipSourceServiceImpl(),
     private val fileTipSource: FileTipSourceService = FileTipSourceServiceImpl(),
     private val sourceModeProvider: () -> String? = { System.getProperty(TIP_SOURCE_MODE_PROPERTY) }

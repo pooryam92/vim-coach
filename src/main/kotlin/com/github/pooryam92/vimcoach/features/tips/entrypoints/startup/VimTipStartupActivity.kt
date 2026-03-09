@@ -17,7 +17,7 @@ class VimTipStartupActivity : ProjectActivity {
     override suspend fun execute(project: Project) {
         val settingsService = ApplicationManager.getApplication().service<VimCoachSettingsService>()
         val periodicScheduler = project.service<PeriodicTipSchedulerService>()
-        val loader = project.service<TipLoaderService>()
+        val loader = service<TipLoaderService>()
         val notifier = VimTipNotifier(service<VimTipService>())
         if (settingsService.isPeriodicTipsEnabled()) {
             periodicScheduler.start()

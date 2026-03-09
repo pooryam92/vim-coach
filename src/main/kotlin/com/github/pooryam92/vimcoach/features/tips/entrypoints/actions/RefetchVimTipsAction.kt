@@ -18,7 +18,7 @@ class RefetchVimTipsAction : AnAction() {
 
     override fun actionPerformed(event: AnActionEvent) {
         val project = event.project ?: return
-        val loader = project.service<TipLoaderService>()
+        val loader = service<TipLoaderService>()
 
         object : Task.Backgroundable(project, MyBundle.message("refetchTipsProgress"), false) {
             override fun run(indicator: ProgressIndicator) {

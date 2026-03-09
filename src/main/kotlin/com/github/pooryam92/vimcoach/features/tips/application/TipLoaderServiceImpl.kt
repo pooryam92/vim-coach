@@ -6,17 +6,23 @@ import com.github.pooryam92.vimcoach.features.tips.source.domain.TipSourceLoadRe
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.intellij.openapi.components.service
 import com.intellij.openapi.diagnostic.Logger
-import com.intellij.openapi.project.Project
+import java.util.concurrent.atomic.AtomicBoolean
 
-class TipLoaderServiceImpl(project: Project) : TipLoaderService {
-    private val tipService = service<VimTipService>()
-    private val tipSource = project.service<TipSourceService>()
+class TipLoaderServiceImpl(
+    private val tipService: VimTipService = service(),
+    private val tipSource: TipSourceService = service()
+) : TipLoaderService {
+    private val updatesChecked = AtomicBoolean(false)
 
     override fun refetchTips(): TipLoadResult {
         return fetchAndSave(conditional = false)
     }
 
     override fun checkForUpdates(): TipLoadResult {
+        if (!updatesChecked.compareAndSet(false, true)) {
+            logger.info("Skipping Vim tip update check because it already ran in this application session")
+            return TipLoadResult.NotModified
+        }
         return fetchAndSave(conditional = hasCachedTips())
     }
 
