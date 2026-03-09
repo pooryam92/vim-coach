@@ -8,10 +8,18 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.diagnostic.Logger
 import java.util.concurrent.atomic.AtomicBoolean
 
-class TipLoaderServiceImpl(
-    private val tipService: VimTipService = service(),
-    private val tipSource: TipSourceService = service()
-) : TipLoaderService {
+class TipLoaderServiceImpl() : TipLoaderService {
+    private var injectedTipService: VimTipService? = null
+    private var injectedTipSource: TipSourceService? = null
+
+    internal constructor(
+        tipService: VimTipService? = null,
+        tipSource: TipSourceService? = null
+    ) : this() {
+        injectedTipService = tipService
+        injectedTipSource = tipSource
+    }
+
     private val updatesChecked = AtomicBoolean(false)
 
     override fun refetchTips(): TipLoadResult {
@@ -33,16 +41,16 @@ class TipLoaderServiceImpl(
     }
 
     private fun hasCachedTips(): Boolean {
-        val tipCount = tipService.countTips()
+        val tipCount = tipService().countTips()
         logger.info("Current Vim tip cache size: $tipCount")
         return tipCount > 0
     }
 
     private fun loadFromSource(conditional: Boolean): TipSourceLoadResult {
         return if (conditional) {
-            tipSource.loadTipsConditional(tipService.getMetadata())
+            tipSource().loadTipsConditional(tipService().getMetadata())
         } else {
-            tipSource.loadTips()
+            tipSource().loadTips()
         }
     }
 
@@ -67,19 +75,23 @@ class TipLoaderServiceImpl(
     }
 
     private fun saveFetchedTips(sourceResult: TipSourceLoadResult.Success): TipLoadResult {
-        tipService.saveTips(sourceResult.tips)
-        tipService.saveMetadata(sourceResult.metadata)
+        tipService().saveTips(sourceResult.tips)
+        tipService().saveMetadata(sourceResult.metadata)
         logger.info("Saved ${sourceResult.tips.size} Vim tips from source")
         return TipLoadResult.Updated(sourceResult.tips.size)
     }
 
     private fun markRefreshTimestamp(): TipLoadResult {
-        val updatedMetadata = tipService.getMetadata().copy(
+        val updatedMetadata = tipService().getMetadata().copy(
             lastFetchTimestamp = System.currentTimeMillis()
         )
-        tipService.saveMetadata(updatedMetadata)
+        tipService().saveMetadata(updatedMetadata)
         return TipLoadResult.NotModified
     }
+
+    private fun tipService(): VimTipService = injectedTipService ?: service()
+
+    private fun tipSource(): TipSourceService = injectedTipSource ?: service()
 
     private companion object {
         val logger = Logger.getInstance(TipLoaderServiceImpl::class.java)

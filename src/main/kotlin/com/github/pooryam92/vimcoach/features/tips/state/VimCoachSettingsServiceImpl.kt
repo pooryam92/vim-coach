@@ -6,16 +6,19 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.ProjectManager
 
-class VimCoachSettingsServiceImpl(
-    private val settingsStore: VimCoachSettingsStore = service()
-) : VimCoachSettingsService {
+class VimCoachSettingsServiceImpl() : VimCoachSettingsService {
+    private var injectedSettingsStore: VimCoachSettingsStore? = null
+
+    internal constructor(settingsStore: VimCoachSettingsStore) : this() {
+        injectedSettingsStore = settingsStore
+    }
 
     override fun isShowTipsOnStartupEnabled(): Boolean {
         return currentState().showTipsOnStartup
     }
 
     override fun setShowTipsOnStartupEnabled(enabled: Boolean) {
-        settingsStore.setShowTipsOnStartup(enabled)
+        settingsStore().setShowTipsOnStartup(enabled)
     }
 
     override fun isPeriodicTipsEnabled(): Boolean {
@@ -26,7 +29,7 @@ class VimCoachSettingsServiceImpl(
         if (currentState().periodicTipsEnabled == enabled) {
             return
         }
-        settingsStore.setPeriodicTipsEnabled(enabled)
+        settingsStore().setPeriodicTipsEnabled(enabled)
         notifyPeriodicSchedulerSettingsChanged()
     }
 
@@ -41,14 +44,18 @@ class VimCoachSettingsServiceImpl(
             return
         }
 
-        settingsStore.setTipIntervalHours(normalizedHours)
+        settingsStore().setTipIntervalHours(normalizedHours)
         if (previousState.periodicTipsEnabled) {
             notifyPeriodicSchedulerSettingsChanged()
         }
     }
 
     private fun currentState(): VimCoachSettingsStore.State {
-        return settingsStore.state ?: VimCoachSettingsStore.State()
+        return settingsStore().state ?: VimCoachSettingsStore.State()
+    }
+
+    private fun settingsStore(): VimCoachSettingsStore {
+        return injectedSettingsStore ?: service()
     }
 
     private companion object {

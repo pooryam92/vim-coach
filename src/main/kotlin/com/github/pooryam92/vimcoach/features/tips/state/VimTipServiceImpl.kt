@@ -5,16 +5,19 @@ import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.state.store.VimTipStore
 import com.intellij.openapi.components.service
 
-class VimTipServiceImpl(
-    private val tipStore: VimTipStore = service()
-) : VimTipService {
+class VimTipServiceImpl() : VimTipService {
+    private var injectedTipStore: VimTipStore? = null
+
+    internal constructor(tipStore: VimTipStore) : this() {
+        injectedTipStore = tipStore
+    }
 
     override fun countTips(): Int {
         return currentState().tips.size
     }
 
     override fun saveTips(tips: List<VimTip>) {
-        tipStore.setTips(tips)
+        tipStore().setTips(tips)
     }
 
     override fun getRandomTip(): VimTip {
@@ -30,11 +33,15 @@ class VimTipServiceImpl(
     }
 
     override fun saveMetadata(metadata: TipMetadata) {
-        tipStore.setMetadata(metadata)
+        tipStore().setMetadata(metadata)
     }
 
     private fun currentState(): VimTipStore.State {
-        return tipStore.state ?: VimTipStore.State()
+        return tipStore().state ?: VimTipStore.State()
+    }
+
+    private fun tipStore(): VimTipStore {
+        return injectedTipStore ?: service()
     }
 
     private companion object {
