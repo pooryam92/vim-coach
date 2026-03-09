@@ -16,12 +16,27 @@ class VimTipNotifier(
 ) {
 
     fun showRandomTip(project: Project) {
+        showTipReplacingActive(project, tipService.getRandomTip())
+    }
+
+    fun showRandomTipIfNoneActive(project: Project): Boolean {
+        if (hasActiveTipNotification(project)) {
+            return false
+        }
         showTip(project, tipService.getRandomTip())
+        return true
     }
 
     private fun showTip(project: Project, tip: VimTip) {
         val notification = createNotificationWithActions(project, tip)
-        replaceActiveTipNotification(project, notification)
+        registerActiveTipNotification(project, notification)
+        notification.notify(project)
+    }
+
+    private fun showTipReplacingActive(project: Project, tip: VimTip) {
+        val notification = createNotificationWithActions(project, tip)
+        expireActiveTipNotification(project)
+        registerActiveTipNotification(project, notification)
         notification.notify(project)
     }
 
@@ -29,7 +44,7 @@ class VimTipNotifier(
         val notification = createNotification(tip)
         notification.addAction(NotificationAction.createSimple(TIP_NEXT_ACTION_TEXT) {
             notification.expire()
-            showTip(project, tipService.getRandomTip())
+            showTipReplacingActive(project, tipService.getRandomTip())
         })
         return notification
     }
@@ -71,9 +86,25 @@ class VimTipNotifier(
             .replace("'", "&#39;")
     }
 
-    private fun replaceActiveTipNotification(project: Project, notification: Notification) {
+    private fun hasActiveTipNotification(project: Project): Boolean {
+        synchronized(activeTipNotifications) {
+            val existingNotification = activeTipNotifications[project] ?: return false
+            if (existingNotification.isExpired) {
+                activeTipNotifications.remove(project)
+                return false
+            }
+            return true
+        }
+    }
+
+    private fun expireActiveTipNotification(project: Project) {
         synchronized(activeTipNotifications) {
             activeTipNotifications.remove(project)?.expire()
+        }
+    }
+
+    private fun registerActiveTipNotification(project: Project, notification: Notification) {
+        synchronized(activeTipNotifications) {
             activeTipNotifications[project] = notification
         }
         notification.whenExpired {
