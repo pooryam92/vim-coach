@@ -1994,33 +1994,31 @@
       "category": [
         "windows"
       ],
-      "summary": "Close current split Ctrl-w q",
+      "summary": "Open a horizontal split :split",
       "details": [
-        "Closes the active split/window",
-        "Use when you want to keep other splits"
+        ":split opens the current buffer in a horizontal split",
+        "Use when you want to compare or edit in stacked views"
       ]
     },
     {
       "category": [
         "windows"
       ],
-      "summary": "Close all other splits Ctrl-w o",
+      "summary": "Open a vertical split :vsplit",
       "details": [
-        "Makes the current split the only one",
-        "Great for focus while editing"
+        ":vsplit opens the current buffer in a vertical split",
+        "Useful for side-by-side editing"
       ]
     },
     {
       "category": [
         "windows"
       ],
-      "summary": "Resize and maximize splits Ctrl-w = _ | + - < >",
+      "summary": "Split from the keyboard Ctrl-w s / Ctrl-w v",
       "details": [
-        "Ctrl-w = equalizes split sizes",
-        "Ctrl-w _ or Ctrl-w | maximizes size",
-        "Ctrl-w + - < > resizes incrementally",
-        "In some IDE keymaps these keys",
-        "are intercepted, so remap if needed"
+        "Ctrl-w s makes a horizontal split",
+        "Ctrl-w v makes a vertical split",
+        "Useful when you want split creation without typing : commands"
       ]
     },
     {
@@ -2113,20 +2111,81 @@
       "category": [
         "windows"
       ],
-      "summary": "Split windows :split / :vsplit",
+      "summary": "Close current split Ctrl-w q",
       "details": [
-        ":split makes a horizontal split",
-        ":vsplit makes a vertical split"
+        "Closes the active split/window",
+        "Use when you want to keep other splits"
       ]
     },
     {
       "category": [
         "windows"
       ],
-      "summary": "Navigate splits Ctrl-w w and Ctrl-w h/j/k/l",
+      "summary": "Close all other splits Ctrl-w o",
       "details": [
-        "Ctrl-w w cycles through splits",
-        "Ctrl-w h/j/k/l moves to split left/down/up/right"
+        "Makes the current split the only one",
+        "Great for focus while editing"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Keep only this split :only",
+      "details": [
+        ":only closes every other split in the current tab",
+        "It is the Ex-command form of Ctrl-w o"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Cycle through splits Ctrl-w w",
+      "details": [
+        "Ctrl-w w moves to the next split",
+        "Useful when you just need the next pane, not a specific direction"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Move to a split Ctrl-w h/j/k/l",
+      "details": [
+        "Ctrl-w h/j/k/l moves left/down/up/right",
+        "Best when you already know which neighboring split you want"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Equalize split sizes Ctrl-w =",
+      "details": [
+        "Ctrl-w = makes split sizes even again",
+        "Helpful after a lot of manual resizing"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Maximize a split Ctrl-w _ and Ctrl-w |",
+      "details": [
+        "Ctrl-w _ maximizes height",
+        "Ctrl-w | maximizes width"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Resize splits incrementally Ctrl-w + - < >",
+      "details": [
+        "Ctrl-w + and - adjust height",
+        "Ctrl-w < and > adjust width",
+        "In some IDE keymaps these keys are intercepted, so remap if needed"
       ]
     },
     {
@@ -2144,11 +2203,40 @@
       "category": [
         "tabs"
       ],
-      "summary": "Tabs: new/close/switch :tabnew :tabclose gt gT",
+      "summary": "Open a new tab :tabnew",
       "details": [
-        ":tabnew opens a new tab",
-        ":tabclose closes current tab",
-        "gt next tab, gT previous tab"
+        ":tabnew opens a fresh Vim tab page",
+        "Useful when you want a separate split layout"
+      ]
+    },
+    {
+      "category": [
+        "tabs"
+      ],
+      "summary": "Close current tab :tabclose",
+      "details": [
+        ":tabclose closes the active tab page",
+        "Use it when you want to keep the rest of your tab layout"
+      ]
+    },
+    {
+      "category": [
+        "tabs"
+      ],
+      "summary": "Next and previous tab gt / gT",
+      "details": [
+        "gt goes to the next tab",
+        "gT goes to the previous tab"
+      ]
+    },
+    {
+      "category": [
+        "tabs"
+      ],
+      "summary": "Jump to a tab by number {count}gt",
+      "details": [
+        "2gt jumps to tab 2, 5gt jumps to tab 5",
+        "Useful when you have several tab pages open"
       ]
     },
     {
@@ -2157,8 +2245,28 @@
       ],
       "summary": "List tabs :tabs",
       "details": [
-        ":tabs shows all open tabs",
-        ":tabn / :tabp moves next/previous"
+        ":tabs shows all open tab pages",
+        "Use it when you need an overview before switching"
+      ]
+    },
+    {
+      "category": [
+        "tabs"
+      ],
+      "summary": "Next and previous tab with Ex :tabn / :tabp",
+      "details": [
+        ":tabn moves to the next tab",
+        ":tabp moves to the previous tab"
+      ]
+    },
+    {
+      "category": [
+        "tabs"
+      ],
+      "summary": "Keep only this tab :tabonly",
+      "details": [
+        ":tabonly closes all other tab pages",
+        "Use it to reduce a crowded tab layout quickly"
       ]
     },
     {
@@ -2168,7 +2276,7 @@
       "summary": "Reorder tabs :tabmove",
       "details": [
         ":tabmove 0 moves current tab to start",
-        ":tabmove moves to end (no number)"
+        ":tabmove moves to end when you omit the number"
       ]
     },
     {
@@ -2300,6 +2408,43 @@
         "You can use $HOME and other env vars in mappings",
         "Example: nnoremap <leader>vc :e $HOME/.ideavimrc<CR>",
         "Helps keep mappings portable across machines"
+      ]
+    },
+    {
+      "category": [
+        "completion",
+        "ideavim"
+      ],
+      "summary": "Trigger IntelliJ completion from Insert Ctrl-Space",
+      "details": [
+        "Ctrl-Space opens basic code completion in IntelliJ",
+        "Press it again to widen the suggestion list",
+        "IdeaVim supports the IDE completion lookup popup"
+      ]
+    },
+    {
+      "category": [
+        "completion",
+        "ideavim",
+        "config"
+      ],
+      "summary": "Completion popup keys are controlled by lookupkeys",
+      "details": [
+        ":set lookupkeys? shows which keys the IDE handles in completion",
+        "By default keys like Tab and Enter go to the IDE lookup popup",
+        "Keep keys in lookupkeys unless you want IdeaVim to intercept them"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "workflow"
+      ],
+      "summary": "Map next IDE problem with <Action>(GotoNextError)",
+      "details": [
+        "IdeaVim supports IDE action mappings with <Action>(...)",
+        "The official README shows map <S-Space> <Action>(GotoNextError)",
+        "Use :actionlist error or track action IDs to find related actions"
       ]
     }
   ]
