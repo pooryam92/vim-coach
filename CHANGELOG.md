@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-03-10
+
 ### Added
 
 - Settings page for enabling startup tips and configuring periodic tip reminders
@@ -49,7 +51,8 @@
 - Support for remote tip sources
 - Action to refetch tips from remote source for updating the local tip library
 
-[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.1.0-beta...HEAD
+[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/pooryam92/vim-coach/compare/1.0.1...1.1.0
 [1.1.0-beta]: https://github.com/pooryam92/vim-coach/compare/1.0.1...1.1.0-beta
 [1.0.1]: https://github.com/pooryam92/vim-coach/compare/0.3.0-beta...1.0.1
 [0.3.0-beta]: https://github.com/pooryam92/vim-coach/compare/0.2.1-beta...0.3.0-beta
