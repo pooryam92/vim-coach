@@ -32,6 +32,17 @@
     },
     {
       "category": [
+        "basics",
+        "editing"
+      ],
+      "summary": "Insert at true line start gI",
+      "details": [
+        "gI inserts at column 1",
+        "Unlike I, it does not skip indentation"
+      ]
+    },
+    {
+      "category": [
         "basics"
       ],
       "summary": "Open new lines o / O",
@@ -375,6 +386,16 @@
       "details": [
         "qa starts recording into register a",
         "Press q again to stop recording"
+      ]
+    },
+    {
+      "category": [
+        "macros"
+      ],
+      "summary": "Append to an existing macro qA",
+      "details": [
+        "qA keeps recording at the end of macro a",
+        "Useful when a macro is close but needs one more step"
       ]
     },
     {
@@ -819,6 +840,19 @@
       "details": [
         "Press * to find next occurrence",
         "cw to change, then n . to repeat"
+      ]
+    },
+    {
+      "category": [
+        "search",
+        "editing",
+        "workflow"
+      ],
+      "summary": "Replace matches one by one with cgn",
+      "details": [
+        "Search first with /, *, or #",
+        "cgn changes the next match and enters Insert",
+        "Press . to apply the same edit to later matches"
       ]
     },
     {
@@ -1345,6 +1379,17 @@
     },
     {
       "category": [
+        "cmdline",
+        "registers"
+      ],
+      "summary": "Insert a register with :put",
+      "details": [
+        ":put a inserts register a below the cursor",
+        ":put! a inserts it above the cursor"
+      ]
+    },
+    {
+      "category": [
         "registers"
       ],
       "summary": "Expression register \"=",
@@ -1371,6 +1416,16 @@
       "details": [
         "zo opens a fold, zc closes a fold",
         "za toggles a fold (IdeaVim: works where IDE folding supports it)"
+      ]
+    },
+    {
+      "category": [
+        "folds"
+      ],
+      "summary": "Jump between folds zj / zk",
+      "details": [
+        "zj moves to the start of the next fold",
+        "zk moves to the start of the previous fold"
       ]
     },
     {
@@ -1495,6 +1550,18 @@
       "details": [
         "> indents right, < outdents left",
         "Then press . to repeat on next selection/line"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "editing",
+        "workflow"
+      ],
+      "summary": "Keep selection after shifting >gv / <gv",
+      "details": [
+        ">gv reselects after indenting",
+        "<gv reselects after outdenting"
       ]
     },
     {
@@ -2034,6 +2101,19 @@
         "plugins",
         "textobjects"
       ],
+      "summary": "Use Mini.ai for any quotes or brackets",
+      "details": [
+        "Enable with :set mini-ai",
+        "aq/iq target any quotes; ab/ib target any brackets",
+        "Great when delimiter type does not matter"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "plugins",
+        "textobjects"
+      ],
       "summary": "Target arguments with ia / aa",
       "details": [
         "Enable with :set argtextobj",
@@ -2132,6 +2212,19 @@
       "details": [
         "ma sets mark a in this file",
         "Use mA for a global mark; ideamarks can sync A-Z to IDE bookmarks"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "config",
+        "marks"
+      ],
+      "summary": "Sync global marks with IDE bookmarks",
+      "details": [
+        ":set ideamarks",
+        "Capital-letter marks sync with IDE bookmarks",
+        "Use mA and `A across files"
       ]
     },
     {
