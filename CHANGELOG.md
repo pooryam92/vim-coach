@@ -4,8 +4,6 @@
 
 ## [Unreleased]
 
-## [1.1.0-beta] - 2026-03-09
-
 ### Added
 
 - Settings page for enabling startup tips and configuring periodic tip reminders
