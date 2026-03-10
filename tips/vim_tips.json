@@ -1265,6 +1265,19 @@
     },
     {
       "category": [
+        "ideavim",
+        "config",
+        "registers"
+      ],
+      "summary": "Use clipboard+=ideaput for IntelliJ-native paste",
+      "details": [
+        ":set clipboard+=ideaput",
+        "Routes clipboard p/P through IntelliJ insertion",
+        "Useful when IDE paste handlers should stay in play"
+      ]
+    },
+    {
+      "category": [
         "registers"
       ],
       "summary": "Insert register while typing Insert Ctrl-r",
@@ -1571,6 +1584,30 @@
       "details": [
         "gqap formats current paragraph",
         "Set textwidth for consistent wrapping"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Comment code with gcc and gc motions",
+      "details": [
+        "Enable with :set commentary",
+        "gcc comments a line; gcap comments a paragraph",
+        "gc in Visual comments the selection"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Add or change pairs with surround",
+      "details": [
+        "Enable with :set surround",
+        "ysiw) adds (); cs\"' swaps quote types",
+        "ds\" removes surrounding quotes"
       ]
     },
     {
@@ -1931,6 +1968,18 @@
     },
     {
       "category": [
+        "ideavim",
+        "textobjects"
+      ],
+      "summary": "Target arguments with ia / aa",
+      "details": [
+        "Enable with :set argtextobj",
+        "cia changes one argument; daa deletes one",
+        "Great for calls with nested parentheses"
+      ]
+    },
+    {
+      "category": [
         "textobjects"
       ],
       "summary": "Sentence objects is / as",
@@ -2019,7 +2068,7 @@
       "summary": "Set a mark m{a}",
       "details": [
         "ma sets mark a in this file",
-        "Use mA for a global mark (IdeaVim can sync via ideamarks)"
+        "Use mA for a global mark; ideamarks can sync A-Z to IDE bookmarks"
       ]
     },
     {
