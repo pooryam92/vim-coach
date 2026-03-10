@@ -1063,6 +1063,18 @@
     },
     {
       "category": [
+        "editing",
+        "visual"
+      ],
+      "summary": "Renumber repeated values with g Ctrl-a",
+      "details": [
+        "Use on a Visual selection of numbers",
+        "First match gets +1, next gets +2, then +3",
+        "Use g Ctrl-x to step the selection downward"
+      ]
+    },
+    {
+      "category": [
         "editing"
       ],
       "summary": "Make dot-repeat predictable",
@@ -1222,12 +1234,35 @@
     },
     {
       "category": [
+        "registers",
+        "workflow"
+      ],
+      "summary": "Append to a named register with \"A",
+      "details": [
+        "\"A appends into register a instead of replacing it",
+        "Use after \"ayy or \"ayiw to collect snippets",
+        "Paste the combined text later with \"ap"
+      ]
+    },
+    {
+      "category": [
         "registers"
       ],
       "summary": "Black-hole register \"_",
       "details": [
         "\"_d deletes without overwriting your registers",
         "Use before pasting repeatedly"
+      ]
+    },
+    {
+      "category": [
+        "registers"
+      ],
+      "summary": "Small deletes go to register \"-",
+      "details": [
+        "\"- stores short deletes smaller than one line",
+        "Useful after x, dw, or other small cuts",
+        "Paste it with \"-p"
       ]
     },
     {
@@ -1442,6 +1477,18 @@
     },
     {
       "category": [
+        "visual",
+        "workflow"
+      ],
+      "summary": "Select the last changed text `[v`]",
+      "details": [
+        "`[ jumps to the start of the last change",
+        "v enters Visual and `] reaches the end",
+        "Useful after paste, indent, or autoformat"
+      ]
+    },
+    {
+      "category": [
         "visual"
       ],
       "summary": "Indent selection in Visual > / <",
@@ -1535,6 +1582,18 @@
     },
     {
       "category": [
+        "visual",
+        "search"
+      ],
+      "summary": "Sort numbers correctly with :sort n",
+      "details": [
+        "Select lines then run :sort n",
+        "Use :sort! n for descending order",
+        "Better than lexical sort for 2, 10, 100"
+      ]
+    },
+    {
+      "category": [
         "basics",
         "visual"
       ],
@@ -1567,6 +1626,7 @@
     {
       "category": [
         "ideavim",
+        "plugins",
         "editing"
       ],
       "summary": "Join lines with IDE-aware behavior ideajoin",
@@ -1589,6 +1649,7 @@
     {
       "category": [
         "ideavim",
+        "plugins",
         "editing"
       ],
       "summary": "Comment code with gcc and gc motions",
@@ -1601,6 +1662,7 @@
     {
       "category": [
         "ideavim",
+        "plugins",
         "editing"
       ],
       "summary": "Add or change pairs with surround",
@@ -1969,6 +2031,7 @@
     {
       "category": [
         "ideavim",
+        "plugins",
         "textobjects"
       ],
       "summary": "Target arguments with ia / aa",
@@ -2405,6 +2468,7 @@
     {
       "category": [
         "ideavim",
+        "plugins",
         "textobjects"
       ],
       "summary": "Select the whole file with ae / ie",
@@ -2425,6 +2489,84 @@
         "Use if has('ide') ... endif in shared vimrc files",
         "Keep <Action>(...) maps and IdeaVim options inside",
         "Lets Vim or Neovim keep separate fallbacks"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "config",
+        "workflow"
+      ],
+      "summary": "Reload .ideavimrc without restarting",
+      "details": [
+        ":source ~/.ideavimrc after config edits",
+        "Plugin setup docs recommend this after new set commands",
+        "Faster than restarting the IDE"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "config",
+        "workflow"
+      ],
+      "summary": "Reuse your Vim config with source ~/.vimrc",
+      "details": [
+        "Put source ~/.vimrc in ~/.ideavimrc",
+        "Keep shared motions and mappings in one place",
+        "Wrap IDE-only parts with if has('ide')"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "config",
+        "workflow"
+      ],
+      "summary": "Keep your mode during IDE rename edits",
+      "details": [
+        ":set idearefactormode=keep",
+        "Rename and template fields stop forcing Select mode",
+        "IdeaVim stays in your current mode instead"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "plugins",
+        "textobjects"
+      ],
+      "summary": "Target functions with if / af",
+      "details": [
+        "Add set functiontextobj to ~/.ideavimrc",
+        "vif selects inner function; yaf yanks a function",
+        "Useful for large methods and quick refactors"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "plugins",
+        "editing"
+      ],
+      "summary": "Toggle common values with switch",
+      "details": [
+        "Add set switch to ~/.ideavimrc",
+        "Use gs on true/false, &&/||, or similar pairs",
+        "Great for fast boolean and operator flips"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "plugins",
+        "registers"
+      ],
+      "summary": "Preview registers with Peekaboo",
+      "details": [
+        "Add set peekaboo to ~/.ideavimrc",
+        "\" and Ctrl-r show register contents in a popup",
+        "Useful before paste or macro replay"
       ]
     },
     {
