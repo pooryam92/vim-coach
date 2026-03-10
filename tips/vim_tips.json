@@ -77,11 +77,9 @@
       ],
       "summary": "Map CapsLock as a dual-role Esc/Ctrl key",
       "details": [
-        "Set CapsLock to dual-role: tap for Esc, hold for Ctrl",
-        "Windows: Dual Key Remap / Kanata",
-        "macOS: Karabiner-Elements",
-        "Linux: keyd",
-        "Reduces hand movement and makes Vim commands faster"
+        "Tap for Esc, hold for Ctrl",
+        "Cuts hand movement for Vim commands",
+        "Use Karabiner, keyd, Kanata or similar"
       ]
     },
     {
@@ -142,10 +140,8 @@
       "summary": "Use counts to repeat actions",
       "details": [
         "Put a number before a command",
-        "5j => move down 5 lines",
-        "3w => jump forward 3 words",
-        "3dw => delete 3 words",
-        "5>> => indent 5 lines"
+        "5j moves down 5 lines",
+        "3dw deletes 3 words"
       ]
     },
     {
@@ -368,8 +364,7 @@
       "details": [
         "{ goes to previous paragraph",
         "} goes to next paragraph",
-        "Moves between blank-line-separated blocks",
-        "Great for prose and spaced-out code"
+        "Moves across blank-line-separated blocks"
       ]
     },
     {
@@ -1072,10 +1067,9 @@
       ],
       "summary": "Make dot-repeat predictable",
       "details": [
-        "Use operator+motion edits",
-        "Examples: cw, ciw, d}",
-        "Do one change, move, then press .",
-        "Example: ciwfoo<Esc>, n, ."
+        "Prefer operator+motion edits like cw or ciw",
+        "Do one clean change, then move",
+        "Press . to replay it"
       ]
     },
     {
@@ -1222,7 +1216,8 @@
       "summary": "Named registers for reusable yanks \"a",
       "details": [
         "\"ayiw yanks a word into register a",
-        "Paste later with \"ap without losing newer default-register content"
+        "Paste later with \"ap",
+        "Keeps your unnamed register free for newer yanks"
       ]
     },
     {
@@ -1316,8 +1311,8 @@
       ],
       "summary": "Create a fold zf{motion}",
       "details": [
-        "zf{motion} folds a motion (e.g., zfip)",
-        "In IdeaVim this uses the IDE folding engine (make sure code folding is enabled)"
+        "zf{motion} folds a motion, like zfip",
+        "Requires IDE code folding to be enabled"
       ]
     },
     {
@@ -1397,10 +1392,9 @@
       ],
       "summary": "Enter Visual mode v / V / Ctrl-v",
       "details": [
-        "v  to select characters",
-        "V  to select whole lines",
-        "Ctrl-v to select a text rectangle",
-        "Esc returns to Normal"
+        "v selects characters",
+        "V selects whole lines",
+        "Ctrl-v selects a block"
       ]
     },
     {
@@ -1860,10 +1854,8 @@
       "summary": "Text objects: types + usage",
       "details": [
         "Text objects are edit units",
-        "Types: words, quotes, tags",
-        "Blocks: (), {}, []",
-        "Use i=inside, a=around",
-        "Use with c/d/y, e.g. ciw"
+        "Use i for inside and a for around",
+        "Combine with d, c, y, or v like ciw"
       ]
     },
     {
@@ -1872,11 +1864,8 @@
       ],
       "summary": "Edit inside () with ci( / cib",
       "details": [
-        "ci( changes inner text in ()",
-        "cib is alias for () textobj",
-        "Example: (hi)",
-        "ci( => hi",
-        "cib => hi"
+        "ci( changes text inside ()",
+        "cib is an alias for the same object"
       ]
     },
     {
@@ -1905,11 +1894,9 @@
       ],
       "summary": "Delete inside vs around pairs di( and da(",
       "details": [
-        "di( to delete inside parentheses",
-        "Keeps the ( )",
-        "da( to delete the entire ( ... )",
-        "Removes parentheses and content",
-        "Works with (), {}, [], \"\", etc."
+        "di( deletes content and keeps ()",
+        "da( deletes delimiters and content",
+        "Same pattern works for {}, [], and quotes"
       ]
     },
     {
@@ -1948,10 +1935,9 @@
       ],
       "summary": "Sentence objects is / as",
       "details": [
-        "Sentence ends with . ! or ?",
-        "is to inner sentence only",
-        "as to sentence + trailing space",
-        "Use c/d/y with is/as (cis, das)"
+        "is selects the inner sentence",
+        "as includes trailing space",
+        "Works with c, d, and y like cis or das"
       ]
     },
     {
@@ -1970,11 +1956,9 @@
       ],
       "summary": "Tag objects cit / dat",
       "details": [
-        "cit changes inside HTML/XML tag",
-        "dat deletes tag + content",
-        "Requires tag text-object support",
-        "in your IdeaVim setup",
-        "Test quickly on a simple HTML tag"
+        "cit changes inside an HTML/XML tag",
+        "dat deletes the tag and its content",
+        "Requires tag text-object support in your setup"
       ]
     },
     {
@@ -1983,11 +1967,8 @@
       ],
       "summary": "Select HTML/XML tag text vit/vat",
       "details": [
-        "vit selects inner text of tag",
-        "vat selects tag + inner text",
-        "Example: <p>hi</p>",
-        "vit => hi",
-        "vat => <p>hi</p>"
+        "vit selects text inside a tag",
+        "vat selects the tag and its text"
       ]
     },
     {
@@ -2185,7 +2166,7 @@
       "details": [
         "Ctrl-w + and - adjust height",
         "Ctrl-w < and > adjust width",
-        "In some IDE keymaps these keys are intercepted, so remap if needed"
+        "Remap if your IDE keymap intercepts them"
       ]
     },
     {
@@ -2287,7 +2268,7 @@
       "summary": "Run and map IDE actions :action / <Action>...",
       "details": [
         ":action ReformatCode runs an IDE action",
-        ":actionlist shows action IDs (enable :set trackactionids if needed)",
+        ":actionlist and track action IDs help find IDs",
         "Map with map <leader>f <Action>(ReformatCode)"
       ]
     },
@@ -2316,66 +2297,53 @@
     },
     {
       "category": [
-        "ideavim",
         "workflow",
         "motions"
       ],
-      "summary": "Combine gi with g; and g, for edit loops",
+      "summary": "Use gi with g; / g, for edit loops",
       "details": [
-        "gi returns to last insert position",
-        "and enters Insert mode",
-        "g; and g, move through",
-        "recent change locations",
-        "Use this loop for repeated",
-        "small edits across matches"
+        "gi returns to the last insert position",
+        "g; and g, walk older and newer changes",
+        "Useful for repeated small edits"
       ]
     },
     {
       "category": [
-        "ideavim",
         "cmdline"
       ],
       "summary": "Repeat last Ex command with @:",
       "details": [
-        "@: re-runs the most recent : command",
-        "Great after :s, :g, and :normal",
-        "commands",
-        "Check command history first",
-        "if unsure what last : command was"
+        "@: reruns the last : command",
+        "Useful after :s, :g, and :normal",
+        "Check history first if unsure"
       ]
     },
     {
       "category": [
-        "ideavim",
         "search",
         "cmdline"
       ],
       "summary": "Repeat :substitute with previous flags :&&",
       "details": [
-        ":&& repeats last :s and keeps flags",
-        "like g and c",
-        "Useful when reapplying substitution",
-        "in new ranges",
-        "Use :%&& for file-wide repeat",
-        "or Visual-select lines then :&&"
+        ":&& repeats the last :s and keeps flags",
+        "Use it on a new range or Visual selection",
+        ":%&& reapplies it file-wide"
       ]
     },
     {
       "category": [
-        "ideavim",
-        "folds"
+        "folds",
+        "config"
       ],
-      "summary": "Fold depth and toggles zA / zr / zm / :set foldlevel",
+      "summary": "Control fold depth with zA / zr / zm",
       "details": [
         "zA toggles a fold recursively",
-        "zr opens folds one level, zm closes one level",
-        ":set foldlevel=99 opens most folds",
-        ":set foldlevel=0 closes folds quickly"
+        "zr opens one level; zm closes one level",
+        ":set foldlevel=99 opens most folds"
       ]
     },
     {
       "category": [
-        "ideavim",
         "cmdline"
       ],
       "summary": "Read shell output into buffer :read!",
@@ -2390,24 +2358,35 @@
         "ideavim",
         "textobjects"
       ],
-      "summary": "Underscore text objects i_ / a_",
+      "summary": "Select the whole file with ae / ie",
       "details": [
-        "ci_ changes inside underscore-delimited token",
-        "da_ deletes the full underscore-delimited segment",
-        "Useful for fast snake_case edits"
+        "Enable vim-textobj-entire with set textobj-entire",
+        "vae or vie selects the whole buffer",
+        "Useful when ggVG feels clumsy"
       ]
     },
     {
       "category": [
         "ideavim",
         "workflow",
-        "cmdline"
+        "config"
       ],
-      "summary": "Use environment vars in mappings",
+      "summary": "Gate IDE-only config with has('ide')",
       "details": [
-        "You can use $HOME and other env vars in mappings",
-        "Example: nnoremap <leader>vc :e $HOME/.ideavimrc<CR>",
-        "Helps keep mappings portable across machines"
+        "Use if has('ide') ... endif in shared vimrc files",
+        "Keep <Action>(...) maps and IdeaVim options inside",
+        "Lets Vim or Neovim keep separate fallbacks"
+      ]
+    },
+    {
+      "category": [
+        "completion"
+      ],
+      "summary": "Keyword completion Ctrl-n / Ctrl-p",
+      "details": [
+        "In Insert mode, Ctrl-n picks the next word match",
+        "Ctrl-p picks the previous one",
+        "Good for repeating names already in the file"
       ]
     },
     {
@@ -2433,18 +2412,6 @@
         ":set lookupkeys? shows which keys the IDE handles in completion",
         "By default keys like Tab and Enter go to the IDE lookup popup",
         "Keep keys in lookupkeys unless you want IdeaVim to intercept them"
-      ]
-    },
-    {
-      "category": [
-        "ideavim",
-        "workflow"
-      ],
-      "summary": "Map next IDE problem with <Action>(GotoNextError)",
-      "details": [
-        "IdeaVim supports IDE action mappings with <Action>(...)",
-        "The official README shows map <S-Space> <Action>(GotoNextError)",
-        "Use :actionlist error or track action IDs to find related actions"
       ]
     }
   ]
