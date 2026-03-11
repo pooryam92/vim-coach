@@ -380,6 +380,19 @@
     },
     {
       "category": [
+        "ideavim",
+        "plugins",
+        "motions"
+      ],
+      "summary": "Make { and } paragraph jumps code-aware",
+      "details": [
+        "Use :set paragraph-motion",
+        "{ and } stop treating every blank line as a hard break",
+        "Useful in code with indented blank separators"
+      ]
+    },
+    {
+      "category": [
         "macros"
       ],
       "summary": "Record a macro q{reg}",
@@ -407,6 +420,19 @@
       "details": [
         "Works on (), {}, [] by default",
         "Use to inspect a whole block quickly"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "plugins",
+        "motions"
+      ],
+      "summary": "Extend % to tags and control blocks",
+      "details": [
+        "Use :set matchit",
+        "Use % on if/else/end or HTML/XML tags",
+        "Extends % beyond (), {}, and []"
       ]
     },
     {
@@ -907,6 +933,19 @@
     },
     {
       "category": [
+        "ideavim",
+        "plugins",
+        "motions"
+      ],
+      "summary": "Jump by two chars with sneak",
+      "details": [
+        "Use :set sneak",
+        "sfo jumps to the next fo; Sfo searches backward",
+        "Great for fast local jumps without /"
+      ]
+    },
+    {
+      "category": [
         "editing",
         "motions"
       ],
@@ -1196,6 +1235,19 @@
     },
     {
       "category": [
+        "ideavim",
+        "plugins",
+        "registers"
+      ],
+      "summary": "Flash yanked text with highlightedyank",
+      "details": [
+        "Use :set highlightedyank",
+        "yy, yiw, and other yanks briefly highlight the copy",
+        "Helpful when you want visual confirmation"
+      ]
+    },
+    {
+      "category": [
         "registers"
       ],
       "summary": "Yank by motion y{motion}",
@@ -1264,6 +1316,19 @@
         "\"ayiw yanks a word into register a",
         "Paste later with \"ap",
         "Keeps your unnamed register free for newer yanks"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "plugins",
+        "registers"
+      ],
+      "summary": "Replace text with a register",
+      "details": [
+        "Use :set ReplaceWithRegister",
+        "gr{motion} replaces text with the current register",
+        "\"agrw uses register a for the replacement"
       ]
     },
     {
@@ -1693,12 +1758,11 @@
     {
       "category": [
         "ideavim",
-        "plugins",
         "editing"
       ],
       "summary": "Join lines with IDE-aware behavior ideajoin",
       "details": [
-        "In IdeaVim: :set ideajoin (if you want IDE join)",
+        "Use :set ideajoin for IDE smart join",
         "Then J uses IDE smart join rules",
         "Without ideajoin, J uses Vim join rules"
       ]
@@ -1721,7 +1785,7 @@
       ],
       "summary": "Comment code with gcc and gc motions",
       "details": [
-        "Enable with :set commentary",
+        "Use :set commentary",
         "gcc comments a line; gcap comments a paragraph",
         "gc in Visual comments the selection"
       ]
@@ -1734,9 +1798,22 @@
       ],
       "summary": "Add or change pairs with surround",
       "details": [
-        "Enable with :set surround",
+        "Use :set surround",
         "ysiw) adds (); cs\"' swaps quote types",
         "ds\" removes surrounding quotes"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "plugins",
+        "editing"
+      ],
+      "summary": "Swap two regions with exchange",
+      "details": [
+        "Use :set exchange",
+        "cxiw marks text; repeat on a second target to swap",
+        "Use cxx to exchange whole lines"
       ]
     },
     {
@@ -2101,11 +2178,11 @@
         "plugins",
         "textobjects"
       ],
-      "summary": "Use Mini.ai for any quotes or brackets",
+      "summary": "Target arguments with ia / aa",
       "details": [
-        "Enable with :set mini-ai",
-        "aq/iq target any quotes; ab/ib target any brackets",
-        "Great when delimiter type does not matter"
+        "Use :set argtextobj",
+        "cia changes one argument; daa deletes one",
+        "Great for calls with nested parentheses"
       ]
     },
     {
@@ -2114,11 +2191,24 @@
         "plugins",
         "textobjects"
       ],
-      "summary": "Target arguments with ia / aa",
+      "summary": "Select the whole file with ae / ie",
       "details": [
-        "Enable with :set argtextobj",
-        "cia changes one argument; daa deletes one",
-        "Great for calls with nested parentheses"
+        "Use :set textobj-entire",
+        "vae or vie selects the whole buffer",
+        "Useful when ggVG feels clumsy"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "plugins",
+        "textobjects"
+      ],
+      "summary": "Target an indent block with ii / ai",
+      "details": [
+        "Use :set indent-object",
+        "vai selects the current indent block; dii deletes it",
+        "Useful in Python and nested code"
       ]
     },
     {
@@ -2192,6 +2282,19 @@
         "Ctrl-w s makes a horizontal split",
         "Ctrl-w v makes a vertical split",
         "Useful when you want split creation without typing : commands"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "plugins",
+        "windows"
+      ],
+      "summary": "Open the project tree with NERDTree",
+      "details": [
+        "Use :set NERDTree",
+        ":NERDTreeToggle opens the file tree",
+        ":NERDTreeFind reveals the current file"
       ]
     },
     {
@@ -2561,19 +2664,6 @@
     {
       "category": [
         "ideavim",
-        "plugins",
-        "textobjects"
-      ],
-      "summary": "Select the whole file with ae / ie",
-      "details": [
-        "Enable vim-textobj-entire with set textobj-entire",
-        "vae or vie selects the whole buffer",
-        "Useful when ggVG feels clumsy"
-      ]
-    },
-    {
-      "category": [
-        "ideavim",
         "workflow",
         "config"
       ],
@@ -2631,9 +2721,23 @@
       ],
       "summary": "Target functions with if / af",
       "details": [
-        "Add set functiontextobj to ~/.ideavimrc",
+        "Use :set functiontextobj",
         "vif selects inner function; yaf yanks a function",
         "Useful for large methods and quick refactors"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "plugins",
+        "editing",
+        "workflow"
+      ],
+      "summary": "Add cursors with multiple-cursors",
+      "details": [
+        "Use :set multiple-cursors",
+        "Map <C-n> to <Plug>NextWholeOccurrence first",
+        "Press <C-n> repeatedly to add the next match"
       ]
     },
     {
@@ -2644,22 +2748,9 @@
       ],
       "summary": "Toggle common values with switch",
       "details": [
-        "Add set switch to ~/.ideavimrc",
+        "Use :set switch",
         "Use gs on true/false, &&/||, or similar pairs",
         "Great for fast boolean and operator flips"
-      ]
-    },
-    {
-      "category": [
-        "ideavim",
-        "plugins",
-        "registers"
-      ],
-      "summary": "Preview registers with Peekaboo",
-      "details": [
-        "Add set peekaboo to ~/.ideavimrc",
-        "\" and Ctrl-r show register contents in a popup",
-        "Useful before paste or macro replay"
       ]
     },
     {
