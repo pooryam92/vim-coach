@@ -57,6 +57,22 @@ Useful test tasks:
 - Avoid adding dependencies unless necessary.
 - Keep this as a single-module project unless explicitly asked otherwise.
 
+## Clean Architecture
+- Keep layers pointed inward: UI/entrypoints depend on application/state/domain, not the other way around.
+- Keep UI/presentation thin. Put derivation, normalization, filtering, and decision logic in services or domain types instead of UI classes.
+- Keep stores focused on persistence and simple state snapshots. Do not move business logic into `PersistentStateComponent` implementations.
+- Prefer one clear owner for a piece of logic or state. Avoid duplicating rules across UI, services, and stores.
+- Minimize coupling between parts of the system. If a class starts depending on multiple services or unrelated concerns, consider introducing a narrower feature-facing service or query model.
+- Prefer simple data crossing boundaries. Avoid leaking UI types into state/domain layers and avoid persistence concerns in UI/application code.
+
+## Clean Code
+- Favor small, cohesive methods with explicit names over long methods with mixed responsibilities.
+- Keep control flow flat when possible. Reduce duplicated branching and repeated state lookups.
+- Avoid parallel mutable state when a single source of truth is enough.
+- Make migration, fallback, and repair paths explicit and rare.
+- Keep naming concrete and intention-revealing. Prefer names that explain why a path exists, not just what it does.
+- Before finishing, do a cleanup pass: remove incidental complexity, tighten APIs, and simplify any code that feels harder to read than the behavior warrants.
+
 ## Verification
 Run after meaningful refactors:
 1. `./gradlew test`

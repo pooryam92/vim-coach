@@ -2595,6 +2595,92 @@
     {
       "category": [
         "ideavim",
+        "workflow",
+        "config"
+      ],
+      "summary": "Map file search under <leader>f",
+      "details": [
+        "Use map <leader>f <Action>(GotoFile)",
+        "Keeps file jumps available from Normal mode",
+        "Use map, not noremap, for <Action>(...)"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "workflow",
+        "config"
+      ],
+      "summary": "Map the IDE switcher under <leader>b",
+      "details": [
+        "Use map <leader>b <Action>(Switcher)",
+        "Fast way to jump among open and recent files",
+        "Useful when Ctrl-^ is not enough"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "workflow",
+        "motions"
+      ],
+      "summary": "Peek a definition without leaving flow",
+      "details": [
+        "Use map gH <Action>(QuickImplementations)",
+        "Shows a quick definition popup instead of a full jump"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "workflow",
+        "config"
+      ],
+      "summary": "Map next problem under <leader>e",
+      "details": [
+        "Use map <leader>e <Action>(GotoNextError)",
+        "Turns error hopping into a Normal-mode command"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "workflow",
+        "config"
+      ],
+      "summary": "Map file structure under <leader>o",
+      "details": [
+        "Use map <leader>o <Action>(FileStructurePopup)",
+        "Jump to methods or fields without leaving Normal mode"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "workflow",
+        "completion"
+      ],
+      "summary": "Show docs from Normal mode with gh",
+      "details": [
+        "Use map gh <Action>(ShowHoverInfo)",
+        "Great for quick docs and error descriptions"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "workflow",
+        "completion"
+      ],
+      "summary": "Use quick definition before accepting a guess",
+      "details": [
+        "Use gH to preview an implementation",
+        "Useful when completion or docs are not enough"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
         "workflow"
       ],
       "summary": "Toggle IdeaVim on/off :action ToggleIdeaVim",
@@ -2774,6 +2860,53 @@
         "Ctrl-Space opens basic code completion in IntelliJ",
         "Press it again to widen the suggestion list",
         "IdeaVim supports the IDE completion lookup popup"
+      ]
+    },
+    {
+      "category": [
+        "completion",
+        "ideavim"
+      ],
+      "summary": "Use smart completion for type-aware choices",
+      "details": [
+        "In Insert mode, Ctrl-Shift-Space narrows by expected type",
+        "Useful in assignments, returns, and arguments"
+      ]
+    },
+    {
+      "category": [
+        "completion",
+        "ideavim",
+        "workflow"
+      ],
+      "summary": "Finish the rest of a statement after completion",
+      "details": [
+        "Ctrl-Shift-Enter closes syntax like ) or }",
+        "Leaves the caret ready for the next edit"
+      ]
+    },
+    {
+      "category": [
+        "completion",
+        "ideavim",
+        "workflow"
+      ],
+      "summary": "Peek docs before accepting completion",
+      "details": [
+        "With the completion popup open, use Ctrl-Q for docs",
+        "Helpful when several suggestions look similar"
+      ]
+    },
+    {
+      "category": [
+        "completion",
+        "ideavim",
+        "workflow"
+      ],
+      "summary": "Show parameter info after completion Ctrl-P",
+      "details": [
+        "Ctrl-P shows method signatures at the caret",
+        "Useful after you accept a method or function name"
       ]
     },
     {

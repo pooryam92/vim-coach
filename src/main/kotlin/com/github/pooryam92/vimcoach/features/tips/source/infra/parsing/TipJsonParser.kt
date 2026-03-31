@@ -2,7 +2,6 @@ package com.github.pooryam92.vimcoach.features.tips.source.infra.parsing
 
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.google.gson.Gson
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import java.io.InputStream
