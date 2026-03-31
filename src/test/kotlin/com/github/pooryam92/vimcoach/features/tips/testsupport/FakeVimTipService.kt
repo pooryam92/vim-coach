@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.testsupport
 
+import com.github.pooryam92.vimcoach.features.tips.domain.TipCategories
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
@@ -9,6 +10,7 @@ class FakeVimTipService(
     initialMetadata: TipMetadata = TipMetadata()
 ) : VimTipService {
     private var tips = initialTips.toMutableList()
+    private var categories = TipCategories.fromTips(initialTips)
     private var metadata = initialMetadata
     private var currentIndex = 0
 
@@ -21,6 +23,7 @@ class FakeVimTipService(
 
     override fun saveTips(tips: List<VimTip>) {
         this.tips = tips.toMutableList()
+        categories = TipCategories.fromTips(tips)
         currentIndex = 0
     }
 
@@ -30,6 +33,10 @@ class FakeVimTipService(
         val tip = tipPool[currentIndex % tipPool.size]
         currentIndex += 1
         return tip
+    }
+
+    override fun getCategories(): TipCategories {
+        return categories
     }
 
     override fun getMetadata(): TipMetadata {

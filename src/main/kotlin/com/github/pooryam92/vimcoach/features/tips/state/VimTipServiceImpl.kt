@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.state
 
+import com.github.pooryam92.vimcoach.features.tips.domain.TipCategories
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.state.store.VimTipStore
@@ -17,7 +18,7 @@ class VimTipServiceImpl() : VimTipService {
     }
 
     override fun saveTips(tips: List<VimTip>) {
-        tipStore().setTips(tips)
+        saveTipCache(tips)
     }
 
     override fun getRandomTip(): VimTip {
@@ -26,6 +27,15 @@ class VimTipServiceImpl() : VimTipService {
             return FALLBACK_TIP
         }
         return state.tips.random()
+    }
+
+    override fun getCategories(): TipCategories {
+        val state = currentState()
+        if (state.categories.isNotEmpty() || state.tips.isEmpty()) {
+            return state.categories
+        }
+
+        return backfillCategories(state.tips)
     }
 
     override fun getMetadata(): TipMetadata {
@@ -38,6 +48,19 @@ class VimTipServiceImpl() : VimTipService {
 
     private fun currentState(): VimTipStore.State {
         return tipStore().state ?: VimTipStore.State()
+    }
+
+    private fun saveTipCache(tips: List<VimTip>) {
+        tipStore().setTipCache(
+            tips = tips,
+            categories = TipCategories.fromTips(tips)
+        )
+    }
+
+    private fun backfillCategories(tips: List<VimTip>): TipCategories {
+        val categories = TipCategories.fromTips(tips)
+        tipStore().setTipCache(tips, categories)
+        return categories
     }
 
     private fun tipStore(): VimTipStore {
