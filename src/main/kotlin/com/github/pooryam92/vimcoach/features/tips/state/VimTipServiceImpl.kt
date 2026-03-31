@@ -8,6 +8,7 @@ import com.intellij.openapi.components.service
 
 class VimTipServiceImpl() : VimTipService {
     private var injectedTipStore: VimTipStore? = null
+    private var cachedTipSelection: TipSelectionIndex? = null
 
     internal constructor(tipStore: VimTipStore) : this() {
         injectedTipStore = tipStore
@@ -22,11 +23,12 @@ class VimTipServiceImpl() : VimTipService {
     }
 
     override fun getRandomTip(): VimTip {
-        val state = currentState()
-        if (state.tips.isEmpty()) {
-            return FALLBACK_TIP
-        }
-        return state.tips.random()
+        return randomTipOrFallback(currentState().tips, FALLBACK_TIP)
+    }
+
+    override fun getRandomTip(categories: List<String>): VimTip {
+        val matchingTips = tipSelectionIndex(currentState().tips).matchingTips(categories)
+        return randomTipOrFallback(matchingTips, FILTERED_FALLBACK_TIP)
     }
 
     override fun getCategories(): TipCategories {
@@ -63,6 +65,22 @@ class VimTipServiceImpl() : VimTipService {
         return categories
     }
 
+    private fun tipSelectionIndex(tips: List<VimTip>): TipSelectionIndex {
+        val existingIndex = cachedTipSelection
+        if (existingIndex != null && existingIndex.isFor(tips)) {
+            return existingIndex
+        }
+
+        return TipSelectionIndex.fromTips(tips).also { cachedTipSelection = it }
+    }
+
+    private fun randomTipOrFallback(tips: List<VimTip>, fallbackTip: VimTip): VimTip {
+        if (tips.isEmpty()) {
+            return fallbackTip
+        }
+        return tips.random()
+    }
+
     private fun tipStore(): VimTipStore {
         return injectedTipStore ?: service()
     }
@@ -71,6 +89,10 @@ class VimTipServiceImpl() : VimTipService {
         val FALLBACK_TIP = VimTip(
             summary = "No tips found.",
             details = listOf("Tips have not been loaded yet.")
+        )
+        val FILTERED_FALLBACK_TIP = VimTip(
+            summary = "No tips match the selected categories.",
+            details = listOf("Enable at least one matching category in Vim Coach settings.")
         )
     }
 }

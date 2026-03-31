@@ -1,8 +1,8 @@
 package com.github.pooryam92.vimcoach.features.tips.ui.settings
 
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
-import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
-import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
+import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenService
+import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenState
 import com.intellij.openapi.components.service
 import com.intellij.openapi.options.SearchableConfigurable
 import com.intellij.ui.components.JBScrollPane
@@ -22,46 +22,38 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
     private var periodicCheckBox: JCheckBox? = null
     private var intervalSpinner: JSpinner? = null
     private val categoryCheckBoxes = linkedMapOf<String, JCheckBox>()
+    private var screenState: VimCoachSettingsScreenState = defaultScreenState()
 
     override fun getId(): String = ID
 
     override fun getDisplayName(): String = MyBundle.message("settingsDisplayName")
 
     override fun createComponent(): JComponent {
+        screenState = settingsScreenService().loadState()
+
         return panel {
             buildStartupRow()
             buildPeriodicRow()
-            buildCategoriesSection(tipService().getCategories().values)
+            buildCategoriesSection(screenState.availableCategories)
         }.also { reset() }
     }
 
     override fun isModified(): Boolean {
-        val startupModified = startupCheckBox?.isSelected != settingsService().isShowTipsOnStartupEnabled()
-        val periodicModified = periodicCheckBox?.isSelected != settingsService().isPeriodicTipsEnabled()
-        val intervalModified = currentIntervalValue() != settingsService().getTipIntervalHours()
-        val categoriesModified = selectedCategories() != settingsService().getEnabledTipCategories(availableCategories())
-        return startupModified || periodicModified || intervalModified || categoriesModified
+        return currentScreenState() != screenState
     }
 
     override fun apply() {
-        val settingsService = settingsService()
-        val showOnStartup = startupCheckBox?.isSelected ?: return
-        val periodicEnabled = periodicCheckBox?.isSelected ?: return
-        val intervalHours = currentIntervalValue()
-
-        settingsService.setShowTipsOnStartupEnabled(showOnStartup)
-        settingsService.setTipIntervalHours(intervalHours)
-        settingsService.setPeriodicTipsEnabled(periodicEnabled)
-        settingsService.setEnabledTipCategories(selectedCategories())
+        screenState = currentScreenState()
+        settingsScreenService().saveState(screenState)
     }
 
     override fun reset() {
-        val settingsService = settingsService()
-        startupCheckBox?.isSelected = settingsService.isShowTipsOnStartupEnabled()
-        periodicCheckBox?.isSelected = settingsService.isPeriodicTipsEnabled()
-        intervalSpinner?.value = settingsService.getTipIntervalHours()
+        screenState = settingsScreenService().loadState()
+        startupCheckBox?.isSelected = screenState.showTipsOnStartup
+        periodicCheckBox?.isSelected = screenState.periodicTipsEnabled
+        intervalSpinner?.value = screenState.tipIntervalHours
 
-        val enabledCategories = settingsService.getEnabledTipCategories(availableCategories()).toSet()
+        val enabledCategories = screenState.enabledCategories.toSet()
         categoryCheckBoxes.forEach { (category, checkBox) ->
             checkBox.isSelected = category in enabledCategories
         }
@@ -116,7 +108,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
     private fun createIntervalSpinner(): JSpinner {
         return JSpinner(
             SpinnerNumberModel(
-                settingsService().getTipIntervalHours(),
+                screenState.tipIntervalHours,
                 MIN_TIP_INTERVAL_HOURS,
                 MAX_TIP_INTERVAL_HOURS,
                 1
@@ -143,21 +135,35 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
         return JCheckBox(category).also { categoryCheckBoxes[category] = it }
     }
 
-    private fun settingsService(): VimCoachSettingsService = service()
+    private fun defaultScreenState(): VimCoachSettingsScreenState {
+        return VimCoachSettingsScreenState(
+            showTipsOnStartup = true,
+            periodicTipsEnabled = false,
+            tipIntervalHours = MIN_TIP_INTERVAL_HOURS,
+            availableCategories = emptyList(),
+            enabledCategories = emptyList()
+        )
+    }
 
-    private fun tipService(): VimTipService = service()
+    private fun currentScreenState(): VimCoachSettingsScreenState {
+        return VimCoachSettingsScreenState(
+            showTipsOnStartup = startupCheckBox?.isSelected ?: screenState.showTipsOnStartup,
+            periodicTipsEnabled = periodicCheckBox?.isSelected ?: screenState.periodicTipsEnabled,
+            tipIntervalHours = currentIntervalValue(),
+            availableCategories = availableCategories(),
+            enabledCategories = selectedCategories()
+        )
+    }
+
+    private fun settingsScreenService(): VimCoachSettingsScreenService = service()
 
     private fun currentIntervalValue(): Int {
-        return (intervalSpinner?.value as? Number)?.toInt() ?: settingsService().getTipIntervalHours()
+        return (intervalSpinner?.value as? Number)?.toInt() ?: screenState.tipIntervalHours
     }
 
-    private fun availableCategories(): List<String> {
-        return categoryCheckBoxes.keys.toList()
-    }
+    private fun availableCategories(): List<String> = categoryCheckBoxes.keys.toList()
 
-    private fun selectedCategories(): List<String> {
-        return availableCategories().filter { categoryCheckBoxes[it]?.isSelected == true }
-    }
+    private fun selectedCategories(): List<String> = availableCategories().filter { categoryCheckBoxes[it]?.isSelected == true }
 
     private companion object {
         const val ID = "com.github.pooryam92.vimcoach.settings"

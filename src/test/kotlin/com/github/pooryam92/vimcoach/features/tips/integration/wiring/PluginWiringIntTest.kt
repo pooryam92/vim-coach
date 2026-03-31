@@ -3,6 +3,7 @@ package com.github.pooryam92.vimcoach.features.tips.integration.wiring
 import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
 import com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerService
 import com.github.pooryam92.vimcoach.features.tips.application.TipNotificationService
+import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenService
 import com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceService
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
@@ -28,6 +29,7 @@ class PluginWiringIntTest : BasePlatformTestCase() {
         val settingsService = service<VimCoachSettingsService>()
         val sourceService = service<TipSourceService>()
         val loaderService = service<TipLoaderService>()
+        val settingsScreenService = service<VimCoachSettingsScreenService>()
 
         assertNotNull(tipStore)
         assertNotNull(settingsStore)
@@ -35,5 +37,6 @@ class PluginWiringIntTest : BasePlatformTestCase() {
         assertNotNull(settingsService)
         assertNotNull(sourceService)
         assertNotNull(loaderService)
+        assertNotNull(settingsScreenService)
     }
 }

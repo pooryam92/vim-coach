@@ -35,6 +35,35 @@ class VimTipServiceIntTest : BasePlatformTestCase() {
         assertTrue(tips.contains(tipService().getRandomTip()))
     }
 
+    fun testGetRandomTipFiltersByCategories() {
+        val service = tipService()
+        service.saveTips(
+            listOf(
+                VimTip("summary-1", listOf("details-1"), listOf("basics")),
+                VimTip("summary-2", listOf("details-2"), listOf("editing"))
+            )
+        )
+
+        val randomTip = service.getRandomTip(listOf("editing"))
+
+        assertEquals("summary-2", randomTip.summary)
+    }
+
+    fun testGetRandomTipReturnsFilteredFallbackWhenNoCategoriesMatch() {
+        val service = tipService()
+        service.saveTips(
+            listOf(VimTip("summary-1", listOf("details-1"), listOf("basics")))
+        )
+
+        val randomTip = service.getRandomTip(listOf("editing"))
+
+        assertEquals("No tips match the selected categories.", randomTip.summary)
+        assertEquals(
+            "Enable at least one matching category in Vim Coach settings.",
+            randomTip.details.single()
+        )
+    }
+
     fun testLoadStateReplacesTips() {
         val service = tipService()
         service.saveTips(listOf(VimTip("old-summary", listOf("old-details"))))

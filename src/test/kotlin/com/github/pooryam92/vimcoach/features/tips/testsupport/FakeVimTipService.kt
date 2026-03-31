@@ -16,6 +16,10 @@ class FakeVimTipService(
 
     var getRandomTipCalls = 0
         private set
+    var getRandomTipByCategoryCalls = 0
+        private set
+    var lastRequestedCategories: List<String>? = null
+        private set
 
     override fun countTips(): Int {
         return tips.size
@@ -29,7 +33,22 @@ class FakeVimTipService(
 
     override fun getRandomTip(): VimTip {
         getRandomTipCalls += 1
+        lastRequestedCategories = null
         val tipPool = if (tips.isEmpty()) listOf(DEFAULT_TIP) else tips
+        val tip = tipPool[currentIndex % tipPool.size]
+        currentIndex += 1
+        return tip
+    }
+
+    override fun getRandomTip(categories: List<String>): VimTip {
+        getRandomTipByCategoryCalls += 1
+        lastRequestedCategories = categories.toList()
+
+        val allowedCategories = categories.toSet()
+        val tipPool = tips.filter { tip ->
+            tip.category.any(allowedCategories::contains)
+        }.ifEmpty { listOf(FILTERED_DEFAULT_TIP) }
+
         val tip = tipPool[currentIndex % tipPool.size]
         currentIndex += 1
         return tip
@@ -51,6 +70,10 @@ class FakeVimTipService(
         val DEFAULT_TIP = VimTip(
             summary = "fallback",
             details = listOf("fallback-details")
+        )
+        val FILTERED_DEFAULT_TIP = VimTip(
+            summary = "filtered-fallback",
+            details = listOf("filtered-fallback-details")
         )
     }
 }
