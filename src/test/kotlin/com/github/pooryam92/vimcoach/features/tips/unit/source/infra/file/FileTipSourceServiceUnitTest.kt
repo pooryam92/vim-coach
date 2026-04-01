@@ -14,10 +14,12 @@ class FileTipSourceServiceUnitTest {
     fun loadsTipsFromJsonFile() {
         val tipsFile = createTipsFile(
             """
-            [
-              {"summary":"summary-1","details":["details-1"]},
-              {"summary":"summary-2","details":["details-2"]}
-            ]
+            {
+              "tips": [
+                {"summary":"summary-1","details":["details-1"]},
+                {"summary":"summary-2","details":["details-2"]}
+              ]
+            }
             """.trimIndent()
         )
         val service = FileTipSourceServiceImpl { tipsFile }

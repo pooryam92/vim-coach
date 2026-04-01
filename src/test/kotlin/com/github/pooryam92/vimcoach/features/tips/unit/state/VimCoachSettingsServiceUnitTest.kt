@@ -69,6 +69,39 @@ class VimCoachSettingsServiceUnitTest {
     }
 
     @Test
+    fun enabledTipCategoriesDefaultToAllAvailableCategories() {
+        val service = createService()
+
+        val enabledCategories = service.getEnabledTipCategories(listOf("basics", "editing"))
+
+        assertEquals(listOf("basics", "editing"), enabledCategories)
+    }
+
+    @Test
+    fun setEnabledTipCategoriesUpdatesState() {
+        val service = createService()
+
+        service.setEnabledTipCategories(listOf("basics", "editing", "basics"))
+
+        assertEquals(
+            listOf("basics", "editing"),
+            service.getEnabledTipCategories(listOf("basics", "editing", "search"))
+        )
+    }
+
+    @Test
+    fun getEnabledTipCategoriesFiltersMissingCategories() {
+        val service = createService()
+
+        service.setEnabledTipCategories(listOf("basics", "editing"))
+
+        assertEquals(
+            listOf("editing"),
+            service.getEnabledTipCategories(listOf("editing", "search"))
+        )
+    }
+
+    @Test
     fun loadStateRestoresShowTipsOnStartupValue() {
         val store = VimCoachSettingsStoreImpl()
         val service = createService(store)
@@ -99,6 +132,20 @@ class VimCoachSettingsServiceUnitTest {
         store.loadState(persistedState)
 
         assertEquals(8, service.getTipIntervalHours())
+    }
+
+    @Test
+    fun loadStateRestoresEnabledTipCategories() {
+        val store = VimCoachSettingsStoreImpl()
+        val service = createService(store)
+        val persistedState = VimCoachSettingsStore.State(enabledTipCategories = listOf("basics", "search"))
+
+        store.loadState(persistedState)
+
+        assertEquals(
+            listOf("basics", "search"),
+            service.getEnabledTipCategories(listOf("basics", "search", "editing"))
+        )
     }
 
     private fun createService(

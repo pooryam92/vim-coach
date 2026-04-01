@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.state.store
 
+import com.github.pooryam92.vimcoach.features.tips.domain.TipCategories
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.intellij.openapi.components.RoamingType
@@ -13,9 +14,12 @@ import com.intellij.openapi.components.StoragePathMacros
 class VimTipStoreImpl :
     SerializablePersistentStateComponent<VimTipStore.State>(VimTipStore.State()),
     VimTipStore {
-    override fun setTips(tips: List<VimTip>) {
+    override fun setTipCache(tips: List<VimTip>, categories: TipCategories) {
         updateState { currentState ->
-            currentState.copy(tips = tips.toList())
+            currentState.copy(
+                tips = tips.toList(),
+                categories = categories.copy()
+            )
         }
     }
 

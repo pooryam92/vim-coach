@@ -18,8 +18,8 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
         tipService.saveTips(listOf(VimTip("old-summary", listOf("old-details"))))
 
         val remoteTips = listOf(
-            VimTip("new-summary-1", listOf("new-details-1")),
-            VimTip("new-summary-2", listOf("new-details-2"))
+            VimTip("new-summary-1", listOf("new-details-1"), listOf("motions")),
+            VimTip("new-summary-2", listOf("new-details-2"), listOf("editing", "motions"))
         )
         val fakeTipSource = FakeTipSource(
             TipSourceLoadResult.Success(remoteTips, TipMetadata())
@@ -32,6 +32,7 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
         assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.Updated(2), result)
         assertEquals(2, tipService.countTips())
+        assertEquals(listOf("motions", "editing"), tipService.getCategories().values)
         assertTrue(remoteTips.contains(tipService.getRandomTip()))
     }
 
@@ -95,7 +96,9 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
 
     fun testRefetchTipsReturnsNotModifiedWhenNoChanges() {
         val tipService = service<VimTipService>()
-        tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
+        tipService.saveTips(
+            listOf(VimTip("existing", listOf("existing-details"), listOf("motions")))
+        )
 
         val fakeTipSource = FakeTipSource(TipSourceLoadResult.NotModified)
         val loader = registerLoader(fakeTipSource)
@@ -106,6 +109,7 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
         assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.NotModified, result)
         assertEquals(1, tipService.countTips())
+        assertEquals(listOf("motions"), tipService.getCategories().values)
         assertEquals("existing", tipService.getRandomTip().summary)
     }
 

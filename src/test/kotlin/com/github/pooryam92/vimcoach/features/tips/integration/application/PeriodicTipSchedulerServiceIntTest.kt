@@ -102,5 +102,9 @@ class PeriodicTipSchedulerServiceIntTest : BasePlatformTestCase() {
         override fun getTipIntervalHours(): Int = tipIntervalHours
 
         override fun setTipIntervalHours(hours: Int) = Unit
+
+        override fun getEnabledTipCategories(availableCategories: List<String>): List<String> = availableCategories
+
+        override fun setEnabledTipCategories(categories: List<String>) = Unit
     }
 }
