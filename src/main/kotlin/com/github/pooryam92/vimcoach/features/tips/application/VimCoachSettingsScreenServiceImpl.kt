@@ -7,18 +7,21 @@ import com.intellij.openapi.components.service
 class VimCoachSettingsScreenServiceImpl() : VimCoachSettingsScreenService {
     private var injectedSettingsService: VimCoachSettingsService? = null
     private var injectedTipService: VimTipService? = null
+    private var injectedTipLoaderService: TipLoaderService? = null
 
     internal constructor(
         settingsService: VimCoachSettingsService,
-        tipService: VimTipService
+        tipService: VimTipService,
+        tipLoaderService: TipLoaderService? = null
     ) : this() {
         injectedSettingsService = settingsService
         injectedTipService = tipService
+        injectedTipLoaderService = tipLoaderService
     }
 
     override fun loadState(): VimCoachSettingsScreenState {
         val settingsService = settingsService()
-        val availableCategories = tipService().getCategories().values
+        val availableCategories = loadAvailableCategories()
 
         return VimCoachSettingsScreenState(
             showTipsOnStartup = settingsService.isShowTipsOnStartupEnabled(),
@@ -37,7 +40,21 @@ class VimCoachSettingsScreenServiceImpl() : VimCoachSettingsScreenService {
         settingsService.setEnabledTipCategories(state.enabledCategories)
     }
 
+    private fun loadAvailableCategories(): List<String> {
+        val tipService = tipService()
+        val categories = tipService.getCategories().values
+        if (categories.isNotEmpty() || tipService.countTips() == 0) {
+            return categories
+        }
+
+        // Legacy caches from pre-category versions need a full reload to recover category data.
+        tipLoaderService().refetchTips()
+        return tipService.getCategories().values
+    }
+
     private fun settingsService(): VimCoachSettingsService = injectedSettingsService ?: service()
 
     private fun tipService(): VimTipService = injectedTipService ?: service()
+
+    private fun tipLoaderService(): TipLoaderService = injectedTipLoaderService ?: service()
 }

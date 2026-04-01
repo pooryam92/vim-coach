@@ -31,7 +31,7 @@ class TipLoaderServiceImpl() : TipLoaderService {
             logger.info("Skipping Vim tip update check because it already ran in this application session")
             return TipLoadResult.NotModified
         }
-        return fetchAndSave(conditional = hasCachedTips())
+        return fetchAndSave(conditional = hasUsableCachedTips())
     }
 
     private fun fetchAndSave(conditional: Boolean): TipLoadResult {
@@ -40,10 +40,19 @@ class TipLoaderServiceImpl() : TipLoaderService {
         return toTipLoadResult(sourceResult)
     }
 
-    private fun hasCachedTips(): Boolean {
+    private fun hasUsableCachedTips(): Boolean {
         val tipCount = tipService().countTips()
-        logger.info("Current Vim tip cache size: $tipCount")
-        return tipCount > 0
+        if (tipCount == 0) {
+            logger.info("Current Vim tip cache is empty")
+            return false
+        }
+
+        val categories = tipService().getCategories()
+        val hasCategories = categories.isNotEmpty()
+        logger.info(
+            "Current Vim tip cache size: $tipCount, recovered categories: ${categories.values.size}, usable=$hasCategories"
+        )
+        return hasCategories
     }
 
     private fun loadFromSource(conditional: Boolean): TipSourceLoadResult {
