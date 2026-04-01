@@ -4,8 +4,6 @@
 
 ## [Unreleased]
 
-## [1.2.0-beta] - 2026-03-31
-
 ### Added
 
 - Category-aware tip filtering with selectable categories in the settings UI
