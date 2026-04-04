@@ -1910,7 +1910,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Reload file from disk :e and :e!",
       "details": [
@@ -1920,7 +1921,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Save current file :w",
       "details": [
@@ -1930,7 +1932,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Save all files :wa",
       "details": [
@@ -1941,7 +1944,8 @@
     {
       "category": [
         "basics",
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Quit :q / :q!",
       "details": [
@@ -1952,7 +1956,8 @@
     {
       "category": [
         "basics",
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Save and quit :wq",
       "details": [
@@ -2354,7 +2359,8 @@
     },
     {
       "category": [
-        "buffers"
+        "buffers",
+        "migrated"
       ],
       "summary": "Toggle last file Ctrl-^",
       "details": [
@@ -2366,7 +2372,8 @@
     {
       "category": [
         "buffers",
-        "tabs"
+        "tabs",
+        "migrated"
       ],
       "summary": "List buffers :ls",
       "details": [
@@ -2377,7 +2384,8 @@
     {
       "category": [
         "buffers",
-        "tabs"
+        "tabs",
+        "migrated"
       ],
       "summary": "Next/previous buffer :bn / :bp",
       "details": [
@@ -2388,7 +2396,8 @@
     {
       "category": [
         "buffers",
-        "tabs"
+        "tabs",
+        "migrated"
       ],
       "summary": "Close current buffer :bd",
       "details": [

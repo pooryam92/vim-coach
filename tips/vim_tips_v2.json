@@ -1,0 +1,217 @@
+{
+  "tips": [
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Edit another file with :edit {file}",
+      "details": [
+        ":edit {file} opens a file for editing",
+        "Write first or use :edit! if you want to discard current changes"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Find a file on 'path' with :find {file}",
+      "details": [
+        ":find searches Vim's 'path' and edits the match",
+        "Useful when the file is not in the current directory"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Open a file chooser with :browse",
+      "details": [
+        ":browse opens the file-open dialog",
+        "Use it when you want to pick a file instead of typing its name"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "List known files with :buffers / :files / :ls",
+      "details": [
+        ":buffers, :files, and :ls list known files/buffers",
+        "Use the list before switching with :buffer, :bn, :bp, or Ctrl-^"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Jump to a listed buffer with :buffer {N}",
+      "details": [
+        ":buffer {N} jumps to the numbered buffer from the buffer list",
+        "Use it after :ls when you know exactly which file you want"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Step through the argument list with :next / :previous",
+      "details": [
+        ":next moves to the next file in the argument list",
+        ":previous moves back to the earlier one"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Jump to a specific argument with :argument {N}",
+      "details": [
+        ":argument {N} edits the Nth file in the argument list",
+        "Use it when you know exactly which argument-list file you want"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Jump to the ends of the argument list with :first / :last",
+      "details": [
+        ":first edits the first file in the argument list",
+        ":last edits the last file in the argument list"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Toggle last file Ctrl-^",
+      "details": [
+        "Jumps to the alternate file",
+        "Great for back-and-forth edits",
+        "Ctrl-^ is Ctrl-6 on many keyboards"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Next/previous buffer :bn / :bp",
+      "details": [
+        ":bn goes to the next buffer",
+        ":bp goes to the previous buffer"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Close current buffer :bd",
+      "details": [
+        ":bd closes the current buffer/editor tab",
+        "Use it when you are done with the file"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Reload file from disk :e and :e!",
+      "details": [
+        ":e reloads if no changes",
+        ":e! discards changes and reloads"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Save current file :w",
+      "details": [
+        ":w writes the file",
+        "In IdeaVim, this maps to IDE save"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Write a copy to another file :w {file}",
+      "details": [
+        ":w {file} writes the current buffer to a different file",
+        "Useful when you want a copy without changing the current buffer name"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Save all files :wa",
+      "details": [
+        ":wa writes all modified buffers",
+        "In IDE, typically saves all open editors"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Write and advance with :wnext / :wprevious",
+      "details": [
+        ":wnext writes the current file and moves to the next one",
+        ":wprevious writes and moves to the previous file"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Read a file into the current buffer with :read {file}",
+      "details": [
+        ":read {file} inserts another file below the current line",
+        "Useful when you want to pull file contents into the current buffer"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Quit :q / :q!",
+      "details": [
+        ":q closes if no unsaved changes",
+        ":q! forces close/discard (if allowed)"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Save and quit :wq / :x / ZZ",
+      "details": [
+        ":wq writes and quits",
+        ":x writes only if changed",
+        "ZZ also writes and quits the current file"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Quit every editor with :qa / :qall",
+      "details": [
+        ":qa exits unless there are changed buffers",
+        ":qall closes all editors",
+        "Use the force form only if you really want to discard pending changes"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Write all and exit with :wqa / :xa",
+      "details": [
+        ":wqa writes changed buffers and exits",
+        ":xa is the equivalent all-files write-and-exit command"
+      ]
+    }
+  ]
+}
