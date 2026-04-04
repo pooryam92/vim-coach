@@ -59,6 +59,60 @@ Reference docs:
 When relevant, also check the matching user-manual chapters under `usr_*.txt`.
 Those pages are often more user-facing than the reference manual and can surface better beginner/intermediate tips.
 
+## Vim help sitemap
+
+Use this as the starting map when hunting for tips.
+Start with the primary pages, then scan the nearby pages if the section still feels thin.
+
+- `editing`
+  Primary: `editing.txt`, `usr_07.txt`
+  Nearby: `windows.txt`, `cmdline.txt`, `options.txt`
+- `motion`
+  Primary: `motion.txt`, `usr_03.txt`
+  Nearby: `scroll.txt`, `pattern.txt`, `usr_29.txt`
+- `scroll`
+  Primary: `scroll.txt`, `usr_03.txt`
+  Nearby: `motion.txt`, `options.txt`, `usr_28.txt`
+- `insert`
+  Primary: `insert.txt`, `usr_24.txt`
+  Nearby: `change.txt`, `visual.txt`, `usr_04.txt`
+- `change`
+  Primary: `change.txt`, `usr_04.txt`
+  Nearby: `repeat.txt`, `visual.txt`, `usr_12.txt`
+- `undo`
+  Primary: `undo.txt`, `usr_32.txt`
+  Nearby: `repeat.txt`, `usr_04.txt`
+- `repeat`
+  Primary: `repeat.txt`, `usr_10.txt`
+  Nearby: `change.txt`, `visual.txt`, `usr_12.txt`
+- `visual`
+  Primary: `visual.txt`, `usr_10.txt`
+  Nearby: `motion.txt`, `change.txt`, `usr_26.txt`
+- `cmdline`
+  Primary: `cmdline.txt`, `usr_20.txt`
+  Nearby: `editing.txt`, `pattern.txt`, `map.txt`
+- `options`
+  Primary: `options.txt`, `usr_05.txt`
+  Nearby: `scroll.txt`, `pattern.txt`, `usr_25.txt`
+- `pattern`
+  Primary: `pattern.txt`, `usr_27.txt`
+  Nearby: `change.txt`, `cmdline.txt`, `usr_12.txt`
+- `map`
+  Primary: `map.txt`, `usr_40.txt`
+  Nearby: `cmdline.txt`, `options.txt`, `usr_41.txt`
+- `windows`
+  Primary: `windows.txt`, `usr_08.txt`
+  Nearby: `editing.txt`, `tabpage.txt`, `usr_09.txt`
+- `tabpage`
+  Primary: `tabpage.txt`
+  Nearby: `windows.txt`, `usr_09.txt`
+- `fold`
+  Primary: `fold.txt`, `usr_28.txt`
+  Nearby: `motion.txt`, `scroll.txt`, `options.txt`
+- `ideavim`
+  Primary: IdeaVim wiki, README, plugin pages, supported set-command docs
+  Nearby: generated support maps, IdeaVim source code, IntelliJ-backed option docs
+
 ## Support rules
 
 - Use Vim docs as the content source, not as proof of IdeaVim support.
@@ -89,6 +143,7 @@ Those pages are often more user-facing than the reference manual and can surface
 - Keep tip lines short; target a maximum of about 40 characters per summary/detail line when practical.
 - Do not claim support that was not verified.
 - While working on a section, also scan the related user-facing Vim manual chapters and pull in relevant tips that belong in the same visible category.
+- When a section feels thin, scan more of vimhelp.org around the nearby reference and user-manual pages instead of stopping at the first matching page.
 - Always do a final pass from the user's perspective:
   check whether the tip is easy to find, easy to understand, and not misleading in how a user would actually think about the command.
 
@@ -107,6 +162,13 @@ Those pages are often more user-facing than the reference manual and can surface
   Example: horizontal scroll commands like `zh`, `zl`, `zH`, `zL`, `ze`, and `zs` may appear to do nothing when soft-wrap is enabled or horizontal scrolling is not relevant in the current editor view.
 - The user-manual pass already surfaced useful additions that a reference-only pass did not prioritize:
   jump return/navigation and wrap-aware motions.
+- `scroll` and `options` can overlap in a user-meaningful way.
+  Tips like `scrolloff` and `scroll` should be discoverable from both categories.
+- Multi-tagging works best when it matches how users look for the tip, not how Vim internally classifies it.
+- Packed command-family tips often need to be split into smaller tips for usability.
+  This was true for both the `z<CR> / z. / z- / z+ / z^` family and the `zh / zl / zH / zL / zs / ze` family.
+- The 40-character line target is still not consistently enforced across older tips.
+  Treat that as cleanup debt to pay down while revisiting sections.
 
 ## Process
 
