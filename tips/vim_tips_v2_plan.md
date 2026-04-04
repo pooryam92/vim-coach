@@ -82,7 +82,8 @@ Those pages are often more user-facing than the reference manual and can surface
 - Keep the tips files cohesive and small enough to review comfortably.
 - Avoid adding extra files or structure unless there is a clear need.
 - Default to one visible category per tip.
-- Add a second/third visible category only when it clearly improves filtering.
+- Multiple visible categories are allowed.
+- Add a second or third visible category when it clearly improves filtering or helps users find the tip from more than one natural path.
 - Keep summaries command-first and concrete.
 - Keep details short and factual.
 - Keep tip lines short; target a maximum of about 40 characters per summary/detail line when practical.
@@ -93,13 +94,17 @@ Those pages are often more user-facing than the reference manual and can surface
 
 ## Current state
 
-- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing` and `motion` sections.
-- Current totals: `48` tips, `28` reused from v1 by exact summary match, `20` new.
-- Current category totals: `21` `editing`, `27` `motion`.
+- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, and `options` sections.
+- Current totals: `59` unique tips, `29` reused from v1 by exact summary match, `30` new.
+- Total counts should always mean unique tip entries only.
+- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `2` `options`.
+- Category totals should use the primary category only so multi-tagged tips are not double-counted in the overall total.
 - Exact-summary reused/new counts are only a rough migration snapshot.
   Once a v2 tip is rewritten for clarity, the wording may no longer match v1 exactly even if the concept was reused.
 - Current rejected examples from runtime contradiction:
   `Ctrl-g`, `g Ctrl-g`, `:file {name}`.
+- Some commands depend on editor state, not just command support.
+  Example: horizontal scroll commands like `zh`, `zl`, `zH`, `zL`, `ze`, and `zs` may appear to do nothing when soft-wrap is enabled or horizontal scrolling is not relevant in the current editor view.
 - The user-manual pass already surfaced useful additions that a reference-only pass did not prioritize:
   jump return/navigation and wrap-aware motions.
 

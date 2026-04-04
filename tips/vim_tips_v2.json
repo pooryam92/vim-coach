@@ -437,7 +437,8 @@
     },
     {
       "category": [
-        "motion"
+        "motion",
+        "editing"
       ],
       "summary": "Jump to last edit location `.",
       "details": [
@@ -494,6 +495,119 @@
       "details": [
         "; repeats in same direction",
         ", repeats in opposite direction"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Place line top/center/bottom zt zz zb",
+      "details": [
+        "zt top, zz center, zb bottom",
+        "Use after searches and big jumps"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Place first text z<CR> z. z-",
+      "details": [
+        "z<CR> top, z. center, z- bottom",
+        "Moves to first non-blank on that line"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Page then place first text z+ / z^",
+      "details": [
+        "z+ uses next page, z^ previous page",
+        "Then lands at first non-blank"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Half-page scroll Ctrl-d / Ctrl-u",
+      "details": [
+        "Ctrl-d scrolls down half a page",
+        "Ctrl-u scrolls up half a page"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Page scroll Ctrl-f / Ctrl-b",
+      "details": [
+        "Ctrl-f scrolls forward one page",
+        "Ctrl-b scrolls back one page"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Line scroll Ctrl-e / Ctrl-y",
+      "details": [
+        "Ctrl-e scrolls down one line",
+        "Ctrl-y scrolls up one line"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Scroll sideways by columns zh / zl",
+      "details": [
+        "zh scrolls left, zl scrolls right",
+        "Needs wrap off or soft-wrap off"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Scroll sideways half screen zH / zL",
+      "details": [
+        "zH and zL scroll half a screen",
+        "Needs wrap off or soft-wrap off"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Place cursor screen edge zs / ze",
+      "details": [
+        "zs shows cursor at screen start",
+        "ze shows cursor at screen end",
+        "Needs wrap off or soft-wrap off"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "scroll"
+      ],
+      "summary": "Keep context with scrolloff",
+      "details": [
+        ":set so=5 keeps context lines",
+        "Use sidescrolloff for side context"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "scroll"
+      ],
+      "summary": "Set Ctrl-d / Ctrl-u size with scroll",
+      "details": [
+        ":set scroll=15 changes step size",
+        "Useful when half-page feels too big"
       ]
     }
   ]

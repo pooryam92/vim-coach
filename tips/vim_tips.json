@@ -299,7 +299,8 @@
     },
     {
       "category": [
-        "motions"
+        "motions",
+        "migrated"
       ],
       "summary": "Recenter cursor line zt / zz / zb",
       "details": [
@@ -309,7 +310,8 @@
     },
     {
       "category": [
-        "motions"
+        "motions",
+        "migrated"
       ],
       "summary": "Half-page scroll Ctrl-d / Ctrl-u",
       "details": [
@@ -319,7 +321,8 @@
     },
     {
       "category": [
-        "motions"
+        "motions",
+        "migrated"
       ],
       "summary": "Full-page scroll Ctrl-f / Ctrl-b",
       "details": [
@@ -329,7 +332,8 @@
     },
     {
       "category": [
-        "motions"
+        "motions",
+        "migrated"
       ],
       "summary": "Scroll window without moving cursor Ctrl-e / Ctrl-y",
       "details": [
@@ -340,7 +344,8 @@
     {
       "category": [
         "config",
-        "motions"
+        "motions",
+        "migrated"
       ],
       "summary": "Keep space around the cursor",
       "details": [
@@ -352,7 +357,8 @@
     {
       "category": [
         "config",
-        "motions"
+        "motions",
+        "migrated"
       ],
       "summary": "Set scroll for Ctrl-d/Ctrl-u distance",
       "details": [
