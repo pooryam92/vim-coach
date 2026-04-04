@@ -52,8 +52,12 @@ Primary local support sources:
 Reference docs:
 
 - https://vimhelp.org/
+- https://vimhelp.org/usr_toc.txt.html
 - https://github.com/JetBrains/ideavim
 - https://github.com/JetBrains/ideavim/wiki
+
+When relevant, also check the matching user-manual chapters under `usr_*.txt`.
+Those pages are often more user-facing than the reference manual and can surface better beginner/intermediate tips.
 
 ## Support rules
 
@@ -69,33 +73,48 @@ Reference docs:
 ## Migration rules
 
 - Reuse v1 tips when they still fit.
+- Prefer reusing and adapting existing tips over rewriting them from scratch when the old version is still good.
 - Add `migrated` only to the reused source tip in [tips/vim_tips.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips.json).
 - Do not add `migrated` to [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json).
 
 ## Writing rules
 
+- Keep the tips files cohesive and small enough to review comfortably.
+- Avoid adding extra files or structure unless there is a clear need.
 - Default to one visible category per tip.
-- Add a second visible category only when it clearly improves filtering.
+- Add a second/third visible category only when it clearly improves filtering.
 - Keep summaries command-first and concrete.
 - Keep details short and factual.
+- Keep tip lines short; target a maximum of about 40 characters per summary/detail line when practical.
 - Do not claim support that was not verified.
+- While working on a section, also scan the related user-facing Vim manual chapters and pull in relevant tips that belong in the same visible category.
+- Always do a final pass from the user's perspective:
+  check whether the tip is easy to find, easy to understand, and not misleading in how a user would actually think about the command.
 
 ## Current state
 
-- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) is currently an `editing`-only dataset.
+- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing` and `motion` sections.
+- Current totals: `48` tips, `28` reused from v1 by exact summary match, `20` new.
+- Current category totals: `21` `editing`, `27` `motion`.
+- Exact-summary reused/new counts are only a rough migration snapshot.
+  Once a v2 tip is rewritten for clarity, the wording may no longer match v1 exactly even if the concept was reused.
 - Current rejected examples from runtime contradiction:
   `Ctrl-g`, `g Ctrl-g`, `:file {name}`.
+- The user-manual pass already surfaced useful additions that a reference-only pass did not prioritize:
+  jump return/navigation and wrap-aware motions.
 
 ## Process
 
 1. Start from the Vim help page for the target section.
-2. Build a candidate list of commands, keys, and workflows.
-3. Filter candidates through the local IdeaVim support sources.
-4. Reuse matching v1 tips where it makes sense.
-5. Write supported tips into [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json).
-6. Mark reused v1 source tips with `migrated` in [tips/vim_tips.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips.json).
-7. Validate JSON with `jq . tips/vim_tips_v2.json` and `jq . tips/vim_tips.json` when v1 changes.
-8. Save newly learned support edge cases back into this file.
+2. Check the related user-facing Vim manual chapters as well.
+3. Build a candidate list of commands, keys, and workflows.
+4. Add any relevant user-facing workflows or explanations from those chapters to the same category pass.
+5. Filter candidates through the local IdeaVim support sources.
+6. Reuse matching v1 tips where it makes sense.
+7. Write supported tips into [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json).
+8. Mark reused v1 source tips with `migrated` in [tips/vim_tips.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips.json).
+9. Validate JSON with `jq . tips/vim_tips_v2.json` and `jq . tips/vim_tips.json` when v1 changes.
+10. Save newly learned support edge cases and user-facing content lessons back into this file.
 
 ## Tip template
 
