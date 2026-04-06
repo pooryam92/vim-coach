@@ -506,7 +506,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Go to a specific line :N",
       "details": [
@@ -517,7 +518,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "See your jump history :jumps",
       "details": [
@@ -1491,7 +1493,8 @@
     {
       "category": [
         "cmdline",
-        "registers"
+        "registers",
+        "migrated"
       ],
       "summary": "Insert register in command line Ctrl-r",
       "details": [
@@ -1981,7 +1984,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Edit command-line quickly Ctrl-w / Ctrl-u",
       "details": [
@@ -2078,7 +2082,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Built-in help :help",
       "details": [
@@ -2430,7 +2435,8 @@
     {
       "category": [
         "marks",
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "List marks :marks",
       "details": [

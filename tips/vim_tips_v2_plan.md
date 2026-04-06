@@ -136,6 +136,7 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 - Add a second or third visible category when it clearly improves filtering or helps users find the tip from more than one natural path.
 - Keep summaries command-first and concrete.
 - Keep details short and factual.
+- If a tip only works in a specific mode or prompt context, make that explicit in the summary or first detail line.
 - Keep tip lines short; target a maximum of about 40 characters per summary/detail line when practical.
 - Do not claim support that was not verified.
 - While working on a section, also scan the related user-facing Vim manual chapters and pull in relevant tips that belong in the same visible category.
@@ -145,10 +146,10 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 
 ## Current state
 
-- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, `repeat`, and `visual` sections.
-- Current totals: `115` unique tips, `57` reused from v1 by exact summary match, `58` new.
+- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, `repeat`, `visual`, and `cmdline` sections.
+- Current totals: `129` unique tips, `58` reused from v1 by exact summary match, `71` new.
 - Total counts should always mean unique tip entries only.
-- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `2` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`.
+- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `2` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`.
 - Category totals should use the primary category only so multi-tagged tips are not double-counted in the overall total.
 - Exact-summary reused/new counts are only a rough migration snapshot.
   Once a v2 tip is rewritten for clarity, the wording may no longer match v1 exactly even if the concept was reused.
@@ -158,6 +159,12 @@ Start with the primary pages, then scan the nearby pages if the section still fe
   Example: horizontal scroll commands like `zh`, `zl`, `zH`, `zL`, `ze`, and `zs` may appear to do nothing when soft-wrap is enabled or horizontal scrolling is not relevant in the current editor view.
 - The user-manual pass already surfaced useful additions that a reference-only pass did not prioritize:
   jump return/navigation and wrap-aware motions.
+- For `cmdline`, explicit `C`-mode editing and history keys are strong support signals.
+  Examples: `Ctrl-b`, `Ctrl-e`, `Ctrl-w`, `Ctrl-u`, `Ctrl-r`, `Ctrl-p`, `Ctrl-n`, `<Up>`, `<Down>`, `<PageUp>`, `<PageDown>`, `<S-Left>`, and `<S-Right>`.
+- For mode-specific tips, do not assume the category label is visible to the user.
+  If a command only makes sense in `:` or `/`, say that in the tip itself.
+- Be more conservative with `cmdline` completion and command-line-window tips.
+  Plain `<Tab>` completion and `q:` are documented in Vim, but they did not have a clean enough generated-support signal in this pass to keep as IdeaVim tips yet.
 - `scroll` and `options` can overlap in a user-meaningful way.
   Tips like `scrolloff` and `scroll` should be discoverable from both categories.
 - `change / undo` overlaps naturally with `motion`, `insert`, and `repeat`.
