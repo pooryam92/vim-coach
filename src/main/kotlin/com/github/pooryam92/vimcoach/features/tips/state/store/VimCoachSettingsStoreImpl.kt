@@ -26,4 +26,10 @@ class VimCoachSettingsStoreImpl :
             currentState.copy(tipIntervalHours = hours)
         }
     }
+
+    override fun setEnabledTipCategories(categories: List<String>) {
+        updateState { currentState ->
+            currentState.copy(enabledTipCategories = categories.toList())
+        }
+    }
 }

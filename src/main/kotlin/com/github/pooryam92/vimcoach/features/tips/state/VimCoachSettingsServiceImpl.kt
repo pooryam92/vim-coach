@@ -50,6 +50,35 @@ class VimCoachSettingsServiceImpl() : VimCoachSettingsService {
         }
     }
 
+    override fun getEnabledTipCategories(availableCategories: List<String>): List<String> {
+        val normalizedAvailable = availableCategories.distinct()
+        val persistedCategories = currentState().enabledTipCategories ?: return normalizedAvailable
+        val availableCategorySet = normalizedAvailable.toSet()
+
+        return persistedCategories
+            .asSequence()
+            .map(String::trim)
+            .filter(String::isNotBlank)
+            .distinct()
+            .filter(availableCategorySet::contains)
+            .toList()
+    }
+
+    override fun setEnabledTipCategories(categories: List<String>) {
+        val normalizedCategories = categories
+            .asSequence()
+            .map(String::trim)
+            .filter(String::isNotBlank)
+            .distinct()
+            .toList()
+
+        if (currentState().enabledTipCategories == normalizedCategories) {
+            return
+        }
+
+        settingsStore().setEnabledTipCategories(normalizedCategories)
+    }
+
     private fun currentState(): VimCoachSettingsStore.State {
         return settingsStore().state ?: VimCoachSettingsStore.State()
     }

@@ -4,6 +4,19 @@
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-04-01
+
+### Added
+
+- Category-aware tip filtering with selectable categories in the settings UI
+
+### Changed
+
+- Switched settings category controls to a compact multi-column layout
+- Indexed in-memory tip selection by category to avoid full-list filtering on every shown tip
+
+## [1.1.0] - 2026-03-10
+
 ### Added
 
 - Settings page for enabling startup tips and configuring periodic tip reminders
@@ -49,7 +62,10 @@
 - Support for remote tip sources
 - Action to refetch tips from remote source for updating the local tip library
 
-[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.1.0-beta...HEAD
+[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/pooryam92/vim-coach/compare/1.1.0...1.2.0
+[1.2.0-beta]: https://github.com/pooryam92/vim-coach/compare/1.1.0...1.2.0-beta
+[1.1.0]: https://github.com/pooryam92/vim-coach/compare/1.0.1...1.1.0
 [1.1.0-beta]: https://github.com/pooryam92/vim-coach/compare/1.0.1...1.1.0-beta
 [1.0.1]: https://github.com/pooryam92/vim-coach/compare/0.3.0-beta...1.0.1
 [0.3.0-beta]: https://github.com/pooryam92/vim-coach/compare/0.2.1-beta...0.3.0-beta

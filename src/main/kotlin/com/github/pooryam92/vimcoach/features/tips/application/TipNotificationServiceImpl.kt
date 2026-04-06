@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.application
 
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationFactory
 import com.intellij.notification.Notification
@@ -13,10 +14,17 @@ class TipNotificationServiceImpl(
 ) : TipNotificationService {
 
     private var injectedNotificationFactory: TipNotificationFactory = TipNotificationFactory()
+    private var injectedSettingsService: VimCoachSettingsService? = null
     private var injectedTipService: VimTipService? = null
 
-    constructor(project: Project, tipService: VimTipService, notificationFactory: TipNotificationFactory) : this(project) {
+    constructor(
+        project: Project,
+        tipService: VimTipService,
+        notificationFactory: TipNotificationFactory,
+        settingsService: VimCoachSettingsService? = null
+    ) : this(project) {
         injectedNotificationFactory = notificationFactory
+        injectedSettingsService = settingsService
         injectedTipService = tipService
     }
 
@@ -26,14 +34,14 @@ class TipNotificationServiceImpl(
         private set
 
     override fun showRandomTip() {
-        showTip(tipService().getRandomTip())
+        showTip(selectRandomTip())
     }
 
     override fun showRandomTipIfNoneActive(): Boolean {
         if (hasActiveTipNotification()) {
             return false
         }
-        showTip(tipService().getRandomTip())
+        showTip(selectRandomTip())
         return true
     }
 
@@ -101,6 +109,18 @@ class TipNotificationServiceImpl(
         }
         return NotificationVisibility.VISIBLE
     }
+
+    private fun selectRandomTip(): VimTip {
+        val availableCategories = tipService().getCategories().values
+        if (availableCategories.isEmpty()) {
+            return tipService().getRandomTip()
+        }
+
+        val enabledCategories = settingsService().getEnabledTipCategories(availableCategories)
+        return tipService().getRandomTip(enabledCategories)
+    }
+
+    private fun settingsService(): VimCoachSettingsService = injectedSettingsService ?: service()
 
     private fun tipService(): VimTipService = injectedTipService ?: service()
 

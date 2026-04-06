@@ -2,6 +2,7 @@ package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.application.TipNotificationServiceImpl
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeVimTipService
 import com.intellij.openapi.ui.popup.Balloon
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
@@ -21,13 +22,19 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
 
     fun testShowRandomTipRequestsTipFromService() {
         val mockTipService = FakeVimTipService(
-            initialTips = listOf(VimTip("Tip", listOf("Details")))
+            initialTips = listOf(VimTip("Tip", listOf("Details"), listOf("basics")))
         )
-        val controller = TipNotificationServiceImpl(project, mockTipService, TipNotificationFactory())
+        val controller = TipNotificationServiceImpl(
+            project,
+            mockTipService,
+            TipNotificationFactory(),
+            FakeSettingsService(listOf("basics"))
+        )
 
         controller.showRandomTip()
 
-        assertEquals(1, mockTipService.getRandomTipCalls)
+        assertEquals(1, mockTipService.getRandomTipByCategoryCalls)
+        assertEquals(listOf("basics"), mockTipService.lastRequestedCategories)
     }
 
     fun testShowRandomTipIfNoneActiveShowsWhenNoActiveNotificationExists() {
@@ -157,5 +164,27 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
             java.lang.Character.TYPE -> 0.toChar()
             else -> null
         }
+    }
+
+    private class FakeSettingsService(
+        private val enabledCategories: List<String>
+    ) : VimCoachSettingsService {
+        override fun isShowTipsOnStartupEnabled(): Boolean = true
+
+        override fun setShowTipsOnStartupEnabled(enabled: Boolean) = Unit
+
+        override fun isPeriodicTipsEnabled(): Boolean = false
+
+        override fun setPeriodicTipsEnabled(enabled: Boolean) = Unit
+
+        override fun getTipIntervalHours(): Int = 1
+
+        override fun setTipIntervalHours(hours: Int) = Unit
+
+        override fun getEnabledTipCategories(availableCategories: List<String>): List<String> {
+            return enabledCategories
+        }
+
+        override fun setEnabledTipCategories(categories: List<String>) = Unit
     }
 }

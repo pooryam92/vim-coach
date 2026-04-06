@@ -1,7 +1,10 @@
 package com.github.pooryam92.vimcoach.features.tips.ui.settings
 
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
+import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
+import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
+import com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsStore
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import java.awt.Container
@@ -16,6 +19,8 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
         settingsService().setShowTipsOnStartupEnabled(true)
         settingsService().setPeriodicTipsEnabled(false)
         settingsService().setTipIntervalHours(1)
+        settingsStore().loadState(VimCoachSettingsStore.State())
+        tipService().saveTips(emptyList())
     }
 
     override fun tearDown() {
@@ -23,6 +28,8 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
             settingsService().setShowTipsOnStartupEnabled(true)
             settingsService().setPeriodicTipsEnabled(false)
             settingsService().setTipIntervalHours(1)
+            settingsStore().loadState(VimCoachSettingsStore.State())
+            tipService().saveTips(emptyList())
         } finally {
             super.tearDown()
         }
@@ -75,6 +82,61 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
         }
     }
 
+    fun testCreateComponentShowsCategoryCheckboxes() {
+        tipService().saveTips(
+            listOf(
+                VimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
+                VimTip("summary-2", listOf("details-2"), listOf("search", "basics"))
+            )
+        )
+        val configurable = VimCoachSettingsConfigurable()
+
+        try {
+            val component = configurable.createComponent()
+            val basicsCheckBox = findCheckBox(component, "basics")
+            val editingCheckBox = findCheckBox(component, "editing")
+            val searchCheckBox = findCheckBox(component, "search")
+
+            assertTrue(basicsCheckBox.isSelected)
+            assertTrue(editingCheckBox.isSelected)
+            assertTrue(searchCheckBox.isSelected)
+        } finally {
+            configurable.disposeUIResources()
+        }
+    }
+
+    fun testApplyPersistsCategorySelection() {
+        tipService().saveTips(
+            listOf(
+                VimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
+                VimTip("summary-2", listOf("details-2"), listOf("search"))
+            )
+        )
+        val configurable = VimCoachSettingsConfigurable()
+
+        try {
+            val component = configurable.createComponent()
+            val basicsCheckBox = findCheckBox(component, "basics")
+            val editingCheckBox = findCheckBox(component, "editing")
+            val searchCheckBox = findCheckBox(component, "search")
+
+            basicsCheckBox.isSelected = true
+            editingCheckBox.isSelected = false
+            searchCheckBox.isSelected = true
+
+            assertTrue(configurable.isModified())
+
+            configurable.apply()
+
+            assertEquals(
+                listOf("basics", "search"),
+                settingsService().getEnabledTipCategories(listOf("basics", "editing", "search"))
+            )
+        } finally {
+            configurable.disposeUIResources()
+        }
+    }
+
     fun testResetRestoresPersistedValue() {
         settingsService().setShowTipsOnStartupEnabled(false)
         settingsService().setPeriodicTipsEnabled(false)
@@ -105,6 +167,14 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
     }
 
     private fun settingsService(): VimCoachSettingsService {
+        return service()
+    }
+
+    private fun tipService(): VimTipService {
+        return service()
+    }
+
+    private fun settingsStore(): VimCoachSettingsStore {
         return service()
     }
 
@@ -147,4 +217,5 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
         fail("Expected a tip-interval spinner in settings UI")
         throw IllegalStateException("Unreachable")
     }
+
 }
