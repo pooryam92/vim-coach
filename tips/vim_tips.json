@@ -2384,7 +2384,8 @@
     },
     {
       "category": [
-        "windows"
+        "windows",
+        "migrated"
       ],
       "summary": "Open a horizontal split :split",
       "details": [
@@ -2394,7 +2395,8 @@
     },
     {
       "category": [
-        "windows"
+        "windows",
+        "migrated"
       ],
       "summary": "Open a vertical split :vsplit",
       "details": [
@@ -2404,7 +2406,8 @@
     },
     {
       "category": [
-        "windows"
+        "windows",
+        "migrated"
       ],
       "summary": "Split from the keyboard Ctrl-w s / Ctrl-w v",
       "details": [
@@ -2552,7 +2555,8 @@
     },
     {
       "category": [
-        "windows"
+        "windows",
+        "migrated"
       ],
       "summary": "Keep only this split :only",
       "details": [
@@ -2562,7 +2566,8 @@
     },
     {
       "category": [
-        "windows"
+        "windows",
+        "migrated"
       ],
       "summary": "Cycle through splits Ctrl-w w",
       "details": [
@@ -2572,7 +2577,8 @@
     },
     {
       "category": [
-        "windows"
+        "windows",
+        "migrated"
       ],
       "summary": "Move to a split Ctrl-w h/j/k/l",
       "details": [

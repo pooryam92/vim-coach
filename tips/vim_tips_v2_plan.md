@@ -146,10 +146,10 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 
 ## Current state
 
-- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, `repeat`, `visual`, `cmdline`, `pattern`, and `map` sections.
-- Current totals: `172` unique tips, `74` reused from v1 by exact summary match, `98` new.
+- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, `repeat`, `visual`, `cmdline`, `pattern`, `map`, and `windows` sections.
+- Current totals: `180` unique tips, `78` reused from v1 by exact summary match, `102` new.
 - Total counts should always mean unique tip entries only.
-- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `13` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`, `24` `pattern`, `8` `map`.
+- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `13` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`, `24` `pattern`, `8` `map`, `8` `windows`.
 - Category totals should use the primary category only so multi-tagged tips are not double-counted in the overall total.
 - Exact-summary reused/new counts are only a rough migration snapshot.
   Once a v2 tip is rewritten for clarity, the wording may no longer match v1 exactly even if the concept was reused.
@@ -183,6 +183,15 @@ Start with the primary pages, then scan the nearby pages if the section still fe
   Direct `:map` and `:unmap` tips can use Ex-command wording, but mapping-definition tips should say they belong in `~/.ideavimrc`.
 - For config-file tips, keep the syntax consistent with config-file usage.
   In `.ideavimrc`, write `nmap`, `nnoremap`, and similar forms without a leading `:`.
+- For `windows`, the strongest support signal comes from `windows.txt`, `usr_08.txt`, and the generated command/ex-command maps together.
+  The safest first batch is the core split, close, only, and window-navigation commands.
+- Be conservative with advanced window layout commands until they are clearly exposed.
+  `:new`, `:vnew`, `:wincmd`, resize commands, and window-moving commands were not strong enough in the local support maps for this pass.
+- Prefer the key forms that are actually exposed in the generated maps.
+  Example: `Ctrl-w c` had a clear support signal for closing the current split; `Ctrl-w q` did not.
+- Current unresolved `windows` candidates are still:
+  `Ctrl-w t / b`, `Ctrl-w =`, `Ctrl-w _ / |`, and `Ctrl-w + - < >`.
+  They are useful in Vim, but they did not show up cleanly in the local generated support maps yet.
 - For `options`, the strongest support signal comes from the official IdeaVim `set` docs plus Vim's own `options.txt`.
   That is more reliable than looking for individual option names in the generated command maps.
 - Keep `options` practical and high-value.
