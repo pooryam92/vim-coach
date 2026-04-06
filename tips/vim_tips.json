@@ -2,7 +2,8 @@
   "tips": [
     {
       "category": [
-        "basics"
+        "basics",
+        "migrated"
       ],
       "summary": "Exit to Normal mode fast",
       "details": [
@@ -12,7 +13,8 @@
     },
     {
       "category": [
-        "basics"
+        "basics",
+        "migrated"
       ],
       "summary": "Insert before/after cursor i / a",
       "details": [
@@ -22,7 +24,8 @@
     },
     {
       "category": [
-        "basics"
+        "basics",
+        "migrated"
       ],
       "summary": "Insert at line ends I / A",
       "details": [
@@ -33,7 +36,8 @@
     {
       "category": [
         "basics",
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Insert at true line start gI",
       "details": [
@@ -43,7 +47,8 @@
     },
     {
       "category": [
-        "basics"
+        "basics",
+        "migrated"
       ],
       "summary": "Open new lines o / O",
       "details": [
@@ -53,7 +58,8 @@
     },
     {
       "category": [
-        "basics"
+        "basics",
+        "migrated"
       ],
       "summary": "Resume last insert location gi",
       "details": [
@@ -63,7 +69,8 @@
     },
     {
       "category": [
-        "basics"
+        "basics",
+        "migrated"
       ],
       "summary": "One-shot Normal command from Insert Ctrl-o",
       "details": [
@@ -95,7 +102,8 @@
     },
     {
       "category": [
-        "basics"
+        "basics",
+        "migrated"
       ],
       "summary": "Delete previous word while typing Insert Ctrl-w",
       "details": [
@@ -105,7 +113,8 @@
     },
     {
       "category": [
-        "basics"
+        "basics",
+        "migrated"
       ],
       "summary": "Clear back while typing Insert Ctrl-u",
       "details": [
@@ -1108,7 +1117,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Replace mode R",
       "details": [
@@ -1444,7 +1454,8 @@
     },
     {
       "category": [
-        "registers"
+        "registers",
+        "migrated"
       ],
       "summary": "Insert register while typing Insert Ctrl-r",
       "details": [

@@ -609,6 +609,150 @@
         ":set scroll=15 changes step size",
         "Useful when half-page feels too big"
       ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Leave Insert with Esc / Ctrl-[",
+      "details": [
+        "Esc leaves Insert mode",
+        "Ctrl-[ is the same command"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Insert before/after cursor i / a",
+      "details": [
+        "i inserts before cursor",
+        "a inserts after cursor"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Insert at line ends I / A",
+      "details": [
+        "I inserts at first non-blank",
+        "A appends at end of line"
+      ]
+    },
+    {
+      "category": [
+        "insert",
+        "editing"
+      ],
+      "summary": "Insert at true line start gI",
+      "details": [
+        "gI inserts at column 1",
+        "Unlike I, it keeps indentation"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Open new lines o / O",
+      "details": [
+        "o opens below and enters Insert",
+        "O opens above and enters Insert"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Return to last insert spot gi",
+      "details": [
+        "gi returns to last insert spot",
+        "Then it enters Insert again"
+      ]
+    },
+    {
+      "category": [
+        "insert",
+        "motion"
+      ],
+      "summary": "One Normal command in Insert Ctrl-o",
+      "details": [
+        "Run one Normal command",
+        "Then return to Insert"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Delete previous word in Insert Ctrl-w",
+      "details": [
+        "Deletes word left of cursor",
+        "Good for quick typo fixes"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Delete back to indent in Insert Ctrl-u",
+      "details": [
+        "Deletes back to first non-blank",
+        "Keeps text after the cursor"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Shift indent in Insert Ctrl-t / Ctrl-d",
+      "details": [
+        "Ctrl-t shifts indent right",
+        "Ctrl-d shifts indent left"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Insert a register in Insert Ctrl-r",
+      "details": [
+        "Ctrl-r 0 inserts last yank",
+        "Ctrl-r + inserts clipboard"
+      ]
+    },
+    {
+      "category": [
+        "insert",
+        "change"
+      ],
+      "summary": "Replace mode R",
+      "details": [
+        "Type to overwrite text",
+        "Esc leaves Replace mode"
+      ]
+    },
+    {
+      "category": [
+        "insert",
+        "repeat"
+      ],
+      "summary": "Repeat last insert Ctrl-a / Ctrl-@",
+      "details": [
+        "Ctrl-a repeats last inserted text",
+        "Ctrl-@ repeats it and exits Insert"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Insert char above/below Ctrl-y/e",
+      "details": [
+        "Ctrl-y inserts char from above",
+        "Ctrl-e inserts char from below"
+      ]
     }
   ]
 }
