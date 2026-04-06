@@ -1038,6 +1038,161 @@
         "@: reruns the last : command",
         "Useful after :s, :g, and :normal"
       ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Enter Visual mode v / V / Ctrl-v",
+      "details": [
+        "v selects characters",
+        "V selects whole lines",
+        "Ctrl-v selects a block"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Swap selection ends in Visual o",
+      "details": [
+        "o moves cursor to the other end",
+        "Great for precise adjustments"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Swap block corner in Visual O",
+      "details": [
+        "In block Visual, O swaps the corner",
+        "Useful for column edits"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Reselect last Visual region gv",
+      "details": [
+        "gv reselects the last selection",
+        "Also reselects text just put with p/P"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "pattern"
+      ],
+      "summary": "Select next/prev search match gn / gN",
+      "details": [
+        "gn selects the next search match",
+        "gN selects the previous one"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Shift a selection > / <",
+      "details": [
+        "> indents, < outdents",
+        "Then press . to repeat"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "editing"
+      ],
+      "summary": "Keep selection after shifting >gv / <gv",
+      "details": [
+        ">gv reselects after indenting",
+        "<gv reselects after outdenting"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Case change selection gu / gU",
+      "details": [
+        "Select then gu to lowercase",
+        "Select then gU to uppercase"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "editing"
+      ],
+      "summary": "Format a selection with gq",
+      "details": [
+        "Select text then press gq",
+        "Great for reflowing comments"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Block insert Ctrl-v then I",
+      "details": [
+        "Select a column, then press I",
+        "Esc applies it to all lines"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Block append Ctrl-v then A",
+      "details": [
+        "Select a column, then press A",
+        "Esc applies it to all lines"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Block change Ctrl-v then c",
+      "details": [
+        "Select a block, then press c",
+        "Esc applies it to all lines"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Block replace with one char Ctrl-v then r",
+      "details": [
+        "Select a block, then press r",
+        "Replaces all selected chars"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "cmdline"
+      ],
+      "summary": "Run : commands on a selection",
+      "details": [
+        "Type : to get '<,'> range",
+        "Use :s, :sort, or :normal"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Paste over a selection p / P",
+      "details": [
+        "p replaces the selection with put text",
+        "P keeps registers intact while putting"
+      ]
     }
   ]
 }

@@ -145,10 +145,10 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 
 ## Current state
 
-- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, and `repeat` sections.
-- Current totals: `100` unique tips, `44` reused from v1 by exact summary match, `56` new.
+- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, `repeat`, and `visual` sections.
+- Current totals: `115` unique tips, `57` reused from v1 by exact summary match, `58` new.
 - Total counts should always mean unique tip entries only.
-- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `2` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`.
+- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `2` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`.
 - Category totals should use the primary category only so multi-tagged tips are not double-counted in the overall total.
 - Exact-summary reused/new counts are only a rough migration snapshot.
   Once a v2 tip is rewritten for clarity, the wording may no longer match v1 exactly even if the concept was reused.
@@ -188,8 +188,8 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 
 ## Process
 
-1. Start from the Vim help page for the target section.
-2. Check the related user-facing Vim manual chapters as well.
+1. Start by reading the Vim reference page for the target section.
+2. Do a real sweep of the related user-facing Vim manual chapters as well.
 3. Build a candidate list of commands, keys, and workflows.
 4. Add any relevant user-facing workflows or explanations from those chapters to the same category pass.
 5. Filter candidates through the local IdeaVim support sources.
@@ -198,6 +198,10 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 8. Mark reused v1 source tips with `migrated` in [tips/vim_tips.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips.json).
 9. Validate JSON with `jq . tips/vim_tips_v2.json` and `jq . tips/vim_tips.json` when v1 changes.
 10. Save newly learned support edge cases and user-facing content lessons back into this file.
+
+Do not call a category done until both passes were done:
+- the reference-doc pass
+- the user-manual (`usr_*.txt`) pass
 
 ## Tip template
 

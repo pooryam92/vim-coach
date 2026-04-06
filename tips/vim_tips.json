@@ -1624,7 +1624,8 @@
     },
     {
       "category": [
-        "visual"
+        "visual",
+        "migrated"
       ],
       "summary": "Enter Visual mode v / V / Ctrl-v",
       "details": [
@@ -1635,7 +1636,8 @@
     },
     {
       "category": [
-        "visual"
+        "visual",
+        "migrated"
       ],
       "summary": "Swap Visual selection ends o",
       "details": [
@@ -1645,7 +1647,8 @@
     },
     {
       "category": [
-        "visual"
+        "visual",
+        "migrated"
       ],
       "summary": "Swap block selection corner O",
       "details": [
@@ -1655,7 +1658,8 @@
     },
     {
       "category": [
-        "visual"
+        "visual",
+        "migrated"
       ],
       "summary": "Reselect last Visual region gv",
       "details": [
@@ -1677,7 +1681,8 @@
     },
     {
       "category": [
-        "visual"
+        "visual",
+        "migrated"
       ],
       "summary": "Indent selection in Visual > / <",
       "details": [
@@ -1689,7 +1694,8 @@
       "category": [
         "visual",
         "editing",
-        "workflow"
+        "workflow",
+        "migrated"
       ],
       "summary": "Keep selection after shifting >gv / <gv",
       "details": [
@@ -1699,7 +1705,8 @@
     },
     {
       "category": [
-        "visual"
+        "visual",
+        "migrated"
       ],
       "summary": "Case change selection gu / gU",
       "details": [
@@ -1710,7 +1717,8 @@
     {
       "category": [
         "visual",
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Format selection with gq Visual",
       "details": [
@@ -1720,7 +1728,8 @@
     },
     {
       "category": [
-        "visual"
+        "visual",
+        "migrated"
       ],
       "summary": "Block insert Ctrl-v then I",
       "details": [
@@ -1730,7 +1739,8 @@
     },
     {
       "category": [
-        "visual"
+        "visual",
+        "migrated"
       ],
       "summary": "Block append Ctrl-v then A",
       "details": [
@@ -1740,7 +1750,8 @@
     },
     {
       "category": [
-        "visual"
+        "visual",
+        "migrated"
       ],
       "summary": "Block change Ctrl-v then c",
       "details": [
@@ -1750,7 +1761,8 @@
     },
     {
       "category": [
-        "visual"
+        "visual",
+        "migrated"
       ],
       "summary": "Block replace with one char Ctrl-v then r",
       "details": [
@@ -1761,7 +1773,8 @@
     {
       "category": [
         "visual",
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Use Visual range for Ex commands",
       "details": [
