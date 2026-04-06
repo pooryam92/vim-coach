@@ -947,7 +947,7 @@
     },
     {
       "category": [
-        "registers"
+        "editing"
       ],
       "summary": "Use the yank register \"0",
       "details": [
@@ -957,7 +957,7 @@
     },
     {
       "category": [
-        "registers"
+        "editing"
       ],
       "summary": "Recover the last delete with \"1",
       "details": [
@@ -967,7 +967,7 @@
     },
     {
       "category": [
-        "registers"
+        "editing"
       ],
       "summary": "Store and append text in named registers \"a / \"A",
       "details": [
@@ -977,7 +977,7 @@
     },
     {
       "category": [
-        "registers"
+        "editing"
       ],
       "summary": "Delete without clobbering registers with \"_",
       "details": [
@@ -987,8 +987,8 @@
     },
     {
       "category": [
-        "registers",
-        "visual"
+        "visual",
+        "editing"
       ],
       "summary": "Paste over a selection without losing your yank",
       "details": [
@@ -998,8 +998,8 @@
     },
     {
       "category": [
-        "registers",
-        "cmdline"
+        "cmdline",
+        "editing"
       ],
       "summary": "Inspect registers with :reg",
       "details": [
@@ -1060,7 +1060,7 @@
     {
       "category": [
         "cmdline",
-        "search"
+        "pattern"
       ],
       "summary": "Run a substitute only on matching lines with :g",
       "details": [
@@ -1747,12 +1747,13 @@
     },
     {
       "category": [
-        "visual"
+        "visual",
+        "editing"
       ],
-      "summary": "Paste over a selection p / P",
+      "summary": "Replace a selection with p",
       "details": [
-        "p replaces the selection with put text",
-        "P keeps registers intact while putting"
+        "In Visual mode, p replaces the selection with put text",
+        "Use \"_dP when you want to keep the current yank"
       ]
     },
     {
@@ -1859,8 +1860,7 @@
     },
     {
       "category": [
-        "cmdline",
-        "registers"
+        "cmdline"
       ],
       "summary": "Insert register in command line Ctrl-r",
       "details": [
@@ -1870,8 +1870,7 @@
     },
     {
       "category": [
-        "cmdline",
-        "registers"
+        "cmdline"
       ],
       "summary": "Insert word in command line Ctrl-r Ctrl-w",
       "details": [
@@ -1881,8 +1880,7 @@
     },
     {
       "category": [
-        "cmdline",
-        "registers"
+        "cmdline"
       ],
       "summary": "Insert file in command line Ctrl-r Ctrl-f",
       "details": [
@@ -2583,16 +2581,6 @@
     },
     {
       "category": [
-        "ideavim"
-      ],
-      "summary": "Map CapsLock to Esc and Ctrl",
-      "details": [
-        "Use a dual-role mapping: tap for Esc, hold for Ctrl",
-        "Tools like Karabiner, keyd, or Kanata can do this"
-      ]
-    },
-    {
-      "category": [
         "ideavim",
         "insert"
       ],
@@ -2653,7 +2641,6 @@
     {
       "category": [
         "editing",
-        "registers",
         "ideavim",
         "plugin"
       ],

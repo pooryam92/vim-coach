@@ -25,6 +25,14 @@
 - `features/tips/ui`: notification presentation and settings UI
 - `features/tips/entrypoints`: actions and startup activity
 
+## Docs
+- Keep user-facing tip authoring docs in `docs/`
+- Current docs:
+- `docs/vim_tips_reference.md`: tip authoring reference, categories, resources, format, and review rules.
+- `docs/category_count_plan.md`: category-count persistence and settings-plan notes.
+- Planning notes and one-off design docs for the tips feature should also live in `docs/`.
+- When changing the tip taxonomy or authoring rules, update the matching docs in `docs/` in the same pass.
+
 ## IntelliJ Guardrails
 - Preserve plugin behavior and extension registrations.
 - Keep action IDs stable unless explicitly requested.
