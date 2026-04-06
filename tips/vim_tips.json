@@ -1877,7 +1877,8 @@
     {
       "category": [
         "ideavim",
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Join lines with IDE-aware behavior ideajoin",
       "details": [
@@ -2457,7 +2458,8 @@
       "category": [
         "ideavim",
         "config",
-        "marks"
+        "marks",
+        "migrated"
       ],
       "summary": "Sync global marks with IDE bookmarks",
       "details": [
@@ -2734,7 +2736,8 @@
     {
       "category": [
         "ideavim",
-        "workflow"
+        "workflow",
+        "migrated"
       ],
       "summary": "Show IDE action IDs",
       "details": [
@@ -2746,7 +2749,8 @@
     {
       "category": [
         "ideavim",
-        "workflow"
+        "workflow",
+        "migrated"
       ],
       "summary": "Toggle IdeaVim on/off :action ToggleIdeaVim",
       "details": [
@@ -2857,7 +2861,8 @@
       "category": [
         "ideavim",
         "config",
-        "workflow"
+        "workflow",
+        "migrated"
       ],
       "summary": "Keep your mode during IDE rename edits",
       "details": [
@@ -2920,7 +2925,8 @@
     {
       "category": [
         "completion",
-        "ideavim"
+        "ideavim",
+        "migrated"
       ],
       "summary": "Trigger IntelliJ completion from Insert Ctrl-Space",
       "details": [
@@ -2933,7 +2939,8 @@
       "category": [
         "completion",
         "ideavim",
-        "config"
+        "config",
+        "migrated"
       ],
       "summary": "Completion popup keys are controlled by lookupkeys",
       "details": [

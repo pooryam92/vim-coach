@@ -2010,6 +2010,114 @@
         "zr opens one fold level",
         "zm closes one fold level"
       ]
+    },
+    {
+      "category": [
+        "ideavim"
+      ],
+      "summary": "Toggle IdeaVim with :action ToggleIdeaVim",
+      "details": [
+        "In :, :action ToggleIdeaVim flips it",
+        "Useful when a key conflict gets in the way"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "cmdline"
+      ],
+      "summary": "Run IDE actions with :action {id}",
+      "details": [
+        "In :, :action ReformatCode runs it",
+        "Use <Action>(...) in mappings instead"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "cmdline"
+      ],
+      "summary": "Find action IDs with :actionlist",
+      "details": [
+        ":actionlist extract filters by name",
+        "Use it before mapping IDE actions"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "options"
+      ],
+      "summary": "Show action IDs with :set trackactionids",
+      "details": [
+        "Use :set trackactionids",
+        "IdeaVim shows the action ID in notices"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "change"
+      ],
+      "summary": "Use IDE smart join with :set ideajoin",
+      "details": [
+        "Then J uses the IDE smart join",
+        "Useful when syntax should be adjusted"
+      ]
+    },
+    {
+      "category": [
+        "ideavim"
+      ],
+      "summary": "Keep your mode during rename edits",
+      "details": [
+        "Use :set idearefactormode=keep",
+        "Rename edits stop forcing Select mode"
+      ]
+    },
+    {
+      "category": [
+        "ideavim"
+      ],
+      "summary": "Sync marks with :set ideamarks",
+      "details": [
+        "A-Z marks sync to IDE bookmarks",
+        "Useful for cross-file jumping"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "options",
+        "editing"
+      ],
+      "summary": "Use IDE save hooks with :set ideawrite=all",
+      "details": [
+        "Use :set ideawrite=all",
+        ":w behaves like IDE Save All"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "options"
+      ],
+      "summary": "Let IDE completion keep Tab and Enter",
+      "details": [
+        "Use :set lookupkeys? to inspect them",
+        "These keys stay with the IDE popup"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "insert"
+      ],
+      "summary": "Trigger IDE completion with Ctrl-Space",
+      "details": [
+        "In Insert, Ctrl-Space opens completion",
+        "Press it again to widen suggestions"
+      ]
     }
   ]
 }
