@@ -1940,6 +1940,76 @@
         ":tabmove 0 moves the tab to the start",
         ":tabmove without a number moves it last"
       ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Create a fold zf{motion}",
+      "details": [
+        "zf{motion} folds a motion like zfip",
+        "Works where IDE folding is available"
+      ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Open/close folds zo / zc / za",
+      "details": [
+        "zo opens, zc closes, za toggles",
+        "Works where IDE folding is available"
+      ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Open/close nested folds zO / zC / zA",
+      "details": [
+        "zO opens nested folds, zC closes them",
+        "zA toggles the whole fold recursively"
+      ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Jump between folds zj / zk",
+      "details": [
+        "zj moves to the next fold start",
+        "zk moves to the previous fold start"
+      ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Delete folds zd / zD",
+      "details": [
+        "zd deletes one fold at the cursor",
+        "zD deletes nested folds there too"
+      ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Fold all / unfold all zM / zR",
+      "details": [
+        "zM closes all folds in view",
+        "zR opens all folds in view"
+      ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Control fold depth with zr / zm",
+      "details": [
+        "zr opens one fold level",
+        "zm closes one fold level"
+      ]
     }
   ]
 }

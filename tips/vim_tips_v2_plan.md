@@ -150,10 +150,10 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 
 ## Current state
 
-- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change`, `undo`, `repeat`, `visual`, `cmdline`, `pattern`, `map`, `windows`, and `tabpage` sections.
-- Current totals: `186` unique tips, `84` reused from v1 by exact summary match, `102` new.
+- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change`, `undo`, `repeat`, `visual`, `cmdline`, `pattern`, `map`, `windows`, `tabpage`, and `fold` sections.
+- Current totals: `193` unique tips, `88` reused from v1 by exact summary match, `105` new.
 - Total counts should always mean unique tip entries only.
-- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `13` `options`, `13` `insert`, `18` `change`, `3` `undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`, `24` `pattern`, `8` `map`, `8` `windows`, `6` `tabpage`.
+- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `13` `options`, `13` `insert`, `18` `change`, `3` `undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`, `24` `pattern`, `8` `map`, `8` `windows`, `6` `tabpage`, `7` `fold`.
 - Category totals should use the primary category only so multi-tagged tips are not double-counted in the overall total.
 - Exact-summary reused/new counts are only a rough migration snapshot.
   Once a v2 tip is rewritten for clarity, the wording may no longer match v1 exactly even if the concept was reused.
@@ -200,6 +200,12 @@ Start with the primary pages, then scan the nearby pages if the section still fe
   `gt`, `gT`, `:tabn`, `:tabp`, `:tabclose`, `:tabonly`, and `:tabmove` all had clear local support.
 - Be careful with tab commands that are present in Vim docs but missing from the local generated Ex-command map.
   `:tabnew` and `:tabs` are still useful candidates, but they did not have a clean enough support signal in this pass.
+- For `fold`, the strongest support signal came from `fold.txt`, `usr_28.txt`, and the generated command map together.
+  The local maps clearly expose `zf`, `zo`, `zc`, `za`, `zO`, `zC`, `zA`, `zj`, `zk`, `zM`, `zR`, `zr`, and `zm`.
+- Be conservative with fold options until they are documented more clearly in IdeaVim.
+  Vim's `foldmethod`, `foldlevel`, and related settings are useful in Vim, but they did not have a strong enough local IdeaVim support signal for this pass.
+- For fold tips, mention IDE folding dependence when it affects behavior.
+  Manual fold commands are useful, but whether they visibly work still depends on the current editor and IDE folding support.
 - For `options`, the strongest support signal comes from the official IdeaVim `set` docs plus Vim's own `options.txt`.
   That is more reliable than looking for individual option names in the generated command maps.
 - Keep `options` practical and high-value.

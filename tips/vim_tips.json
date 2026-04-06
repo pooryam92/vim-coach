@@ -1568,7 +1568,8 @@
     },
     {
       "category": [
-        "folds"
+        "folds",
+        "migrated"
       ],
       "summary": "Create a fold zf{motion}",
       "details": [
@@ -1578,7 +1579,8 @@
     },
     {
       "category": [
-        "folds"
+        "folds",
+        "migrated"
       ],
       "summary": "Open/close folds zo / zc / za",
       "details": [
@@ -1588,7 +1590,8 @@
     },
     {
       "category": [
-        "folds"
+        "folds",
+        "migrated"
       ],
       "summary": "Jump between folds zj / zk",
       "details": [
@@ -2353,7 +2356,8 @@
     },
     {
       "category": [
-        "folds"
+        "folds",
+        "migrated"
       ],
       "summary": "Fold all / unfold all zM / zR",
       "details": [
@@ -2789,7 +2793,8 @@
     {
       "category": [
         "folds",
-        "config"
+        "config",
+        "migrated"
       ],
       "summary": "Control fold depth with zA / zr / zm",
       "details": [
