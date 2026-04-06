@@ -562,7 +562,8 @@
     },
     {
       "category": [
-        "config"
+        "config",
+        "migrated"
       ],
       "summary": "Show absolute/relative line numbers",
       "details": [
@@ -592,7 +593,8 @@
     },
     {
       "category": [
-        "config"
+        "config",
+        "migrated"
       ],
       "summary": "Show invisible characters list",
       "details": [
@@ -647,7 +649,8 @@
     {
       "category": [
         "search",
-        "config"
+        "config",
+        "migrated"
       ],
       "summary": "Incremental search feedback incsearch",
       "details": [
@@ -658,7 +661,8 @@
     {
       "category": [
         "search",
-        "config"
+        "config",
+        "migrated"
       ],
       "summary": "Persistent highlights hlsearch",
       "details": [
@@ -689,7 +693,8 @@
     {
       "category": [
         "search",
-        "config"
+        "config",
+        "migrated"
       ],
       "summary": "Smart case searching ignorecase + smartcase",
       "details": [
@@ -700,7 +705,8 @@
     {
       "category": [
         "search",
-        "config"
+        "config",
+        "migrated"
       ],
       "summary": "Wrap search at EOF wrapscan",
       "details": [
@@ -1458,7 +1464,8 @@
       "category": [
         "basics",
         "config",
-        "registers"
+        "registers",
+        "migrated"
       ],
       "summary": "Use clipboard+=unnamedplus for default clipboard ops",
       "details": [
@@ -1470,7 +1477,8 @@
       "category": [
         "ideavim",
         "config",
-        "registers"
+        "registers",
+        "migrated"
       ],
       "summary": "Use clipboard+=ideaput for IntelliJ-native paste",
       "details": [
@@ -2052,7 +2060,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Check an option value :set option?",
       "details": [
@@ -2062,7 +2071,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Toggle an option :set invoption",
       "details": [

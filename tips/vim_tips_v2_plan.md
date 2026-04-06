@@ -147,9 +147,9 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 ## Current state
 
 - [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, `repeat`, `visual`, and `cmdline` sections.
-- Current totals: `129` unique tips, `58` reused from v1 by exact summary match, `71` new.
+- Current totals: `140` unique tips, `64` reused from v1 by exact summary match, `76` new.
 - Total counts should always mean unique tip entries only.
-- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `2` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`.
+- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `13` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`.
 - Category totals should use the primary category only so multi-tagged tips are not double-counted in the overall total.
 - Exact-summary reused/new counts are only a rough migration snapshot.
   Once a v2 tip is rewritten for clarity, the wording may no longer match v1 exactly even if the concept was reused.
@@ -165,6 +165,12 @@ Start with the primary pages, then scan the nearby pages if the section still fe
   If a command only makes sense in `:` or `/`, say that in the tip itself.
 - Be more conservative with `cmdline` completion and command-line-window tips.
   Plain `<Tab>` completion and `q:` are documented in Vim, but they did not have a clean enough generated-support signal in this pass to keep as IdeaVim tips yet.
+- For `options`, the strongest support signal comes from the official IdeaVim `set` docs plus Vim's own `options.txt`.
+  That is more reliable than looking for individual option names in the generated command maps.
+- Keep `options` practical and high-value.
+  Prefer commonly adjusted behaviors like search, numbers, wrapping, clipboard, and generic `:set` workflows over long lists of niche settings.
+- Be careful with options that overlap IDE-controlled editor behavior.
+  Example: `wrap` can affect line wrapping, but JetBrains soft-wrap settings may still shape what the user actually sees.
 - `scroll` and `options` can overlap in a user-meaningful way.
   Tips like `scrolloff` and `scroll` should be discoverable from both categories.
 - `change / undo` overlaps naturally with `motion`, `insert`, and `repeat`.

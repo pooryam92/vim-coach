@@ -605,10 +605,128 @@
         "options",
         "scroll"
       ],
-      "summary": "Set Ctrl-d / Ctrl-u size with scroll",
+      "summary": "Set half-page size with scroll",
       "details": [
         ":set scroll=15 changes step size",
         "Useful when half-page feels too big"
+      ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Show line numbers number / relativenumber",
+      "details": [
+        ":set number shows line numbers",
+        ":set relativenumber helps with counts"
+      ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Show invisible characters list",
+      "details": [
+        ":set list shows tabs and trailing spaces",
+        ":set nolist hides them again"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "scroll"
+      ],
+      "summary": "Wrap long lines with wrap",
+      "details": [
+        ":set wrap makes long lines wrap on screen",
+        "IDE soft-wrap settings can affect this too"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "pattern"
+      ],
+      "summary": "Incremental search feedback incsearch",
+      "details": [
+        ":set incsearch shows matches while typing",
+        "Makes /pattern navigation feel instant"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "pattern"
+      ],
+      "summary": "Persistent highlights hlsearch",
+      "details": [
+        ":set hlsearch keeps matches highlighted",
+        "Clear temporarily with :noh"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "pattern"
+      ],
+      "summary": "Smart case ignorecase + smartcase",
+      "details": [
+        ":set ignorecase smartcase",
+        "Uppercase in pattern forces case-sensitive"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "pattern"
+      ],
+      "summary": "Wrap search at EOF wrapscan",
+      "details": [
+        ":set wrapscan continues from top",
+        ":set nowrapscan stops at the end"
+      ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Use clipboard+=unnamedplus",
+      "details": [
+        ":set clipboard+=unnamedplus",
+        "Yank and put use the system clipboard by default"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "ideavim"
+      ],
+      "summary": "Use clipboard+=ideaput",
+      "details": [
+        ":set clipboard+=ideaput",
+        "Uses IntelliJ paste for put commands"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "cmdline"
+      ],
+      "summary": "Check an option with :set option?",
+      "details": [
+        "In :, :set number? shows the value",
+        "Useful when debugging behavior"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "cmdline"
+      ],
+      "summary": "Toggle an option with :set invoption",
+      "details": [
+        "In :, :set invnumber toggles it",
+        "Quick way to flip a boolean option"
       ]
     },
     {
