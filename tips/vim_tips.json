@@ -1,3 +1,2787 @@
 {
-  "tips": []
+  "tips": [
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Edit another file with :edit {file}",
+      "details": [
+        ":edit {file} opens a file for editing",
+        "Write first or use :edit! if you want to discard current changes"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Find a file on 'path' with :find {file}",
+      "details": [
+        ":find searches Vim's 'path' and edits the match",
+        "Useful when the file is not in the current directory"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Open a file chooser with :browse",
+      "details": [
+        ":browse opens the file-open dialog",
+        "Use it when you want to pick a file instead of typing its name"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "List known files with :buffers / :files / :ls",
+      "details": [
+        ":buffers, :files, and :ls list known files/buffers",
+        "Use the list before switching with :buffer, :bn, :bp, or Ctrl-^"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Jump to a listed buffer with :buffer {N}",
+      "details": [
+        ":buffer {N} jumps to the numbered buffer from the buffer list",
+        "Use it after :ls when you know exactly which file you want"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Step through the argument list with :next / :previous",
+      "details": [
+        ":next moves to the next file in the argument list",
+        ":previous moves back to the earlier one"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Jump to a specific argument with :argument {N}",
+      "details": [
+        ":argument {N} edits the Nth file in the argument list",
+        "Use it when you know exactly which argument-list file you want"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Jump to the ends of the argument list with :first / :last",
+      "details": [
+        ":first edits the first file in the argument list",
+        ":last edits the last file in the argument list"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Toggle last file Ctrl-^",
+      "details": [
+        "Jumps to the alternate file",
+        "Great for back-and-forth edits",
+        "Ctrl-^ is Ctrl-6 on many keyboards"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Next/previous buffer :bn / :bp",
+      "details": [
+        ":bn goes to the next buffer",
+        ":bp goes to the previous buffer"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Close current buffer :bd",
+      "details": [
+        ":bd closes the current buffer/editor tab",
+        "Use it when you are done with the file"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Reload file from disk :e and :e!",
+      "details": [
+        ":e reloads if no changes",
+        ":e! discards changes and reloads"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Save current file :w",
+      "details": [
+        ":w writes the file",
+        "In IdeaVim, this maps to IDE save"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Write a copy to another file :w {file}",
+      "details": [
+        ":w {file} writes the current buffer to a different file",
+        "Useful when you want a copy without changing the current buffer name"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Save all files :wa",
+      "details": [
+        ":wa writes all modified buffers",
+        "In IDE, typically saves all open editors"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Write and advance with :wnext / :wprevious",
+      "details": [
+        ":wnext writes the current file and moves to the next one",
+        ":wprevious writes and moves to the previous file"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Read a file into the current buffer with :read {file}",
+      "details": [
+        ":read {file} inserts another file below the current line",
+        "Useful when you want to pull file contents into the current buffer"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Quit :q / :q!",
+      "details": [
+        ":q closes if no unsaved changes",
+        ":q! forces close/discard (if allowed)"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Save and quit :wq / :x / ZZ",
+      "details": [
+        ":wq writes and quits",
+        ":x writes only if changed",
+        "ZZ also writes and quits the current file"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Quit every editor with :qa / :qall",
+      "details": [
+        ":qa exits unless there are changed buffers",
+        ":qall closes all editors",
+        "Use the force form only if you really want to discard pending changes"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Write all and exit with :wqa / :xa",
+      "details": [
+        ":wqa writes changed buffers and exits",
+        ":xa is the equivalent all-files write-and-exit command"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Home-row movement h j k l",
+      "details": [
+        "h left, j down, k up, l right",
+        "Use counts like 10j to jump"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Use counts before motions and operators",
+      "details": [
+        "Put a number before a motion or operator",
+        "5j moves down 5 lines",
+        "3dw deletes 3 words"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Jump to a specific line {count}G",
+      "details": [
+        "G goes to the last line",
+        "{count}G goes to that line number",
+        "Example: 120G jumps to line 120"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Word moves w / b / e",
+      "details": [
+        "w next word start",
+        "b previous word start",
+        "e moves to end of word"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "End of previous word ge",
+      "details": [
+        "ge goes to end of previous word",
+        "Nice for edits before punctuation"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Big WORD moves W / B / E",
+      "details": [
+        "WORDs split on whitespace",
+        "Great for paths and long tokens"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "End of previous WORD gE",
+      "details": [
+        "gE goes to end of previous WORD",
+        "Useful on URLs / file paths"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Line start/end 0 / ^ / $",
+      "details": [
+        "0 start of line",
+        "^ first non-blank",
+        "$ end of line"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Last non-blank on line g_",
+      "details": [
+        "g_ jumps to last non-space character",
+        "Handy near );}] and trailing spaces"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Move to first text on next/prev line + / -",
+      "details": [
+        "+ moves down to first non-blank",
+        "- moves up to first non-blank",
+        "These are motions; use with operators (e.g., d+)"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Jump to last changed/yanked lines '[ / ']",
+      "details": [
+        "'[ jumps to the first line of the last changed or yanked text",
+        "'] jumps to the last line of that text"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Jump to exact changed/yanked bounds `[ / `]",
+      "details": [
+        "`[ jumps to the exact start of the last changed or yanked text",
+        "`] jumps to the exact end of that text"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Jump to a column |",
+      "details": [
+        "80| jumps to column 80",
+        "Great for line-length edits"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "File top/bottom gg / G",
+      "details": [
+        "gg goes to first line",
+        "G goes to last line"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Jump by file percentage N%",
+      "details": [
+        "Use a count before % to jump by file percentage",
+        "50% jumps to middle of file",
+        "10% jumps near the top",
+        "Bare % jumps to a matching pair instead"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Jump to top/middle/bottom of screen H / M / L",
+      "details": [
+        "H top of screen, M middle, L bottom",
+        "Great for fast scanning"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Move by screen lines on wraps gj / gk",
+      "details": [
+        "gj and gk follow wrapped screen lines",
+        "Use them when one long line wraps"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Screen-line start/end on wraps g0 / g^ / g$",
+      "details": [
+        "g0 goes to screen-line start",
+        "g^ to first text, g$ to screen-line end"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Move by paragraphs { and }",
+      "details": [
+        "{ goes to previous paragraph",
+        "} goes to next paragraph",
+        "Moves across blank-line-separated blocks"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Move by sentences ( and )",
+      "details": [
+        "( moves to the previous sentence start",
+        ") moves to the next sentence start",
+        "Useful in prose, comments, and doc blocks"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Jump to matching pair %",
+      "details": [
+        "% jumps between (), {}, and [] by default",
+        "Use a count like 50% to jump by file percentage instead",
+        "Use to inspect a whole block quickly"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Return after big jumps `` and ''",
+      "details": [
+        "`` returns to the exact previous spot",
+        "'' returns to the previous line",
+        "Useful after big jumps like G, %, /, or file switches"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Jump list navigation Ctrl-o / Ctrl-i",
+      "details": [
+        "Ctrl-o goes back through older jump locations",
+        "Ctrl-i goes forward again",
+        "Useful after searches, definitions, and other big jumps"
+      ]
+    },
+    {
+      "category": [
+        "motion",
+        "editing",
+        "undo"
+      ],
+      "summary": "Jump to last edit location `.",
+      "details": [
+        "`. jumps to the exact last change",
+        "'. jumps to the line of the last change",
+        "Useful when you want to get back to where you were editing"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Find a character forward on the line f{c}",
+      "details": [
+        "f; jumps to next ';' on the line",
+        "Great for long parameter lists"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Find a character backward on the line F{c}",
+      "details": [
+        "F; jumps to previous ';' on the line",
+        "Use to move precisely without searching"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Move till before a character t{c}",
+      "details": [
+        "t) stops just before ')'",
+        "Perfect for ct) edits"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Move backward till after a character T{c}",
+      "details": [
+        "T) stops just after ')'",
+        "Good for edits near opening brackets"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Repeat last f/F/t/T ; and , ",
+      "details": [
+        "; repeats in same direction",
+        ", repeats in opposite direction"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Place line top/center/bottom zt zz zb",
+      "details": [
+        "zt top, zz center, zb bottom",
+        "Use after searches and big jumps"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Place first text z<CR> z. z-",
+      "details": [
+        "z<CR> top, z. center, z- bottom",
+        "Moves to first non-blank on that line"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Page then place first text z+ / z^",
+      "details": [
+        "z+ uses next page, z^ previous page",
+        "Then lands at first non-blank"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Half-page scroll Ctrl-d / Ctrl-u",
+      "details": [
+        "Ctrl-d scrolls down half a page",
+        "Ctrl-u scrolls up half a page"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Page scroll Ctrl-f / Ctrl-b",
+      "details": [
+        "Ctrl-f scrolls forward one page",
+        "Ctrl-b scrolls back one page"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Line scroll Ctrl-e / Ctrl-y",
+      "details": [
+        "Ctrl-e scrolls down one line",
+        "Ctrl-y scrolls up one line"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Scroll sideways by columns zh / zl",
+      "details": [
+        "zh scrolls left, zl scrolls right",
+        "Needs wrap off or soft-wrap off"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Scroll sideways half screen zH / zL",
+      "details": [
+        "zH and zL scroll half a screen",
+        "Needs wrap off or soft-wrap off"
+      ]
+    },
+    {
+      "category": [
+        "scroll"
+      ],
+      "summary": "Place cursor screen edge zs / ze",
+      "details": [
+        "zs shows cursor at screen start",
+        "ze shows cursor at screen end",
+        "Needs wrap off or soft-wrap off"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "scroll"
+      ],
+      "summary": "Keep context with scrolloff",
+      "details": [
+        ":set so=5 keeps context lines",
+        "Use sidescrolloff for side context"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "scroll"
+      ],
+      "summary": "Set half-page size with scroll",
+      "details": [
+        ":set scroll=15 changes step size",
+        "Useful when half-page feels too big"
+      ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Show line numbers number / relativenumber",
+      "details": [
+        ":set number shows line numbers",
+        ":set relativenumber helps with counts"
+      ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Show invisible characters list",
+      "details": [
+        ":set list shows tabs and trailing spaces",
+        ":set nolist hides them again"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "scroll"
+      ],
+      "summary": "Wrap long lines with wrap",
+      "details": [
+        ":set wrap makes long lines wrap on screen",
+        "IDE soft-wrap settings can affect this too"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "pattern"
+      ],
+      "summary": "Incremental search feedback incsearch",
+      "details": [
+        ":set incsearch shows matches while typing",
+        "Makes /pattern navigation feel instant"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "pattern"
+      ],
+      "summary": "Persistent highlights hlsearch",
+      "details": [
+        ":set hlsearch keeps matches highlighted",
+        "Clear temporarily with :noh"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "pattern"
+      ],
+      "summary": "Smart case ignorecase + smartcase",
+      "details": [
+        ":set ignorecase smartcase",
+        "Uppercase in pattern forces case-sensitive"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "pattern"
+      ],
+      "summary": "Wrap search at EOF wrapscan",
+      "details": [
+        ":set wrapscan continues from top",
+        ":set nowrapscan stops at the end"
+      ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Use clipboard+=unnamedplus",
+      "details": [
+        ":set clipboard+=unnamedplus",
+        "Yank and put use the system clipboard by default"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "ideavim"
+      ],
+      "summary": "Use clipboard+=ideaput",
+      "details": [
+        ":set clipboard+=ideaput",
+        "Uses IntelliJ paste for put commands"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "cmdline"
+      ],
+      "summary": "Check an option with :set option?",
+      "details": [
+        "In :, :set number? shows the value",
+        "Useful when debugging behavior"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "cmdline"
+      ],
+      "summary": "Toggle an option with :set invoption",
+      "details": [
+        "In :, :set invnumber toggles it",
+        "Quick way to flip a boolean option"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Leave Insert with Esc / Ctrl-[",
+      "details": [
+        "Esc leaves Insert mode",
+        "Ctrl-[ is the same command"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Insert before/after cursor i / a",
+      "details": [
+        "i inserts before cursor",
+        "a inserts after cursor"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Complete words with Ctrl-n / Ctrl-p",
+      "details": [
+        "In Insert mode, Ctrl-n picks the next word match",
+        "Ctrl-p picks the previous one from words already in the file"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Insert at line ends I / A",
+      "details": [
+        "I inserts at first non-blank",
+        "A appends at end of line"
+      ]
+    },
+    {
+      "category": [
+        "insert",
+        "editing"
+      ],
+      "summary": "Insert at true line start gI",
+      "details": [
+        "gI inserts at column 1",
+        "Unlike I, it keeps indentation"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Delete word text diw / daw",
+      "details": [
+        "diw deletes just the word",
+        "daw deletes the word and trailing space",
+        "Use i for inside and a for around"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Change word text ciw / caw",
+      "details": [
+        "ciw changes just the word, even mid-word",
+        "caw changes the word and trailing space",
+        "Use i for inside and a for around"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Change inside quotes with ci\"",
+      "details": [
+        "ci\" changes the text inside double quotes",
+        "You can trigger it from anywhere inside the string"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Change quotes and content with ca\"",
+      "details": [
+        "ca\" changes the text and the surrounding double quotes",
+        "Useful when you want to replace the whole quoted string"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Delete quotes and content with da\"",
+      "details": [
+        "da\" deletes the quoted text and the surrounding double quotes",
+        "Useful when you want to remove the whole string"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Change inside parentheses with ci( / cib",
+      "details": [
+        "ci( changes the text inside parentheses",
+        "cib is an alias for the same text object"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Delete inside or around pairs di( / da(",
+      "details": [
+        "di( deletes the content and keeps the parentheses",
+        "da( deletes the content and the surrounding pair"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Yank inner/around word yiw / yaw",
+      "details": [
+        "yiw copies just the word",
+        "yaw copies the word and trailing space",
+        "Use i for inside and a for around"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Yank whole line yy",
+      "details": [
+        "yy yanks the current line",
+        "5yy yanks five lines"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Yank line parts y0 / y$",
+      "details": [
+        "y0 yanks to start of line",
+        "y$ yanks to end of line"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Paste after/before p / P",
+      "details": [
+        "p puts after the cursor, or below for linewise text",
+        "P puts before the cursor, or above for linewise text"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Swap two characters with xp",
+      "details": [
+        "x deletes the character under the cursor and p puts it after",
+        "Useful for fixing adjacent typos quickly"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Paste and leave cursor after gp / gP",
+      "details": [
+        "gp pastes and moves to end of the pasted text",
+        "gP does the same for paste-before"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim"
+      ],
+      "summary": "Use system clipboard register \"+",
+      "details": [
+        "\"+y yanks to the OS clipboard",
+        "\"+p pastes from the OS clipboard",
+        "In IdeaVim this depends on IDE clipboard support"
+      ]
+    },
+    {
+      "category": [
+        "registers"
+      ],
+      "summary": "Use the yank register \"0",
+      "details": [
+        "\"0 keeps the most recent yank",
+        "Paste it with \"0p even after a delete changes the unnamed register"
+      ]
+    },
+    {
+      "category": [
+        "registers"
+      ],
+      "summary": "Recover the last delete with \"1",
+      "details": [
+        "\"1 usually holds the most recent delete",
+        "Paste it with \"1p after an accidental dd"
+      ]
+    },
+    {
+      "category": [
+        "registers"
+      ],
+      "summary": "Store and append text in named registers \"a / \"A",
+      "details": [
+        "\"ayiw stores text in register a; \"ap pastes it later",
+        "\"A appends more text instead of replacing the register"
+      ]
+    },
+    {
+      "category": [
+        "registers"
+      ],
+      "summary": "Delete without clobbering registers with \"_",
+      "details": [
+        "\"_d deletes into the black-hole register",
+        "Useful when you want to keep the current yank for later pasting"
+      ]
+    },
+    {
+      "category": [
+        "registers",
+        "visual"
+      ],
+      "summary": "Paste over a selection without losing your yank",
+      "details": [
+        "Select text, then use \"_dP",
+        "Useful when replacing repeated matches with the same yanked text"
+      ]
+    },
+    {
+      "category": [
+        "registers",
+        "cmdline"
+      ],
+      "summary": "Inspect registers with :reg",
+      "details": [
+        ":reg shows registers and recorded macros",
+        "Use it when you forget what you yanked or recorded"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Paste and reindent ]p / [p",
+      "details": [
+        "]p pastes after and reindents",
+        "[p pastes before and reindents"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Move a line with :m {address}",
+      "details": [
+        ":m+1 moves the current line down; :m-2 moves it up",
+        ":m0 moves it to the top, :m$ to the end, :m2 after line 2"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Duplicate a line with :t.",
+      "details": [
+        ":t. copies the current line below itself",
+        "Useful when you want a quick duplicate without yanking"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Copy lines with :t {address}",
+      "details": [
+        ":1,5t. copies lines 1–5 below the cursor",
+        "Use 0, $, line numbers, or Visual ranges as the destination"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Run a Normal command on many lines with :normal",
+      "details": [
+        ":%normal A; appends ; to every line",
+        "Try it on a small range first to avoid accidental bulk edits"
+      ]
+    },
+    {
+      "category": [
+        "cmdline",
+        "search"
+      ],
+      "summary": "Run a substitute only on matching lines with :g",
+      "details": [
+        ":g/ERROR/s/foo/bar/g runs the substitute only on lines matching ERROR",
+        "Useful for targeted bulk edits without touching every line"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Indent/outdent a line >> / <<",
+      "details": [
+        ">> shifts the current line right",
+        "<< shifts it left; counts work too"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Indent/outdent a block >ip / <ip",
+      "details": [
+        ">ip shifts the current paragraph or block right",
+        "Use other motions too, such as >} or <ap"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Reindent a line ==",
+      "details": [
+        "== recalculates indent for the current line",
+        "Use it when manual shifting is not enough"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Reindent a block =ip",
+      "details": [
+        "=ip recalculates indent for a paragraph or block",
+        "Useful after paste or structural edits"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Format a paragraph with gqap",
+      "details": [
+        "gqap reformats the current paragraph",
+        "Use it for wrapped prose or comments; textwidth affects the result"
+      ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Wrap text with :set textwidth=80",
+      "details": [
+        ":set textwidth=80 wraps text at 80 columns",
+        "gq uses textwidth when formatting prose and comments"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Open new lines o / O",
+      "details": [
+        "o opens below and enters Insert",
+        "O opens above and enters Insert"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Return to last insert spot gi",
+      "details": [
+        "gi returns to last insert spot",
+        "Then it enters Insert again"
+      ]
+    },
+    {
+      "category": [
+        "insert",
+        "motion"
+      ],
+      "summary": "One Normal command in Insert Ctrl-o",
+      "details": [
+        "Run one Normal command",
+        "Then return to Insert"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Delete previous word in Insert Ctrl-w",
+      "details": [
+        "Deletes word left of cursor",
+        "Good for quick typo fixes"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Delete back to indent in Insert Ctrl-u",
+      "details": [
+        "Deletes back to first non-blank",
+        "Keeps text after the cursor"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Shift indent in Insert Ctrl-t / Ctrl-d",
+      "details": [
+        "Ctrl-t shifts indent right",
+        "Ctrl-d shifts indent left"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Insert a register in Insert Ctrl-r",
+      "details": [
+        "Ctrl-r 0 inserts last yank",
+        "Ctrl-r + inserts clipboard"
+      ]
+    },
+    {
+      "category": [
+        "insert",
+        "change"
+      ],
+      "summary": "Replace mode R",
+      "details": [
+        "Type to overwrite text",
+        "Esc leaves Replace mode"
+      ]
+    },
+    {
+      "category": [
+        "repeat",
+        "insert"
+      ],
+      "summary": "Repeat last insert Ctrl-a / Ctrl-@",
+      "details": [
+        "Ctrl-a repeats last inserted text",
+        "Ctrl-@ repeats it and exits Insert"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Insert char above/below Ctrl-y/e",
+      "details": [
+        "Ctrl-y inserts char from above",
+        "Ctrl-e inserts char from below"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "motion"
+      ],
+      "summary": "Change/delete with operator + motion",
+      "details": [
+        "d{motion} deletes text",
+        "c{motion} changes text"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "motion"
+      ],
+      "summary": "Delete/change to line start d0 / c0",
+      "details": [
+        "d0 deletes to line start",
+        "c0 changes to line start"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "motion"
+      ],
+      "summary": "Delete/change to first non-blank d^ / c^",
+      "details": [
+        "d^ deletes to first non-blank",
+        "c^ changes to first non-blank"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "motion"
+      ],
+      "summary": "Delete/change to line end d$ / c$",
+      "details": [
+        "d$ deletes to line end",
+        "c$ changes to line end"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Shortcuts to line end D / C",
+      "details": [
+        "D is d$ to line end",
+        "C is c$ to line end"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Delete a char x / X",
+      "details": [
+        "x deletes under cursor",
+        "X deletes before cursor"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Delete lines dd",
+      "details": [
+        "dd deletes current line",
+        "3dd deletes three lines"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "insert"
+      ],
+      "summary": "Substitute chars s / S",
+      "details": [
+        "s changes one char and inserts",
+        "S changes whole line and inserts"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "insert"
+      ],
+      "summary": "Change whole line cc",
+      "details": [
+        "cc clears the line",
+        "Keeps indent and enters Insert"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Replace one char r{char}",
+      "details": [
+        "r replaces the char under cursor",
+        "Stays in Normal mode"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "motion"
+      ],
+      "summary": "Change/delete a word cw / dw",
+      "details": [
+        "cw changes to word end",
+        "dw deletes to next word start"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "motion"
+      ],
+      "summary": "Delete to word end de",
+      "details": [
+        "de deletes to current word end",
+        "Useful when dw goes too far"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Join lines J / gJ",
+      "details": [
+        "J joins with one space",
+        "gJ joins without a space"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Toggle case of char ~",
+      "details": [
+        "~ toggles case and moves on",
+        "Counts work: 5~"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Change case over motion gu / gU",
+      "details": [
+        "gUw uppercases a word",
+        "guap lowercases a paragraph"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Toggle case over motion g~",
+      "details": [
+        "g~iw toggles current word",
+        "Useful for style fixes"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Change numbers Ctrl-a / Ctrl-x",
+      "details": [
+        "Ctrl-a increments a number",
+        "Ctrl-x decrements a number"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "repeat"
+      ],
+      "summary": "Repeat last change .",
+      "details": [
+        "Dot repeats the last text change",
+        "Do one clean change, then repeat"
+      ]
+    },
+    {
+      "category": [
+        "undo"
+      ],
+      "summary": "Undo and redo u / Ctrl-r",
+      "details": [
+        "u undoes the last change",
+        "Ctrl-r redoes the undone change"
+      ]
+    },
+    {
+      "category": [
+        "undo",
+        "cmdline"
+      ],
+      "summary": "Ex undo and redo :undo / :redo",
+      "details": [
+        ":undo undoes one change",
+        ":redo reapplies the undone change"
+      ]
+    },
+    {
+      "category": [
+        "undo",
+        "insert"
+      ],
+      "summary": "Start a new undo step in Insert Ctrl-g u",
+      "details": [
+        "Starts a new undo step in Insert",
+        "Useful after punctuation or pauses"
+      ]
+    },
+    {
+      "category": [
+        "repeat"
+      ],
+      "summary": "Record a macro q{reg}",
+      "details": [
+        "qa records into register a",
+        "Press q again to stop"
+      ]
+    },
+    {
+      "category": [
+        "repeat"
+      ],
+      "summary": "Append to a macro qA",
+      "details": [
+        "qA appends to macro a",
+        "Use when one more step is needed"
+      ]
+    },
+    {
+      "category": [
+        "repeat"
+      ],
+      "summary": "Play and repeat macros @ / @@",
+      "details": [
+        "@a plays macro a",
+        "@@ repeats the last macro"
+      ]
+    },
+    {
+      "category": [
+        "repeat",
+        "cmdline"
+      ],
+      "summary": "Repeat a macro {count}@{reg}",
+      "details": [
+        "10@a runs macro a ten times",
+        "Use counts to scale the playback"
+      ]
+    },
+    {
+      "category": [
+        "repeat",
+        "cmdline"
+      ],
+      "summary": "Run a macro on a range with :normal @r",
+      "details": [
+        ":normal @r runs macro r on a range",
+        "Useful for line-by-line cleanup"
+      ]
+    },
+    {
+      "category": [
+        "repeat",
+        "cmdline"
+      ],
+      "summary": "Repeat last : command with @:",
+      "details": [
+        "@: reruns the last : command",
+        "Useful after :s, :g, and :normal"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Enter Visual mode v / V / Ctrl-v",
+      "details": [
+        "v selects characters",
+        "V selects whole lines",
+        "Ctrl-v selects a block"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Swap selection ends in Visual o",
+      "details": [
+        "o moves cursor to the other end",
+        "Great for precise adjustments"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Swap block corner in Visual O",
+      "details": [
+        "In block Visual, O swaps the corner",
+        "Useful for column edits"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Select the last changed text `[v`]",
+      "details": [
+        "`[ jumps to the start of the last change",
+        "v starts Visual mode and `] reaches the end"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Drop a mark before exploring with ma",
+      "details": [
+        "ma sets a mark before you jump elsewhere",
+        "`a returns to the exact position later"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Jump to a mark with `a / 'a",
+      "details": [
+        "`a jumps to the exact marked position",
+        "'a jumps to the marked line"
+      ]
+    },
+    {
+      "category": [
+        "motion",
+        "ideavim"
+      ],
+      "summary": "Jump to definition or declaration with gd / gD",
+      "details": [
+        "gd jumps to definition through the IDE",
+        "gD jumps to declaration when the IDE provides one"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Reselect last Visual region gv",
+      "details": [
+        "gv reselects the last selection",
+        "Also reselects text just put with p/P"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "pattern"
+      ],
+      "summary": "Select next/prev search match gn / gN",
+      "details": [
+        "gn selects the next search match",
+        "gN selects the previous one"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "cmdline"
+      ],
+      "summary": "Sort selected lines with :sort",
+      "details": [
+        "Select lines in Visual mode, then run :sort",
+        "Use :sort u to keep only unique lines"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "cmdline"
+      ],
+      "summary": "Sort numbers with :sort n",
+      "details": [
+        "Select lines in Visual mode, then run :sort n",
+        "Use :sort! n for descending numeric order"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Select inside a word or paragraph viw / vip",
+      "details": [
+        "viw selects inside the current word",
+        "vip selects inside the current paragraph; vap includes surrounding blank lines",
+        "Use i for inside and a for around with other text objects too"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "editing"
+      ],
+      "summary": "Select the whole file ggVG",
+      "details": [
+        "gg goes to the top, V starts linewise Visual",
+        "G extends the selection to the end of the file"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Shift a selection > / <",
+      "details": [
+        "> indents, < outdents",
+        "Then press . to repeat"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "editing"
+      ],
+      "summary": "Keep selection after shifting >gv / <gv",
+      "details": [
+        ">gv reselects after indenting",
+        "<gv reselects after outdenting"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Case change selection gu / gU",
+      "details": [
+        "Select then gu to lowercase",
+        "Select then gU to uppercase"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "editing"
+      ],
+      "summary": "Format a selection with gq",
+      "details": [
+        "Select text then press gq",
+        "Great for reflowing comments"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Block insert Ctrl-v then I",
+      "details": [
+        "Select a column, then press I",
+        "Esc applies it to all lines"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Block append Ctrl-v then A",
+      "details": [
+        "Select a column, then press A",
+        "Esc applies it to all lines"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Block change Ctrl-v then c",
+      "details": [
+        "Select a block, then press c",
+        "Esc applies it to all lines"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Block replace with one char Ctrl-v then r",
+      "details": [
+        "Select a block, then press r",
+        "Replaces all selected chars"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "cmdline"
+      ],
+      "summary": "Run : commands on a selection",
+      "details": [
+        "Type : to get '<,'> range",
+        "Use :s, :sort, or :normal"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Paste over a selection p / P",
+      "details": [
+        "p replaces the selection with put text",
+        "P keeps registers intact while putting"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Move on command line Ctrl-b / Ctrl-e",
+      "details": [
+        "Ctrl-b jumps to the start",
+        "Ctrl-e jumps to the end"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Move by word on command line S-Left / S-Right",
+      "details": [
+        "S-Left moves to the previous word",
+        "S-Right moves to the next word"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Cancel command line Ctrl-c / Esc",
+      "details": [
+        "Ctrl-c cancels the prompt",
+        "Esc cancels it too"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Edit command-line quickly Ctrl-w / Ctrl-u",
+      "details": [
+        "In : prompt: Ctrl-w deletes a word",
+        "Ctrl-u clears the whole command line"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Recall matching history Up / Down",
+      "details": [
+        "Up finds older matching entries",
+        "Down goes back toward newer ones"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Browse cmdline history Ctrl-p / Ctrl-n",
+      "details": [
+        "In : or /, Ctrl-p goes to older history",
+        "PageUp / PageDown do the same"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Show command history with :history",
+      "details": [
+        ":history shows : command history",
+        "Use :history / for search history"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Go to a specific line :N",
+      "details": [
+        "Type :N then press Enter",
+        "Example: :120 jumps to line 120"
+      ]
+    },
+    {
+      "category": [
+        "cmdline",
+        "motion"
+      ],
+      "summary": "See your jump history :jumps",
+      "details": [
+        "Lists stored jump locations",
+        "Pair with Ctrl-o / Ctrl-i"
+      ]
+    },
+    {
+      "category": [
+        "cmdline",
+        "motion"
+      ],
+      "summary": "List marks :marks",
+      "details": [
+        ":marks shows active marks",
+        "Use it before jumping with ' or `"
+      ]
+    },
+    {
+      "category": [
+        "cmdline",
+        "registers"
+      ],
+      "summary": "Insert register in command line Ctrl-r",
+      "details": [
+        "In : or /, Ctrl-r inserts a register",
+        "Great for reusing text in :s"
+      ]
+    },
+    {
+      "category": [
+        "cmdline",
+        "registers"
+      ],
+      "summary": "Insert word in command line Ctrl-r Ctrl-w",
+      "details": [
+        "In : or /, Ctrl-r Ctrl-w inserts the word under cursor",
+        "Useful for reusing names in a command"
+      ]
+    },
+    {
+      "category": [
+        "cmdline",
+        "registers"
+      ],
+      "summary": "Insert file in command line Ctrl-r Ctrl-f",
+      "details": [
+        "In : or /, Ctrl-r Ctrl-f inserts the file under cursor",
+        "Useful for file-based Ex commands"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Built-in help :help",
+      "details": [
+        ":help {topic} opens docs (e.g., :help text-objects)",
+        "Use Ctrl-] to jump tags, Ctrl-t to jump back"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Search forward/backward / and ?",
+      "details": [
+        "/pattern searches forward",
+        "?pattern searches backward",
+        "Press Enter to search, Esc to cancel"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "repeat"
+      ],
+      "summary": "Next/previous search match n / N",
+      "details": [
+        "n goes to the next match",
+        "N goes to the previous match",
+        "Works after /, ?, *, and #"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "motion"
+      ],
+      "summary": "Search word under cursor * / #",
+      "details": [
+        "* searches forward for the exact word",
+        "# searches backward for the exact word"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Rename repeats with * cw n .",
+      "details": [
+        "* finds the next whole-word match",
+        "cw changes it; n . repeats on the next match"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Search partial token g* / g#",
+      "details": [
+        "Like * and # but allows partial matches",
+        "Useful for camelCase and snake_case"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Clear search highlighting :noh",
+      "details": [
+        ":noh (or :nohlsearch) clears highlighting",
+        "The current search pattern still stays active"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Force search case with \\c / \\C",
+      "details": [
+        "/foo\\c makes this search case-insensitive",
+        "/Foo\\C forces this search to be case-sensitive"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Match whole words with \\< and \\>",
+      "details": [
+        "/\\<word\\> matches whole words only",
+        "Use it to avoid partial-token matches"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "scroll"
+      ],
+      "summary": "Recenter search results with nzz",
+      "details": [
+        "After a search, use nzz to jump and recenter",
+        "Use Nzz to go back and recenter too"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "change"
+      ],
+      "summary": "Delete/change up to a search match",
+      "details": [
+        "d/pat<Enter> deletes up to the next match",
+        "c?pat<Enter> changes back to the previous match"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Use / offsets like /e and /+2",
+      "details": [
+        "/pat/e lands on the end of the match",
+        "/pat/+2 lands two lines after the match"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Search for literal text with \\V",
+      "details": [
+        "\\V makes most characters literal",
+        "Good for paths, JSON, and punctuation"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Use \\v to reduce escaping in regex",
+      "details": [
+        "\\v makes most characters magic",
+        "Great for :s patterns with groups"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Reuse last / pattern in :s with //",
+      "details": [
+        "After searching /pat, use :%s//new/g",
+        "The empty pattern reuses the last search"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Use # or | as :s delimiters",
+      "details": [
+        "Use # or | when the pattern contains /",
+        "Example: :%s#old/path#new/path#g"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Confirm each :s change with gc",
+      "details": [
+        "Use :%s/old/new/gc",
+        "y/n/a/q/l controls each match"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "repeat"
+      ],
+      "summary": "Repeat last :s on this line with &",
+      "details": [
+        "& repeats the last :s on the current line",
+        "Useful for applying the same :s line by line"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Use \\r to insert a newline in :s",
+      "details": [
+        "In the replacement, \\r inserts a newline",
+        "Useful for reformatting lists and code"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Reuse whole match in :s with &",
+      "details": [
+        "In the replacement, & means the whole match",
+        "Example: :%s/foo/&_suffix/g"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Reuse groups in :s with \\1, \\2",
+      "details": [
+        "Capture groups in the pattern, then reuse them",
+        "Great for swapping or reordering text"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "change",
+        "repeat"
+      ],
+      "summary": "Replace matches one by one with cgn",
+      "details": [
+        "Search first with /, *, or #",
+        "cgn changes the next match and enters Insert",
+        ". repeats the same edit on later matches"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline",
+        "visual"
+      ],
+      "summary": "Limit :s to a range",
+      "details": [
+        ":10,20s/a/b/g changes only those lines",
+        "Visual :s starts with the '<,'> range"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Replace from here to end with :.,$s",
+      "details": [
+        ":.,$s/foo/bar/g starts at the current line",
+        "Useful for partial-file refactors"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Run a command on matching lines with :g",
+      "details": [
+        ":g/TODO/p prints matching lines",
+        ":g/pat/d deletes matching lines"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Keep only matching lines with :v / :g!",
+      "details": [
+        ":v/pat/d deletes lines that do not match",
+        "Use it when you want to keep only matching lines"
+      ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Inspect maps with :map / :nmap / :imap",
+      "details": [
+        ":map lists mappings; mode forms narrow the list",
+        "Use :nmap or :imap when a key fails in one mode"
+      ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Use mode-specific maps in ~/.ideavimrc",
+      "details": [
+        "Use nmap, imap, or vmap for the target mode",
+        "Normal, Insert, and Visual maps should stay separate"
+      ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Prefer noremap forms in ~/.ideavimrc",
+      "details": [
+        "nnoremap, inoremap, and vnoremap avoid recursion",
+        "Safer when your rhs uses keys you also remap"
+      ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Set <Leader> in ~/.ideavimrc",
+      "details": [
+        "Set it before mappings: let mapleader = \" \"",
+        "Put your personal shortcuts under <Leader>"
+      ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Use <silent> in ~/.ideavimrc maps",
+      "details": [
+        "<silent> stops a map from echoing on the cmdline",
+        "Useful for clean, repeatable shortcuts"
+      ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Remove a map with :unmap / :nunmap",
+      "details": [
+        ":unmap removes a mapping; mode forms target one mode",
+        "Use :iunmap or :vunmap when only one mode is affected"
+      ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Use <Nop> to disable a key",
+      "details": [
+        "nnoremap Q <Nop> makes Q do nothing",
+        "Useful for disabling keys you hit by accident"
+      ]
+    },
+    {
+      "category": [
+        "map",
+        "ideavim"
+      ],
+      "summary": "Map IDE actions in ~/.ideavimrc",
+      "details": [
+        "In ~/.ideavimrc: map <Leader>f <Action>(ReformatCode)",
+        "Use plain map for <Action>(...), not noremap"
+      ]
+    },
+    {
+      "category": [
+        "ideavim"
+      ],
+      "summary": "Reload ~/.ideavimrc with :source",
+      "details": [
+        ":source ~/.ideavimrc reloads your config after edits",
+        "Useful when you want to test mappings without restarting the IDE"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Open a horizontal split :split",
+      "details": [
+        ":split opens another split on the current file",
+        "Use it when stacked editing is easier"
+      ]
+    },
+    {
+      "category": [
+        "windows",
+        "editing"
+      ],
+      "summary": "Open a file in a split :split {file}",
+      "details": [
+        ":split {file} opens that file in a new split",
+        ":vsplit {file} does it side by side"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Open a vertical split :vsplit",
+      "details": [
+        ":vsplit opens a side-by-side view",
+        "Useful for compare-style editing"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Split from the keyboard Ctrl-w s / Ctrl-w v",
+      "details": [
+        "Ctrl-w s splits horizontally",
+        "Ctrl-w v splits vertically"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Close current split :close / Ctrl-w c",
+      "details": [
+        ":close or Ctrl-w c closes this split",
+        "Use it when you want to keep other splits"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Keep only this split :only",
+      "details": [
+        ":only keeps the current split",
+        "Ctrl-w o does the same from Normal mode"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Cycle through splits Ctrl-w w / W",
+      "details": [
+        "Ctrl-w w goes to the next split",
+        "Ctrl-w W goes to the previous split"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Move to a split Ctrl-w h/j/k/l",
+      "details": [
+        "Use h j k l for left down up right",
+        "Arrow keys also work after Ctrl-w"
+      ]
+    },
+    {
+      "category": [
+        "tabpage"
+      ],
+      "summary": "Next and previous tab gt / gT",
+      "details": [
+        "gt goes to the next tab",
+        "gT goes to the previous tab"
+      ]
+    },
+    {
+      "category": [
+        "tabpage"
+      ],
+      "summary": "Jump to a tab by number {count}gt",
+      "details": [
+        "2gt jumps to tab 2, 5gt jumps to tab 5",
+        "Useful when you have several tabs open"
+      ]
+    },
+    {
+      "category": [
+        "tabpage"
+      ],
+      "summary": "Next and previous tab with Ex :tabn / :tabp",
+      "details": [
+        ":tabn moves to the next tab",
+        ":tabp moves to the previous tab"
+      ]
+    },
+    {
+      "category": [
+        "tabpage"
+      ],
+      "summary": "Close current tab :tabclose",
+      "details": [
+        ":tabclose closes the active tab page",
+        "Use it when you want to keep the rest"
+      ]
+    },
+    {
+      "category": [
+        "tabpage"
+      ],
+      "summary": "Keep only this tab :tabonly",
+      "details": [
+        ":tabonly closes all other tab pages",
+        "Use it to reduce a crowded tab layout"
+      ]
+    },
+    {
+      "category": [
+        "tabpage"
+      ],
+      "summary": "Reorder tabs :tabmove",
+      "details": [
+        ":tabmove 0 moves the tab to the start",
+        ":tabmove without a number moves it last"
+      ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Create a fold zf{motion}",
+      "details": [
+        "zf{motion} folds a motion like zfip",
+        "Works where IDE folding is available"
+      ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Open/close folds zo / zc / za",
+      "details": [
+        "zo opens, zc closes, za toggles",
+        "Works where IDE folding is available"
+      ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Open/close nested folds zO / zC / zA",
+      "details": [
+        "zO opens nested folds, zC closes them",
+        "zA toggles the whole fold recursively"
+      ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Jump between folds zj / zk",
+      "details": [
+        "zj moves to the next fold start",
+        "zk moves to the previous fold start"
+      ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Delete folds zd / zD",
+      "details": [
+        "zd deletes one fold at the cursor",
+        "zD deletes nested folds there too"
+      ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Fold all / unfold all zM / zR",
+      "details": [
+        "zM closes all folds in view",
+        "zR opens all folds in view"
+      ]
+    },
+    {
+      "category": [
+        "fold"
+      ],
+      "summary": "Control fold depth with zr / zm",
+      "details": [
+        "zr opens one fold level",
+        "zm closes one fold level"
+      ]
+    },
+    {
+      "category": [
+        "ideavim"
+      ],
+      "summary": "Toggle IdeaVim with :action ToggleIdeaVim",
+      "details": [
+        "In :, :action ToggleIdeaVim flips it",
+        "Useful when a key conflict gets in the way"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "cmdline"
+      ],
+      "summary": "Run IDE actions with :action {id}",
+      "details": [
+        "In :, :action ReformatCode runs it",
+        "Use <Action>(...) in mappings instead"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "cmdline"
+      ],
+      "summary": "Find action IDs with :actionlist",
+      "details": [
+        ":actionlist extract filters by name",
+        "Use it before mapping IDE actions"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "options"
+      ],
+      "summary": "Show action IDs with :set trackactionids",
+      "details": [
+        "Use :set trackactionids",
+        "IdeaVim shows the action ID in notices"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "change"
+      ],
+      "summary": "Use IDE smart join with :set ideajoin",
+      "details": [
+        "Then J uses the IDE smart join",
+        "Useful when syntax should be adjusted"
+      ]
+    },
+    {
+      "category": [
+        "ideavim"
+      ],
+      "summary": "Keep your mode during rename edits",
+      "details": [
+        "Use :set idearefactormode=keep",
+        "Rename edits stop forcing Select mode"
+      ]
+    },
+    {
+      "category": [
+        "ideavim"
+      ],
+      "summary": "Sync marks with :set ideamarks",
+      "details": [
+        "A-Z marks sync to IDE bookmarks",
+        "Useful for cross-file jumping"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "options",
+        "editing"
+      ],
+      "summary": "Use IDE save hooks with :set ideawrite=all",
+      "details": [
+        "Use :set ideawrite=all",
+        ":w behaves like IDE Save All"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "options"
+      ],
+      "summary": "Let IDE completion keep Tab and Enter",
+      "details": [
+        "Use :set lookupkeys? to inspect them",
+        "These keys stay with the IDE popup"
+      ]
+    },
+    {
+      "category": [
+        "ideavim"
+      ],
+      "summary": "Open IdeaVim Tutor from the status bar",
+      "details": [
+        "Click the Vim indicator in the IDE status bar",
+        "Choose Tutor from that menu"
+      ]
+    },
+    {
+      "category": [
+        "ideavim"
+      ],
+      "summary": "Map CapsLock to Esc and Ctrl",
+      "details": [
+        "Use a dual-role mapping: tap for Esc, hold for Ctrl",
+        "Tools like Karabiner, keyd, or Kanata can do this"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "insert"
+      ],
+      "summary": "Trigger IDE completion with Ctrl-Space",
+      "details": [
+        "In Insert, Ctrl-Space opens completion",
+        "Press it again to widen suggestions"
+      ]
+    },
+    {
+      "category": [
+        "motion",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Make { and } code-aware with paragraph-motion",
+      "details": [
+        "Use :set paragraph-motion to enable the plugin",
+        "{ and } stop treating only fully empty lines as paragraph breaks"
+      ]
+    },
+    {
+      "category": [
+        "motion",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Extend % with matchit",
+      "details": [
+        "Use :set matchit to enable the plugin",
+        "% jumps across tags and control blocks, not just brackets"
+      ]
+    },
+    {
+      "category": [
+        "motion",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Jump to two-character targets with sneak",
+      "details": [
+        "Use :set sneak to enable the plugin",
+        "sfo jumps forward to fo; Sfo searches backward"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Flash yanked text with highlightedyank",
+      "details": [
+        "Use :set highlightedyank to enable the plugin",
+        "Yanks briefly flash so you can confirm what was copied"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "registers",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Replace text from a register with ReplaceWithRegister",
+      "details": [
+        "Use :set ReplaceWithRegister to enable the plugin",
+        "gr{motion} replaces text with the current register; \"agrw uses register a"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Comment text with commentary gcc / gc",
+      "details": [
+        "Use :set commentary to enable the plugin",
+        "gcc comments a line; gc works with motions and Visual selections"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Add, change, or delete surroundings with surround",
+      "details": [
+        "Use :set surround to enable the plugin",
+        "ysiw) adds parens; cs\"' swaps quote types; ds\" removes them"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Swap two regions with exchange",
+      "details": [
+        "Use :set exchange to enable the plugin",
+        "cxiw marks one region; repeat on a second target to swap"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Target arguments with ia / aa",
+      "details": [
+        "Use :set argtextobj to enable the plugin",
+        "cia changes one argument; daa deletes one"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Select the whole buffer with ae / ie",
+      "details": [
+        "Use :set textobj-entire to enable the plugin",
+        "vae or vie selects the whole buffer"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Target an indent block with ii / ai",
+      "details": [
+        "Use :set indent-object to enable the plugin",
+        "vai selects the current indent block; dii deletes it"
+      ]
+    },
+    {
+      "category": [
+        "windows",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Open the project tree with NERDTree",
+      "details": [
+        "Use :set NERDTree to enable the plugin",
+        ":NERDTreeToggle opens the tree; :NERDTreeFind reveals the current file"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Target functions with if / af",
+      "details": [
+        "Use :set functiontextobj to enable the plugin",
+        "vif selects the inner function; yaf yanks a function"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Add cursors with multiple-cursors",
+      "details": [
+        "Use :set multiple-cursors to enable the plugin",
+        "Map <C-n> to <Plug>NextWholeOccurrence, then press <C-n> to add matches"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Toggle paired values with switch",
+      "details": [
+        "Use :set switch to enable the plugin",
+        "gs flips pairs like true/false and &&/||"
+      ]
+    }
+  ]
 }
