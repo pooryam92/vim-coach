@@ -2640,7 +2640,8 @@
     },
     {
       "category": [
-        "tabs"
+        "tabs",
+        "migrated"
       ],
       "summary": "Close current tab :tabclose",
       "details": [
@@ -2650,7 +2651,8 @@
     },
     {
       "category": [
-        "tabs"
+        "tabs",
+        "migrated"
       ],
       "summary": "Next and previous tab gt / gT",
       "details": [
@@ -2660,7 +2662,8 @@
     },
     {
       "category": [
-        "tabs"
+        "tabs",
+        "migrated"
       ],
       "summary": "Jump to a tab by number {count}gt",
       "details": [
@@ -2680,7 +2683,8 @@
     },
     {
       "category": [
-        "tabs"
+        "tabs",
+        "migrated"
       ],
       "summary": "Next and previous tab with Ex :tabn / :tabp",
       "details": [
@@ -2690,7 +2694,8 @@
     },
     {
       "category": [
-        "tabs"
+        "tabs",
+        "migrated"
       ],
       "summary": "Keep only this tab :tabonly",
       "details": [
@@ -2700,7 +2705,8 @@
     },
     {
       "category": [
-        "tabs"
+        "tabs",
+        "migrated"
       ],
       "summary": "Reorder tabs :tabmove",
       "details": [

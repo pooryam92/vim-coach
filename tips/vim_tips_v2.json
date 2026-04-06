@@ -1880,6 +1880,66 @@
         "Use h j k l for left down up right",
         "Arrow keys also work after Ctrl-w"
       ]
+    },
+    {
+      "category": [
+        "tabpage"
+      ],
+      "summary": "Next and previous tab gt / gT",
+      "details": [
+        "gt goes to the next tab",
+        "gT goes to the previous tab"
+      ]
+    },
+    {
+      "category": [
+        "tabpage"
+      ],
+      "summary": "Jump to a tab by number {count}gt",
+      "details": [
+        "2gt jumps to tab 2, 5gt jumps to tab 5",
+        "Useful when you have several tabs open"
+      ]
+    },
+    {
+      "category": [
+        "tabpage"
+      ],
+      "summary": "Next and previous tab with Ex :tabn / :tabp",
+      "details": [
+        ":tabn moves to the next tab",
+        ":tabp moves to the previous tab"
+      ]
+    },
+    {
+      "category": [
+        "tabpage"
+      ],
+      "summary": "Close current tab :tabclose",
+      "details": [
+        ":tabclose closes the active tab page",
+        "Use it when you want to keep the rest"
+      ]
+    },
+    {
+      "category": [
+        "tabpage"
+      ],
+      "summary": "Keep only this tab :tabonly",
+      "details": [
+        ":tabonly closes all other tab pages",
+        "Use it to reduce a crowded tab layout"
+      ]
+    },
+    {
+      "category": [
+        "tabpage"
+      ],
+      "summary": "Reorder tabs :tabmove",
+      "details": [
+        ":tabmove 0 moves the tab to the start",
+        ":tabmove without a number moves it last"
+      ]
     }
   ]
 }

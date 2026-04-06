@@ -146,10 +146,10 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 
 ## Current state
 
-- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, `repeat`, `visual`, `cmdline`, `pattern`, `map`, and `windows` sections.
-- Current totals: `180` unique tips, `78` reused from v1 by exact summary match, `102` new.
+- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, `repeat`, `visual`, `cmdline`, `pattern`, `map`, `windows`, and `tabpage` sections.
+- Current totals: `186` unique tips, `84` reused from v1 by exact summary match, `102` new.
 - Total counts should always mean unique tip entries only.
-- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `13` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`, `24` `pattern`, `8` `map`, `8` `windows`.
+- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `13` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`, `24` `pattern`, `8` `map`, `8` `windows`, `6` `tabpage`.
 - Category totals should use the primary category only so multi-tagged tips are not double-counted in the overall total.
 - Exact-summary reused/new counts are only a rough migration snapshot.
   Once a v2 tip is rewritten for clarity, the wording may no longer match v1 exactly even if the concept was reused.
@@ -192,6 +192,10 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 - Current unresolved `windows` candidates are still:
   `Ctrl-w t / b`, `Ctrl-w =`, `Ctrl-w _ / |`, and `Ctrl-w + - < >`.
   They are useful in Vim, but they did not show up cleanly in the local generated support maps yet.
+- For `tabpage`, the strongest support signal comes from `tabpage.txt` plus the generated tab commands.
+  `gt`, `gT`, `:tabn`, `:tabp`, `:tabclose`, `:tabonly`, and `:tabmove` all had clear local support.
+- Be careful with tab commands that are present in Vim docs but missing from the local generated Ex-command map.
+  `:tabnew` and `:tabs` are still useful candidates, but they did not have a clean enough support signal in this pass.
 - For `options`, the strongest support signal comes from the official IdeaVim `set` docs plus Vim's own `options.txt`.
   That is more reliable than looking for individual option names in the generated command maps.
 - Keep `options` practical and high-value.
