@@ -12,7 +12,8 @@ Users see one list of tags and turn them on or off to control which tips they ge
 - `motion`
 - `scroll`
 - `insert`
-- `change / undo`
+- `change`
+- `undo`
 - `repeat`
 - `visual`
 - `cmdline`
@@ -75,9 +76,12 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 - `insert`
   Primary: `insert.txt`, `usr_24.txt`
   Nearby: `change.txt`, `visual.txt`, `usr_04.txt`
-- `change / undo`
-  Primary: `change.txt`, `undo.txt`, `usr_04.txt`, `usr_32.txt`
-  Nearby: `repeat.txt`, `visual.txt`, `usr_12.txt`
+- `change`
+  Primary: `change.txt`, `usr_04.txt`
+  Nearby: `undo.txt`, `repeat.txt`, `visual.txt`, `usr_12.txt`
+- `undo`
+  Primary: `undo.txt`, `usr_32.txt`
+  Nearby: `change.txt`, `insert.txt`, `repeat.txt`
 - `repeat`
   Primary: `repeat.txt`, `usr_10.txt`
   Nearby: `change.txt`, `visual.txt`, `usr_12.txt`
@@ -146,10 +150,10 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 
 ## Current state
 
-- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, `repeat`, `visual`, `cmdline`, `pattern`, `map`, `windows`, and `tabpage` sections.
+- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change`, `undo`, `repeat`, `visual`, `cmdline`, `pattern`, `map`, `windows`, and `tabpage` sections.
 - Current totals: `186` unique tips, `84` reused from v1 by exact summary match, `102` new.
 - Total counts should always mean unique tip entries only.
-- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `13` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`, `24` `pattern`, `8` `map`, `8` `windows`, `6` `tabpage`.
+- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `13` `options`, `13` `insert`, `18` `change`, `3` `undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`, `24` `pattern`, `8` `map`, `8` `windows`, `6` `tabpage`.
 - Category totals should use the primary category only so multi-tagged tips are not double-counted in the overall total.
 - Exact-summary reused/new counts are only a rough migration snapshot.
   Once a v2 tip is rewritten for clarity, the wording may no longer match v1 exactly even if the concept was reused.
@@ -204,8 +208,10 @@ Start with the primary pages, then scan the nearby pages if the section still fe
   Example: `wrap` can affect line wrapping, but JetBrains soft-wrap settings may still shape what the user actually sees.
 - `scroll` and `options` can overlap in a user-meaningful way.
   Tips like `scrolloff` and `scroll` should be discoverable from both categories.
-- `change / undo` overlaps naturally with `motion`, `insert`, and `repeat`.
-  Tips like `cw`, `s`, `cc`, `.`, and `u` are easier to find when they can show up from more than one user path.
+- `change` overlaps naturally with `motion`, `insert`, and `repeat`.
+  Tips like `cw`, `s`, `cc`, and `.` are easier to find when they can show up from more than one user path.
+- `undo` stays small and works best as a focused category plus a few cross-tagged workflow tips.
+  Tips like `u`, `Ctrl-r`, `:undo`, and `Ctrl-g u` can stay primary `undo`, while nearby workflows like last-edit jumps can also point there.
 - `repeat` is partly its own category and partly a cross-cutting behavior.
   The strongest repeat tips are `.`, macro record/playback, `Ctrl-a`/`Ctrl-@`, `@:`, and a few repeat-style commands that naturally belong to other sections.
 - When a repeat tip already has a strong home in another section, prefer cross-tagging over moving it.
