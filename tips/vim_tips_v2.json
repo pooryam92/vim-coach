@@ -438,7 +438,8 @@
     {
       "category": [
         "motion",
-        "editing"
+        "editing",
+        "change / undo"
       ],
       "summary": "Jump to last edit location `.",
       "details": [
@@ -725,7 +726,7 @@
     {
       "category": [
         "insert",
-        "change"
+        "change / undo"
       ],
       "summary": "Replace mode R",
       "details": [
@@ -756,7 +757,7 @@
     },
     {
       "category": [
-        "change",
+        "change / undo",
         "motion"
       ],
       "summary": "Change/delete with operator + motion",
@@ -767,7 +768,7 @@
     },
     {
       "category": [
-        "change",
+        "change / undo",
         "motion"
       ],
       "summary": "Delete/change to line start d0 / c0",
@@ -778,7 +779,7 @@
     },
     {
       "category": [
-        "change",
+        "change / undo",
         "motion"
       ],
       "summary": "Delete/change to first non-blank d^ / c^",
@@ -789,7 +790,7 @@
     },
     {
       "category": [
-        "change",
+        "change / undo",
         "motion"
       ],
       "summary": "Delete/change to line end d$ / c$",
@@ -800,7 +801,7 @@
     },
     {
       "category": [
-        "change"
+        "change / undo"
       ],
       "summary": "Shortcuts to line end D / C",
       "details": [
@@ -810,7 +811,7 @@
     },
     {
       "category": [
-        "change"
+        "change / undo"
       ],
       "summary": "Delete a char x / X",
       "details": [
@@ -820,7 +821,7 @@
     },
     {
       "category": [
-        "change"
+        "change / undo"
       ],
       "summary": "Delete lines dd",
       "details": [
@@ -830,7 +831,7 @@
     },
     {
       "category": [
-        "change",
+        "change / undo",
         "insert"
       ],
       "summary": "Substitute chars s / S",
@@ -841,7 +842,7 @@
     },
     {
       "category": [
-        "change",
+        "change / undo",
         "insert"
       ],
       "summary": "Change whole line cc",
@@ -852,7 +853,7 @@
     },
     {
       "category": [
-        "change"
+        "change / undo"
       ],
       "summary": "Replace one char r{char}",
       "details": [
@@ -862,7 +863,7 @@
     },
     {
       "category": [
-        "change",
+        "change / undo",
         "motion"
       ],
       "summary": "Change/delete a word cw / dw",
@@ -873,7 +874,7 @@
     },
     {
       "category": [
-        "change",
+        "change / undo",
         "motion"
       ],
       "summary": "Delete to word end de",
@@ -884,7 +885,7 @@
     },
     {
       "category": [
-        "change"
+        "change / undo"
       ],
       "summary": "Join lines J / gJ",
       "details": [
@@ -894,7 +895,7 @@
     },
     {
       "category": [
-        "change"
+        "change / undo"
       ],
       "summary": "Toggle case of char ~",
       "details": [
@@ -904,7 +905,7 @@
     },
     {
       "category": [
-        "change"
+        "change / undo"
       ],
       "summary": "Change case over motion gu / gU",
       "details": [
@@ -914,7 +915,7 @@
     },
     {
       "category": [
-        "change"
+        "change / undo"
       ],
       "summary": "Toggle case over motion g~",
       "details": [
@@ -924,7 +925,7 @@
     },
     {
       "category": [
-        "change"
+        "change / undo"
       ],
       "summary": "Change numbers Ctrl-a / Ctrl-x",
       "details": [
@@ -934,13 +935,45 @@
     },
     {
       "category": [
-        "change",
+        "change / undo",
         "repeat"
       ],
       "summary": "Repeat last change .",
       "details": [
         "Dot repeats the last text change",
         "Do one clean change, then repeat"
+      ]
+    },
+    {
+      "category": [
+        "change / undo"
+      ],
+      "summary": "Undo and redo u / Ctrl-r",
+      "details": [
+        "u undoes the last change",
+        "Ctrl-r redoes the undone change"
+      ]
+    },
+    {
+      "category": [
+        "change / undo",
+        "cmdline"
+      ],
+      "summary": "Ex undo and redo :undo / :redo",
+      "details": [
+        ":undo undoes one change",
+        ":redo reapplies the undone change"
+      ]
+    },
+    {
+      "category": [
+        "change / undo",
+        "insert"
+      ],
+      "summary": "Start a new undo step in Insert Ctrl-g u",
+      "details": [
+        "Starts a new undo step in Insert",
+        "Useful after punctuation or pauses"
       ]
     }
   ]

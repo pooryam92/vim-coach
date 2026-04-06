@@ -124,7 +124,8 @@
     },
     {
       "category": [
-        "basics"
+        "basics",
+        "migrated"
       ],
       "summary": "Undo and redo u / Ctrl-r",
       "details": [
