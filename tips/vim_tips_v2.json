@@ -753,6 +753,195 @@
         "Ctrl-y inserts char from above",
         "Ctrl-e inserts char from below"
       ]
+    },
+    {
+      "category": [
+        "change",
+        "motion"
+      ],
+      "summary": "Change/delete with operator + motion",
+      "details": [
+        "d{motion} deletes text",
+        "c{motion} changes text"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "motion"
+      ],
+      "summary": "Delete/change to line start d0 / c0",
+      "details": [
+        "d0 deletes to line start",
+        "c0 changes to line start"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "motion"
+      ],
+      "summary": "Delete/change to first non-blank d^ / c^",
+      "details": [
+        "d^ deletes to first non-blank",
+        "c^ changes to first non-blank"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "motion"
+      ],
+      "summary": "Delete/change to line end d$ / c$",
+      "details": [
+        "d$ deletes to line end",
+        "c$ changes to line end"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Shortcuts to line end D / C",
+      "details": [
+        "D is d$ to line end",
+        "C is c$ to line end"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Delete a char x / X",
+      "details": [
+        "x deletes under cursor",
+        "X deletes before cursor"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Delete lines dd",
+      "details": [
+        "dd deletes current line",
+        "3dd deletes three lines"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "insert"
+      ],
+      "summary": "Substitute chars s / S",
+      "details": [
+        "s changes one char and inserts",
+        "S changes whole line and inserts"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "insert"
+      ],
+      "summary": "Change whole line cc",
+      "details": [
+        "cc clears the line",
+        "Keeps indent and enters Insert"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Replace one char r{char}",
+      "details": [
+        "r replaces the char under cursor",
+        "Stays in Normal mode"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "motion"
+      ],
+      "summary": "Change/delete a word cw / dw",
+      "details": [
+        "cw changes to word end",
+        "dw deletes to next word start"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "motion"
+      ],
+      "summary": "Delete to word end de",
+      "details": [
+        "de deletes to current word end",
+        "Useful when dw goes too far"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Join lines J / gJ",
+      "details": [
+        "J joins with one space",
+        "gJ joins without a space"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Toggle case of char ~",
+      "details": [
+        "~ toggles case and moves on",
+        "Counts work: 5~"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Change case over motion gu / gU",
+      "details": [
+        "gUw uppercases a word",
+        "guap lowercases a paragraph"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Toggle case over motion g~",
+      "details": [
+        "g~iw toggles current word",
+        "Useful for style fixes"
+      ]
+    },
+    {
+      "category": [
+        "change"
+      ],
+      "summary": "Change numbers Ctrl-a / Ctrl-x",
+      "details": [
+        "Ctrl-a increments a number",
+        "Ctrl-x decrements a number"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "repeat"
+      ],
+      "summary": "Repeat last change .",
+      "details": [
+        "Dot repeats the last text change",
+        "Do one clean change, then repeat"
+      ]
     }
   ]
 }

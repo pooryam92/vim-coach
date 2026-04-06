@@ -134,7 +134,8 @@
     },
     {
       "category": [
-        "basics"
+        "basics",
+        "migrated"
       ],
       "summary": "Repeat last change .",
       "details": [
@@ -988,7 +989,8 @@
     {
       "category": [
         "editing",
-        "motions"
+        "motions",
+        "migrated"
       ],
       "summary": "Delete/change to line start d0 / c0",
       "details": [
@@ -999,7 +1001,8 @@
     {
       "category": [
         "editing",
-        "motions"
+        "motions",
+        "migrated"
       ],
       "summary": "Delete/change to first non-blank d^ / c^",
       "details": [
@@ -1010,7 +1013,8 @@
     {
       "category": [
         "editing",
-        "motions"
+        "motions",
+        "migrated"
       ],
       "summary": "Delete/change to end of line d$ / c$",
       "details": [
@@ -1020,7 +1024,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Shortcut to end-of-line ops D / C",
       "details": [
@@ -1040,7 +1045,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Operator + motion is the core pattern",
       "details": [
@@ -1051,7 +1057,8 @@
     {
       "category": [
         "basics",
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Delete a character x / X",
       "details": [
@@ -1062,7 +1069,8 @@
     {
       "category": [
         "basics",
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Delete lines dd",
       "details": [
@@ -1072,7 +1080,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Substitute quickly s / S",
       "details": [
@@ -1084,7 +1093,8 @@
     {
       "category": [
         "basics",
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Change whole line cc",
       "details": [
@@ -1096,7 +1106,8 @@
     {
       "category": [
         "basics",
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Replace a single character r{c}",
       "details": [
@@ -1107,7 +1118,8 @@
     {
       "category": [
         "basics",
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Change/delete a word cw / dw",
       "details": [
@@ -1128,7 +1140,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Join lines J / gJ",
       "details": [
@@ -1138,7 +1151,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Toggle case of character ~",
       "details": [
@@ -1148,7 +1162,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Change case over a motion gu / gU",
       "details": [
@@ -1158,7 +1173,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Toggle case over a motion g~",
       "details": [
@@ -1168,7 +1184,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Increment/decrement numbers Ctrl-a / Ctrl-x",
       "details": [
@@ -1179,7 +1196,8 @@
     {
       "category": [
         "editing",
-        "visual"
+        "visual",
+        "migrated"
       ],
       "summary": "Renumber repeated values with g Ctrl-a",
       "details": [
@@ -1190,7 +1208,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Make dot-repeat predictable",
       "details": [
@@ -1201,7 +1220,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "migrated"
       ],
       "summary": "Delete to next word start vs end dw / de",
       "details": [

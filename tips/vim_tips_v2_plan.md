@@ -149,10 +149,10 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 
 ## Current state
 
-- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, and `insert` sections.
-- Current totals: `73` unique tips, `34` reused from v1 by exact summary match, `39` new.
+- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, and `change` sections.
+- Current totals: `91` unique tips, `41` reused from v1 by exact summary match, `50` new.
 - Total counts should always mean unique tip entries only.
-- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `2` `options`, `14` `insert`.
+- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `2` `options`, `14` `insert`, `18` `change`.
 - Category totals should use the primary category only so multi-tagged tips are not double-counted in the overall total.
 - Exact-summary reused/new counts are only a rough migration snapshot.
   Once a v2 tip is rewritten for clarity, the wording may no longer match v1 exactly even if the concept was reused.
@@ -164,9 +164,21 @@ Start with the primary pages, then scan the nearby pages if the section still fe
   jump return/navigation and wrap-aware motions.
 - `scroll` and `options` can overlap in a user-meaningful way.
   Tips like `scrolloff` and `scroll` should be discoverable from both categories.
+- `change` also overlaps naturally with `motion`, `insert`, and `repeat`.
+  Tips like `cw`, `s`, `cc`, and `.` are easier to find when they can show up from more than one user path.
 - Multi-tagging works best when it matches how users look for the tip, not how Vim internally classifies it.
 - Packed command-family tips often need to be split into smaller tips for usability.
   This was true for both the `z<CR> / z. / z- / z+ / z^` family and the `zh / zl / zH / zL / zs / ze` family.
+- Nearby tips should not duplicate the same command unless the user intent is clearly different.
+  Example: avoid two adjacent tips that both hinge on `dw` unless each teaches a distinct decision.
+- If a duplicated tip is only duplicated for discoverability, keep one tip and give it multiple categories instead of repeating the same command in separate entries.
+  Prefer multi-category tagging over duplicate tip entries when the content is otherwise the same.
+- Prefer standard Vim wording when it is clearer and more precise.
+  Example: keep terms like "first non-blank" instead of looser rephrasings like "first text".
+- When reusing a tip from v1, do not accidentally drop the key behavior that made it useful.
+  Example: `cc` should still mention that it enters Insert mode.
+- Separate command tips from strategy/advice tips carefully.
+  If two tips both teach `.`, merge them or make the second one clearly about workflow rather than restating the command.
 - The 40-character line target is still not consistently enforced across older tips.
   Treat that as cleanup debt to pay down while revisiting sections.
 
