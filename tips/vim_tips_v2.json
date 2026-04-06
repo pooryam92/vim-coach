@@ -322,6 +322,26 @@
       "category": [
         "motion"
       ],
+      "summary": "Jump to last changed/yanked lines '[ / ']",
+      "details": [
+        "'[ jumps to the first line of the last changed or yanked text",
+        "'] jumps to the last line of that text"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Jump to exact changed/yanked bounds `[ / `]",
+      "details": [
+        "`[ jumps to the exact start of the last changed or yanked text",
+        "`] jumps to the exact end of that text"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
       "summary": "Jump to a column |",
       "details": [
         "80| jumps to column 80",
@@ -772,6 +792,242 @@
     },
     {
       "category": [
+        "editing"
+      ],
+      "summary": "Delete word text diw / daw",
+      "details": [
+        "diw deletes just the word",
+        "daw deletes the word and trailing space",
+        "Use i for inside and a for around"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Change word text ciw / caw",
+      "details": [
+        "ciw changes just the word, even mid-word",
+        "caw changes the word and trailing space",
+        "Use i for inside and a for around"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Change inside quotes with ci\"",
+      "details": [
+        "ci\" changes the text inside double quotes",
+        "You can trigger it from anywhere inside the string"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Change quotes and content with ca\"",
+      "details": [
+        "ca\" changes the text and the surrounding double quotes",
+        "Useful when you want to replace the whole quoted string"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Delete quotes and content with da\"",
+      "details": [
+        "da\" deletes the quoted text and the surrounding double quotes",
+        "Useful when you want to remove the whole string"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Change inside parentheses with ci( / cib",
+      "details": [
+        "ci( changes the text inside parentheses",
+        "cib is an alias for the same text object"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Delete inside or around pairs di( / da(",
+      "details": [
+        "di( deletes the content and keeps the parentheses",
+        "da( deletes the content and the surrounding pair"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Yank inner/around word yiw / yaw",
+      "details": [
+        "yiw copies just the word",
+        "yaw copies the word and trailing space",
+        "Use i for inside and a for around"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Yank whole line yy",
+      "details": [
+        "yy yanks the current line",
+        "5yy yanks five lines"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Yank line parts y0 / y$",
+      "details": [
+        "y0 yanks to start of line",
+        "y$ yanks to end of line"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Paste after/before p / P",
+      "details": [
+        "p puts after the cursor, or below for linewise text",
+        "P puts before the cursor, or above for linewise text"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Paste and leave cursor after gp / gP",
+      "details": [
+        "gp pastes and moves to end of the pasted text",
+        "gP does the same for paste-before"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim"
+      ],
+      "summary": "Use system clipboard register \"+",
+      "details": [
+        "\"+y yanks to the OS clipboard",
+        "\"+p pastes from the OS clipboard",
+        "In IdeaVim this depends on IDE clipboard support"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Paste and reindent ]p / [p",
+      "details": [
+        "]p pastes after and reindents",
+        "[p pastes before and reindents"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Move a line with :m {address}",
+      "details": [
+        ":m+1 moves the current line down; :m-2 moves it up",
+        ":m0 moves it to the top, :m$ to the end, :m2 after line 2"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Duplicate a line with :t.",
+      "details": [
+        ":t. copies the current line below itself",
+        "Useful when you want a quick duplicate without yanking"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Copy lines with :t {address}",
+      "details": [
+        ":1,5t. copies lines 1–5 below the cursor",
+        "Use 0, $, line numbers, or Visual ranges as the destination"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Run a Normal command on many lines with :normal",
+      "details": [
+        ":%normal A; appends ; to every line",
+        "Try it on a small range first to avoid accidental bulk edits"
+      ]
+    },
+    {
+      "category": [
+        "cmdline",
+        "search"
+      ],
+      "summary": "Run a substitute only on matching lines with :g",
+      "details": [
+        ":g/ERROR/s/foo/bar/g runs the substitute only on lines matching ERROR",
+        "Useful for targeted bulk edits without touching every line"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Indent/outdent a line >> / <<",
+      "details": [
+        ">> shifts the current line right",
+        "<< shifts it left; counts work too"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Indent/outdent a block >ip / <ip",
+      "details": [
+        ">ip shifts the current paragraph or block right",
+        "Use other motions too, such as >} or <ap"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Reindent a line ==",
+      "details": [
+        "== recalculates indent for the current line",
+        "Use it when manual shifting is not enough"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Reindent a block =ip",
+      "details": [
+        "=ip recalculates indent for a paragraph or block",
+        "Useful after paste or structural edits"
+      ]
+    },
+    {
+      "category": [
         "insert"
       ],
       "summary": "Open new lines o / O",
@@ -1192,6 +1448,47 @@
       "category": [
         "visual"
       ],
+      "summary": "Select the last changed text `[v`]",
+      "details": [
+        "`[ jumps to the start of the last change",
+        "v starts Visual mode and `] reaches the end"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Drop a mark before exploring with ma",
+      "details": [
+        "ma sets a mark before you jump elsewhere",
+        "`a returns to the exact position later"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Jump to a mark with `a / 'a",
+      "details": [
+        "`a jumps to the exact marked position",
+        "'a jumps to the marked line"
+      ]
+    },
+    {
+      "category": [
+        "motion",
+        "ideavim"
+      ],
+      "summary": "Jump to definition or declaration with gd / gD",
+      "details": [
+        "gd jumps to definition through the IDE",
+        "gD jumps to declaration when the IDE provides one"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
       "summary": "Reselect last Visual region gv",
       "details": [
         "gv reselects the last selection",
@@ -1207,6 +1504,50 @@
       "details": [
         "gn selects the next search match",
         "gN selects the previous one"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "cmdline"
+      ],
+      "summary": "Sort selected lines with :sort",
+      "details": [
+        "Select lines in Visual mode, then run :sort",
+        "Use :sort u to keep only unique lines"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "cmdline"
+      ],
+      "summary": "Sort numbers with :sort n",
+      "details": [
+        "Select lines in Visual mode, then run :sort n",
+        "Use :sort! n for descending numeric order"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Select inside a word or paragraph viw / vip",
+      "details": [
+        "viw selects inside the current word",
+        "vip selects inside the current paragraph; vap includes surrounding blank lines",
+        "Use i for inside and a for around with other text objects too"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "editing"
+      ],
+      "summary": "Select the whole file ggVG",
+      "details": [
+        "gg goes to the top, V starts linewise Visual",
+        "G extends the selection to the end of the file"
       ]
     },
     {
@@ -1489,6 +1830,16 @@
       "details": [
         "* searches forward for the exact word",
         "# searches backward for the exact word"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Rename repeats with * cw n .",
+      "details": [
+        "* finds the next whole-word match",
+        "cw changes it; n . repeats on the next match"
       ]
     },
     {

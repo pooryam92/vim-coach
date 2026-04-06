@@ -8,6 +8,10 @@
       "details": [
         "Click the bottom-right Vim indicator in the IDE status bar",
         "Choose Tutor from that menu"
+      ],
+      "review_tags": [
+        "support:ideavim-doc",
+        "v2:command-overlap"
       ]
     },
     {
@@ -20,6 +24,10 @@
         "Tap for Esc, hold for Ctrl",
         "Cuts hand movement for Vim commands",
         "Use Karabiner, keyd, Kanata or similar"
+      ],
+      "review_tags": [
+        "support:external-advice",
+        "v2:command-overlap"
       ]
     },
     {
@@ -33,7 +41,13 @@
         "Use :set paragraph-motion",
         "{ and } stop treating every blank line as a hard break",
         "Useful in code with indented blank separators"
-      ]
+      ],
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it depends on a plugin-backed text object."
     },
     {
       "category": [
@@ -46,68 +60,10 @@
         "Use :set matchit",
         "Use % on if/else/end or HTML/XML tags",
         "Extends % beyond (), {}, and []"
-      ]
-    },
-    {
-      "category": [
-        "motions"
       ],
-      "summary": "Change list navigation g; / g,",
-      "details": [
-        "g; older change location",
-        "g, newer change location"
-      ]
-    },
-    {
-      "category": [
-        "marks",
-        "motions"
-      ],
-      "summary": "Linewise bounds of last changed/yanked text '[ and ']",
-      "details": [
-        "'[ jumps to the start line of last changed/yanked text",
-        "'] jumps to the end line of last changed/yanked text"
-      ]
-    },
-    {
-      "category": [
-        "marks",
-        "motions"
-      ],
-      "summary": "Exact bounds of last changed/yanked text `[ and `]",
-      "details": [
-        "`[ jumps to exact start of last changed/yanked text",
-        "`] jumps to exact end of last changed/yanked text"
-      ]
-    },
-    {
-      "category": [
-        "config"
-      ],
-      "summary": "Show current mode showmode",
-      "details": [
-        ":set showmode shows NORMAL/INSERT/VISUAL",
-        "Helpful while learning"
-      ]
-    },
-    {
-      "category": [
-        "config"
-      ],
-      "summary": "Show pending keys showcmd",
-      "details": [
-        ":set showcmd shows partial commands",
-        "Great for multi-key sequences"
-      ]
-    },
-    {
-      "category": [
-        "search"
-      ],
-      "summary": "Fast rename loop * then cw then n .",
-      "details": [
-        "Press * to find next occurrence",
-        "cw to change, then n . to repeat"
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
       ]
     },
     {
@@ -121,6 +77,10 @@
         "Use :set sneak",
         "sfo jumps to the next fo; Sfo searches backward",
         "Great for fast local jumps without /"
+      ],
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
       ]
     },
     {
@@ -131,73 +91,13 @@
       "details": [
         "Shows codepoint and representation",
         "Great for weird whitespace issues"
-      ]
-    },
-    {
-      "category": [
-        "textobjects",
-        "editing"
       ],
-      "summary": "Delete inner word diw",
-      "details": [
-        "Deletes only the word",
-        "Leaves surrounding spaces intact"
-      ]
-    },
-    {
-      "category": [
-        "textobjects",
-        "editing"
+      "review_tags": [
+        "support:json-match",
+        "v2:no-obvious-duplicate"
       ],
-      "summary": "Delete a word plus space daw",
-      "details": [
-        "Deletes word and trailing space",
-        "Great for list cleanup"
-      ]
-    },
-    {
-      "category": [
-        "textobjects",
-        "editing"
-      ],
-      "summary": "Change inner word ciw",
-      "details": [
-        "Works even if cursor is mid-word",
-        "Safer than cw for renames"
-      ]
-    },
-    {
-      "category": [
-        "textobjects",
-        "editing"
-      ],
-      "summary": "Change a word plus space caw",
-      "details": [
-        "Changes word and trailing space",
-        "Great for argument swaps"
-      ]
-    },
-    {
-      "category": [
-        "textobjects",
-        "registers"
-      ],
-      "summary": "Yank inner/around word yiw / yaw",
-      "details": [
-        "yiw copies just the word",
-        "yaw copies word plus trailing space"
-      ]
-    },
-    {
-      "category": [
-        "basics",
-        "registers"
-      ],
-      "summary": "Yank whole line yy",
-      "details": [
-        "yy yanks current line",
-        "5yy yanks five lines"
-      ]
+      "review_status": "skip",
+      "review_note": "Generated command map includes ga, but runtime test did not show visible output in IdeaVim."
     },
     {
       "category": [
@@ -210,47 +110,10 @@
         "Use :set highlightedyank",
         "yy, yiw, and other yanks briefly highlight the copy",
         "Helpful when you want visual confirmation"
-      ]
-    },
-    {
-      "category": [
-        "registers"
       ],
-      "summary": "Yank by motion y{motion}",
-      "details": [
-        "yw yank word, y$ yank to end of line",
-        "Then paste with p/P"
-      ]
-    },
-    {
-      "category": [
-        "registers"
-      ],
-      "summary": "Yank line parts y0 / y$",
-      "details": [
-        "y0 yanks to start of line",
-        "y$ yanks to end of line"
-      ]
-    },
-    {
-      "category": [
-        "basics",
-        "registers"
-      ],
-      "summary": "Paste after/before p / P",
-      "details": [
-        "p puts after cursor (or below for linewise)",
-        "P puts before cursor (or above for linewise)"
-      ]
-    },
-    {
-      "category": [
-        "registers"
-      ],
-      "summary": "Paste and leave cursor after gp / gP",
-      "details": [
-        "gp pastes and moves to end of pasted text",
-        "gP does the same for paste-before"
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
       ]
     },
     {
@@ -261,7 +124,13 @@
       "details": [
         "\"0 holds the most recent yank",
         "Paste it with \"0p even after deletes"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped as a standalone tip because the inside-vs-around idea is better folded into the concrete text-object tips."
     },
     {
       "category": [
@@ -271,7 +140,13 @@
       "details": [
         "\"1 usually holds the most recent delete",
         "Paste with \"1p after an accidental dd"
-      ]
+      ],
+      "review_tags": [
+        "support:manual-check",
+        "v2:no-obvious-duplicate"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it is too register-specific for the trimmed main set."
     },
     {
       "category": [
@@ -282,7 +157,13 @@
         "\"ayiw yanks a word into register a",
         "Paste later with \"ap",
         "Keeps your unnamed register free for newer yanks"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:no-obvious-duplicate"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it is too register-specific for the trimmed main set."
     },
     {
       "category": [
@@ -295,6 +176,10 @@
         "Use :set ReplaceWithRegister",
         "gr{motion} replaces text with the current register",
         "\"agrw uses register a for the replacement"
+      ],
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
       ]
     },
     {
@@ -307,7 +192,13 @@
         "\"A appends into register a instead of replacing it",
         "Use after \"ayy or \"ayiw to collect snippets",
         "Paste the combined text later with \"ap"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it is too register-specific for the trimmed main set."
     },
     {
       "category": [
@@ -317,7 +208,13 @@
       "details": [
         "\"_d deletes without overwriting your registers",
         "Use before pasting repeatedly"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it is too register-specific for the trimmed main set."
     },
     {
       "category": [
@@ -328,7 +225,13 @@
         "\"- stores short deletes smaller than one line",
         "Useful after x, dw, or other small cuts",
         "Paste it with \"-p"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it is too register-specific for the trimmed main set."
     },
     {
       "category": [
@@ -338,18 +241,13 @@
       "details": [
         "Select then use \"_dP",
         "Keeps your previous yank intact"
-      ]
-    },
-    {
-      "category": [
-        "registers"
       ],
-      "summary": "System clipboard register \"+",
-      "details": [
-        "\"+y yanks to OS clipboard (if enabled)",
-        "\"+p pastes from OS clipboard",
-        "Requires +clipboard (Vim) or IDE clipboard support (IdeaVim)"
-      ]
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it is too register-specific for the trimmed main set."
     },
     {
       "category": [
@@ -360,7 +258,13 @@
       "details": [
         ":reg shows registers and macros",
         "Useful when you forgot what you yanked"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it is too register-specific for the trimmed main set."
     },
     {
       "category": [
@@ -371,7 +275,13 @@
       "details": [
         ":put a inserts register a below the cursor",
         ":put! a inserts it above the cursor"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it is too register-specific for the trimmed main set."
     },
     {
       "category": [
@@ -381,7 +291,13 @@
       "details": [
         "\"=2+2<CR>p inserts result",
         "Also works in Insert with Ctrl-r ="
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it is too register-specific for the trimmed main set."
     },
     {
       "category": [
@@ -391,36 +307,10 @@
       "details": [
         "x deletes char under cursor, p puts it after",
         "Fast fix for adjacent typos"
-      ]
-    },
-    {
-      "category": [
-        "editing"
       ],
-      "summary": "Indent/outdent lines >> / <<",
-      "details": [
-        ">> indents current line, << outdents",
-        "Counts work: 5>>"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Indent/outdent with motions > / <",
-      "details": [
-        ">ip indents a paragraph/block",
-        "<} outdents next paragraph"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Fix indentation with = (use a motion)",
-      "details": [
-        "`==` fixes indentation on the current line",
-        "`=ip` fixes indentation for the current paragraph"
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
       ]
     },
     {
@@ -431,6 +321,10 @@
       "details": [
         "gqap formats a paragraph",
         "Uses textwidth when set"
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
       ]
     },
     {
@@ -442,73 +336,13 @@
       "details": [
         ":set textwidth=80 for docs/comments",
         "gq uses textwidth for formatting"
-      ]
-    },
-    {
-      "category": [
-        "visual",
-        "workflow"
       ],
-      "summary": "Select the last changed text `[v`]",
-      "details": [
-        "`[ jumps to the start of the last change",
-        "v enters Visual and `] reaches the end",
-        "Useful after paste, indent, or autoformat"
-      ]
-    },
-    {
-      "category": [
-        "visual",
-        "search"
+      "review_tags": [
+        "support:set-or-config",
+        "v2:command-overlap"
       ],
-      "summary": "Sort selected lines :sort",
-      "details": [
-        "Select lines then :sort",
-        "Add u: :sort u to unique"
-      ]
-    },
-    {
-      "category": [
-        "visual",
-        "search"
-      ],
-      "summary": "Sort numbers correctly with :sort n",
-      "details": [
-        "Select lines then run :sort n",
-        "Use :sort! n for descending order",
-        "Better than lexical sort for 2, 10, 100"
-      ]
-    },
-    {
-      "category": [
-        "basics",
-        "visual"
-      ],
-      "summary": "Quick select inner word/paragraph viw / vip",
-      "details": [
-        "viw selects inner word",
-        "vip selects inner paragraph"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Select whole file quickly ggVG",
-      "details": [
-        "gg to top, V linewise select, G to bottom",
-        "Then run =, :sort, or :s on the range"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Paste and auto-indent ]p and [p",
-      "details": [
-        "]p pastes after and reindents",
-        "[p pastes before and reindents"
-      ]
+      "review_status": "skip",
+      "review_note": "Skipped for now because it is a lower-priority options/config tip."
     },
     {
       "category": [
@@ -518,7 +352,13 @@
       "details": [
         "gqap formats current paragraph",
         "Set textwidth for consistent wrapping"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it depends on lower-priority textwidth/formatting configuration context."
     },
     {
       "category": [
@@ -531,6 +371,10 @@
         "Use :set commentary",
         "gcc comments a line; gcap comments a paragraph",
         "gc in Visual comments the selection"
+      ],
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
       ]
     },
     {
@@ -544,6 +388,10 @@
         "Use :set surround",
         "ysiw) adds (); cs\"' swaps quote types",
         "ds\" removes surrounding quotes"
+      ],
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
       ]
     },
     {
@@ -557,36 +405,10 @@
         "Use :set exchange",
         "cxiw marks text; repeat on a second target to swap",
         "Use cxx to exchange whole lines"
-      ]
-    },
-    {
-      "category": [
-        "editing"
       ],
-      "summary": "Move current line down/up :m",
-      "details": [
-        ":m+1 moves line down one",
-        ":m-2 moves line up one"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Duplicate current line :t.",
-      "details": [
-        ":t. copies current line below itself",
-        "Works even when y/p is awkward"
-      ]
-    },
-    {
-      "category": [
-        "cmdline"
-      ],
-      "summary": "Copy a range of lines :t",
-      "details": [
-        ":1,5t. copies lines 1\u20135 below cursor",
-        "Use ranges + destination for quick duplication"
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
       ]
     },
     {
@@ -595,8 +417,12 @@
       ],
       "summary": "Delete a line range :d",
       "details": [
-        ":3,10d deletes lines 3\u201310",
+        ":3,10d deletes lines 3–10",
         "Use '<,'> after Visual selection too"
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
       ]
     },
     {
@@ -605,30 +431,15 @@
       ],
       "summary": "Yank a range of lines :y",
       "details": [
-        ":3,10y yanks lines 3\u201310",
+        ":3,10y yanks lines 3–10",
         "Great for copying blocks precisely"
-      ]
-    },
-    {
-      "category": [
-        "cmdline"
       ],
-      "summary": "Run Normal commands on a range :normal",
-      "details": [
-        "Example: :%normal A; appends ; to every line",
-        "Test on a small range first"
-      ]
-    },
-    {
-      "category": [
-        "cmdline",
-        "search"
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
       ],
-      "summary": "Global substitute only on matching lines",
-      "details": [
-        "Example: :g/ERROR/s/foo/bar/g",
-        "Acts only on lines matching ERROR"
-      ]
+      "review_status": "skip",
+      "review_note": "Skipped for now because it is too mechanical and weaker than the broader :t {address} copy tip."
     },
     {
       "category": [
@@ -639,7 +450,13 @@
       "details": [
         "Try :g/pat/p to preview matches",
         "Then :g/pat/d to delete safely"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it is a narrower follow-up pattern and less valuable than the broader :g substitute tip."
     },
     {
       "category": [
@@ -649,37 +466,13 @@
       "details": [
         "i{obj} excludes delimiters, a{obj} includes them",
         "Works with d/c/y/v"
-      ]
-    },
-    {
-      "category": [
-        "textobjects"
       ],
-      "summary": "Edit inside double quotes ci\"",
-      "details": [
-        "ci\" changes inside quotes",
-        "Cursor can be anywhere inside string"
-      ]
-    },
-    {
-      "category": [
-        "textobjects"
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
       ],
-      "summary": "Edit around double quotes (ca\")",
-      "details": [
-        "ca\" changes content and quotes",
-        "Useful to replace quotes entirely"
-      ]
-    },
-    {
-      "category": [
-        "textobjects"
-      ],
-      "summary": "Delete around double quotes da\"",
-      "details": [
-        "da\" removes quotes + content",
-        "Fast string removal"
-      ]
+      "review_status": "skip",
+      "review_note": "Skipped as a standalone tip because the inside-vs-around idea is already folded into the concrete text-object tips."
     },
     {
       "category": [
@@ -689,7 +482,13 @@
       "details": [
         "ci' changes inside single quotes",
         "Great for quick string edits"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped as a duplicate variant of the double-quote text-object tip."
     },
     {
       "category": [
@@ -699,7 +498,13 @@
       "details": [
         "ci` changes inside backticks",
         "Handy in Markdown and JS templates"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped as another delimiter variant; v2 keeps the clearer double-quote example instead."
     },
     {
       "category": [
@@ -710,17 +515,13 @@
         "Text objects are edit units",
         "Use i for inside and a for around",
         "Combine with d, c, y, or v like ciw"
-      ]
-    },
-    {
-      "category": [
-        "textobjects"
       ],
-      "summary": "Edit inside () with ci( / cib",
-      "details": [
-        "ci( changes text inside ()",
-        "cib is an alias for the same object"
-      ]
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped as a standalone theory tip because v2 keeps concrete text-object examples instead."
     },
     {
       "category": [
@@ -730,7 +531,13 @@
       "details": [
         "ci[ changes inside []",
         "Good for array/index edits"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped as a duplicate pair-delimiter variant; parentheses are the representative pair example in v2."
     },
     {
       "category": [
@@ -740,18 +547,13 @@
       "details": [
         "ci{ changes inside {}",
         "ciB is an alias for braces in many setups"
-      ]
-    },
-    {
-      "category": [
-        "textobjects"
       ],
-      "summary": "Delete inside vs around pairs di( and da(",
-      "details": [
-        "di( deletes content and keeps ()",
-        "da( deletes delimiters and content",
-        "Same pattern works for {}, [], and quotes"
-      ]
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped as a duplicate pair-delimiter variant; parentheses are the representative pair example in v2."
     },
     {
       "category": [
@@ -761,7 +563,13 @@
       "details": [
         "vi( selects inside parentheses",
         "va{ selects including braces"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped because the visual pair-selection pattern is too reference-like for the trimmed set."
     },
     {
       "category": [
@@ -771,7 +579,13 @@
       "details": [
         "vip selects inner paragraph",
         "vap includes surrounding blank lines"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped as a standalone tip because paragraph around-selection is folded into the existing viw/vip visual tip."
     },
     {
       "category": [
@@ -781,7 +595,13 @@
       "details": [
         "diw deletes inner word",
         "daw deletes word + surrounding space"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped because v2 already keeps the stronger concrete word tips for delete, change, yank, and select."
     },
     {
       "category": [
@@ -794,7 +614,13 @@
         "Use :set argtextobj",
         "cia changes one argument; daa deletes one",
         "Great for calls with nested parentheses"
-      ]
+      ],
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it depends on a plugin-backed text object."
     },
     {
       "category": [
@@ -807,7 +633,13 @@
         "Use :set textobj-entire",
         "vae or vie selects the whole buffer",
         "Useful when ggVG feels clumsy"
-      ]
+      ],
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it depends on a plugin-backed text object."
     },
     {
       "category": [
@@ -820,7 +652,13 @@
         "Use :set indent-object",
         "vai selects the current indent block; dii deletes it",
         "Useful in Python and nested code"
-      ]
+      ],
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it depends on a plugin-backed text object."
     },
     {
       "category": [
@@ -831,7 +669,13 @@
         "is selects the inner sentence",
         "as includes trailing space",
         "Works with c, d, and y like cis or das"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped because sentence text objects are more niche than the stronger word, quote, pair, and paragraph examples."
     },
     {
       "category": [
@@ -842,7 +686,13 @@
         "cit changes inside an HTML/XML tag",
         "dat deletes the tag and its content",
         "Requires tag text-object support in your setup"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped because support is setup-dependent and the tip set is avoiding ambiguous or plugin-like text-object variants for now."
     },
     {
       "category": [
@@ -852,7 +702,13 @@
       "details": [
         "vit selects text inside a tag",
         "vat selects the tag and its text"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped because tag text-object support is setup-dependent and not part of the trimmed core set."
     },
     {
       "category": [
@@ -865,17 +721,13 @@
         "Use :set NERDTree",
         ":NERDTreeToggle opens the file tree",
         ":NERDTreeFind reveals the current file"
-      ]
-    },
-    {
-      "category": [
-        "workflow"
       ],
-      "summary": "Use marks before exploring",
-      "details": [
-        "ma sets a mark, then go explore",
-        "Use `a to return exactly"
-      ]
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it depends on a plugin-backed text object."
     },
     {
       "category": [
@@ -885,58 +737,13 @@
       "details": [
         "ma sets mark a in this file",
         "Use mA for a global mark; ideamarks can sync A-Z to IDE bookmarks"
-      ]
-    },
-    {
-      "category": [
-        "marks",
-        "motions"
       ],
-      "summary": "Jump to a mark `a and 'a",
-      "details": [
-        "`a jumps to exact position",
-        "'a jumps to the line (first non-blank)"
-      ]
-    },
-    {
-      "category": [
-        "windows"
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
       ],
-      "summary": "Close current split Ctrl-w q",
-      "details": [
-        "Closes the active split/window",
-        "Use when you want to keep other splits"
-      ]
-    },
-    {
-      "category": [
-        "windows"
-      ],
-      "summary": "Close all other splits Ctrl-w o",
-      "details": [
-        "Makes the current split the only one",
-        "Great for focus while editing"
-      ]
-    },
-    {
-      "category": [
-        "windows"
-      ],
-      "summary": "Equalize split sizes Ctrl-w =",
-      "details": [
-        "Ctrl-w = makes split sizes even again",
-        "Helpful after a lot of manual resizing"
-      ]
-    },
-    {
-      "category": [
-        "windows"
-      ],
-      "summary": "Maximize a split Ctrl-w _ and Ctrl-w |",
-      "details": [
-        "Ctrl-w _ maximizes height",
-        "Ctrl-w | maximizes width"
-      ]
+      "review_status": "skip",
+      "review_note": "Skipped because the workflow-oriented mark tip is stronger and this one is too reference-like."
     },
     {
       "category": [
@@ -947,17 +754,10 @@
         "Ctrl-w + and - adjust height",
         "Ctrl-w < and > adjust width",
         "Remap if your IDE keymap intercepts them"
-      ]
-    },
-    {
-      "category": [
-        "ideavim",
-        "motions"
       ],
-      "summary": "Go to definition/declaration gd / gD (IDE)",
-      "details": [
-        "gd goes to definition (IDE action if enabled)",
-        "gD goes to declaration (if IDE provides it)"
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
       ]
     },
     {
@@ -968,7 +768,13 @@
       "details": [
         ":tabnew opens a fresh Vim tab page",
         "Useful when you want a separate split layout"
-      ]
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped because it is too reference-like and weaker than stronger tab-use workflow tips."
     },
     {
       "category": [
@@ -978,6 +784,10 @@
       "details": [
         ":tabs shows all open tab pages",
         "Use it when you need an overview before switching"
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
       ]
     },
     {
@@ -990,6 +800,10 @@
         "gi returns to the last insert position",
         "g; and g, walk older and newer changes",
         "Useful for repeated small edits"
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
       ]
     },
     {
@@ -1002,6 +816,10 @@
         ":&& repeats the last :s and keeps flags",
         "Use it on a new range or Visual selection",
         ":%&& reapplies it file-wide"
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
       ]
     },
     {
@@ -1013,6 +831,10 @@
         ":read! {cmd} inserts command output below cursor",
         "Example: :read! git branch --show-current",
         "Great for notes, snippets, and diagnostics"
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
       ]
     },
     {
@@ -1026,6 +848,10 @@
         "Use if has('ide') ... endif in shared vimrc files",
         "Keep <Action>(...) maps and IdeaVim options inside",
         "Lets Vim or Neovim keep separate fallbacks"
+      ],
+      "review_tags": [
+        "support:ideavim-doc",
+        "v2:command-overlap"
       ]
     },
     {
@@ -1039,6 +865,10 @@
         ":source ~/.ideavimrc after config edits",
         "Plugin setup docs recommend this after new set commands",
         "Faster than restarting the IDE"
+      ],
+      "review_tags": [
+        "support:ideavim-doc",
+        "v2:command-overlap"
       ]
     },
     {
@@ -1052,6 +882,10 @@
         "Put source ~/.vimrc in ~/.ideavimrc",
         "Keep shared motions and mappings in one place",
         "Wrap IDE-only parts with if has('ide')"
+      ],
+      "review_tags": [
+        "support:ideavim-doc",
+        "v2:command-overlap"
       ]
     },
     {
@@ -1065,7 +899,13 @@
         "Use :set functiontextobj",
         "vif selects inner function; yaf yanks a function",
         "Useful for large methods and quick refactors"
-      ]
+      ],
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
+      ],
+      "review_status": "skip",
+      "review_note": "Skipped for now because it depends on a plugin-backed text object."
     },
     {
       "category": [
@@ -1079,6 +919,10 @@
         "Use :set multiple-cursors",
         "Map <C-n> to <Plug>NextWholeOccurrence first",
         "Press <C-n> repeatedly to add the next match"
+      ],
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
       ]
     },
     {
@@ -1092,6 +936,10 @@
         "Use :set switch",
         "Use gs on true/false, &&/||, or similar pairs",
         "Great for fast boolean and operator flips"
+      ],
+      "review_tags": [
+        "support:plugin",
+        "v2:command-overlap"
       ]
     },
     {
@@ -1103,6 +951,10 @@
         "In Insert mode, Ctrl-n picks the next word match",
         "Ctrl-p picks the previous one",
         "Good for repeating names already in the file"
+      ],
+      "review_tags": [
+        "support:json-match",
+        "v2:command-overlap"
       ]
     }
   ]
