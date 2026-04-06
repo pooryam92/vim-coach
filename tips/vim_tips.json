@@ -2,7 +2,8 @@
   "tips": [
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Edit another file with :edit {file}",
       "details": [
@@ -12,7 +13,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Find a file on 'path' with :find {file}",
       "details": [
@@ -22,7 +24,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Open a file chooser with :browse",
       "details": [
@@ -32,7 +35,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "List known files with :buffers / :files / :ls",
       "details": [
@@ -42,7 +46,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Jump to a listed buffer with :buffer {N}",
       "details": [
@@ -52,7 +57,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Step through the argument list with :next / :previous",
       "details": [
@@ -62,7 +68,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Jump to a specific argument with :argument {N}",
       "details": [
@@ -72,7 +79,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Jump to the ends of the argument list with :first / :last",
       "details": [
@@ -93,7 +101,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Next/previous buffer :bn / :bp",
       "details": [
@@ -103,7 +112,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Close current buffer :bd",
       "details": [
@@ -113,7 +123,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Reload file from disk :e and :e!",
       "details": [
@@ -123,7 +134,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Save current file :w",
       "details": [
@@ -133,7 +145,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Write a copy to another file :w {file}",
       "details": [
@@ -143,7 +156,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Save all files :wa",
       "details": [
@@ -153,7 +167,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Write and advance with :wnext / :wprevious",
       "details": [
@@ -163,7 +178,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Read a file into the current buffer with :read {file}",
       "details": [
@@ -173,7 +189,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Quit :q / :q!",
       "details": [
@@ -183,7 +200,8 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Save and quit :wq / :x / ZZ",
       "details": [
@@ -194,18 +212,20 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Quit every editor with :qa / :qall",
       "details": [
         ":qa exits unless there are changed buffers",
-        ":qall closes all editors",
+        ":qall is the long form of :qa",
         "Use the force form only if you really want to discard pending changes"
       ]
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Write all and exit with :wqa / :xa",
       "details": [
@@ -217,7 +237,7 @@
       "category": [
         "motion"
       ],
-      "summary": "Home-row movement h j k l",
+      "summary": "Move with h j k l",
       "details": [
         "h left, j down, k up, l right",
         "Use counts like 10j to jump"
@@ -270,7 +290,7 @@
       "category": [
         "motion"
       ],
-      "summary": "Big WORD moves W / B / E",
+      "summary": "Move by big WORDs W / B / E",
       "details": [
         "WORDs split on whitespace",
         "Great for paths and long tokens"
@@ -280,7 +300,7 @@
       "category": [
         "motion"
       ],
-      "summary": "End of previous WORD gE",
+      "summary": "End of previous big WORD gE",
       "details": [
         "gE goes to end of previous WORD",
         "Useful on URLs / file paths"
@@ -290,7 +310,7 @@
       "category": [
         "motion"
       ],
-      "summary": "Line start/end 0 / ^ / $",
+      "summary": "Jump to line start/end 0 / ^ / $",
       "details": [
         "0 start of line",
         "^ first non-blank",
@@ -315,7 +335,8 @@
       "details": [
         "+ moves down to first non-blank",
         "- moves up to first non-blank",
-        "These are motions; use with operators (e.g., d+)"
+        "These are motions",
+        "Use them with operators like d+"
       ]
     },
     {
@@ -352,7 +373,7 @@
       "category": [
         "motion"
       ],
-      "summary": "File top/bottom gg / G",
+      "summary": "Jump to file top/bottom gg / G",
       "details": [
         "gg goes to first line",
         "G goes to last line"
@@ -394,7 +415,7 @@
       "category": [
         "motion"
       ],
-      "summary": "Screen-line start/end on wraps g0 / g^ / g$",
+      "summary": "Jump to screen-line start/end on wraps g0 / g^ / g$",
       "details": [
         "g0 goes to screen-line start",
         "g^ to first text, g$ to screen-line end"
@@ -458,7 +479,6 @@
     {
       "category": [
         "motion",
-        "editing",
         "undo"
       ],
       "summary": "Jump to last edit location `.",
@@ -512,7 +532,7 @@
       "category": [
         "motion"
       ],
-      "summary": "Repeat last f/F/t/T ; and , ",
+      "summary": "Repeat last character search ; / ,",
       "details": [
         "; repeats in same direction",
         ", repeats in opposite direction"
@@ -635,7 +655,7 @@
       "category": [
         "options"
       ],
-      "summary": "Show line numbers number / relativenumber",
+      "summary": "Show line numbers with number / relativenumber",
       "details": [
         ":set number shows line numbers",
         ":set relativenumber helps with counts"
@@ -645,7 +665,7 @@
       "category": [
         "options"
       ],
-      "summary": "Show invisible characters list",
+      "summary": "Show invisible characters with list",
       "details": [
         ":set list shows tabs and trailing spaces",
         ":set nolist hides them again"
@@ -667,7 +687,7 @@
         "options",
         "pattern"
       ],
-      "summary": "Incremental search feedback incsearch",
+      "summary": "Show search matches while typing incsearch",
       "details": [
         ":set incsearch shows matches while typing",
         "Makes /pattern navigation feel instant"
@@ -678,7 +698,7 @@
         "options",
         "pattern"
       ],
-      "summary": "Persistent highlights hlsearch",
+      "summary": "Keep search matches highlighted hlsearch",
       "details": [
         ":set hlsearch keeps matches highlighted",
         "Clear temporarily with :noh"
@@ -689,7 +709,7 @@
         "options",
         "pattern"
       ],
-      "summary": "Smart case ignorecase + smartcase",
+      "summary": "Use smart case with ignorecase + smartcase",
       "details": [
         ":set ignorecase smartcase",
         "Uppercase in pattern forces case-sensitive"
@@ -700,7 +720,7 @@
         "options",
         "pattern"
       ],
-      "summary": "Wrap search at EOF wrapscan",
+      "summary": "Wrap searches at EOF with wrapscan",
       "details": [
         ":set wrapscan continues from top",
         ":set nowrapscan stops at the end"
@@ -708,29 +728,19 @@
     },
     {
       "category": [
+        "ideavim",
+        "options",
+        "editing"
+      ],
+      "summary": "Choose clipboard behavior with unnamedplus and ideaput",
+      "details": [
+        ":set clipboard+=unnamedplus uses the system clipboard by default",
+        ":set clipboard+=ideaput uses IntelliJ paste handling for put commands"
+      ]
+    },
+    {
+      "category": [
         "options"
-      ],
-      "summary": "Use clipboard+=unnamedplus",
-      "details": [
-        ":set clipboard+=unnamedplus",
-        "Yank and put use the system clipboard by default"
-      ]
-    },
-    {
-      "category": [
-        "options",
-        "ideavim"
-      ],
-      "summary": "Use clipboard+=ideaput",
-      "details": [
-        ":set clipboard+=ideaput",
-        "Uses IntelliJ paste for put commands"
-      ]
-    },
-    {
-      "category": [
-        "options",
-        "cmdline"
       ],
       "summary": "Check an option with :set option?",
       "details": [
@@ -740,8 +750,7 @@
     },
     {
       "category": [
-        "options",
-        "cmdline"
+        "options"
       ],
       "summary": "Toggle an option with :set invoption",
       "details": [
@@ -753,7 +762,7 @@
       "category": [
         "insert"
       ],
-      "summary": "Leave Insert with Esc / Ctrl-[",
+      "summary": "Leave Insert mode with Esc / Ctrl-[",
       "details": [
         "Esc leaves Insert mode",
         "Ctrl-[ is the same command"
@@ -791,8 +800,7 @@
     },
     {
       "category": [
-        "insert",
-        "editing"
+        "insert"
       ],
       "summary": "Insert at true line start gI",
       "details": [
@@ -971,7 +979,8 @@
       ],
       "summary": "Store and append text in named registers \"a / \"A",
       "details": [
-        "\"ayiw stores text in register a; \"ap pastes it later",
+        "\"ayiw stores text in register a",
+        "\"ap pastes it later",
         "\"A appends more text instead of replacing the register"
       ]
     },
@@ -998,8 +1007,7 @@
     },
     {
       "category": [
-        "cmdline",
-        "editing"
+        "cmdline"
       ],
       "summary": "Inspect registers with :reg",
       "details": [
@@ -1019,17 +1027,20 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Move a line with :m {address}",
       "details": [
-        ":m+1 moves the current line down; :m-2 moves it up",
+        ":m+1 moves the current line down",
+        ":m-2 moves it up",
         ":m0 moves it to the top, :m$ to the end, :m2 after line 2"
       ]
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "cmdline"
       ],
       "summary": "Duplicate a line with :t.",
       "details": [
@@ -1039,6 +1050,7 @@
     },
     {
       "category": [
+        "editing",
         "cmdline"
       ],
       "summary": "Copy lines with :t {address}",
@@ -1049,6 +1061,7 @@
     },
     {
       "category": [
+        "editing",
         "cmdline"
       ],
       "summary": "Run a Normal command on many lines with :normal",
@@ -1075,7 +1088,8 @@
       "summary": "Indent/outdent a line >> / <<",
       "details": [
         ">> shifts the current line right",
-        "<< shifts it left; counts work too"
+        "<< shifts it left",
+        "Counts work too"
       ]
     },
     {
@@ -1115,7 +1129,8 @@
       "summary": "Format a paragraph with gqap",
       "details": [
         "gqap reformats the current paragraph",
-        "Use it for wrapped prose or comments; textwidth affects the result"
+        "Use it for wrapped prose or comments",
+        "textwidth affects the result"
       ]
     },
     {
@@ -1153,17 +1168,17 @@
         "insert",
         "motion"
       ],
-      "summary": "One Normal command in Insert Ctrl-o",
+      "summary": "Run one Normal command from Insert mode Ctrl-o",
       "details": [
         "Run one Normal command",
-        "Then return to Insert"
+        "Then return to Insert mode"
       ]
     },
     {
       "category": [
         "insert"
       ],
-      "summary": "Delete previous word in Insert Ctrl-w",
+      "summary": "Delete previous word in Insert mode Ctrl-w",
       "details": [
         "Deletes word left of cursor",
         "Good for quick typo fixes"
@@ -1173,7 +1188,7 @@
       "category": [
         "insert"
       ],
-      "summary": "Delete back to indent in Insert Ctrl-u",
+      "summary": "Delete back to indent in Insert mode Ctrl-u",
       "details": [
         "Deletes back to first non-blank",
         "Keeps text after the cursor"
@@ -1183,7 +1198,7 @@
       "category": [
         "insert"
       ],
-      "summary": "Shift indent in Insert Ctrl-t / Ctrl-d",
+      "summary": "Shift indent in Insert mode Ctrl-t / Ctrl-d",
       "details": [
         "Ctrl-t shifts indent right",
         "Ctrl-d shifts indent left"
@@ -1193,7 +1208,7 @@
       "category": [
         "insert"
       ],
-      "summary": "Insert a register in Insert Ctrl-r",
+      "summary": "Insert a register in Insert mode Ctrl-r",
       "details": [
         "Ctrl-r 0 inserts last yank",
         "Ctrl-r + inserts clipboard"
@@ -1446,9 +1461,9 @@
         "undo",
         "insert"
       ],
-      "summary": "Start a new undo step in Insert Ctrl-g u",
+      "summary": "Start a new undo step in Insert mode Ctrl-g u",
       "details": [
-        "Starts a new undo step in Insert",
+        "Starts a new undo step in Insert mode",
         "Useful after punctuation or pauses"
       ]
     },
@@ -1519,7 +1534,7 @@
       "category": [
         "visual"
       ],
-      "summary": "Enter Visual mode v / V / Ctrl-v",
+      "summary": "Enter Visual mode with v / V / Ctrl-v",
       "details": [
         "v selects characters",
         "V selects whole lines",
@@ -1530,7 +1545,7 @@
       "category": [
         "visual"
       ],
-      "summary": "Swap selection ends in Visual o",
+      "summary": "Swap selection ends in Visual mode with o",
       "details": [
         "o moves cursor to the other end",
         "Great for precise adjustments"
@@ -1540,9 +1555,9 @@
       "category": [
         "visual"
       ],
-      "summary": "Swap block corner in Visual O",
+      "summary": "Swap block corner in Visual mode with O",
       "details": [
-        "In block Visual, O swaps the corner",
+        "In block Visual mode, O swaps the corner",
         "Useful for column edits"
       ]
     },
@@ -1591,7 +1606,7 @@
       "category": [
         "visual"
       ],
-      "summary": "Reselect last Visual region gv",
+      "summary": "Reselect last Visual selection with gv",
       "details": [
         "gv reselects the last selection",
         "Also reselects text just put with p/P"
@@ -1637,7 +1652,8 @@
       "summary": "Select inside a word or paragraph viw / vip",
       "details": [
         "viw selects inside the current word",
-        "vip selects inside the current paragraph; vap includes surrounding blank lines",
+        "vip selects inside the current paragraph",
+        "vap includes surrounding blank lines",
         "Use i for inside and a for around with other text objects too"
       ]
     },
@@ -1760,7 +1776,7 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Move on command line Ctrl-b / Ctrl-e",
+      "summary": "Move on the command line Ctrl-b / Ctrl-e",
       "details": [
         "Ctrl-b jumps to the start",
         "Ctrl-e jumps to the end"
@@ -1770,7 +1786,7 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Move by word on command line S-Left / S-Right",
+      "summary": "Move by word on the command line S-Left / S-Right",
       "details": [
         "S-Left moves to the previous word",
         "S-Right moves to the next word"
@@ -1780,7 +1796,7 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Cancel command line Ctrl-c / Esc",
+      "summary": "Cancel the command line Ctrl-c / Esc",
       "details": [
         "Ctrl-c cancels the prompt",
         "Esc cancels it too"
@@ -1810,7 +1826,7 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Browse cmdline history Ctrl-p / Ctrl-n",
+      "summary": "Browse command-line history Ctrl-p / Ctrl-n",
       "details": [
         "In : or /, Ctrl-p goes to older history",
         "PageUp / PageDown do the same"
@@ -1860,9 +1876,31 @@
     },
     {
       "category": [
+        "cmdline",
+        "motion"
+      ],
+      "summary": "Clear jump history with :clearjumps",
+      "details": [
+        ":clearjumps removes stored jump locations",
+        "Useful when you want Ctrl-o / Ctrl-i to start fresh"
+      ]
+    },
+    {
+      "category": [
+        "cmdline",
+        "motion"
+      ],
+      "summary": "Delete marks with :delmarks",
+      "details": [
+        ":delmarks removes one or more marks",
+        "Use it when old marks are getting in the way"
+      ]
+    },
+    {
+      "category": [
         "cmdline"
       ],
-      "summary": "Insert register in command line Ctrl-r",
+      "summary": "Insert a register on the command line Ctrl-r",
       "details": [
         "In : or /, Ctrl-r inserts a register",
         "Great for reusing text in :s"
@@ -1872,7 +1910,7 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Insert word in command line Ctrl-r Ctrl-w",
+      "summary": "Insert a word on the command line Ctrl-r Ctrl-w",
       "details": [
         "In : or /, Ctrl-r Ctrl-w inserts the word under cursor",
         "Useful for reusing names in a command"
@@ -1882,7 +1920,7 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Insert file in command line Ctrl-r Ctrl-f",
+      "summary": "Insert a file on the command line Ctrl-r Ctrl-f",
       "details": [
         "In : or /, Ctrl-r Ctrl-f inserts the file under cursor",
         "Useful for file-based Ex commands"
@@ -1892,7 +1930,7 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Built-in help :help",
+      "summary": "Open help with :help",
       "details": [
         ":help {topic} opens docs (e.g., :help text-objects)",
         "Use Ctrl-] to jump tags, Ctrl-t to jump back"
@@ -1934,12 +1972,14 @@
     },
     {
       "category": [
-        "pattern"
+        "pattern",
+        "repeat"
       ],
       "summary": "Rename repeats with * cw n .",
       "details": [
         "* finds the next whole-word match",
-        "cw changes it; n . repeats on the next match"
+        "cw changes it",
+        "n . repeats on the next match"
       ]
     },
     {
@@ -2082,6 +2122,17 @@
     {
       "category": [
         "pattern",
+        "repeat"
+      ],
+      "summary": "Repeat last :s across the file with g&",
+      "details": [
+        "g& reruns the last :substitute on all lines",
+        "Useful after checking the change on one line with &"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
         "cmdline"
       ],
       "summary": "Use \\r to insert a newline in :s",
@@ -2176,7 +2227,8 @@
       ],
       "summary": "Inspect maps with :map / :nmap / :imap",
       "details": [
-        ":map lists mappings; mode forms narrow the list",
+        ":map lists mappings",
+        "Mode forms narrow the list",
         "Use :nmap or :imap when a key fails in one mode"
       ]
     },
@@ -2194,39 +2246,10 @@
       "category": [
         "map"
       ],
-      "summary": "Prefer noremap forms in ~/.ideavimrc",
-      "details": [
-        "nnoremap, inoremap, and vnoremap avoid recursion",
-        "Safer when your rhs uses keys you also remap"
-      ]
-    },
-    {
-      "category": [
-        "map"
-      ],
-      "summary": "Set <Leader> in ~/.ideavimrc",
-      "details": [
-        "Set it before mappings: let mapleader = \" \"",
-        "Put your personal shortcuts under <Leader>"
-      ]
-    },
-    {
-      "category": [
-        "map"
-      ],
-      "summary": "Use <silent> in ~/.ideavimrc maps",
-      "details": [
-        "<silent> stops a map from echoing on the cmdline",
-        "Useful for clean, repeatable shortcuts"
-      ]
-    },
-    {
-      "category": [
-        "map"
-      ],
       "summary": "Remove a map with :unmap / :nunmap",
       "details": [
-        ":unmap removes a mapping; mode forms target one mode",
+        ":unmap removes a mapping",
+        "Mode forms target one mode",
         "Use :iunmap or :vunmap when only one mode is affected"
       ]
     },
@@ -2242,18 +2265,19 @@
     },
     {
       "category": [
-        "map",
-        "ideavim"
+        "map"
       ],
-      "summary": "Map IDE actions in ~/.ideavimrc",
+      "summary": "Clear mappings with :mapclear / :nmapclear / :imapclear",
       "details": [
-        "In ~/.ideavimrc: map <Leader>f <Action>(ReformatCode)",
-        "Use plain map for <Action>(...), not noremap"
+        ":mapclear removes mappings",
+        "Mode forms limit the scope",
+        "Useful when debugging conflicting keys or resetting a mode"
       ]
     },
     {
       "category": [
-        "ideavim"
+        "ideavim",
+        "cmdline"
       ],
       "summary": "Reload ~/.ideavimrc with :source",
       "details": [
@@ -2263,7 +2287,20 @@
     },
     {
       "category": [
-        "windows"
+        "map",
+        "ideavim"
+      ],
+      "summary": "Use <Action>(...) in IdeaVim mappings",
+      "details": [
+        "In ~/.ideavimrc, map IDE actions with <Action>(...)",
+        "Example: map <Leader>f <Action>(ReformatCode)",
+        "Use plain map for IDE actions, not noremap"
+      ]
+    },
+    {
+      "category": [
+        "windows",
+        "cmdline"
       ],
       "summary": "Open a horizontal split :split",
       "details": [
@@ -2274,7 +2311,7 @@
     {
       "category": [
         "windows",
-        "editing"
+        "cmdline"
       ],
       "summary": "Open a file in a split :split {file}",
       "details": [
@@ -2284,7 +2321,8 @@
     },
     {
       "category": [
-        "windows"
+        "windows",
+        "cmdline"
       ],
       "summary": "Open a vertical split :vsplit",
       "details": [
@@ -2304,7 +2342,8 @@
     },
     {
       "category": [
-        "windows"
+        "windows",
+        "cmdline"
       ],
       "summary": "Close current split :close / Ctrl-w c",
       "details": [
@@ -2314,7 +2353,8 @@
     },
     {
       "category": [
-        "windows"
+        "windows",
+        "cmdline"
       ],
       "summary": "Keep only this split :only",
       "details": [
@@ -2346,7 +2386,7 @@
       "category": [
         "tabpage"
       ],
-      "summary": "Next and previous tab gt / gT",
+      "summary": "Next/previous tab gt / gT",
       "details": [
         "gt goes to the next tab",
         "gT goes to the previous tab"
@@ -2364,9 +2404,10 @@
     },
     {
       "category": [
-        "tabpage"
+        "tabpage",
+        "cmdline"
       ],
-      "summary": "Next and previous tab with Ex :tabn / :tabp",
+      "summary": "Next/previous tab with Ex :tabn / :tabp",
       "details": [
         ":tabn moves to the next tab",
         ":tabp moves to the previous tab"
@@ -2374,7 +2415,8 @@
     },
     {
       "category": [
-        "tabpage"
+        "tabpage",
+        "cmdline"
       ],
       "summary": "Close current tab :tabclose",
       "details": [
@@ -2384,7 +2426,8 @@
     },
     {
       "category": [
-        "tabpage"
+        "tabpage",
+        "cmdline"
       ],
       "summary": "Keep only this tab :tabonly",
       "details": [
@@ -2394,7 +2437,8 @@
     },
     {
       "category": [
-        "tabpage"
+        "tabpage",
+        "cmdline"
       ],
       "summary": "Reorder tabs :tabmove",
       "details": [
@@ -2410,6 +2454,17 @@
       "details": [
         "zf{motion} folds a motion like zfip",
         "Works where IDE folding is available"
+      ]
+    },
+    {
+      "category": [
+        "fold",
+        "visual"
+      ],
+      "summary": "Fold a selection from Visual mode with zf",
+      "details": [
+        "Select text in Visual mode, then press zf",
+        "Useful when the region is easier to select than describe with a motion"
       ]
     },
     {
@@ -2474,7 +2529,8 @@
     },
     {
       "category": [
-        "ideavim"
+        "ideavim",
+        "cmdline"
       ],
       "summary": "Toggle IdeaVim with :action ToggleIdeaVim",
       "details": [
@@ -2518,6 +2574,7 @@
     {
       "category": [
         "ideavim",
+        "options",
         "change"
       ],
       "summary": "Use IDE smart join with :set ideajoin",
@@ -2528,17 +2585,19 @@
     },
     {
       "category": [
-        "ideavim"
+        "ideavim",
+        "options"
       ],
-      "summary": "Keep your mode during rename edits",
+      "summary": "Stop rename from forcing Select mode",
       "details": [
         "Use :set idearefactormode=keep",
-        "Rename edits stop forcing Select mode"
+        "Useful when IDE rename interrupts your normal Vim mode flow"
       ]
     },
     {
       "category": [
-        "ideavim"
+        "ideavim",
+        "options"
       ],
       "summary": "Sync marks with :set ideamarks",
       "details": [
@@ -2549,13 +2608,12 @@
     {
       "category": [
         "ideavim",
-        "options",
-        "editing"
+        "options"
       ],
-      "summary": "Use IDE save hooks with :set ideawrite=all",
+      "summary": "Make :w use IDE Save All",
       "details": [
         "Use :set ideawrite=all",
-        ":w behaves like IDE Save All"
+        "Useful when you want :w to trigger IDE save hooks"
       ]
     },
     {
@@ -2563,10 +2621,10 @@
         "ideavim",
         "options"
       ],
-      "summary": "Let IDE completion keep Tab and Enter",
+      "summary": "Inspect IDE-owned completion keys with :set lookupkeys?",
       "details": [
-        "Use :set lookupkeys? to inspect them",
-        "These keys stay with the IDE popup"
+        ":set lookupkeys? shows which keys stay with the IDE completion popup",
+        "Use it when Tab or Enter do not behave like plain Vim keys"
       ]
     },
     {
@@ -2596,10 +2654,10 @@
         "ideavim",
         "plugin"
       ],
-      "summary": "Make { and } code-aware with paragraph-motion",
+      "summary": "Treat whitespace-only lines as paragraph breaks",
       "details": [
         "Use :set paragraph-motion to enable the plugin",
-        "{ and } stop treating only fully empty lines as paragraph breaks"
+        "{ and } treat whitespace-only lines as paragraph breaks"
       ]
     },
     {
@@ -2623,7 +2681,8 @@
       "summary": "Jump to two-character targets with sneak",
       "details": [
         "Use :set sneak to enable the plugin",
-        "sfo jumps forward to fo; Sfo searches backward"
+        "sfo jumps forward to fo",
+        "Sfo searches backward"
       ]
     },
     {
@@ -2644,10 +2703,10 @@
         "ideavim",
         "plugin"
       ],
-      "summary": "Replace text from a register with ReplaceWithRegister",
+      "summary": "Replace text with the current register",
       "details": [
         "Use :set ReplaceWithRegister to enable the plugin",
-        "gr{motion} replaces text with the current register; \"agrw uses register a"
+        "gr{motion} replaces text with the current register"
       ]
     },
     {
@@ -2659,7 +2718,8 @@
       "summary": "Comment text with commentary gcc / gc",
       "details": [
         "Use :set commentary to enable the plugin",
-        "gcc comments a line; gc works with motions and Visual selections"
+        "gcc comments a line",
+        "gc works with motions or Visual mode"
       ]
     },
     {
@@ -2671,7 +2731,9 @@
       "summary": "Add, change, or delete surroundings with surround",
       "details": [
         "Use :set surround to enable the plugin",
-        "ysiw) adds parens; cs\"' swaps quote types; ds\" removes them"
+        "ysiw) adds parens",
+        "cs\"' swaps quote types",
+        "ds\" removes them"
       ]
     },
     {
@@ -2683,7 +2745,8 @@
       "summary": "Swap two regions with exchange",
       "details": [
         "Use :set exchange to enable the plugin",
-        "cxiw marks one region; repeat on a second target to swap"
+        "cxiw marks one region",
+        "Repeat on a second target to swap them"
       ]
     },
     {
@@ -2695,7 +2758,8 @@
       "summary": "Target arguments with ia / aa",
       "details": [
         "Use :set argtextobj to enable the plugin",
-        "cia changes one argument; daa deletes one"
+        "cia changes one argument",
+        "daa deletes one argument"
       ]
     },
     {
@@ -2707,7 +2771,7 @@
       "summary": "Select the whole buffer with ae / ie",
       "details": [
         "Use :set textobj-entire to enable the plugin",
-        "vae or vie selects the whole buffer"
+        "vae or vie selects the entire buffer"
       ]
     },
     {
@@ -2718,8 +2782,9 @@
       ],
       "summary": "Target an indent block with ii / ai",
       "details": [
-        "Use :set indent-object to enable the plugin",
-        "vai selects the current indent block; dii deletes it"
+        "Enable the indent-object plugin in ~/.ideavimrc",
+        "vai selects the current indent block",
+        "dii deletes it"
       ]
     },
     {
@@ -2728,10 +2793,11 @@
         "ideavim",
         "plugin"
       ],
-      "summary": "Open the project tree with NERDTree",
+      "summary": "Browse the project tree with NERDTree",
       "details": [
         "Use :set NERDTree to enable the plugin",
-        ":NERDTreeToggle opens the tree; :NERDTreeFind reveals the current file"
+        ":NERDTreeToggle opens the tree",
+        ":NERDTreeFind reveals the current file"
       ]
     },
     {
@@ -2743,7 +2809,8 @@
       "summary": "Target functions with if / af",
       "details": [
         "Use :set functiontextobj to enable the plugin",
-        "vif selects the inner function; yaf yanks a function"
+        "vif selects the inner function",
+        "yaf yanks the function"
       ]
     },
     {
@@ -2752,10 +2819,10 @@
         "ideavim",
         "plugin"
       ],
-      "summary": "Add cursors with multiple-cursors",
+      "summary": "Add cursors to the next whole-word match",
       "details": [
         "Use :set multiple-cursors to enable the plugin",
-        "Map <C-n> to <Plug>NextWholeOccurrence, then press <C-n> to add matches"
+        "Press your mapped key to add the next whole-word match"
       ]
     },
     {
