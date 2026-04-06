@@ -137,6 +137,33 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
         }
     }
 
+    fun testCreateComponentSelectsNewCategoriesByDefault() {
+        settingsService().setEnabledTipCategories(
+            availableCategories = listOf("basics", "editing"),
+            enabledCategories = listOf("editing")
+        )
+        tipService().saveTips(
+            listOf(
+                VimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
+                VimTip("summary-2", listOf("details-2"), listOf("search"))
+            )
+        )
+        val configurable = VimCoachSettingsConfigurable()
+
+        try {
+            val component = configurable.createComponent()
+            val basicsCheckBox = findCheckBox(component, "basics")
+            val editingCheckBox = findCheckBox(component, "editing")
+            val searchCheckBox = findCheckBox(component, "search")
+
+            assertFalse(basicsCheckBox.isSelected)
+            assertTrue(editingCheckBox.isSelected)
+            assertTrue(searchCheckBox.isSelected)
+        } finally {
+            configurable.disposeUIResources()
+        }
+    }
+
     fun testResetRestoresPersistedValue() {
         settingsService().setShowTipsOnStartupEnabled(false)
         settingsService().setPeriodicTipsEnabled(false)

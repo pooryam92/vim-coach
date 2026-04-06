@@ -51,32 +51,23 @@ class VimCoachSettingsServiceImpl() : VimCoachSettingsService {
     }
 
     override fun getEnabledTipCategories(availableCategories: List<String>): List<String> {
-        val normalizedAvailable = availableCategories.distinct()
-        val persistedCategories = currentState().enabledTipCategories ?: return normalizedAvailable
-        val availableCategorySet = normalizedAvailable.toSet()
+        val normalizedAvailable = normalizeCategoryNames(availableCategories)
+        val disabledCategories = disabledCategorySet()
 
-        return persistedCategories
+        return normalizedAvailable
             .asSequence()
-            .map(String::trim)
-            .filter(String::isNotBlank)
-            .distinct()
-            .filter(availableCategorySet::contains)
+            .filterNot(disabledCategories::contains)
             .toList()
     }
 
-    override fun setEnabledTipCategories(categories: List<String>) {
-        val normalizedCategories = categories
-            .asSequence()
-            .map(String::trim)
-            .filter(String::isNotBlank)
-            .distinct()
-            .toList()
+    override fun setEnabledTipCategories(availableCategories: List<String>, enabledCategories: List<String>) {
+        val normalizedDisabled = disabledCategoriesFor(availableCategories, enabledCategories)
 
-        if (currentState().enabledTipCategories == normalizedCategories) {
+        if (disabledCategoryList() == normalizedDisabled) {
             return
         }
 
-        settingsStore().setEnabledTipCategories(normalizedCategories)
+        settingsStore().setDisabledTipCategories(normalizedDisabled)
     }
 
     private fun currentState(): VimCoachSettingsStore.State {
@@ -85,6 +76,32 @@ class VimCoachSettingsServiceImpl() : VimCoachSettingsService {
 
     private fun settingsStore(): VimCoachSettingsStore {
         return injectedSettingsStore ?: service()
+    }
+
+    private fun disabledCategoriesFor(
+        availableCategories: List<String>,
+        enabledCategories: List<String>
+    ): List<String> {
+        val normalizedAvailable = normalizeCategoryNames(availableCategories)
+        val normalizedEnabled = normalizeCategoryNames(enabledCategories).toSet()
+        return normalizedAvailable.filterNot(normalizedEnabled::contains)
+    }
+
+    private fun disabledCategoryList(): List<String> {
+        return normalizeCategoryNames(currentState().disabledTipCategories)
+    }
+
+    private fun disabledCategorySet(): Set<String> {
+        return disabledCategoryList().toSet()
+    }
+
+    private fun normalizeCategoryNames(categories: List<String>): List<String> {
+        return categories
+            .asSequence()
+            .map(String::trim)
+            .filter(String::isNotBlank)
+            .distinct()
+            .toList()
     }
 
     private companion object {

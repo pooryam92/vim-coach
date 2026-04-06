@@ -37,7 +37,7 @@ class VimCoachSettingsScreenServiceImpl() : VimCoachSettingsScreenService {
         settingsService.setShowTipsOnStartupEnabled(state.showTipsOnStartup)
         settingsService.setTipIntervalHours(state.tipIntervalHours)
         settingsService.setPeriodicTipsEnabled(state.periodicTipsEnabled)
-        settingsService.setEnabledTipCategories(state.enabledCategories)
+        settingsService.setEnabledTipCategories(state.availableCategories, state.enabledCategories)
     }
 
     private fun loadAvailableCategories(): List<String> {

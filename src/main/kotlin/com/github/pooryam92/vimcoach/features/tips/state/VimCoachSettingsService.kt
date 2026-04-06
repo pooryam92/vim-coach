@@ -11,5 +11,5 @@ interface VimCoachSettingsService {
     fun setTipIntervalHours(hours: Int)
 
     fun getEnabledTipCategories(availableCategories: List<String>): List<String>
-    fun setEnabledTipCategories(categories: List<String>)
+    fun setEnabledTipCategories(availableCategories: List<String>, enabledCategories: List<String>)
 }

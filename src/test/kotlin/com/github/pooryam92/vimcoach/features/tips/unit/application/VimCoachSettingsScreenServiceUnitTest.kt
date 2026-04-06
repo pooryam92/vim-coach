@@ -25,7 +25,10 @@ class VimCoachSettingsScreenServiceUnitTest {
         settingsService.setShowTipsOnStartupEnabled(false)
         settingsService.setPeriodicTipsEnabled(true)
         settingsService.setTipIntervalHours(6)
-        settingsService.setEnabledTipCategories(listOf("editing"))
+        settingsService.setEnabledTipCategories(
+            availableCategories = listOf("basics", "editing", "search"),
+            enabledCategories = listOf("editing")
+        )
 
         val tipService = createTipService().apply {
             saveTips(
@@ -98,6 +101,30 @@ class VimCoachSettingsScreenServiceUnitTest {
         assertEquals(1, loader.refetchCalls)
         assertEquals(listOf("basics", "editing"), state.availableCategories)
         assertEquals(listOf("basics", "editing"), state.enabledCategories)
+    }
+
+    @Test
+    fun loadStateSelectsNewCategoriesByDefault() {
+        val settingsService = createSettingsService().apply {
+            setEnabledTipCategories(
+                availableCategories = listOf("basics", "editing"),
+                enabledCategories = listOf("editing")
+            )
+        }
+        val tipService = createTipService().apply {
+            saveTips(
+                listOf(
+                    VimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
+                    VimTip("summary-2", listOf("details-2"), listOf("search"))
+                )
+            )
+        }
+        val service = createScreenService(settingsService, tipService)
+
+        val state = service.loadState()
+
+        assertEquals(listOf("basics", "editing", "search"), state.availableCategories)
+        assertEquals(listOf("editing", "search"), state.enabledCategories)
     }
 
     private fun createScreenService(

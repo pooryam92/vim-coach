@@ -81,7 +81,10 @@ class VimCoachSettingsServiceUnitTest {
     fun setEnabledTipCategoriesUpdatesState() {
         val service = createService()
 
-        service.setEnabledTipCategories(listOf("basics", "editing", "basics"))
+        service.setEnabledTipCategories(
+            availableCategories = listOf("basics", "editing", "search"),
+            enabledCategories = listOf("basics", "editing", "basics")
+        )
 
         assertEquals(
             listOf("basics", "editing"),
@@ -90,14 +93,32 @@ class VimCoachSettingsServiceUnitTest {
     }
 
     @Test
-    fun getEnabledTipCategoriesFiltersMissingCategories() {
+    fun removedCategoriesDoNotLeakIntoEnabledResults() {
         val service = createService()
 
-        service.setEnabledTipCategories(listOf("basics", "editing"))
+        service.setEnabledTipCategories(
+            availableCategories = listOf("basics", "editing", "search"),
+            enabledCategories = listOf("editing", "search")
+        )
 
         assertEquals(
-            listOf("editing"),
-            service.getEnabledTipCategories(listOf("editing", "search"))
+            listOf("editing", "search", "macros"),
+            service.getEnabledTipCategories(listOf("editing", "search", "macros"))
+        )
+    }
+
+    @Test
+    fun newCategoriesAreEnabledByDefaultAfterSavingSelection() {
+        val service = createService()
+
+        service.setEnabledTipCategories(
+            availableCategories = listOf("basics", "editing"),
+            enabledCategories = listOf("editing")
+        )
+
+        assertEquals(
+            listOf("editing", "search"),
+            service.getEnabledTipCategories(listOf("basics", "editing", "search"))
         )
     }
 
@@ -135,10 +156,10 @@ class VimCoachSettingsServiceUnitTest {
     }
 
     @Test
-    fun loadStateRestoresEnabledTipCategories() {
+    fun loadStateRestoresDisabledTipCategories() {
         val store = VimCoachSettingsStoreImpl()
         val service = createService(store)
-        val persistedState = VimCoachSettingsStore.State(enabledTipCategories = listOf("basics", "search"))
+        val persistedState = VimCoachSettingsStore.State(disabledTipCategories = listOf("editing"))
 
         store.loadState(persistedState)
 

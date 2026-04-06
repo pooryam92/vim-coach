@@ -7,11 +7,11 @@ interface VimCoachSettingsStore : PersistentStateComponent<VimCoachSettingsStore
         var showTipsOnStartup: Boolean = true,
         var periodicTipsEnabled: Boolean = false,
         var tipIntervalHours: Int = 1,
-        var enabledTipCategories: List<String>? = null
+        var disabledTipCategories: List<String> = emptyList()
     )
 
     fun setShowTipsOnStartup(enabled: Boolean)
     fun setPeriodicTipsEnabled(enabled: Boolean)
     fun setTipIntervalHours(hours: Int)
-    fun setEnabledTipCategories(categories: List<String>)
+    fun setDisabledTipCategories(categories: List<String>)
 }

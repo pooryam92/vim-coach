@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-04-07
+
+### Changed
+
+- Newly added tip categories now stay selected by default in Vim Coach settings after tip refreshes
+- Category selection persistence now stores explicit opt-outs, so category lists expand safely as the tip taxonomy grows
+
 ## [1.2.0] - 2026-04-01
 
 ### Added
@@ -62,7 +69,8 @@
 - Support for remote tip sources
 - Action to refetch tips from remote source for updating the local tip library
 
-[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.2.0...HEAD
+[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.2.1...HEAD
+[1.2.1]: https://github.com/pooryam92/vim-coach/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/pooryam92/vim-coach/compare/1.1.0...1.2.0
 [1.2.0-beta]: https://github.com/pooryam92/vim-coach/compare/1.1.0...1.2.0-beta
 [1.1.0]: https://github.com/pooryam92/vim-coach/compare/1.0.1...1.1.0

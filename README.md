@@ -15,7 +15,7 @@ Vim Coach is an IntelliJ Platform plugin designed to help developers learn and m
 -  **On-Demand Action**: Run `Vim Coach: Show Tip` from Find Action (`Ctrl+Shift+A`)
 -  **Startup Tips**: See a Vim tip when you start your IDE
 -  **Periodic Tips**: Schedule reminder tips from the plugin settings
--  **Category Filters**: Enable or disable tip categories from the settings UI
+-  **Category Filters**: Enable or disable tip categories from the settings UI, with newly added categories enabled by default
 -  **Settings UI**: Control startup tips, periodic reminders, and active categories from `Settings | Tools | Vim Coach`
 -  **Comprehensive Library**: Hundreds of Vim commands covering navigation, editing, searching, and more
 -  **Remote Updates**: Tips can be loaded from remote sources for fresh content
@@ -31,7 +31,7 @@ Once installed, you can:
 1. **Show a Vim Tip on Demand**: Run `Vim Coach: Show Tip` from Find Action (`Ctrl+Shift+A`)
 2. **Learn at Startup**: Tips will appear automatically when you open a project 
 3. **Schedule Periodic Tips**: Open `Settings | Tools | Vim Coach` and enable recurring reminders
-4. **Filter by Category**: Use the category checkboxes in `Settings | Tools | Vim Coach` to focus on the types of tips you want to practice
+4. **Filter by Category**: Use the category checkboxes in `Settings | Tools | Vim Coach` to focus on the types of tips you want to practice. When refreshed tips introduce new categories, they start enabled unless you explicitly turn them off.
 5. **Browse Tips**: Each tip includes a summary and detailed explanation with examples
 6. **Refresh Tips from Remote**: Use the `Vim Coach: Refresh Tips` action to update your tips library from the remote source
 

@@ -27,9 +27,9 @@ class VimCoachSettingsStoreImpl :
         }
     }
 
-    override fun setEnabledTipCategories(categories: List<String>) {
+    override fun setDisabledTipCategories(categories: List<String>) {
         updateState { currentState ->
-            currentState.copy(enabledTipCategories = categories.toList())
+            currentState.copy(disabledTipCategories = categories.toList())
         }
     }
 }

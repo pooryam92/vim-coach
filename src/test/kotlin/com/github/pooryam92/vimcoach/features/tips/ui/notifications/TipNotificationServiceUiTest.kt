@@ -185,6 +185,9 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
             return enabledCategories
         }
 
-        override fun setEnabledTipCategories(categories: List<String>) = Unit
+        override fun setEnabledTipCategories(
+            availableCategories: List<String>,
+            enabledCategories: List<String>
+        ) = Unit
     }
 }
