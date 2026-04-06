@@ -146,10 +146,10 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 
 ## Current state
 
-- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, `repeat`, `visual`, `cmdline`, and `pattern` sections.
-- Current totals: `161` unique tips, `83` reused from v1 by exact summary match, `78` new.
+- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, `repeat`, `visual`, `cmdline`, `pattern`, and `map` sections.
+- Current totals: `172` unique tips, `74` reused from v1 by exact summary match, `98` new.
 - Total counts should always mean unique tip entries only.
-- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `13` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`, `21` `pattern`.
+- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `13` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`, `24` `pattern`, `8` `map`.
 - Category totals should use the primary category only so multi-tagged tips are not double-counted in the overall total.
 - Exact-summary reused/new counts are only a rough migration snapshot.
   Once a v2 tip is rewritten for clarity, the wording may no longer match v1 exactly even if the concept was reused.
@@ -173,6 +173,16 @@ Start with the primary pages, then scan the nearby pages if the section still fe
   High-value examples were `nzz`, `cgn`, and `:.,$s`, which are easier for users to apply than abstract pattern syntax alone.
 - For `pattern`, summaries must describe the user outcome, not the Vim concept label.
   Tips like `:g`, `:v`, `gc`, and `&` were much clearer once the summary said what they do instead of naming the underlying command family.
+- For `map`, the strongest support signal comes from `map.txt`, `usr_40.txt`, and the generated Ex command map together.
+  The mapping commands themselves appear in the generated list, but many useful pieces like `<Leader>`, `<silent>`, and `<Nop>` are mapping arguments, not standalone commands.
+- For `map`, keep the section focused on practical `.ideavimrc` workflows.
+  High-value topics were inspecting maps, choosing the right mode-specific map, preferring `noremap`, using `<Leader>`, unmapping keys, and disabling risky keys with `<Nop>`.
+- For IdeaVim-specific action mappings, use documented behavior instead of guessing from generic Vim help.
+  The project README and existing IdeaVim tips both point to `map <Leader>... <Action>(...)`, and that form should stay `map`, not `noremap`.
+- For `map`, be explicit about where the user uses the syntax.
+  Direct `:map` and `:unmap` tips can use Ex-command wording, but mapping-definition tips should say they belong in `~/.ideavimrc`.
+- For config-file tips, keep the syntax consistent with config-file usage.
+  In `.ideavimrc`, write `nmap`, `nnoremap`, and similar forms without a leading `:`.
 - For `options`, the strongest support signal comes from the official IdeaVim `set` docs plus Vim's own `options.txt`.
   That is more reliable than looking for individual option names in the generated command maps.
 - Keep `options` practical and high-value.

@@ -1718,6 +1718,87 @@
         ":v/pat/d deletes lines that do not match",
         "Use it when you want to keep only matching lines"
       ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Inspect maps with :map / :nmap / :imap",
+      "details": [
+        ":map lists mappings; mode forms narrow the list",
+        "Use :nmap or :imap when a key fails in one mode"
+      ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Use mode-specific maps in ~/.ideavimrc",
+      "details": [
+        "Use nmap, imap, or vmap for the target mode",
+        "Normal, Insert, and Visual maps should stay separate"
+      ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Prefer noremap forms in ~/.ideavimrc",
+      "details": [
+        "nnoremap, inoremap, and vnoremap avoid recursion",
+        "Safer when your rhs uses keys you also remap"
+      ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Set <Leader> in ~/.ideavimrc",
+      "details": [
+        "Set it before mappings: let mapleader = \" \"",
+        "Put your personal shortcuts under <Leader>"
+      ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Use <silent> in ~/.ideavimrc maps",
+      "details": [
+        "<silent> stops a map from echoing on the cmdline",
+        "Useful for clean, repeatable shortcuts"
+      ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Remove a map with :unmap / :nunmap",
+      "details": [
+        ":unmap removes a mapping; mode forms target one mode",
+        "Use :iunmap or :vunmap when only one mode is affected"
+      ]
+    },
+    {
+      "category": [
+        "map"
+      ],
+      "summary": "Use <Nop> to disable a key",
+      "details": [
+        "nnoremap Q <Nop> makes Q do nothing",
+        "Useful for disabling keys you hit by accident"
+      ]
+    },
+    {
+      "category": [
+        "map",
+        "ideavim"
+      ],
+      "summary": "Map IDE actions in ~/.ideavimrc",
+      "details": [
+        "In ~/.ideavimrc: map <Leader>f <Action>(ReformatCode)",
+        "Use plain map for <Action>(...), not noremap"
+      ]
     }
   ]
 }

@@ -2106,7 +2106,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Inspect mappings :map :nmap :imap",
       "details": [
@@ -2127,7 +2128,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Prefer non-recursive maps noremap",
       "details": [
@@ -2137,7 +2139,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Use <leader> for ergonomic mappings",
       "details": [
@@ -2147,7 +2150,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Hide mapping noise with <silent>",
       "details": [
@@ -2701,7 +2705,8 @@
     {
       "category": [
         "ideavim",
-        "workflow"
+        "workflow",
+        "migrated"
       ],
       "summary": "Run and map IDE actions :action / <Action>...",
       "details": [
