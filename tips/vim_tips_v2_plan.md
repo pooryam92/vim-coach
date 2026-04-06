@@ -145,10 +145,10 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 
 ## Current state
 
-- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, and `change / undo` sections.
-- Current totals: `94` unique tips, `42` reused from v1 by exact summary match, `52` new.
+- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, and `repeat` sections.
+- Current totals: `100` unique tips, `44` reused from v1 by exact summary match, `56` new.
 - Total counts should always mean unique tip entries only.
-- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `2` `options`, `14` `insert`, `21` `change / undo`.
+- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `2` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`.
 - Category totals should use the primary category only so multi-tagged tips are not double-counted in the overall total.
 - Exact-summary reused/new counts are only a rough migration snapshot.
   Once a v2 tip is rewritten for clarity, the wording may no longer match v1 exactly even if the concept was reused.
@@ -162,6 +162,14 @@ Start with the primary pages, then scan the nearby pages if the section still fe
   Tips like `scrolloff` and `scroll` should be discoverable from both categories.
 - `change / undo` overlaps naturally with `motion`, `insert`, and `repeat`.
   Tips like `cw`, `s`, `cc`, `.`, and `u` are easier to find when they can show up from more than one user path.
+- `repeat` is partly its own category and partly a cross-cutting behavior.
+  The strongest repeat tips are `.`, macro record/playback, `Ctrl-a`/`Ctrl-@`, `@:`, and a few repeat-style commands that naturally belong to other sections.
+- When a repeat tip already has a strong home in another section, prefer cross-tagging over moving it.
+  Good examples are `;` / `,` under `motion`, `n` / `N` under `pattern`, and `&` under `pattern` or `cmdline`.
+- Be careful with packed repeat tips.
+  `{count}@{reg}` and `:normal @r` read better as two tips than one overloaded macro tip.
+- For `repeat`, primary-category counts should only include tips whose main user intent is repetition itself.
+  Cross-tagged repeat behaviors in `motion`, `pattern`, or `cmdline` should not inflate the primary `repeat` total.
 - Multi-tagging works best when it matches how users look for the tip, not how Vim internally classifies it.
 - Packed command-family tips often need to be split into smaller tips for usability.
   This was true for both the `z<CR> / z. / z- / z+ / z^` family and the `zh / zl / zH / zL / zs / ze` family.

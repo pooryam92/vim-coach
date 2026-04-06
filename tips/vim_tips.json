@@ -427,7 +427,8 @@
     },
     {
       "category": [
-        "macros"
+        "macros",
+        "migrated"
       ],
       "summary": "Record a macro q{reg}",
       "details": [
@@ -437,7 +438,8 @@
     },
     {
       "category": [
-        "macros"
+        "macros",
+        "migrated"
       ],
       "summary": "Append to an existing macro qA",
       "details": [
@@ -806,7 +808,8 @@
     },
     {
       "category": [
-        "macros"
+        "macros",
+        "migrated"
       ],
       "summary": "Play and repeat macros @ / @@",
       "details": [
@@ -887,7 +890,8 @@
     {
       "category": [
         "macros",
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Repeat a macro {count}@{reg} / :normal @r",
       "details": [
@@ -2690,7 +2694,8 @@
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "migrated"
       ],
       "summary": "Repeat last Ex command with @:",
       "details": [

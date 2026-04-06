@@ -736,8 +736,8 @@
     },
     {
       "category": [
-        "insert",
-        "repeat"
+        "repeat",
+        "insert"
       ],
       "summary": "Repeat last insert Ctrl-a / Ctrl-@",
       "details": [
@@ -974,6 +974,69 @@
       "details": [
         "Starts a new undo step in Insert",
         "Useful after punctuation or pauses"
+      ]
+    },
+    {
+      "category": [
+        "repeat"
+      ],
+      "summary": "Record a macro q{reg}",
+      "details": [
+        "qa records into register a",
+        "Press q again to stop"
+      ]
+    },
+    {
+      "category": [
+        "repeat"
+      ],
+      "summary": "Append to a macro qA",
+      "details": [
+        "qA appends to macro a",
+        "Use when one more step is needed"
+      ]
+    },
+    {
+      "category": [
+        "repeat"
+      ],
+      "summary": "Play and repeat macros @ / @@",
+      "details": [
+        "@a plays macro a",
+        "@@ repeats the last macro"
+      ]
+    },
+    {
+      "category": [
+        "repeat",
+        "cmdline"
+      ],
+      "summary": "Repeat a macro {count}@{reg}",
+      "details": [
+        "10@a runs macro a ten times",
+        "Use counts to scale the playback"
+      ]
+    },
+    {
+      "category": [
+        "repeat",
+        "cmdline"
+      ],
+      "summary": "Run a macro on a range with :normal @r",
+      "details": [
+        ":normal @r runs macro r on a range",
+        "Useful for line-by-line cleanup"
+      ]
+    },
+    {
+      "category": [
+        "repeat",
+        "cmdline"
+      ],
+      "summary": "Repeat last : command with @:",
+      "details": [
+        "@: reruns the last : command",
+        "Useful after :s, :g, and :normal"
       ]
     }
   ]
