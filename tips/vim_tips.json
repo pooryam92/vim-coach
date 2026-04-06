@@ -605,7 +605,8 @@
     {
       "category": [
         "basics",
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Search forward/backward / and ?",
       "details": [
@@ -617,7 +618,8 @@
     {
       "category": [
         "basics",
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Next/previous search match n / N",
       "details": [
@@ -628,7 +630,8 @@
     {
       "category": [
         "basics",
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Search word under cursor * / #",
       "details": [
@@ -638,7 +641,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Search partial token g* / g#",
       "details": [
@@ -672,7 +676,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Clear search highlighting :noh",
       "details": [
@@ -682,7 +687,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Case toggle inside a pattern \\c and \\C",
       "details": [
@@ -716,7 +722,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Whole-word boundaries \\< and \\>",
       "details": [
@@ -726,7 +733,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Keep results centered while hopping nzz",
       "details": [
@@ -736,7 +744,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Use search as a motion with operators",
       "details": [
@@ -746,7 +755,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Search offsets to land precisely",
       "details": [
@@ -756,7 +766,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Search for literal text with \\V",
       "details": [
@@ -766,7 +777,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Use \\v to reduce escaping in regex",
       "details": [
@@ -776,7 +788,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Reuse last / pattern in :s with //",
       "details": [
@@ -786,7 +799,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Alternative delimiters in :s",
       "details": [
@@ -796,7 +810,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Confirm substitutions with c",
       "details": [
@@ -806,7 +821,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Repeat last substitute on a line &",
       "details": [
@@ -827,7 +843,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Use \\r to insert a newline in :s",
       "details": [
@@ -837,7 +854,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Use & to reuse the whole match in :s",
       "details": [
@@ -847,7 +865,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Backreferences in :s (\\1, \\2, ...)",
       "details": [
@@ -857,7 +876,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Limit :s to a range",
       "details": [
@@ -867,7 +887,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "From cursor to end :.,$",
       "details": [
@@ -877,7 +898,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Run commands on matching lines :g",
       "details": [
@@ -887,7 +909,8 @@
     },
     {
       "category": [
-        "search"
+        "search",
+        "migrated"
       ],
       "summary": "Invert :global :v / :g!",
       "details": [
@@ -922,7 +945,8 @@
       "category": [
         "search",
         "editing",
-        "workflow"
+        "workflow",
+        "migrated"
       ],
       "summary": "Replace matches one by one with cgn",
       "details": [

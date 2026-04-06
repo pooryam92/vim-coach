@@ -1456,6 +1456,268 @@
         ":help {topic} opens docs (e.g., :help text-objects)",
         "Use Ctrl-] to jump tags, Ctrl-t to jump back"
       ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Search forward/backward / and ?",
+      "details": [
+        "/pattern searches forward",
+        "?pattern searches backward",
+        "Press Enter to search, Esc to cancel"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "repeat"
+      ],
+      "summary": "Next/previous search match n / N",
+      "details": [
+        "n goes to the next match",
+        "N goes to the previous match",
+        "Works after /, ?, *, and #"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "motion"
+      ],
+      "summary": "Search word under cursor * / #",
+      "details": [
+        "* searches forward for the exact word",
+        "# searches backward for the exact word"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Search partial token g* / g#",
+      "details": [
+        "Like * and # but allows partial matches",
+        "Useful for camelCase and snake_case"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Clear search highlighting :noh",
+      "details": [
+        ":noh (or :nohlsearch) clears highlighting",
+        "The current search pattern still stays active"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Force search case with \\c / \\C",
+      "details": [
+        "/foo\\c makes this search case-insensitive",
+        "/Foo\\C forces this search to be case-sensitive"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Match whole words with \\< and \\>",
+      "details": [
+        "/\\<word\\> matches whole words only",
+        "Use it to avoid partial-token matches"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "scroll"
+      ],
+      "summary": "Recenter search results with nzz",
+      "details": [
+        "After a search, use nzz to jump and recenter",
+        "Use Nzz to go back and recenter too"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "change / undo"
+      ],
+      "summary": "Delete/change up to a search match",
+      "details": [
+        "d/pat<Enter> deletes up to the next match",
+        "c?pat<Enter> changes back to the previous match"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Use / offsets like /e and /+2",
+      "details": [
+        "/pat/e lands on the end of the match",
+        "/pat/+2 lands two lines after the match"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Search for literal text with \\V",
+      "details": [
+        "\\V makes most characters literal",
+        "Good for paths, JSON, and punctuation"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Use \\v to reduce escaping in regex",
+      "details": [
+        "\\v makes most characters magic",
+        "Great for :s patterns with groups"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Reuse last / pattern in :s with //",
+      "details": [
+        "After searching /pat, use :%s//new/g",
+        "The empty pattern reuses the last search"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Use # or | as :s delimiters",
+      "details": [
+        "Use # or | when the pattern contains /",
+        "Example: :%s#old/path#new/path#g"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Confirm each :s change with gc",
+      "details": [
+        "Use :%s/old/new/gc",
+        "y/n/a/q/l controls each match"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "repeat"
+      ],
+      "summary": "Repeat last :s on this line with &",
+      "details": [
+        "& repeats the last :s on the current line",
+        "Useful for applying the same :s line by line"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Use \\r to insert a newline in :s",
+      "details": [
+        "In the replacement, \\r inserts a newline",
+        "Useful for reformatting lists and code"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Reuse whole match in :s with &",
+      "details": [
+        "In the replacement, & means the whole match",
+        "Example: :%s/foo/&_suffix/g"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Reuse groups in :s with \\1, \\2",
+      "details": [
+        "Capture groups in the pattern, then reuse them",
+        "Great for swapping or reordering text"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "change / undo",
+        "repeat"
+      ],
+      "summary": "Replace matches one by one with cgn",
+      "details": [
+        "Search first with /, *, or #",
+        "cgn changes the next match and enters Insert",
+        ". repeats the same edit on later matches"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline",
+        "visual"
+      ],
+      "summary": "Limit :s to a range",
+      "details": [
+        ":10,20s/a/b/g changes only those lines",
+        "Visual :s starts with the '<,'> range"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Replace from here to end with :.,$s",
+      "details": [
+        ":.,$s/foo/bar/g starts at the current line",
+        "Useful for partial-file refactors"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Run a command on matching lines with :g",
+      "details": [
+        ":g/TODO/p prints matching lines",
+        ":g/pat/d deletes matching lines"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Keep only matching lines with :v / :g!",
+      "details": [
+        ":v/pat/d deletes lines that do not match",
+        "Use it when you want to keep only matching lines"
+      ]
     }
   ]
 }

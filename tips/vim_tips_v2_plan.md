@@ -146,10 +146,10 @@ Start with the primary pages, then scan the nearby pages if the section still fe
 
 ## Current state
 
-- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, `repeat`, `visual`, and `cmdline` sections.
-- Current totals: `140` unique tips, `64` reused from v1 by exact summary match, `76` new.
+- [vim_tips_v2.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips_v2.json) currently has `editing`, `motion`, `scroll`, `options`, `insert`, `change / undo`, `repeat`, `visual`, `cmdline`, and `pattern` sections.
+- Current totals: `161` unique tips, `83` reused from v1 by exact summary match, `78` new.
 - Total counts should always mean unique tip entries only.
-- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `13` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`.
+- Current category totals: `21` `editing`, `27` `motion`, `9` `scroll`, `13` `options`, `13` `insert`, `21` `change / undo`, `7` `repeat`, `15` `visual`, `14` `cmdline`, `21` `pattern`.
 - Category totals should use the primary category only so multi-tagged tips are not double-counted in the overall total.
 - Exact-summary reused/new counts are only a rough migration snapshot.
   Once a v2 tip is rewritten for clarity, the wording may no longer match v1 exactly even if the concept was reused.
@@ -165,6 +165,14 @@ Start with the primary pages, then scan the nearby pages if the section still fe
   If a command only makes sense in `:` or `/`, say that in the tip itself.
 - Be more conservative with `cmdline` completion and command-line-window tips.
   Plain `<Tab>` completion and `q:` are documented in Vim, but they did not have a clean enough generated-support signal in this pass to keep as IdeaVim tips yet.
+- For `pattern`, many of the useful regex features are syntax inside supported commands, not standalone commands.
+  Examples: `\V`, `\v`, `\c`, `\C`, `\<`, and `\>` belong to `/`, `?`, and `:s`, so they will not appear as separate entries in the generated command maps.
+- For `pattern`, the strongest support anchors are the surrounding commands:
+  `/`, `?`, `n`, `N`, `*`, `#`, `g*`, `g#`, `:s`, `&`, `:noh`, `:g`, and `:v`.
+- For `pattern`, practical workflows matter as much as raw regex features.
+  High-value examples were `nzz`, `cgn`, and `:.,$s`, which are easier for users to apply than abstract pattern syntax alone.
+- For `pattern`, summaries must describe the user outcome, not the Vim concept label.
+  Tips like `:g`, `:v`, `gc`, and `&` were much clearer once the summary said what they do instead of naming the underlying command family.
 - For `options`, the strongest support signal comes from the official IdeaVim `set` docs plus Vim's own `options.txt`.
   That is more reliable than looking for individual option names in the generated command maps.
 - Keep `options` practical and high-value.
