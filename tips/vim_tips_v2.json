@@ -773,6 +773,16 @@
       "category": [
         "insert"
       ],
+      "summary": "Complete words with Ctrl-n / Ctrl-p",
+      "details": [
+        "In Insert mode, Ctrl-n picks the next word match",
+        "Ctrl-p picks the previous one from words already in the file"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
       "summary": "Insert at line ends I / A",
       "details": [
         "I inserts at first non-blank",
@@ -907,6 +917,16 @@
       "category": [
         "editing"
       ],
+      "summary": "Swap two characters with xp",
+      "details": [
+        "x deletes the character under the cursor and p puts it after",
+        "Useful for fixing adjacent typos quickly"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
       "summary": "Paste and leave cursor after gp / gP",
       "details": [
         "gp pastes and moves to end of the pasted text",
@@ -923,6 +943,68 @@
         "\"+y yanks to the OS clipboard",
         "\"+p pastes from the OS clipboard",
         "In IdeaVim this depends on IDE clipboard support"
+      ]
+    },
+    {
+      "category": [
+        "registers"
+      ],
+      "summary": "Use the yank register \"0",
+      "details": [
+        "\"0 keeps the most recent yank",
+        "Paste it with \"0p even after a delete changes the unnamed register"
+      ]
+    },
+    {
+      "category": [
+        "registers"
+      ],
+      "summary": "Recover the last delete with \"1",
+      "details": [
+        "\"1 usually holds the most recent delete",
+        "Paste it with \"1p after an accidental dd"
+      ]
+    },
+    {
+      "category": [
+        "registers"
+      ],
+      "summary": "Store and append text in named registers \"a / \"A",
+      "details": [
+        "\"ayiw stores text in register a; \"ap pastes it later",
+        "\"A appends more text instead of replacing the register"
+      ]
+    },
+    {
+      "category": [
+        "registers"
+      ],
+      "summary": "Delete without clobbering registers with \"_",
+      "details": [
+        "\"_d deletes into the black-hole register",
+        "Useful when you want to keep the current yank for later pasting"
+      ]
+    },
+    {
+      "category": [
+        "registers",
+        "visual"
+      ],
+      "summary": "Paste over a selection without losing your yank",
+      "details": [
+        "Select text, then use \"_dP",
+        "Useful when replacing repeated matches with the same yanked text"
+      ]
+    },
+    {
+      "category": [
+        "registers",
+        "cmdline"
+      ],
+      "summary": "Inspect registers with :reg",
+      "details": [
+        ":reg shows registers and recorded macros",
+        "Use it when you forget what you yanked or recorded"
       ]
     },
     {
@@ -1024,6 +1106,26 @@
       "details": [
         "=ip recalculates indent for a paragraph or block",
         "Useful after paste or structural edits"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Format a paragraph with gqap",
+      "details": [
+        "gqap reformats the current paragraph",
+        "Use it for wrapped prose or comments; textwidth affects the result"
+      ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Wrap text with :set textwidth=80",
+      "details": [
+        ":set textwidth=80 wraps text at 80 columns",
+        "gq uses textwidth when formatting prose and comments"
       ]
     },
     {
@@ -2153,6 +2255,16 @@
     },
     {
       "category": [
+        "ideavim"
+      ],
+      "summary": "Reload ~/.ideavimrc with :source",
+      "details": [
+        ":source ~/.ideavimrc reloads your config after edits",
+        "Useful when you want to test mappings without restarting the IDE"
+      ]
+    },
+    {
+      "category": [
         "windows"
       ],
       "summary": "Open a horizontal split :split",
@@ -2461,6 +2573,26 @@
     },
     {
       "category": [
+        "ideavim"
+      ],
+      "summary": "Open IdeaVim Tutor from the status bar",
+      "details": [
+        "Click the Vim indicator in the IDE status bar",
+        "Choose Tutor from that menu"
+      ]
+    },
+    {
+      "category": [
+        "ideavim"
+      ],
+      "summary": "Map CapsLock to Esc and Ctrl",
+      "details": [
+        "Use a dual-role mapping: tap for Esc, hold for Ctrl",
+        "Tools like Karabiner, keyd, or Kanata can do this"
+      ]
+    },
+    {
+      "category": [
         "ideavim",
         "insert"
       ],
@@ -2468,6 +2600,187 @@
       "details": [
         "In Insert, Ctrl-Space opens completion",
         "Press it again to widen suggestions"
+      ]
+    },
+    {
+      "category": [
+        "motion",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Make { and } code-aware with paragraph-motion",
+      "details": [
+        "Use :set paragraph-motion to enable the plugin",
+        "{ and } stop treating only fully empty lines as paragraph breaks"
+      ]
+    },
+    {
+      "category": [
+        "motion",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Extend % with matchit",
+      "details": [
+        "Use :set matchit to enable the plugin",
+        "% jumps across tags and control blocks, not just brackets"
+      ]
+    },
+    {
+      "category": [
+        "motion",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Jump to two-character targets with sneak",
+      "details": [
+        "Use :set sneak to enable the plugin",
+        "sfo jumps forward to fo; Sfo searches backward"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Flash yanked text with highlightedyank",
+      "details": [
+        "Use :set highlightedyank to enable the plugin",
+        "Yanks briefly flash so you can confirm what was copied"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "registers",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Replace text from a register with ReplaceWithRegister",
+      "details": [
+        "Use :set ReplaceWithRegister to enable the plugin",
+        "gr{motion} replaces text with the current register; \"agrw uses register a"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Comment text with commentary gcc / gc",
+      "details": [
+        "Use :set commentary to enable the plugin",
+        "gcc comments a line; gc works with motions and Visual selections"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Add, change, or delete surroundings with surround",
+      "details": [
+        "Use :set surround to enable the plugin",
+        "ysiw) adds parens; cs\"' swaps quote types; ds\" removes them"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Swap two regions with exchange",
+      "details": [
+        "Use :set exchange to enable the plugin",
+        "cxiw marks one region; repeat on a second target to swap"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Target arguments with ia / aa",
+      "details": [
+        "Use :set argtextobj to enable the plugin",
+        "cia changes one argument; daa deletes one"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Select the whole buffer with ae / ie",
+      "details": [
+        "Use :set textobj-entire to enable the plugin",
+        "vae or vie selects the whole buffer"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Target an indent block with ii / ai",
+      "details": [
+        "Use :set indent-object to enable the plugin",
+        "vai selects the current indent block; dii deletes it"
+      ]
+    },
+    {
+      "category": [
+        "windows",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Open the project tree with NERDTree",
+      "details": [
+        "Use :set NERDTree to enable the plugin",
+        ":NERDTreeToggle opens the tree; :NERDTreeFind reveals the current file"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Target functions with if / af",
+      "details": [
+        "Use :set functiontextobj to enable the plugin",
+        "vif selects the inner function; yaf yanks a function"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Add cursors with multiple-cursors",
+      "details": [
+        "Use :set multiple-cursors to enable the plugin",
+        "Map <C-n> to <Plug>NextWholeOccurrence, then press <C-n> to add matches"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Toggle paired values with switch",
+      "details": [
+        "Use :set switch to enable the plugin",
+        "gs flips pairs like true/false and &&/||"
       ]
     }
   ]
