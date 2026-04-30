@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 
+## [1.2.2] - 2026-04-30
 
 ### Added
 
@@ -74,8 +75,8 @@
 - Support for remote tip sources
 - Action to refetch tips from remote source for updating the local tip library
 
-[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.3.0...HEAD
-[1.3.0]: https://github.com/pooryam92/vim-coach/compare/1.2.1...1.3.0
+[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.2.2...HEAD
+[1.2.2]: https://github.com/pooryam92/vim-coach/compare/1.2.1...1.2.2
 [1.2.1]: https://github.com/pooryam92/vim-coach/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/pooryam92/vim-coach/compare/1.1.0...1.2.0
 [1.2.0-beta]: https://github.com/pooryam92/vim-coach/compare/1.1.0...1.2.0-beta
