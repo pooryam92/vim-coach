@@ -11,6 +11,7 @@ import com.intellij.ui.dsl.builder.Panel
 import com.intellij.ui.dsl.builder.panel
 import com.intellij.ui.dsl.builder.selected
 import java.awt.GridLayout
+import javax.swing.JButton
 import javax.swing.JComponent
 import javax.swing.JCheckBox
 import javax.swing.JPanel
@@ -21,6 +22,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
     private var startupCheckBox: JCheckBox? = null
     private var periodicCheckBox: JCheckBox? = null
     private var intervalSpinner: JSpinner? = null
+    private var categoryToggleButton: JButton? = null
     private val categoryCheckBoxes = linkedMapOf<String, JCheckBox>()
     private var screenState: VimCoachSettingsScreenState = defaultScreenState()
 
@@ -57,12 +59,14 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
         categoryCheckBoxes.forEach { (category, checkBox) ->
             checkBox.isSelected = category in enabledCategories
         }
+        updateCategoryToggleButtonText()
     }
 
     override fun disposeUIResources() {
         startupCheckBox = null
         periodicCheckBox = null
         intervalSpinner = null
+        categoryToggleButton = null
         categoryCheckBoxes.clear()
     }
 
@@ -100,6 +104,12 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
         }
 
         row {
+            categoryToggleButton = button(categoryToggleButtonText()) {
+                setAllCategoriesSelected(!areAllCategoriesSelected())
+            }.component
+        }
+
+        row {
             cell(createCategoryScrollPane(categories))
                 .align(AlignX.FILL)
         }
@@ -132,7 +142,32 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
     }
 
     private fun createCategoryCheckBox(category: String): JCheckBox {
-        return JCheckBox(category).also { categoryCheckBoxes[category] = it }
+        return JCheckBox(category).also {
+            it.addItemListener { updateCategoryToggleButtonText() }
+            categoryCheckBoxes[category] = it
+        }
+    }
+
+    private fun setAllCategoriesSelected(selected: Boolean) {
+        categoryCheckBoxes.values.forEach { it.isSelected = selected }
+        updateCategoryToggleButtonText()
+    }
+
+    private fun updateCategoryToggleButtonText() {
+        categoryToggleButton?.text = categoryToggleButtonText()
+    }
+
+    private fun categoryToggleButtonText(): String {
+        val messageKey = if (areAllCategoriesSelected()) {
+            "settingsDeselectAllCategories"
+        } else {
+            "settingsSelectAllCategories"
+        }
+        return MyBundle.message(messageKey)
+    }
+
+    private fun areAllCategoriesSelected(): Boolean {
+        return categoryCheckBoxes.isNotEmpty() && categoryCheckBoxes.values.all { it.isSelected }
     }
 
     private fun defaultScreenState(): VimCoachSettingsScreenState {

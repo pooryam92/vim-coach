@@ -8,6 +8,7 @@ import com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsS
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import java.awt.Container
+import javax.swing.JButton
 import javax.swing.JCheckBox
 import javax.swing.JComponent
 import javax.swing.JSpinner
@@ -137,6 +138,43 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
         }
     }
 
+    fun testCategoryToggleButtonSelectsAndDeselectsAllCategories() {
+        tipService().saveTips(
+            listOf(
+                VimTip("summary-1", listOf("details-1"), listOf("basics")),
+                VimTip("summary-2", listOf("details-2"), listOf("editing")),
+                VimTip("summary-3", listOf("details-3"), listOf("search"))
+            )
+        )
+        val configurable = VimCoachSettingsConfigurable()
+
+        try {
+            val component = configurable.createComponent()
+            val basicsCheckBox = findCheckBox(component, "basics")
+            val editingCheckBox = findCheckBox(component, "editing")
+            val searchCheckBox = findCheckBox(component, "search")
+            val deselectAllButton = findButton(component, MyBundle.message("settingsDeselectAllCategories"))
+
+            deselectAllButton.doClick()
+
+            assertFalse(basicsCheckBox.isSelected)
+            assertFalse(editingCheckBox.isSelected)
+            assertFalse(searchCheckBox.isSelected)
+            assertEquals(MyBundle.message("settingsSelectAllCategories"), deselectAllButton.text)
+            assertTrue(configurable.isModified())
+
+            deselectAllButton.doClick()
+
+            assertTrue(basicsCheckBox.isSelected)
+            assertTrue(editingCheckBox.isSelected)
+            assertTrue(searchCheckBox.isSelected)
+            assertEquals(MyBundle.message("settingsDeselectAllCategories"), deselectAllButton.text)
+            assertFalse(configurable.isModified())
+        } finally {
+            configurable.disposeUIResources()
+        }
+    }
+
     fun testCreateComponentSelectsNewCategoriesByDefault() {
         settingsService().setEnabledTipCategories(
             availableCategories = listOf("basics", "editing"),
@@ -222,6 +260,26 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
         }
 
         fail("Expected checkbox with text '$text' in settings UI")
+        throw IllegalStateException("Unreachable")
+    }
+
+    private fun findButton(root: JComponent, text: String): JButton {
+        val queue = ArrayDeque<Container>()
+        queue.add(root)
+
+        while (queue.isNotEmpty()) {
+            val current = queue.removeFirst()
+            for (child in current.components) {
+                if (child is JButton && child.text == text) {
+                    return child
+                }
+                if (child is Container) {
+                    queue.add(child)
+                }
+            }
+        }
+
+        fail("Expected button with text '$text' in settings UI")
         throw IllegalStateException("Unreachable")
     }
 
