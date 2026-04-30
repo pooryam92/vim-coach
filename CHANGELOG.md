@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 
+
 ### Added
 
 - Settings category controls now include a single button to select or deselect all categories
@@ -73,7 +74,8 @@
 - Support for remote tip sources
 - Action to refetch tips from remote source for updating the local tip library
 
-[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.2.1...HEAD
+[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.3.0...HEAD
+[1.3.0]: https://github.com/pooryam92/vim-coach/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/pooryam92/vim-coach/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/pooryam92/vim-coach/compare/1.1.0...1.2.0
 [1.2.0-beta]: https://github.com/pooryam92/vim-coach/compare/1.1.0...1.2.0-beta
