@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Settings category controls now include a single button to select or deselect all categories
+
 ## [1.2.1] - 2026-04-07
 
 ### Changed
