@@ -12,4 +12,8 @@ interface VimCoachSettingsService {
 
     fun getEnabledTipCategories(availableCategories: List<String>): List<String>
     fun setEnabledTipCategories(availableCategories: List<String>, enabledCategories: List<String>)
+
+    fun getHiddenTipHashes(): List<String>
+    fun hideTip(hash: String)
+    fun consumeExcludedTipsManagementHint(): Boolean
 }

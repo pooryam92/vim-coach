@@ -169,6 +169,25 @@ class VimCoachSettingsServiceUnitTest {
         )
     }
 
+    @Test
+    fun excludedTipsManagementHintIsAvailableOnceByDefault() {
+        val service = createService()
+
+        assertTrue(service.consumeExcludedTipsManagementHint())
+        assertFalse(service.consumeExcludedTipsManagementHint())
+    }
+
+    @Test
+    fun loadStateRestoresConsumedExcludedTipsManagementHint() {
+        val store = VimCoachSettingsStoreImpl()
+        val service = createService(store)
+        val persistedState = VimCoachSettingsStore.State(excludedTipsManagementHintShown = true)
+
+        store.loadState(persistedState)
+
+        assertFalse(service.consumeExcludedTipsManagementHint())
+    }
+
     private fun createService(
         store: VimCoachSettingsStore = VimCoachSettingsStoreImpl()
     ): VimCoachSettingsService {

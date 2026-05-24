@@ -2,7 +2,7 @@ package com.github.pooryam92.vimcoach.features.tips.entrypoints.actions
 
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationFactory
-import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
+import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTips
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
@@ -21,7 +21,7 @@ class RefetchVimTipsAction : AnAction() {
 
     override fun actionPerformed(event: AnActionEvent) {
         val project = event.project ?: return
-        val loader = service<TipLoaderService>()
+        val loader = service<RefreshTips>()
 
         object : Task.Backgroundable(project, MyBundle.message("refetchTipsProgress"), false) {
             override fun run(indicator: ProgressIndicator) {

@@ -1,4 +1,4 @@
-package com.github.pooryam92.vimcoach.features.tips.application
+package com.github.pooryam92.vimcoach.features.tips.application.settings
 
 data class VimCoachSettingsScreenState(
     val showTipsOnStartup: Boolean,

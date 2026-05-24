@@ -1,8 +1,8 @@
 package com.github.pooryam92.vimcoach.features.tips.integration.application
 
-import com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerServiceImpl
-import com.github.pooryam92.vimcoach.features.tips.application.TipNotificationService
-import com.github.pooryam92.vimcoach.features.tips.application.TipNotificationServiceImpl
+import com.github.pooryam92.vimcoach.features.tips.application.notifications.ShowTips
+import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotificationController
+import com.github.pooryam92.vimcoach.features.tips.application.scheduling.PeriodicTipScheduler
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsServiceImpl
 import com.intellij.openapi.application.ApplicationManager
@@ -10,7 +10,7 @@ import com.intellij.testFramework.PlatformTestUtil
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.testFramework.registerServiceInstance
 
-class PeriodicTipSchedulerServiceIntTest : BasePlatformTestCase() {
+class PeriodicTipSchedulerIntTest : BasePlatformTestCase() {
 
     override fun tearDown() {
         try {
@@ -19,8 +19,8 @@ class PeriodicTipSchedulerServiceIntTest : BasePlatformTestCase() {
                 VimCoachSettingsServiceImpl()
             )
             project.registerServiceInstance(
-                TipNotificationService::class.java,
-                TipNotificationServiceImpl(project)
+                ShowTips::class.java,
+                TipNotificationController(project)
             )
         } finally {
             super.tearDown()
@@ -32,10 +32,10 @@ class PeriodicTipSchedulerServiceIntTest : BasePlatformTestCase() {
             periodicTipsEnabled = true,
             tipIntervalHours = 1
         )
-        val tipNotificationService = FakeTipNotificationService()
+        val tipNotificationService = FakeShowTips()
         registerDependencies(settingsService, tipNotificationService)
 
-        val scheduler = PeriodicTipSchedulerServiceImpl(project)
+        val scheduler = PeriodicTipScheduler(project)
 
         scheduler.showPeriodicTipIfEnabled()
         PlatformTestUtil.dispatchAllEventsInIdeEventQueue()
@@ -48,10 +48,10 @@ class PeriodicTipSchedulerServiceIntTest : BasePlatformTestCase() {
             periodicTipsEnabled = false,
             tipIntervalHours = 1
         )
-        val tipNotificationService = FakeTipNotificationService()
+        val tipNotificationService = FakeShowTips()
         registerDependencies(settingsService, tipNotificationService)
 
-        val scheduler = PeriodicTipSchedulerServiceImpl(project)
+        val scheduler = PeriodicTipScheduler(project)
 
         scheduler.showPeriodicTipIfEnabled()
         PlatformTestUtil.dispatchAllEventsInIdeEventQueue()
@@ -61,19 +61,19 @@ class PeriodicTipSchedulerServiceIntTest : BasePlatformTestCase() {
 
     private fun registerDependencies(
         settingsService: VimCoachSettingsService,
-        tipNotificationService: TipNotificationService
+        tipNotificationService: ShowTips
     ) {
         ApplicationManager.getApplication().registerServiceInstance(
             VimCoachSettingsService::class.java,
             settingsService
         )
         project.registerServiceInstance(
-            TipNotificationService::class.java,
+            ShowTips::class.java,
             tipNotificationService
         )
     }
 
-    private class FakeTipNotificationService : TipNotificationService {
+    private class FakeShowTips : ShowTips {
         var showIfNoneActiveCalls = 0
             private set
 
@@ -109,5 +109,11 @@ class PeriodicTipSchedulerServiceIntTest : BasePlatformTestCase() {
             availableCategories: List<String>,
             enabledCategories: List<String>
         ) = Unit
+
+        override fun getHiddenTipHashes(): List<String> = emptyList()
+
+        override fun hideTip(hash: String) = Unit
+
+        override fun consumeExcludedTipsManagementHint(): Boolean = false
     }
 }

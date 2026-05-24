@@ -1,25 +1,26 @@
-package com.github.pooryam92.vimcoach.features.tips.application
+package com.github.pooryam92.vimcoach.features.tips.application.settings
 
+import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTips
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.intellij.openapi.components.service
 
-class VimCoachSettingsScreenServiceImpl() : VimCoachSettingsScreenService {
+class VimCoachSettingsScreenController() {
     private var injectedSettingsService: VimCoachSettingsService? = null
     private var injectedTipService: VimTipService? = null
-    private var injectedTipLoaderService: TipLoaderService? = null
+    private var injectedRefreshTips: RefreshTips? = null
 
     internal constructor(
         settingsService: VimCoachSettingsService,
         tipService: VimTipService,
-        tipLoaderService: TipLoaderService? = null
+        refreshTips: RefreshTips? = null
     ) : this() {
         injectedSettingsService = settingsService
         injectedTipService = tipService
-        injectedTipLoaderService = tipLoaderService
+        injectedRefreshTips = refreshTips
     }
 
-    override fun loadState(): VimCoachSettingsScreenState {
+    fun loadState(): VimCoachSettingsScreenState {
         val settingsService = settingsService()
         val availableCategories = loadAvailableCategories()
 
@@ -32,7 +33,7 @@ class VimCoachSettingsScreenServiceImpl() : VimCoachSettingsScreenService {
         )
     }
 
-    override fun saveState(state: VimCoachSettingsScreenState) {
+    fun saveState(state: VimCoachSettingsScreenState) {
         val settingsService = settingsService()
         settingsService.setShowTipsOnStartupEnabled(state.showTipsOnStartup)
         settingsService.setTipIntervalHours(state.tipIntervalHours)
@@ -48,7 +49,7 @@ class VimCoachSettingsScreenServiceImpl() : VimCoachSettingsScreenService {
         }
 
         // Legacy caches from pre-category versions need a full reload to recover category data.
-        tipLoaderService().refetchTips()
+        refreshTips().refetchTips()
         return tipService.getCategories().values
     }
 
@@ -56,5 +57,5 @@ class VimCoachSettingsScreenServiceImpl() : VimCoachSettingsScreenService {
 
     private fun tipService(): VimTipService = injectedTipService ?: service()
 
-    private fun tipLoaderService(): TipLoaderService = injectedTipLoaderService ?: service()
+    private fun refreshTips(): RefreshTips = injectedRefreshTips ?: service()
 }

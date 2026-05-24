@@ -10,10 +10,24 @@ import com.intellij.openapi.util.IconLoader
 class TipNotificationFactory {
 
     internal fun createNotificationWithActions(tip: VimTip, onShowNextTip: () -> Unit): Notification {
+        return createNotificationWithActions(
+            tip,
+            TipNotificationActions(onShowNextTip = onShowNextTip)
+        )
+    }
+
+    internal fun createNotificationWithActions(tip: VimTip, actions: TipNotificationActions): Notification {
         val notification = createNotification(tip)
-        notification.addAction(NotificationAction.createSimple(TIP_NEXT_ACTION_TEXT) {
-            onShowNextTip()
-        })
+        actions.onShowNextTip?.let { onShowNextTip ->
+            notification.addAction(NotificationAction.createSimple(TIP_NEXT_ACTION_TEXT) {
+                onShowNextTip()
+            })
+        }
+        actions.onExcludeTip?.let { onExcludeTip ->
+            notification.addAction(NotificationAction.createSimple(TIP_DONT_SHOW_AGAIN_ACTION_TEXT) {
+                onExcludeTip(notification)
+            })
+        }
         return notification
     }
 
@@ -25,6 +39,20 @@ class TipNotificationFactory {
             NotificationType.INFORMATION
         ).apply {
             icon = TIP_ICON
+        }
+    }
+
+    internal fun createTipExcludedNotification(onOpenSettings: () -> Unit): Notification {
+        return Notification(
+            NOTIFICATION_GROUP_ID,
+            APP_TITLE,
+            TIP_EXCLUDED_WITH_MANAGEMENT_TEXT,
+            NotificationType.INFORMATION
+        ).apply {
+            icon = TIP_ICON
+            addAction(NotificationAction.createSimple(TIP_MANAGE_EXCLUDED_ACTION_TEXT) {
+                onOpenSettings()
+            })
         }
     }
 
@@ -58,6 +86,9 @@ class TipNotificationFactory {
         val APP_TITLE: String = MyBundle.message("appTitle")
         val NOTIFICATION_GROUP_ID: String = MyBundle.message("notificationGroupId")
         val TIP_NEXT_ACTION_TEXT: String = MyBundle.message("tipNextAction")
+        val TIP_DONT_SHOW_AGAIN_ACTION_TEXT: String = MyBundle.message("tipDontShowAgainAction")
+        val TIP_EXCLUDED_WITH_MANAGEMENT_TEXT: String = MyBundle.message("tipExcludedWithManagementMessage")
+        val TIP_MANAGE_EXCLUDED_ACTION_TEXT: String = MyBundle.message("tipManageExcludedAction")
         val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", TipNotificationFactory::class.java)
 
         private const val DETAILS_SEPARATOR = "<br/>"
@@ -71,3 +102,8 @@ class TipNotificationFactory {
         private const val DETAILS_CLOSE = "</div>"
     }
 }
+
+internal data class TipNotificationActions(
+    val onShowNextTip: (() -> Unit)? = null,
+    val onExcludeTip: ((Notification) -> Unit)? = null
+)

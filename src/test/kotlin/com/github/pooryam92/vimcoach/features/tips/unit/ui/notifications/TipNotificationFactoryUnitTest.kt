@@ -69,4 +69,15 @@ class TipNotificationFactoryUnitTest {
         assertNotNull(notification.icon)
         assertEquals(TipNotificationFactory.TIP_ICON, notification.icon)
     }
+
+    @Test
+    fun excludedTipNotificationOffersSettingsAction() {
+        val notifier = TipNotificationFactory()
+
+        val notification = notifier.createTipExcludedNotification {}
+
+        assertEquals(TipNotificationFactory.TIP_EXCLUDED_WITH_MANAGEMENT_TEXT, notification.content)
+        assertEquals(1, notification.actions.size)
+        assertEquals(TipNotificationFactory.TIP_MANAGE_EXCLUDED_ACTION_TEXT, notification.actions.single().templateText)
+    }
 }

@@ -1,8 +1,8 @@
 package com.github.pooryam92.vimcoach.features.tips.ui.settings
 
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
-import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenService
-import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenState
+import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenController
+import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenState
 import com.intellij.openapi.components.service
 import com.intellij.openapi.options.SearchableConfigurable
 import com.intellij.ui.components.JBScrollPane
@@ -190,7 +190,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
         )
     }
 
-    private fun settingsScreenService(): VimCoachSettingsScreenService = service()
+    private fun settingsScreenService(): VimCoachSettingsScreenController = service()
 
     private fun currentIntervalValue(): Int {
         return (intervalSpinner?.value as? Number)?.toInt() ?: screenState.tipIntervalHours

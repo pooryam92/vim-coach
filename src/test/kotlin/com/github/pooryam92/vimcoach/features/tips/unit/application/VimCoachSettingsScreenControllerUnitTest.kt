@@ -1,9 +1,8 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.application
 
-import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
-import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenService
-import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenServiceImpl
-import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenState
+import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTips
+import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenController
+import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenState
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
@@ -17,7 +16,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class VimCoachSettingsScreenServiceUnitTest {
+class VimCoachSettingsScreenControllerUnitTest {
 
     @Test
     fun loadStateCombinesSettingsAndTipCategories() {
@@ -85,7 +84,7 @@ class VimCoachSettingsScreenServiceUnitTest {
                 )
             )
         }
-        val loader = FakeTipLoaderService {
+        val loader = FakeRefreshTips {
             tipService.saveTips(
                 listOf(
                     VimTip("summary-1", listOf("details-1"), listOf("basics")),
@@ -130,9 +129,9 @@ class VimCoachSettingsScreenServiceUnitTest {
     private fun createScreenService(
         settingsService: VimCoachSettingsService,
         tipService: VimTipService,
-        tipLoaderService: TipLoaderService? = null
-    ): VimCoachSettingsScreenService {
-        return VimCoachSettingsScreenServiceImpl(settingsService, tipService, tipLoaderService)
+        refreshTips: RefreshTips? = null
+    ): VimCoachSettingsScreenController {
+        return VimCoachSettingsScreenController(settingsService, tipService, refreshTips)
     }
 
     private fun createSettingsService(): VimCoachSettingsService {
@@ -143,9 +142,9 @@ class VimCoachSettingsScreenServiceUnitTest {
         return VimTipServiceImpl(VimTipStoreImpl())
     }
 
-    private class FakeTipLoaderService(
+    private class FakeRefreshTips(
         private val onRefetch: () -> TipLoadResult
-    ) : TipLoaderService {
+    ) : RefreshTips {
         var refetchCalls = 0
             private set
 
