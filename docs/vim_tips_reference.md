@@ -86,6 +86,13 @@ Invalid content:
 - duplicate tip entries that only differ by category
 - unsupported claims about IdeaVim behavior
 
+## Tip Preference Identity
+
+User preferences such as hiding a tip are tied to a deterministic hash of each
+tip's trimmed `summary` value. This avoids adding an author-managed ID field,
+but it means changing a tip title creates a new identity for that tip and may
+reset any existing user preference for it.
+
 ## Writing Style
 
 Use these rules when writing or revising tip text:

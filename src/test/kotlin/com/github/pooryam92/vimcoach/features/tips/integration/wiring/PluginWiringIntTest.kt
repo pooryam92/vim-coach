@@ -1,9 +1,9 @@
 package com.github.pooryam92.vimcoach.features.tips.integration.wiring
 
-import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
-import com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerService
-import com.github.pooryam92.vimcoach.features.tips.application.TipNotificationService
-import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenService
+import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTips
+import com.github.pooryam92.vimcoach.features.tips.application.notifications.ShowTips
+import com.github.pooryam92.vimcoach.features.tips.application.scheduling.ScheduleTips
+import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenController
 import com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceService
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
@@ -15,11 +15,11 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase
 class PluginWiringIntTest : BasePlatformTestCase() {
 
     fun testProjectServicesAreRegistered() {
-        val periodicSchedulerService = project.service<PeriodicTipSchedulerService>()
-        val tipNotificationService = project.service<TipNotificationService>()
+        val scheduleTips = project.service<ScheduleTips>()
+        val showTips = project.service<ShowTips>()
 
-        assertNotNull(periodicSchedulerService)
-        assertNotNull(tipNotificationService)
+        assertNotNull(scheduleTips)
+        assertNotNull(showTips)
     }
 
     fun testApplicationServicesAreRegistered() {
@@ -28,15 +28,15 @@ class PluginWiringIntTest : BasePlatformTestCase() {
         val tipService = service<VimTipService>()
         val settingsService = service<VimCoachSettingsService>()
         val sourceService = service<TipSourceService>()
-        val loaderService = service<TipLoaderService>()
-        val settingsScreenService = service<VimCoachSettingsScreenService>()
+        val refreshTips = service<RefreshTips>()
+        val settingsScreenService = service<VimCoachSettingsScreenController>()
 
         assertNotNull(tipStore)
         assertNotNull(settingsStore)
         assertNotNull(tipService)
         assertNotNull(settingsService)
         assertNotNull(sourceService)
-        assertNotNull(loaderService)
+        assertNotNull(refreshTips)
         assertNotNull(settingsScreenService)
     }
 }

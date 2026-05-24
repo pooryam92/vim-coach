@@ -1,8 +1,8 @@
 package com.github.pooryam92.vimcoach.features.tips.integration.entrypoints.startup
 
-import com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerService
-import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
-import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderServiceImpl
+import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTips
+import com.github.pooryam92.vimcoach.features.tips.application.loading.TipRefreshCoordinator
+import com.github.pooryam92.vimcoach.features.tips.application.scheduling.ScheduleTips
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.entrypoints.startup.VimTipStartupActivity
@@ -30,7 +30,7 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
         try {
             settingsService().setShowTipsOnStartupEnabled(true)
             ApplicationManager.getApplication().registerServiceInstance(VimTipService::class.java, VimTipServiceImpl())
-            ApplicationManager.getApplication().registerServiceInstance(TipLoaderService::class.java, TipLoaderServiceImpl())
+            ApplicationManager.getApplication().registerServiceInstance(RefreshTips::class.java, TipRefreshCoordinator())
         } finally {
             super.tearDown()
         }
@@ -97,19 +97,19 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
         return fakeTipService
     }
 
-    private fun registerFakeLoader(): FakeTipLoaderService {
-        val fakeLoader = FakeTipLoaderService()
+    private fun registerFakeLoader(): FakeRefreshTips {
+        val fakeLoader = FakeRefreshTips()
         ApplicationManager.getApplication().registerServiceInstance(
-            TipLoaderService::class.java,
+            RefreshTips::class.java,
             fakeLoader
         )
         return fakeLoader
     }
 
-    private fun registerFakePeriodicScheduler(): FakePeriodicTipSchedulerService {
-        val fakePeriodicScheduler = FakePeriodicTipSchedulerService()
+    private fun registerFakePeriodicScheduler(): FakeScheduleTips {
+        val fakePeriodicScheduler = FakeScheduleTips()
         project.registerServiceInstance(
-            PeriodicTipSchedulerService::class.java,
+            ScheduleTips::class.java,
             fakePeriodicScheduler
         )
         return fakePeriodicScheduler
@@ -129,7 +129,7 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
 
     private fun settingsService(): VimCoachSettingsService = service()
 
-    private class FakeTipLoaderService : TipLoaderService {
+    private class FakeRefreshTips : RefreshTips {
         private val checkForUpdatesCalled = CountDownLatch(1)
 
         override fun refetchTips(): TipLoadResult {
@@ -146,7 +146,7 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
         }
     }
 
-    private class FakePeriodicTipSchedulerService : PeriodicTipSchedulerService {
+    private class FakeScheduleTips : ScheduleTips {
         private val startCalled = CountDownLatch(1)
 
         override fun start() {

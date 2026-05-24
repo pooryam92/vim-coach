@@ -31,17 +31,16 @@
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceService"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceServiceImpl" />
         <applicationService
-            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService"
-            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.TipLoaderServiceImpl" />
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTips"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.loading.TipRefreshCoordinator" />
         <applicationService
-            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenService"
-            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenServiceImpl" />
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenController" />
         <projectService
-            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerService"
-            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerServiceImpl" />
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.scheduling.ScheduleTips"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.scheduling.PeriodicTipScheduler" />
         <projectService
-            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.TipNotificationService"
-            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.TipNotificationServiceImpl" />
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.notifications.ShowTips"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotificationController" />
     </extensions>
 
     <actions>

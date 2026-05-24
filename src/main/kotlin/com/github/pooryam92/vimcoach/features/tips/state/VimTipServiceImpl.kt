@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.state
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipCategories
+import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.state.store.VimTipStore
@@ -8,10 +9,15 @@ import com.intellij.openapi.components.service
 
 class VimTipServiceImpl() : VimTipService {
     private var injectedTipStore: VimTipStore? = null
+    private var injectedSettingsService: VimCoachSettingsService? = null
     private var cachedTipSelection: TipSelectionIndex? = null
 
     internal constructor(tipStore: VimTipStore) : this() {
         injectedTipStore = tipStore
+    }
+
+    internal constructor(tipStore: VimTipStore, settingsService: VimCoachSettingsService) : this(tipStore) {
+        injectedSettingsService = settingsService
     }
 
     override fun countTips(): Int {
@@ -29,6 +35,21 @@ class VimTipServiceImpl() : VimTipService {
     override fun getRandomTip(categories: List<String>): VimTip {
         val matchingTips = tipSelectionIndex(currentState().tips).matchingTips(categories)
         return randomTipOrFallback(matchingTips, FILTERED_FALLBACK_TIP)
+    }
+
+    override fun getTipsByHashes(hashes: List<String>): List<VimTip> {
+        val requestedHashes = hashes
+            .asSequence()
+            .map(String::trim)
+            .filter(String::isNotBlank)
+            .distinct()
+            .toList()
+        if (requestedHashes.isEmpty()) {
+            return emptyList()
+        }
+
+        val tipsByHash = currentState().tips.associateBy { TipHash.fromTip(it).value }
+        return requestedHashes.mapNotNull(tipsByHash::get)
     }
 
     override fun getCategories(): TipCategories {
@@ -75,14 +96,34 @@ class VimTipServiceImpl() : VimTipService {
     }
 
     private fun randomTipOrFallback(tips: List<VimTip>, fallbackTip: VimTip): VimTip {
-        if (tips.isEmpty()) {
+        val visibleTips = visibleTips(tips)
+        if (visibleTips.isEmpty()) {
             return fallbackTip
         }
-        return tips.random()
+        return visibleTips.random()
+    }
+
+    private fun visibleTips(tips: List<VimTip>): List<VimTip> {
+        val hiddenHashes = hiddenTipHashes()
+        return tips
+            .asSequence()
+            .filterNot { TipHash.fromTip(it).value in hiddenHashes }
+            .toList()
+    }
+
+    private fun hiddenTipHashes(): Set<String> {
+        val settingsService = settingsServiceOrNull()
+            ?: return emptySet()
+        return settingsService.getHiddenTipHashes().toSet()
     }
 
     private fun tipStore(): VimTipStore {
         return injectedTipStore ?: service()
+    }
+
+    private fun settingsServiceOrNull(): VimCoachSettingsService? {
+        injectedSettingsService?.let { return it }
+        return runCatching { service<VimCoachSettingsService>() }.getOrNull()
     }
 
     private companion object {

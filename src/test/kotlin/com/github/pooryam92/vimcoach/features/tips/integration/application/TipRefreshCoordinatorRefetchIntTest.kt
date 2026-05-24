@@ -1,7 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.integration.application
 
-import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
-import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderServiceImpl
+import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTips
+import com.github.pooryam92.vimcoach.features.tips.application.loading.TipRefreshCoordinator
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
@@ -11,7 +11,7 @@ import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
-class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
+class TipRefreshCoordinatorRefetchIntTest : BasePlatformTestCase() {
 
     fun testRefetchTipsReloadsEvenWhenTipsExist() {
         val tipService = service<VimTipService>()
@@ -284,8 +284,8 @@ class TipLoaderServiceRefetchIntTest : BasePlatformTestCase() {
         assertEquals(1, fakeTipSource.loadTipsConditionalCalls)
     }
 
-    private fun registerLoader(fakeTipSource: TipSourceService): TipLoaderService {
-        return TipLoaderServiceImpl(
+    private fun registerLoader(fakeTipSource: TipSourceService): RefreshTips {
+        return TipRefreshCoordinator(
             tipSource = fakeTipSource
         )
     }

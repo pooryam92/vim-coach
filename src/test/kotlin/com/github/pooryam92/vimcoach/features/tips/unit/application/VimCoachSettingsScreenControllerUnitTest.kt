@@ -1,10 +1,11 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.application
 
-import com.github.pooryam92.vimcoach.features.tips.application.TipLoaderService
-import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenService
-import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenServiceImpl
-import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenState
+import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTips
+import com.github.pooryam92.vimcoach.features.tips.application.settings.ExcludedTipSettingsItem
+import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenController
+import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenState
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
+import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsServiceImpl
@@ -17,7 +18,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class VimCoachSettingsScreenServiceUnitTest {
+class VimCoachSettingsScreenControllerUnitTest {
 
     @Test
     fun loadStateCombinesSettingsAndTipCategories() {
@@ -50,6 +51,31 @@ class VimCoachSettingsScreenServiceUnitTest {
     }
 
     @Test
+    fun loadStateIncludesExcludedTipsBySummary() {
+        val excludedTip = VimTip("Excluded motion tip", listOf("details"), listOf("basics"))
+        val visibleTip = VimTip("Visible search tip", listOf("details"), listOf("search"))
+        val settingsService = createSettingsService().apply {
+            hideTip(TipHash.fromTip(excludedTip).value)
+        }
+        val tipService = createTipService().apply {
+            saveTips(listOf(excludedTip, visibleTip))
+        }
+        val service = createScreenService(settingsService, tipService)
+
+        val state = service.loadState()
+
+        assertEquals(
+            listOf(
+                ExcludedTipSettingsItem(
+                    hash = TipHash.fromTip(excludedTip).value,
+                    summary = "Excluded motion tip"
+                )
+            ),
+            state.excludedTips
+        )
+    }
+
+    @Test
     fun saveStatePersistsFormValues() {
         val settingsService = createSettingsService()
         val tipService = createTipService()
@@ -75,6 +101,52 @@ class VimCoachSettingsScreenServiceUnitTest {
     }
 
     @Test
+    fun saveStateRestoresExplicitlyRestoredExcludedTips() {
+        val excludedTip = VimTip("Excluded motion tip", listOf("details"), listOf("basics"))
+        val excludedHash = TipHash.fromTip(excludedTip).value
+        val settingsService = createSettingsService().apply {
+            hideTip(excludedHash)
+        }
+        val tipService = createTipService().apply {
+            saveTips(listOf(excludedTip))
+        }
+        val service = createScreenService(settingsService, tipService)
+        val state = service.loadState()
+
+        service.saveState(
+            state.copy(
+                excludedTips = emptyList(),
+                restoredExcludedTipHashes = listOf(excludedHash)
+            )
+        )
+
+        assertEquals(emptyList<String>(), settingsService.getHiddenTipHashes())
+    }
+
+    @Test
+    fun saveStateDoesNotRestoreTipExcludedAfterStateWasLoaded() {
+        val initiallyExcludedTip = VimTip("Initially excluded tip", listOf("details"), listOf("basics"))
+        val laterExcludedTip = VimTip("Later excluded tip", listOf("details"), listOf("editing"))
+        val settingsService = createSettingsService().apply {
+            hideTip(TipHash.fromTip(initiallyExcludedTip).value)
+        }
+        val tipService = createTipService().apply {
+            saveTips(listOf(initiallyExcludedTip, laterExcludedTip))
+        }
+        val service = createScreenService(settingsService, tipService)
+        val state = service.loadState()
+        val laterExcludedHash = TipHash.fromTip(laterExcludedTip).value
+
+        settingsService.hideTip(laterExcludedHash)
+        service.saveState(state)
+
+        assertEquals(
+            listOf(TipHash.fromTip(initiallyExcludedTip).value, laterExcludedHash),
+            settingsService.getHiddenTipHashes()
+        )
+    }
+
+    @Test
     fun loadStateRefetchesTipsWhenLegacyCacheHasNoCategories() {
         val settingsService = createSettingsService()
         val tipService = createTipService().apply {
@@ -85,7 +157,7 @@ class VimCoachSettingsScreenServiceUnitTest {
                 )
             )
         }
-        val loader = FakeTipLoaderService {
+        val loader = FakeRefreshTips {
             tipService.saveTips(
                 listOf(
                     VimTip("summary-1", listOf("details-1"), listOf("basics")),
@@ -130,9 +202,9 @@ class VimCoachSettingsScreenServiceUnitTest {
     private fun createScreenService(
         settingsService: VimCoachSettingsService,
         tipService: VimTipService,
-        tipLoaderService: TipLoaderService? = null
-    ): VimCoachSettingsScreenService {
-        return VimCoachSettingsScreenServiceImpl(settingsService, tipService, tipLoaderService)
+        refreshTips: RefreshTips? = null
+    ): VimCoachSettingsScreenController {
+        return VimCoachSettingsScreenController(settingsService, tipService, refreshTips)
     }
 
     private fun createSettingsService(): VimCoachSettingsService {
@@ -143,9 +215,9 @@ class VimCoachSettingsScreenServiceUnitTest {
         return VimTipServiceImpl(VimTipStoreImpl())
     }
 
-    private class FakeTipLoaderService(
+    private class FakeRefreshTips(
         private val onRefetch: () -> TipLoadResult
-    ) : TipLoaderService {
+    ) : RefreshTips {
         var refetchCalls = 0
             private set
 

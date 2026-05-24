@@ -1,5 +1,6 @@
-package com.github.pooryam92.vimcoach.features.tips.application
+package com.github.pooryam92.vimcoach.features.tips.application.scheduling
 
+import com.github.pooryam92.vimcoach.features.tips.application.notifications.ShowTips
 import com.github.pooryam92.vimcoach.features.tips.source.infra.config.VimTipConfig
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.intellij.openapi.Disposable
@@ -11,9 +12,9 @@ import com.intellij.util.concurrency.AppExecutorUtil
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 
-class PeriodicTipSchedulerServiceImpl(
+class PeriodicTipScheduler(
     private val project: Project
-) : PeriodicTipSchedulerService, Disposable {
+) : ScheduleTips, Disposable {
 
     private val lock = Any()
     private var scheduledTask: ScheduledFuture<*>? = null
@@ -85,11 +86,11 @@ class PeriodicTipSchedulerServiceImpl(
             return
         }
 
-        val tipNotificationService = project.service<TipNotificationService>()
+        val showTips = project.service<ShowTips>()
         ApplicationManager.getApplication().invokeLater {
             try {
                 if (!project.isDisposed && isSchedulingEnabled()) {
-                    val shown = tipNotificationService.showRandomTipIfNoneActive()
+                    val shown = showTips.showRandomTipIfNoneActive()
                     if (shown) {
                         logger.info("Shown periodic Vim tip for project '${project.name}'")
                     } else {
@@ -149,7 +150,7 @@ class PeriodicTipSchedulerServiceImpl(
     )
 
     private companion object {
-        val logger = Logger.getInstance(PeriodicTipSchedulerServiceImpl::class.java)
+        val logger = Logger.getInstance(PeriodicTipScheduler::class.java)
         const val SECONDS_PER_MINUTE = 60L
         const val SECONDS_PER_HOUR = 60L * 60L
         const val MAX_INTERVAL_HOURS = 24L * 7L

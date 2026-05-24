@@ -1,4 +1,4 @@
-package com.github.pooryam92.vimcoach.features.tips.application
+package com.github.pooryam92.vimcoach.features.tips.application.loading
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
 import com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceService
@@ -8,7 +8,7 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.diagnostic.Logger
 import java.util.concurrent.atomic.AtomicBoolean
 
-class TipLoaderServiceImpl() : TipLoaderService {
+class TipRefreshCoordinator() : RefreshTips {
     private var injectedTipService: VimTipService? = null
     private var injectedTipSource: TipSourceService? = null
 
@@ -103,6 +103,6 @@ class TipLoaderServiceImpl() : TipLoaderService {
     private fun tipSource(): TipSourceService = injectedTipSource ?: service()
 
     private companion object {
-        val logger = Logger.getInstance(TipLoaderServiceImpl::class.java)
+        val logger = Logger.getInstance(TipRefreshCoordinator::class.java)
     }
 }

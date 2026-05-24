@@ -1,6 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.state
 
-import com.github.pooryam92.vimcoach.features.tips.application.PeriodicTipSchedulerService
+import com.github.pooryam92.vimcoach.features.tips.application.scheduling.ScheduleTips
 import com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsStore
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
@@ -70,6 +70,35 @@ class VimCoachSettingsServiceImpl() : VimCoachSettingsService {
         settingsStore().setDisabledTipCategories(normalizedDisabled)
     }
 
+    override fun getHiddenTipHashes(): List<String> {
+        return normalizeHashes(currentState().hiddenTipHashes)
+    }
+
+    override fun hideTip(hash: String) {
+        val normalizedHash = normalizeHash(hash) ?: return
+        val hiddenHashes = addHash(getHiddenTipHashes(), normalizedHash)
+        if (hiddenHashes != getHiddenTipHashes()) {
+            settingsStore().setHiddenTipHashes(hiddenHashes)
+        }
+    }
+
+    override fun restoreTip(hash: String) {
+        val normalizedHash = normalizeHash(hash) ?: return
+        val hiddenHashes = getHiddenTipHashes().filterNot { it == normalizedHash }
+        if (hiddenHashes != getHiddenTipHashes()) {
+            settingsStore().setHiddenTipHashes(hiddenHashes)
+        }
+    }
+
+    override fun consumeExcludedTipsManagementHint(): Boolean {
+        if (currentState().excludedTipsManagementHintShown) {
+            return false
+        }
+
+        settingsStore().setExcludedTipsManagementHintShown(true)
+        return true
+    }
+
     private fun currentState(): VimCoachSettingsStore.State {
         return settingsStore().state ?: VimCoachSettingsStore.State()
     }
@@ -104,6 +133,18 @@ class VimCoachSettingsServiceImpl() : VimCoachSettingsService {
             .toList()
     }
 
+    private fun normalizeHashes(hashes: List<String>): List<String> {
+        return hashes.mapNotNull(::normalizeHash).distinct()
+    }
+
+    private fun normalizeHash(hash: String): String? {
+        return hash.trim().takeIf(String::isNotBlank)
+    }
+
+    private fun addHash(hashes: List<String>, hash: String): List<String> {
+        return (hashes + hash).distinct()
+    }
+
     private companion object {
         const val MIN_TIP_INTERVAL_HOURS = 1
     }
@@ -117,7 +158,7 @@ class VimCoachSettingsServiceImpl() : VimCoachSettingsService {
         ProjectManager.getInstance().openProjects
             .filter { !it.isDisposed }
             .forEach { project ->
-                project.service<PeriodicTipSchedulerService>().onSettingsChanged()
+                project.service<ScheduleTips>().onSettingsChanged()
             }
     }
 }

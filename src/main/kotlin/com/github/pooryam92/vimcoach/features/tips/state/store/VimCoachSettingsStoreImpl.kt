@@ -32,4 +32,16 @@ class VimCoachSettingsStoreImpl :
             currentState.copy(disabledTipCategories = categories.toList())
         }
     }
+
+    override fun setHiddenTipHashes(hashes: List<String>) {
+        updateState { currentState ->
+            currentState.copy(hiddenTipHashes = hashes.toList())
+        }
+    }
+
+    override fun setExcludedTipsManagementHintShown(shown: Boolean) {
+        updateState { currentState ->
+            currentState.copy(excludedTipsManagementHintShown = shown)
+        }
+    }
 }

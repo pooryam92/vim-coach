@@ -1,14 +1,31 @@
 package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 
-import com.github.pooryam92.vimcoach.features.tips.application.TipNotificationServiceImpl
+import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotificationController
+import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
+import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
+import com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsStore
 import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeVimTipService
+import com.intellij.notification.Notification
+import com.intellij.openapi.actionSystem.AnAction
+import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.actionSystem.DataContext
+import com.intellij.openapi.components.service
 import com.intellij.openapi.ui.popup.Balloon
+import com.intellij.testFramework.TestActionEvent
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import java.lang.reflect.Proxy
 
-class TipNotificationServiceUiTest : BasePlatformTestCase() {
+class TipNotificationControllerUiTest : BasePlatformTestCase() {
+
+    override fun tearDown() {
+        try {
+            resetSettingsState()
+        } finally {
+            super.tearDown()
+        }
+    }
 
     fun testNotificationAddsNextTipAction() {
         val notifier = TipNotificationFactory()
@@ -20,11 +37,29 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
         assertEquals(TipNotificationFactory.TIP_NEXT_ACTION_TEXT, notification.actions[0].templateText)
     }
 
+    fun testNotificationAddsNextAndHideActionsForRealTip() {
+        val tip = VimTip(summary = "Tip 1", details = listOf("Details 1"))
+        val settingsService = FakeSettingsService(emptyList())
+        val controller = TipNotificationController(
+            project,
+            FakeVimTipService(initialTips = listOf(tip)),
+            TipNotificationFactory(),
+            settingsService
+        )
+
+        controller.showRandomTip()
+
+        val notification = controller.activeNotification!!
+        assertEquals(2, notification.actions.size)
+        assertEquals(TipNotificationFactory.TIP_NEXT_ACTION_TEXT, notification.actions[0].templateText)
+        assertEquals(TipNotificationFactory.TIP_DONT_SHOW_AGAIN_ACTION_TEXT, notification.actions[1].templateText)
+    }
+
     fun testShowRandomTipRequestsTipFromService() {
         val mockTipService = FakeVimTipService(
             initialTips = listOf(VimTip("Tip", listOf("Details"), listOf("basics")))
         )
-        val controller = TipNotificationServiceImpl(
+        val controller = TipNotificationController(
             project,
             mockTipService,
             TipNotificationFactory(),
@@ -37,11 +72,59 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
         assertEquals(listOf("basics"), mockTipService.lastRequestedCategories)
     }
 
+    fun testShowRandomTipNotificationUsesRealSelectionAndExcludesHiddenTips() {
+        resetSettingsState()
+        val hiddenTip = VimTip("Hidden editing tip", listOf("Hidden details"), listOf("editing"))
+        val visibleTip = VimTip("Visible editing tip", listOf("Visible details"), listOf("editing"))
+        val settingsService = service<VimCoachSettingsService>()
+        val tipService = service<VimTipService>().apply {
+            saveTips(listOf(hiddenTip, visibleTip))
+        }
+        settingsService.hideTip(TipHash.fromTip(hiddenTip).value)
+        val controller = TipNotificationController(
+            project,
+            tipService,
+            TipNotificationFactory(),
+            settingsService
+        )
+
+        controller.showRandomTip()
+
+        val content = controller.activeNotification!!.content
+        assertTrue(content.contains("Visible editing tip"))
+        assertTrue(content.contains("Visible details"))
+        assertFalse(content.contains("Hidden editing tip"))
+        assertFalse(content.contains("Hidden details"))
+    }
+
+    fun testExcludeTipActionHidesCurrentTipWithoutShowingNextRandomTip() {
+        val tip = VimTip(summary = "Tip 1", details = listOf("Details 1"))
+        val settingsService = FakeSettingsService(emptyList())
+        val mockTipService = FakeVimTipService(
+            initialTips = listOf(tip, VimTip(summary = "Tip 2", details = listOf("Details 2")))
+        )
+        val controller = TipNotificationController(
+            project,
+            mockTipService,
+            TipNotificationFactory(),
+            settingsService
+        )
+
+        controller.showRandomTip()
+        val notification = controller.activeNotification!!
+        invokeNotificationAction(notification.actions[1], notification)
+
+        assertEquals(listOf(TipHash.fromTip(tip).value), settingsService.getHiddenTipHashes())
+        assertEquals(1, mockTipService.getRandomTipCalls)
+        assertTrue(notification.isExpired)
+        assertNull(controller.activeNotification)
+    }
+
     fun testShowRandomTipIfNoneActiveShowsWhenNoActiveNotificationExists() {
         val mockTipService = FakeVimTipService(
             initialTips = listOf(VimTip("Tip 1", listOf("Details 1")))
         )
-        val controller = TipNotificationServiceImpl(project, mockTipService, TipNotificationFactory())
+        val controller = TipNotificationController(project, mockTipService, TipNotificationFactory())
 
         val shown = controller.showRandomTipIfNoneActive()
         val notification = controller.activeNotification
@@ -59,7 +142,7 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
                 VimTip("Tip 2", listOf("Details 2"))
             )
         )
-        val controller = TipNotificationServiceImpl(project, mockTipService, TipNotificationFactory())
+        val controller = TipNotificationController(project, mockTipService, TipNotificationFactory())
 
         controller.showRandomTip()
         val firstNotification = controller.activeNotification
@@ -72,6 +155,28 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
         assertFalse(secondNotification!!.isExpired)
     }
 
+    fun testStaleExcludeActionDoesNotExpireNewerActiveTipNotification() {
+        val firstTip = VimTip("Tip 1", listOf("Details 1"))
+        val secondTip = VimTip("Tip 2", listOf("Details 2"))
+        val settingsService = FakeSettingsService(emptyList())
+        val controller = TipNotificationController(
+            project,
+            FakeVimTipService(initialTips = listOf(firstTip, secondTip)),
+            TipNotificationFactory(),
+            settingsService
+        )
+
+        controller.showRandomTip()
+        val firstNotification = controller.activeNotification!!
+        controller.showRandomTip()
+        val secondNotification = controller.activeNotification!!
+        invokeNotificationAction(firstNotification.actions[1], firstNotification)
+
+        assertEquals(listOf(TipHash.fromTip(firstTip).value), settingsService.getHiddenTipHashes())
+        assertSame(secondNotification, controller.activeNotification)
+        assertFalse(secondNotification.isExpired)
+    }
+
     fun testShowRandomTipIfNoneActiveDoesNotReplaceVisibleNotification() {
         val mockTipService = FakeVimTipService(
             initialTips = listOf(
@@ -79,7 +184,7 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
                 VimTip("Tip 2", listOf("Details 2"))
             )
         )
-        val controller = TipNotificationServiceImpl(project, mockTipService, TipNotificationFactory())
+        val controller = TipNotificationController(project, mockTipService, TipNotificationFactory())
 
         controller.showRandomTip()
         val firstNotification = controller.activeNotification
@@ -101,7 +206,7 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
                 VimTip("Tip 2", listOf("Details 2"))
             )
         )
-        val controller = TipNotificationServiceImpl(project, mockTipService, TipNotificationFactory())
+        val controller = TipNotificationController(project, mockTipService, TipNotificationFactory())
 
         controller.showRandomTip()
         val firstNotification = controller.activeNotification
@@ -124,7 +229,7 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
                 VimTip("Tip 2", listOf("Details 2"))
             )
         )
-        val controller = TipNotificationServiceImpl(project, mockTipService, TipNotificationFactory())
+        val controller = TipNotificationController(project, mockTipService, TipNotificationFactory())
 
         controller.showRandomTip()
         val firstNotification = controller.activeNotification
@@ -137,6 +242,19 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
         assertNotNull(secondNotification)
         assertNotSame(firstNotification, secondNotification)
         assertFalse(secondNotification!!.isExpired)
+    }
+
+    private fun invokeNotificationAction(action: AnAction, notification: Notification) {
+        val event = TestActionEvent.createTestEvent(action, DataContext.EMPTY_CONTEXT)
+        val actionPerformed = action.javaClass.methods.first { method ->
+            method.name == "actionPerformed" &&
+                method.parameterTypes.contentEquals(arrayOf(AnActionEvent::class.java, Notification::class.java))
+        }
+        actionPerformed.invoke(action, event, notification)
+    }
+
+    private fun resetSettingsState() {
+        service<VimCoachSettingsStore>().loadState(VimCoachSettingsStore.State())
     }
 
     private fun createVisibleBalloon(): Balloon {
@@ -169,6 +287,8 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
     private class FakeSettingsService(
         private val enabledCategories: List<String>
     ) : VimCoachSettingsService {
+        private val hiddenTipHashes = mutableListOf<String>()
+
         override fun isShowTipsOnStartupEnabled(): Boolean = true
 
         override fun setShowTipsOnStartupEnabled(enabled: Boolean) = Unit
@@ -189,5 +309,19 @@ class TipNotificationServiceUiTest : BasePlatformTestCase() {
             availableCategories: List<String>,
             enabledCategories: List<String>
         ) = Unit
+
+        override fun getHiddenTipHashes(): List<String> = hiddenTipHashes.toList()
+
+        override fun hideTip(hash: String) {
+            if (hash !in hiddenTipHashes) {
+                hiddenTipHashes.add(hash)
+            }
+        }
+
+        override fun restoreTip(hash: String) {
+            hiddenTipHashes.remove(hash)
+        }
+
+        override fun consumeExcludedTipsManagementHint(): Boolean = true
     }
 }
