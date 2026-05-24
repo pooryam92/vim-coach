@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-05-24
+
 ### Added
 
 - Tip notifications now include an `Exclude tip` action to hide specific tips from future random selections
