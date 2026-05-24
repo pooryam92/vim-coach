@@ -20,6 +20,7 @@ internal class ExcludedTipsListPanel : JBScrollPane() {
         isOpaque = false
     }
     private var tips = emptyList<ExcludedTipSettingsItem>()
+    private var restoredTipHashes = emptyList<String>()
 
     init {
         viewport.view = rowsPanel
@@ -29,11 +30,16 @@ internal class ExcludedTipsListPanel : JBScrollPane() {
 
     fun reset(tips: List<ExcludedTipSettingsItem>) {
         this.tips = tips
+        restoredTipHashes = emptyList()
         render()
     }
 
     fun currentTips(): List<ExcludedTipSettingsItem> {
         return tips
+    }
+
+    fun restoredTipHashes(): List<String> {
+        return restoredTipHashes
     }
 
     private fun render() {
@@ -84,6 +90,7 @@ internal class ExcludedTipsListPanel : JBScrollPane() {
         return JButton(MyBundle.message("settingsUndoExcludedTip")).apply {
             addActionListener {
                 tips = tips.filterNot { it.hash == tip.hash }
+                restoredTipHashes = (restoredTipHashes + tip.hash).distinct()
                 render()
             }
         }

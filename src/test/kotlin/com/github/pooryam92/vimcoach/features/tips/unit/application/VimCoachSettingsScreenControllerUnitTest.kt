@@ -101,10 +101,11 @@ class VimCoachSettingsScreenControllerUnitTest {
     }
 
     @Test
-    fun saveStateRestoresExcludedTipsRemovedFromState() {
+    fun saveStateRestoresExplicitlyRestoredExcludedTips() {
         val excludedTip = VimTip("Excluded motion tip", listOf("details"), listOf("basics"))
+        val excludedHash = TipHash.fromTip(excludedTip).value
         val settingsService = createSettingsService().apply {
-            hideTip(TipHash.fromTip(excludedTip).value)
+            hideTip(excludedHash)
         }
         val tipService = createTipService().apply {
             saveTips(listOf(excludedTip))
@@ -112,9 +113,37 @@ class VimCoachSettingsScreenControllerUnitTest {
         val service = createScreenService(settingsService, tipService)
         val state = service.loadState()
 
-        service.saveState(state.copy(excludedTips = emptyList()))
+        service.saveState(
+            state.copy(
+                excludedTips = emptyList(),
+                restoredExcludedTipHashes = listOf(excludedHash)
+            )
+        )
 
         assertEquals(emptyList<String>(), settingsService.getHiddenTipHashes())
+    }
+
+    @Test
+    fun saveStateDoesNotRestoreTipExcludedAfterStateWasLoaded() {
+        val initiallyExcludedTip = VimTip("Initially excluded tip", listOf("details"), listOf("basics"))
+        val laterExcludedTip = VimTip("Later excluded tip", listOf("details"), listOf("editing"))
+        val settingsService = createSettingsService().apply {
+            hideTip(TipHash.fromTip(initiallyExcludedTip).value)
+        }
+        val tipService = createTipService().apply {
+            saveTips(listOf(initiallyExcludedTip, laterExcludedTip))
+        }
+        val service = createScreenService(settingsService, tipService)
+        val state = service.loadState()
+        val laterExcludedHash = TipHash.fromTip(laterExcludedTip).value
+
+        settingsService.hideTip(laterExcludedHash)
+        service.saveState(state)
+
+        assertEquals(
+            listOf(TipHash.fromTip(initiallyExcludedTip).value, laterExcludedHash),
+            settingsService.getHiddenTipHashes()
+        )
     }
 
     @Test

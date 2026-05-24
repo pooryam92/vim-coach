@@ -41,7 +41,7 @@ class VimCoachSettingsScreenController() {
         settingsService.setTipIntervalHours(state.tipIntervalHours)
         settingsService.setPeriodicTipsEnabled(state.periodicTipsEnabled)
         settingsService.setEnabledTipCategories(state.availableCategories, state.enabledCategories)
-        restoreTipsRemovedFromSettings(state.excludedTips)
+        restoreTipsFromSettings(state.restoredExcludedTipHashes)
     }
 
     private fun loadAvailableCategories(): List<String> {
@@ -65,15 +65,13 @@ class VimCoachSettingsScreenController() {
         }
     }
 
-    private fun restoreTipsRemovedFromSettings(excludedTips: List<ExcludedTipSettingsItem>) {
+    private fun restoreTipsFromSettings(hashes: List<String>) {
         val settingsService = settingsService()
-        val currentExcludedHashes = loadExcludedTips(settingsService.getHiddenTipHashes())
-            .map(ExcludedTipSettingsItem::hash)
-            .toSet()
-        val remainingHashes = excludedTips.map(ExcludedTipSettingsItem::hash).toSet()
-
-        currentExcludedHashes
-            .filterNot(remainingHashes::contains)
+        hashes
+            .asSequence()
+            .map(String::trim)
+            .filter(String::isNotBlank)
+            .distinct()
             .forEach(settingsService::restoreTip)
     }
 

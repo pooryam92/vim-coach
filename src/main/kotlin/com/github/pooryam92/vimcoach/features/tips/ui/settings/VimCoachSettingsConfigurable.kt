@@ -199,7 +199,8 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
             tipIntervalHours = MIN_TIP_INTERVAL_HOURS,
             availableCategories = emptyList(),
             enabledCategories = emptyList(),
-            excludedTips = emptyList()
+            excludedTips = emptyList(),
+            restoredExcludedTipHashes = emptyList()
         )
     }
 
@@ -210,7 +211,9 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
             tipIntervalHours = currentIntervalValue(),
             availableCategories = availableCategories(),
             enabledCategories = selectedCategories(),
-            excludedTips = excludedTipsListPanel?.currentTips() ?: screenState.excludedTips
+            excludedTips = excludedTipsListPanel?.currentTips() ?: screenState.excludedTips,
+            restoredExcludedTipHashes = excludedTipsListPanel?.restoredTipHashes()
+                ?: screenState.restoredExcludedTipHashes
         )
     }
 
