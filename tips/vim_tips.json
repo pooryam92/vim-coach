@@ -458,6 +458,17 @@
       "category": [
         "motion"
       ],
+      "summary": "Jump to unmatched braces [{ / ]}",
+      "details": [
+        "[{ jumps to the previous unmatched {",
+        "]} jumps to the next unmatched }",
+        "Useful when you are inside nested code blocks"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
       "summary": "Return after big jumps `` and ''",
       "details": [
         "`` returns to the exact previous spot",
@@ -884,6 +895,28 @@
       "category": [
         "editing"
       ],
+      "summary": "Change inside brackets with ci[ / ci{",
+      "details": [
+        "ci[ changes text inside square brackets",
+        "ci{ changes text inside braces",
+        "Use ca[ or ca{ when you also want the delimiters"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Change inside tags with cit / cat",
+      "details": [
+        "cit changes text inside the current tag",
+        "cat changes the tag and its contents",
+        "Useful in XML, HTML, and markup-like code"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
       "summary": "Yank inner/around word yiw / yaw",
       "details": [
         "yiw copies just the word",
@@ -1064,6 +1097,39 @@
         "editing",
         "cmdline"
       ],
+      "summary": "Delete a range with :delete",
+      "details": [
+        ":delete removes the addressed lines",
+        "Use a range like :10,20delete for line-based cleanup"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "cmdline"
+      ],
+      "summary": "Put a register with :put",
+      "details": [
+        ":put 0 inserts register 0 below the current line",
+        ":put + inserts clipboard text below the current line"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "cmdline"
+      ],
+      "summary": "Join a range with :join",
+      "details": [
+        ":10,12join joins the lines in that range",
+        "Use :join! when you do not want spacing adjusted"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "cmdline"
+      ],
       "summary": "Run a Normal command on many lines with :normal",
       "details": [
         ":%normal A; appends ; to every line",
@@ -1212,6 +1278,17 @@
       "details": [
         "Ctrl-r 0 inserts last yank",
         "Ctrl-r + inserts clipboard"
+      ]
+    },
+    {
+      "category": [
+        "insert",
+        "cmdline"
+      ],
+      "summary": "Insert special characters with Ctrl-k digraphs",
+      "details": [
+        "In Insert mode, Ctrl-k followed by a digraph inserts that character",
+        "Use :digraphs to list available digraphs"
       ]
     },
     {
@@ -1604,6 +1681,17 @@
     },
     {
       "category": [
+        "motion"
+      ],
+      "summary": "Move between methods with ]m / [m",
+      "details": [
+        "]m jumps to the next method start",
+        "[m jumps to the previous method start",
+        "Use ]M and [M for method ends"
+      ]
+    },
+    {
+      "category": [
         "visual"
       ],
       "summary": "Reselect last Visual selection with gv",
@@ -1934,6 +2022,17 @@
       "details": [
         ":help {topic} opens docs (e.g., :help text-objects)",
         "Use Ctrl-] to jump tags, Ctrl-t to jump back"
+      ]
+    },
+    {
+      "category": [
+        "cmdline",
+        "motion"
+      ],
+      "summary": "Inspect character codes with ga / :ascii",
+      "details": [
+        "ga reports the character under the cursor",
+        ":ascii is the Ex command for the same check"
       ]
     },
     {
@@ -2656,7 +2755,7 @@
       ],
       "summary": "Treat whitespace-only lines as paragraph breaks",
       "details": [
-        "Use :set paragraph-motion to enable the plugin",
+        "Use :set vim-paragraph-motion to enable the plugin",
         "{ and } treat whitespace-only lines as paragraph breaks"
       ]
     },
@@ -2680,7 +2779,7 @@
       ],
       "summary": "Jump to two-character targets with sneak",
       "details": [
-        "Use :set sneak to enable the plugin",
+        "Add vim-sneak in ~/.ideavimrc to enable the plugin",
         "sfo jumps forward to fo",
         "Sfo searches backward"
       ]
@@ -2782,7 +2881,7 @@
       ],
       "summary": "Target an indent block with ii / ai",
       "details": [
-        "Enable the indent-object plugin in ~/.ideavimrc",
+        "Use :set textobj-indent to enable the plugin",
         "vai selects the current indent block",
         "dii deletes it"
       ]
