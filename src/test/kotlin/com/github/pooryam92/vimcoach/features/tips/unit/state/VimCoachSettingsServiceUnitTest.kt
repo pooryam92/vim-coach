@@ -188,6 +188,17 @@ class VimCoachSettingsServiceUnitTest {
         assertFalse(service.consumeExcludedTipsManagementHint())
     }
 
+    @Test
+    fun restoreTipRemovesExcludedTipHash() {
+        val service = createService()
+        service.hideTip(" hash-1 ")
+        service.hideTip("hash-2")
+
+        service.restoreTip("hash-1")
+
+        assertEquals(listOf("hash-2"), service.getHiddenTipHashes())
+    }
+
     private fun createService(
         store: VimCoachSettingsStore = VimCoachSettingsStoreImpl()
     ): VimCoachSettingsService {

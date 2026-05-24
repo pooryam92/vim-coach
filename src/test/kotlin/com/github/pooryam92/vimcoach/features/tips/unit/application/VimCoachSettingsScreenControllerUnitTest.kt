@@ -1,9 +1,11 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.application
 
 import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTips
+import com.github.pooryam92.vimcoach.features.tips.application.settings.ExcludedTipSettingsItem
 import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenController
 import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenState
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
+import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsServiceImpl
@@ -49,6 +51,31 @@ class VimCoachSettingsScreenControllerUnitTest {
     }
 
     @Test
+    fun loadStateIncludesExcludedTipsBySummary() {
+        val excludedTip = VimTip("Excluded motion tip", listOf("details"), listOf("basics"))
+        val visibleTip = VimTip("Visible search tip", listOf("details"), listOf("search"))
+        val settingsService = createSettingsService().apply {
+            hideTip(TipHash.fromTip(excludedTip).value)
+        }
+        val tipService = createTipService().apply {
+            saveTips(listOf(excludedTip, visibleTip))
+        }
+        val service = createScreenService(settingsService, tipService)
+
+        val state = service.loadState()
+
+        assertEquals(
+            listOf(
+                ExcludedTipSettingsItem(
+                    hash = TipHash.fromTip(excludedTip).value,
+                    summary = "Excluded motion tip"
+                )
+            ),
+            state.excludedTips
+        )
+    }
+
+    @Test
     fun saveStatePersistsFormValues() {
         val settingsService = createSettingsService()
         val tipService = createTipService()
@@ -71,6 +98,23 @@ class VimCoachSettingsScreenControllerUnitTest {
             listOf("basics", "search"),
             settingsService.getEnabledTipCategories(listOf("basics", "editing", "search"))
         )
+    }
+
+    @Test
+    fun saveStateRestoresExcludedTipsRemovedFromState() {
+        val excludedTip = VimTip("Excluded motion tip", listOf("details"), listOf("basics"))
+        val settingsService = createSettingsService().apply {
+            hideTip(TipHash.fromTip(excludedTip).value)
+        }
+        val tipService = createTipService().apply {
+            saveTips(listOf(excludedTip))
+        }
+        val service = createScreenService(settingsService, tipService)
+        val state = service.loadState()
+
+        service.saveState(state.copy(excludedTips = emptyList()))
+
+        assertEquals(emptyList<String>(), settingsService.getHiddenTipHashes())
     }
 
     @Test

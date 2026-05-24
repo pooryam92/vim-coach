@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.ui.settings
 
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
+import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
@@ -11,6 +12,7 @@ import java.awt.Container
 import javax.swing.JButton
 import javax.swing.JCheckBox
 import javax.swing.JComponent
+import javax.swing.JLabel
 import javax.swing.JSpinner
 
 class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
@@ -202,6 +204,50 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
         }
     }
 
+    fun testCreateComponentShowsExcludedTipsWithUndoButton() {
+        val excludedTip = VimTip("Excluded motion tip", listOf("excluded-details"), listOf("basics"))
+        val visibleTip = VimTip("Visible search tip", listOf("visible-details"), listOf("search"))
+        tipService().saveTips(listOf(excludedTip, visibleTip))
+        settingsService().hideTip(TipHash.fromTip(excludedTip).value)
+        val configurable = VimCoachSettingsConfigurable()
+
+        try {
+            val component = configurable.createComponent()
+
+            assertNotNull(findLabel(component, MyBundle.message("settingsExcludedTipsLabel")))
+            assertNotNull(findLabel(component, "Excluded motion tip"))
+            assertNotNull(findButton(component, MyBundle.message("settingsUndoExcludedTip")))
+            assertFalse(hasLabel(component, "Visible search tip"))
+        } finally {
+            configurable.disposeUIResources()
+        }
+    }
+
+    fun testUndoExcludedTipRestoresTipOnApply() {
+        val excludedTip = VimTip("Excluded motion tip", listOf("excluded-details"), listOf("basics"))
+        tipService().saveTips(listOf(excludedTip))
+        val excludedHash = TipHash.fromTip(excludedTip).value
+        settingsService().hideTip(excludedHash)
+        val configurable = VimCoachSettingsConfigurable()
+
+        try {
+            val component = configurable.createComponent()
+            val undoButton = findButton(component, MyBundle.message("settingsUndoExcludedTip"))
+
+            undoButton.doClick()
+
+            assertTrue(configurable.isModified())
+            assertFalse(hasLabel(component, "Excluded motion tip"))
+
+            configurable.apply()
+
+            assertEquals(emptyList<String>(), settingsService().getHiddenTipHashes())
+            assertFalse(configurable.isModified())
+        } finally {
+            configurable.disposeUIResources()
+        }
+    }
+
     fun testResetRestoresPersistedValue() {
         settingsService().setShowTipsOnStartupEnabled(false)
         settingsService().setPeriodicTipsEnabled(false)
@@ -281,6 +327,30 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
 
         fail("Expected button with text '$text' in settings UI")
         throw IllegalStateException("Unreachable")
+    }
+
+    private fun findLabel(root: JComponent, text: String): JLabel {
+        val queue = ArrayDeque<Container>()
+        queue.add(root)
+
+        while (queue.isNotEmpty()) {
+            val current = queue.removeFirst()
+            for (child in current.components) {
+                if (child is JLabel && child.text == text) {
+                    return child
+                }
+                if (child is Container) {
+                    queue.add(child)
+                }
+            }
+        }
+
+        fail("Expected label with text '$text' in settings UI")
+        throw IllegalStateException("Unreachable")
+    }
+
+    private fun hasLabel(root: JComponent, text: String): Boolean {
+        return runCatching { findLabel(root, text) }.isSuccess
     }
 
     private fun findSpinner(root: JComponent): JSpinner {

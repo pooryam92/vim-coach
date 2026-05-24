@@ -114,6 +114,8 @@ class PeriodicTipSchedulerIntTest : BasePlatformTestCase() {
 
         override fun hideTip(hash: String) = Unit
 
+        override fun restoreTip(hash: String) = Unit
+
         override fun consumeExcludedTipsManagementHint(): Boolean = false
     }
 }

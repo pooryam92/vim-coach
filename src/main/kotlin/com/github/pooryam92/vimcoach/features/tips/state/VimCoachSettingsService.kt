@@ -15,5 +15,6 @@ interface VimCoachSettingsService {
 
     fun getHiddenTipHashes(): List<String>
     fun hideTip(hash: String)
+    fun restoreTip(hash: String)
     fun consumeExcludedTipsManagementHint(): Boolean
 }

@@ -82,6 +82,14 @@ class VimCoachSettingsServiceImpl() : VimCoachSettingsService {
         }
     }
 
+    override fun restoreTip(hash: String) {
+        val normalizedHash = normalizeHash(hash) ?: return
+        val hiddenHashes = getHiddenTipHashes().filterNot { it == normalizedHash }
+        if (hiddenHashes != getHiddenTipHashes()) {
+            settingsStore().setHiddenTipHashes(hiddenHashes)
+        }
+    }
+
     override fun consumeExcludedTipsManagementHint(): Boolean {
         if (currentState().excludedTipsManagementHintShown) {
             return false

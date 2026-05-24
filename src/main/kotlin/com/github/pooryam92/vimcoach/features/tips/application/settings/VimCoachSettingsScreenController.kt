@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.application.settings
 
 import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTips
+import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.intellij.openapi.components.service
@@ -29,7 +30,8 @@ class VimCoachSettingsScreenController() {
             periodicTipsEnabled = settingsService.isPeriodicTipsEnabled(),
             tipIntervalHours = settingsService.getTipIntervalHours(),
             availableCategories = availableCategories,
-            enabledCategories = settingsService.getEnabledTipCategories(availableCategories)
+            enabledCategories = settingsService.getEnabledTipCategories(availableCategories),
+            excludedTips = loadExcludedTips(settingsService.getHiddenTipHashes())
         )
     }
 
@@ -39,6 +41,7 @@ class VimCoachSettingsScreenController() {
         settingsService.setTipIntervalHours(state.tipIntervalHours)
         settingsService.setPeriodicTipsEnabled(state.periodicTipsEnabled)
         settingsService.setEnabledTipCategories(state.availableCategories, state.enabledCategories)
+        restoreTipsRemovedFromSettings(state.excludedTips)
     }
 
     private fun loadAvailableCategories(): List<String> {
@@ -51,6 +54,27 @@ class VimCoachSettingsScreenController() {
         // Legacy caches from pre-category versions need a full reload to recover category data.
         refreshTips().refetchTips()
         return tipService.getCategories().values
+    }
+
+    private fun loadExcludedTips(hiddenTipHashes: List<String>): List<ExcludedTipSettingsItem> {
+        return tipService().getTipsByHashes(hiddenTipHashes).map { tip ->
+            ExcludedTipSettingsItem(
+                hash = TipHash.fromTip(tip).value,
+                summary = tip.summary
+            )
+        }
+    }
+
+    private fun restoreTipsRemovedFromSettings(excludedTips: List<ExcludedTipSettingsItem>) {
+        val settingsService = settingsService()
+        val currentExcludedHashes = loadExcludedTips(settingsService.getHiddenTipHashes())
+            .map(ExcludedTipSettingsItem::hash)
+            .toSet()
+        val remainingHashes = excludedTips.map(ExcludedTipSettingsItem::hash).toSet()
+
+        currentExcludedHashes
+            .filterNot(remainingHashes::contains)
+            .forEach(settingsService::restoreTip)
     }
 
     private fun settingsService(): VimCoachSettingsService = injectedSettingsService ?: service()

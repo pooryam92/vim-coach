@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.testsupport
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipCategories
+import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
@@ -52,6 +53,11 @@ class FakeVimTipService(
         val tip = tipPool[currentIndex % tipPool.size]
         currentIndex += 1
         return tip
+    }
+
+    override fun getTipsByHashes(hashes: List<String>): List<VimTip> {
+        val tipsByHash = tips.associateBy { TipHash.fromTip(it).value }
+        return hashes.mapNotNull(tipsByHash::get)
     }
 
     override fun getCategories(): TipCategories {

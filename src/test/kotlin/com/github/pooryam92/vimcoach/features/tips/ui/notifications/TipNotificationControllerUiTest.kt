@@ -13,6 +13,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.components.service
 import com.intellij.openapi.ui.popup.Balloon
+import com.intellij.testFramework.TestActionEvent
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import java.lang.reflect.Proxy
 
@@ -244,7 +245,7 @@ class TipNotificationControllerUiTest : BasePlatformTestCase() {
     }
 
     private fun invokeNotificationAction(action: AnAction, notification: Notification) {
-        val event = AnActionEvent.createFromAnAction(action, null, "", DataContext.EMPTY_CONTEXT)
+        val event = TestActionEvent.createTestEvent(action, DataContext.EMPTY_CONTEXT)
         val actionPerformed = action.javaClass.methods.first { method ->
             method.name == "actionPerformed" &&
                 method.parameterTypes.contentEquals(arrayOf(AnActionEvent::class.java, Notification::class.java))
@@ -315,6 +316,10 @@ class TipNotificationControllerUiTest : BasePlatformTestCase() {
             if (hash !in hiddenTipHashes) {
                 hiddenTipHashes.add(hash)
             }
+        }
+
+        override fun restoreTip(hash: String) {
+            hiddenTipHashes.remove(hash)
         }
 
         override fun consumeExcludedTipsManagementHint(): Boolean = true

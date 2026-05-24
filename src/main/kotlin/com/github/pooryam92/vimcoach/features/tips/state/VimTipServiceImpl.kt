@@ -37,6 +37,21 @@ class VimTipServiceImpl() : VimTipService {
         return randomTipOrFallback(matchingTips, FILTERED_FALLBACK_TIP)
     }
 
+    override fun getTipsByHashes(hashes: List<String>): List<VimTip> {
+        val requestedHashes = hashes
+            .asSequence()
+            .map(String::trim)
+            .filter(String::isNotBlank)
+            .distinct()
+            .toList()
+        if (requestedHashes.isEmpty()) {
+            return emptyList()
+        }
+
+        val tipsByHash = currentState().tips.associateBy { TipHash.fromTip(it).value }
+        return requestedHashes.mapNotNull(tipsByHash::get)
+    }
+
     override fun getCategories(): TipCategories {
         val state = currentState()
         if (state.categories.isNotEmpty() || state.tips.isEmpty()) {

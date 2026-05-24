@@ -23,6 +23,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
     private var periodicCheckBox: JCheckBox? = null
     private var intervalSpinner: JSpinner? = null
     private var categoryToggleButton: JButton? = null
+    private var excludedTipsListPanel: ExcludedTipsListPanel? = null
     private val categoryCheckBoxes = linkedMapOf<String, JCheckBox>()
     private var screenState: VimCoachSettingsScreenState = defaultScreenState()
 
@@ -37,6 +38,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
             buildStartupRow()
             buildPeriodicRow()
             buildCategoriesSection(screenState.availableCategories)
+            buildExcludedTipsSection()
         }.also { reset() }
     }
 
@@ -59,6 +61,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
         categoryCheckBoxes.forEach { (category, checkBox) ->
             checkBox.isSelected = category in enabledCategories
         }
+        excludedTipsListPanel?.reset(screenState.excludedTips)
         updateCategoryToggleButtonText()
     }
 
@@ -67,6 +70,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
         periodicCheckBox = null
         intervalSpinner = null
         categoryToggleButton = null
+        excludedTipsListPanel = null
         categoryCheckBoxes.clear()
     }
 
@@ -148,6 +152,24 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
         }
     }
 
+    private fun Panel.buildExcludedTipsSection() {
+        row {
+            label(MyBundle.message("settingsExcludedTipsLabel"))
+        }
+
+        row {
+            cell(createExcludedTipsListPanel())
+                .align(AlignX.FILL)
+        }
+    }
+
+    private fun createExcludedTipsListPanel(): ExcludedTipsListPanel {
+        return ExcludedTipsListPanel().also {
+            excludedTipsListPanel = it
+            it.reset(screenState.excludedTips)
+        }
+    }
+
     private fun setAllCategoriesSelected(selected: Boolean) {
         categoryCheckBoxes.values.forEach { it.isSelected = selected }
         updateCategoryToggleButtonText()
@@ -176,7 +198,8 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
             periodicTipsEnabled = false,
             tipIntervalHours = MIN_TIP_INTERVAL_HOURS,
             availableCategories = emptyList(),
-            enabledCategories = emptyList()
+            enabledCategories = emptyList(),
+            excludedTips = emptyList()
         )
     }
 
@@ -186,7 +209,8 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
             periodicTipsEnabled = periodicCheckBox?.isSelected ?: screenState.periodicTipsEnabled,
             tipIntervalHours = currentIntervalValue(),
             availableCategories = availableCategories(),
-            enabledCategories = selectedCategories()
+            enabledCategories = selectedCategories(),
+            excludedTips = excludedTipsListPanel?.currentTips() ?: screenState.excludedTips
         )
     }
 
