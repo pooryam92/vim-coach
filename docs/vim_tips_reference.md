@@ -75,9 +75,11 @@ Field rules:
 - `summary`
   - one short command-first line
   - should tell the user what to do or what they gain
+  - aim for 35 characters or fewer so it fits on one line in the notification
 - `details`
   - short factual lines
   - explain what the command does, context, caveats, or a quick example
+  - each line should also aim for 35 characters or fewer
 
 Invalid content:
 
@@ -93,11 +95,38 @@ tip's trimmed `summary` value. This avoids adding an author-managed ID field,
 but it means changing a tip title creates a new identity for that tip and may
 reset any existing user preference for it.
 
+## Notification Display
+
+Tips appear inside an IntelliJ balloon notification. The app name "Vim Coach" is
+the static balloon title. Both `summary` and `details` are rendered in the body
+as HTML — `summary` in bold at the top, `details` lines below separated by line
+breaks.
+
+The IntelliJ balloon body area is styled at 240 px wideDD 
+(`BalloonLayoutConfiguration.MaxWidthStyle`). At the default IDE font, this fits
+roughly **30–35 characters per line** before text wraps. The summary renders in
+bold, which is slightly wider. The default balloon view shows about 2 wrapped
+lines of body text; anything beyond that requires the user to scroll.
+
+Practical constraints:
+
+- Keep summaries to **≤ 35 characters** so the bold summary line stays on one
+  line. Wrapping onto two lines pushes detail lines out of the default view.
+- Keep each detail line short for the same reason. Two or three short lines are
+  better than one long wrapped line.
+- Abbreviated forms like `char`, `msg`, and `prev` are acceptable in summaries
+  when spelling them out would push the summary over one line.
+- Omit filler words like `with` before a command name when the command already
+  makes the relationship clear. `Replace one character r{char}` reads fine
+  without `with`.
+
 ## Writing Style
 
 Use these rules when writing or revising tip text:
 
 - Keep summaries command-first and concrete.
+- Keep summaries to 35 characters or fewer. See the Notification Display section
+  for why this matters.
 - Prefer user outcome over Vim taxonomy.
 - Keep details short and factual.
 - Make mode or prompt context explicit when it matters.

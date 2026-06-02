@@ -57,39 +57,6 @@
     },
     {
       "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Step through the argument list with :next / :previous",
-      "details": [
-        ":next moves to the next file in the argument list",
-        ":previous moves back to the earlier one"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Jump to a specific argument with :argument {N}",
-      "details": [
-        ":argument {N} edits the Nth file in the argument list",
-        "Use it when you know exactly which argument-list file you want"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Jump to the ends of the argument list with :first / :last",
-      "details": [
-        ":first edits the first file in the argument list",
-        ":last edits the last file in the argument list"
-      ]
-    },
-    {
-      "category": [
         "editing"
       ],
       "summary": "Toggle last file Ctrl-^",
@@ -163,17 +130,6 @@
       "details": [
         ":wa writes all modified buffers",
         "In IDE, typically saves all open editors"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Write and advance with :wnext / :wprevious",
-      "details": [
-        ":wnext writes the current file and moves to the next one",
-        ":wprevious writes and moves to the previous file"
       ]
     },
     {
@@ -269,7 +225,7 @@
       "category": [
         "motion"
       ],
-      "summary": "Word moves w / b / e",
+      "summary": "Move by words w / b / e",
       "details": [
         "w next word start",
         "b previous word start",
@@ -280,7 +236,7 @@
       "category": [
         "motion"
       ],
-      "summary": "End of previous word ge",
+      "summary": "Jump to end of previous word ge",
       "details": [
         "ge goes to end of previous word",
         "Nice for edits before punctuation"
@@ -300,7 +256,7 @@
       "category": [
         "motion"
       ],
-      "summary": "End of previous big WORD gE",
+      "summary": "Jump to end of previous WORD gE",
       "details": [
         "gE goes to end of previous WORD",
         "Useful on URLs / file paths"
@@ -321,7 +277,7 @@
       "category": [
         "motion"
       ],
-      "summary": "Last non-blank on line g_",
+      "summary": "Jump to last non-blank on line g_",
       "details": [
         "g_ jumps to last non-space character",
         "Handy near );}] and trailing spaces"
@@ -331,7 +287,7 @@
       "category": [
         "motion"
       ],
-      "summary": "Move to first text on next/prev line + / -",
+      "summary": "Move to first text + / -",
       "details": [
         "+ moves down to first non-blank",
         "- moves up to first non-blank",
@@ -469,6 +425,17 @@
       "category": [
         "motion"
       ],
+      "summary": "Jump to unmatched parens [( / ])",
+      "details": [
+        "[( jumps to previous unmatched (",
+        "]) jumps to the next unmatched )",
+        "Useful inside nested expressions"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
       "summary": "Return after big jumps `` and ''",
       "details": [
         "`` returns to the exact previous spot",
@@ -563,26 +530,6 @@
       "category": [
         "scroll"
       ],
-      "summary": "Place first text z<CR> z. z-",
-      "details": [
-        "z<CR> top, z. center, z- bottom",
-        "Moves to first non-blank on that line"
-      ]
-    },
-    {
-      "category": [
-        "scroll"
-      ],
-      "summary": "Page then place first text z+ / z^",
-      "details": [
-        "z+ uses next page, z^ previous page",
-        "Then lands at first non-blank"
-      ]
-    },
-    {
-      "category": [
-        "scroll"
-      ],
       "summary": "Half-page scroll Ctrl-d / Ctrl-u",
       "details": [
         "Ctrl-d scrolls down half a page",
@@ -649,17 +596,6 @@
       "details": [
         ":set so=5 keeps context lines",
         "Use sidescrolloff for side context"
-      ]
-    },
-    {
-      "category": [
-        "options",
-        "scroll"
-      ],
-      "summary": "Set half-page size with scroll",
-      "details": [
-        ":set scroll=15 changes step size",
-        "Useful when half-page feels too big"
       ]
     },
     {
@@ -755,7 +691,7 @@
       ],
       "summary": "Check an option with :set option?",
       "details": [
-        "In :, :set number? shows the value",
+        ":set number? shows its value",
         "Useful when debugging behavior"
       ]
     },
@@ -765,7 +701,7 @@
       ],
       "summary": "Toggle an option with :set invoption",
       "details": [
-        "In :, :set invnumber toggles it",
+        ":set invnumber toggles the option",
         "Quick way to flip a boolean option"
       ]
     },
@@ -816,7 +752,7 @@
       "summary": "Insert at true line start gI",
       "details": [
         "gI inserts at column 1",
-        "Unlike I, it keeps indentation"
+        "Starts before any leading spaces"
       ]
     },
     {
@@ -1296,7 +1232,7 @@
         "insert",
         "change"
       ],
-      "summary": "Replace mode R",
+      "summary": "Enter Replace mode with R",
       "details": [
         "Type to overwrite text",
         "Esc leaves Replace mode"
@@ -1371,17 +1307,17 @@
       "category": [
         "change"
       ],
-      "summary": "Shortcuts to line end D / C",
+      "summary": "Delete/change to line end D / C",
       "details": [
-        "D is d$ to line end",
-        "C is c$ to line end"
+        "D is shorthand for d$",
+        "C is shorthand for c$"
       ]
     },
     {
       "category": [
         "change"
       ],
-      "summary": "Delete a char x / X",
+      "summary": "Delete a character x / X",
       "details": [
         "x deletes under cursor",
         "X deletes before cursor"
@@ -1402,7 +1338,7 @@
         "change",
         "insert"
       ],
-      "summary": "Substitute chars s / S",
+      "summary": "Substitute chars with s / S",
       "details": [
         "s changes one char and inserts",
         "S changes whole line and inserts"
@@ -1423,7 +1359,7 @@
       "category": [
         "change"
       ],
-      "summary": "Replace one char r{char}",
+      "summary": "Replace one character r{char}",
       "details": [
         "r replaces the char under cursor",
         "Stays in Normal mode"
@@ -1465,7 +1401,7 @@
       "category": [
         "change"
       ],
-      "summary": "Toggle case of char ~",
+      "summary": "Toggle case of a character ~",
       "details": [
         "~ toggles case and moves on",
         "Counts work: 5~"
@@ -1504,6 +1440,29 @@
     {
       "category": [
         "change",
+        "visual"
+      ],
+      "summary": "Increment sequentially g Ctrl-a",
+      "details": [
+        "Select lines, then press g Ctrl-a",
+        "Adds 1, 2, 3... to each line's number",
+        "Useful for building numbered lists"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "visual"
+      ],
+      "summary": "Decrement sequentially g Ctrl-x",
+      "details": [
+        "Select lines, then press g Ctrl-x",
+        "Subtracts 1, 2, 3... from each number"
+      ]
+    },
+    {
+      "category": [
+        "change",
         "repeat"
       ],
       "summary": "Repeat last change .",
@@ -1520,17 +1479,6 @@
       "details": [
         "u undoes the last change",
         "Ctrl-r redoes the undone change"
-      ]
-    },
-    {
-      "category": [
-        "undo",
-        "cmdline"
-      ],
-      "summary": "Ex undo and redo :undo / :redo",
-      "details": [
-        ":undo undoes one change",
-        ":redo reapplies the undone change"
       ]
     },
     {
@@ -1688,6 +1636,53 @@
         "]m jumps to the next method start",
         "[m jumps to the previous method start",
         "Use ]M and [M for method ends"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Jump between sections [[ / ]]",
+      "details": [
+        "[[ jumps to previous section start",
+        "]] jumps to the next section start",
+        "[] and ][ jump to section ends"
+      ]
+    },
+    {
+      "category": [
+        "motion"
+      ],
+      "summary": "Navigate misspelled words ]s / [s",
+      "details": [
+        "]s jumps to next misspelled word",
+        "[s jumps to the previous one",
+        "Requires active spell checking"
+      ]
+    },
+    {
+      "category": [
+        "motion",
+        "ideavim"
+      ],
+      "summary": "Move by camelCase words [w / [b",
+      "details": [
+        "[w moves to next camelCase word",
+        "[b moves to previous camelCase word",
+        "]w and ]b move to word ends"
+      ]
+    },
+    {
+      "category": [
+        "motion",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Move through camelCase sub-words",
+      "details": [
+        "Use :set CamelCaseMotion to enable",
+        "Set g:camelcasemotion_key as prefix",
+        "Prefix + w, b, e, ge are the motions"
       ]
     },
     {
@@ -2633,8 +2628,8 @@
       ],
       "summary": "Toggle IdeaVim with :action ToggleIdeaVim",
       "details": [
-        "In :, :action ToggleIdeaVim flips it",
-        "Useful when a key conflict gets in the way"
+        ":action ToggleIdeaVim toggles it",
+        "Useful when keys conflict"
       ]
     },
     {
@@ -2644,7 +2639,7 @@
       ],
       "summary": "Run IDE actions with :action {id}",
       "details": [
-        "In :, :action ReformatCode runs it",
+        ":action ReformatCode is one example",
         "Use <Action>(...) in mappings instead"
       ]
     },
@@ -2738,12 +2733,22 @@
     },
     {
       "category": [
+        "ideavim"
+      ],
+      "summary": "Open quick docs with K",
+      "details": [
+        "K opens the IDE quick docs popup",
+        "Works on any symbol in Normal mode"
+      ]
+    },
+    {
+      "category": [
         "ideavim",
         "insert"
       ],
       "summary": "Trigger IDE completion with Ctrl-Space",
       "details": [
-        "In Insert, Ctrl-Space opens completion",
+        "Use Ctrl-Space in Insert mode",
         "Press it again to widen suggestions"
       ]
     },
@@ -2833,6 +2838,20 @@
         "ysiw) adds parens",
         "cs\"' swaps quote types",
         "ds\" removes them"
+      ]
+    },
+    {
+      "category": [
+        "change",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Recase a word with cr coercions",
+      "details": [
+        "Use :set abolish to enable",
+        "crs=snake_case, crc=camelCase",
+        "crm=PascalCase, cru=UPPER_SNAKE",
+        "cr-=kebab-case, crt=Title Case"
       ]
     },
     {
