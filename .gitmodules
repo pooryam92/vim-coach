@@ -1,0 +1,5 @@
+[submodule "external/ideavim"]
+	path = external/ideavim
+	url = https://github.com/JetBrains/ideavim.git
+	branch = master
+	shallow = true

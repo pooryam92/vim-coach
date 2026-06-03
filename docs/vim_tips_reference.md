@@ -11,20 +11,42 @@ Use this document when adding, revising, or reviewing tips in
 
 ## Local Support Data
 
-Use the generated KSP JSON files in `tips/` as the first local support check for
-whether a command, Ex command, Vimscript function, or IdeaVim extension exists.
+Use the generated KSP JSON files in the IdeaVim submodule as the first local
+support check for whether a command, Ex command, Vimscript function, or IdeaVim
+extension exists.
+
+To fetch the submodule after cloning this repo:
+
+```bash
+git submodule update --init external/ideavim
+```
+
+To keep the local submodule checkout focused on generated KSP files:
+
+```bash
+git -C external/ideavim sparse-checkout init --cone
+git -C external/ideavim sparse-checkout set \
+  src/main/resources/ksp-generated \
+  vim-engine/src/main/resources/ksp-generated
+```
+
+To refresh it to the latest tracked IdeaVim `master` commit:
+
+```bash
+git submodule update --remote external/ideavim
+```
 
 - Engine command data:
-  - `tips/ksp-generated/engine_commands.json`
-  - `tips/ksp-generated/engine_ex_commands.json`
-  - `tips/ksp-generated/engine_vimscript_functions.json`
+  - `external/ideavim/vim-engine/src/main/resources/ksp-generated/engine_commands.json`
+  - `external/ideavim/vim-engine/src/main/resources/ksp-generated/engine_ex_commands.json`
+  - `external/ideavim/vim-engine/src/main/resources/ksp-generated/engine_vimscript_functions.json`
 - Frontend command data:
-  - `tips/ksp-generated-frontend/frontend_commands.json`
-  - `tips/ksp-generated-frontend/frontend_ex_commands.json`
-  - `tips/ksp-generated-frontend/frontend_vimscript_functions.json`
+  - `external/ideavim/src/main/resources/ksp-generated/frontend_commands.json`
+  - `external/ideavim/src/main/resources/ksp-generated/frontend_ex_commands.json`
+  - `external/ideavim/src/main/resources/ksp-generated/frontend_vimscript_functions.json`
 - Extension data:
-  - `tips/ksp-generated/ideavim_extensions.json`
-  - `tips/ksp-generated-frontend/ideavim_extensions.json`
+  - `external/ideavim/vim-engine/src/main/resources/ksp-generated/ideavim_extensions.json`
+  - `external/ideavim/src/main/resources/ksp-generated/ideavim_extensions.json`
 
 Use them like this:
 
@@ -267,8 +289,7 @@ reference pages alone.
 
 ### IdeaVim support sources
 
-- Local generated support data in `tips/ksp-generated/` and
-  `tips/ksp-generated-frontend/`
+- Local generated support data in `external/ideavim/.../ksp-generated/`
 - https://github.com/JetBrains/ideavim
 - https://github.com/JetBrains/ideavim/wiki
 - https://github.com/JetBrains/ideavim/tree/master/annotation-processors
