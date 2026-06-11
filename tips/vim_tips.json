@@ -8,7 +8,7 @@
       "summary": "Edit another file with :edit {file}",
       "details": [
         ":edit {file} opens a file for editing",
-        "Write first or use :edit! if you want to discard current changes"
+        "Use :edit! to discard unsaved changes first"
       ]
     },
     {
@@ -30,7 +30,7 @@
       "summary": "Open a file chooser with :browse",
       "details": [
         ":browse opens the file-open dialog",
-        "Use it when you want to pick a file instead of typing its name"
+        "Pick a file instead of typing its name"
       ]
     },
     {
@@ -38,10 +38,10 @@
         "editing",
         "cmdline"
       ],
-      "summary": "List known files with :buffers / :files / :ls",
+      "summary": "List open buffers with :ls",
       "details": [
-        ":buffers, :files, and :ls list known files/buffers",
-        "Use the list before switching with :buffer, :bn, :bp, or Ctrl-^"
+        ":ls, :buffers, and :files list known buffers",
+        "Then switch with :buffer, :bn, or :bp"
       ]
     },
     {
@@ -51,8 +51,8 @@
       ],
       "summary": "Jump to a listed buffer with :buffer {N}",
       "details": [
-        ":buffer {N} jumps to the numbered buffer from the buffer list",
-        "Use it after :ls when you know exactly which file you want"
+        ":buffer {N} jumps to buffer number N",
+        "Use it after :ls when you know the number"
       ]
     },
     {
@@ -117,8 +117,8 @@
       ],
       "summary": "Write a copy to another file :w {file}",
       "details": [
-        ":w {file} writes the current buffer to a different file",
-        "Useful when you want a copy without changing the current buffer name"
+        ":w {file} writes the buffer to another file",
+        "Makes a copy without renaming the buffer"
       ]
     },
     {
@@ -137,10 +137,10 @@
         "editing",
         "cmdline"
       ],
-      "summary": "Read a file into the current buffer with :read {file}",
+      "summary": "Insert a file with :read {file}",
       "details": [
-        ":read {file} inserts another file below the current line",
-        "Useful when you want to pull file contents into the current buffer"
+        ":read {file} inserts a file below the current line",
+        "Pulls file contents into this buffer"
       ]
     },
     {
@@ -151,7 +151,8 @@
       "summary": "Quit :q / :q!",
       "details": [
         ":q closes if no unsaved changes",
-        ":q! forces close/discard (if allowed)"
+        ":q! forces close/discard (if allowed)",
+        "ZQ is the key form of :q!"
       ]
     },
     {
@@ -175,7 +176,7 @@
       "details": [
         ":qa exits unless there are changed buffers",
         ":qall is the long form of :qa",
-        "Use the force form only if you really want to discard pending changes"
+        "The force form discards pending changes"
       ]
     },
     {
@@ -301,8 +302,8 @@
       ],
       "summary": "Jump to last changed/yanked lines '[ / ']",
       "details": [
-        "'[ jumps to the first line of the last changed or yanked text",
-        "'] jumps to the last line of that text"
+        "'[ first line of the last change or yank",
+        "'] jumps to its last line"
       ]
     },
     {
@@ -311,8 +312,8 @@
       ],
       "summary": "Jump to exact changed/yanked bounds `[ / `]",
       "details": [
-        "`[ jumps to the exact start of the last changed or yanked text",
-        "`] jumps to the exact end of that text"
+        "`[ exact start of the last change or yank",
+        "`] jumps to its exact end"
       ]
     },
     {
@@ -351,7 +352,7 @@
       "category": [
         "motion"
       ],
-      "summary": "Jump to top/middle/bottom of screen H / M / L",
+      "summary": "Screen top/middle/bottom H / M / L",
       "details": [
         "H top of screen, M middle, L bottom",
         "Great for fast scanning"
@@ -371,10 +372,11 @@
       "category": [
         "motion"
       ],
-      "summary": "Jump to screen-line start/end on wraps g0 / g^ / g$",
+      "summary": "Screen-line start/end g0 / g^ / g$",
       "details": [
         "g0 goes to screen-line start",
-        "g^ to first text, g$ to screen-line end"
+        "g$ to screen-line end",
+        "g^ to first text"
       ]
     },
     {
@@ -464,6 +466,17 @@
         "`. jumps to the exact last change",
         "'. jumps to the line of the last change",
         "Useful when you want to get back to where you were editing"
+      ]
+    },
+    {
+      "category": [
+        "motion",
+        "undo"
+      ],
+      "summary": "Jump through changes g; / g,",
+      "details": [
+        "g; goes to an older change position",
+        "g, moves back toward newer ones"
       ]
     },
     {
@@ -602,7 +615,7 @@
       "category": [
         "options"
       ],
-      "summary": "Show line numbers with number / relativenumber",
+      "summary": "Show line numbers with number",
       "details": [
         ":set number shows line numbers",
         ":set relativenumber helps with counts"
@@ -679,10 +692,10 @@
         "options",
         "editing"
       ],
-      "summary": "Choose clipboard behavior with unnamedplus and ideaput",
+      "summary": "Use OS clipboard with unnamedplus",
       "details": [
-        ":set clipboard+=unnamedplus uses the system clipboard by default",
-        ":set clipboard+=ideaput uses IntelliJ paste handling for put commands"
+        "clipboard+=unnamedplus uses the OS clipboard",
+        "clipboard+=ideaput uses IDE paste for put"
       ]
     },
     {
@@ -731,8 +744,9 @@
       ],
       "summary": "Complete words with Ctrl-n / Ctrl-p",
       "details": [
-        "In Insert mode, Ctrl-n picks the next word match",
-        "Ctrl-p picks the previous one from words already in the file"
+        "In Insert mode, Ctrl-n picks the next match",
+        "Ctrl-p picks the previous match",
+        "Matches words already in the file"
       ]
     },
     {
@@ -803,8 +817,8 @@
       ],
       "summary": "Delete quotes and content with da\"",
       "details": [
-        "da\" deletes the quoted text and the surrounding double quotes",
-        "Useful when you want to remove the whole string"
+        "da\" deletes the text and the quotes",
+        "Useful for removing the whole string"
       ]
     },
     {
@@ -853,6 +867,17 @@
       "category": [
         "editing"
       ],
+      "summary": "Target a sentence with is / as",
+      "details": [
+        "cis changes the current sentence",
+        "das deletes it and trailing space",
+        "Useful in prose and comments"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
       "summary": "Yank inner/around word yiw / yaw",
       "details": [
         "yiw copies just the word",
@@ -867,7 +892,8 @@
       "summary": "Yank whole line yy",
       "details": [
         "yy yanks the current line",
-        "5yy yanks five lines"
+        "5yy yanks five lines",
+        "Y does the same as yy"
       ]
     },
     {
@@ -896,7 +922,7 @@
       ],
       "summary": "Swap two characters with xp",
       "details": [
-        "x deletes the character under the cursor and p puts it after",
+        "x deletes the char and p puts it after",
         "Useful for fixing adjacent typos quickly"
       ]
     },
@@ -929,7 +955,7 @@
       "summary": "Use the yank register \"0",
       "details": [
         "\"0 keeps the most recent yank",
-        "Paste it with \"0p even after a delete changes the unnamed register"
+        "\"0p pastes it even after a delete"
       ]
     },
     {
@@ -946,7 +972,7 @@
       "category": [
         "editing"
       ],
-      "summary": "Store and append text in named registers \"a / \"A",
+      "summary": "Use named registers \"a / \"A",
       "details": [
         "\"ayiw stores text in register a",
         "\"ap pastes it later",
@@ -960,7 +986,7 @@
       "summary": "Delete without clobbering registers with \"_",
       "details": [
         "\"_d deletes into the black-hole register",
-        "Useful when you want to keep the current yank for later pasting"
+        "Keeps your yank safe for later pasting"
       ]
     },
     {
@@ -968,10 +994,10 @@
         "visual",
         "editing"
       ],
-      "summary": "Paste over a selection without losing your yank",
+      "summary": "Paste over a selection with \"_dP",
       "details": [
         "Select text, then use \"_dP",
-        "Useful when replacing repeated matches with the same yanked text"
+        "Reuse the same yank on many targets"
       ]
     },
     {
@@ -1066,10 +1092,10 @@
         "editing",
         "cmdline"
       ],
-      "summary": "Run a Normal command on many lines with :normal",
+      "summary": "Bulk-edit lines with :normal",
       "details": [
         ":%normal A; appends ; to every line",
-        "Try it on a small range first to avoid accidental bulk edits"
+        "Try a small range first"
       ]
     },
     {
@@ -1079,8 +1105,8 @@
       ],
       "summary": "Run a substitute only on matching lines with :g",
       "details": [
-        ":g/ERROR/s/foo/bar/g runs the substitute only on lines matching ERROR",
-        "Useful for targeted bulk edits without touching every line"
+        ":g/ERROR/s/foo/bar/g edits only ERROR lines",
+        "Targeted bulk edits without touching every line"
       ]
     },
     {
@@ -1170,7 +1196,7 @@
         "insert",
         "motion"
       ],
-      "summary": "Run one Normal command from Insert mode Ctrl-o",
+      "summary": "Run one Normal command with Ctrl-o",
       "details": [
         "Run one Normal command",
         "Then return to Insert mode"
@@ -1221,9 +1247,9 @@
         "insert",
         "cmdline"
       ],
-      "summary": "Insert special characters with Ctrl-k digraphs",
+      "summary": "Insert digraphs with Ctrl-k",
       "details": [
-        "In Insert mode, Ctrl-k followed by a digraph inserts that character",
+        "In Insert mode, type Ctrl-k {digraph}",
         "Use :digraphs to list available digraphs"
       ]
     },
@@ -1486,7 +1512,7 @@
         "undo",
         "insert"
       ],
-      "summary": "Start a new undo step in Insert mode Ctrl-g u",
+      "summary": "Split undo in Insert mode Ctrl-g u",
       "details": [
         "Starts a new undo step in Insert mode",
         "Useful after punctuation or pauses"
@@ -1621,7 +1647,7 @@
         "motion",
         "ideavim"
       ],
-      "summary": "Jump to definition or declaration with gd / gD",
+      "summary": "Go to definition with gd / gD",
       "details": [
         "gd jumps to definition through the IDE",
         "gD jumps to declaration when the IDE provides one"
@@ -1737,7 +1763,7 @@
         "viw selects inside the current word",
         "vip selects inside the current paragraph",
         "vap includes surrounding blank lines",
-        "Use i for inside and a for around with other text objects too"
+        "Use i/a with other text objects too"
       ]
     },
     {
@@ -1817,6 +1843,16 @@
       "category": [
         "visual"
       ],
+      "summary": "Append at line ends Ctrl-v $ A",
+      "details": [
+        "Ctrl-v then $ selects to each line end",
+        "A appends the same text to every line"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
       "summary": "Block change Ctrl-v then c",
       "details": [
         "Select a block, then press c",
@@ -1869,7 +1905,7 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Move by word on the command line S-Left / S-Right",
+      "summary": "Move by word in : S-Left / S-Right",
       "details": [
         "S-Left moves to the previous word",
         "S-Right moves to the next word"
@@ -1993,7 +2029,7 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Insert a word on the command line Ctrl-r Ctrl-w",
+      "summary": "Insert word in : with Ctrl-r Ctrl-w",
       "details": [
         "In : or /, Ctrl-r Ctrl-w inserts the word under cursor",
         "Useful for reusing names in a command"
@@ -2003,7 +2039,7 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Insert a file on the command line Ctrl-r Ctrl-f",
+      "summary": "Insert file in : with Ctrl-r Ctrl-f",
       "details": [
         "In : or /, Ctrl-r Ctrl-f inserts the file under cursor",
         "Useful for file-based Ex commands"
@@ -2361,7 +2397,7 @@
       "category": [
         "map"
       ],
-      "summary": "Clear mappings with :mapclear / :nmapclear / :imapclear",
+      "summary": "Clear mappings with :mapclear",
       "details": [
         ":mapclear removes mappings",
         "Mode forms limit the scope",
@@ -2375,8 +2411,8 @@
       ],
       "summary": "Reload ~/.ideavimrc with :source",
       "details": [
-        ":source ~/.ideavimrc reloads your config after edits",
-        "Useful when you want to test mappings without restarting the IDE"
+        ":source ~/.ideavimrc reloads your config",
+        "Test mappings without an IDE restart"
       ]
     },
     {
@@ -2478,12 +2514,23 @@
     },
     {
       "category": [
+        "windows"
+      ],
+      "summary": "Resize splits Ctrl-w + / - / =",
+      "details": [
+        "Ctrl-w + taller, Ctrl-w - shorter",
+        "Ctrl-w = makes splits equal size"
+      ]
+    },
+    {
+      "category": [
         "tabpage"
       ],
       "summary": "Next/previous tab gt / gT",
       "details": [
         "gt goes to the next tab",
-        "gT goes to the previous tab"
+        "gT goes to the previous tab",
+        ":tabn and :tabp are the Ex forms"
       ]
     },
     {
@@ -2494,17 +2541,6 @@
       "details": [
         "2gt jumps to tab 2, 5gt jumps to tab 5",
         "Useful when you have several tabs open"
-      ]
-    },
-    {
-      "category": [
-        "tabpage",
-        "cmdline"
-      ],
-      "summary": "Next/previous tab with Ex :tabn / :tabp",
-      "details": [
-        ":tabn moves to the next tab",
-        ":tabp moves to the previous tab"
       ]
     },
     {
@@ -2558,7 +2594,7 @@
       "summary": "Fold a selection from Visual mode with zf",
       "details": [
         "Select text in Visual mode, then press zf",
-        "Useful when the region is easier to select than describe with a motion"
+        "Easier than describing it with a motion"
       ]
     },
     {
@@ -2715,10 +2751,10 @@
         "ideavim",
         "options"
       ],
-      "summary": "Inspect IDE-owned completion keys with :set lookupkeys?",
+      "summary": "Inspect popup keys with lookupkeys",
       "details": [
-        ":set lookupkeys? shows which keys stay with the IDE completion popup",
-        "Use it when Tab or Enter do not behave like plain Vim keys"
+        ":set lookupkeys? shows the keys it keeps",
+        "Use it when Tab or Enter act oddly"
       ]
     },
     {
@@ -2758,7 +2794,7 @@
         "ideavim",
         "plugin"
       ],
-      "summary": "Treat whitespace-only lines as paragraph breaks",
+      "summary": "Fix { } on whitespace-only lines",
       "details": [
         "Use :set vim-paragraph-motion to enable the plugin",
         "{ and } treat whitespace-only lines as paragraph breaks"
@@ -2832,7 +2868,7 @@
         "ideavim",
         "plugin"
       ],
-      "summary": "Add, change, or delete surroundings with surround",
+      "summary": "Edit surroundings with surround",
       "details": [
         "Use :set surround to enable the plugin",
         "ysiw) adds parens",
