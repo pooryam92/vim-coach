@@ -102,6 +102,19 @@ Field rules:
   - short factual lines
   - explain what the command does, context, caveats, or a quick example
   - each line should also aim for 35 characters or fewer
+- `config` (optional)
+  - array of `.ideavimrc` line(s) the tip refers to
+  - when present, the tip notification shows an **Add to .ideavimrc** button that
+    appends these line(s) to the user's `.ideavimrc` (creating it if needed)
+  - hold the **enable** line(s) only, not usage mappings (e.g. `ysiw)` is how you
+    *use* surround, not config)
+  - for IdeaVim plugins, author the `Plug '<github-alias>'` form, not the legacy
+    `set <plugin>` form, which IdeaVim flags via `UsePlugSyntaxInspection`. Aliases
+    live in `external/ideavim/doc/IdeaVim Plugins.md`
+  - lines are written verbatim (order and duplicates preserved); only blank lines
+    are dropped
+  - multi-line config is fine, e.g.
+    `["Plug 'bkad/CamelCaseMotion'", "let g:camelcasemotion_key = '<leader>'"]`
 
 Invalid content:
 

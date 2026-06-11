@@ -1,8 +1,10 @@
 package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 
+import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotificationController
 import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.github.pooryam92.vimcoach.features.tips.ideavimrc.infra.IdeaVimRcFile
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsStore
@@ -12,19 +14,29 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.components.service
+import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.ui.popup.Balloon
+import com.intellij.openapi.util.io.FileUtil
 import com.intellij.testFramework.TestActionEvent
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import java.lang.reflect.Proxy
+import kotlin.io.path.Path
+import kotlin.io.path.readText
 
 class TipNotificationControllerUiTest : BasePlatformTestCase() {
 
     override fun tearDown() {
         try {
+            closeOpenedEditors()
             resetSettingsState()
         } finally {
             super.tearDown()
         }
+    }
+
+    private fun closeOpenedEditors() {
+        val manager = FileEditorManager.getInstance(project)
+        manager.openFiles.forEach(manager::closeFile)
     }
 
     fun testNotificationAddsNextTipAction() {
@@ -53,6 +65,60 @@ class TipNotificationControllerUiTest : BasePlatformTestCase() {
         assertEquals(2, notification.actions.size)
         assertEquals(TipNotificationFactory.TIP_NEXT_ACTION_TEXT, notification.actions[0].templateText)
         assertEquals(TipNotificationFactory.TIP_DONT_SHOW_AGAIN_ACTION_TEXT, notification.actions[1].templateText)
+    }
+
+    fun testAddToIdeaVimRcActionAppendsConfigAndIsShownLast() {
+        val tempHome = FileUtil.createTempDirectory("vimcoach", "home", true).absolutePath
+        val tip = VimTip(
+            summary = "surround",
+            details = listOf("edit surroundings"),
+            config = listOf("Plug 'tpope/vim-surround'")
+        )
+        val controller = TipNotificationController(
+            project,
+            FakeVimTipService(initialTips = listOf(tip)),
+            TipNotificationFactory(),
+            FakeSettingsService(emptyList()),
+            AddTipToIdeaVimRc(IdeaVimRcFile(userHome = tempHome, xdgConfigHome = null))
+        )
+
+        controller.showRandomTip()
+        val notification = controller.activeNotification!!
+        assertEquals(3, notification.actions.size)
+        // "Next tip" stays first; the add action is last to avoid accidental clicks.
+        assertEquals(TipNotificationFactory.TIP_NEXT_ACTION_TEXT, notification.actions[0].templateText)
+        assertEquals(
+            TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT,
+            notification.actions[2].templateText
+        )
+
+        invokeNotificationAction(notification.actions[2], notification)
+
+        val written = Path(tempHome, ".ideavimrc").readText()
+        assertTrue(written.contains("Plug 'tpope/vim-surround'"))
+        // The file opens with the caret on the just-appended line so the change is visible.
+        val editor = FileEditorManager.getInstance(project).selectedTextEditor!!
+        assertEquals(0, editor.caretModel.logicalPosition.line)
+    }
+
+    fun testTipWithoutConfigHasNoAddToIdeaVimRcAction() {
+        val tip = VimTip(summary = "Tip 1", details = listOf("Details 1"))
+        val controller = TipNotificationController(
+            project,
+            FakeVimTipService(initialTips = listOf(tip)),
+            TipNotificationFactory(),
+            FakeSettingsService(emptyList())
+        )
+
+        controller.showRandomTip()
+
+        val notification = controller.activeNotification!!
+        assertEquals(2, notification.actions.size)
+        assertTrue(
+            notification.actions.none {
+                it.templateText == TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT
+            }
+        )
     }
 
     fun testShowRandomTipRequestsTipFromService() {

@@ -37,7 +37,8 @@ object TipJsonParser {
             return null
         }
         val normalizedCategories = normalizeStrings(tip.category)
-        return VimTip(summary, details, normalizedCategories)
+        val normalizedConfig = normalizeConfigLines(tip.config)
+        return VimTip(summary, details, normalizedCategories, normalizedConfig)
     }
 
     private fun normalizeStrings(values: List<String>): List<String> {
@@ -45,5 +46,13 @@ object TipJsonParser {
             .map(String::trim)
             .filter(String::isNotBlank)
             .distinct()
+    }
+
+    // Config lines are written verbatim into .ideavimrc, so keep order and duplicates
+    // (a snippet may legitimately repeat a line); only trim and drop blank lines.
+    private fun normalizeConfigLines(values: List<String>): List<String> {
+        return values
+            .map(String::trim)
+            .filter(String::isNotBlank)
     }
 }

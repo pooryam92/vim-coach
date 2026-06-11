@@ -35,6 +35,49 @@ class TipJsonParserUnitTest {
     }
 
     @Test
+    fun parseTipsJsonReadsConfigLinesPreservingOrderAndDuplicates() {
+        val json = """
+            {
+              "tips": [
+                {
+                  "summary":"surround",
+                  "details":["edit surroundings"],
+                  "config":["  Plug 'tpope/vim-surround'  ", "", "Plug 'tpope/vim-surround'"]
+                }
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(1, tips.size)
+        assertEquals(
+            listOf("Plug 'tpope/vim-surround'", "Plug 'tpope/vim-surround'"),
+            tips[0].config
+        )
+    }
+
+    @Test
+    fun parseTipsJsonDefaultsConfigToEmptyWhenAbsent() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"jump", "details":["use %"]}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(1, tips.size)
+        assertEquals(emptyList<String>(), tips[0].config)
+    }
+
+    @Test
     fun parseTipsJsonReturnsEmptyWhenTipsFieldIsMissing() {
         val json = """
             {

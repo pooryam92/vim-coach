@@ -1709,6 +1709,10 @@
         "Use :set CamelCaseMotion to enable",
         "Set g:camelcasemotion_key as prefix",
         "Prefix + w, b, e, ge are the motions"
+      ],
+      "config": [
+        "Plug 'bkad/CamelCaseMotion'",
+        "let g:camelcasemotion_key = '<leader>'"
       ]
     },
     {
@@ -2798,6 +2802,9 @@
       "details": [
         "Use :set vim-paragraph-motion to enable the plugin",
         "{ and } treat whitespace-only lines as paragraph breaks"
+      ],
+      "config": [
+        "Plug 'dbakker/vim-paragraph-motion'"
       ]
     },
     {
@@ -2810,6 +2817,9 @@
       "details": [
         "Use :set matchit to enable the plugin",
         "% jumps across tags and control blocks, not just brackets"
+      ],
+      "config": [
+        "Plug 'chrisbra/matchit'"
       ]
     },
     {
@@ -2823,6 +2833,9 @@
         "Add vim-sneak in ~/.ideavimrc to enable the plugin",
         "sfo jumps forward to fo",
         "Sfo searches backward"
+      ],
+      "config": [
+        "Plug 'justinmk/vim-sneak'"
       ]
     },
     {
@@ -2835,6 +2848,9 @@
       "details": [
         "Use :set highlightedyank to enable the plugin",
         "Yanks briefly flash so you can confirm what was copied"
+      ],
+      "config": [
+        "Plug 'machakann/vim-highlightedyank'"
       ]
     },
     {
@@ -2847,6 +2863,9 @@
       "details": [
         "Use :set ReplaceWithRegister to enable the plugin",
         "gr{motion} replaces text with the current register"
+      ],
+      "config": [
+        "Plug 'vim-scripts/ReplaceWithRegister'"
       ]
     },
     {
@@ -2860,6 +2879,9 @@
         "Use :set commentary to enable the plugin",
         "gcc comments a line",
         "gc works with motions or Visual mode"
+      ],
+      "config": [
+        "Plug 'tpope/vim-commentary'"
       ]
     },
     {
@@ -2874,6 +2896,9 @@
         "ysiw) adds parens",
         "cs\"' swaps quote types",
         "ds\" removes them"
+      ],
+      "config": [
+        "Plug 'tpope/vim-surround'"
       ]
     },
     {
@@ -2888,6 +2913,9 @@
         "crs=snake_case, crc=camelCase",
         "crm=PascalCase, cru=UPPER_SNAKE",
         "cr-=kebab-case, crt=Title Case"
+      ],
+      "config": [
+        "Plug 'tpope/vim-abolish'"
       ]
     },
     {
@@ -2901,6 +2929,9 @@
         "Use :set exchange to enable the plugin",
         "cxiw marks one region",
         "Repeat on a second target to swap them"
+      ],
+      "config": [
+        "Plug 'tommcdo/vim-exchange'"
       ]
     },
     {
@@ -2914,6 +2945,9 @@
         "Use :set argtextobj to enable the plugin",
         "cia changes one argument",
         "daa deletes one argument"
+      ],
+      "config": [
+        "Plug 'vim-scripts/argtextobj.vim'"
       ]
     },
     {
@@ -2926,6 +2960,9 @@
       "details": [
         "Use :set textobj-entire to enable the plugin",
         "vae or vie selects the entire buffer"
+      ],
+      "config": [
+        "Plug 'kana/vim-textobj-entire'"
       ]
     },
     {
@@ -2939,6 +2976,9 @@
         "Use :set textobj-indent to enable the plugin",
         "vai selects the current indent block",
         "dii deletes it"
+      ],
+      "config": [
+        "Plug 'michaeljsmith/vim-indent-object'"
       ]
     },
     {
@@ -2952,6 +2992,9 @@
         "Use :set NERDTree to enable the plugin",
         ":NERDTreeToggle opens the tree",
         ":NERDTreeFind reveals the current file"
+      ],
+      "config": [
+        "Plug 'preservim/nerdtree'"
       ]
     },
     {
@@ -2965,6 +3008,9 @@
         "Use :set functiontextobj to enable the plugin",
         "vif selects the inner function",
         "yaf yanks the function"
+      ],
+      "config": [
+        "Plug 'kana/vim-textobj-function'"
       ]
     },
     {
@@ -2977,6 +3023,9 @@
       "details": [
         "Use :set multiple-cursors to enable the plugin",
         "Press your mapped key to add the next whole-word match"
+      ],
+      "config": [
+        "Plug 'terryma/vim-multiple-cursors'"
       ]
     },
     {

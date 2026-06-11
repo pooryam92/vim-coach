@@ -28,6 +28,12 @@ class TipNotificationFactory {
                 onExcludeTip(notification)
             })
         }
+        // Kept last so it does not sit where "Next tip" usually is and get clicked by accident.
+        actions.onAddToIdeaVimRc?.let { onAddToIdeaVimRc ->
+            notification.addAction(NotificationAction.createSimple(TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT) {
+                onAddToIdeaVimRc()
+            })
+        }
         return notification
     }
 
@@ -53,6 +59,28 @@ class TipNotificationFactory {
             addAction(NotificationAction.createSimple(TIP_MANAGE_EXCLUDED_ACTION_TEXT) {
                 onOpenSettings()
             })
+        }
+    }
+
+    internal fun createAddedToIdeaVimRcNotification(message: String): Notification {
+        return Notification(
+            NOTIFICATION_GROUP_ID,
+            APP_TITLE,
+            message,
+            NotificationType.INFORMATION
+        ).apply {
+            icon = TIP_ICON
+        }
+    }
+
+    internal fun createAddToIdeaVimRcFailedNotification(): Notification {
+        return Notification(
+            NOTIFICATION_GROUP_ID,
+            APP_TITLE,
+            TIP_ADD_TO_IDEAVIMRC_FAILED_TEXT,
+            NotificationType.WARNING
+        ).apply {
+            icon = TIP_ICON
         }
     }
 
@@ -89,6 +117,10 @@ class TipNotificationFactory {
         val TIP_DONT_SHOW_AGAIN_ACTION_TEXT: String = MyBundle.message("tipDontShowAgainAction")
         val TIP_EXCLUDED_WITH_MANAGEMENT_TEXT: String = MyBundle.message("tipExcludedWithManagementMessage")
         val TIP_MANAGE_EXCLUDED_ACTION_TEXT: String = MyBundle.message("tipManageExcludedAction")
+        val TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT: String = MyBundle.message("tipAddToIdeaVimRcAction")
+        val TIP_ADDED_TO_IDEAVIMRC_TEXT: String = MyBundle.message("tipAddedToIdeaVimRcMessage")
+        val TIP_ALREADY_IN_IDEAVIMRC_TEXT: String = MyBundle.message("tipAlreadyInIdeaVimRcMessage")
+        val TIP_ADD_TO_IDEAVIMRC_FAILED_TEXT: String = MyBundle.message("tipAddToIdeaVimRcFailedMessage")
         val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", TipNotificationFactory::class.java)
 
         private const val DETAILS_SEPARATOR = "<br/>"
@@ -105,5 +137,6 @@ class TipNotificationFactory {
 
 internal data class TipNotificationActions(
     val onShowNextTip: (() -> Unit)? = null,
-    val onExcludeTip: ((Notification) -> Unit)? = null
+    val onExcludeTip: ((Notification) -> Unit)? = null,
+    val onAddToIdeaVimRc: (() -> Unit)? = null
 )
