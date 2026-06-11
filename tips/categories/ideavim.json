@@ -1,0 +1,158 @@
+{
+  "tips": [
+    {
+      "category": [
+        "ideavim",
+        "options",
+        "editing"
+      ],
+      "summary": "Use OS clipboard with unnamedplus",
+      "details": [
+        "clipboard+=unnamedplus uses the OS clipboard",
+        "clipboard+=ideaput uses IDE paste for put"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "cmdline"
+      ],
+      "summary": "Reload ~/.ideavimrc with :source",
+      "details": [
+        ":source ~/.ideavimrc reloads your config",
+        "Test mappings without an IDE restart"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "cmdline"
+      ],
+      "summary": "Toggle IdeaVim with :action ToggleIdeaVim",
+      "details": [
+        ":action ToggleIdeaVim toggles it",
+        "Useful when keys conflict"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "cmdline"
+      ],
+      "summary": "Run IDE actions with :action {id}",
+      "details": [
+        ":action ReformatCode is one example",
+        "Use <Action>(...) in mappings instead"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "cmdline"
+      ],
+      "summary": "Find action IDs with :actionlist",
+      "details": [
+        ":actionlist extract filters by name",
+        "Use it before mapping IDE actions"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "options"
+      ],
+      "summary": "Show action IDs with :set trackactionids",
+      "details": [
+        "Use :set trackactionids",
+        "IdeaVim shows the action ID in notices"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "options",
+        "change"
+      ],
+      "summary": "Use IDE smart join with :set ideajoin",
+      "details": [
+        "Then J uses the IDE smart join",
+        "Useful when syntax should be adjusted"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "options"
+      ],
+      "summary": "Stop rename from forcing Select mode",
+      "details": [
+        "Use :set idearefactormode=keep",
+        "Useful when IDE rename interrupts your normal Vim mode flow"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "options"
+      ],
+      "summary": "Sync marks with :set ideamarks",
+      "details": [
+        "A-Z marks sync to IDE bookmarks",
+        "Useful for cross-file jumping"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "options"
+      ],
+      "summary": "Make :w use IDE Save All",
+      "details": [
+        "Use :set ideawrite=all",
+        "Useful when you want :w to trigger IDE save hooks"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "options"
+      ],
+      "summary": "Inspect popup keys with lookupkeys",
+      "details": [
+        ":set lookupkeys? shows the keys it keeps",
+        "Use it when Tab or Enter act oddly"
+      ]
+    },
+    {
+      "category": [
+        "ideavim"
+      ],
+      "summary": "Open IdeaVim Tutor from the status bar",
+      "details": [
+        "Click the Vim indicator in the IDE status bar",
+        "Choose Tutor from that menu"
+      ]
+    },
+    {
+      "category": [
+        "ideavim"
+      ],
+      "summary": "Open quick docs with K",
+      "details": [
+        "K opens the IDE quick docs popup",
+        "Works on any symbol in Normal mode"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "insert"
+      ],
+      "summary": "Trigger IDE completion with Ctrl-Space",
+      "details": [
+        "Use Ctrl-Space in Insert mode",
+        "Press it again to widen suggestions"
+      ]
+    }
+  ]
+}

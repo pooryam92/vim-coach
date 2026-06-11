@@ -1,0 +1,120 @@
+{
+  "tips": [
+    {
+      "category": [
+        "options",
+        "scroll"
+      ],
+      "summary": "Keep context with scrolloff",
+      "details": [
+        ":set so=5 keeps context lines",
+        "Use sidescrolloff for side context"
+      ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Show line numbers with number",
+      "details": [
+        ":set number shows line numbers",
+        ":set relativenumber helps with counts"
+      ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Show invisible characters with list",
+      "details": [
+        ":set list shows tabs and trailing spaces",
+        ":set nolist hides them again"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "scroll"
+      ],
+      "summary": "Wrap long lines with wrap",
+      "details": [
+        ":set wrap makes long lines wrap on screen",
+        "IDE soft-wrap settings can affect this too"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "pattern"
+      ],
+      "summary": "Show search matches while typing incsearch",
+      "details": [
+        ":set incsearch shows matches while typing",
+        "Makes /pattern navigation feel instant"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "pattern"
+      ],
+      "summary": "Keep search matches highlighted hlsearch",
+      "details": [
+        ":set hlsearch keeps matches highlighted",
+        "Clear temporarily with :noh"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "pattern"
+      ],
+      "summary": "Use smart case with ignorecase + smartcase",
+      "details": [
+        ":set ignorecase smartcase",
+        "Uppercase in pattern forces case-sensitive"
+      ]
+    },
+    {
+      "category": [
+        "options",
+        "pattern"
+      ],
+      "summary": "Wrap searches at EOF with wrapscan",
+      "details": [
+        ":set wrapscan continues from top",
+        ":set nowrapscan stops at the end"
+      ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Check an option with :set option?",
+      "details": [
+        ":set number? shows its value",
+        "Useful when debugging behavior"
+      ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Toggle an option with :set invoption",
+      "details": [
+        ":set invnumber toggles the option",
+        "Quick way to flip a boolean option"
+      ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Wrap text with :set textwidth=80",
+      "details": [
+        ":set textwidth=80 wraps text at 80 columns",
+        "gq uses textwidth when formatting prose and comments"
+      ]
+    }
+  ]
+}

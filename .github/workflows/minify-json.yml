@@ -1,66 +1,61 @@
-name: Minify JSON
+# Validates the published Vim tips file is the generated output of the category sources.
+#
+# tips/vim_tips_min.json is a generated artifact: it must never be hand-edited.
+# It is produced from the authoring files in tips/categories/ by the
+# `generateVimTipsMin` Gradle task. This workflow regenerates it and fails if the
+# committed file is stale (i.e. the sources were changed without regenerating, or
+# the file was edited by hand).
+
+name: Validate Tips
 
 on:
   push:
     branches: [ main ]
     paths:
-      - 'tips/vim_tips.json'
+      - 'tips/categories/**'
+      - 'tips/vim_tips_min.json'
+      - 'build.gradle.kts'
+      - '.github/workflows/minify-json.yml'
   pull_request:
     paths:
-      - 'tips/vim_tips.json'
+      - 'tips/categories/**'
+      - 'tips/vim_tips_min.json'
+      - 'build.gradle.kts'
+      - '.github/workflows/minify-json.yml'
 
 jobs:
-  minify:
-    name: Minify vim_tips.json
+  validate:
+    name: Validate generated tips
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       # Check out the current repository
       - name: Fetch Sources
         uses: actions/checkout@v6
+
+      # Set up the Java environment for the next steps
+      - name: Setup Java
+        uses: actions/setup-java@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ref: ${{ github.head_ref }}
+          distribution: zulu
+          java-version: 21
 
-      # Install jq for JSON processing
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
+      # Setup Gradle
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-read-only: true
 
-      # Check if file needs minification
-      - name: Check if minification needed
-        id: check
+      # Regenerate the published file from the category sources
+      - name: Generate vim_tips_min.json
+        run: ./gradlew generateVimTipsMin --rerun-tasks
+
+      # Fail if the committed file does not match the regenerated output
+      - name: Verify vim_tips_min.json is up to date
         run: |
-          if [ -f tips/vim_tips.json ]; then
-            # Create minified version
-            jq -c . tips/vim_tips.json > tips/vim_tips.min.json
-            
-            # Compare with original
-            if cmp -s tips/vim_tips.json tips/vim_tips.min.json; then
-              echo "File is already minified"
-              echo "needs_minify=false" >> $GITHUB_OUTPUT
-            else
-              echo "File needs minification"
-              echo "needs_minify=true" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "needs_minify=false" >> $GITHUB_OUTPUT
+          if ! git diff --exit-code --stat tips/vim_tips_min.json; then
+            echo "::error::tips/vim_tips_min.json is out of date or was edited by hand."
+            echo "::error::Edit the sources in tips/categories/ and run ./gradlew generateVimTipsMin, then commit the result."
+            git --no-pager diff tips/vim_tips_min.json
+            exit 1
           fi
-
-      # Minify the JSON file
-      - name: Minify vim_tips.json
-        if: steps.check.outputs.needs_minify == 'true'
-        run: |
-          jq -c . tips/vim_tips.json > tips/vim_tips.tmp.json
-          mv tips/vim_tips.tmp.json tips/vim_tips_min.json
-
-      # Commit and push changes
-      - name: Commit minified file
-        if: steps.check.outputs.needs_minify == 'true'
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add tips/vim_tips_min.json
-          git commit -m "chore: minify vim_tips.json [skip ci]"
-          git push
-
+          echo "tips/vim_tips_min.json matches the generated output."

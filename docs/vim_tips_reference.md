@@ -1,62 +1,37 @@
 # Vim Tips Reference
 
 Use this document when adding, revising, or reviewing tips in
-[tips/vim_tips.json](/home/poorya/IdeaProjects/vim-coach/tips/vim_tips.json).
+[tips/categories/](../tips/categories).
 
-## Working File
+## Files and Workflow
 
-- Main tip file: `tips/vim_tips.json`
-- Root shape: one JSON object with a `tips` array
+- Authoring files: `tips/categories/<primary-category>.json` — **edit these**
+- Published file: `tips/vim_tips_min.json` — **generated, never edit by hand**
+- Each authoring file is one JSON object with a `tips` array
 - Each array item is one user-facing tip
+- A tip lives in the file named by its **first** category. A tip whose first
+  category is `motion` goes in `tips/categories/motion.json`.
 
-## Local Support Data
+> **Never edit `tips/vim_tips_min.json` by hand.** It is a generated artifact,
+> always produced from `tips/categories/` by the `generateVimTipsMin` Gradle task
+> (which also runs as part of `buildPlugin`). Edit the category sources, then
+> regenerate. The `Validate Tips` CI workflow regenerates the file and fails the
+> build if the committed copy is stale or was hand-edited.
 
-Use the generated KSP JSON files in the IdeaVim submodule as the first local
-support check for whether a command, Ex command, Vimscript function, or IdeaVim
-extension exists.
+### Adding or editing a tip
 
-To fetch the submodule after cloning this repo:
+1. Pick the tip's primary category and open `tips/categories/<category>.json`.
+2. Add or edit a tip object in that file's `tips` array (see **Tip Format**).
+   The first entry in `category` must match the file name.
+3. Regenerate and validate the published file:
+   ```bash
+   ./gradlew generateVimTipsMin
+   ```
+4. Commit **both** the category file you changed and the regenerated
+   `tips/vim_tips_min.json`.
 
-```bash
-git submodule update --init external/ideavim
-```
-
-To keep the local submodule checkout focused on generated KSP files:
-
-```bash
-git -C external/ideavim sparse-checkout init --cone
-git -C external/ideavim sparse-checkout set \
-  src/main/resources/ksp-generated \
-  vim-engine/src/main/resources/ksp-generated
-```
-
-To refresh it to the latest tracked IdeaVim `master` commit:
-
-```bash
-git submodule update --remote external/ideavim
-```
-
-- Engine command data:
-  - `external/ideavim/vim-engine/src/main/resources/ksp-generated/engine_commands.json`
-  - `external/ideavim/vim-engine/src/main/resources/ksp-generated/engine_ex_commands.json`
-  - `external/ideavim/vim-engine/src/main/resources/ksp-generated/engine_vimscript_functions.json`
-- Frontend command data:
-  - `external/ideavim/src/main/resources/ksp-generated/frontend_commands.json`
-  - `external/ideavim/src/main/resources/ksp-generated/frontend_ex_commands.json`
-  - `external/ideavim/src/main/resources/ksp-generated/frontend_vimscript_functions.json`
-- Extension data:
-  - `external/ideavim/vim-engine/src/main/resources/ksp-generated/ideavim_extensions.json`
-  - `external/ideavim/src/main/resources/ksp-generated/ideavim_extensions.json`
-
-Use them like this:
-
-- Check `engine_*` files for core Vim engine support.
-- Check `frontend_*` files for frontend-only commands such as `:buffer`,
-  `:buffers`, `:files`, `:ls`, `:help`, `:read`, and `:actionlist`.
-- Check the extension JSON files before claiming a plugin-backed IdeaVim
-  extension exists.
-- If the KSP data confirms existence but not user-facing behavior, use Vim docs
-  for semantics and IdeaVim docs/source for plugin setup or runtime details.
+If the task fails, fix the reported tip and rerun it. See **Validation** for the
+exact checks it runs.
 
 ## Tip Goals
 
@@ -92,6 +67,7 @@ Field rules:
 
 - `category`
   - array of category names
+  - the first entry is the primary category and must match the file name
   - use one primary category by default
   - add a second or third category only when it genuinely helps discoverability
 - `summary`
@@ -103,19 +79,17 @@ Field rules:
   - explain what the command does, context, caveats, or a quick example
   - each line should also aim for 35 characters or fewer
 
-Invalid content:
+Invalid content (the build rejects these — see **Validation**):
 
 - blank summaries
-- blank detail lines
-- duplicate tip entries that only differ by category
+- a tip with no detail lines
+- a `summary` that repeats one already used by another tip, in any file
+- a first `category` that does not match the file name
+
+Avoid as a matter of style:
+
+- blank detail lines (they are stripped silently, so they just add noise)
 - unsupported claims about IdeaVim behavior
-
-## Tip Preference Identity
-
-User preferences such as hiding a tip are tied to a deterministic hash of each
-tip's trimmed `summary` value. This avoids adding an author-managed ID field,
-but it means changing a tip title creates a new identity for that tip and may
-reset any existing user preference for it.
 
 ## Notification Display
 
@@ -124,7 +98,7 @@ the static balloon title. Both `summary` and `details` are rendered in the body
 as HTML — `summary` in bold at the top, `details` lines below separated by line
 breaks.
 
-The IntelliJ balloon body area is styled at 240 px wideDD 
+The IntelliJ balloon body area is styled at 240 px wide
 (`BalloonLayoutConfiguration.MaxWidthStyle`). At the default IDE font, this fits
 roughly **30–35 characters per line** before text wraps. The summary renders in
 bold, which is slightly wider. The default balloon view shows about 2 wrapped
@@ -141,6 +115,13 @@ Practical constraints:
 - Omit filler words like `with` before a command name when the command already
   makes the relationship clear. `Replace one character r{char}` reads fine
   without `with`.
+
+## Tip Preference Identity
+
+User preferences such as hiding a tip are tied to a deterministic hash of each
+tip's trimmed `summary` value. This avoids adding an author-managed ID field,
+but it means changing a tip title creates a new identity for that tip and may
+reset any existing user preference for it.
 
 ## Writing Style
 
@@ -207,7 +188,8 @@ Examples:
 
 ## Category Reference
 
-Current user-facing categories:
+Current user-facing categories (this is also the order tips appear in the
+published file):
 
 - `editing`
 - `motion`
@@ -254,11 +236,85 @@ Category notes:
   is explicitly about selecting text.
 - Use `ideavim` for IdeaVim-specific behavior that is not necessarily tied to a plugin.
 - Do not create ad hoc category names without updating the docs and the broader
-  taxonomy deliberately.
+  taxonomy deliberately. A new category also means a new
+  `tips/categories/<name>.json` file.
 
-## Resources
+## Validation
 
-Use Vim docs for meaning and teaching value. Use IdeaVim docs and source for support checks.
+After editing, regenerate and validate the published file:
+
+```bash
+./gradlew generateVimTipsMin
+```
+
+The task reads every file in `tips/categories/`, validates it, and writes
+`tips/vim_tips_min.json`. It fails the build if any tip:
+
+- has a blank `summary`
+- has no `details` lines
+- does not use the file's category name as its first `category` entry
+- repeats a `summary` already used by another tip, in any file
+
+Surrounding whitespace is trimmed and blank or duplicate detail lines are
+dropped automatically, so you do not need to hand-clean those.
+
+`buildPlugin` runs this task automatically, and the `Validate Tips` CI workflow
+re-runs it to confirm the committed `tips/vim_tips_min.json` is up to date with
+the sources.
+
+## Checking IdeaVim Support
+
+Use Vim docs for meaning and teaching value. Use IdeaVim docs and source to
+confirm a command or behavior is actually supported.
+
+### Local support data
+
+Use the generated KSP JSON files in the IdeaVim submodule as the first local
+support check for whether a command, Ex command, Vimscript function, or IdeaVim
+extension exists.
+
+To fetch the submodule after cloning this repo:
+
+```bash
+git submodule update --init external/ideavim
+```
+
+To keep the local submodule checkout focused on generated KSP files:
+
+```bash
+git -C external/ideavim sparse-checkout init --cone
+git -C external/ideavim sparse-checkout set \
+  src/main/resources/ksp-generated \
+  vim-engine/src/main/resources/ksp-generated
+```
+
+To refresh it to the latest tracked IdeaVim `master` commit:
+
+```bash
+git submodule update --remote external/ideavim
+```
+
+- Engine command data:
+  - `external/ideavim/vim-engine/src/main/resources/ksp-generated/engine_commands.json`
+  - `external/ideavim/vim-engine/src/main/resources/ksp-generated/engine_ex_commands.json`
+  - `external/ideavim/vim-engine/src/main/resources/ksp-generated/engine_vimscript_functions.json`
+- Frontend command data:
+  - `external/ideavim/src/main/resources/ksp-generated/frontend_commands.json`
+  - `external/ideavim/src/main/resources/ksp-generated/frontend_ex_commands.json`
+  - `external/ideavim/src/main/resources/ksp-generated/frontend_vimscript_functions.json`
+- Extension data:
+  - `external/ideavim/vim-engine/src/main/resources/ksp-generated/ideavim_extensions.json`
+  - `external/ideavim/src/main/resources/ksp-generated/ideavim_extensions.json`
+
+Use them like this:
+
+- Check `engine_*` files for core Vim engine support.
+- Check `frontend_*` files for frontend-only commands such as `:buffer`,
+  `:buffers`, `:files`, `:ls`, `:help`, `:read`, and `:actionlist`.
+- Check the extension JSON files before claiming a plugin-backed IdeaVim
+  extension exists.
+- If the KSP data confirms existence but not user-facing behavior, use Vim docs
+  for semantics and IdeaVim docs/source for plugin setup or runtime details.
 
 ### Vim docs
 
@@ -289,13 +345,25 @@ reference pages alone.
 
 ### IdeaVim support sources
 
-- Local generated support data in `external/ideavim/.../ksp-generated/`
-- https://github.com/JetBrains/ideavim
-- https://github.com/JetBrains/ideavim/wiki
-- https://github.com/JetBrains/ideavim/tree/master/annotation-processors
-- https://github.com/JetBrains/ideavim/tree/master/vimscript-info
-- https://github.com/JetBrains/ideavim/tree/master/src
-- https://github.com/JetBrains/ideavim/tree/master/vim-engine
+The `external/ideavim` submodule is the source of truth — read it directly
+instead of browsing GitHub. The recommended sparse checkout (see **Local
+support data**) only includes the `ksp-generated` JSON, which is enough for most
+support checks. To read the full source, widen the sparse-checkout set, for
+example:
+
+```bash
+git -C external/ideavim sparse-checkout add \
+  annotation-processors vimscript-info src vim-engine
+```
+
+- Generated support data: `external/ideavim/.../ksp-generated/`
+- Annotation processors: `external/ideavim/annotation-processors`
+- Vimscript info: `external/ideavim/vimscript-info`
+- Frontend source: `external/ideavim/src`
+- Engine source: `external/ideavim/vim-engine`
+
+For setup and usage docs not in the source tree, see the
+[IdeaVim wiki](https://github.com/JetBrains/ideavim/wiki).
 
 ## Support Checklist
 
@@ -330,11 +398,3 @@ When reviewing existing tips, look for:
 - summaries that lead with plugin or option names when the user outcome would be
   clearer
 - tips that should be merged, split, retagged, or deleted
-
-## Validation
-
-Validate the JSON after edits:
-
-```bash
-jq . tips/vim_tips.json
-```

@@ -1,7 +1,16 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+import org.gradle.api.DefaultTask
+import org.gradle.api.GradleException
+import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.OutputFile
+import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.testing.Test
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
-import org.gradle.api.tasks.testing.Test
 
 plugins {
     id("java") // Java support
@@ -10,6 +19,112 @@ plugins {
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
+}
+
+abstract class GenerateVimTipsMinTask : DefaultTask() {
+    @get:InputDirectory
+    abstract val sourceDir: DirectoryProperty
+
+    @get:OutputFile
+    abstract val outputFile: RegularFileProperty
+
+    private val categoryOrder = listOf(
+        "editing",
+        "motion",
+        "scroll",
+        "insert",
+        "change",
+        "undo",
+        "repeat",
+        "visual",
+        "cmdline",
+        "options",
+        "pattern",
+        "map",
+        "windows",
+        "tabpage",
+        "fold",
+        "ideavim",
+        "plugin",
+    )
+
+    @TaskAction
+    fun generate() {
+        val sourceDirectory = sourceDir.get().asFile
+        val sourceFiles = sourceDirectory
+            .listFiles { file -> file.isFile && file.extension == "json" }
+            ?.associateBy { it.nameWithoutExtension }
+            ?: throw GradleException("Tip category source directory does not exist: $sourceDirectory")
+
+        if (sourceFiles.isEmpty()) {
+            throw GradleException("No tip category source files found in $sourceDirectory")
+        }
+
+        val orderedFiles = categoryOrder.mapNotNull(sourceFiles::get) +
+            sourceFiles
+                .filterKeys { it !in categoryOrder }
+                .toSortedMap()
+                .values
+
+        val parser = JsonSlurper()
+        val mergedTips = mutableListOf<Map<String, Any>>()
+        val summarySources = mutableMapOf<String, String>()
+        orderedFiles.forEach { file ->
+            val fileCategory = file.nameWithoutExtension
+            val root = parser.parse(file) as? Map<*, *>
+                ?: throw GradleException("Tip category file must contain a JSON object: $file")
+            val rawTips = root["tips"] as? List<*>
+                ?: throw GradleException("Tip category file must contain a tips array: $file")
+
+            rawTips.forEachIndexed { index, rawTip ->
+                val tip = rawTip as? Map<*, *>
+                    ?: throw GradleException("Tip ${index + 1} in $file must be a JSON object")
+                val categories = normalizeStrings(tip["category"] as? List<*>)
+                val summary = (tip["summary"] as? String)?.trim().orEmpty()
+                val details = normalizeStrings(tip["details"] as? List<*>)
+
+                if (summary.isBlank()) {
+                    throw GradleException("Tip ${index + 1} in $file has a blank summary")
+                }
+                if (details.isEmpty()) {
+                    throw GradleException("Tip '$summary' in $file has no details")
+                }
+                if (categories.firstOrNull() != fileCategory) {
+                    throw GradleException(
+                        "Tip '$summary' in $file must use '$fileCategory' as its first category"
+                    )
+                }
+                val previousSource = summarySources.put(summary, file.name)
+                if (previousSource != null) {
+                    throw GradleException(
+                        "Duplicate tip summary '$summary' found in ${file.name} and $previousSource"
+                    )
+                }
+
+                mergedTips += linkedMapOf(
+                    "category" to categories,
+                    "summary" to summary,
+                    "details" to details,
+                )
+            }
+        }
+
+        val output = outputFile.get().asFile
+        output.parentFile.mkdirs()
+        output.writeText(
+            JsonOutput.toJson(linkedMapOf("tips" to mergedTips)),
+            Charsets.UTF_8,
+        )
+    }
+
+    private fun normalizeStrings(values: List<*>?): List<String> {
+        return values
+            .orEmpty()
+            .mapNotNull { it as? String }
+            .map(String::trim)
+            .filter(String::isNotBlank)
+            .distinct()
+    }
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -143,6 +258,13 @@ tasks.withType<Test>().configureEach {
     useJUnit()
 }
 
+val generateVimTipsMin by tasks.registering(GenerateVimTipsMinTask::class) {
+    description = "Generates the published minified Vim tips JSON from category source files."
+    group = "build"
+    sourceDir.set(layout.projectDirectory.dir("tips/categories"))
+    outputFile.set(layout.projectDirectory.file("tips/vim_tips_min.json"))
+}
+
 val requestedTasks = gradle.startParameter.taskNames
 val requestedLayerTasks = requestedTasks.map { it.substringAfterLast(':') }
     .filter { it in setOf("unitTest", "integrationTest", "uiTest") }
@@ -191,13 +313,18 @@ tasks.register("uiTest") {
     dependsOn(tasks.test)
 }
 
+tasks.named("buildPlugin") {
+    dependsOn(generateVimTipsMin)
+}
+
 intellijPlatformTesting {
     runIde {
         register("runIdeWithFileTips") {
             task {
                 description = "Run IDE with file tip source"
                 group = "ide"
-                val tipsFilePath = layout.projectDirectory.file("tips/vim_tips.json").asFile.absolutePath
+                dependsOn(generateVimTipsMin)
+                val tipsFilePath = layout.projectDirectory.file("tips/vim_tips_min.json").asFile.absolutePath
                 jvmArgumentProviders += CommandLineArgumentProvider {
                     listOf(
                         "-Dvimcoach.tip.source=file",
