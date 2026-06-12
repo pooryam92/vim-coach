@@ -1,0 +1,248 @@
+{
+  "tips": [
+    {
+      "category": [
+        "visual",
+        "editing"
+      ],
+      "summary": "Paste over a selection with \"_dP",
+      "details": [
+        "Select text, then use \"_dP",
+        "Reuse the same yank on many targets"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Enter Visual mode with v / V / Ctrl-v",
+      "details": [
+        "v selects characters",
+        "V selects whole lines",
+        "Ctrl-v selects a block"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Swap selection ends in Visual mode with o",
+      "details": [
+        "o moves cursor to the other end",
+        "Great for precise adjustments"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Swap block corner in Visual mode with O",
+      "details": [
+        "In block Visual mode, O swaps the corner",
+        "Useful for column edits"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Select the last changed text `[v`]",
+      "details": [
+        "`[ jumps to the start of the last change",
+        "v starts Visual mode and `] reaches the end"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Reselect last Visual selection with gv",
+      "details": [
+        "gv reselects the last selection",
+        "Also reselects text just put with p/P"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "pattern"
+      ],
+      "summary": "Select next/prev search match gn / gN",
+      "details": [
+        "gn selects the next search match",
+        "gN selects the previous one"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "cmdline"
+      ],
+      "summary": "Sort selected lines with :sort",
+      "details": [
+        "Select lines in Visual mode, then run :sort",
+        "Use :sort u to keep only unique lines"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "cmdline"
+      ],
+      "summary": "Sort numbers with :sort n",
+      "details": [
+        "Select lines in Visual mode, then run :sort n",
+        "Use :sort! n for descending numeric order"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Select inside a word or paragraph viw / vip",
+      "details": [
+        "viw selects inside the current word",
+        "vip selects inside the current paragraph",
+        "vap includes surrounding blank lines",
+        "Use i/a with other text objects too"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "editing"
+      ],
+      "summary": "Select the whole file ggVG",
+      "details": [
+        "gg goes to the top, V starts linewise Visual",
+        "G extends the selection to the end of the file"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Shift a selection > / <",
+      "details": [
+        "> indents, < outdents",
+        "Then press . to repeat"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "editing"
+      ],
+      "summary": "Keep selection after shifting >gv / <gv",
+      "details": [
+        ">gv reselects after indenting",
+        "<gv reselects after outdenting"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Case change selection gu / gU",
+      "details": [
+        "Select then gu to lowercase",
+        "Select then gU to uppercase"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "editing"
+      ],
+      "summary": "Format a selection with gq",
+      "details": [
+        "Select text then press gq",
+        "Great for reflowing comments"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Block insert Ctrl-v then I",
+      "details": [
+        "Select a column, then press I",
+        "Esc applies it to all lines"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Block append Ctrl-v then A",
+      "details": [
+        "Select a column, then press A",
+        "Esc applies it to all lines"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Append at line ends Ctrl-v $ A",
+      "details": [
+        "Ctrl-v then $ selects to each line end",
+        "A appends the same text to every line"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Block change Ctrl-v then c",
+      "details": [
+        "Select a block, then press c",
+        "Esc applies it to all lines"
+      ]
+    },
+    {
+      "category": [
+        "visual"
+      ],
+      "summary": "Block replace with one char Ctrl-v then r",
+      "details": [
+        "Select a block, then press r",
+        "Replaces all selected chars"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "cmdline"
+      ],
+      "summary": "Run : commands on a selection",
+      "details": [
+        "Type : to get '<,'> range",
+        "Use :s, :sort, or :normal"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "editing"
+      ],
+      "summary": "Replace a selection with p",
+      "details": [
+        "In Visual mode, p replaces the selection with put text",
+        "Use \"_dP when you want to keep the current yank"
+      ]
+    },
+    {
+      "category": [
+        "visual",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Select the whole buffer with ae / ie",
+      "details": [
+        "Use :set textobj-entire to enable the plugin",
+        "vae or vie selects the entire buffer"
+      ]
+    }
+  ]
+}

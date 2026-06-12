@@ -197,7 +197,7 @@ intellijPlatformTesting {
             task {
                 description = "Run IDE with file tip source"
                 group = "ide"
-                val tipsFilePath = layout.projectDirectory.file("tips/vim_tips.json").asFile.absolutePath
+                val tipsFilePath = layout.projectDirectory.file("tips/vim_tips_min.json").asFile.absolutePath
                 jvmArgumentProviders += CommandLineArgumentProvider {
                     listOf(
                         "-Dvimcoach.tip.source=file",

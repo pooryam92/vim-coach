@@ -1,0 +1,25 @@
+{
+  "tips": [
+    {
+      "category": [
+        "undo"
+      ],
+      "summary": "Undo and redo u / Ctrl-r",
+      "details": [
+        "u undoes the last change",
+        "Ctrl-r redoes the undone change"
+      ]
+    },
+    {
+      "category": [
+        "undo",
+        "insert"
+      ],
+      "summary": "Split undo in Insert mode Ctrl-g u",
+      "details": [
+        "Starts a new undo step in Insert mode",
+        "Useful after punctuation or pauses"
+      ]
+    }
+  ]
+}

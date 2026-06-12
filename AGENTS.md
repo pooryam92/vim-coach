@@ -27,7 +27,8 @@
 ## Docs
 - Keep user-facing tip authoring docs in `docs/`
 - Current docs:
-  - `docs/vim_tips_reference.md`: tip authoring reference, categories, resources, format, and review rules.
+  - `docs/tips_authoring.md`: tip authoring guide — categories, resources, format, and review rules.
+  - `docs/tips_pipeline.md`: how `tips/categories/` sources are generated into `tips/vim_tips_min.json` and kept in sync by CI.
   - `docs/category_count_plan.md`: category-count persistence and settings-plan notes.
 - Planning notes and one-off design docs for the tips feature should also live in `docs/`.
 - When changing the tip taxonomy or authoring rules, update the matching docs in `docs/` in the same pass.
