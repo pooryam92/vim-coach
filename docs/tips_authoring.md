@@ -1,37 +1,35 @@
-# Vim Tips Reference
+# Vim Tips Authoring Guide
 
-Use this document when adding, revising, or reviewing tips in
-[tips/categories/](../tips/categories).
+Use this document when adding, revising, or reviewing **tip content** in
+[tips/categories/](../tips/categories). For how those sources become the
+published file and how CI keeps them in sync, see
+[tips_pipeline.md](tips_pipeline.md).
 
-## Files and Workflow
+## Where Tips Live
 
 - Authoring files: `tips/categories/<primary-category>.json` — **edit these**
-- Published file: `tips/vim_tips_min.json` — **generated, never edit by hand**
 - Each authoring file is one JSON object with a `tips` array
 - Each array item is one user-facing tip
 - A tip lives in the file named by its **first** category. A tip whose first
   category is `motion` goes in `tips/categories/motion.json`.
+- The published `tips/vim_tips_min.json` is **generated** from these files and is
+  never edited by hand — see [tips_pipeline.md](tips_pipeline.md).
 
-> **Never edit `tips/vim_tips_min.json` by hand.** It is a generated artifact,
-> always produced from `tips/categories/` by the `generateVimTipsMin` Gradle task
-> (which also runs as part of `buildPlugin`). Edit the category sources, then
-> regenerate. The `Validate Tips` CI workflow regenerates the file and fails the
-> build if the committed copy is stale or was hand-edited.
-
-### Adding or editing a tip
+## Adding or editing a tip
 
 1. Pick the tip's primary category and open `tips/categories/<category>.json`.
 2. Add or edit a tip object in that file's `tips` array (see **Tip Format**).
    The first entry in `category` must match the file name.
 3. Regenerate and validate the published file:
    ```bash
-   ./gradlew generateVimTipsMin
+   node scripts/generate-tips.mjs
    ```
-4. Commit **both** the category file you changed and the regenerated
-   `tips/vim_tips_min.json`.
+4. Commit the category file you changed. Committing the regenerated
+   `tips/vim_tips_min.json` too keeps the diff self-contained, but it is not
+   required — CI regenerates and commits it from the sources either way.
 
-If the task fails, fix the reported tip and rerun it. See **Validation** for the
-exact checks it runs.
+If the script reports an error, fix the named tip and rerun it. See
+[tips_pipeline.md](tips_pipeline.md) for the exact checks it runs.
 
 ## Tip Goals
 
@@ -79,7 +77,8 @@ Field rules:
   - explain what the command does, context, caveats, or a quick example
   - each line should also aim for 35 characters or fewer
 
-Invalid content (the build rejects these — see **Validation**):
+Invalid content (the generator rejects these — see
+[tips_pipeline.md](tips_pipeline.md)):
 
 - blank summaries
 - a tip with no detail lines
@@ -237,30 +236,8 @@ Category notes:
 - Use `ideavim` for IdeaVim-specific behavior that is not necessarily tied to a plugin.
 - Do not create ad hoc category names without updating the docs and the broader
   taxonomy deliberately. A new category also means a new
-  `tips/categories/<name>.json` file.
-
-## Validation
-
-After editing, regenerate and validate the published file:
-
-```bash
-./gradlew generateVimTipsMin
-```
-
-The task reads every file in `tips/categories/`, validates it, and writes
-`tips/vim_tips_min.json`. It fails the build if any tip:
-
-- has a blank `summary`
-- has no `details` lines
-- does not use the file's category name as its first `category` entry
-- repeats a `summary` already used by another tip, in any file
-
-Surrounding whitespace is trimmed and blank or duplicate detail lines are
-dropped automatically, so you do not need to hand-clean those.
-
-`buildPlugin` runs this task automatically, and the `Validate Tips` CI workflow
-re-runs it to confirm the committed `tips/vim_tips_min.json` is up to date with
-the sources.
+  `tips/categories/<name>.json` file (and an entry in the generator's category
+  order — see [tips_pipeline.md](tips_pipeline.md)).
 
 ## Checking IdeaVim Support
 
