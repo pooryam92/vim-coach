@@ -1,0 +1,112 @@
+{
+  "tips": [
+    {
+      "category": [
+        "windows",
+        "cmdline"
+      ],
+      "summary": "Open a horizontal split :split",
+      "details": [
+        ":split opens another split on the current file",
+        "Use it when stacked editing is easier"
+      ]
+    },
+    {
+      "category": [
+        "windows",
+        "cmdline"
+      ],
+      "summary": "Open a file in a split :split {file}",
+      "details": [
+        ":split {file} opens that file in a new split",
+        ":vsplit {file} does it side by side"
+      ]
+    },
+    {
+      "category": [
+        "windows",
+        "cmdline"
+      ],
+      "summary": "Open a vertical split :vsplit",
+      "details": [
+        ":vsplit opens a side-by-side view",
+        "Useful for compare-style editing"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Split from the keyboard Ctrl-w s / Ctrl-w v",
+      "details": [
+        "Ctrl-w s splits horizontally",
+        "Ctrl-w v splits vertically"
+      ]
+    },
+    {
+      "category": [
+        "windows",
+        "cmdline"
+      ],
+      "summary": "Close current split :close / Ctrl-w c",
+      "details": [
+        ":close or Ctrl-w c closes this split",
+        "Use it when you want to keep other splits"
+      ]
+    },
+    {
+      "category": [
+        "windows",
+        "cmdline"
+      ],
+      "summary": "Keep only this split :only",
+      "details": [
+        ":only keeps the current split",
+        "Ctrl-w o does the same from Normal mode"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Cycle through splits Ctrl-w w / W",
+      "details": [
+        "Ctrl-w w goes to the next split",
+        "Ctrl-w W goes to the previous split"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Move to a split Ctrl-w h/j/k/l",
+      "details": [
+        "Use h j k l for left down up right",
+        "Arrow keys also work after Ctrl-w"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Resize splits Ctrl-w + / - / =",
+      "details": [
+        "Ctrl-w + taller, Ctrl-w - shorter",
+        "Ctrl-w = makes splits equal size"
+      ]
+    },
+    {
+      "category": [
+        "windows",
+        "ideavim",
+        "plugin"
+      ],
+      "summary": "Browse the project tree with NERDTree",
+      "details": [
+        "Use :set NERDTree to enable the plugin",
+        ":NERDTreeToggle opens the tree",
+        ":NERDTreeFind reveals the current file"
+      ]
+    }
+  ]
+}

@@ -13,6 +13,8 @@ interface VimTipService {
 
     fun getRandomTip(categories: List<String>): VimTip
 
+    fun getTipsByHashes(hashes: List<String>): List<VimTip>
+
     /**
      * Returns the persisted category cache.
      * If tips exist but cached categories are empty, implementations should

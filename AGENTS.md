@@ -13,7 +13,6 @@
 - Keep IntelliJ entrypoints close to the owning feature:
   - actions: `features/<feature>/entrypoints/actions`
   - startup activities: `features/<feature>/entrypoints/startup`
-- Keep UI/presentation separate from state, persistence, and source/integration code.
 
 ## Current Tips Feature Layout
 - `core/shared/i18n`: shared bundle access
@@ -28,8 +27,9 @@
 ## Docs
 - Keep user-facing tip authoring docs in `docs/`
 - Current docs:
-- `docs/vim_tips_reference.md`: tip authoring reference, categories, resources, format, and review rules.
-- `docs/category_count_plan.md`: category-count persistence and settings-plan notes.
+  - `docs/tips_authoring.md`: tip authoring guide — categories, resources, format, and review rules.
+  - `docs/tips_pipeline.md`: how `tips/categories/` sources are generated into `tips/vim_tips_min.json` and kept in sync by CI.
+  - `docs/category_count_plan.md`: category-count persistence and settings-plan notes.
 - Planning notes and one-off design docs for the tips feature should also live in `docs/`.
 - When changing the tip taxonomy or authoring rules, update the matching docs in `docs/` in the same pass.
 
@@ -52,19 +52,6 @@ Current service scopes:
 - Do not use `BasePlatformTestCase` for pure logic.
 - Do not hide slow platform tests inside `UnitTest` classes.
 
-Useful test tasks:
-1. `./gradlew test`
-2. `./gradlew unitTest`
-3. `./gradlew integrationTest`
-4. `./gradlew uiTest`
-5. `./gradlew buildPlugin`
-
-## Working Rules
-- Prefer moving existing files over rewriting logic.
-- Keep files cohesive and small.
-- Avoid adding dependencies unless necessary.
-- Keep this as a single-module project unless explicitly asked otherwise.
-
 ## Clean Architecture
 - Keep layers pointed inward: UI/entrypoints depend on application/state/domain, not the other way around.
 - Keep UI/presentation thin. Put derivation, normalization, filtering, and decision logic in services or domain types instead of UI classes.
@@ -72,14 +59,6 @@ Useful test tasks:
 - Prefer one clear owner for a piece of logic or state. Avoid duplicating rules across UI, services, and stores.
 - Minimize coupling between parts of the system. If a class starts depending on multiple services or unrelated concerns, consider introducing a narrower feature-facing service or query model.
 - Prefer simple data crossing boundaries. Avoid leaking UI types into state/domain layers and avoid persistence concerns in UI/application code.
-
-## Clean Code
-- Favor small, cohesive methods with explicit names over long methods with mixed responsibilities.
-- Keep control flow flat when possible. Reduce duplicated branching and repeated state lookups.
-- Avoid parallel mutable state when a single source of truth is enough.
-- Make migration, fallback, and repair paths explicit and rare.
-- Keep naming concrete and intention-revealing. Prefer names that explain why a path exists, not just what it does.
-- Before finishing, do a cleanup pass: remove incidental complexity, tighten APIs, and simplify any code that feels harder to read than the behavior warrants.
 
 ## Verification
 Run after meaningful refactors:

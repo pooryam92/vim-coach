@@ -1,0 +1,53 @@
+# Keeps the published Vim tips file in sync with its sources.
+#
+# tips/vim_tips_min.json is a generated artifact and is never authored by hand.
+# It is always produced from the files in tips/categories/ by
+# scripts/generate-tips.mjs. This workflow regenerates it whenever the sources
+# change and commits the result, so the published file can never drift from the
+# category sources.
+
+name: Generate Tips
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'tips/categories/**'
+      - 'scripts/generate-tips.mjs'
+      - '.github/workflows/generate-tips.yml'
+  pull_request:
+    paths:
+      - 'tips/categories/**'
+      - 'scripts/generate-tips.mjs'
+      - '.github/workflows/generate-tips.yml'
+
+jobs:
+  generate:
+    name: Generate vim_tips_min.json
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      # Check out the branch under test so we can commit back to it
+      - name: Fetch Sources
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.head_ref }}
+
+      # Regenerate the published file from the category sources
+      - name: Generate vim_tips_min.json
+        run: node scripts/generate-tips.mjs
+
+      # Commit the regenerated file if it changed
+      - name: Commit regenerated file
+        run: |
+          if git diff --quiet tips/vim_tips_min.json; then
+            echo "tips/vim_tips_min.json already up to date."
+          else
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            git add tips/vim_tips_min.json
+            git commit -m "chore: regenerate vim_tips_min.json from category sources [skip ci]"
+            git push
+          fi

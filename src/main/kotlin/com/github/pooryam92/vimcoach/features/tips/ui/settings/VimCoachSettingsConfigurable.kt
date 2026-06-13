@@ -1,8 +1,8 @@
 package com.github.pooryam92.vimcoach.features.tips.ui.settings
 
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
-import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenService
-import com.github.pooryam92.vimcoach.features.tips.application.VimCoachSettingsScreenState
+import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenController
+import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenState
 import com.intellij.openapi.components.service
 import com.intellij.openapi.options.SearchableConfigurable
 import com.intellij.ui.components.JBScrollPane
@@ -23,6 +23,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
     private var periodicCheckBox: JCheckBox? = null
     private var intervalSpinner: JSpinner? = null
     private var categoryToggleButton: JButton? = null
+    private var excludedTipsListPanel: ExcludedTipsListPanel? = null
     private val categoryCheckBoxes = linkedMapOf<String, JCheckBox>()
     private var screenState: VimCoachSettingsScreenState = defaultScreenState()
 
@@ -37,6 +38,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
             buildStartupRow()
             buildPeriodicRow()
             buildCategoriesSection(screenState.availableCategories)
+            buildExcludedTipsSection()
         }.also { reset() }
     }
 
@@ -59,6 +61,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
         categoryCheckBoxes.forEach { (category, checkBox) ->
             checkBox.isSelected = category in enabledCategories
         }
+        excludedTipsListPanel?.reset(screenState.excludedTips)
         updateCategoryToggleButtonText()
     }
 
@@ -67,6 +70,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
         periodicCheckBox = null
         intervalSpinner = null
         categoryToggleButton = null
+        excludedTipsListPanel = null
         categoryCheckBoxes.clear()
     }
 
@@ -148,6 +152,24 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
         }
     }
 
+    private fun Panel.buildExcludedTipsSection() {
+        row {
+            label(MyBundle.message("settingsExcludedTipsLabel"))
+        }
+
+        row {
+            cell(createExcludedTipsListPanel())
+                .align(AlignX.FILL)
+        }
+    }
+
+    private fun createExcludedTipsListPanel(): ExcludedTipsListPanel {
+        return ExcludedTipsListPanel().also {
+            excludedTipsListPanel = it
+            it.reset(screenState.excludedTips)
+        }
+    }
+
     private fun setAllCategoriesSelected(selected: Boolean) {
         categoryCheckBoxes.values.forEach { it.isSelected = selected }
         updateCategoryToggleButtonText()
@@ -176,7 +198,9 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
             periodicTipsEnabled = false,
             tipIntervalHours = MIN_TIP_INTERVAL_HOURS,
             availableCategories = emptyList(),
-            enabledCategories = emptyList()
+            enabledCategories = emptyList(),
+            excludedTips = emptyList(),
+            restoredExcludedTipHashes = emptyList()
         )
     }
 
@@ -186,11 +210,14 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
             periodicTipsEnabled = periodicCheckBox?.isSelected ?: screenState.periodicTipsEnabled,
             tipIntervalHours = currentIntervalValue(),
             availableCategories = availableCategories(),
-            enabledCategories = selectedCategories()
+            enabledCategories = selectedCategories(),
+            excludedTips = excludedTipsListPanel?.currentTips() ?: screenState.excludedTips,
+            restoredExcludedTipHashes = excludedTipsListPanel?.restoredTipHashes()
+                ?: screenState.restoredExcludedTipHashes
         )
     }
 
-    private fun settingsScreenService(): VimCoachSettingsScreenService = service()
+    private fun settingsScreenService(): VimCoachSettingsScreenController = service()
 
     private fun currentIntervalValue(): Int {
         return (intervalSpinner?.value as? Number)?.toInt() ?: screenState.tipIntervalHours
