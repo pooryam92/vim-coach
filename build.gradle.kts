@@ -205,6 +205,10 @@ intellijPlatformTesting {
                     )
                 }
             }
+
+            plugins {
+                plugin("IdeaVIM", "2.38.0")
+            }
         }
 
         register("runIdeWithMinuteTipSchedule") {
@@ -214,6 +218,10 @@ intellijPlatformTesting {
                 jvmArgumentProviders += CommandLineArgumentProvider {
                     listOf("-Dvimcoach.tip.interval.unit=minutes")
                 }
+            }
+
+            plugins {
+                plugin("IdeaVIM", "2.38.0")
             }
         }
 
@@ -231,6 +239,7 @@ intellijPlatformTesting {
 
             plugins {
                 robotServerPlugin()
+                plugin("IdeaVIM", "2.38.0")
             }
         }
     }

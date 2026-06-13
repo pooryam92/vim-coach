@@ -1,0 +1,213 @@
+{
+  "tips": [
+    {
+      "category": [
+        "plugin",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Enable surround plugin in .ideavimrc",
+      "details": [
+        "Add 'set surround' to your .ideavimrc",
+        "ysiw) wraps a word with parens",
+        "cs\"' swaps quote types",
+        "ds\" removes surrounding quotes"
+      ],
+      "config": [
+        "set surround"
+      ]
+    },
+    {
+      "category": [
+        "plugin",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Enable commentary plugin in .ideavimrc",
+      "details": [
+        "Add 'set commentary' to your .ideavimrc",
+        "gcc toggles a line comment",
+        "gc works with any motion or Visual selection"
+      ],
+      "config": [
+        "set commentary"
+      ]
+    },
+    {
+      "category": [
+        "plugin",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Enable highlightedyank plugin in .ideavimrc",
+      "details": [
+        "Add 'set highlightedyank' to your .ideavimrc",
+        "The yanked region briefly flashes after every y or Y",
+        "Gives visual confirmation of what was copied"
+      ],
+      "config": [
+        "set highlightedyank"
+      ]
+    },
+    {
+      "category": [
+        "plugin",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Enable ReplaceWithRegister plugin in .ideavimrc",
+      "details": [
+        "Add 'set ReplaceWithRegister' to your .ideavimrc",
+        "gr{motion} replaces the motion text with the current register",
+        "griw replaces the word without clobbering the yank"
+      ],
+      "config": [
+        "set ReplaceWithRegister"
+      ]
+    },
+    {
+      "category": [
+        "plugin",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Enable exchange plugin in .ideavimrc",
+      "details": [
+        "Add 'set exchange' to your .ideavimrc",
+        "cxiw marks the first region",
+        "Repeating on a second region swaps them"
+      ],
+      "config": [
+        "set exchange"
+      ]
+    },
+    {
+      "category": [
+        "plugin",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Enable argtextobj plugin in .ideavimrc",
+      "details": [
+        "Add 'set argtextobj' to your .ideavimrc",
+        "ia and aa become text objects for function arguments",
+        "cia changes one argument, daa deletes it with its comma"
+      ],
+      "config": [
+        "set argtextobj"
+      ]
+    },
+    {
+      "category": [
+        "plugin",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Enable textobj-indent plugin in .ideavimrc",
+      "details": [
+        "Add 'set textobj-indent' to your .ideavimrc",
+        "ii and ai become text objects for the current indent block",
+        "vai selects the block, dii deletes it"
+      ],
+      "config": [
+        "set textobj-indent"
+      ]
+    },
+    {
+      "category": [
+        "plugin",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Enable switch plugin in .ideavimrc",
+      "details": [
+        "Add 'set switch' to your .ideavimrc",
+        "gs flips paired values like true/false or &&/||",
+        "Works on the word under the cursor"
+      ],
+      "config": [
+        "set switch"
+      ]
+    },
+    {
+      "category": [
+        "plugin",
+        "ideavim",
+        "motion"
+      ],
+      "summary": "Enable sneak plugin in .ideavimrc",
+      "details": [
+        "Add 'set sneak' to your .ideavimrc",
+        "s{cc} jumps forward to the next two-char match",
+        "S{cc} searches backward"
+      ],
+      "config": [
+        "set sneak"
+      ]
+    },
+    {
+      "category": [
+        "plugin",
+        "ideavim",
+        "motion"
+      ],
+      "summary": "Enable matchit plugin in .ideavimrc",
+      "details": [
+        "Add 'set matchit' to your .ideavimrc",
+        "% then also jumps between tag pairs and control blocks",
+        "Works in HTML, XML, Ruby, and similar languages"
+      ],
+      "config": [
+        "set matchit"
+      ]
+    },
+    {
+      "category": [
+        "plugin",
+        "ideavim",
+        "motion"
+      ],
+      "summary": "Enable vim-paragraph-motion plugin in .ideavimrc",
+      "details": [
+        "Add 'set vim-paragraph-motion' to your .ideavimrc",
+        "{ and } treat whitespace-only lines as paragraph breaks",
+        "Makes { and } behave like standard Vim on all file types"
+      ],
+      "config": [
+        "set vim-paragraph-motion"
+      ]
+    },
+    {
+      "category": [
+        "plugin",
+        "ideavim",
+        "visual"
+      ],
+      "summary": "Enable textobj-entire plugin in .ideavimrc",
+      "details": [
+        "Add 'set textobj-entire' to your .ideavimrc",
+        "ae and ie become text objects for the entire buffer",
+        "vae selects everything, yie yanks it"
+      ],
+      "config": [
+        "set textobj-entire"
+      ]
+    },
+    {
+      "category": [
+        "plugin",
+        "ideavim",
+        "windows"
+      ],
+      "summary": "Enable NERDTree plugin in .ideavimrc",
+      "details": [
+        "Add 'set NERDTree' to your .ideavimrc",
+        ":NERDTreeToggle opens and closes the project tree",
+        ":NERDTreeFind reveals the current file in the tree"
+      ],
+      "config": [
+        "set NERDTree"
+      ]
+    }
+  ]
+}

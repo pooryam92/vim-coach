@@ -2,6 +2,7 @@ package com.github.pooryam92.vimcoach.features.tips.application.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.github.pooryam92.vimcoach.features.tips.ideavimrc.infra.IdeaVimRcFile
 import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
 import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationActions
@@ -9,14 +10,18 @@ import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificat
 import com.github.pooryam92.vimcoach.features.tips.ui.settings.VimCoachSettingsConfigurable
 import com.intellij.codeInsight.highlighting.HighlightManager
 import com.intellij.notification.Notification
+import com.intellij.openapi.actionSystem.ActionManager
+import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.components.service
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.colors.EditorColors
+import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.OpenFileDescriptor
 import com.intellij.openapi.options.ShowSettingsUtil
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.LocalFileSystem
+import com.intellij.openapi.vfs.VirtualFile
 import java.nio.file.Path
 
 class TipNotificationController(
@@ -27,6 +32,7 @@ class TipNotificationController(
     private var injectedSettingsService: VimCoachSettingsService? = null
     private var injectedTipService: VimTipService? = null
     private var injectedAddTipToIdeaVimRc: AddTipToIdeaVimRc = AddTipToIdeaVimRc()
+    private var injectedReloadIdeaVimRc: (() -> Unit)? = null
     private val activeTipNotifications = ActiveTipNotificationTracker(project)
 
     constructor(
@@ -34,12 +40,14 @@ class TipNotificationController(
         tipService: VimTipService,
         notificationFactory: TipNotificationFactory,
         settingsService: VimCoachSettingsService? = null,
-        addTipToIdeaVimRc: AddTipToIdeaVimRc = AddTipToIdeaVimRc()
+        addTipToIdeaVimRc: AddTipToIdeaVimRc = AddTipToIdeaVimRc(),
+        reloadIdeaVimRc: (() -> Unit)? = null
     ) : this(project) {
         injectedNotificationFactory = notificationFactory
         injectedSettingsService = settingsService
         injectedTipService = tipService
         injectedAddTipToIdeaVimRc = addTipToIdeaVimRc
+        injectedReloadIdeaVimRc = reloadIdeaVimRc
     }
 
     internal val activeNotification: Notification?
@@ -80,13 +88,15 @@ class TipNotificationController(
     }
 
     private fun addTipToIdeaVimRc(tip: VimTip) {
+        saveIdeaVimRcIfOpen()
         when (val result = injectedAddTipToIdeaVimRc.add(tip)) {
             is AddTipToIdeaVimRc.Result.Added ->
                 showIdeaVimRcUpdatedNotification(
                     TipNotificationFactory.TIP_ADDED_TO_IDEAVIMRC_TEXT,
                     result.path,
                     result.startLine,
-                    result.lineCount
+                    result.lineCount,
+                    onReloadIdeaVimRc = if (ideaVimReloadAvailable()) ::reloadIdeaVimRc else null
                 )
 
             is AddTipToIdeaVimRc.Result.AlreadyPresent ->
@@ -101,16 +111,49 @@ class TipNotificationController(
         message: String,
         path: Path,
         startLine: Int = -1,
-        lineCount: Int = 0
+        lineCount: Int = 0,
+        onReloadIdeaVimRc: (() -> Unit)? = null
     ) {
         openIdeaVimRc(path, startLine, lineCount)
         injectedNotificationFactory
-            .createAddedToIdeaVimRcNotification(message)
+            .createAddedToIdeaVimRcNotification(message, onReloadIdeaVimRc)
             .notify(project)
+    }
+
+    private fun saveIdeaVimRcIfOpen() {
+        val path = IdeaVimRcFile().find() ?: return
+        val vf = LocalFileSystem.getInstance().findFileByNioFile(path) ?: return
+        val doc = FileDocumentManager.getInstance().getCachedDocument(vf) ?: return
+        FileDocumentManager.getInstance().saveDocument(doc)
+    }
+
+    private fun ideaVimReloadAvailable(): Boolean =
+        injectedReloadIdeaVimRc != null ||
+            ActionManager.getInstance().getAction("IdeaVim.ReloadVimRc.reload") != null
+
+    private fun reloadIdeaVimRc() {
+        val reload = injectedReloadIdeaVimRc
+        if (reload != null) {
+            reload()
+            injectedNotificationFactory.createAddedToIdeaVimRcNotification(
+                TipNotificationFactory.TIP_RELOADED_IDEAVIMRC_TEXT
+            ).notify(project)
+            return
+        }
+        val action = ActionManager.getInstance().getAction("IdeaVim.ReloadVimRc.reload")
+        if (action == null) {
+            injectedNotificationFactory.createReloadIdeaVimRcFailedNotification().notify(project)
+            return
+        }
+        ActionManager.getInstance().tryToExecute(action, null, null, ActionPlaces.NOTIFICATION, true)
+        injectedNotificationFactory.createAddedToIdeaVimRcNotification(
+            TipNotificationFactory.TIP_RELOADED_IDEAVIMRC_TEXT
+        ).notify(project)
     }
 
     private fun openIdeaVimRc(path: Path, startLine: Int, lineCount: Int) {
         val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByNioFile(path) ?: return
+        syncDocumentFromDisk(virtualFile)
         if (startLine < 0 || lineCount <= 0) {
             FileEditorManager.getInstance(project).openFile(virtualFile, true)
             return
@@ -119,6 +162,17 @@ class TipNotificationController(
         val editor = FileEditorManager.getInstance(project).openTextEditor(descriptor, true)
             ?: return
         highlightAppendedLines(editor, startLine, lineCount)
+    }
+
+    /**
+     * NIO writes in [IdeaVimRcFile] bypass IntelliJ's VFS, so the open Document still has
+     * old content after [refreshAndFindFileByNioFile] (the reload is normally async via
+     * invokeLater). Calling reloadFromDisk directly makes the reload synchronous so the
+     * editor opens at the correct line with up-to-date content.
+     */
+    private fun syncDocumentFromDisk(virtualFile: VirtualFile) {
+        val doc = FileDocumentManager.getInstance().getCachedDocument(virtualFile) ?: return
+        FileDocumentManager.getInstance().reloadFromDisk(doc)
     }
 
     /** Briefly flashes the just-appended line(s) so the user can see exactly what changed. */

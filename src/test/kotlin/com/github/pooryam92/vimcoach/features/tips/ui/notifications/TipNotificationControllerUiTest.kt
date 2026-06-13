@@ -20,8 +20,11 @@ import com.intellij.openapi.util.io.FileUtil
 import com.intellij.testFramework.TestActionEvent
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import java.lang.reflect.Proxy
+import com.intellij.notification.Notifications
+import com.intellij.openapi.vfs.LocalFileSystem
 import kotlin.io.path.Path
 import kotlin.io.path.readText
+import kotlin.io.path.writeText
 
 class TipNotificationControllerUiTest : BasePlatformTestCase() {
 
@@ -99,6 +102,116 @@ class TipNotificationControllerUiTest : BasePlatformTestCase() {
         // The file opens with the caret on the just-appended line so the change is visible.
         val editor = FileEditorManager.getInstance(project).selectedTextEditor!!
         assertEquals(0, editor.caretModel.logicalPosition.line)
+    }
+
+    fun testAddToIdeaVimRcUpdatesEditorDocumentWhenFileIsAlreadyOpen() {
+        // Regression: NIO writes bypass IntelliJ's VFS, so the open Document was not updated
+        // synchronously — the user saw no change in the editor even though the disk was written.
+        val tempHome = FileUtil.createTempDirectory("vimcoach", "home", true).absolutePath
+        val ideavimrcPath = Path(tempHome, ".ideavimrc")
+        ideavimrcPath.writeText("\" existing config\n")
+
+        val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByNioFile(ideavimrcPath)!!
+        FileEditorManager.getInstance(project).openFile(virtualFile, true)
+
+        val tip = VimTip(
+            summary = "surround",
+            details = listOf("edit surroundings"),
+            config = listOf("Plug 'tpope/vim-surround'")
+        )
+        val controller = TipNotificationController(
+            project,
+            FakeVimTipService(initialTips = listOf(tip)),
+            TipNotificationFactory(),
+            FakeSettingsService(emptyList()),
+            AddTipToIdeaVimRc(IdeaVimRcFile(userHome = tempHome, xdgConfigHome = null))
+        )
+
+        controller.showRandomTip()
+        val notification = controller.activeNotification!!
+        val addAction = notification.actions.first {
+            it.templateText == TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT
+        }
+        invokeNotificationAction(addAction, notification)
+
+        assertTrue(ideavimrcPath.readText().contains("Plug 'tpope/vim-surround'"))
+
+        // The in-memory Document must reflect the change immediately — no waiting for invokeLater.
+        val editor = FileEditorManager.getInstance(project).selectedTextEditor!!
+        assertTrue(
+            "Editor document should contain the appended config line when the file was open at time of add",
+            editor.document.text.contains("Plug 'tpope/vim-surround'")
+        )
+    }
+
+    fun testAddToIdeaVimRcShowsReloadButtonWhenIdeaVimIsAvailable() {
+        val shownNotifications = captureProjectNotifications()
+
+        val tempHome = FileUtil.createTempDirectory("vimcoach", "home", true).absolutePath
+        val tip = VimTip(
+            summary = "surround",
+            details = listOf("edit surroundings"),
+            config = listOf("Plug 'tpope/vim-surround'")
+        )
+        val controller = TipNotificationController(
+            project,
+            FakeVimTipService(initialTips = listOf(tip)),
+            TipNotificationFactory(),
+            FakeSettingsService(emptyList()),
+            AddTipToIdeaVimRc(IdeaVimRcFile(userHome = tempHome, xdgConfigHome = null)),
+            reloadIdeaVimRc = {}  // injected lambda signals IdeaVim reload is available
+        )
+
+        controller.showRandomTip()
+        invokeNotificationAction(
+            controller.activeNotification!!.actions.first {
+                it.templateText == TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT
+            },
+            controller.activeNotification!!
+        )
+
+        val addedNotification = shownNotifications.first {
+            it.content == TipNotificationFactory.TIP_ADDED_TO_IDEAVIMRC_TEXT
+        }
+        assertTrue(
+            "Reload now button should be present when IdeaVim reload is available",
+            addedNotification.actions.any { it.templateText == TipNotificationFactory.TIP_RELOAD_IDEAVIMRC_ACTION_TEXT }
+        )
+    }
+
+    fun testAddToIdeaVimRcOmitsReloadButtonWhenIdeaVimIsNotAvailable() {
+        val shownNotifications = captureProjectNotifications()
+
+        val tempHome = FileUtil.createTempDirectory("vimcoach", "home", true).absolutePath
+        val tip = VimTip(
+            summary = "surround",
+            details = listOf("edit surroundings"),
+            config = listOf("Plug 'tpope/vim-surround'")
+        )
+        // No reloadIdeaVimRc lambda injected; IdeaVim action also absent in the test environment.
+        val controller = TipNotificationController(
+            project,
+            FakeVimTipService(initialTips = listOf(tip)),
+            TipNotificationFactory(),
+            FakeSettingsService(emptyList()),
+            AddTipToIdeaVimRc(IdeaVimRcFile(userHome = tempHome, xdgConfigHome = null))
+        )
+
+        controller.showRandomTip()
+        invokeNotificationAction(
+            controller.activeNotification!!.actions.first {
+                it.templateText == TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT
+            },
+            controller.activeNotification!!
+        )
+
+        val addedNotification = shownNotifications.first {
+            it.content == TipNotificationFactory.TIP_ADDED_TO_IDEAVIMRC_TEXT
+        }
+        assertTrue(
+            "Reload now button should not appear when IdeaVim is not available",
+            addedNotification.actions.none { it.templateText == TipNotificationFactory.TIP_RELOAD_IDEAVIMRC_ACTION_TEXT }
+        )
     }
 
     fun testTipWithoutConfigHasNoAddToIdeaVimRcAction() {
@@ -308,6 +421,19 @@ class TipNotificationControllerUiTest : BasePlatformTestCase() {
         assertNotNull(secondNotification)
         assertNotSame(firstNotification, secondNotification)
         assertFalse(secondNotification!!.isExpired)
+    }
+
+    private fun captureProjectNotifications(): MutableList<Notification> {
+        val captured = mutableListOf<Notification>()
+        project.messageBus.connect(testRootDisposable).subscribe(
+            Notifications.TOPIC,
+            object : Notifications {
+                override fun notify(notification: Notification) {
+                    captured.add(notification)
+                }
+            }
+        )
+        return captured
     }
 
     private fun invokeNotificationAction(action: AnAction, notification: Notification) {

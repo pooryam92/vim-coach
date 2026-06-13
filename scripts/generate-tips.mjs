@@ -87,7 +87,10 @@ for (const category of ordered) {
     }
     summarySources.set(summary, fileName);
 
-    mergedTips.push({ category: categories, summary, details });
+    const entry = { category: categories, summary, details };
+    const config = (tip.config ?? []).map((l) => (typeof l === "string" ? l.trim() : "")).filter(Boolean);
+    if (config.length > 0) entry.config = config;
+    mergedTips.push(entry);
   });
 }
 
