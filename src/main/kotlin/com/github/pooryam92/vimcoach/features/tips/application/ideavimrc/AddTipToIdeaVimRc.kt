@@ -1,8 +1,8 @@
 package com.github.pooryam92.vimcoach.features.tips.application.ideavimrc
 
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
-import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.WriteAction
+import com.intellij.openapi.components.serviceOrNull
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
@@ -12,9 +12,10 @@ import java.nio.file.Path
 class AddTipToIdeaVimRc(
     private val project: Project,
     private val findPath: () -> Path? = {
-        ApplicationManager.getApplication().getService(FindIdeaVimRc::class.java)?.findVimRc()
+        serviceOrNull<FindIdeaVimRc>()?.findVimRc()
     }
 ) {
+    // Only available when the user already has a vimrc — we never create one for them.
     fun isAvailable(): Boolean = findPath() != null
 
     fun add(tip: VimTip): Result {
@@ -24,6 +25,8 @@ class AddTipToIdeaVimRc(
         val doc = FileDocumentManager.getInstance().getDocument(vf) ?: return Result.Failed
 
         val cleaned = tip.config.map(String::trim).filter(String::isNotEmpty)
+        if (cleaned.isEmpty()) return Result.Failed
+
         val existingLines = doc.text.lineSequence().map(String::trim).toHashSet()
         val toAdd = mutableListOf<String>()
         for (line in cleaned) {
