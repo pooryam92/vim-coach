@@ -1,19 +1,24 @@
 # Add to .ideavimrc
 
-When a tip has configuration lines (e.g. `set surround`, `Plug 'tpope/vim-surround'`), an **"Add to .ideavimrc"** action button appears on the tip notification. Clicking it appends those lines to the user's `.ideavimrc`, opens the file in the editor at the added lines, and offers a **"Reload now"** button if IdeaVim's reload action is available.
+When a tip has configuration lines (e.g. `set surround`, `Plug 'tpope/vim-surround'`) **and** the user has IdeaVim installed **and** a `.ideavimrc` file already exists, an **"Add to .ideavimrc"** action button appears on the tip notification. Clicking it appends those lines to the file, opens it in the editor at the added lines, and offers a **"Reload now"** button if IdeaVim's reload action is available.
+
+File creation is deliberately out of scope — if no `.ideavimrc` exists, the button is simply not shown. The user creates the file through IdeaVim's own "Create ~/.ideavimrc" action.
 
 ## Vertical Slice
 
 ```mermaid
 graph LR
-    A[TipNotificationController] -->|"tip.config non-empty"| B[AddTipToIdeaVimRc]
-    B --> C[IdeaVimRcFile]
-    C --> D["~/.ideavimrc\n(or XDG path)"]
+    A[TipNotificationController] -->|"isAvailable()"| B[AddTipToIdeaVimRc]
+    B -->|findPath| C[IdeaVimIntegration]
+    C -->|VimRcService| D["~/.ideavimrc\n(or XDG path)"]
+    B -->|Document API| E[FileDocumentManager]
+    E --> F[IntelliJ Document]
+    F --> D
     B -->|Result| A
-    A -->|Added| E[openIdeaVimRc\nhighlightAppendedLines]
-    A -->|AlreadyPresent| F[openIdeaVimRc\nno highlight]
-    A -->|Failed| G[failure notification]
-    A -->|Added + IdeaVim present| H[reloadIdeaVimRc]
+    A -->|Added| G[openIdeaVimRc\nhighlightAppendedLines]
+    A -->|AlreadyPresent| H[openIdeaVimRc\nno highlight]
+    A -->|Failed| I[failure notification]
+    A -->|Added + IdeaVim present| J[reloadIdeaVimRc]
 ```
 
 ## Flow on Button Click
@@ -22,38 +27,32 @@ graph LR
 sequenceDiagram
     participant User
     participant CTRL as TipNotificationController
-    participant SAVE as FileDocumentManager
-    participant USE as AddTipToIdeaVimRc
-    participant FILE as IdeaVimRcFile
-    participant FS as Filesystem
+    participant ADD as AddTipToIdeaVimRc
+    participant INTEG as IdeaVimIntegration
+    participant VFS as LocalFileSystem / VirtualFile
+    participant DOC as FileDocumentManager / Document
     participant ED as FileEditorManager
     participant HM as HighlightManager
     participant AM as ActionManager
 
     User->>CTRL: clicks "Add to .ideavimrc"
-    CTRL->>SAVE: saveDocument (if .ideavimrc open in editor)
-    CTRL->>USE: add(tip)
-    USE->>FILE: findOrCreate()
-    alt file exists
-        FILE-->>USE: Path
-    else file missing
-        FILE->>FS: createFile ~/.ideavimrc
-        FILE-->>USE: Path (new)
-    end
-    USE->>FILE: append(path, tip.config)
-    FILE->>FS: readText (existing content)
-    note over FILE: skip lines already present (exact match)
-    FILE->>FS: writeText (existing + new lines)
-    FILE-->>USE: AppendOutcome
-    USE-->>CTRL: Result.Added / AlreadyPresent / Failed
+    CTRL->>ADD: add(tip)
+    ADD->>INTEG: findVimRc() via IdeaVimIntegration service
+    note over INTEG: delegates to VimRcService.findIdeaVimRc()
+    INTEG-->>ADD: Path
+    ADD->>VFS: refreshAndFindFileByNioFile(path)
+    ADD->>VFS: vf.isWritable
+    ADD->>DOC: getDocument(vf)
+    note over ADD: dedup against document.text (exact match)
+    ADD->>DOC: WriteCommandAction → insertString
+    ADD->>DOC: WriteAction → saveDocument (sync flush to disk)
+    ADD-->>CTRL: Result.Added / AlreadyPresent / Failed
 
     alt Added
         CTRL->>ED: openTextEditor at startLine
-        CTRL->>ED: reloadFromDisk (sync VFS after NIO write)
         CTRL->>HM: addRangeHighlight (flash added lines)
         CTRL->>CTRL: show "Added to .ideavimrc" notification
         opt IdeaVim reload action registered
-            note over CTRL: "Reload now" button shown
             User->>CTRL: clicks "Reload now"
             CTRL->>AM: execute IdeaVim.ReloadVimRc.reload
             CTRL->>CTRL: show ".ideavimrc reloaded" notification
@@ -68,7 +67,7 @@ sequenceDiagram
 
 ## File Discovery
 
-`IdeaVimRcFile` mirrors IdeaVim's own `VimRcService` search order:
+`IdeaVimIntegration` is an application service registered only when IdeaVim is installed (via `plugin-ideavim.xml`). Its implementation delegates to `VimRcService.findIdeaVimRc()` which uses IdeaVim's own search order:
 
 | Priority | Path |
 |----------|------|
@@ -76,27 +75,34 @@ sequenceDiagram
 | 2 | `~/_ideavimrc` |
 | 3 | `$XDG_CONFIG_HOME/ideavim/ideavimrc` (defaults to `~/.config/ideavim/ideavimrc`) |
 
-If none exists, `findOrCreate()` creates `~/.ideavimrc` (first candidate that succeeds).
+When `IdeaVimIntegration` service is absent (IdeaVim not installed), `isAvailable()` returns false and the button is never shown.
 
-IdeaVim is not a runtime dependency — the search logic is reimplemented to avoid coupling to a submodule.
+## Why Document API
+
+All writes go through IntelliJ's `Document` + `WriteCommandAction` rather than NIO:
+
+- **Windows compatibility**: IntelliJ holds an exclusive file lock on open documents. A raw NIO write would fail with an access error. The Document API is the platform's own abstraction over this.
+- **Line endings**: Document API normalises line endings per platform automatically — no `System.lineSeparator()` differences.
+- **No VFS sync needed**: the Document is always current; `reloadFromDisk` is unnecessary.
+- **Undo support**: `WriteCommandAction` registers the change in IntelliJ's undo stack.
+
+After `WriteCommandAction`, the document is saved synchronously via `WriteAction { saveDocument(doc) }` so IdeaVim's "Reload now" reads the up-to-date file from disk immediately.
 
 ## Dedup Logic
 
-Before writing, `IdeaVimRcFile.append` reads the file and builds a set of trimmed lines. Any config line already present verbatim is silently skipped — only genuinely new lines are appended.
+Before writing, `AddTipToIdeaVimRc.add` reads `document.text` and builds a set of trimmed existing lines. Any config line already present verbatim is skipped — only genuinely new lines are appended. Duplicate lines within the tip's own config list are also collapsed.
 
 **Limitation:** dedup is exact-match only. It will not detect semantic equivalents (e.g. `set surround` vs. `Plug 'tpope/vim-surround'` enabling the same feature).
-
-## VFS Sync
-
-NIO writes bypass IntelliJ's Virtual File System, so the open `Document` has stale content after `refreshAndFindFileByNioFile` (which schedules an async reload). `TipNotificationController.syncDocumentFromDisk` calls `reloadFromDisk` directly to make the reload synchronous, ensuring the editor opens at the correct line with up-to-date content.
 
 ## Error Paths
 
 | Condition | Result |
 |-----------|--------|
+| IdeaVim not installed | Button not shown |
+| `.ideavimrc` does not exist | Button not shown |
 | `tip.config` is empty | Button not shown |
-| File creation fails (IOException) | `Result.Failed` → warning notification |
-| Append fails (IOException) | `Result.Failed` → warning notification |
+| `VirtualFile` not found | `Result.Failed` → warning notification |
+| File not writable | `Result.Failed` → warning notification |
+| `Document` unavailable | `Result.Failed` → warning notification |
 | All config lines already present | `Result.AlreadyPresent` → file opened, no highlight |
 | IdeaVim reload action not registered | "Reload now" button not shown |
-| Reload action missing at click time | warning notification |

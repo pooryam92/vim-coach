@@ -1,0 +1,107 @@
+package com.github.pooryam92.vimcoach.features.tips.application.loading
+
+import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
+import com.github.pooryam92.vimcoach.features.tips.domain.TipSourceLoadResult
+import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
+import com.intellij.openapi.components.service
+import com.intellij.openapi.diagnostic.Logger
+import java.util.concurrent.atomic.AtomicBoolean
+
+class TipRefresh() : RefreshTips {
+    private var injectedTipService: VimTipRepository? = null
+    private var injectedTipSource: TipSourceService? = null
+
+    internal constructor(
+        tipService: VimTipRepository? = null,
+        tipSource: TipSourceService? = null
+    ) : this() {
+        injectedTipService = tipService
+        injectedTipSource = tipSource
+    }
+
+    private val updatesChecked = AtomicBoolean(false)
+
+    override fun refetchTips(): TipLoadResult {
+        return fetchAndSave(conditional = false)
+    }
+
+    override fun checkForUpdates(): TipLoadResult {
+        if (!updatesChecked.compareAndSet(false, true)) {
+            logger.info("Skipping Vim tip update check because it already ran in this application session")
+            return TipLoadResult.NotModified
+        }
+        return fetchAndSave(conditional = hasUsableCachedTips())
+    }
+
+    private fun fetchAndSave(conditional: Boolean): TipLoadResult {
+        logger.info("Fetching Vim tips (conditional=$conditional)")
+        val sourceResult = loadFromSource(conditional)
+        return toTipLoadResult(sourceResult)
+    }
+
+    private fun hasUsableCachedTips(): Boolean {
+        val tipCount = tipService().countTips()
+        if (tipCount == 0) {
+            logger.info("Current Vim tip cache is empty")
+            return false
+        }
+
+        val categories = tipService().getCategories()
+        val hasCategories = categories.isNotEmpty()
+        logger.info(
+            "Current Vim tip cache size: $tipCount, recovered categories: ${categories.values.size}, usable=$hasCategories"
+        )
+        return hasCategories
+    }
+
+    private fun loadFromSource(conditional: Boolean): TipSourceLoadResult {
+        return if (conditional) {
+            tipSource().loadTipsConditional(tipService().getMetadata())
+        } else {
+            tipSource().loadTips()
+        }
+    }
+
+    private fun toTipLoadResult(sourceResult: TipSourceLoadResult): TipLoadResult {
+        return when (sourceResult) {
+            is TipSourceLoadResult.Success -> saveFetchedTips(sourceResult)
+            TipSourceLoadResult.NotModified -> {
+                logger.info("Tip source returned not modified; refreshing fetch timestamp only")
+                markRefreshTimestamp()
+            }
+
+            TipSourceLoadResult.Empty -> {
+                logger.info("Tip source returned empty data")
+                TipLoadResult.NoData
+            }
+
+            is TipSourceLoadResult.Failure -> {
+                logger.warn("Tip source failed: ${sourceResult.message}", sourceResult.cause)
+                TipLoadResult.Failed(sourceResult.message, sourceResult.cause)
+            }
+        }
+    }
+
+    private fun saveFetchedTips(sourceResult: TipSourceLoadResult.Success): TipLoadResult {
+        tipService().saveTips(sourceResult.tips)
+        tipService().saveMetadata(sourceResult.metadata)
+        logger.info("Saved ${sourceResult.tips.size} Vim tips from source")
+        return TipLoadResult.Updated(sourceResult.tips.size)
+    }
+
+    private fun markRefreshTimestamp(): TipLoadResult {
+        val updatedMetadata = tipService().getMetadata().copy(
+            lastFetchTimestamp = System.currentTimeMillis()
+        )
+        tipService().saveMetadata(updatedMetadata)
+        return TipLoadResult.NotModified
+    }
+
+    private fun tipService(): VimTipRepository = injectedTipService ?: service()
+
+    private fun tipSource(): TipSourceService = injectedTipSource ?: service()
+
+    private companion object {
+        val logger = Logger.getInstance(TipRefresh::class.java)
+    }
+}

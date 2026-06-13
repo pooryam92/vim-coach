@@ -7,12 +7,12 @@ import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoach
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
 import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
-import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
-import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsServiceImpl
-import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
-import com.github.pooryam92.vimcoach.features.tips.state.VimTipServiceImpl
-import com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsStoreImpl
-import com.github.pooryam92.vimcoach.features.tips.state.store.VimTipStoreImpl
+import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
+import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepositoryImpl
+import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
+import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepositoryImpl
+import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
+import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -200,19 +200,19 @@ class VimCoachSettingsScreenControllerUnitTest {
     }
 
     private fun createScreenService(
-        settingsService: VimCoachSettingsService,
-        tipService: VimTipService,
+        settingsService: SettingsRepository,
+        tipService: VimTipRepository,
         refreshTips: RefreshTips? = null
     ): VimCoachSettingsScreenController {
         return VimCoachSettingsScreenController(settingsService, tipService, refreshTips)
     }
 
-    private fun createSettingsService(): VimCoachSettingsService {
-        return VimCoachSettingsServiceImpl(VimCoachSettingsStoreImpl())
+    private fun createSettingsService(): SettingsRepository {
+        return SettingsRepositoryImpl(PersistentSettingsStore())
     }
 
-    private fun createTipService(): VimTipService {
-        return VimTipServiceImpl(VimTipStoreImpl())
+    private fun createTipService(): VimTipRepository {
+        return VimTipRepositoryImpl(PersistentVimTipStore())
     }
 
     private class FakeRefreshTips(

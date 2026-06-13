@@ -1,37 +1,54 @@
 package com.github.pooryam92.vimcoach.features.tips.application.ideavimrc
 
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
-import com.github.pooryam92.vimcoach.features.tips.ideavimrc.infra.IdeaVimRcFile
-import java.io.IOException
+import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.application.WriteAction
+import com.intellij.openapi.command.WriteCommandAction
+import com.intellij.openapi.fileEditor.FileDocumentManager
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.LocalFileSystem
 import java.nio.file.Path
 
-/**
- * Appends a tip's config line(s) to the user's .ideavimrc, keeping file I/O out of the
- * notification controller and making the flow unit-testable.
- */
 class AddTipToIdeaVimRc(
-    private val ideaVimRcFile: IdeaVimRcFile = IdeaVimRcFile()
+    private val project: Project,
+    private val findPath: () -> Path? = {
+        ApplicationManager.getApplication().getService(FindIdeaVimRc::class.java)?.findVimRc()
+    }
 ) {
-    fun add(tip: VimTip): Result {
-        if (tip.config.isEmpty()) {
-            return Result.Failed
-        }
-        val path = try {
-            ideaVimRcFile.findOrCreate()
-        } catch (ignored: IOException) {
-            null
-        } ?: return Result.Failed
+    fun isAvailable(): Boolean = findPath() != null
 
-        return try {
-            val outcome = ideaVimRcFile.append(path, tip.config)
-            if (outcome.addedSomething) {
-                Result.Added(outcome.path, outcome.addedStartLine, outcome.addedLines.size)
-            } else {
-                Result.AlreadyPresent(outcome.path)
-            }
-        } catch (ignored: IOException) {
-            Result.Failed
+    fun add(tip: VimTip): Result {
+        val path = findPath() ?: return Result.Failed
+        val vf = LocalFileSystem.getInstance().refreshAndFindFileByNioFile(path) ?: return Result.Failed
+        if (!vf.isWritable) return Result.Failed
+        val doc = FileDocumentManager.getInstance().getDocument(vf) ?: return Result.Failed
+
+        val cleaned = tip.config.map(String::trim).filter(String::isNotEmpty)
+        val existingLines = doc.text.lineSequence().map(String::trim).toHashSet()
+        val toAdd = mutableListOf<String>()
+        for (line in cleaned) {
+            if (line !in existingLines && line !in toAdd) toAdd.add(line)
         }
+
+        if (toAdd.isEmpty()) return Result.AlreadyPresent(path)
+
+        val startLine = when {
+            doc.text.isEmpty() || doc.text.endsWith('\n') -> doc.lineCount - 1
+            else -> doc.lineCount
+        }
+        val insertText = buildString {
+            if (doc.textLength > 0 && !doc.text.endsWith('\n')) append('\n')
+            toAdd.forEach { append(it).append('\n') }
+        }
+
+        WriteCommandAction.runWriteCommandAction(project) {
+            doc.insertString(doc.textLength, insertText)
+        }
+        WriteAction.run<Throwable> {
+            FileDocumentManager.getInstance().saveDocument(doc)
+        }
+
+        return Result.Added(path, startLine, toAdd.size)
     }
 
     sealed interface Result {

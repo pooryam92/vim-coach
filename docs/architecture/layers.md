@@ -6,11 +6,11 @@ Dependency rule: arrows should only point **inward/downward**. Two violations ex
 graph TD
     UI["**UI**\nTipNotificationFactory · VimCoachSettingsConfigurable\nExcludedTipsListPanel"]
 
-    APP["**Application**\nTipNotificationController ⚠ · TipRefreshCoordinator\nPeriodicTipScheduler · AddTipToIdeaVimRc\nVimCoachSettingsScreenController\n─────────────────────\nShowTips · RefreshTips · ScheduleTips  *(interfaces)*"]
+    APP["**Application**\nTipNotificationController ⚠ · TipRefreshCoordinator\nPeriodicTipScheduler · AddTipToIdeaVimRc\nVimCoachSettingsScreenController\n─────────────────────\nShowTips · RefreshTips · ScheduleTips  *(interfaces)*\nIdeaVimIntegration  *(interface)*"]
 
     STATE["**State**\nVimTipServiceImpl · VimCoachSettingsServiceImpl ⚠\nVimTipStore · VimCoachSettingsStore\n─────────────────────\nVimTipService · VimCoachSettingsService  *(interfaces)*"]
 
-    INFRA["**Source / Infra**\nTipSourceServiceImpl\nRemoteTipSourceServiceImpl · FileTipSourceServiceImpl\nTipJsonParser · IdeaVimRcFile"]
+    INFRA["**Source / Infra**\nTipSourceServiceImpl\nRemoteTipSourceServiceImpl · FileTipSourceServiceImpl\nTipJsonParser · IdeaVimIntegrationImpl"]
 
     DOMAIN["**Domain**\nVimTip · TipMetadata · TipHash · TipCategories · TipLoadResult"]
 

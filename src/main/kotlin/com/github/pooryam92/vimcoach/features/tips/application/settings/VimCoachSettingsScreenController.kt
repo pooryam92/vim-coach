@@ -2,18 +2,18 @@ package com.github.pooryam92.vimcoach.features.tips.application.settings
 
 import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTips
 import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
-import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
-import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
+import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
+import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 import com.intellij.openapi.components.service
 
 class VimCoachSettingsScreenController() {
-    private var injectedSettingsService: VimCoachSettingsService? = null
-    private var injectedTipService: VimTipService? = null
+    private var injectedSettingsService: SettingsRepository? = null
+    private var injectedTipService: VimTipRepository? = null
     private var injectedRefreshTips: RefreshTips? = null
 
     internal constructor(
-        settingsService: VimCoachSettingsService,
-        tipService: VimTipService,
+        settingsService: SettingsRepository,
+        tipService: VimTipRepository,
         refreshTips: RefreshTips? = null
     ) : this() {
         injectedSettingsService = settingsService
@@ -75,9 +75,9 @@ class VimCoachSettingsScreenController() {
             .forEach(settingsService::restoreTip)
     }
 
-    private fun settingsService(): VimCoachSettingsService = injectedSettingsService ?: service()
+    private fun settingsService(): SettingsRepository = injectedSettingsService ?: service()
 
-    private fun tipService(): VimTipService = injectedTipService ?: service()
+    private fun tipService(): VimTipRepository = injectedTipService ?: service()
 
     private fun refreshTips(): RefreshTips = injectedRefreshTips ?: service()
 }

@@ -64,14 +64,16 @@ graph TD
         direction LR
         E1[TipNotificationController]
         E2([AddTipToIdeaVimRc])
-        E3[IdeaVimRcFile]
-        E4[("~/.ideavimrc\n(or XDG path)")]
-        E5[FileEditorManager]
-        E6[HighlightManager]
-        E7[[IdeaVim.ReloadVimRc.reload]]
-        E1 --> E2 --> E3 --> E4
-        E1 -->|Added| E5 & E6
-        E1 -.->|opt reload| E7
+        E3[IdeaVimIntegration]
+        E4[[VimRcService]]
+        E5[(.ideavimrc)]
+        E6[FileDocumentManager]
+        E7[FileEditorManager]
+        E8[[IdeaVim.ReloadVimRc.reload]]
+        E1 --> E2 --> E3 --> E4 --> E5
+        E2 --> E6 --> E5
+        E1 -->|Added| E7
+        E1 -.->|opt reload| E8
     end
 
     showTip ~~~ refresh ~~~ periodic ~~~ settings ~~~ ideavimrc
