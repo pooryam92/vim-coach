@@ -1,10 +1,12 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.ui.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationActions
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationFactory
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -68,6 +70,52 @@ class TipNotificationFactoryUnitTest {
         assertEquals(TipNotificationFactory.NOTIFICATION_GROUP_ID, notification.groupId)
         assertNotNull(notification.icon)
         assertEquals(TipNotificationFactory.TIP_ICON, notification.icon)
+    }
+
+    @Test
+    fun notificationWithIdeaVimRcCallbackShowsThreeActionButtons() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(summary = "surround", details = listOf("edit surroundings"))
+
+        val notification = notifier.createNotificationWithActions(
+            tip,
+            TipNotificationActions(
+                onShowNextTip = {},
+                onExcludeTip = {},
+                onAddToIdeaVimRc = {}
+            )
+        )
+
+        assertEquals(3, notification.actions.size)
+        assertEquals(TipNotificationFactory.TIP_NEXT_ACTION_TEXT, notification.actions[0].templateText)
+        assertEquals(TipNotificationFactory.TIP_DONT_SHOW_AGAIN_ACTION_TEXT, notification.actions[1].templateText)
+        assertEquals(TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT, notification.actions[2].templateText)
+    }
+
+    @Test
+    fun notificationWithoutIdeaVimRcCallbackHasTwoActionButtons() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(summary = "jump", details = listOf("use %"))
+
+        val notification = notifier.createNotificationWithActions(
+            tip,
+            TipNotificationActions(onShowNextTip = {}, onExcludeTip = {})
+        )
+
+        assertEquals(2, notification.actions.size)
+        assertNull(notification.listener)
+    }
+
+    @Test
+    fun addedToIdeaVimRcNotificationIsPlainConfirmation() {
+        val notifier = TipNotificationFactory()
+
+        val notification = notifier.createAddedToIdeaVimRcNotification(
+            TipNotificationFactory.TIP_ADDED_TO_IDEAVIMRC_TEXT
+        )
+
+        assertEquals(TipNotificationFactory.TIP_ADDED_TO_IDEAVIMRC_TEXT, notification.content)
+        assertTrue(notification.actions.isEmpty())
     }
 
     @Test

@@ -44,7 +44,7 @@ dependencies {
         bundledPlugins(providers.gradleProperty("platformBundledPlugins").map { it.split(',') })
 
         // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file for plugin from JetBrains Marketplace.
-        plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
+        plugins(providers.gradleProperty("platformPlugins").map { it.split(',').filter(String::isNotEmpty) })
 
         // Module Dependencies. Uses `platformBundledModules` property from the gradle.properties file for bundled IntelliJ Platform modules.
         bundledModules(providers.gradleProperty("platformBundledModules").map { it.split(',') })
@@ -205,6 +205,10 @@ intellijPlatformTesting {
                     )
                 }
             }
+
+            plugins {
+                plugin("IdeaVIM", "2.38.0")
+            }
         }
 
         register("runIdeWithMinuteTipSchedule") {
@@ -214,6 +218,10 @@ intellijPlatformTesting {
                 jvmArgumentProviders += CommandLineArgumentProvider {
                     listOf("-Dvimcoach.tip.interval.unit=minutes")
                 }
+            }
+
+            plugins {
+                plugin("IdeaVIM", "2.38.0")
             }
         }
 
@@ -231,6 +239,7 @@ intellijPlatformTesting {
 
             plugins {
                 robotServerPlugin()
+                plugin("IdeaVIM", "2.38.0")
             }
         }
     }

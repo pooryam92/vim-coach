@@ -1,0 +1,92 @@
+# Vim Tips Build Pipeline
+
+How the tip sources become the published file, and how CI keeps the two in sync.
+For writing and reviewing tip **content**, see
+[tips_authoring.md](tips-authoring.md).
+
+## Sources and the generated file
+
+- **Authoring sources:** `tips/categories/*.json` — one file per primary
+  category, each a JSON object with a `tips` array. These are the only files you
+  edit by hand.
+- **Generated file:** `tips/vim_tips_min.json` — the single minified file the
+  plugin actually publishes and consumes.
+
+> **Never edit `tips/vim_tips_min.json` by hand.** It is a generated artifact,
+> always produced from `tips/categories/` by `scripts/generate-tips.mjs`. Any
+> hand edits are overwritten the next time the generator runs. `.gitattributes`
+> marks the file as generated so GitHub collapses its diffs.
+
+## The generator
+
+`scripts/generate-tips.mjs` is a plain Node script with no dependencies. It reads
+every `tips/categories/*.json` file, validates the tips, and writes
+`tips/vim_tips_min.json`.
+
+Run it directly whenever you change the sources:
+
+```bash
+node scripts/generate-tips.mjs
+```
+
+### Ordering
+
+Tips are emitted grouped by category in this fixed order:
+
+```
+editing, motion, scroll, insert, change, undo, repeat, visual, cmdline,
+options, pattern, map, windows, tabpage, fold, ideavim, plugin
+```
+
+Any category file not in that list is appended afterward, sorted by name. If you
+add a brand-new category, add it to the `categoryOrder` array in the script so
+its position is intentional rather than alphabetical.
+
+### Validation
+
+The generator **fails with a non-zero exit code** (and writes nothing) if any
+tip:
+
+- has a blank `summary`
+- has no `details` lines
+- does not use its file's category name as its first `category` entry
+- repeats a `summary` already used by another tip, in any file
+
+The error message names the offending file and tip so you can fix it quickly.
+
+### Normalization
+
+For each tip the generator trims surrounding whitespace, drops blank `details`
+lines, and removes duplicate `details` lines (preserving order). The output is
+compact JSON with non-ASCII characters escaped as `\uXXXX`, so the published file
+is deterministic and stays plain ASCII.
+
+## CI: the Generate Tips workflow
+
+`.github/workflows/generate-tips.yml` keeps the published file in sync
+automatically. It runs on pushes to `main` and on pull requests, but only when
+one of these changes:
+
+- `tips/categories/**`
+- `scripts/generate-tips.mjs`
+- the workflow file itself
+
+The job checks out the branch, runs `node scripts/generate-tips.mjs`, and — if
+the regenerated `tips/vim_tips_min.json` differs from what is committed — commits
+the result back to the branch with `[skip ci]`.
+
+Because of this, you never have to keep the generated file in sync by hand: edit
+the category sources, and CI regenerates and commits the published file. Hand
+edits to `tips/vim_tips_min.json` are simply overwritten on the next run.
+
+## How the published file is consumed
+
+- **At runtime**, the plugin fetches `tips/vim_tips_min.json` from GitHub
+  (`VimTipConfig.GITHUB_API_URL` points at
+  `repos/pooryam92/vim-coach/contents/tips/vim_tips_min.json`). The committed
+  generated file is therefore exactly what users receive, which is why CI must
+  keep it current.
+- **For local IDE runs**, the `runIdeWithFileTips` Gradle task launches the IDE
+  with `-Dvimcoach.tip.source=file` pointed at the local
+  `tips/vim_tips_min.json`. Run `node scripts/generate-tips.mjs` first if you
+  have edited the category sources, since this task does not regenerate it.
