@@ -3,7 +3,7 @@
 Use this document when adding, revising, or reviewing **tip content** in
 [tips/categories/](../tips/categories). For how those sources become the
 published file and how CI keeps them in sync, see
-[tips_pipeline.md](tips_pipeline.md).
+[tips_pipeline.md](tips-pipeline.md).
 
 ## Where Tips Live
 
@@ -13,7 +13,7 @@ published file and how CI keeps them in sync, see
 - A tip lives in the file named by its **first** category. A tip whose first
   category is `motion` goes in `tips/categories/motion.json`.
 - The published `tips/vim_tips_min.json` is **generated** from these files and is
-  never edited by hand — see [tips_pipeline.md](tips_pipeline.md).
+  never edited by hand — see [tips_pipeline.md](tips-pipeline.md).
 
 ## Adding or editing a tip
 
@@ -29,7 +29,7 @@ published file and how CI keeps them in sync, see
    required — CI regenerates and commits it from the sources either way.
 
 If the script reports an error, fix the named tip and rerun it. See
-[tips_pipeline.md](tips_pipeline.md) for the exact checks it runs.
+[tips_pipeline.md](tips-pipeline.md) for the exact checks it runs.
 
 ## Tip Goals
 
@@ -91,7 +91,7 @@ Field rules:
     `["Plug 'bkad/CamelCaseMotion'", "let g:camelcasemotion_key = '<leader>'"]`
 
 Invalid content (the generator rejects these — see
-[tips_pipeline.md](tips_pipeline.md)):
+[tips_pipeline.md](tips-pipeline.md)):
 
 - blank summaries
 - a tip with no detail lines
@@ -250,7 +250,7 @@ Category notes:
 - Do not create ad hoc category names without updating the docs and the broader
   taxonomy deliberately. A new category also means a new
   `tips/categories/<name>.json` file (and an entry in the generator's category
-  order — see [tips_pipeline.md](tips_pipeline.md)).
+  order — see [tips_pipeline.md](tips-pipeline.md)).
 
 ## Checking IdeaVim Support
 

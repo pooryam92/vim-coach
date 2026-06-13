@@ -6,6 +6,7 @@ import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificat
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -72,7 +73,7 @@ class TipNotificationFactoryUnitTest {
     }
 
     @Test
-    fun notificationShowsAddToIdeaVimRcActionLastSoNextTipStaysFirst() {
+    fun notificationWithIdeaVimRcCallbackShowsThreeActionButtons() {
         val notifier = TipNotificationFactory()
         val tip = VimTip(summary = "surround", details = listOf("edit surroundings"))
 
@@ -87,14 +88,12 @@ class TipNotificationFactoryUnitTest {
 
         assertEquals(3, notification.actions.size)
         assertEquals(TipNotificationFactory.TIP_NEXT_ACTION_TEXT, notification.actions[0].templateText)
-        assertEquals(
-            TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT,
-            notification.actions[2].templateText
-        )
+        assertEquals(TipNotificationFactory.TIP_DONT_SHOW_AGAIN_ACTION_TEXT, notification.actions[1].templateText)
+        assertEquals(TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT, notification.actions[2].templateText)
     }
 
     @Test
-    fun notificationOmitsAddToIdeaVimRcActionWhenNoConfigCallback() {
+    fun notificationWithoutIdeaVimRcCallbackHasTwoActionButtons() {
         val notifier = TipNotificationFactory()
         val tip = VimTip(summary = "jump", details = listOf("use %"))
 
@@ -103,11 +102,8 @@ class TipNotificationFactoryUnitTest {
             TipNotificationActions(onShowNextTip = {}, onExcludeTip = {})
         )
 
-        assertTrue(
-            notification.actions.none {
-                it.templateText == TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT
-            }
-        )
+        assertEquals(2, notification.actions.size)
+        assertNull(notification.listener)
     }
 
     @Test

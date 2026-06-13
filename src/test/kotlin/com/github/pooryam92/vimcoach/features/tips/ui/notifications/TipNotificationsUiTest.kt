@@ -21,6 +21,7 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import java.lang.reflect.Proxy
 import com.intellij.notification.Notifications
 import com.intellij.openapi.vfs.LocalFileSystem
+import javax.swing.event.HyperlinkEvent
 import kotlin.io.path.Path
 import kotlin.io.path.readText
 import kotlin.io.path.writeText
@@ -69,7 +70,7 @@ class TipNotificationsUiTest : BasePlatformTestCase() {
         assertEquals(TipNotificationFactory.TIP_DONT_SHOW_AGAIN_ACTION_TEXT, notification.actions[1].templateText)
     }
 
-    fun testAddToIdeaVimRcActionAppendsConfigAndIsShownLast() {
+    fun testAddToIdeaVimRcLinkAppendsConfigAndOpensEditor() {
         val tempHome = FileUtil.createTempDirectory("vimcoach", "home", true).absolutePath
         val ideavimrcPath = Path(tempHome, ".ideavimrc").also { it.writeText("") }
         val tip = VimTip(
@@ -87,14 +88,11 @@ class TipNotificationsUiTest : BasePlatformTestCase() {
 
         controller.showRandomTip()
         val notification = controller.activeNotification!!
-        assertEquals(3, notification.actions.size)
+        assertEquals(2, notification.actions.size)
         assertEquals(TipNotificationFactory.TIP_NEXT_ACTION_TEXT, notification.actions[0].templateText)
-        assertEquals(
-            TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT,
-            notification.actions[2].templateText
-        )
+        assertTrue(notification.content.contains(TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT))
 
-        invokeNotificationAction(notification.actions[2], notification)
+        invokeIdeaVimRcLink(notification)
 
         assertTrue(ideavimrcPath.readText().contains("Plug 'tpope/vim-surround'"))
         val editor = FileEditorManager.getInstance(project).selectedTextEditor!!
@@ -123,10 +121,7 @@ class TipNotificationsUiTest : BasePlatformTestCase() {
 
         controller.showRandomTip()
         val notification = controller.activeNotification!!
-        val addAction = notification.actions.first {
-            it.templateText == TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT
-        }
-        invokeNotificationAction(addAction, notification)
+        invokeIdeaVimRcLink(notification)
 
         assertTrue(ideavimrcPath.readText().contains("Plug 'tpope/vim-surround'"))
         val editor = FileEditorManager.getInstance(project).selectedTextEditor!!
@@ -156,12 +151,7 @@ class TipNotificationsUiTest : BasePlatformTestCase() {
         )
 
         controller.showRandomTip()
-        invokeNotificationAction(
-            controller.activeNotification!!.actions.first {
-                it.templateText == TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT
-            },
-            controller.activeNotification!!
-        )
+        invokeIdeaVimRcLink(controller.activeNotification!!)
 
         val addedNotification = shownNotifications.first {
             it.content == TipNotificationFactory.TIP_ADDED_TO_IDEAVIMRC_TEXT
@@ -191,12 +181,7 @@ class TipNotificationsUiTest : BasePlatformTestCase() {
         )
 
         controller.showRandomTip()
-        invokeNotificationAction(
-            controller.activeNotification!!.actions.first {
-                it.templateText == TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT
-            },
-            controller.activeNotification!!
-        )
+        invokeIdeaVimRcLink(controller.activeNotification!!)
 
         val addedNotification = shownNotifications.first {
             it.content == TipNotificationFactory.TIP_ADDED_TO_IDEAVIMRC_TEXT
@@ -207,7 +192,7 @@ class TipNotificationsUiTest : BasePlatformTestCase() {
         )
     }
 
-    fun testTipWithoutConfigHasNoAddToIdeaVimRcAction() {
+    fun testTipWithoutConfigHasNoAddToIdeaVimRcLink() {
         val tip = VimTip(summary = "Tip 1", details = listOf("Details 1"))
         val controller = TipNotifications(
             project,
@@ -220,11 +205,8 @@ class TipNotificationsUiTest : BasePlatformTestCase() {
 
         val notification = controller.activeNotification!!
         assertEquals(2, notification.actions.size)
-        assertTrue(
-            notification.actions.none {
-                it.templateText == TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT
-            }
-        )
+        assertFalse(notification.content.contains(TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT))
+        assertNull(notification.listener)
     }
 
     fun testShowRandomTipRequestsTipFromService() {
@@ -427,6 +409,11 @@ class TipNotificationsUiTest : BasePlatformTestCase() {
             }
         )
         return captured
+    }
+
+    private fun invokeIdeaVimRcLink(notification: Notification) {
+        val event = HyperlinkEvent(Any(), HyperlinkEvent.EventType.ACTIVATED, null, "ideavimrc")
+        notification.listener?.hyperlinkUpdate(notification, event)
     }
 
     private fun invokeNotificationAction(action: AnAction, notification: Notification) {

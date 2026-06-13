@@ -2,7 +2,7 @@
 
 How the tip sources become the published file, and how CI keeps the two in sync.
 For writing and reviewing tip **content**, see
-[tips_authoring.md](tips_authoring.md).
+[tips_authoring.md](tips-authoring.md).
 
 ## Sources and the generated file
 

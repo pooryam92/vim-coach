@@ -1,7 +1,9 @@
 package com.github.pooryam92.vimcoach.features.tips.application.ideavimrc
 
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.WriteAction
+import com.intellij.openapi.util.Computable
 import com.intellij.openapi.components.serviceOrNull
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.fileEditor.FileDocumentManager
@@ -27,20 +29,27 @@ class AddTipToIdeaVimRc(
         val cleaned = tip.config.map(String::trim).filter(String::isNotEmpty)
         if (cleaned.isEmpty()) return Result.Failed
 
-        val existingLines = doc.text.lineSequence().map(String::trim).toHashSet()
+        data class DocSnapshot(val existingLines: Set<String>, val textLength: Int, val lineCount: Int, val endsWithNewline: Boolean)
+        val snap = ApplicationManager.getApplication().runReadAction(Computable {
+            val text = doc.text
+            DocSnapshot(
+                existingLines = text.lineSequence().map(String::trim).toHashSet(),
+                textLength = doc.textLength,
+                lineCount = doc.lineCount,
+                endsWithNewline = text.isEmpty() || text.endsWith('\n')
+            )
+        })
+
         val toAdd = mutableListOf<String>()
         for (line in cleaned) {
-            if (line !in existingLines && line !in toAdd) toAdd.add(line)
+            if (line !in snap.existingLines && line !in toAdd) toAdd.add(line)
         }
 
         if (toAdd.isEmpty()) return Result.AlreadyPresent(path)
 
-        val startLine = when {
-            doc.text.isEmpty() || doc.text.endsWith('\n') -> doc.lineCount - 1
-            else -> doc.lineCount
-        }
+        val startLine = if (snap.endsWithNewline) snap.lineCount - 1 else snap.lineCount
         val insertText = buildString {
-            if (doc.textLength > 0 && !doc.text.endsWith('\n')) append('\n')
+            if (snap.textLength > 0 && !snap.endsWithNewline) append('\n')
             toAdd.forEach { append(it).append('\n') }
         }
 
