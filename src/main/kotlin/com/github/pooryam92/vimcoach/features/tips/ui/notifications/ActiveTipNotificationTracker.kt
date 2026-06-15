@@ -1,4 +1,4 @@
-package com.github.pooryam92.vimcoach.features.tips.application.notifications
+package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 
 import com.intellij.notification.Notification
 import com.intellij.openapi.diagnostic.Logger

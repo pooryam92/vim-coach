@@ -57,13 +57,13 @@ Dependencies only flow inward. Entrypoints depend on application interfaces; app
 Code is organized by feature first (`features/tips/`), then by layer within it. Shared utilities live in `core/shared/` only when genuinely reused. This keeps all code for a capability co-located and makes it easy to follow a slice end to end.
 
 ### Interface seams at layer boundaries
-Every layer boundary is an interface (`ShowTips`, `RefreshTips`, `ScheduleTips`, `VimTipRepository`, `SettingsRepository`, `TipSourceService`, `FindIdeaVimRc`). Implementations live alongside them in the same package. This is what makes the rest of the decisions possible.
+Every layer boundary is an interface (`ShowTips`, `RefreshTips`, `ScheduleTips`, `VimTipRepository`, `SettingsRepository`, `TipSourceService`, `FindIdeaVimRc`, `TipNotifier`). Implementations live alongside them — except `TipNotifier`, whose adapter (`IntelliJTipNotifier`) lives in the UI layer so the application stays free of IntelliJ `Notification` types. This is what makes the rest of the decisions possible.
 
 ### Dual-constructor dependency injection
 Classes have two constructors: a primary one that resolves dependencies via `service<T>()` at runtime, and an internal one that accepts injected instances for tests. This avoids the need for IntelliJ test fixtures in most tests and keeps the production wiring implicit.
 
 ### Application vs project service scope
-Application services hold state shared across all open projects (tip cache, settings). Project services hold per-project state (notification tracker, periodic scheduler). Mixing these up causes either stale cross-project state or unnecessary duplication.
+Application services hold state shared across all open projects (tip cache, settings). Project services hold per-project state (the `TipNotifier` adapter and its notification tracker, periodic scheduler). Mixing these up causes either stale cross-project state or unnecessary duplication.
 
 ### Stores are dumb
 `PersistentStateComponent` implementations (`PersistentVimTipStore`, `PersistentSettingsStore`) are plain state snapshots with no logic. All derivation, filtering, and normalization happens in the repository layer above them. This keeps persistence concerns separate from business rules.

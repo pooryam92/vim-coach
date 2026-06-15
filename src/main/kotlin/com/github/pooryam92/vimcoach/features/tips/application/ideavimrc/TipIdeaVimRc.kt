@@ -1,9 +1,9 @@
 package com.github.pooryam92.vimcoach.features.tips.application.ideavimrc
 
+import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipMessageHandle
+import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotifier
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
-import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationFactory
 import com.intellij.codeInsight.highlighting.HighlightManager
-import com.intellij.notification.Notification
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.application.ApplicationManager
@@ -21,9 +21,23 @@ import java.util.concurrent.TimeUnit
 
 private const val IDEAVIM_RELOAD_ACTION_ID = "IdeaVim.ReloadVimRc.reload"
 
+/**
+ * Handles the "Add to .ideavimrc" button on tip notifications.
+ *
+ * getAction() returns the button callback, or null if the button should not be shown
+ * (tip has no config lines, or no .ideavimrc exists).
+ *
+ * On click:
+ *   Added          → opens .ideavimrc at the appended lines with a brief highlight;
+ *                    shows a "Reload now" affordance if IdeaVim reload is available.
+ *   AlreadyPresent → opens .ideavimrc without highlight, reports it is already in.
+ *   Failed         → reports a failure; file is not opened.
+ *
+ * Notifications go through the [TipNotifier] port; [project] is used only for editor IO.
+ */
 class TipIdeaVimRc(
     private val project: Project,
-    private val notificationFactory: TipNotificationFactory,
+    private val notifier: TipNotifier,
     private val addTipToIdeaVimRc: AddTipToIdeaVimRc = AddTipToIdeaVimRc(project),
     private val reloadIdeaVimRc: (() -> Unit)? = null
 ) {
@@ -35,36 +49,20 @@ class TipIdeaVimRc(
     private fun handle(tip: VimTip) {
         when (val result = addTipToIdeaVimRc.add(tip)) {
             is AddTipToIdeaVimRc.Result.Added -> {
-                var addedNotification: Notification? = null
-                val reloadAction = if (reloadAvailable()) {
-                    { addedNotification?.expire(); triggerReload() }
+                openIdeaVimRcAtLine(result.path, result.startLine, result.lineCount)
+                var message: TipMessageHandle? = null
+                val onReload = if (reloadAvailable()) {
+                    { message?.dismiss(); triggerReload() }
                 } else null
-                addedNotification = showUpdatedNotification(
-                    TipNotificationFactory.TIP_ADDED_TO_IDEAVIMRC_TEXT,
-                    result.path,
-                    result.startLine,
-                    result.lineCount,
-                    onReloadIdeaVimRc = reloadAction
-                )
+                message = notifier.showAddedToIdeaVimRc(onReload)
             }
-            is AddTipToIdeaVimRc.Result.AlreadyPresent ->
-                showUpdatedNotification(TipNotificationFactory.TIP_ALREADY_IN_IDEAVIMRC_TEXT, result.path)
+            is AddTipToIdeaVimRc.Result.AlreadyPresent -> {
+                openIdeaVimRc(result.path)
+                notifier.showAlreadyInIdeaVimRc()
+            }
             AddTipToIdeaVimRc.Result.Failed ->
-                notificationFactory.createAddToIdeaVimRcFailedNotification().notify(project)
+                notifier.showAddToIdeaVimRcFailed()
         }
-    }
-
-    private fun showUpdatedNotification(
-        message: String,
-        path: Path,
-        startLine: Int = -1,
-        lineCount: Int = 0,
-        onReloadIdeaVimRc: (() -> Unit)? = null
-    ): Notification {
-        openIdeaVimRc(path, startLine, lineCount)
-        return notificationFactory
-            .createAddedToIdeaVimRcNotification(message, onReloadIdeaVimRc)
-            .also { it.notify(project) }
     }
 
     private fun reloadAvailable(): Boolean =
@@ -73,32 +71,29 @@ class TipIdeaVimRc(
             ActionManager.getInstance().getAction(IDEAVIM_RELOAD_ACTION_ID) != null
 
     private fun triggerReload() {
-        val reload = reloadIdeaVimRc
-        if (reload != null) {
-            reload()
-            notificationFactory.createAddedToIdeaVimRcNotification(
-                TipNotificationFactory.TIP_RELOADED_IDEAVIMRC_TEXT
-            ).notify(project)
+        val injected = reloadIdeaVimRc
+        if (injected != null) {
+            injected()
+            notifier.showReloadedIdeaVimRc()
             return
         }
         //noinspection ActionIsNotPreregistered
         val action = ActionManager.getInstance().getAction(IDEAVIM_RELOAD_ACTION_ID)
         if (action == null) {
-            notificationFactory.createReloadIdeaVimRcFailedNotification().notify(project)
+            notifier.showReloadIdeaVimRcFailed()
             return
         }
         ActionManager.getInstance().tryToExecute(action, null, null, ActionPlaces.NOTIFICATION, true)
-        notificationFactory.createAddedToIdeaVimRcNotification(
-            TipNotificationFactory.TIP_RELOADED_IDEAVIMRC_TEXT
-        ).notify(project)
+        notifier.showReloadedIdeaVimRc()
     }
 
-    private fun openIdeaVimRc(path: Path, startLine: Int, lineCount: Int) {
+    private fun openIdeaVimRc(path: Path) {
         val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByNioFile(path) ?: return
-        if (startLine < 0 || lineCount <= 0) {
-            FileEditorManager.getInstance(project).openFile(virtualFile, true)
-            return
-        }
+        FileEditorManager.getInstance(project).openFile(virtualFile, true)
+    }
+
+    private fun openIdeaVimRcAtLine(path: Path, startLine: Int, lineCount: Int) {
+        val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByNioFile(path) ?: return
         val descriptor = OpenFileDescriptor(project, virtualFile, startLine, 0)
         val editor = FileEditorManager.getInstance(project).openTextEditor(descriptor, true) ?: return
         highlightAppendedLines(editor, startLine, lineCount)
@@ -115,12 +110,8 @@ class TipIdeaVimRc(
         }) ?: return
         val highlighters = mutableListOf<RangeHighlighter>()
         HighlightManager.getInstance(project).addRangeHighlight(
-            editor,
-            offsets.first,
-            offsets.second,
-            EditorColors.SEARCH_RESULT_ATTRIBUTES,
-            true,
-            highlighters
+            editor, offsets.first, offsets.second,
+            EditorColors.SEARCH_RESULT_ATTRIBUTES, true, highlighters
         )
         AppExecutorUtil.getAppScheduledExecutorService().schedule({
             ApplicationManager.getApplication().invokeLater {

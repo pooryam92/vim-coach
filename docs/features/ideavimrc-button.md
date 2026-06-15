@@ -8,17 +8,19 @@ File creation is deliberately out of scope — if no `.ideavimrc` exists, the bu
 
 ```mermaid
 graph LR
-    A[TipNotificationController] -->|"isAvailable()"| B[AddTipToIdeaVimRc]
-    B -->|findPath| C[IdeaVimIntegration]
-    C -->|VimRcService| D["~/.ideavimrc\n(or XDG path)"]
-    B -->|Document API| E[FileDocumentManager]
-    E --> F[IntelliJ Document]
-    F --> D
-    B -->|Result| A
-    A -->|Added| G[openIdeaVimRc\nhighlightAppendedLines]
-    A -->|AlreadyPresent| H[openIdeaVimRc\nno highlight]
-    A -->|Failed| I[failure notification]
-    A -->|Added + IdeaVim present| J[reloadIdeaVimRc]
+    A[TipNotifications] -->|"getAction(tip)"| B[TipIdeaVimRc]
+    B -->|"isAvailable()"| C[AddTipToIdeaVimRc]
+    C -->|"serviceOrNull()"| D([FindIdeaVimRc])
+    D --> E[IdeaVimPluginFindVimRc]
+    E --> F["~/.ideavimrc\n(or XDG path)"]
+    C -->|Document API| G[FileDocumentManager]
+    G --> H[IntelliJ Document]
+    H --> F
+    C -->|Result| B
+    B -->|Added| I[openIdeaVimRc\nhighlightAppendedLines]
+    B -->|AlreadyPresent| J[openIdeaVimRc\nno highlight]
+    B -->|Failed| K[failure notification]
+    B -->|Added + IdeaVim present| L[reloadIdeaVimRc]
 ```
 
 ## Flow on Button Click
@@ -26,48 +28,59 @@ graph LR
 ```mermaid
 sequenceDiagram
     participant User
-    participant CTRL as TipNotificationController
+    participant TN as TipNotifications
+    participant IV as TipIdeaVimRc
     participant ADD as AddTipToIdeaVimRc
-    participant INTEG as IdeaVimIntegration
+    participant PLAN as IdeaVimRcAppendPlan
+    participant FIND as FindIdeaVimRc
     participant VFS as LocalFileSystem / VirtualFile
     participant DOC as FileDocumentManager / Document
     participant ED as FileEditorManager
     participant HM as HighlightManager
+    participant N as TipNotifier
     participant AM as ActionManager
 
-    User->>CTRL: clicks "Add to .ideavimrc"
-    CTRL->>ADD: add(tip)
-    ADD->>INTEG: findVimRc() via IdeaVimIntegration service
-    note over INTEG: delegates to VimRcService.findIdeaVimRc()
-    INTEG-->>ADD: Path
+    User->>TN: clicks "Add to .ideavimrc"
+    note over TN: executes lambda returned earlier by TipIdeaVimRc.getAction(tip)
+    TN->>IV: handle(tip)
+    IV->>ADD: add(tip)
+    ADD->>FIND: findVimRc() via serviceOrNull<FindIdeaVimRc>()
+    note over FIND: IdeaVimPluginFindVimRc searches user.home + XDG paths
+    FIND-->>ADD: Path
     ADD->>VFS: refreshAndFindFileByNioFile(path)
     ADD->>VFS: vf.isWritable
-    ADD->>DOC: getDocument(vf)
-    note over ADD: dedup against document.text (exact match)
+    ADD->>DOC: getDocument(vf) → read document.text
+    ADD->>PLAN: of(existingText, tip.config)
+    note over PLAN: pure: dedup + insert text + start line
+    PLAN-->>ADD: Append / AlreadyPresent / Empty
     ADD->>DOC: WriteCommandAction → insertString
     ADD->>DOC: WriteAction → saveDocument (sync flush to disk)
-    ADD-->>CTRL: Result.Added / AlreadyPresent / Failed
+    ADD-->>IV: Result.Added / AlreadyPresent / Failed
 
     alt Added
-        CTRL->>ED: openTextEditor at startLine
-        CTRL->>HM: addRangeHighlight (flash added lines)
-        CTRL->>CTRL: show "Added to .ideavimrc" notification
+        IV->>ED: openTextEditor at startLine
+        IV->>HM: addRangeHighlight (flash added lines)
+        IV->>N: showAddedToIdeaVimRc(onReload)
         opt IdeaVim reload action registered
-            User->>CTRL: clicks "Reload now"
-            CTRL->>AM: execute IdeaVim.ReloadVimRc.reload
-            CTRL->>CTRL: show ".ideavimrc reloaded" notification
+            User->>IV: clicks "Reload now"
+            IV->>AM: execute IdeaVim.ReloadVimRc.reload
+            IV->>N: showReloadedIdeaVimRc()
         end
     else AlreadyPresent
-        CTRL->>ED: openFile (no highlight)
-        CTRL->>CTRL: show "Already in .ideavimrc" notification
+        IV->>ED: openFile (no highlight)
+        IV->>N: showAlreadyInIdeaVimRc()
     else Failed
-        CTRL->>CTRL: show failure notification (WARNING)
+        IV->>N: showAddToIdeaVimRcFailed()
     end
 ```
 
+Notifications go through the `TipNotifier` port (see [Show Tip](show-tip.md)); `TipIdeaVimRc` itself touches no IntelliJ `Notification` types. `project` is used only for editor IO (open / highlight).
+
 ## File Discovery
 
-`IdeaVimIntegration` is an application service registered only when IdeaVim is installed (via `plugin-ideavim.xml`). Its implementation delegates to `VimRcService.findIdeaVimRc()` which uses IdeaVim's own search order:
+`FindIdeaVimRc` is an application service interface registered only when IdeaVim is installed (via `plugin-ideavim.xml`), with `IdeaVimPluginFindVimRc` as its implementation. `AddTipToIdeaVimRc` resolves it via `serviceOrNull<FindIdeaVimRc>()` — when IdeaVim is absent the service is not registered, `serviceOrNull` returns null, and `isAvailable()` returns false.
+
+`IdeaVimPluginFindVimRc.findVimRc()` replicates IdeaVim's search order directly using `System.getProperty("user.home")` and `System.getenv("XDG_CONFIG_HOME")`:
 
 | Priority | Path |
 |----------|------|
@@ -75,7 +88,7 @@ sequenceDiagram
 | 2 | `~/_ideavimrc` |
 | 3 | `$XDG_CONFIG_HOME/ideavim/ideavimrc` (defaults to `~/.config/ideavim/ideavimrc`) |
 
-When `IdeaVimIntegration` service is absent (IdeaVim not installed), `isAvailable()` returns false and the button is never shown.
+Only paths that already exist on disk are returned; `null` means no file was found.
 
 ## Why Document API
 
@@ -90,7 +103,7 @@ After `WriteCommandAction`, the document is saved synchronously via `WriteAction
 
 ## Dedup Logic
 
-Before writing, `AddTipToIdeaVimRc.add` reads `document.text` and builds a set of trimmed existing lines. Any config line already present verbatim is skipped — only genuinely new lines are appended. Duplicate lines within the tip's own config list are also collapsed.
+Before writing, `AddTipToIdeaVimRc.add` reads `document.text` and hands it with `tip.config` to `IdeaVimRcAppendPlan.of()` — a pure, IDE-free function that decides what to append. It builds a set of trimmed existing lines; any config line already present verbatim is skipped, and duplicate lines within the tip's own config list are collapsed. It returns the exact insert text, the 0-based start line of the first appended line, and the added-line count (or `AlreadyPresent` / `Empty`). Keeping this logic free of `Document`/VFS types makes the branching unit-testable (`IdeaVimRcAppendPlanUnitTest`); `add()` is left to do only the IO.
 
 **Limitation:** dedup is exact-match only. It will not detect semantic equivalents (e.g. `set surround` vs. `Plug 'tpope/vim-surround'` enabling the same feature).
 

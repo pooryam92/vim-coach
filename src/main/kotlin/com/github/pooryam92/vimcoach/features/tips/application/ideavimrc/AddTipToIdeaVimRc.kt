@@ -6,6 +6,7 @@ import com.intellij.openapi.application.WriteAction
 import com.intellij.openapi.util.Computable
 import com.intellij.openapi.components.serviceOrNull
 import com.intellij.openapi.command.WriteCommandAction
+import com.intellij.openapi.editor.Document
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.LocalFileSystem
@@ -26,41 +27,24 @@ class AddTipToIdeaVimRc(
         if (!vf.isWritable) return Result.Failed
         val doc = FileDocumentManager.getInstance().getDocument(vf) ?: return Result.Failed
 
-        val cleaned = tip.config.map(String::trim).filter(String::isNotEmpty)
-        if (cleaned.isEmpty()) return Result.Failed
-
-        data class DocSnapshot(val existingLines: Set<String>, val textLength: Int, val lineCount: Int, val endsWithNewline: Boolean)
-        val snap = ApplicationManager.getApplication().runReadAction(Computable {
-            val text = doc.text
-            DocSnapshot(
-                existingLines = text.lineSequence().map(String::trim).toHashSet(),
-                textLength = doc.textLength,
-                lineCount = doc.lineCount,
-                endsWithNewline = text.isEmpty() || text.endsWith('\n')
-            )
-        })
-
-        val toAdd = mutableListOf<String>()
-        for (line in cleaned) {
-            if (line !in snap.existingLines && line !in toAdd) toAdd.add(line)
+        val existingText = ApplicationManager.getApplication().runReadAction(Computable { doc.text })
+        return when (val plan = IdeaVimRcAppendPlan.of(existingText, tip.config)) {
+            IdeaVimRcAppendPlan.Plan.Empty -> Result.Failed
+            IdeaVimRcAppendPlan.Plan.AlreadyPresent -> Result.AlreadyPresent(path)
+            is IdeaVimRcAppendPlan.Plan.Append -> {
+                appendAndSave(doc, plan.insertText)
+                Result.Added(path, plan.startLine, plan.addedCount)
+            }
         }
+    }
 
-        if (toAdd.isEmpty()) return Result.AlreadyPresent(path)
-
-        val startLine = if (snap.endsWithNewline) snap.lineCount - 1 else snap.lineCount
-        val insertText = buildString {
-            if (snap.textLength > 0 && !snap.endsWithNewline) append('\n')
-            toAdd.forEach { append(it).append('\n') }
-        }
-
+    private fun appendAndSave(doc: Document, insertText: String) {
         WriteCommandAction.runWriteCommandAction(project) {
             doc.insertString(doc.textLength, insertText)
         }
         WriteAction.run<Throwable> {
             FileDocumentManager.getInstance().saveDocument(doc)
         }
-
-        return Result.Added(path, startLine, toAdd.size)
     }
 
     sealed interface Result {

@@ -40,6 +40,9 @@
         <projectService
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.notifications.ShowTips"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotifications" />
+        <projectService
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotifier"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.ui.notifications.IntelliJTipNotifier" />
     </extensions>
 
     <actions>
