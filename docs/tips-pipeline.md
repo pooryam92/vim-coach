@@ -2,7 +2,7 @@
 
 How the tip sources become the published file, and how CI keeps the two in sync.
 For writing and reviewing tip **content**, see
-[tips_authoring.md](tips-authoring.md).
+[tips-authoring/](tips-authoring/README.md).
 
 ## Sources and the generated file
 
@@ -38,9 +38,12 @@ editing, motion, scroll, insert, change, undo, repeat, visual, cmdline,
 options, pattern, map, windows, tabpage, fold, ideavim, plugin
 ```
 
-Any category file not in that list is appended afterward, sorted by name. If you
-add a brand-new category, add it to the `categoryOrder` array in the script so
-its position is intentional rather than alphabetical.
+This list mirrors the `categoryOrder` array in `scripts/generate-tips.mjs`,
+which is the source of truth. Any category file not in that array is appended
+afterward, sorted by name. If you add a brand-new category, add it to
+`categoryOrder` so its position is intentional rather than alphabetical, and
+update the other places listed under **Changing the category set** in
+[tips-authoring/categories.md](tips-authoring/categories.md#changing-the-category-set).
 
 ### Validation
 
