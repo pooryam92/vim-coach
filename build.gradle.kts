@@ -15,6 +15,18 @@ plugins {
 group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
 
+val ideaVimPluginId = "IdeaVIM"
+val ideaVimPluginVersion = providers.gradleProperty("platformPlugins").map { pluginDependencies ->
+    val dependency = pluginDependencies.split(',')
+        .map(String::trim)
+        .firstOrNull { it.substringBefore(':') == ideaVimPluginId }
+        ?: throw GradleException("platformPlugins must declare $ideaVimPluginId:<version>")
+
+    dependency.substringAfter(':', missingDelimiterValue = "")
+        .substringBefore('@')
+        .ifEmpty { throw GradleException("$ideaVimPluginId platform plugin dependency must include a version") }
+}
+
 // Set the JVM language level used to build the project.
 kotlin {
     jvmToolchain(21)
@@ -207,7 +219,7 @@ intellijPlatformTesting {
             }
 
             plugins {
-                plugin("IdeaVIM", "2.38.0")
+                plugin(ideaVimPluginId, ideaVimPluginVersion.get())
             }
         }
 
@@ -221,7 +233,7 @@ intellijPlatformTesting {
             }
 
             plugins {
-                plugin("IdeaVIM", "2.38.0")
+                plugin(ideaVimPluginId, ideaVimPluginVersion.get())
             }
         }
 
@@ -239,7 +251,7 @@ intellijPlatformTesting {
 
             plugins {
                 robotServerPlugin()
-                plugin("IdeaVIM", "2.38.0")
+                plugin(ideaVimPluginId, ideaVimPluginVersion.get())
             }
         }
     }

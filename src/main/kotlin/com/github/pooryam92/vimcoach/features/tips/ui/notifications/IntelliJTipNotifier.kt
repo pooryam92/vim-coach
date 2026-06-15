@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 
+import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipActions
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipMessageHandle
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotifier
@@ -43,8 +44,8 @@ class IntelliJTipNotifier(private val project: Project) : TipNotifier {
     override fun showAlreadyInIdeaVimRc() =
         message(factory.createAddedToIdeaVimRcNotification(TipNotificationFactory.TIP_ALREADY_IN_IDEAVIMRC_TEXT))
 
-    override fun showAddToIdeaVimRcFailed() =
-        message(factory.createAddToIdeaVimRcFailedNotification())
+    override fun showAddToIdeaVimRcFailed(reason: AddTipToIdeaVimRc.FailureReason) =
+        message(factory.createAddToIdeaVimRcFailedNotification(reason))
 
     override fun showReloadedIdeaVimRc() =
         message(factory.createAddedToIdeaVimRcNotification(TipNotificationFactory.TIP_RELOADED_IDEAVIMRC_TEXT))

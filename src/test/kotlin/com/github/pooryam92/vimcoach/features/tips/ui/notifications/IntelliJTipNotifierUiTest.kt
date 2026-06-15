@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 
+import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipActions
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.intellij.notification.Notification
@@ -118,7 +119,7 @@ class IntelliJTipNotifierUiTest : BasePlatformTestCase() {
 
     fun testShowAddToIdeaVimRcFailedEmitsWarning() {
         val captured = captureProjectNotifications()
-        notifier().showAddToIdeaVimRcFailed()
+        notifier().showAddToIdeaVimRcFailed(AddTipToIdeaVimRc.FailureReason.ReadOnly)
 
         assertTrue(captured.any { it.type == NotificationType.WARNING })
     }

@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.application.notifications
 
+import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 
 /**
@@ -26,8 +27,8 @@ interface TipNotifier {
     /** Report that the config was already present in .ideavimrc. */
     fun showAlreadyInIdeaVimRc()
 
-    /** Report that appending to .ideavimrc failed. */
-    fun showAddToIdeaVimRcFailed()
+    /** Report that appending to .ideavimrc failed, explaining [reason] to the user. */
+    fun showAddToIdeaVimRcFailed(reason: AddTipToIdeaVimRc.FailureReason)
 
     /** Report that .ideavimrc was reloaded. */
     fun showReloadedIdeaVimRc()

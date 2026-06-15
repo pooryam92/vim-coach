@@ -11,7 +11,9 @@ import com.intellij.util.io.HttpRequests
 import java.net.HttpURLConnection
 import java.util.Base64
 
-class RemoteTipSourceServiceImpl : RemoteTipSourceService {
+class RemoteTipSourceServiceImpl(
+    private val sourceUrl: String = VimTipConfig.GITHUB_API_URL
+) : RemoteTipSourceService {
     private val gson = Gson()
 
     override fun loadTips(): TipSourceLoadResult {
@@ -34,7 +36,7 @@ class RemoteTipSourceServiceImpl : RemoteTipSourceService {
     }
 
     private fun fetchTipsFromRemote(metadata: TipMetadata, context: RequestContext): List<VimTip> {
-        return HttpRequests.request(VimTipConfig.GITHUB_API_URL)
+        return HttpRequests.request(sourceUrl)
             .tuner { connection ->
                 connection.setRequestProperty(HEADER_ACCEPT, ACCEPT_GITHUB_V3_JSON)
                 metadata.etag?.let { connection.setRequestProperty(HEADER_IF_NONE_MATCH, it) }

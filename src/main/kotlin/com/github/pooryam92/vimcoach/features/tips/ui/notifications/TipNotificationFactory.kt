@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
+import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
@@ -78,11 +79,18 @@ class TipNotificationFactory {
         }
     }
 
-    internal fun createAddToIdeaVimRcFailedNotification(): Notification {
+    internal fun createAddToIdeaVimRcFailedNotification(
+        reason: AddTipToIdeaVimRc.FailureReason
+    ): Notification {
+        val text = when (reason) {
+            AddTipToIdeaVimRc.FailureReason.ReadOnly -> TIP_ADD_TO_IDEAVIMRC_READONLY_TEXT
+            AddTipToIdeaVimRc.FailureReason.NotAccessible -> TIP_ADD_TO_IDEAVIMRC_NOT_ACCESSIBLE_TEXT
+            AddTipToIdeaVimRc.FailureReason.NothingToAdd -> TIP_ADD_TO_IDEAVIMRC_NOTHING_TEXT
+        }
         return Notification(
             NOTIFICATION_GROUP_ID,
             APP_TITLE,
-            TIP_ADD_TO_IDEAVIMRC_FAILED_TEXT,
+            text,
             NotificationType.WARNING
         ).apply {
             icon = TIP_ICON
@@ -137,7 +145,9 @@ class TipNotificationFactory {
         val TIP_RELOAD_IDEAVIMRC_ACTION_TEXT: String = MyBundle.message("tipReloadIdeaVimRcAction")
         val TIP_ADDED_TO_IDEAVIMRC_TEXT: String = MyBundle.message("tipAddedToIdeaVimRcMessage")
         val TIP_ALREADY_IN_IDEAVIMRC_TEXT: String = MyBundle.message("tipAlreadyInIdeaVimRcMessage")
-        val TIP_ADD_TO_IDEAVIMRC_FAILED_TEXT: String = MyBundle.message("tipAddToIdeaVimRcFailedMessage")
+        val TIP_ADD_TO_IDEAVIMRC_READONLY_TEXT: String = MyBundle.message("tipAddToIdeaVimRcReadOnlyMessage")
+        val TIP_ADD_TO_IDEAVIMRC_NOT_ACCESSIBLE_TEXT: String = MyBundle.message("tipAddToIdeaVimRcNotAccessibleMessage")
+        val TIP_ADD_TO_IDEAVIMRC_NOTHING_TEXT: String = MyBundle.message("tipAddToIdeaVimRcNothingToAddMessage")
         val TIP_RELOADED_IDEAVIMRC_TEXT: String = MyBundle.message("tipReloadedIdeaVimRcMessage")
         val TIP_RELOAD_IDEAVIMRC_FAILED_TEXT: String = MyBundle.message("tipReloadIdeaVimRcFailedMessage")
         val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", TipNotificationFactory::class.java)

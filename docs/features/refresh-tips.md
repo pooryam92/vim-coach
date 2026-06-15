@@ -13,9 +13,27 @@ graph LR
     C --> E([VimTipRepository])
     D --> F[TipSourceServiceImpl]
     F --> G[RemoteTipSourceServiceImpl]
+    F --> J[FileTipSourceServiceImpl]
     G --> H[[GitHub Contents API]]
+    J --> K["local tips file\n(vim_tips_min.json)"]
     E --> I[(PersistentVimTipStore)]
 ```
+
+## Source Selection
+
+`TipSourceServiceImpl` chooses between two adapters based on the `vimcoach.tip.source`
+JVM property:
+
+| `vimcoach.tip.source` | Adapter | Used by |
+|-----------------------|---------|---------|
+| unset / anything else | `RemoteTipSourceServiceImpl` (GitHub) | production, default |
+| `file` | `FileTipSourceServiceImpl` | local dev via the `runIdeWithFileTips` Gradle task |
+
+In `file` mode the source path comes from `vimcoach.tip.file.path` (required, or
+loading fails), and the parsed result carries an empty `TipMetadata` — so there is
+no ETag/SHA and conditional fetches degrade to plain reads. See
+[tips-pipeline.md](../tips-pipeline.md) for how the local file is generated. Both
+adapters share `TipJsonParser`.
 
 ## Two Triggers, Two Strategies
 

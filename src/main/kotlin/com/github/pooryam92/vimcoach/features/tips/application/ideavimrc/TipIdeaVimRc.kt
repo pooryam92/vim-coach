@@ -19,6 +19,10 @@ import com.intellij.util.concurrency.AppExecutorUtil
 import java.nio.file.Path
 import java.util.concurrent.TimeUnit
 
+// IdeaVim's reload action id. Like the .ideavimrc search order in FindIdeaVimRc, this is an
+// internal IdeaVim detail with no stability contract — if IdeaVim renames or removes it, the
+// "Reload now" affordance silently disappears (reloadAvailable() returns false) rather than
+// breaking. The external/ideavim submodule is the reference to check for drift.
 private const val IDEAVIM_RELOAD_ACTION_ID = "IdeaVim.ReloadVimRc.reload"
 
 /**
@@ -50,6 +54,9 @@ class TipIdeaVimRc(
         when (val result = addTipToIdeaVimRc.add(tip)) {
             is AddTipToIdeaVimRc.Result.Added -> {
                 openIdeaVimRcAtLine(result.path, result.startLine, result.lineCount)
+                // Forward reference: onReload needs to dismiss the message, but the message handle
+                // only exists once showAddedToIdeaVimRc has been called with onReload. The lambda is
+                // not invoked until the user clicks "Reload now", by which point `message` is set.
                 var message: TipMessageHandle? = null
                 val onReload = if (reloadAvailable()) {
                     { message?.dismiss(); triggerReload() }
@@ -60,8 +67,8 @@ class TipIdeaVimRc(
                 openIdeaVimRc(result.path)
                 notifier.showAlreadyInIdeaVimRc()
             }
-            AddTipToIdeaVimRc.Result.Failed ->
-                notifier.showAddToIdeaVimRcFailed()
+            is AddTipToIdeaVimRc.Result.Failed ->
+                notifier.showAddToIdeaVimRcFailed(result.reason)
         }
     }
 
@@ -115,6 +122,9 @@ class TipIdeaVimRc(
         )
         AppExecutorUtil.getAppScheduledExecutorService().schedule({
             ApplicationManager.getApplication().invokeLater {
+                // The project or editor may have been disposed during the 1s delay; touching a
+                // disposed editor throws. Skip cleanup in that case — the highlighters die with it.
+                if (project.isDisposed || editor.isDisposed) return@invokeLater
                 val highlightManager = HighlightManager.getInstance(project)
                 highlighters.forEach { highlightManager.removeSegmentHighlighter(editor, it) }
             }

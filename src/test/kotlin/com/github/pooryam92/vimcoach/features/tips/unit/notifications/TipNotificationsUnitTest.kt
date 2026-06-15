@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.notifications
 
+import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipActions
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipMessageHandle
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotifications
@@ -125,7 +126,7 @@ class TipNotificationsUnitTest {
         override fun showAddedToIdeaVimRc(onReload: (() -> Unit)?): TipMessageHandle =
             object : TipMessageHandle { override fun dismiss() = Unit }
         override fun showAlreadyInIdeaVimRc() = Unit
-        override fun showAddToIdeaVimRcFailed() = Unit
+        override fun showAddToIdeaVimRcFailed(reason: AddTipToIdeaVimRc.FailureReason) = Unit
         override fun showReloadedIdeaVimRc() = Unit
         override fun showReloadIdeaVimRcFailed() = Unit
     }

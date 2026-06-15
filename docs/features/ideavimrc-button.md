@@ -50,7 +50,7 @@ sequenceDiagram
     ADD->>VFS: refreshAndFindFileByNioFile(path)
     ADD->>VFS: vf.isWritable
     ADD->>DOC: getDocument(vf) → read document.text
-    ADD->>PLAN: of(existingText, tip.config)
+    ADD->>PLAN: determine(existingText, tip.config)
     note over PLAN: pure: dedup + insert text + start line
     PLAN-->>ADD: Append / AlreadyPresent / Empty
     ADD->>DOC: WriteCommandAction → insertString
@@ -80,6 +80,8 @@ Notifications go through the `TipNotifier` port (see [Show Tip](show-tip.md)); `
 
 `FindIdeaVimRc` is an application service interface registered only when IdeaVim is installed (via `plugin-ideavim.xml`), with `IdeaVimPluginFindVimRc` as its implementation. `AddTipToIdeaVimRc` resolves it via `serviceOrNull<FindIdeaVimRc>()` — when IdeaVim is absent the service is not registered, `serviceOrNull` returns null, and `isAvailable()` returns false.
 
+`plugin.xml` declares `IdeaVIM` as an optional dependency for that descriptor, and `gradle.properties` declares the same Marketplace plugin in `platformPlugins`. Keeping both in sync lets IntelliJ resolve `plugin-ideavim.xml` during development and lets the custom run IDE tasks install the same IdeaVim version.
+
 `IdeaVimPluginFindVimRc.findVimRc()` replicates IdeaVim's search order directly using `System.getProperty("user.home")` and `System.getenv("XDG_CONFIG_HOME")`:
 
 | Priority | Path |
@@ -103,7 +105,7 @@ After `WriteCommandAction`, the document is saved synchronously via `WriteAction
 
 ## Dedup Logic
 
-Before writing, `AddTipToIdeaVimRc.add` reads `document.text` and hands it with `tip.config` to `IdeaVimRcAppendPlan.of()` — a pure, IDE-free function that decides what to append. It builds a set of trimmed existing lines; any config line already present verbatim is skipped, and duplicate lines within the tip's own config list are collapsed. It returns the exact insert text, the 0-based start line of the first appended line, and the added-line count (or `AlreadyPresent` / `Empty`). Keeping this logic free of `Document`/VFS types makes the branching unit-testable (`IdeaVimRcAppendPlanUnitTest`); `add()` is left to do only the IO.
+Before writing, `AddTipToIdeaVimRc.add` reads `document.text` and hands it with `tip.config` to `IdeaVimRcAppendPlan.determine()` — a pure, IDE-free function that decides what to append. It builds a set of trimmed existing lines; any config line already present verbatim is skipped, and duplicate lines within the tip's own config list are collapsed. It returns the exact insert text, the 0-based start line of the first appended line, and the added-line count (or `AlreadyPresent` / `Empty`). Keeping this logic free of `Document`/VFS types makes the branching unit-testable (`IdeaVimRcAppendPlanUnitTest`); `add()` is left to do only the IO.
 
 **Limitation:** dedup is exact-match only. It will not detect semantic equivalents (e.g. `set surround` vs. `Plug 'tpope/vim-surround'` enabling the same feature).
 

@@ -22,14 +22,16 @@ class AddTipToIdeaVimRc(
     fun isAvailable(): Boolean = findPath() != null
 
     fun add(tip: VimTip): Result {
-        val path = findPath() ?: return Result.Failed
-        val vf = LocalFileSystem.getInstance().refreshAndFindFileByNioFile(path) ?: return Result.Failed
-        if (!vf.isWritable) return Result.Failed
-        val doc = FileDocumentManager.getInstance().getDocument(vf) ?: return Result.Failed
+        val path = findPath() ?: return Result.Failed(FailureReason.NotAccessible)
+        val vf = LocalFileSystem.getInstance().refreshAndFindFileByNioFile(path)
+            ?: return Result.Failed(FailureReason.NotAccessible)
+        if (!vf.isWritable) return Result.Failed(FailureReason.ReadOnly)
+        val doc = FileDocumentManager.getInstance().getDocument(vf)
+            ?: return Result.Failed(FailureReason.NotAccessible)
 
         val existingText = ApplicationManager.getApplication().runReadAction(Computable { doc.text })
-        return when (val plan = IdeaVimRcAppendPlan.of(existingText, tip.config)) {
-            IdeaVimRcAppendPlan.Plan.Empty -> Result.Failed
+        return when (val plan = IdeaVimRcAppendPlan.determine(existingText, tip.config)) {
+            IdeaVimRcAppendPlan.Plan.Empty -> Result.Failed(FailureReason.NothingToAdd)
             IdeaVimRcAppendPlan.Plan.AlreadyPresent -> Result.AlreadyPresent(path)
             is IdeaVimRcAppendPlan.Plan.Append -> {
                 appendAndSave(doc, plan.insertText)
@@ -51,6 +53,18 @@ class AddTipToIdeaVimRc(
         /** [startLine] is the 0-based line of the first appended line; [lineCount] how many were added. */
         data class Added(val path: Path, val startLine: Int, val lineCount: Int) : Result
         data class AlreadyPresent(val path: Path) : Result
-        data object Failed : Result
+        data class Failed(val reason: FailureReason) : Result
+    }
+
+    /** Why an add could not be performed — surfaced to the user so the failure isn't opaque. */
+    enum class FailureReason {
+        /** The .ideavimrc could not be located or opened (vanished, or no in-memory document). */
+        NotAccessible,
+
+        /** The .ideavimrc exists but is not writable (e.g. read-only file). */
+        ReadOnly,
+
+        /** The tip had no usable config lines to add (all blank). */
+        NothingToAdd,
     }
 }
