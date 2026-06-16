@@ -2,7 +2,7 @@
   "tips": [
     {
       "category": [
-        "map"
+        "mappings"
       ],
       "summary": "Inspect maps with :map / :nmap / :imap",
       "details": [
@@ -13,7 +13,7 @@
     },
     {
       "category": [
-        "map"
+        "mappings"
       ],
       "summary": "Use mode-specific maps in ~/.ideavimrc",
       "details": [
@@ -23,7 +23,7 @@
     },
     {
       "category": [
-        "map"
+        "mappings"
       ],
       "summary": "Remove a map with :unmap / :nunmap",
       "details": [
@@ -34,7 +34,7 @@
     },
     {
       "category": [
-        "map"
+        "mappings"
       ],
       "summary": "Use <Nop> to disable a key",
       "details": [
@@ -44,7 +44,7 @@
     },
     {
       "category": [
-        "map"
+        "mappings"
       ],
       "summary": "Clear mappings with :mapclear",
       "details": [
@@ -55,7 +55,7 @@
     },
     {
       "category": [
-        "map",
+        "mappings",
         "ideavim"
       ],
       "summary": "Use <Action>(...) in IdeaVim mappings",

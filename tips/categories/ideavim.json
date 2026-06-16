@@ -10,6 +10,10 @@
       "details": [
         "clipboard+=unnamedplus uses the OS clipboard",
         "clipboard+=ideaput uses IDE paste for put"
+      ],
+      "config": [
+        "set clipboard+=unnamedplus",
+        "set clipboard+=ideaput"
       ]
     },
     {
@@ -65,18 +69,24 @@
       "details": [
         "Use :set trackactionids",
         "IdeaVim shows the action ID in notices"
+      ],
+      "config": [
+        "set trackactionids"
       ]
     },
     {
       "category": [
         "ideavim",
         "options",
-        "change"
+        "editing"
       ],
       "summary": "Use IDE smart join with :set ideajoin",
       "details": [
         "Then J uses the IDE smart join",
         "Useful when syntax should be adjusted"
+      ],
+      "config": [
+        "set ideajoin"
       ]
     },
     {
@@ -88,6 +98,9 @@
       "details": [
         "Use :set idearefactormode=keep",
         "Useful when IDE rename interrupts your normal Vim mode flow"
+      ],
+      "config": [
+        "set idearefactormode=keep"
       ]
     },
     {
@@ -99,6 +112,9 @@
       "details": [
         "A-Z marks sync to IDE bookmarks",
         "Useful for cross-file jumping"
+      ],
+      "config": [
+        "set ideamarks"
       ]
     },
     {
@@ -110,6 +126,9 @@
       "details": [
         "Use :set ideawrite=all",
         "Useful when you want :w to trigger IDE save hooks"
+      ],
+      "config": [
+        "set ideawrite=all"
       ]
     },
     {

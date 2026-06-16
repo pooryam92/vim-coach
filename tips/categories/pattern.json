@@ -26,7 +26,7 @@
     {
       "category": [
         "pattern",
-        "motion"
+        "navigation"
       ],
       "summary": "Search word under cursor * / #",
       "details": [
@@ -90,7 +90,7 @@
     {
       "category": [
         "pattern",
-        "scroll"
+        "navigation"
       ],
       "summary": "Recenter search results with nzz",
       "details": [
@@ -101,7 +101,7 @@
     {
       "category": [
         "pattern",
-        "change"
+        "editing"
       ],
       "summary": "Delete/change up to a search match",
       "details": [
@@ -230,7 +230,7 @@
     {
       "category": [
         "pattern",
-        "change",
+        "editing",
         "repeat"
       ],
       "summary": "Replace matches one by one with cgn",
@@ -271,7 +271,8 @@
       "summary": "Run a command on matching lines with :g",
       "details": [
         ":g/TODO/p prints matching lines",
-        ":g/pat/d deletes matching lines"
+        ":g/pat/d deletes matching lines",
+        ":g/pat/s/foo/bar/g substitutes only on matching lines"
       ]
     },
     {

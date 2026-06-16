@@ -74,7 +74,7 @@
     {
       "category": [
         "insert",
-        "motion"
+        "navigation"
       ],
       "summary": "Run one Normal command with Ctrl-o",
       "details": [
@@ -136,7 +136,7 @@
     {
       "category": [
         "insert",
-        "change"
+        "editing"
       ],
       "summary": "Enter Replace mode with R",
       "details": [

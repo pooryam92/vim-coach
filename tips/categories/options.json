@@ -3,12 +3,15 @@
     {
       "category": [
         "options",
-        "scroll"
+        "navigation"
       ],
       "summary": "Keep context with scrolloff",
       "details": [
         ":set so=5 keeps context lines",
         "Use sidescrolloff for side context"
+      ],
+      "config": [
+        "set scrolloff=5"
       ]
     },
     {
@@ -19,6 +22,9 @@
       "details": [
         ":set number shows line numbers",
         ":set relativenumber helps with counts"
+      ],
+      "config": [
+        "set number"
       ]
     },
     {
@@ -29,17 +35,23 @@
       "details": [
         ":set list shows tabs and trailing spaces",
         ":set nolist hides them again"
+      ],
+      "config": [
+        "set list"
       ]
     },
     {
       "category": [
         "options",
-        "scroll"
+        "navigation"
       ],
       "summary": "Wrap long lines with wrap",
       "details": [
         ":set wrap makes long lines wrap on screen",
         "IDE soft-wrap settings can affect this too"
+      ],
+      "config": [
+        "set wrap"
       ]
     },
     {
@@ -51,6 +63,9 @@
       "details": [
         ":set incsearch shows matches while typing",
         "Makes /pattern navigation feel instant"
+      ],
+      "config": [
+        "set incsearch"
       ]
     },
     {
@@ -62,6 +77,9 @@
       "details": [
         ":set hlsearch keeps matches highlighted",
         "Clear temporarily with :noh"
+      ],
+      "config": [
+        "set hlsearch"
       ]
     },
     {
@@ -73,6 +91,9 @@
       "details": [
         ":set ignorecase smartcase",
         "Uppercase in pattern forces case-sensitive"
+      ],
+      "config": [
+        "set ignorecase smartcase"
       ]
     },
     {
@@ -84,6 +105,9 @@
       "details": [
         ":set wrapscan continues from top",
         ":set nowrapscan stops at the end"
+      ],
+      "config": [
+        "set wrapscan"
       ]
     },
     {
@@ -114,6 +138,9 @@
       "details": [
         ":set textwidth=80 wraps text at 80 columns",
         "gq uses textwidth when formatting prose and comments"
+      ],
+      "config": [
+        "set textwidth=80"
       ]
     }
   ]

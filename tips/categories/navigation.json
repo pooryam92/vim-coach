@@ -2,7 +2,7 @@
   "tips": [
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Move with h j k l",
       "details": [
@@ -12,7 +12,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Use counts before motions and operators",
       "details": [
@@ -23,7 +23,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump to a specific line {count}G",
       "details": [
@@ -34,7 +34,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Move by words w / b / e",
       "details": [
@@ -45,7 +45,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump to end of previous word ge",
       "details": [
@@ -55,7 +55,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Move by big WORDs W / B / E",
       "details": [
@@ -65,7 +65,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump to end of previous WORD gE",
       "details": [
@@ -75,7 +75,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump to line start/end 0 / ^ / $",
       "details": [
@@ -86,7 +86,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump to last non-blank on line g_",
       "details": [
@@ -96,7 +96,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Move to first text + / -",
       "details": [
@@ -108,7 +108,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump to last changed/yanked lines '[ / ']",
       "details": [
@@ -118,7 +118,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump to exact changed/yanked bounds `[ / `]",
       "details": [
@@ -128,7 +128,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump to a column |",
       "details": [
@@ -138,7 +138,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump to file top/bottom gg / G",
       "details": [
@@ -148,7 +148,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump by file percentage N%",
       "details": [
@@ -160,7 +160,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Screen top/middle/bottom H / M / L",
       "details": [
@@ -170,7 +170,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Move by screen lines on wraps gj / gk",
       "details": [
@@ -180,7 +180,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Screen-line start/end g0 / g^ / g$",
       "details": [
@@ -191,7 +191,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Move by paragraphs { and }",
       "details": [
@@ -202,7 +202,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Move by sentences ( and )",
       "details": [
@@ -213,7 +213,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump to matching pair %",
       "details": [
@@ -224,7 +224,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump to unmatched braces [{ / ]}",
       "details": [
@@ -235,7 +235,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump to unmatched parens [( / ])",
       "details": [
@@ -246,7 +246,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Return after big jumps `` and ''",
       "details": [
@@ -257,7 +257,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump list navigation Ctrl-o / Ctrl-i",
       "details": [
@@ -268,8 +268,8 @@
     },
     {
       "category": [
-        "motion",
-        "undo"
+        "navigation",
+        "editing"
       ],
       "summary": "Jump to last edit location `.",
       "details": [
@@ -280,8 +280,8 @@
     },
     {
       "category": [
-        "motion",
-        "undo"
+        "navigation",
+        "editing"
       ],
       "summary": "Jump through changes g; / g,",
       "details": [
@@ -291,7 +291,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Find a character forward on the line f{c}",
       "details": [
@@ -301,7 +301,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Find a character backward on the line F{c}",
       "details": [
@@ -311,7 +311,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Move till before a character t{c}",
       "details": [
@@ -321,7 +321,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Move backward till after a character T{c}",
       "details": [
@@ -331,7 +331,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Repeat last character search ; / ,",
       "details": [
@@ -341,7 +341,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Drop a mark before exploring with ma",
       "details": [
@@ -351,7 +351,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump to a mark with `a / 'a",
       "details": [
@@ -361,7 +361,7 @@
     },
     {
       "category": [
-        "motion",
+        "navigation",
         "ideavim"
       ],
       "summary": "Go to definition with gd / gD",
@@ -372,7 +372,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Move between methods with ]m / [m",
       "details": [
@@ -383,7 +383,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Jump between sections [[ / ]]",
       "details": [
@@ -394,7 +394,7 @@
     },
     {
       "category": [
-        "motion"
+        "navigation"
       ],
       "summary": "Navigate misspelled words ]s / [s",
       "details": [
@@ -405,7 +405,7 @@
     },
     {
       "category": [
-        "motion",
+        "navigation",
         "ideavim"
       ],
       "summary": "Move by camelCase words [w / [b",
@@ -417,7 +417,7 @@
     },
     {
       "category": [
-        "motion",
+        "navigation",
         "ideavim",
         "plugin"
       ],
@@ -430,7 +430,7 @@
     },
     {
       "category": [
-        "motion",
+        "navigation",
         "ideavim",
         "plugin"
       ],
@@ -442,7 +442,7 @@
     },
     {
       "category": [
-        "motion",
+        "navigation",
         "ideavim",
         "plugin"
       ],
@@ -454,7 +454,7 @@
     },
     {
       "category": [
-        "motion",
+        "navigation",
         "ideavim",
         "plugin"
       ],
@@ -463,6 +463,158 @@
         "Add vim-sneak in ~/.ideavimrc to enable the plugin",
         "sfo jumps forward to fo",
         "Sfo searches backward"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Place line top/center/bottom zt zz zb",
+      "details": [
+        "zt top, zz center, zb bottom",
+        "Use after searches and big jumps"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Half-page scroll Ctrl-d / Ctrl-u",
+      "details": [
+        "Ctrl-d scrolls down half a page",
+        "Ctrl-u scrolls up half a page"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Page scroll Ctrl-f / Ctrl-b",
+      "details": [
+        "Ctrl-f scrolls forward one page",
+        "Ctrl-b scrolls back one page"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Line scroll Ctrl-e / Ctrl-y",
+      "details": [
+        "Ctrl-e scrolls down one line",
+        "Ctrl-y scrolls up one line"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Scroll sideways by columns zh / zl",
+      "details": [
+        "zh scrolls left, zl scrolls right",
+        "Needs wrap off or soft-wrap off"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Scroll sideways half screen zH / zL",
+      "details": [
+        "zH and zL scroll half a screen",
+        "Needs wrap off or soft-wrap off"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Place cursor screen edge zs / ze",
+      "details": [
+        "zs shows cursor at screen start",
+        "ze shows cursor at screen end",
+        "Needs wrap off or soft-wrap off"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Create a fold zf{motion}",
+      "details": [
+        "zf{motion} folds a motion like zfip",
+        "Works where IDE folding is available"
+      ]
+    },
+    {
+      "category": [
+        "navigation",
+        "visual"
+      ],
+      "summary": "Fold a selection from Visual mode with zf",
+      "details": [
+        "Select text in Visual mode, then press zf",
+        "Easier than describing it with a motion"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Open/close folds zo / zc / za",
+      "details": [
+        "zo opens, zc closes, za toggles",
+        "Works where IDE folding is available"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Open/close nested folds zO / zC / zA",
+      "details": [
+        "zO opens nested folds, zC closes them",
+        "zA toggles the whole fold recursively"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump between folds zj / zk",
+      "details": [
+        "zj moves to the next fold start",
+        "zk moves to the previous fold start"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Delete folds zd / zD",
+      "details": [
+        "zd deletes one fold at the cursor",
+        "zD deletes nested folds there too"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Fold all / unfold all zM / zR",
+      "details": [
+        "zM closes all folds in view",
+        "zR opens all folds in view"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Control fold depth with zr / zm",
+      "details": [
+        "zr opens one fold level",
+        "zm closes one fold level"
       ]
     }
   ]

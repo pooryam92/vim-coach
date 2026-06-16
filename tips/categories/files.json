@@ -1,0 +1,194 @@
+{
+  "tips": [
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Edit another file with :edit {file}",
+      "details": [
+        ":edit {file} opens a file for editing",
+        "Use :edit! to discard unsaved changes first"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Find a file on 'path' with :find {file}",
+      "details": [
+        ":find searches Vim's 'path' and edits the match",
+        "Useful when the file is not in the current directory"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Open a file chooser with :browse",
+      "details": [
+        ":browse opens the file-open dialog",
+        "Pick a file instead of typing its name"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "List open buffers with :ls",
+      "details": [
+        ":ls, :buffers, and :files list known buffers",
+        "Then switch with :buffer, :bn, or :bp"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Jump to a listed buffer with :buffer {N}",
+      "details": [
+        ":buffer {N} jumps to buffer number N",
+        "Use it after :ls when you know the number"
+      ]
+    },
+    {
+      "category": [
+        "files"
+      ],
+      "summary": "Toggle last file Ctrl-^",
+      "details": [
+        "Jumps to the alternate file",
+        "Great for back-and-forth edits",
+        "Ctrl-^ is Ctrl-6 on many keyboards"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Next/previous buffer :bn / :bp",
+      "details": [
+        ":bn goes to the next buffer",
+        ":bp goes to the previous buffer"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Close current buffer :bd",
+      "details": [
+        ":bd closes the current buffer/editor tab",
+        "Use it when you are done with the file"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Reload file from disk :e and :e!",
+      "details": [
+        ":e reloads if no changes",
+        ":e! discards changes and reloads"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Save current file :w",
+      "details": [
+        ":w writes the file",
+        "In IdeaVim, this maps to IDE save"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Write a copy to another file :w {file}",
+      "details": [
+        ":w {file} writes the buffer to another file",
+        "Makes a copy without renaming the buffer"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Save all files :wa",
+      "details": [
+        ":wa writes all modified buffers",
+        "In IDE, typically saves all open editors"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Insert a file with :read {file}",
+      "details": [
+        ":read {file} inserts a file below the current line",
+        "Pulls file contents into this buffer"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Quit :q / :q!",
+      "details": [
+        ":q closes if no unsaved changes",
+        ":q! forces close/discard (if allowed)",
+        "ZQ is the key form of :q!"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Save and quit :wq / :x / ZZ",
+      "details": [
+        ":wq writes and quits",
+        ":x writes only if changed",
+        "ZZ also writes and quits the current file"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Quit every editor with :qa / :qall",
+      "details": [
+        ":qa exits unless there are changed buffers",
+        ":qall is the long form of :qa",
+        "The force form discards pending changes"
+      ]
+    },
+    {
+      "category": [
+        "files",
+        "cmdline"
+      ],
+      "summary": "Write all and exit with :wqa / :xa",
+      "details": [
+        ":wqa writes changed buffers and exits",
+        ":xa is the equivalent all-files write-and-exit command"
+      ]
+    }
+  ]
+}

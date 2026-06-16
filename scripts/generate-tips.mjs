@@ -16,9 +16,9 @@ const outputFile = join(repoRoot, "tips", "vim_tips_min.json");
 
 // Categories are emitted in this order; any others follow, sorted by name.
 const categoryOrder = [
-  "editing", "motion", "scroll", "insert", "change", "undo", "repeat",
-  "visual", "cmdline", "options", "pattern", "map", "windows", "tabpage",
-  "fold", "ideavim", "plugin",
+  "navigation", "editing", "registers", "visual", "insert", "repeat",
+  "pattern", "cmdline", "files", "windows", "options", "mappings",
+  "ideavim", "plugin",
 ];
 
 function fail(message) {
