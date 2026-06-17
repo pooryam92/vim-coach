@@ -107,6 +107,21 @@ class TipNotificationFactoryUnitTest {
     }
 
     @Test
+    fun categoriesAreRenderedAndPluginNameIsNot() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(
+            summary = "Add, change, delete surroundings",
+            details = listOf("ys/cs/ds add, change, delete"),
+            category = listOf("plugin", "editing"),
+            config = listOf("Plug 'tpope/vim-surround'")
+        )
+
+        val notification = notifier.createNotification(tip)
+
+        assertTrue(notification.content.contains("editing"))
+    }
+
+    @Test
     fun addedToIdeaVimRcNotificationIsPlainConfirmation() {
         val notifier = TipNotificationFactory()
 

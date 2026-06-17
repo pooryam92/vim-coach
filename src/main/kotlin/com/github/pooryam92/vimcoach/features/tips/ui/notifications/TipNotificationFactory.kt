@@ -7,6 +7,8 @@ import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.util.IconLoader
+import com.intellij.ui.ColorUtil
+import com.intellij.ui.JBColor
 
 class TipNotificationFactory {
 
@@ -111,18 +113,25 @@ class TipNotificationFactory {
     private fun renderTipAsHtml(tip: VimTip): String {
         val summaryHtml = escapeHtml(tip.summary)
         val detailsHtml = tip.details.joinToString(DETAILS_SEPARATOR) { escapeHtml(it) }
+        val cleanSummary = "$SUMMARY_DIV_OPEN$SUMMARY_OPEN$summaryHtml$SUMMARY_CLOSE$SUMMARY_DIV_CLOSE"
+
         return buildString {
             append(HTML_OPEN)
             append(WRAPPER_OPEN)
-            append(SUMMARY_OPEN)
-            append(summaryHtml)
-            append(SUMMARY_CLOSE)
+            append(cleanSummary)
             append(DETAILS_OPEN)
             append(detailsHtml)
             append(DETAILS_CLOSE)
+            append(renderCategoryHint(tip.category))
             append(WRAPPER_CLOSE)
             append(HTML_CLOSE)
         }
+    }
+
+    private fun renderCategoryHint(categories: List<String>): String {
+        if (categories.isEmpty()) return ""
+        val tags = categories.joinToString(CATEGORY_SEPARATOR) { escapeHtml(it) }
+        return "$CATEGORY_HINT_OPEN$tags$CATEGORY_HINT_CLOSE"
     }
 
     private fun escapeHtml(text: String): String {
@@ -152,6 +161,14 @@ class TipNotificationFactory {
         val TIP_RELOAD_IDEAVIMRC_FAILED_TEXT: String = MyBundle.message("tipReloadIdeaVimRcFailedMessage")
         val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", TipNotificationFactory::class.java)
 
+        private val CATEGORY_HINT_FG = JBColor(0x808080, 0x888888)
+
+        /** Opening tag of the category hint; the color is resolved per render so it tracks the theme. */
+        private val CATEGORY_HINT_OPEN: String
+            get() = "<div style=\"margin-top:6px;margin-bottom:4px;color:#${ColorUtil.toHex(CATEGORY_HINT_FG)};\">"
+        private const val CATEGORY_HINT_CLOSE = "</div>"
+        private const val CATEGORY_SEPARATOR = " · "
+
         private const val DETAILS_SEPARATOR = "<br/>"
         private const val HTML_OPEN = "<html>"
         private const val HTML_CLOSE = "</html>"
@@ -159,7 +176,9 @@ class TipNotificationFactory {
         private const val WRAPPER_CLOSE = "</div>"
         private const val SUMMARY_OPEN = "<b>"
         private const val SUMMARY_CLOSE = "</b>"
-        private const val DETAILS_OPEN = "<div style=\"margin-top:12px;margin-bottom:12px;\">"
+        private const val SUMMARY_DIV_OPEN = "<div style=\"margin-top:5px;\">"
+        private const val SUMMARY_DIV_CLOSE = "</div>"
+        private const val DETAILS_OPEN = "<div style=\"margin-top:8px;margin-bottom:8px;\">"
         private const val DETAILS_CLOSE = "</div>"
     }
 }
