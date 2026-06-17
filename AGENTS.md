@@ -14,5 +14,5 @@
 **Docs — read when:**
 - Changing code structure or layers → [Architecture](docs/architecture/overview.md)
 - Working on a specific feature → [Features](docs/features/)
-- Adding/editing tips → [Tip authoring](docs/tips-authoring/README.md)
-- Changing tip categories or JSON pipeline → [Tips pipeline](docs/tips-pipeline.md)
+- Adding/editing tips → [Tip authoring](docs/tips/README.md)
+- Changing tip categories or JSON pipeline → [Tips pipeline](docs/tips/tips-pipeline.md)

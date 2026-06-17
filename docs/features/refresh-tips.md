@@ -32,7 +32,7 @@ JVM property:
 In `file` mode the source path comes from `vimcoach.tip.file.path` (required, or
 loading fails), and the parsed result carries an empty `TipMetadata` — so there is
 no ETag/SHA and conditional fetches degrade to plain reads. See
-[tips-pipeline.md](../tips-pipeline.md) for how the local file is generated. Both
+[tips-pipeline.md](../tips/tips-pipeline.md) for how the local file is generated. Both
 adapters share `TipJsonParser`.
 
 ## Two Triggers, Two Strategies

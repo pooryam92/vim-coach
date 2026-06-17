@@ -2,7 +2,7 @@
 
 How the tip sources become the published file, and how CI keeps the two in sync.
 For writing and reviewing tip **content**, see
-[tips-authoring/](tips-authoring/README.md).
+[tips-authoring/](README.md).
 
 ## Sources and the generated file
 
@@ -31,19 +31,11 @@ node scripts/generate-tips.mjs
 
 ### Ordering
 
-Tips are emitted grouped by category in this fixed order:
-
-```
-editing, motion, scroll, insert, change, undo, repeat, visual, cmdline,
-options, pattern, map, windows, tabpage, fold, ideavim, plugin
-```
-
-This list mirrors the `categoryOrder` array in `scripts/generate-tips.mjs`,
-which is the source of truth. Any category file not in that array is appended
-afterward, sorted by name. If you add a brand-new category, add it to
-`categoryOrder` so its position is intentional rather than alphabetical, and
-update the other places listed under **Changing the category set** in
-[tips-authoring/categories.md](tips-authoring/categories.md#changing-the-category-set).
+Tips are emitted grouped by category, with categories sorted **alphabetically**
+by name. There is no curated order to maintain: tip selection is random at
+runtime, so this ordering only affects the order categories list in the settings
+UI. Adding a new category file therefore needs no ordering change — it slots into
+the alphabetical sequence automatically.
 
 ### Validation
 
