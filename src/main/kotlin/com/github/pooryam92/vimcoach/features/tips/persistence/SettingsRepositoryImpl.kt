@@ -76,17 +76,19 @@ class SettingsRepositoryImpl() : SettingsRepository {
 
     override fun hideTip(hash: String) {
         val normalizedHash = normalizeHash(hash) ?: return
-        val hiddenHashes = addHash(getHiddenTipHashes(), normalizedHash)
-        if (hiddenHashes != getHiddenTipHashes()) {
-            settingsStore().setHiddenTipHashes(hiddenHashes)
+        val current = getHiddenTipHashes()
+        val updated = (current + normalizedHash).distinct()
+        if (updated != current) {
+            settingsStore().setHiddenTipHashes(updated)
         }
     }
 
     override fun restoreTip(hash: String) {
         val normalizedHash = normalizeHash(hash) ?: return
-        val hiddenHashes = getHiddenTipHashes().filterNot { it == normalizedHash }
-        if (hiddenHashes != getHiddenTipHashes()) {
-            settingsStore().setHiddenTipHashes(hiddenHashes)
+        val current = getHiddenTipHashes()
+        val updated = current.filterNot { it == normalizedHash }
+        if (updated != current) {
+            settingsStore().setHiddenTipHashes(updated)
         }
     }
 
@@ -139,10 +141,6 @@ class SettingsRepositoryImpl() : SettingsRepository {
 
     private fun normalizeHash(hash: String): String? {
         return hash.trim().takeIf(String::isNotBlank)
-    }
-
-    private fun addHash(hashes: List<String>, hash: String): List<String> {
-        return (hashes + hash).distinct()
     }
 
     private companion object {

@@ -148,6 +148,28 @@ class TipJsonParserUnitTest {
     }
 
     @Test
+    fun parseTipsJsonKeepsFirstTipWhenSummariesCollideAfterTrimming() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"  jump  ", "details":["first"]},
+                {"summary":"jump", "details":["second"]},
+                {"summary":"other", "details":["third"]}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(2, tips.size)
+        assertEquals("jump", tips[0].summary)
+        assertEquals(listOf("first"), tips[0].details)
+        assertEquals("other", tips[1].summary)
+    }
+
+    @Test
     fun parseTipsJsonReturnsEmptyWhenTipsFieldIsMissing() {
         val json = """
             {

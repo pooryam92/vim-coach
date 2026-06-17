@@ -8,6 +8,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.intellij.openapi.diagnostic.Logger
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.lang.reflect.Type
@@ -16,6 +17,8 @@ object TipJsonParser {
     private const val TIPS_FIELD = "tips"
     private const val CONFIG_NAME_FIELD = "name"
     private const val CONFIG_LINES_FIELD = "lines"
+
+    private val logger = Logger.getInstance(TipJsonParser::class.java)
 
     private val gson = GsonBuilder()
         .registerTypeAdapter(TipConfig::class.java, TipConfigDeserializer)
@@ -37,7 +40,21 @@ object TipJsonParser {
             return emptyList()
         }
         val tips = gson.fromJson(element, Array<VimTip>::class.java) ?: return emptyList()
-        return tips.mapNotNull(::normalizeTip)
+        return dropDuplicateSummaries(tips.mapNotNull(::normalizeTip))
+    }
+
+    // A tip's trimmed summary is its identity downstream (see TipHash): it keys hidden-tip
+    // filtering and hash->tip matching. Two tips sharing a summary would make one unreachable
+    // and hiding one would hide both, so we keep the first and drop the rest loudly here.
+    private fun dropDuplicateSummaries(tips: List<VimTip>): List<VimTip> {
+        val seenSummaries = HashSet<String>(tips.size)
+        return tips.filter { tip ->
+            seenSummaries.add(tip.summary).also { isUnique ->
+                if (!isUnique) {
+                    logger.warn("Dropping Vim tip with duplicate summary: \"${tip.summary}\"")
+                }
+            }
+        }
     }
 
     private fun normalizeTip(tip: VimTip): VimTip? {

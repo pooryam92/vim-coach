@@ -53,7 +53,7 @@ sequenceDiagram
     ADD->>VFS: vf.isWritable
     ADD->>DOC: getDocument(vf) → read document.text
     ADD->>PLAN: determine(existingText, tip.config?.lines)
-    note over PLAN: pure: dedup + insert text + start line
+    note over PLAN: pure: block match + insert text + start line
     PLAN-->>ADD: Append / AlreadyPresent / Empty
     ADD->>DOC: WriteCommandAction → insertString
     ADD->>DOC: WriteAction → saveDocument (sync flush to disk)
@@ -106,11 +106,17 @@ All writes go through IntelliJ's `Document` + `WriteCommandAction` rather than N
 
 After `WriteCommandAction`, the document is saved synchronously via `WriteAction { saveDocument(doc) }` so IdeaVim's "Reload now" reads the up-to-date file from disk immediately.
 
-## Dedup Logic
+## Append Planning
 
-Before writing, `AddTipToIdeaVimRc.add` reads `document.text` and hands it with `tip.config?.lines` to `IdeaVimRcAppendPlan.determine()` — a pure, IDE-free function that decides what to append. It builds a set of trimmed existing lines; any config line already present verbatim is skipped, and duplicate lines within the tip's own config list are collapsed. It returns the exact insert text, the 0-based start line of the first appended line, and the added-line count (or `AlreadyPresent` / `Empty`). Keeping this logic free of `Document`/VFS types makes the branching unit-testable (`IdeaVimRcAppendPlanUnitTest`); `add()` is left to do only the IO.
+Before writing, `AddTipToIdeaVimRc.add` reads `document.text` and hands it with `tip.config?.lines` to `IdeaVimRcAppendPlan.determine()` — a pure, IDE-free function that decides what to append. A tip's config is treated as a **single, indivisible snippet**: config lines are trimmed and blank lines dropped, then the snippet is matched against the file as a contiguous run of trimmed lines, in order. The result is one of:
 
-**Limitation:** dedup is exact-match only. It will not detect semantic equivalents (e.g. `set surround` vs. `Plug 'tpope/vim-surround'` enabling the same feature).
+- **`AlreadyPresent(startLine, lineCount)`** — the whole block already exists; nothing is written. The 0-based start line and line span of the existing block are returned so the caller can re-highlight it.
+- **`Append(insertText, startLine, addedCount)`** — the snippet is copied in full (verbatim, preserving order and any repeated lines), along with the 0-based start line of the first appended line and the added-line count.
+- **`Empty`** — the config had no usable (non-blank) lines.
+
+It deliberately does **not** append "just the missing lines": a snippet whose lines exist but are scattered or reordered is re-appended in full, since a snippet may rely on its lines being together and in order. Keeping this logic free of `Document`/VFS types makes the branching unit-testable (`IdeaVimRcAppendPlanUnitTest`); `add()` is left to do only the IO.
+
+**Limitation:** block matching is exact-match only. It will not detect semantic equivalents (e.g. `set surround` vs. `Plug 'tpope/vim-surround'` enabling the same feature). Key-aware dedup is tracked as future work.
 
 ## Error Paths
 
