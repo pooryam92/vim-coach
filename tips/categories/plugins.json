@@ -180,6 +180,240 @@
           "Plug 'tpope/vim-surround'"
         ]
       }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Toggle comments gcc / gc",
+      "details": [
+        "gcc toggles the current line",
+        "gc works with a motion or selection"
+      ],
+      "config": {
+        "name": "Install vim-commentary",
+        "lines": [
+          "Plug 'tpope/vim-commentary'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Flash the region you just yanked",
+      "details": [
+        "Yanks briefly flash after y or Y",
+        "Confirms exactly what was copied"
+      ],
+      "config": {
+        "name": "Install vim-highlightedyank",
+        "lines": [
+          "Plug 'machakann/vim-highlightedyank'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Replace with a register gr",
+      "details": [
+        "gr{motion} pastes over the motion",
+        "griw replaces a word in place"
+      ],
+      "config": {
+        "name": "Install ReplaceWithRegister",
+        "lines": [
+          "Plug 'vim-scripts/ReplaceWithRegister'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Swap two regions cx",
+      "details": [
+        "cxiw marks the first region",
+        "Repeat on a 2nd region to swap"
+      ],
+      "config": {
+        "name": "Install vim-exchange",
+        "lines": [
+          "Plug 'tommcdo/vim-exchange'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Select an argument ia / aa",
+      "details": [
+        "cia changes one argument",
+        "daa deletes it with its comma"
+      ],
+      "config": {
+        "name": "Install argtextobj",
+        "lines": [
+          "Plug 'vim-scripts/argtextobj.vim'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Select an indent block ii / ai",
+      "details": [
+        "vai selects the indent block",
+        "dii deletes its inner lines"
+      ],
+      "config": {
+        "name": "Install vim-indent-object",
+        "lines": [
+          "Plug 'michaeljsmith/vim-indent-object'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Recase a word crs / crc",
+      "details": [
+        "crc camelCase, crs snake_case",
+        "crm PascalCase, cru UPPER_CASE"
+      ],
+      "config": {
+        "name": "Install vim-abolish",
+        "lines": [
+          "Plug 'tpope/vim-abolish'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Add a cursor to the next match",
+      "details": [
+        "<A-n> selects the next word match",
+        "<A-x> skips, <A-p> removes last"
+      ],
+      "config": {
+        "name": "Install vim-multiple-cursors",
+        "lines": [
+          "Plug 'terryma/vim-multiple-cursors'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "visual"
+      ],
+      "summary": "Select the whole file ae / ie",
+      "details": [
+        "vae selects the entire buffer",
+        "yie yanks all of it"
+      ],
+      "config": {
+        "name": "Install vim-textobj-entire",
+        "lines": [
+          "Plug 'kana/vim-textobj-entire'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "navigation"
+      ],
+      "summary": "Jump to two chars s / S",
+      "details": [
+        "sfo jumps forward to fo",
+        "Sfo searches backward"
+      ],
+      "config": {
+        "name": "Install vim-sneak",
+        "lines": [
+          "Plug 'justinmk/vim-sneak'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "navigation"
+      ],
+      "summary": "Match tags and blocks %",
+      "details": [
+        "% jumps across HTML/XML tag pairs",
+        "Also matches if/end style blocks"
+      ],
+      "config": {
+        "name": "Install matchit",
+        "lines": [
+          "Plug 'chrisbra/matchit'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "navigation"
+      ],
+      "summary": "Fix { } on whitespace-only lines",
+      "details": [
+        "{ } stop at blank-looking lines",
+        "Fixes paragraph motions everywhere"
+      ],
+      "config": {
+        "name": "Install vim-paragraph-motion",
+        "lines": [
+          "Plug 'dbakker/vim-paragraph-motion'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "windows"
+      ],
+      "summary": "Browse files in a tree",
+      "details": [
+        ":NERDTreeToggle opens the tree",
+        ":NERDTreeFind reveals the file"
+      ],
+      "config": {
+        "name": "Install NERDTree",
+        "lines": [
+          "Plug 'preservim/nerdtree'"
+        ]
+      }
     }
   ]
 }
