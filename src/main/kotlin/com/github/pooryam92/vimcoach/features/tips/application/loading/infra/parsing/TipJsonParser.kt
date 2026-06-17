@@ -1,15 +1,25 @@
 package com.github.pooryam92.vimcoach.features.tips.application.loading.infra.parsing
 
+import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.lang.reflect.Type
 
 object TipJsonParser {
     private const val TIPS_FIELD = "tips"
-    private val gson = Gson()
+    private const val CONFIG_NAME_FIELD = "name"
+    private const val CONFIG_LINES_FIELD = "lines"
+
+    private val gson = GsonBuilder()
+        .registerTypeAdapter(TipConfig::class.java, TipConfigDeserializer)
+        .create()
 
     fun parseTipsJson(stream: InputStream): List<VimTip> {
         return InputStreamReader(stream, Charsets.UTF_8).use { reader ->
@@ -37,7 +47,7 @@ object TipJsonParser {
             return null
         }
         val normalizedCategories = normalizeStrings(tip.category)
-        val normalizedConfig = normalizeConfigLines(tip.config)
+        val normalizedConfig = normalizeConfig(tip.config)
         return VimTip(summary, details, normalizedCategories, normalizedConfig)
     }
 
@@ -49,10 +59,46 @@ object TipJsonParser {
     }
 
     // Config lines are written verbatim into .ideavimrc, so keep order and duplicates
-    // (a snippet may legitimately repeat a line); only trim and drop blank lines.
-    private fun normalizeConfigLines(values: List<String>): List<String> {
-        return values
+    // (a snippet may legitimately repeat a line); only trim and drop blank lines. A config
+    // with no usable lines is dropped entirely so the tip has no apply affordance.
+    private fun normalizeConfig(config: TipConfig?): TipConfig? {
+        if (config == null) return null
+        val lines = config.lines
             .map(String::trim)
             .filter(String::isNotBlank)
+        if (lines.isEmpty()) return null
+        val name = config.name?.trim()?.takeIf(String::isNotBlank)
+        return TipConfig(name, lines)
+    }
+
+    /**
+     * Accepts either the object form `{ "name": ..., "lines": [...] }` or the legacy array form
+     * `["line", ...]` (treated as lines with no name), so older sources keep parsing.
+     */
+    private object TipConfigDeserializer : JsonDeserializer<TipConfig> {
+        override fun deserialize(
+            json: JsonElement,
+            typeOfT: Type,
+            context: JsonDeserializationContext
+        ): TipConfig {
+            return when {
+                json.isJsonArray -> TipConfig(name = null, lines = readLines(json))
+                json.isJsonObject -> {
+                    val obj = json.asJsonObject
+                    val name = obj.get(CONFIG_NAME_FIELD)
+                        ?.takeIf { it.isJsonPrimitive }
+                        ?.asString
+                    TipConfig(name = name, lines = readLines(obj.get(CONFIG_LINES_FIELD)))
+                }
+                else -> TipConfig()
+            }
+        }
+
+        private fun readLines(element: JsonElement?): List<String> {
+            if (element == null || !element.isJsonArray) return emptyList()
+            return element.asJsonArray.mapNotNull { line ->
+                line.takeIf { it.isJsonPrimitive }?.asString
+            }
+        }
     }
 }

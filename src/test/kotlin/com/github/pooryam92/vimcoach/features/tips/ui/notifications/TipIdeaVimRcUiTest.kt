@@ -2,6 +2,7 @@ package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
 import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.TipIdeaVimRc
+import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
@@ -28,15 +29,29 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
     }
 
     fun testGetActionReturnsNullWhenVimRcNotAvailable() {
-        val tip = VimTip("surround", listOf("details"), config = listOf("set surround"))
+        val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
         val sut = sut(findPath = { null })
+
+        assertNull(sut.getAction(tip))
+    }
+
+    fun testGetActionReturnsNullWhenTipHasNoConfig() {
+        val tip = VimTip("surround", listOf("details"), config = null)
+        val sut = sut(findPath = { tempVimRc("") })
+
+        assertNull(sut.getAction(tip))
+    }
+
+    fun testGetActionReturnsNullWhenConfigHasNoLines() {
+        val tip = VimTip("surround", listOf("details"), config = TipConfig(name = "Install x", lines = emptyList()))
+        val sut = sut(findPath = { tempVimRc("") })
 
         assertNull(sut.getAction(tip))
     }
 
     fun testHandleFailedShowsWarningNotification() {
         val shownNotifications = captureProjectNotifications()
-        val tip = VimTip("surround", listOf("details"), config = listOf("set surround"))
+        val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
         // Path exists as far as isAvailable() is concerned, but VFS can't find it → Failed
         val sut = sut(findPath = { Path("/nonexistent/path/.ideavimrc") })
 
@@ -49,7 +64,7 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
         val shownNotifications = captureProjectNotifications()
         val configLine = "set surround"
         val ideavimrcPath = tempVimRc("$configLine\n")
-        val tip = VimTip("surround", listOf("details"), config = listOf(configLine))
+        val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf(configLine)))
         val sut = sut(findPath = { ideavimrcPath })
 
         sut.getAction(tip)?.invoke()
@@ -60,7 +75,7 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
 
     fun testReloadCallbackInvokedAndReloadNotificationShownOnReloadButtonClick() {
         val shownNotifications = captureProjectNotifications()
-        val tip = VimTip("surround", listOf("details"), config = listOf("set surround"))
+        val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
         var reloadCalled = false
         val sut = sut(findPath = { tempVimRc("") }, reloadIdeaVimRc = { reloadCalled = true })
 

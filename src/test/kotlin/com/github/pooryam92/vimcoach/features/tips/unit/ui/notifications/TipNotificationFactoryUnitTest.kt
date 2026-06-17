@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.ui.notifications
 
+import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationActions
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationFactory
@@ -93,6 +94,45 @@ class TipNotificationFactoryUnitTest {
     }
 
     @Test
+    fun namedConfigApplyButtonShowsTheNameVerbatim() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(
+            summary = "Add surroundings ys{motion}",
+            details = listOf("ysiw) wraps a word in parens"),
+            category = listOf("plugins", "editing"),
+            config = TipConfig(name = "Install vim-surround", lines = listOf("Plug 'tpope/vim-surround'"))
+        )
+
+        val notification = notifier.createNotificationWithActions(
+            tip,
+            TipNotificationActions(onShowNextTip = {}, onExcludeTip = {}, onAddToIdeaVimRc = {})
+        )
+
+        assertEquals("Install vim-surround", notification.actions[2].templateText)
+    }
+
+    @Test
+    fun unnamedConfigApplyButtonUsesGenericLabel() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(
+            summary = "Keep lines visible while scrolling",
+            details = listOf("set scrolloff=5"),
+            category = listOf("options"),
+            config = TipConfig(name = null, lines = listOf("set scrolloff=5"))
+        )
+
+        val notification = notifier.createNotificationWithActions(
+            tip,
+            TipNotificationActions(onShowNextTip = {}, onExcludeTip = {}, onAddToIdeaVimRc = {})
+        )
+
+        assertEquals(
+            TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT,
+            notification.actions[2].templateText
+        )
+    }
+
+    @Test
     fun notificationWithoutIdeaVimRcCallbackHasTwoActionButtons() {
         val notifier = TipNotificationFactory()
         val tip = VimTip(summary = "jump", details = listOf("use %"))
@@ -107,18 +147,18 @@ class TipNotificationFactoryUnitTest {
     }
 
     @Test
-    fun categoriesAreRenderedAndPluginNameIsNot() {
+    fun categoriesAreNotRenderedInContent() {
         val notifier = TipNotificationFactory()
         val tip = VimTip(
             summary = "Add, change, delete surroundings",
             details = listOf("ys/cs/ds add, change, delete"),
             category = listOf("plugin", "editing"),
-            config = listOf("Plug 'tpope/vim-surround'")
+            config = TipConfig(name = "vim-surround", lines = listOf("Plug 'tpope/vim-surround'"))
         )
 
         val notification = notifier.createNotification(tip)
 
-        assertTrue(notification.content.contains("editing"))
+        assertFalse(notification.content.contains("editing"))
     }
 
     @Test

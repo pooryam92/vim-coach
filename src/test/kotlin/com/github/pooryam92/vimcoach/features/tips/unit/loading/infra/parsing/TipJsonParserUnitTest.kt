@@ -3,6 +3,7 @@ package com.github.pooryam92.vimcoach.features.tips.unit.loading.infra.parsing
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.application.loading.infra.parsing.TipJsonParser
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Test
 import java.io.ByteArrayInputStream
 
@@ -35,7 +36,7 @@ class TipJsonParserUnitTest {
     }
 
     @Test
-    fun parseTipsJsonReadsConfigLinesPreservingOrderAndDuplicates() {
+    fun parseTipsJsonReadsLegacyArrayConfigPreservingOrderAndDuplicates() {
         val json = """
             {
               "tips": [
@@ -53,14 +54,83 @@ class TipJsonParserUnitTest {
         )
 
         assertEquals(1, tips.size)
+        assertNull(tips[0].config?.name)
         assertEquals(
             listOf("Plug 'tpope/vim-surround'", "Plug 'tpope/vim-surround'"),
-            tips[0].config
+            tips[0].config?.lines
         )
     }
 
     @Test
-    fun parseTipsJsonDefaultsConfigToEmptyWhenAbsent() {
+    fun parseTipsJsonReadsNamedConfigObject() {
+        val json = """
+            {
+              "tips": [
+                {
+                  "summary":"surround",
+                  "details":["edit surroundings"],
+                  "config":{"name":"  vim-surround  ","lines":["  Plug 'tpope/vim-surround'  "]}
+                }
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(1, tips.size)
+        assertEquals("vim-surround", tips[0].config?.name)
+        assertEquals(listOf("Plug 'tpope/vim-surround'"), tips[0].config?.lines)
+    }
+
+    @Test
+    fun parseTipsJsonTreatsBlankConfigNameAsNull() {
+        val json = """
+            {
+              "tips": [
+                {
+                  "summary":"line numbers",
+                  "details":["show line numbers"],
+                  "config":{"name":"   ","lines":["set number"]}
+                }
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(1, tips.size)
+        assertNull(tips[0].config?.name)
+        assertEquals(listOf("set number"), tips[0].config?.lines)
+    }
+
+    @Test
+    fun parseTipsJsonDropsConfigWhenLinesAreAllBlank() {
+        val json = """
+            {
+              "tips": [
+                {
+                  "summary":"line numbers",
+                  "details":["show line numbers"],
+                  "config":{"name":"Install x","lines":["  ", ""]}
+                }
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(1, tips.size)
+        assertNull(tips[0].config)
+    }
+
+    @Test
+    fun parseTipsJsonDefaultsConfigToNullWhenAbsent() {
         val json = """
             {
               "tips": [
@@ -74,7 +144,7 @@ class TipJsonParserUnitTest {
         )
 
         assertEquals(1, tips.size)
-        assertEquals(emptyList<String>(), tips[0].config)
+        assertNull(tips[0].config)
     }
 
     @Test

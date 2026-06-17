@@ -30,7 +30,7 @@ class AddTipToIdeaVimRc(
             ?: return Result.Failed(FailureReason.NotAccessible)
 
         val existingText = ApplicationManager.getApplication().runReadAction(Computable { doc.text })
-        return when (val plan = IdeaVimRcAppendPlan.determine(existingText, tip.config)) {
+        return when (val plan = IdeaVimRcAppendPlan.determine(existingText, tip.config?.lines ?: emptyList())) {
             IdeaVimRcAppendPlan.Plan.Empty -> Result.Failed(FailureReason.NothingToAdd)
             IdeaVimRcAppendPlan.Plan.AlreadyPresent -> Result.AlreadyPresent(path)
             is IdeaVimRcAppendPlan.Plan.Append -> {

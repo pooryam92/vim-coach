@@ -46,7 +46,7 @@ class TipIdeaVimRc(
     private val reloadIdeaVimRc: (() -> Unit)? = null
 ) {
     fun getAction(tip: VimTip): (() -> Unit)? {
-        if (tip.config.isEmpty() || !addTipToIdeaVimRc.isAvailable()) return null
+        if (tip.config?.lines.isNullOrEmpty() || !addTipToIdeaVimRc.isAvailable()) return null
         return { handle(tip) }
     }
 

@@ -7,8 +7,6 @@ import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.util.IconLoader
-import com.intellij.ui.ColorUtil
-import com.intellij.ui.JBColor
 
 class TipNotificationFactory {
 
@@ -32,7 +30,7 @@ class TipNotificationFactory {
             })
         }
         actions.onAddToIdeaVimRc?.let { onAddToIdeaVimRc ->
-            notification.addAction(NotificationAction.createSimple(TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT) {
+            notification.addAction(NotificationAction.createSimple(addToIdeaVimRcActionText(tip)) {
                 onAddToIdeaVimRc()
             })
         }
@@ -48,6 +46,11 @@ class TipNotificationFactory {
         ).apply {
             icon = TIP_ICON
         }
+    }
+
+    /** A named config uses its name verbatim as the apply button label; otherwise it stays generic. */
+    private fun addToIdeaVimRcActionText(tip: VimTip): String {
+        return tip.config?.name?.takeIf(String::isNotBlank) ?: TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT
     }
 
     internal fun createTipExcludedNotification(onOpenSettings: () -> Unit): Notification {
@@ -122,16 +125,9 @@ class TipNotificationFactory {
             append(DETAILS_OPEN)
             append(detailsHtml)
             append(DETAILS_CLOSE)
-            append(renderCategoryHint(tip.category))
             append(WRAPPER_CLOSE)
             append(HTML_CLOSE)
         }
-    }
-
-    private fun renderCategoryHint(categories: List<String>): String {
-        if (categories.isEmpty()) return ""
-        val tags = categories.joinToString(CATEGORY_SEPARATOR) { escapeHtml(it) }
-        return "$CATEGORY_HINT_OPEN$tags$CATEGORY_HINT_CLOSE"
     }
 
     private fun escapeHtml(text: String): String {
@@ -160,14 +156,6 @@ class TipNotificationFactory {
         val TIP_RELOADED_IDEAVIMRC_TEXT: String = MyBundle.message("tipReloadedIdeaVimRcMessage")
         val TIP_RELOAD_IDEAVIMRC_FAILED_TEXT: String = MyBundle.message("tipReloadIdeaVimRcFailedMessage")
         val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", TipNotificationFactory::class.java)
-
-        private val CATEGORY_HINT_FG = JBColor(0x808080, 0x888888)
-
-        /** Opening tag of the category hint; the color is resolved per render so it tracks the theme. */
-        private val CATEGORY_HINT_OPEN: String
-            get() = "<div style=\"margin-top:6px;margin-bottom:4px;color:#${ColorUtil.toHex(CATEGORY_HINT_FG)};\">"
-        private const val CATEGORY_HINT_CLOSE = "</div>"
-        private const val CATEGORY_SEPARATOR = " · "
 
         private const val DETAILS_SEPARATOR = "<br/>"
         private const val HTML_OPEN = "<html>"
