@@ -1,6 +1,8 @@
 # Add to .ideavimrc
 
-When a tip has configuration lines (e.g. `set surround`, `Plug 'tpope/vim-surround'`) **and** the user has IdeaVim installed **and** a `.ideavimrc` file already exists, an **"Add to .ideavimrc"** action button appears on the tip notification. Clicking it appends those lines to the file, opens it in the editor at the added lines, and offers a **"Reload now"** button if IdeaVim's reload action is available.
+When a tip has configuration lines (e.g. `set surround`, `Plug 'tpope/vim-surround'`) **and** the user has IdeaVim installed **and** a `.ideavimrc` file already exists, an apply action button appears on the tip notification. Clicking it appends those lines to the file, opens it in the editor at the added lines, and offers a **"Reload now"** button if IdeaVim's reload action is available.
+
+The button label comes from the tip's `config`: if `config.name` is set it is used **verbatim** (e.g. `Install vim-surround`); otherwise the generic **"Apply"** label is used. The lines written to the file come from `config.lines`. See the [tip schema](../tips/README.md) for the `config` object shape (and the legacy array form still accepted for back-compat).
 
 File creation is deliberately out of scope — if no `.ideavimrc` exists, the button is simply not shown. The user creates the file through IdeaVim's own "Create ~/.ideavimrc" action.
 
@@ -18,7 +20,7 @@ graph LR
     H --> F
     C -->|Result| B
     B -->|Added| I[openIdeaVimRc\nhighlightAppendedLines]
-    B -->|AlreadyPresent| J[openIdeaVimRc\nno highlight]
+    B -->|AlreadyPresent| J[openIdeaVimRcAtLine\nhighlightAppendedLines]
     B -->|Failed| K[failure notification]
     B -->|Added + IdeaVim present| L[reloadIdeaVimRc]
 ```
@@ -50,7 +52,7 @@ sequenceDiagram
     ADD->>VFS: refreshAndFindFileByNioFile(path)
     ADD->>VFS: vf.isWritable
     ADD->>DOC: getDocument(vf) → read document.text
-    ADD->>PLAN: determine(existingText, tip.config)
+    ADD->>PLAN: determine(existingText, tip.config?.lines)
     note over PLAN: pure: dedup + insert text + start line
     PLAN-->>ADD: Append / AlreadyPresent / Empty
     ADD->>DOC: WriteCommandAction → insertString
@@ -105,7 +107,7 @@ After `WriteCommandAction`, the document is saved synchronously via `WriteAction
 
 ## Dedup Logic
 
-Before writing, `AddTipToIdeaVimRc.add` reads `document.text` and hands it with `tip.config` to `IdeaVimRcAppendPlan.determine()` — a pure, IDE-free function that decides what to append. It builds a set of trimmed existing lines; any config line already present verbatim is skipped, and duplicate lines within the tip's own config list are collapsed. It returns the exact insert text, the 0-based start line of the first appended line, and the added-line count (or `AlreadyPresent` / `Empty`). Keeping this logic free of `Document`/VFS types makes the branching unit-testable (`IdeaVimRcAppendPlanUnitTest`); `add()` is left to do only the IO.
+Before writing, `AddTipToIdeaVimRc.add` reads `document.text` and hands it with `tip.config?.lines` to `IdeaVimRcAppendPlan.determine()` — a pure, IDE-free function that decides what to append. It builds a set of trimmed existing lines; any config line already present verbatim is skipped, and duplicate lines within the tip's own config list are collapsed. It returns the exact insert text, the 0-based start line of the first appended line, and the added-line count (or `AlreadyPresent` / `Empty`). Keeping this logic free of `Document`/VFS types makes the branching unit-testable (`IdeaVimRcAppendPlanUnitTest`); `add()` is left to do only the IO.
 
 **Limitation:** dedup is exact-match only. It will not detect semantic equivalents (e.g. `set surround` vs. `Plug 'tpope/vim-surround'` enabling the same feature).
 
@@ -115,7 +117,7 @@ Before writing, `AddTipToIdeaVimRc.add` reads `document.text` and hands it with 
 |-----------|--------|
 | IdeaVim not installed | Button not shown |
 | `.ideavimrc` does not exist | Button not shown |
-| `tip.config` is empty | Button not shown |
+| `tip.config` absent or `config.lines` empty | Button not shown |
 | `VirtualFile` not found | `Result.Failed` → warning notification |
 | File not writable | `Result.Failed` → warning notification |
 | `Document` unavailable | `Result.Failed` → warning notification |

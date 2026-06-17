@@ -33,6 +33,31 @@ function normalizeStrings(values) {
   return result;
 }
 
+// Config lines are written verbatim into .ideavimrc, so keep order and duplicates;
+// only trim and drop blanks.
+function normalizeConfigLines(values) {
+  return (values ?? [])
+    .map((l) => (typeof l === "string" ? l.trim() : ""))
+    .filter(Boolean);
+}
+
+// Accepts the object form { name, lines } or the legacy array form ["line", ...].
+// Returns the emitted config (object when named, array otherwise) or undefined when empty.
+function normalizeConfig(config) {
+  if (config == null) return undefined;
+  if (Array.isArray(config)) {
+    const lines = normalizeConfigLines(config);
+    return lines.length > 0 ? lines : undefined;
+  }
+  if (typeof config === "object") {
+    const lines = normalizeConfigLines(config.lines);
+    if (lines.length === 0) return undefined;
+    const name = typeof config.name === "string" ? config.name.trim() : "";
+    return name ? { name, lines } : lines;
+  }
+  return undefined;
+}
+
 const sourceFiles = readdirSync(sourceDir)
   .filter((name) => name.endsWith(".json"))
   .map((name) => name.slice(0, -".json".length));
@@ -80,8 +105,8 @@ for (const category of ordered) {
     summarySources.set(summary, fileName);
 
     const entry = { category: categories, summary, details };
-    const config = (tip.config ?? []).map((l) => (typeof l === "string" ? l.trim() : "")).filter(Boolean);
-    if (config.length > 0) entry.config = config;
+    const config = normalizeConfig(tip.config);
+    if (config) entry.config = config;
     mergedTips.push(entry);
   });
 }

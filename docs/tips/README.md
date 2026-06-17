@@ -50,7 +50,10 @@ Config-backed tip (shows an **Add to .ideavimrc** button):
     "ysiw) wraps a word in parens",
     "ys$\" quotes to end of line"
   ],
-  "config": ["Plug 'tpope/vim-surround'"]
+  "config": {
+    "name": "Install vim-surround",
+    "lines": ["Plug 'tpope/vim-surround'"]
+  }
 }
 ```
 
@@ -67,13 +70,20 @@ ys{motion}`), never the plugin name (`Surround text with vim-surround`) — see
   chars** (see [Display](#display)).
 - `details` — short factual lines: what it does, context, a caveat, or a quick
   example. Aim ≤ 35 chars each; two short lines beat one wrapped line.
-- `config` (optional) — `.ideavimrc` line(s) the button appends (only when
-  IdeaVim is installed and the file already exists; never creates it).
-  - **Enable** lines only, not usage mappings (`ysiw)` is *usage*, not config).
+- `config` (optional) — an object `{ "name": ..., "lines": [...] }` describing
+  the `.ideavimrc` snippet the button appends (only when IdeaVim is installed and
+  the file already exists; never creates it).
+  - `lines` — the `.ideavimrc` line(s), written verbatim (order/duplicates
+    preserved; blanks dropped). **Enable** lines only, not usage mappings
+    (`ysiw)` is *usage*, not config).
+  - `name` (optional) — the button label, used **verbatim** (e.g. `Install
+    vim-surround` → a button reading exactly that). Omit it to get the generic
+    `Apply` label. Not limited to plugins — any named snippet can use it.
   - For plugins author `Plug '<github-alias>'`, not the legacy `set <plugin>`
     form (IdeaVim flags it via `UsePlugSyntaxInspection`). Aliases:
     `external/ideavim/doc/IdeaVim Plugins.md`.
-  - Lines are verbatim (order/duplicates preserved); blanks dropped.
+  - The legacy array form `"config": ["<line>", ...]` is still accepted (treated
+    as `lines` with no `name`), but new tips should use the object form.
 
 **The generator rejects** (see [tips-pipeline.md](tips-pipeline.md)): a blank
 summary; a tip with no details; a `summary` duplicated by any other tip in any
