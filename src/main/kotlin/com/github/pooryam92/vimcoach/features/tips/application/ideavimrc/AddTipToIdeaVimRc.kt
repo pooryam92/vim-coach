@@ -30,7 +30,8 @@ class AddTipToIdeaVimRc(
             ?: return Result.Failed(FailureReason.NotAccessible)
 
         val existingText = ApplicationManager.getApplication().runReadAction(Computable { doc.text })
-        return when (val plan = IdeaVimRcAppendPlan.determine(existingText, tip.config?.lines ?: emptyList())) {
+        val stamp = stampFor(tip.config?.name)
+        return when (val plan = IdeaVimRcAppendPlan.determine(existingText, tip.config?.lines ?: emptyList(), stamp)) {
             IdeaVimRcAppendPlan.Plan.Empty -> Result.Failed(FailureReason.NothingToAdd)
             is IdeaVimRcAppendPlan.Plan.AlreadyPresent -> Result.AlreadyPresent(path, plan.startLine, plan.lineCount)
             is IdeaVimRcAppendPlan.Plan.Append -> {
@@ -38,6 +39,16 @@ class AddTipToIdeaVimRc(
                 Result.Added(path, plan.startLine, plan.addedCount)
             }
         }
+    }
+
+    /**
+     * The vimscript comment written above an appended snippet so the user can tell which lines
+     * Vim Coach added (and find them later). When the tip's config has a [name] (e.g. a plugin
+     * name) it is folded into the stamp for traceability; otherwise a generic stamp is used.
+     */
+    private fun stampFor(name: String?): String {
+        val label = name?.trim()?.takeIf(String::isNotEmpty)
+        return if (label != null) "\" $label — added by Vim Coach" else "\" Added by Vim Coach"
     }
 
     private fun appendAndSave(doc: Document, insertText: String) {

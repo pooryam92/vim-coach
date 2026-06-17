@@ -110,6 +110,44 @@ class IdeaVimRcAppendPlanUnitTest {
     }
 
     @Test
+    fun writesStampAboveTheSnippetWhenAppending() {
+        val plan = IdeaVimRcAppendPlan.determine(
+            existingText = "",
+            configLines = listOf("set surround"),
+            stamp = "\" Added by Vim Coach"
+        ) as Plan.Append
+        assertEquals("\" Added by Vim Coach\nset surround\n", plan.insertText)
+        assertEquals(0, plan.startLine)
+        // The stamp counts as an added line so the caller highlights the whole inserted block.
+        assertEquals(2, plan.addedCount)
+    }
+
+    @Test
+    fun ignoresBlankStamp() {
+        val plan = IdeaVimRcAppendPlan.determine(
+            existingText = "",
+            configLines = listOf("set surround"),
+            stamp = "   "
+        ) as Plan.Append
+        assertEquals("set surround\n", plan.insertText)
+        assertEquals(1, plan.addedCount)
+    }
+
+    @Test
+    fun stampDoesNotAffectAlreadyPresentMatching() {
+        // A snippet previously added with a stamp is still recognised on a re-add: matching keys
+        // off the config lines only, so the stamp line above them is irrelevant and no duplicate
+        // (nor a second stamp) is written.
+        val plan = IdeaVimRcAppendPlan.determine(
+            existingText = "\" Added by Vim Coach\nset surround\n",
+            configLines = listOf("set surround"),
+            stamp = "\" Added by Vim Coach"
+        ) as Plan.AlreadyPresent
+        assertEquals(1, plan.startLine)
+        assertEquals(1, plan.lineCount)
+    }
+
+    @Test
     fun copiesRepeatedConfigLinesVerbatim() {
         // A snippet is copied as-is; repeated lines are kept (a snippet may legitimately repeat one).
         val plan = IdeaVimRcAppendPlan.determine(

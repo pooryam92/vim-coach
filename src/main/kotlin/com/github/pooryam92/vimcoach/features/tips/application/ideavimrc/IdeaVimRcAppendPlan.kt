@@ -9,6 +9,11 @@ package com.github.pooryam92.vimcoach.features.tips.application.ideavimrc
  * present — left untouched. We deliberately do not append "just the missing lines"; a snippet
  * may rely on its lines being together and in order.
  *
+ * An optional [stamp] (a vimscript comment, e.g. `" Added by Vim Coach`) is written above the
+ * snippet when appending, so the user can tell which lines this plugin added. The stamp is
+ * **not** part of the already-present match: matching keys off the real config lines only, so a
+ * snippet that was added with a stamp is still recognised on a re-add and not duplicated.
+ *
  * Line/length math mirrors IntelliJ's Document: lineCount == number of '\n' + 1.
  */
 internal object IdeaVimRcAppendPlan {
@@ -28,22 +33,25 @@ internal object IdeaVimRcAppendPlan {
         data object Empty : Plan
     }
 
-    fun determine(existingText: String, configLines: List<String>): Plan {
+    fun determine(existingText: String, configLines: List<String>, stamp: String? = null): Plan {
         val snippet = configLines.map(String::trim).filter(String::isNotEmpty)
         if (snippet.isEmpty()) return Plan.Empty
 
         val blockStart = findBlockStart(existingText, snippet)
         if (blockStart != null) return Plan.AlreadyPresent(blockStart, snippet.size)
 
+        val stampLine = stamp?.trim()?.takeIf(String::isNotEmpty)
         val endsWithNewline = existingText.isEmpty() || existingText.endsWith('\n')
         val lineCount = existingText.count { it == '\n' } + 1
         val startLine = if (endsWithNewline) lineCount - 1 else lineCount
 
         val insertText = buildString {
             if (existingText.isNotEmpty() && !endsWithNewline) append('\n')
+            stampLine?.let { append(it).append('\n') }
             snippet.forEach { append(it).append('\n') }
         }
-        return Plan.Append(insertText, startLine, snippet.size)
+        val addedCount = snippet.size + if (stampLine != null) 1 else 0
+        return Plan.Append(insertText, startLine, addedCount)
     }
 
     /**

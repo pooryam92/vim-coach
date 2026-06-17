@@ -116,6 +116,12 @@ Before writing, `AddTipToIdeaVimRc.add` reads `document.text` and hands it with 
 
 It deliberately does **not** append "just the missing lines": a snippet whose lines exist but are scattered or reordered is re-appended in full, since a snippet may rely on its lines being together and in order. Keeping this logic free of `Document`/VFS types makes the branching unit-testable (`IdeaVimRcAppendPlanUnitTest`); `add()` is left to do only the IO.
 
+### Vim Coach stamp
+
+When appending, a vimscript comment is written **above** the snippet so the user can tell which lines Vim Coach added — `AddTipToIdeaVimRc.stampFor` produces `" <name> — added by Vim Coach` when the tip's `config.name` is set, or `" Added by Vim Coach` otherwise. The stamp counts toward `addedCount` so the highlight covers the whole inserted block (stamp + lines).
+
+The stamp is **not** part of the already-present match: `findBlockStart` keys off the real config lines only. A snippet that was previously added with a stamp is still recognised on a re-add — neither the lines nor a second stamp are duplicated.
+
 **Limitation:** block matching is exact-match only. It will not detect semantic equivalents (e.g. `set surround` vs. `Plug 'tpope/vim-surround'` enabling the same feature). Key-aware dedup is tracked as future work.
 
 ## Error Paths
