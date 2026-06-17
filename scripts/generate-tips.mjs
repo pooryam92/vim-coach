@@ -14,13 +14,6 @@ const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repoRoot, "tips", "categories");
 const outputFile = join(repoRoot, "tips", "vim_tips_min.json");
 
-// Categories are emitted in this order; any others follow, sorted by name.
-const categoryOrder = [
-  "navigation", "editing", "registers", "visual", "insert", "repeat",
-  "pattern", "cmdline", "files", "windows", "options", "mappings",
-  "ideavim", "plugins",
-];
-
 function fail(message) {
   console.error(`generate-tips: ${message}`);
   process.exit(1);
@@ -48,10 +41,9 @@ if (sourceFiles.length === 0) {
   fail(`no tip category source files found in ${sourceDir}`);
 }
 
-const ordered = [
-  ...categoryOrder.filter((c) => sourceFiles.includes(c)),
-  ...sourceFiles.filter((c) => !categoryOrder.includes(c)).sort(),
-];
+// Categories are emitted alphabetically; tip selection is random at runtime,
+// so this order only affects how categories list in the settings UI.
+const ordered = [...sourceFiles].sort();
 
 const mergedTips = [];
 const summarySources = new Map();
