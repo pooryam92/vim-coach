@@ -238,7 +238,7 @@
       "category": [
         "editing",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Flash yanked text with highlightedyank",
       "details": [
@@ -250,7 +250,7 @@
       "category": [
         "editing",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Replace text with the current register",
       "details": [
@@ -262,7 +262,7 @@
       "category": [
         "editing",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Comment text with commentary gcc / gc",
       "details": [
@@ -275,7 +275,7 @@
       "category": [
         "editing",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Edit surroundings with surround",
       "details": [
@@ -289,7 +289,7 @@
       "category": [
         "editing",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Swap two regions with exchange",
       "details": [
@@ -302,7 +302,7 @@
       "category": [
         "editing",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Target arguments with ia / aa",
       "details": [
@@ -315,7 +315,7 @@
       "category": [
         "editing",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Target an indent block with ii / ai",
       "details": [
@@ -328,7 +328,7 @@
       "category": [
         "editing",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Target functions with if / af",
       "details": [
@@ -341,7 +341,7 @@
       "category": [
         "editing",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Add cursors to the next whole-word match",
       "details": [
@@ -353,7 +353,7 @@
       "category": [
         "editing",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Toggle paired values with switch",
       "details": [
@@ -577,7 +577,7 @@
       "category": [
         "editing",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Recase a word with cr coercions",
       "details": [

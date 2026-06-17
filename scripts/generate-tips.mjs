@@ -18,7 +18,7 @@ const outputFile = join(repoRoot, "tips", "vim_tips_min.json");
 const categoryOrder = [
   "navigation", "editing", "registers", "visual", "insert", "repeat",
   "pattern", "cmdline", "files", "windows", "options", "mappings",
-  "ideavim", "plugin",
+  "ideavim", "plugins",
 ];
 
 function fail(message) {

@@ -419,7 +419,7 @@
       "category": [
         "navigation",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Move through camelCase sub-words",
       "details": [
@@ -432,7 +432,7 @@
       "category": [
         "navigation",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Fix { } on whitespace-only lines",
       "details": [
@@ -444,7 +444,7 @@
       "category": [
         "navigation",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Extend % with matchit",
       "details": [
@@ -456,7 +456,7 @@
       "category": [
         "navigation",
         "ideavim",
-        "plugin"
+        "plugins"
       ],
       "summary": "Jump to two-character targets with sneak",
       "details": [
