@@ -231,18 +231,6 @@
         "In Visual mode, p replaces the selection with put text",
         "Use \"_dP when you want to keep the current yank"
       ]
-    },
-    {
-      "category": [
-        "visual",
-        "ideavim",
-        "plugins"
-      ],
-      "summary": "Select the whole buffer with ae / ie",
-      "details": [
-        "Use :set textobj-entire to enable the plugin",
-        "vae or vie selects the entire buffer"
-      ]
     }
   ]
 }

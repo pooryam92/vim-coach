@@ -97,19 +97,6 @@
     },
     {
       "category": [
-        "windows",
-        "ideavim",
-        "plugins"
-      ],
-      "summary": "Browse the project tree with NERDTree",
-      "details": [
-        "Use :set NERDTree to enable the plugin",
-        ":NERDTreeToggle opens the tree",
-        ":NERDTreeFind reveals the current file"
-      ]
-    },
-    {
-      "category": [
         "windows"
       ],
       "summary": "Next/previous tab gt / gT",

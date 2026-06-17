@@ -417,56 +417,6 @@
     },
     {
       "category": [
-        "navigation",
-        "ideavim",
-        "plugins"
-      ],
-      "summary": "Move through camelCase sub-words",
-      "details": [
-        "Use :set CamelCaseMotion to enable",
-        "Set g:camelcasemotion_key as prefix",
-        "Prefix + w, b, e, ge are the motions"
-      ]
-    },
-    {
-      "category": [
-        "navigation",
-        "ideavim",
-        "plugins"
-      ],
-      "summary": "Fix { } on whitespace-only lines",
-      "details": [
-        "Use :set vim-paragraph-motion to enable the plugin",
-        "{ and } treat whitespace-only lines as paragraph breaks"
-      ]
-    },
-    {
-      "category": [
-        "navigation",
-        "ideavim",
-        "plugins"
-      ],
-      "summary": "Extend % with matchit",
-      "details": [
-        "Use :set matchit to enable the plugin",
-        "% jumps across tags and control blocks, not just brackets"
-      ]
-    },
-    {
-      "category": [
-        "navigation",
-        "ideavim",
-        "plugins"
-      ],
-      "summary": "Jump to two-character targets with sneak",
-      "details": [
-        "Add vim-sneak in ~/.ideavimrc to enable the plugin",
-        "sfo jumps forward to fo",
-        "Sfo searches backward"
-      ]
-    },
-    {
-      "category": [
         "navigation"
       ],
       "summary": "Place line top/center/bottom zt zz zb",
