@@ -19,7 +19,7 @@ graph LR
     G --> H[IntelliJ Document]
     H --> F
     C -->|Result| B
-    B -->|Added| I[openIdeaVimRc\nhighlightAppendedLines]
+    B -->|Added| I[openIdeaVimRcAtLine\nhighlightAppendedLines]
     B -->|AlreadyPresent| J[openIdeaVimRcAtLine\nhighlightAppendedLines]
     B -->|Failed| K[failure notification]
     B -->|Added + IdeaVim present| L[reloadIdeaVimRc]
