@@ -4,16 +4,6 @@
       "category": [
         "navigation"
       ],
-      "summary": "Move with h j k l",
-      "details": [
-        "h left, j down, k up, l right",
-        "Use counts like 10j to jump"
-      ]
-    },
-    {
-      "category": [
-        "navigation"
-      ],
       "summary": "Use counts before motions and operators",
       "details": [
         "Put a number before a motion or operator",

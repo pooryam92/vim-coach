@@ -1,0 +1,185 @@
+{
+  "tips": [
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Add surroundings ys{motion}",
+      "details": [
+        "ys then a motion, then a pair",
+        "ysiw) wraps a word in parens",
+        "ys$\" quotes to end of line"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Surround a whole line yss",
+      "details": [
+        "yss) wraps the whole line",
+        "Skips leading whitespace"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Change surroundings cs",
+      "details": [
+        "cs\"' swaps quotes to single",
+        "cs)] changes parens to brackets"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Delete surroundings ds",
+      "details": [
+        "ds\" removes surrounding quotes",
+        "ds( strips the parens"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "visual"
+      ],
+      "summary": "Surround a selection S",
+      "details": [
+        "Select text, then S and a pair",
+        "S) wraps it, S<em> adds a tag"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Wrap in an HTML tag ysiwt",
+      "details": [
+        "t or < prompts for the tag",
+        "ysiw<em> wraps a word in <em>"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Change or delete a tag cst / dst",
+      "details": [
+        "cst<div> retags the block",
+        "dst removes the tag, keeps text"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Inner spaces with ( vs )",
+      "details": [
+        "ysiw) gives (word)",
+        "ysiw( gives ( word )"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Wrap in a function call f",
+      "details": [
+        "f prompts for a function name",
+        "ysiwf then name gives name(word)"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "repeat"
+      ],
+      "summary": "Repeat a surround with .",
+      "details": [
+        ". replays the last ys, cs or ds",
+        "Works like any Vim edit"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    }
+  ]
+}

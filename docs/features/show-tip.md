@@ -73,4 +73,4 @@ Dismissing the tip balloon is the adapter's responsibility: `IntelliJTipNotifier
 </div></html>
 ```
 
-Actions — "Next tip", "Exclude tip", and "Add to .ideavimrc" (when `tip.config` is non-empty) — are all standard `NotificationAction` buttons appended to the balloon.
+Actions — "Next tip", "Exclude tip", and the apply-to-`.ideavimrc` action (when `tip.config?.lines` is non-empty; labelled by `config.name` or the generic "Apply") — are all standard `NotificationAction` buttons appended to the balloon.
