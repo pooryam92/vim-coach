@@ -5,8 +5,8 @@
 **Rules**
 - Always write or update tests when adding or changing behavior.
 - Always update relevant docs when adding or changing behavior.
-  Add concise class-level docstrings and targeted inline comments where they explain intent, non-obvious logic, or important design decisions. Do not add comments that merely describe obvious code behavior.- Use logging when it adds value for debugging, observability, or diagnosing user/plugin issues.
-- Keep comments and logs useful; avoid restating obvious code behavior.
+- Comment sparingly. Prefer self-explanatory names over comments. Add one only when it explains the non-obvious *why* — intent, a design decision, or a gotcha — never to restate what the code already says.
+- Use logging when it adds value for debugging, observability, or diagnosing user/plugin issues.
 - Verify changes with: `./gradlew test && ./gradlew buildPlugin`
 
 
