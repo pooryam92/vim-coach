@@ -17,8 +17,12 @@ internal object IdeaVimRcAppendPlan {
         /** [startLine] is the 0-based line of the first appended line; [addedCount] how many were added. */
         data class Append(val insertText: String, val startLine: Int, val addedCount: Int) : Plan
 
-        /** The whole snippet is already present (as a contiguous block, after trimming) — nothing to do. */
-        data object AlreadyPresent : Plan
+        /**
+         * The whole snippet is already present (as a contiguous block, after trimming) — nothing to
+         * append. [startLine] is the 0-based line where the existing block begins; [lineCount] how many
+         * lines it spans, so the caller can re-highlight it.
+         */
+        data class AlreadyPresent(val startLine: Int, val lineCount: Int) : Plan
 
         /** No usable config lines (all blank). */
         data object Empty : Plan
@@ -28,7 +32,8 @@ internal object IdeaVimRcAppendPlan {
         val snippet = configLines.map(String::trim).filter(String::isNotEmpty)
         if (snippet.isEmpty()) return Plan.Empty
 
-        if (containsBlock(existingText, snippet)) return Plan.AlreadyPresent
+        val blockStart = findBlockStart(existingText, snippet)
+        if (blockStart != null) return Plan.AlreadyPresent(blockStart, snippet.size)
 
         val endsWithNewline = existingText.isEmpty() || existingText.endsWith('\n')
         val lineCount = existingText.count { it == '\n' } + 1
@@ -42,14 +47,15 @@ internal object IdeaVimRcAppendPlan {
     }
 
     /**
-     * Whether [snippet] already appears in [existingText] as a contiguous run of (trimmed) lines,
-     * in order. This is a coarse "already present" check that treats the snippet as one unit — a
-     * snippet whose lines exist but are scattered or reordered will still be re-appended for now.
+     * The 0-based line where [snippet] first appears in [existingText] as a contiguous run of
+     * (trimmed) lines, in order, or null if it is not present. This is a coarse "already present"
+     * check that treats the snippet as one unit — a snippet whose lines exist but are scattered or
+     * reordered will still be re-appended for now.
      */
-    private fun containsBlock(existingText: String, snippet: List<String>): Boolean {
+    private fun findBlockStart(existingText: String, snippet: List<String>): Int? {
         val lines = existingText.lineSequence().map(String::trim).toList()
-        if (snippet.size > lines.size) return false
-        return (0..lines.size - snippet.size).any { start ->
+        if (snippet.size > lines.size) return null
+        return (0..lines.size - snippet.size).firstOrNull { start ->
             snippet.indices.all { lines[start + it] == snippet[it] }
         }
     }

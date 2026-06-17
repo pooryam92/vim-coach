@@ -69,7 +69,8 @@ sequenceDiagram
             IV->>N: showReloadedIdeaVimRc()
         end
     else AlreadyPresent
-        IV->>ED: openFile (no highlight)
+        IV->>ED: openTextEditor at startLine
+        IV->>HM: addRangeHighlight (flash existing lines)
         IV->>N: showAlreadyInIdeaVimRc()
     else Failed
         IV->>N: showAddToIdeaVimRcFailed()
@@ -121,5 +122,5 @@ Before writing, `AddTipToIdeaVimRc.add` reads `document.text` and hands it with 
 | `VirtualFile` not found | `Result.Failed` → warning notification |
 | File not writable | `Result.Failed` → warning notification |
 | `Document` unavailable | `Result.Failed` → warning notification |
-| All config lines already present | `Result.AlreadyPresent` → file opened, no highlight |
+| All config lines already present | `Result.AlreadyPresent` → file opened at the existing lines, briefly highlighted |
 | IdeaVim reload action not registered | "Reload now" button not shown |

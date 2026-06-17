@@ -53,10 +53,22 @@ class IdeaVimRcAppendPlanUnitTest {
 
     @Test
     fun returnsAlreadyPresentWhenEveryLineExists() {
-        assertEquals(
-            Plan.AlreadyPresent,
-            IdeaVimRcAppendPlan.determine(existingText = "set a\nset b\n", configLines = listOf("set a", "set b"))
-        )
+        val plan = IdeaVimRcAppendPlan.determine(
+            existingText = "set a\nset b\n",
+            configLines = listOf("set a", "set b")
+        ) as Plan.AlreadyPresent
+        assertEquals(0, plan.startLine)
+        assertEquals(2, plan.lineCount)
+    }
+
+    @Test
+    fun reportsTheLineWhereTheExistingBlockBegins() {
+        val plan = IdeaVimRcAppendPlan.determine(
+            existingText = "set x\nset a\nset b\n",
+            configLines = listOf("set a", "set b")
+        ) as Plan.AlreadyPresent
+        assertEquals(1, plan.startLine)
+        assertEquals(2, plan.lineCount)
     }
 
     @Test
@@ -83,10 +95,12 @@ class IdeaVimRcAppendPlanUnitTest {
 
     @Test
     fun matchesExistingLinesIgnoringSurroundingWhitespace() {
-        assertEquals(
-            Plan.AlreadyPresent,
-            IdeaVimRcAppendPlan.determine(existingText = "   set a   \n", configLines = listOf("set a"))
-        )
+        val plan = IdeaVimRcAppendPlan.determine(
+            existingText = "   set a   \n",
+            configLines = listOf("set a")
+        ) as Plan.AlreadyPresent
+        assertEquals(0, plan.startLine)
+        assertEquals(1, plan.lineCount)
     }
 
     @Test

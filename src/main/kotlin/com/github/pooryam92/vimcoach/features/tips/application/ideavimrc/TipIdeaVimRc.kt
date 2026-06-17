@@ -34,7 +34,8 @@ private const val IDEAVIM_RELOAD_ACTION_ID = "IdeaVim.ReloadVimRc.reload"
  * On click:
  *   Added          → opens .ideavimrc at the appended lines with a brief highlight;
  *                    shows a "Reload now" affordance if IdeaVim reload is available.
- *   AlreadyPresent → opens .ideavimrc without highlight, reports it is already in.
+ *   AlreadyPresent → opens .ideavimrc at the existing lines with a brief highlight,
+ *                    reports it is already in.
  *   Failed         → reports a failure; file is not opened.
  *
  * Notifications go through the [TipNotifier] port; [project] is used only for editor IO.
@@ -64,7 +65,7 @@ class TipIdeaVimRc(
                 message = notifier.showAddedToIdeaVimRc(onReload)
             }
             is AddTipToIdeaVimRc.Result.AlreadyPresent -> {
-                openIdeaVimRc(result.path)
+                openIdeaVimRcAtLine(result.path, result.startLine, result.lineCount)
                 notifier.showAlreadyInIdeaVimRc()
             }
             is AddTipToIdeaVimRc.Result.Failed ->
@@ -92,11 +93,6 @@ class TipIdeaVimRc(
         }
         ActionManager.getInstance().tryToExecute(action, null, null, ActionPlaces.NOTIFICATION, true)
         notifier.showReloadedIdeaVimRc()
-    }
-
-    private fun openIdeaVimRc(path: Path) {
-        val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByNioFile(path) ?: return
-        FileEditorManager.getInstance(project).openFile(virtualFile, true)
     }
 
     private fun openIdeaVimRcAtLine(path: Path, startLine: Int, lineCount: Int) {

@@ -60,17 +60,20 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
         assertTrue(shownNotifications.any { it.type == NotificationType.WARNING })
     }
 
-    fun testHandleAlreadyPresentOpensFileAndShowsAlreadyInNotification() {
+    fun testHandleAlreadyPresentOpensFileAtExistingLineAndShowsAlreadyInNotification() {
         val shownNotifications = captureProjectNotifications()
         val configLine = "set surround"
-        val ideavimrcPath = tempVimRc("$configLine\n")
+        // The existing block sits on line 2, after two unrelated lines.
+        val ideavimrcPath = tempVimRc("set a\nset b\n$configLine\n")
         val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf(configLine)))
         val sut = sut(findPath = { ideavimrcPath })
 
         sut.getAction(tip)?.invoke()
 
         assertTrue(shownNotifications.any { it.content == TipNotificationFactory.TIP_ALREADY_IN_IDEAVIMRC_TEXT })
-        assertNotNull(FileEditorManager.getInstance(project).selectedTextEditor)
+        val editor = FileEditorManager.getInstance(project).selectedTextEditor
+        assertNotNull(editor)
+        assertEquals(2, editor!!.caretModel.logicalPosition.line)
     }
 
     fun testReloadCallbackInvokedAndReloadNotificationShownOnReloadButtonClick() {

@@ -32,7 +32,7 @@ class AddTipToIdeaVimRc(
         val existingText = ApplicationManager.getApplication().runReadAction(Computable { doc.text })
         return when (val plan = IdeaVimRcAppendPlan.determine(existingText, tip.config?.lines ?: emptyList())) {
             IdeaVimRcAppendPlan.Plan.Empty -> Result.Failed(FailureReason.NothingToAdd)
-            IdeaVimRcAppendPlan.Plan.AlreadyPresent -> Result.AlreadyPresent(path)
+            is IdeaVimRcAppendPlan.Plan.AlreadyPresent -> Result.AlreadyPresent(path, plan.startLine, plan.lineCount)
             is IdeaVimRcAppendPlan.Plan.Append -> {
                 appendAndSave(doc, plan.insertText)
                 Result.Added(path, plan.startLine, plan.addedCount)
@@ -52,7 +52,9 @@ class AddTipToIdeaVimRc(
     sealed interface Result {
         /** [startLine] is the 0-based line of the first appended line; [lineCount] how many were added. */
         data class Added(val path: Path, val startLine: Int, val lineCount: Int) : Result
-        data class AlreadyPresent(val path: Path) : Result
+
+        /** [startLine] is the 0-based line where the existing block begins; [lineCount] how many it spans. */
+        data class AlreadyPresent(val path: Path, val startLine: Int, val lineCount: Int) : Result
         data class Failed(val reason: FailureReason) : Result
     }
 
