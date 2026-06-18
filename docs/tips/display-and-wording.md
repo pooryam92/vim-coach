@@ -61,6 +61,12 @@ an improvement, but know the cost.
   key taught).
 - For IdeaVim/plugin tips put the user outcome in the summary, the plugin/option
   name in details. Avoid config-authoring summaries unless config *is* the workflow.
+- Don't make detail line 1 restate the summary — it wastes the most-read line.
+  `Surround a line yss` → detail `yss wraps the line` teaches nothing; use that
+  line for the mechanic or a mnemonic instead (`2nd s = whole line, like dd/yy`).
+- Never dump alternative keys as an inline symbol list — `Swap ) for ] } " ' t`
+  reads like keyboard mashing. Name the category in prose (`Any bracket or quote
+  works too`) and keep at most one concrete symbol as the example.
 
 ### Every keystroke shown must do something when typed
 

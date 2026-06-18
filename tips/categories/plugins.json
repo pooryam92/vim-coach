@@ -24,9 +24,10 @@
         "plugins",
         "editing"
       ],
-      "summary": "Surround a whole line yss",
+      "summary": "yss) wraps the whole line",
       "details": [
-        "yss) wraps the whole line",
+        "2nd s = whole line, like dd/yy",
+        "Any bracket or quote works too",
         "Skips leading whitespace"
       ],
       "config": {
@@ -282,10 +283,11 @@
         "plugins",
         "editing"
       ],
-      "summary": "Recase a word crs / crc",
+      "summary": "Recase a word to camelCase crc",
       "details": [
-        "crc camelCase, crs snake_case",
-        "crm PascalCase, cru UPPER_CASE"
+        "cr + a letter picks the case",
+        "c camel, s snake, m Mixed, u UPPER",
+        "e.g. foo_bar →crc fooBar"
       ],
       "config": {
         "name": "Install vim-abolish",
