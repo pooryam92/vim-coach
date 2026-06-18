@@ -3,8 +3,9 @@
 Everything for **adding** and **improving** tip content in
 [tips/categories/](../../tips/categories): tip format + examples, categories, and
 support checking. The published file is generated from these sources — see
-[tips-pipeline.md](tips-pipeline.md). The in-flight 14-category migration /
-config-tip roadmap lives in [wip/taxonomy-and-config.md](wip/taxonomy-and-config.md).
+[tips-pipeline.md](tips-pipeline.md). Not-yet-shippable config work (positional
+maps, leader convention, key-aware dedup) is tracked in
+[../discover/config-tips-roadmap.md](../discover/config-tips-roadmap.md).
 
 A good tip: one concrete command, correct for IdeaVim, easy to scan, easy to act
 on now, findable by category.
@@ -89,6 +90,58 @@ ys{motion}`), never the plugin name (`Surround text with vim-surround`) — see
 summary; a tip with no details; a `summary` duplicated by any other tip in any
 file; a first `category` that doesn't match the file name. Blank detail lines are
 stripped silently — don't add them.
+
+### Config-tip kinds (additive)
+
+These three config kinds are **additive** — each `config.lines` entry is unique
+and order-independent, so the **Add to .ideavimrc** button can safely append it
+to an existing file today (exact-match dedup, no leader, no key collisions).
+Author config tips in one of these three forms; anything that claims keys or sets
+shared state is *positional* and not shippable yet (see
+[../discover/config-tips-roadmap.md](../discover/config-tips-roadmap.md)).
+
+**1. Install a plugin** — a single official-plugin entry in `Plug` form.
+
+```json
+"config": {
+  "name": "Install vim-surround",
+  "lines": ["Plug 'tpope/vim-surround'"]
+}
+```
+
+Use the `Plug '<github-alias>'` form, not the legacy `set <plugin>` form. Aliases
+come from `external/ideavim/doc/IdeaVim Plugins.md`. Keep `plugins` as the first
+category, add a functional secondary (`editing`, `navigation`, `pattern`,
+`files`), and teach one concise usage in the summary/details — not the plugin
+name (see [Wording](#wording-good-vs-worse)).
+
+**2. Tune built-in behavior** — a Vim option toggle/setting.
+
+```json
+"config": {
+  "name": "Keep 5 lines of context",
+  "lines": ["set scrolloff=5"]
+}
+```
+
+Examples: `ignorecase smartcase`, `hlsearch`, `number`. Primary category
+`options`.
+
+**3. IDE-bridge options** — an IdeaVim-specific `set` that wires Vim to the IDE.
+
+```json
+"config": {
+  "name": "Use IDE join",
+  "lines": ["set ideajoin"]
+}
+```
+
+Examples: `set ideajoin`, `set idearefactormode=keep`, `set
+clipboard+=unnamedplus`. Primary category `ideavim`.
+
+In all three, `lines` holds **enable** lines only — never usage mappings (`ysiw)`
+is usage, not config). See [Append Planning](../features/ideavimrc-button.md) for
+how the button matches and appends a snippet.
 
 ## Display
 
@@ -196,8 +249,8 @@ cosmetic — see [tips-pipeline.md](tips-pipeline.md#ordering)).
 Coupled across code + docs — update all together: (1)
 `tips/categories/<name>.json` (add = new file; remove = migrate/delete its tips
 first); (2) the table above + picking rules; (3)
-[wip/taxonomy-and-config.md](wip/taxonomy-and-config.md) if it affects the
-migration. Ordering needs no change — categories sort alphabetically
+[../discover/config-tips-roadmap.md](../discover/config-tips-roadmap.md) if it
+affects the config roadmap. Ordering needs no change — categories sort alphabetically
 automatically. Then run `node scripts/generate-tips.mjs` to confirm it validates.
 
 ---
