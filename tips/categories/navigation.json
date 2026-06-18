@@ -395,18 +395,6 @@
     },
     {
       "category": [
-        "navigation",
-        "ideavim"
-      ],
-      "summary": "Move by camelCase words [w / [b",
-      "details": [
-        "[w moves to next camelCase word",
-        "[b moves to previous camelCase word",
-        "]w and ]b move to word ends"
-      ]
-    },
-    {
-      "category": [
         "navigation"
       ],
       "summary": "Place line top/center/bottom zt zz zb",

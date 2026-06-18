@@ -293,6 +293,24 @@
       "category": [
         "plugins",
         "ideavim",
+        "pattern"
+      ],
+      "summary": "Substitute case variants with :S",
+      "details": [
+        ":S/foo/bar/g keeps case variants",
+        "Handles foo, Foo, and FOO"
+      ],
+      "config": {
+        "name": "Install vim-abolish",
+        "lines": [
+          "Plug 'tpope/vim-abolish'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
         "editing"
       ],
       "summary": "Recase a word crs / crc",
@@ -311,17 +329,73 @@
       "category": [
         "plugins",
         "ideavim",
-        "editing"
+        "navigation"
       ],
-      "summary": "Add a cursor to the next match",
+      "summary": "Move by subword <leader>w",
       "details": [
-        "<A-n> selects the next word match",
-        "<A-x> skips, <A-p> removes last"
+        "Set the key before Plug",
+        "Jumps inside CamelCase names"
       ],
       "config": {
-        "name": "Install vim-multiple-cursors",
+        "name": "Install CamelCaseMotion",
         "lines": [
-          "Plug 'terryma/vim-multiple-cursors'"
+          "let g:camelcasemotion_key = '<leader>'",
+          "Plug 'bkad/CamelCaseMotion'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Change identifier part ci<leader>w",
+      "details": [
+        "Targets one CamelCase chunk",
+        "Also works in snake_case names"
+      ],
+      "config": {
+        "name": "Install CamelCaseMotion",
+        "lines": [
+          "let g:camelcasemotion_key = '<leader>'",
+          "Plug 'bkad/CamelCaseMotion'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Change next pair cin)",
+      "details": [
+        "n targets the next object",
+        "Use c2in) to skip farther"
+      ],
+      "config": {
+        "name": "Install targets.vim",
+        "lines": [
+          "Plug 'wellle/targets.vim'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Delete one list item da,",
+      "details": [
+        "Acts on separator objects",
+        "Includes the comma or neighbor gap"
+      ],
+      "config": {
+        "name": "Install targets.vim",
+        "lines": [
+          "Plug 'wellle/targets.vim'"
         ]
       }
     },
@@ -401,7 +475,7 @@
       "category": [
         "plugins",
         "ideavim",
-        "windows"
+        "files"
       ],
       "summary": "Browse files in a tree",
       "details": [

@@ -25,7 +25,7 @@ random at runtime).
 | 11 | `options` | options | tune behavior |
 | 12 | `mappings` | map | reshape the keyboard |
 | 13 | `ideavim` | ideavim | IDE-bridge behavior |
-| 14 | `plugin` | plugin | install capabilities |
+| 14 | `plugins` | plugin | install capabilities |
 
 **Locked decisions:** split `registers` now (~15 tips); `navigation` stays merged
 (~58, the core skill); the 17 file/buffer/save-quit tips get their own `files`
@@ -65,8 +65,8 @@ Organized by what the user wants. The line that matters for shipping is
 **additive vs. positional**.
 
 **Additive — safe to one-click append today** (unique, order-independent lines):
-- **Install a capability** — `Plug 'tpope/vim-surround'`. 13 tips today, on the
-  legacy `set <plugin>` form; migrate to `Plug`.
+- **Install a capability** — `Plug 'tpope/vim-surround'`. Plugin tips use the
+  `Plug` form for official IdeaVim plugin-list entries.
 - **Tune built-in behavior** — `set scrolloff=5`, `ignorecase smartcase`,
   `hlsearch`, `number`. ~7 tips, each needs a `config` line added.
 - **IDE-bridge options** — `set ideajoin`, `idearefactormode=keep`,
@@ -81,17 +81,16 @@ Organized by what the user wants. The line that matters for shipping is
 
 The additive set is ~25 tips of value shippable **before** any dedup or leader work.
 
-**Plugin enable/use split (locked):** each plugin = an **enable tip** in `plugin`
-(carries the `Plug` line, drives the button) + a **usage tip** in its functional
-category (keystrokes, no config). The 13 current `plugin` tips are all enable tips;
-usage tips already live in their homes.
+**Plugin enable/use split (locked):** each plugin tip carries the `Plug` line
+and teaches one concise usage. Keep the first category as `plugins`, then add a
+functional secondary such as `editing`, `navigation`, `pattern`, or `files`.
 
 ---
 
 ## 3. Roadmap — ship additive first
 
-1. **Bucket A** — migrate plugin form `set <plugin>` → `Plug '<alias>'` for all 13;
-   apply the enable/use split.
+1. **Bucket A** — keep expanding `plugins` with verified `Plug '<alias>'`
+   entries from the official IdeaVim plugin list.
 2. **Bucket B** — add a `config` line to the ~12 existing option tips. Highest value
    per effort; exact-match-safe, no leader, no collisions.
 3. Provenance markers in `IdeaVimRcAppendPlan` + tests.

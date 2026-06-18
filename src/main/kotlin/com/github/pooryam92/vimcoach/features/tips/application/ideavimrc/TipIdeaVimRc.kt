@@ -91,8 +91,11 @@ class TipIdeaVimRc(
             notifier.showReloadIdeaVimRcFailed()
             return
         }
-        ActionManager.getInstance().tryToExecute(action, null, null, ActionPlaces.NOTIFICATION, true)
-        notifier.showReloadedIdeaVimRc()
+        // tryToExecute runs synchronously (now = true) and rejects the callback when the action is
+        // disabled — e.g. IdeaVim's ReloadVimRc disables itself when no .ideavimrc editor is in the
+        // click-time context. Only report success when the action actually ran, never unconditionally.
+        val callback = ActionManager.getInstance().tryToExecute(action, null, null, ActionPlaces.NOTIFICATION, true)
+        if (callback.isDone) notifier.showReloadedIdeaVimRc() else notifier.showReloadIdeaVimRcFailed()
     }
 
     private fun openIdeaVimRcAtLine(path: Path, startLine: Int, lineCount: Int) {
