@@ -12,9 +12,15 @@ import java.net.HttpURLConnection
 import java.util.Base64
 
 class RemoteTipSourceServiceImpl(
-    private val sourceUrl: String = VimTipConfig.GITHUB_API_URL
+    private val sourceUrl: String = VimTipConfig.resolveRemoteUrl()
 ) : RemoteTipSourceService {
     private val gson = Gson()
+
+    init {
+        if (sourceUrl != VimTipConfig.GITHUB_API_URL) {
+            logger.info("Remote tip source overridden via ${VimTipConfig.TIP_REMOTE_URL_PROPERTY}: $sourceUrl")
+        }
+    }
 
     override fun loadTips(): TipSourceLoadResult {
         logger.info("Loading Vim tips from remote source (unconditional)")
