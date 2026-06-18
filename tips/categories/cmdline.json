@@ -7,15 +7,15 @@
       ],
       "summary": "Inspect registers with :reg",
       "details": [
-        ":reg shows registers and recorded macros",
-        "Use it when you forget what you yanked or recorded"
+        ":reg lists registers and macros",
+        "Check what you yanked or recorded"
       ]
     },
     {
       "category": [
         "cmdline"
       ],
-      "summary": "Move on the command line Ctrl-b / Ctrl-e",
+      "summary": "Jump to ends of : Ctrl-b / Ctrl-e",
       "details": [
         "Ctrl-b jumps to the start",
         "Ctrl-e jumps to the end"
@@ -27,15 +27,15 @@
       ],
       "summary": "Move by word in : S-Left / S-Right",
       "details": [
-        "S-Left moves to the previous word",
-        "S-Right moves to the next word"
+        "S-Left to the previous word",
+        "S-Right to the next word"
       ]
     },
     {
       "category": [
         "cmdline"
       ],
-      "summary": "Cancel the command line Ctrl-c / Esc",
+      "summary": "Cancel the : prompt Ctrl-c / Esc",
       "details": [
         "Ctrl-c cancels the prompt",
         "Esc cancels it too"
@@ -45,10 +45,10 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Edit command-line quickly Ctrl-w / Ctrl-u",
+      "summary": "Erase in : Ctrl-w / Ctrl-u",
       "details": [
-        "In : prompt: Ctrl-w deletes a word",
-        "Ctrl-u clears the whole command line"
+        "Ctrl-w deletes a word back",
+        "Ctrl-u clears the whole line"
       ]
     },
     {
@@ -58,17 +58,17 @@
       "summary": "Recall matching history Up / Down",
       "details": [
         "Up finds older matching entries",
-        "Down goes back toward newer ones"
+        "Down moves toward newer ones"
       ]
     },
     {
       "category": [
         "cmdline"
       ],
-      "summary": "Browse command-line history Ctrl-p / Ctrl-n",
+      "summary": "Browse : history Ctrl-p / Ctrl-n",
       "details": [
-        "In : or /, Ctrl-p goes to older history",
-        "PageUp / PageDown do the same"
+        "Ctrl-p goes to older history",
+        "Ctrl-n goes to newer history"
       ]
     },
     {
@@ -77,8 +77,18 @@
       ],
       "summary": "Show command history with :history",
       "details": [
-        ":history shows : command history",
-        "Use :history / for search history"
+        ":history shows : history",
+        ":history / shows search history"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Repeat last : command with :@:",
+      "details": [
+        ":@: reruns your last Ex command",
+        "Faster than retyping it"
       ]
     },
     {
@@ -87,8 +97,8 @@
       ],
       "summary": "Go to a specific line :N",
       "details": [
-        "Type :N then press Enter",
-        "Example: :120 jumps to line 120"
+        "Type :N then Enter",
+        ":120 jumps to line 120"
       ]
     },
     {
@@ -107,10 +117,10 @@
         "cmdline",
         "navigation"
       ],
-      "summary": "List marks :marks",
+      "summary": "List marks with :marks",
       "details": [
         ":marks shows active marks",
-        "Use it before jumping with ' or `"
+        "Check before jumping with ' or `"
       ]
     },
     {
@@ -120,8 +130,8 @@
       ],
       "summary": "Clear jump history with :clearjumps",
       "details": [
-        ":clearjumps removes stored jump locations",
-        "Useful when you want Ctrl-o / Ctrl-i to start fresh"
+        ":clearjumps drops jump locations",
+        "Lets Ctrl-o / Ctrl-i start fresh"
       ]
     },
     {
@@ -131,17 +141,18 @@
       ],
       "summary": "Delete marks with :delmarks",
       "details": [
-        ":delmarks removes one or more marks",
-        "Use it when old marks are getting in the way"
+        ":delmarks removes given marks",
+        ":delmarks! clears all marks"
       ]
     },
     {
       "category": [
-        "cmdline"
+        "cmdline",
+        "registers"
       ],
-      "summary": "Insert a register on the command line Ctrl-r",
+      "summary": "Insert a register in : Ctrl-r",
       "details": [
-        "In : or /, Ctrl-r inserts a register",
+        "Ctrl-r then a register name",
         "Great for reusing text in :s"
       ]
     },
@@ -149,41 +160,31 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Insert word in : with Ctrl-r Ctrl-w",
+      "summary": "Insert word in : Ctrl-r Ctrl-w",
       "details": [
-        "In : or /, Ctrl-r Ctrl-w inserts the word under cursor",
-        "Useful for reusing names in a command"
-      ]
-    },
-    {
-      "category": [
-        "cmdline"
-      ],
-      "summary": "Insert file in : with Ctrl-r Ctrl-f",
-      "details": [
-        "In : or /, Ctrl-r Ctrl-f inserts the file under cursor",
-        "Useful for file-based Ex commands"
-      ]
-    },
-    {
-      "category": [
-        "cmdline"
-      ],
-      "summary": "Open help with :help",
-      "details": [
-        ":help {topic} opens docs (e.g., :help text-objects)",
-        "Use Ctrl-] to jump tags, Ctrl-t to jump back"
+        "Inserts the word under cursor",
+        "Reuse names without retyping"
       ]
     },
     {
       "category": [
         "cmdline",
-        "navigation"
+        "files"
       ],
-      "summary": "Inspect character codes with ga / :ascii",
+      "summary": "Insert filename in : Ctrl-r Ctrl-f",
       "details": [
-        "ga reports the character under the cursor",
-        ":ascii is the Ex command for the same check"
+        "Inserts the file under cursor",
+        "Handy for file Ex commands"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Inspect a character with :ascii",
+      "details": [
+        ":ascii shows the char's codes",
+        "ga does the same in normal mode"
       ]
     }
   ]

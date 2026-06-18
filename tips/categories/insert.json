@@ -24,11 +24,11 @@
       "category": [
         "insert"
       ],
-      "summary": "Complete words with Ctrl-n / Ctrl-p",
+      "summary": "Pick completions Ctrl-n / Ctrl-p",
       "details": [
-        "In Insert mode, Ctrl-n picks the next match",
-        "Ctrl-p picks the previous match",
-        "Matches words already in the file"
+        "Ctrl-n moves down the list",
+        "Ctrl-p moves up the list",
+        "Use it in the completion popup"
       ]
     },
     {
@@ -73,8 +73,7 @@
     },
     {
       "category": [
-        "insert",
-        "navigation"
+        "insert"
       ],
       "summary": "Run one Normal command with Ctrl-o",
       "details": [
@@ -86,7 +85,7 @@
       "category": [
         "insert"
       ],
-      "summary": "Delete previous word in Insert mode Ctrl-w",
+      "summary": "Delete the previous word Ctrl-w",
       "details": [
         "Deletes word left of cursor",
         "Good for quick typo fixes"
@@ -96,7 +95,7 @@
       "category": [
         "insert"
       ],
-      "summary": "Delete back to indent in Insert mode Ctrl-u",
+      "summary": "Delete back to indent Ctrl-u",
       "details": [
         "Deletes back to first non-blank",
         "Keeps text after the cursor"
@@ -106,7 +105,7 @@
       "category": [
         "insert"
       ],
-      "summary": "Shift indent in Insert mode Ctrl-t / Ctrl-d",
+      "summary": "Shift indent Ctrl-t / Ctrl-d",
       "details": [
         "Ctrl-t shifts indent right",
         "Ctrl-d shifts indent left"
@@ -114,9 +113,10 @@
     },
     {
       "category": [
-        "insert"
+        "insert",
+        "registers"
       ],
-      "summary": "Insert a register in Insert mode Ctrl-r",
+      "summary": "Insert a register Ctrl-r",
       "details": [
         "Ctrl-r 0 inserts last yank",
         "Ctrl-r + inserts clipboard"
@@ -152,6 +152,26 @@
       "details": [
         "Ctrl-y inserts char from above",
         "Ctrl-e inserts char from below"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Reinsert last inserted text Ctrl-a",
+      "details": [
+        "Repeats your last typed text",
+        "Ctrl-@ inserts it then exits"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Insert a literal key Ctrl-v",
+      "details": [
+        "Ctrl-v then a key inserts it raw",
+        "Ctrl-v Tab adds a real tab"
       ]
     }
   ]

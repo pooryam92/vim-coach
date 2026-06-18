@@ -7,8 +7,8 @@
       ],
       "summary": "Open a horizontal split :split",
       "details": [
-        ":split opens another split on the current file",
-        "Use it when stacked editing is easier"
+        ":split (or :sp) stacks another view of this file",
+        "Both windows share one buffer, so edits stay in sync"
       ]
     },
     {
@@ -29,8 +29,8 @@
       ],
       "summary": "Open a vertical split :vsplit",
       "details": [
-        ":vsplit opens a side-by-side view",
-        "Useful for compare-style editing"
+        ":vsplit (or :vs) opens a side-by-side view",
+        "Great for comparing two parts of a file"
       ]
     },
     {
@@ -50,8 +50,8 @@
       ],
       "summary": "Close current split :close / Ctrl-w c",
       "details": [
-        ":close or Ctrl-w c closes this split",
-        "Use it when you want to keep other splits"
+        ":close or Ctrl-w c closes this window",
+        "The buffer stays loaded; only the view closes"
       ]
     },
     {
@@ -81,7 +81,7 @@
       ],
       "summary": "Move to a split Ctrl-w h/j/k/l",
       "details": [
-        "Use h j k l for left down up right",
+        "Ctrl-w h/j/k/l moves left/down/up/right",
         "Arrow keys also work after Ctrl-w"
       ]
     },
@@ -89,10 +89,10 @@
       "category": [
         "windows"
       ],
-      "summary": "Resize splits Ctrl-w + / - / =",
+      "summary": "Resize splits Ctrl-w + / - / = / < / >",
       "details": [
-        "Ctrl-w + taller, Ctrl-w - shorter",
-        "Ctrl-w = makes splits equal size"
+        "Ctrl-w +/- change height, Ctrl-w </> change width",
+        "Ctrl-w = makes all splits equal size"
       ]
     },
     {
@@ -146,7 +146,48 @@
       "summary": "Reorder tabs :tabmove",
       "details": [
         ":tabmove 0 moves the tab to the start",
-        ":tabmove without a number moves it last"
+        ":tabmove with no count moves it to the end"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Maximize a split Ctrl-w _ / Ctrl-w |",
+      "details": [
+        "Ctrl-w _ gives this split max height",
+        "Ctrl-w | gives it max width"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Move a split to an edge Ctrl-w H/J/K/L",
+      "details": [
+        "Ctrl-w H/J/K/L moves this split far left/down/up/right",
+        "It also re-orients between vertical and horizontal"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Swap two splits Ctrl-w r / Ctrl-w x",
+      "details": [
+        "Ctrl-w r rotates the splits in a row or column",
+        "Ctrl-w x swaps this split with the next one"
+      ]
+    },
+    {
+      "category": [
+        "windows",
+        "cmdline"
+      ],
+      "summary": "New tab :tabnew / Ctrl-w T",
+      "details": [
+        ":tabnew opens an empty tab page",
+        "Ctrl-w T moves the current split into its own tab"
       ]
     }
   ]

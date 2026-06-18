@@ -3,14 +3,13 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "editing"
       ],
       "summary": "Add surroundings ys{motion}",
       "details": [
         "ys then a motion, then a pair",
-        "ysiw) wraps a word in parens",
-        "ys$\" quotes to end of line"
+        "ysiw) gives (word)",
+        "ysiw( pads it: ( word )"
       ],
       "config": {
         "name": "Install vim-surround",
@@ -22,7 +21,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "editing"
       ],
       "summary": "Surround a whole line yss",
@@ -40,7 +38,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "editing"
       ],
       "summary": "Change surroundings cs",
@@ -58,7 +55,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "editing"
       ],
       "summary": "Delete surroundings ds",
@@ -76,7 +72,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "visual"
       ],
       "summary": "Surround a selection S",
@@ -94,7 +89,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "editing"
       ],
       "summary": "Wrap in an HTML tag ysiwt",
@@ -112,7 +106,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "editing"
       ],
       "summary": "Change or delete a tag cst / dst",
@@ -130,25 +123,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
-        "editing"
-      ],
-      "summary": "Inner spaces with ( vs )",
-      "details": [
-        "ysiw) gives (word)",
-        "ysiw( gives ( word )"
-      ],
-      "config": {
-        "name": "Install vim-surround",
-        "lines": [
-          "Plug 'tpope/vim-surround'"
-        ]
-      }
-    },
-    {
-      "category": [
-        "plugins",
-        "ideavim",
         "editing"
       ],
       "summary": "Wrap in a function call f",
@@ -166,7 +140,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "repeat"
       ],
       "summary": "Repeat a surround with .",
@@ -184,7 +157,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "editing"
       ],
       "summary": "Toggle comments gcc / gc",
@@ -202,10 +174,9 @@
     {
       "category": [
         "plugins",
-        "ideavim",
-        "editing"
+        "registers"
       ],
-      "summary": "Flash the region you just yanked",
+      "summary": "Flash text after you yank it",
       "details": [
         "Yanks briefly flash after y or Y",
         "Confirms exactly what was copied"
@@ -220,8 +191,7 @@
     {
       "category": [
         "plugins",
-        "ideavim",
-        "editing"
+        "registers"
       ],
       "summary": "Replace with a register gr",
       "details": [
@@ -238,7 +208,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "editing"
       ],
       "summary": "Swap two regions cx",
@@ -256,8 +225,7 @@
     {
       "category": [
         "plugins",
-        "ideavim",
-        "editing"
+        "visual"
       ],
       "summary": "Select an argument ia / aa",
       "details": [
@@ -274,8 +242,7 @@
     {
       "category": [
         "plugins",
-        "ideavim",
-        "editing"
+        "visual"
       ],
       "summary": "Select an indent block ii / ai",
       "details": [
@@ -292,7 +259,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "pattern"
       ],
       "summary": "Substitute case variants with :S",
@@ -310,7 +276,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "editing"
       ],
       "summary": "Recase a word crs / crc",
@@ -328,45 +293,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
-        "navigation"
-      ],
-      "summary": "Move by subword <leader>w",
-      "details": [
-        "Set the key before Plug",
-        "Jumps inside CamelCase names"
-      ],
-      "config": {
-        "name": "Install CamelCaseMotion",
-        "lines": [
-          "let g:camelcasemotion_key = '<leader>'",
-          "Plug 'bkad/CamelCaseMotion'"
-        ]
-      }
-    },
-    {
-      "category": [
-        "plugins",
-        "ideavim",
-        "editing"
-      ],
-      "summary": "Change identifier part ci<leader>w",
-      "details": [
-        "Targets one CamelCase chunk",
-        "Also works in snake_case names"
-      ],
-      "config": {
-        "name": "Install CamelCaseMotion",
-        "lines": [
-          "let g:camelcasemotion_key = '<leader>'",
-          "Plug 'bkad/CamelCaseMotion'"
-        ]
-      }
-    },
-    {
-      "category": [
-        "plugins",
-        "ideavim",
         "editing"
       ],
       "summary": "Change next pair cin)",
@@ -384,7 +310,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "editing"
       ],
       "summary": "Delete one list item da,",
@@ -402,7 +327,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "visual"
       ],
       "summary": "Select the whole file ae / ie",
@@ -420,7 +344,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "navigation"
       ],
       "summary": "Jump to two chars s / S",
@@ -438,7 +361,6 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "navigation"
       ],
       "summary": "Match tags and blocks %",
@@ -456,13 +378,12 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "navigation"
       ],
-      "summary": "Fix { } on whitespace-only lines",
+      "summary": "Stop { } at whitespace-only lines",
       "details": [
-        "{ } stop at blank-looking lines",
-        "Fixes paragraph motions everywhere"
+        "Plain { } pass over these lines",
+        "Now they end the paragraph"
       ],
       "config": {
         "name": "Install vim-paragraph-motion",
@@ -474,18 +395,51 @@
     {
       "category": [
         "plugins",
-        "ideavim",
         "files"
       ],
-      "summary": "Browse files in a tree",
+      "summary": "Open a file tree :NERDTreeToggle",
       "details": [
-        ":NERDTreeToggle opens the tree",
-        ":NERDTreeFind reveals the file"
+        ":NERDTreeFind reveals the file",
+        "Toggle again to hide it"
       ],
       "config": {
         "name": "Install NERDTree",
         "lines": [
           "Plug 'preservim/nerdtree'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "visual"
+      ],
+      "summary": "Select a method am / im",
+      "details": [
+        "dam deletes the whole method",
+        "cim changes just the body"
+      ],
+      "config": {
+        "name": "Install vim-textobj-function",
+        "lines": [
+          "Plug 'kana/vim-textobj-function'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "visual"
+      ],
+      "summary": "Select a class ac",
+      "details": [
+        "dac deletes the whole class",
+        "Picks the innermost when nested"
+      ],
+      "config": {
+        "name": "Enable classtextobj",
+        "lines": [
+          "set classtextobj"
         ]
       }
     }

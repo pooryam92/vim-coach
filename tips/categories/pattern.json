@@ -30,8 +30,8 @@
       ],
       "summary": "Search word under cursor * / #",
       "details": [
-        "* searches forward for the exact word",
-        "# searches backward for the exact word"
+        "* jumps to next whole word under cursor",
+        "# jumps to previous whole word under cursor"
       ]
     },
     {
@@ -133,10 +133,10 @@
       "category": [
         "pattern"
       ],
-      "summary": "Use \\v to reduce escaping in regex",
+      "summary": "Very magic mode \\v reduces escaping",
       "details": [
-        "\\v makes most characters magic",
-        "Great for :s patterns with groups"
+        "\\v makes +, ?, (, |, {, } special automatically",
+        "/\\v(foo|bar) matches foo or bar, no backslashes"
       ]
     },
     {
@@ -223,8 +223,8 @@
       ],
       "summary": "Reuse groups in :s with \\1, \\2",
       "details": [
-        "Capture groups in the pattern, then reuse them",
-        "Great for swapping or reordering text"
+        "Group with \\(...\\), reuse as \\1, \\2",
+        "Swap a,b: :%s/\\(\\w*\\),\\(\\w*\\)/\\2,\\1/"
       ]
     },
     {
@@ -284,6 +284,50 @@
       "details": [
         ":v/pat/d deletes lines that do not match",
         "Use it when you want to keep only matching lines"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Smart case search with smartcase",
+      "details": [
+        ":set ignorecase smartcase",
+        "Lowercase search ignores case",
+        "Add an uppercase letter to match case"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Edit search history with q/",
+      "details": [
+        "q/ opens past searches in a window",
+        "Edit a line and press Enter to run it",
+        "q: does the same for : commands"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Count matches with :s///n or %",
+      "details": [
+        ":%s/pat//gn counts matches without changing",
+        "Or after /pat, run :%s///gn"
+      ]
+    },
+    {
+      "category": [
+        "pattern"
+      ],
+      "summary": "Recall last search with Ctrl-r /",
+      "details": [
+        "In : or insert, Ctrl-r / pastes the last search",
+        "Example: :%s/<C-r>//new/g reuses it"
       ]
     }
   ]

@@ -241,7 +241,7 @@
       "summary": "Return after big jumps `` and ''",
       "details": [
         "`` returns to the exact previous spot",
-        "'' returns to the previous line",
+        "'' returns to the previous line (first non-blank)",
         "Useful after big jumps like G, %, /, or file switches"
       ]
     },
@@ -543,6 +543,50 @@
       "details": [
         "zr opens one fold level",
         "zm closes one fold level"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Search forward/backward / and ?",
+      "details": [
+        "/text searches forward, ?text searches backward",
+        "n repeats in the same direction",
+        "N repeats in the opposite direction"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Search the word under cursor * / #",
+      "details": [
+        "* searches forward for the word under the cursor",
+        "# searches backward for it",
+        "g* / g# match partial words too"
+      ]
+    },
+    {
+      "category": [
+        "navigation",
+        "editing"
+      ],
+      "summary": "Resume insert at last edit gi",
+      "details": [
+        "gi jumps to the last insert spot and enters Insert mode",
+        "Picks up exactly where you stopped typing"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Repeat search and place line n then zz",
+      "details": [
+        "Press n to jump to the next match",
+        "Then zz centers that line on screen",
+        "Keeps the match comfortably in view"
       ]
     }
   ]
