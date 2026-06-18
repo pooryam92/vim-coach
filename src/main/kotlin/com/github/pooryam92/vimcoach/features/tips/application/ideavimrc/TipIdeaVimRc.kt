@@ -54,13 +54,13 @@ class TipIdeaVimRc(
     private fun handle(tip: VimTip) {
         when (val result = addTipToIdeaVimRc.add(tip)) {
             is AddTipToIdeaVimRc.Result.Added -> {
-                openIdeaVimRcAtLine(result.path, result.startLine, result.lineCount)
+                val editor = openIdeaVimRcAtLine(result.path, result.startLine, result.lineCount)
                 // Forward reference: onReload needs to dismiss the message, but the message handle
                 // only exists once showAddedToIdeaVimRc has been called with onReload. The lambda is
                 // not invoked until the user clicks "Reload now", by which point `message` is set.
                 var message: TipMessageHandle? = null
                 val onReload = if (reloadAvailable()) {
-                    { message?.dismiss(); triggerReload() }
+                    { message?.dismiss(); triggerReload(editor) }
                 } else null
                 message = notifier.showAddedToIdeaVimRc(onReload)
             }
@@ -78,7 +78,7 @@ class TipIdeaVimRc(
             //noinspection ActionIsNotPreregistered
             ActionManager.getInstance().getAction(IDEAVIM_RELOAD_ACTION_ID) != null
 
-    private fun triggerReload() {
+    private fun triggerReload(editor: Editor?) {
         val injected = reloadIdeaVimRc
         if (injected != null) {
             injected()
@@ -91,18 +91,25 @@ class TipIdeaVimRc(
             notifier.showReloadIdeaVimRcFailed()
             return
         }
+        // IdeaVim's ReloadVimRc requires EDITOR and VIRTUAL_FILE in its data context and disables
+        // itself otherwise. The click originates on the notification balloon, whose focus-based data
+        // context (the null-component case) has neither — so the action would always be disabled and
+        // the reload would silently fail. Pass the .ideavimrc editor we just opened as the context
+        // component so the action sees the file it needs to reload.
+        val contextComponent = editor?.takeUnless { it.isDisposed }?.contentComponent
         // tryToExecute runs synchronously (now = true) and rejects the callback when the action is
-        // disabled — e.g. IdeaVim's ReloadVimRc disables itself when no .ideavimrc editor is in the
-        // click-time context. Only report success when the action actually ran, never unconditionally.
-        val callback = ActionManager.getInstance().tryToExecute(action, null, null, ActionPlaces.NOTIFICATION, true)
+        // disabled. Only report success when the action actually ran, never unconditionally.
+        val callback = ActionManager.getInstance()
+            .tryToExecute(action, null, contextComponent, ActionPlaces.NOTIFICATION, true)
         if (callback.isDone) notifier.showReloadedIdeaVimRc() else notifier.showReloadIdeaVimRcFailed()
     }
 
-    private fun openIdeaVimRcAtLine(path: Path, startLine: Int, lineCount: Int) {
-        val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByNioFile(path) ?: return
+    private fun openIdeaVimRcAtLine(path: Path, startLine: Int, lineCount: Int): Editor? {
+        val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByNioFile(path) ?: return null
         val descriptor = OpenFileDescriptor(project, virtualFile, startLine, 0)
-        val editor = FileEditorManager.getInstance(project).openTextEditor(descriptor, true) ?: return
+        val editor = FileEditorManager.getInstance(project).openTextEditor(descriptor, true) ?: return null
         highlightAppendedLines(editor, startLine, lineCount)
+        return editor
     }
 
     private fun highlightAppendedLines(editor: Editor, startLine: Int, lineCount: Int) {
