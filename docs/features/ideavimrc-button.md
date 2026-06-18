@@ -2,7 +2,7 @@
 
 When a tip has configuration lines (e.g. `set surround`, `Plug 'tpope/vim-surround'`) **and** the user has IdeaVim installed **and** a `.ideavimrc` file already exists, an apply action button appears on the tip notification. Clicking it appends those lines to the file, opens it in the editor at the added lines, and offers a **"Reload now"** button if IdeaVim's reload action is available.
 
-The button label comes from the tip's `config`: if `config.name` is set it is used **verbatim** (e.g. `Install vim-surround`); otherwise the generic **"Apply"** label is used. The lines written to the file come from `config.lines`. See the [tip schema](../tips/README.md) for the `config` object shape (and the legacy array form still accepted for back-compat).
+The button label comes from the tip's `config`: if `config.name` is set it is used **verbatim** (e.g. `Install vim-surround`); otherwise the generic **"Apply"** label is used. The lines written to the file come from `config.lines`. See the [tip schema](../tips/tip-format.md) for the `config` object shape (and the legacy array form still accepted for back-compat).
 
 File creation is deliberately out of scope — if no `.ideavimrc` exists, the button is simply not shown. The user creates the file through IdeaVim's own "Create ~/.ideavimrc" action.
 

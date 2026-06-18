@@ -9,7 +9,8 @@
       "details": [
         "ys then a motion, then a pair",
         "ysiw) gives (word)",
-        "ysiw( pads it: ( word )"
+        "ysiw( pads it: ( word )",
+        "Repeat on the next word with ."
       ],
       "config": {
         "name": "Install vim-surround",
@@ -43,7 +44,8 @@
       "summary": "Change surroundings cs",
       "details": [
         "cs\"' swaps quotes to single",
-        "cs)] changes parens to brackets"
+        "cs)] changes parens to brackets",
+        "Press . to repeat it on the next match"
       ],
       "config": {
         "name": "Install vim-surround",
@@ -74,10 +76,10 @@
         "plugins",
         "visual"
       ],
-      "summary": "Surround a selection S",
+      "summary": "Surround a visual selection S",
       "details": [
-        "Select text, then S and a pair",
-        "S) wraps it, S<em> adds a tag"
+        "In Visual mode, press S then a bracket or tag",
+        "S) wraps in ( ), S<em> in <em> tags"
       ],
       "config": {
         "name": "Install vim-surround",
@@ -125,27 +127,10 @@
         "plugins",
         "editing"
       ],
-      "summary": "Wrap in a function call f",
+      "summary": "Wrap in a function call ysiwf",
       "details": [
         "f prompts for a function name",
         "ysiwf then name gives name(word)"
-      ],
-      "config": {
-        "name": "Install vim-surround",
-        "lines": [
-          "Plug 'tpope/vim-surround'"
-        ]
-      }
-    },
-    {
-      "category": [
-        "plugins",
-        "repeat"
-      ],
-      "summary": "Repeat a surround with .",
-      "details": [
-        ". replays the last ys, cs or ds",
-        "Works like any Vim edit"
       ],
       "config": {
         "name": "Install vim-surround",
@@ -227,7 +212,7 @@
         "plugins",
         "visual"
       ],
-      "summary": "Select an argument ia / aa",
+      "summary": "Act on an argument cia / daa",
       "details": [
         "cia changes one argument",
         "daa deletes it with its comma"
@@ -244,10 +229,29 @@
         "plugins",
         "visual"
       ],
-      "summary": "Select an indent block ii / ai",
+      "summary": "Act on a block by indent dii / cii",
       "details": [
-        "vai selects the indent block",
-        "dii deletes its inner lines"
+        "dii deletes lines at the current indent",
+        "cii changes them, yii yanks them",
+        "Works with any operator, even > and ="
+      ],
+      "config": {
+        "name": "Install vim-indent-object",
+        "lines": [
+          "Plug 'michaeljsmith/vim-indent-object'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "visual"
+      ],
+      "summary": "Extend an indent block dai / daI",
+      "details": [
+        "dai also takes the header line above",
+        "daI takes the closing line below too",
+        "Pairs with c, y, > and other operators"
       ],
       "config": {
         "name": "Install vim-indent-object",
@@ -295,10 +299,11 @@
         "plugins",
         "editing"
       ],
-      "summary": "Change next pair cin)",
+      "summary": "Edit the next () pair cin)",
       "details": [
-        "n targets the next object",
-        "Use c2in) to skip farther"
+        "ci) edits inside; cin) seeks ahead",
+        "cil) goes back to the previous",
+        "Works for ) ] } \" ' too"
       ],
       "config": {
         "name": "Install targets.vim",
@@ -314,8 +319,8 @@
       ],
       "summary": "Delete one list item da,",
       "details": [
-        "Acts on separator objects",
-        "Includes the comma or neighbor gap"
+        "da, deletes an item with its comma",
+        "Works for . ; : | and more too"
       ],
       "config": {
         "name": "Install targets.vim",
@@ -329,7 +334,7 @@
         "plugins",
         "visual"
       ],
-      "summary": "Select the whole file ae / ie",
+      "summary": "Act on the whole file vae / yie",
       "details": [
         "vae selects the entire buffer",
         "yie yanks all of it"
@@ -380,10 +385,10 @@
         "plugins",
         "navigation"
       ],
-      "summary": "Stop { } at whitespace-only lines",
+      "summary": "{ } paragraph jumps stop at blanks",
       "details": [
-        "Plain { } pass over these lines",
-        "Now they end the paragraph"
+        "By default { } skip lines holding only spaces",
+        "This plugin treats them as real paragraph breaks"
       ],
       "config": {
         "name": "Install vim-paragraph-motion",
@@ -414,7 +419,7 @@
         "plugins",
         "visual"
       ],
-      "summary": "Select a method am / im",
+      "summary": "Act on a method dam / cim",
       "details": [
         "dam deletes the whole method",
         "cim changes just the body"
@@ -431,10 +436,29 @@
         "plugins",
         "visual"
       ],
-      "summary": "Select a class ac",
+      "summary": "Act on a whole class dac / vac",
       "details": [
-        "dac deletes the whole class",
-        "Picks the innermost when nested"
+        "dac deletes the class, header and all",
+        "vac selects it, yac yanks it",
+        "Works with any operator"
+      ],
+      "config": {
+        "name": "Enable classtextobj",
+        "lines": [
+          "set classtextobj"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "visual"
+      ],
+      "summary": "Act on a class body cic / dic",
+      "details": [
+        "cic changes the body, keeps the class line",
+        "dic clears the body only",
+        "Pairs with y, >, = and more"
       ],
       "config": {
         "name": "Enable classtextobj",
