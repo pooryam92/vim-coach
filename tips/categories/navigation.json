@@ -547,28 +547,6 @@
     },
     {
       "category": [
-        "navigation"
-      ],
-      "summary": "Search forward/backward / and ?",
-      "details": [
-        "/text searches forward, ?text searches backward",
-        "n repeats in the same direction",
-        "N repeats in the opposite direction"
-      ]
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Search the word under cursor * / #",
-      "details": [
-        "* searches forward for the word under the cursor",
-        "# searches backward for it",
-        "g* / g# match partial words too"
-      ]
-    },
-    {
-      "category": [
         "navigation",
         "editing"
       ],

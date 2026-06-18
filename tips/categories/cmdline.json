@@ -85,16 +85,6 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Repeat last : command with :@:",
-      "details": [
-        ":@: reruns your last Ex command",
-        "Faster than retyping it"
-      ]
-    },
-    {
-      "category": [
-        "cmdline"
-      ],
       "summary": "Go to a specific line :N",
       "details": [
         "Type :N then Enter",

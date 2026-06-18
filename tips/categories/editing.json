@@ -437,17 +437,6 @@
     },
     {
       "category": [
-        "editing",
-        "repeat"
-      ],
-      "summary": "Repeat last change .",
-      "details": [
-        "Dot repeats the last text change",
-        "Do one clean change, then repeat"
-      ]
-    },
-    {
-      "category": [
         "editing"
       ],
       "summary": "Undo and redo u / Ctrl-r",
