@@ -4,9 +4,12 @@
 
 ## [Unreleased]
 
+## [1.4.0-beta.2] - 2026-06-19
+
 ### Changed
 
 - The **Apply to .ideavimrc** action now appears whenever IdeaVim is installed, not only when a `.ideavimrc` already exists. If you have no config file yet, clicking it guides you to create one through IdeaVim's "Create ~/.ideavimrc" — Vim Coach never creates the file itself
+- Expanded and refined the tip library, with improved plugin tips and additional tips across categories
 
 ## [1.4.0-beta.1] - 2026-06-18
 
