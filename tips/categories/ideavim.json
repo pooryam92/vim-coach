@@ -33,6 +33,18 @@
     {
       "category": [
         "ideavim",
+        "options"
+      ],
+      "summary": "Test options live with :set",
+      "details": [
+        ":set number turns line numbers on now",
+        "It only lasts this session",
+        "Add it to .ideavimrc to keep it"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
         "cmdline"
       ],
       "summary": "Toggle IdeaVim with :action",

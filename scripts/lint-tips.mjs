@@ -70,7 +70,6 @@ const files = readdirSync(sourceDir).filter((n) => n.endsWith(".json")).sort();
 const longSummaries = [];
 const longDetails = [];
 const separators = [];
-const legacyConfig = [];
 const allTips = [];
 
 for (const file of files) {
@@ -91,10 +90,6 @@ for (const file of files) {
     if (/\s-\s/.test(s) || /\s→\s/.test(s) || /\([^)]*\)\s*$/.test(s)) {
       separators.push([file, s]);
     }
-
-    // Object form { name, lines } renders a labelled button; the legacy array
-    // form falls back to a generic "Apply".
-    if (Array.isArray(tip.config)) legacyConfig.push([file, s]);
 
     allTips.push({
       file,
@@ -126,9 +121,6 @@ section(`Details over ${DETAIL_MAX} chars (won't fit ~2 wrapped lines)`, longDet
   `${String(n).padEnd(3)} ${f.replace(".json", "").padEnd(12)} ${JSON.stringify(d)}`,
 );
 section("Possible stray separators in summaries (eyeball — `-` may be part of keys)", separators, ([f, s]) =>
-  `${f.replace(".json", "").padEnd(12)} ${JSON.stringify(s)}`,
-);
-section("Legacy array config form (no button label)", legacyConfig, ([f, s]) =>
   `${f.replace(".json", "").padEnd(12)} ${JSON.stringify(s)}`,
 );
 

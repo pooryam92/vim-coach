@@ -5,10 +5,10 @@
         "options",
         "navigation"
       ],
-      "summary": "Keep context with scrolloff",
+      "summary": "Keep lines around cursor scrolloff",
       "details": [
-        ":set so=5 keeps context lines",
-        "Use sidescrolloff for side context"
+        "Cursor stays 5 lines from the edge",
+        "sidescrolloff adds side margin too"
       ],
       "config": [
         "set scrolloff=5"
