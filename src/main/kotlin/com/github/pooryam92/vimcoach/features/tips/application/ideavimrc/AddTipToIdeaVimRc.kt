@@ -14,15 +14,16 @@ import java.nio.file.Path
 
 class AddTipToIdeaVimRc(
     private val project: Project,
-    private val findPath: () -> Path? = {
-        serviceOrNull<FindIdeaVimRc>()?.findVimRc()
-    }
+    private val findService: () -> FindIdeaVimRc? = { serviceOrNull<FindIdeaVimRc>() }
 ) {
-    // Only available when the user already has a vimrc — we never create one for them.
-    fun isAvailable(): Boolean = findPath() != null
+    // Available whenever IdeaVim is installed — its file-locator service is registered only then
+    // (plugin-ideavim.xml). Independent of whether a .ideavimrc file exists yet: when it doesn't,
+    // add() returns NoVimRc so the user can be guided to create one. We never create it ourselves.
+    fun isAvailable(): Boolean = findService() != null
 
     fun add(tip: VimTip): Result {
-        val path = findPath() ?: return Result.Failed(FailureReason.NotAccessible)
+        val service = findService() ?: return Result.Failed(FailureReason.NotAccessible)
+        val path = service.findVimRc() ?: return Result.NoVimRc
         val vf = LocalFileSystem.getInstance().refreshAndFindFileByNioFile(path)
             ?: return Result.Failed(FailureReason.NotAccessible)
         if (!vf.isWritable) return Result.Failed(FailureReason.ReadOnly)
@@ -66,6 +67,12 @@ class AddTipToIdeaVimRc(
 
         /** [startLine] is the 0-based line where the existing block begins; [lineCount] how many it spans. */
         data class AlreadyPresent(val path: Path, val startLine: Int, val lineCount: Int) : Result
+
+        /**
+         * IdeaVim is installed but the user has no .ideavimrc yet. We deliberately do not create one
+         * (see [AddTipToIdeaVimRc]); the caller guides the user to create it through IdeaVim instead.
+         */
+        data object NoVimRc : Result
         data class Failed(val reason: FailureReason) : Result
     }
 

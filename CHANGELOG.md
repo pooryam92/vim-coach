@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- The **Apply to .ideavimrc** action now appears whenever IdeaVim is installed, not only when a `.ideavimrc` already exists. If you have no config file yet, clicking it guides you to create one through IdeaVim's "Create ~/.ideavimrc" — Vim Coach never creates the file itself
+
 ## [1.4.0-beta.1] - 2026-06-18
 
 ### Added

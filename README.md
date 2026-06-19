@@ -17,7 +17,7 @@ Vim Coach is an IntelliJ Platform plugin designed to help developers learn and m
 -  **Periodic Tips**: Schedule reminder tips from the plugin settings
 -  **Category Filters**: Enable or disable tip categories from the settings UI, with newly added categories enabled by default
 -  **Tip Exclusions**: Exclude individual tips from notifications and restore them later from settings
--  **Add to .ideavimrc**: When IdeaVim is installed and you already have a `.ideavimrc`, tips that ship a mapping or command show an apply button that appends it to your file, opens it at the added lines, and offers one-click reload
+-  **Add to .ideavimrc**: When IdeaVim is installed, tips that ship a mapping or command show an apply button that appends it to your `.ideavimrc`, opens it at the added lines, and offers one-click reload. No `.ideavimrc` yet? The button points you to IdeaVim's "Create ~/.ideavimrc" — Vim Coach never creates the file for you
 -  **Settings UI**: Control startup tips, periodic reminders, active categories, and excluded tips from `Settings | Tools | Vim Coach`
 -  **Comprehensive Library**: Hundreds of Vim commands covering navigation, editing, searching, and more
 -  **Remote Updates**: Tips can be loaded from remote sources for fresh content
@@ -37,7 +37,7 @@ Once installed, you can:
 5. **Exclude Repeated Tips**: Use `Exclude tip` on a notification to hide that tip from future random selections. Restore excluded tips from `Settings | Tools | Vim Coach`.
 6. **Browse Tips**: Each tip includes a summary and detailed explanation with examples
 7. **Refresh Tips from Remote**: Use the `Vim Coach: Refresh Tips` action to update your tips library from the remote source
-8. **Apply Tips to `.ideavimrc`**: When a tip ships a mapping or command (for example a plugin tip's `Plug` line) and you have IdeaVim with an existing `.ideavimrc`, click the apply button on the notification. Vim Coach appends the lines (skipping any already present), opens the file at the change, and offers a **Reload now** button.
+8. **Apply Tips to `.ideavimrc`**: When a tip ships a mapping or command (for example a plugin tip's `Plug` line) and you have IdeaVim installed, click the apply button on the notification. Vim Coach appends the lines (skipping any already present), opens the file at the change, and offers a **Reload now** button. If you don't have a `.ideavimrc` yet, the button instead guides you to create one via IdeaVim's "Create ~/.ideavimrc" (Vim status-bar icon); create it, then click again.
 
 ### IdeaVim mapping with `<leader>`
 

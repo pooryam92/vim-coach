@@ -126,6 +126,7 @@ class TipNotificationsUnitTest {
         override fun showAddedToIdeaVimRc(onReload: (() -> Unit)?): TipMessageHandle =
             object : TipMessageHandle { override fun dismiss() = Unit }
         override fun showAlreadyInIdeaVimRc() = Unit
+        override fun showCreateIdeaVimRcGuidance() = Unit
         override fun showAddToIdeaVimRcFailed(reason: AddTipToIdeaVimRc.FailureReason) = Unit
         override fun showReloadedIdeaVimRc() = Unit
         override fun showReloadIdeaVimRcFailed() = Unit

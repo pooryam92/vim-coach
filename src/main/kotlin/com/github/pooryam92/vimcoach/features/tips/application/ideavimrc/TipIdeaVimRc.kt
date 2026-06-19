@@ -29,13 +29,15 @@ private const val IDEAVIM_RELOAD_ACTION_ID = "IdeaVim.ReloadVimRc.reload"
  * Handles the "Add to .ideavimrc" button on tip notifications.
  *
  * getAction() returns the button callback, or null if the button should not be shown
- * (tip has no config lines, or no .ideavimrc exists).
+ * (tip has no config lines, or IdeaVim is not installed).
  *
  * On click:
  *   Added          → opens .ideavimrc at the appended lines with a brief highlight;
  *                    shows a "Reload now" affordance if IdeaVim reload is available.
  *   AlreadyPresent → opens .ideavimrc at the existing lines with a brief highlight,
  *                    reports it is already in.
+ *   NoVimRc        → no .ideavimrc exists yet; guides the user to create one (we never
+ *                    create it for them). The button works once the file exists.
  *   Failed         → reports a failure; file is not opened.
  *
  * Notifications go through the [TipNotifier] port; [project] is used only for editor IO.
@@ -68,6 +70,8 @@ class TipIdeaVimRc(
                 openIdeaVimRcAtLine(result.path, result.startLine, result.lineCount)
                 notifier.showAlreadyInIdeaVimRc()
             }
+            is AddTipToIdeaVimRc.Result.NoVimRc ->
+                notifier.showCreateIdeaVimRcGuidance()
             is AddTipToIdeaVimRc.Result.Failed ->
                 notifier.showAddToIdeaVimRcFailed(result.reason)
         }

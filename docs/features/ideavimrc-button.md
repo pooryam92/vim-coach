@@ -1,10 +1,10 @@
 # Add to .ideavimrc
 
-When a tip has configuration lines (e.g. `set surround`, `Plug 'tpope/vim-surround'`) **and** the user has IdeaVim installed **and** a `.ideavimrc` file already exists, an apply action button appears on the tip notification. Clicking it appends those lines to the file, opens it in the editor at the added lines, and offers a **"Reload now"** button if IdeaVim's reload action is available.
+When a tip has configuration lines (e.g. `set surround`, `Plug 'tpope/vim-surround'`) **and** the user has IdeaVim installed, an apply action button appears on the tip notification. Clicking it appends those lines to the `.ideavimrc`, opens it in the editor at the added lines, and offers a **"Reload now"** button if IdeaVim's reload action is available.
 
 The button label comes from the tip's `config`: if `config.name` is set it is used **verbatim** (e.g. `Install vim-surround`); otherwise the generic **"Apply"** label is used. The lines written to the file come from `config.lines`. See the [tip schema](../tips/tip-format.md) for the `config` object shape (and the legacy array form still accepted for back-compat).
 
-File creation is deliberately out of scope — if no `.ideavimrc` exists, the button is simply not shown. The user creates the file through IdeaVim's own "Create ~/.ideavimrc" action.
+**File creation is deliberately out of scope** — Vim Coach never creates a `.ideavimrc` itself. The button is gated only on **IdeaVim being installed** (not on a file existing), so a user who has IdeaVim but no config file still sees the affordance. When they click it and no `.ideavimrc` exists yet (`Result.NoVimRc`), they get a one-line guidance message pointing at IdeaVim's own "Create ~/.ideavimrc" (the Vim status-bar icon); once they create it, the next click appends as normal. This closes the **has-IdeaVim, no-file** dead-end without taking a dependency on IdeaVim's internal file-creation API. See [the indicator-gap notes](../TODO/plugin-tip-indicator-gap.md) for the still-open **no-IdeaVim** case and [the rejected create-on-click plan](../TODO/create-ideavimrc-on-click-plan.md) for why we don't write the file.
 
 ## Vertical Slice
 
@@ -21,6 +21,7 @@ graph LR
     C -->|Result| B
     B -->|Added| I[openIdeaVimRcAtLine\nhighlightAppendedLines]
     B -->|AlreadyPresent| J[openIdeaVimRcAtLine\nhighlightAppendedLines]
+    B -->|NoVimRc| M[create-it guidance notification]
     B -->|Failed| K[failure notification]
     B -->|Added + IdeaVim present| L[reloadIdeaVimRc]
 ```
@@ -48,7 +49,7 @@ sequenceDiagram
     IV->>ADD: add(tip)
     ADD->>FIND: findVimRc() via serviceOrNull<FindIdeaVimRc>()
     note over FIND: IdeaVimPluginFindVimRc searches user.home + XDG paths
-    FIND-->>ADD: Path
+    FIND-->>ADD: Path (or null ⇒ Result.NoVimRc, no file written)
     ADD->>VFS: refreshAndFindFileByNioFile(path)
     ADD->>VFS: vf.isWritable
     ADD->>DOC: getDocument(vf) → read document.text
@@ -72,6 +73,8 @@ sequenceDiagram
         IV->>ED: openTextEditor at startLine
         IV->>HM: addRangeHighlight (flash existing lines)
         IV->>N: showAlreadyInIdeaVimRc()
+    else NoVimRc
+        IV->>N: showCreateIdeaVimRcGuidance()
     else Failed
         IV->>N: showAddToIdeaVimRcFailed()
     end
@@ -81,7 +84,7 @@ Notifications go through the `TipNotifier` port (see [Show Tip](show-tip.md)); `
 
 ## File Discovery
 
-`FindIdeaVimRc` is an application service interface registered only when IdeaVim is installed (via `plugin-ideavim.xml`), with `IdeaVimPluginFindVimRc` as its implementation. `AddTipToIdeaVimRc` resolves it via `serviceOrNull<FindIdeaVimRc>()` — when IdeaVim is absent the service is not registered, `serviceOrNull` returns null, and `isAvailable()` returns false.
+`FindIdeaVimRc` is an application service interface registered only when IdeaVim is installed (via `plugin-ideavim.xml`), with `IdeaVimPluginFindVimRc` as its implementation. `AddTipToIdeaVimRc` resolves it via `serviceOrNull<FindIdeaVimRc>()` — when IdeaVim is absent the service is not registered, `serviceOrNull` returns null, and `isAvailable()` returns false. `isAvailable()` keys purely on the **service's presence** (IdeaVim installed), not on a file existing: the file lookup happens later in `add()`, which returns `Result.NoVimRc` when `findVimRc()` finds nothing — that result drives the create-it guidance rather than hiding the button.
 
 `plugin.xml` declares `IdeaVIM` as an optional dependency for that descriptor, and `gradle.properties` declares the same Marketplace plugin in `platformPlugins`. Keeping both in sync lets IntelliJ resolve `plugin-ideavim.xml` during development and lets the custom run IDE tasks install the same IdeaVim version.
 
@@ -128,9 +131,9 @@ The stamp is **not** part of the already-present match: `findBlockStart` keys of
 
 | Condition | Result |
 |-----------|--------|
-| IdeaVim not installed | Button not shown |
-| `.ideavimrc` does not exist | Button not shown |
+| IdeaVim not installed | Button not shown (`FindIdeaVimRc` service unregistered → `isAvailable()` false) |
 | `tip.config` absent or `config.lines` empty | Button not shown |
+| `.ideavimrc` does not exist (IdeaVim installed) | Button shown; click → `Result.NoVimRc` → guidance to create one via IdeaVim (no file written) |
 | `VirtualFile` not found | `Result.Failed` → warning notification |
 | File not writable | `Result.Failed` → warning notification |
 | `Document` unavailable | `Result.Failed` → warning notification |

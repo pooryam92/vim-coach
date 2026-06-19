@@ -124,6 +124,14 @@ class IntelliJTipNotifierUiTest : BasePlatformTestCase() {
         assertTrue(captured.any { it.type == NotificationType.WARNING })
     }
 
+    fun testShowCreateIdeaVimRcGuidanceEmitsInformationNotWarning() {
+        val captured = captureProjectNotifications()
+        notifier().showCreateIdeaVimRcGuidance()
+
+        val guidance = captured.first { it.content == TipNotificationFactory.TIP_CREATE_IDEAVIMRC_GUIDANCE_TEXT }
+        assertEquals(NotificationType.INFORMATION, guidance.type)
+    }
+
     fun testShowTipExcludedOffersManageAction() {
         val captured = captureProjectNotifications()
         notifier().showTipExcluded(onManage = {})

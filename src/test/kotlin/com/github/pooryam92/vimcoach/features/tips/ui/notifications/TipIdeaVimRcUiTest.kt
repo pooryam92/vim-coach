@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
+import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.FindIdeaVimRc
 import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.TipIdeaVimRc
 import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
@@ -28,32 +29,51 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
         }
     }
 
-    fun testGetActionReturnsNullWhenVimRcNotAvailable() {
+    fun testGetActionReturnsNullWhenIdeaVimNotInstalled() {
         val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
-        val sut = sut(findPath = { null })
+        val sut = sut(findService = { null })
 
         assertNull(sut.getAction(tip))
     }
 
     fun testGetActionReturnsNullWhenTipHasNoConfig() {
         val tip = VimTip("surround", listOf("details"), config = null)
-        val sut = sut(findPath = { tempVimRc("") })
+        val sut = sut(findService = { service(tempVimRc("")) })
 
         assertNull(sut.getAction(tip))
     }
 
     fun testGetActionReturnsNullWhenConfigHasNoLines() {
         val tip = VimTip("surround", listOf("details"), config = TipConfig(name = "Install x", lines = emptyList()))
-        val sut = sut(findPath = { tempVimRc("") })
+        val sut = sut(findService = { service(tempVimRc("")) })
 
         assertNull(sut.getAction(tip))
+    }
+
+    fun testGetActionShownWhenIdeaVimInstalledButNoVimRcFile() {
+        val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
+        // IdeaVim installed (service present) but no file yet — the action shows so we can guide.
+        val sut = sut(findService = { service(null) })
+
+        assertNotNull(sut.getAction(tip))
+    }
+
+    fun testHandleNoVimRcShowsCreateGuidanceAndNoWarning() {
+        val shownNotifications = captureProjectNotifications()
+        val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
+        val sut = sut(findService = { service(null) })
+
+        sut.getAction(tip)?.invoke()
+
+        assertTrue(shownNotifications.any { it.content == TipNotificationFactory.TIP_CREATE_IDEAVIMRC_GUIDANCE_TEXT })
+        assertTrue(shownNotifications.none { it.type == NotificationType.WARNING })
     }
 
     fun testHandleFailedShowsWarningNotification() {
         val shownNotifications = captureProjectNotifications()
         val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
-        // Path exists as far as isAvailable() is concerned, but VFS can't find it → Failed
-        val sut = sut(findPath = { Path("/nonexistent/path/.ideavimrc") })
+        // File path is reported, but VFS can't find it → Failed
+        val sut = sut(findService = { service(Path("/nonexistent/path/.ideavimrc")) })
 
         sut.getAction(tip)?.invoke()
 
@@ -66,7 +86,7 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
         // The existing block sits on line 2, after two unrelated lines.
         val ideavimrcPath = tempVimRc("set a\nset b\n$configLine\n")
         val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf(configLine)))
-        val sut = sut(findPath = { ideavimrcPath })
+        val sut = sut(findService = { service(ideavimrcPath) })
 
         sut.getAction(tip)?.invoke()
 
@@ -80,7 +100,7 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
         val shownNotifications = captureProjectNotifications()
         val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
         var reloadCalled = false
-        val sut = sut(findPath = { tempVimRc("") }, reloadIdeaVimRc = { reloadCalled = true })
+        val sut = sut(findService = { service(tempVimRc("")) }, reloadIdeaVimRc = { reloadCalled = true })
 
         sut.getAction(tip)?.invoke()
 
@@ -97,14 +117,19 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
     }
 
     private fun sut(
-        findPath: () -> java.nio.file.Path?,
+        findService: () -> FindIdeaVimRc?,
         reloadIdeaVimRc: (() -> Unit)? = null
     ) = TipIdeaVimRc(
         project,
         IntelliJTipNotifier(project),
-        AddTipToIdeaVimRc(project, findPath = findPath),
+        AddTipToIdeaVimRc(project, findService = findService),
         reloadIdeaVimRc
     )
+
+    /** A fake IdeaVim file-locator: [path] null means IdeaVim is installed but no .ideavimrc exists. */
+    private fun service(path: java.nio.file.Path?) = object : FindIdeaVimRc {
+        override fun findVimRc(): java.nio.file.Path? = path
+    }
 
     private fun tempVimRc(content: String): java.nio.file.Path =
         Path(FileUtil.createTempDirectory("vimcoach", "home", true).absolutePath, ".ideavimrc")

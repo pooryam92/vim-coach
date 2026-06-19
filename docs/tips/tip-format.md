@@ -50,8 +50,9 @@ ys{motion}`), never the plugin name (`Surround text with vim-surround`) — see
 - `details` — short factual lines: what it does, context, a caveat, or a quick
   example. Aim ≤ 35 chars each; two short lines beat one wrapped line.
 - `config` (optional) — an object `{ "name": ..., "lines": [...] }` describing
-  the `.ideavimrc` snippet the button appends (only when IdeaVim is installed and
-  the file already exists; never creates it).
+  the `.ideavimrc` snippet the button appends (shown whenever IdeaVim is
+  installed; if no `.ideavimrc` exists yet the button guides the user to create
+  one through IdeaVim — Vim Coach never creates it).
   - `lines` — the `.ideavimrc` line(s), written verbatim (order/duplicates
     preserved; blanks dropped). **Enable** lines only, not usage mappings
     (`ysiw)` is *usage*, not config).

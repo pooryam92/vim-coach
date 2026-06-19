@@ -44,6 +44,9 @@ class IntelliJTipNotifier(private val project: Project) : TipNotifier {
     override fun showAlreadyInIdeaVimRc() =
         message(factory.createAddedToIdeaVimRcNotification(TipNotificationFactory.TIP_ALREADY_IN_IDEAVIMRC_TEXT))
 
+    override fun showCreateIdeaVimRcGuidance() =
+        message(factory.createAddedToIdeaVimRcNotification(TipNotificationFactory.TIP_CREATE_IDEAVIMRC_GUIDANCE_TEXT))
+
     override fun showAddToIdeaVimRcFailed(reason: AddTipToIdeaVimRc.FailureReason) =
         message(factory.createAddToIdeaVimRcFailedNotification(reason))
 

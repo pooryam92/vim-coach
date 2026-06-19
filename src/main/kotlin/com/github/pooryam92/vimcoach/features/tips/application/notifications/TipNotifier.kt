@@ -27,6 +27,13 @@ interface TipNotifier {
     /** Report that the config was already present in .ideavimrc. */
     fun showAlreadyInIdeaVimRc()
 
+    /**
+     * Guide the user to create a .ideavimrc when IdeaVim is installed but no file exists yet.
+     * Vim Coach does not create the file itself; the user creates it through IdeaVim, then the
+     * apply action works on the next click.
+     */
+    fun showCreateIdeaVimRcGuidance()
+
     /** Report that appending to .ideavimrc failed, explaining [reason] to the user. */
     fun showAddToIdeaVimRcFailed(reason: AddTipToIdeaVimRc.FailureReason)
 
@@ -44,7 +51,7 @@ interface TipMessageHandle {
 
 /**
  * Callbacks wired into a tip notification's affordances. [onAddToIdeaVimRc] is null when the
- * tip has no config lines or no .ideavimrc exists.
+ * tip has no config lines or IdeaVim is not installed.
  */
 data class TipActions(
     val onShowNextTip: () -> Unit,

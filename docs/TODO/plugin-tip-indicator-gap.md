@@ -12,11 +12,15 @@ button is gated on two things:
 1. **IdeaVim installed** — `plugin-ideavim.xml` (which registers `FindIdeaVimRc`)
    only loads when IdeaVim is present. IdeaVim is an **optional** dependency
    (`plugin.xml`).
-2. **`.ideavimrc` writable** — previously also required the file to already exist.
+2. **`.ideavimrc` exists** — previously also required the file to already exist.
 
-Gate (2) is being fixed: the button now shows whenever IdeaVim is installed and
-creates `~/.ideavimrc` via IdeaVim's `VimRcService.findOrCreateIdeaVimRc()` on
-click. That closes the **has-IdeaVim, no-file** hole.
+Gate (2) is now closed (2026-06-19): the button shows whenever IdeaVim is
+installed (`isAvailable()` keys on the `FindIdeaVimRc` service, not on a file).
+When no `.ideavimrc` exists, clicking returns `Result.NoVimRc` and the user is
+**guided** to create one through IdeaVim — Vim Coach never writes the file. That
+closes the **has-IdeaVim, no-file** hole without coupling to IdeaVim internals.
+See [ideavimrc-button.md](../features/ideavimrc-button.md) and the
+[rejected create-on-click plan](create-ideavimrc-on-click-plan.md).
 
 ## The remaining gap
 
@@ -39,7 +43,7 @@ IdeaVim to work at all.
   - [ ] Option C — leave tips on, but mark plugin/config tips as "needs IdeaVim".
 - [ ] Decide whether plugin tips should still surface as **discovery** for users
       who have IdeaVim but not the specific plugin (don't kill the install funnel
-      — see [config-tips-roadmap.md](config-tips-roadmap.md)).
+      — see [config-tips-roadmap.md](../discover/config-tips-roadmap.md)).
 - [ ] If we keep showing tips without IdeaVim, settle how (if at all) to indicate
       a tip's requirement in the body without the button as the carrier.
 
@@ -47,5 +51,5 @@ IdeaVim to work at all.
 
 - [../features/ideavimrc-button.md](../features/ideavimrc-button.md) — the button
   + create-on-click behavior and its error/gating table.
-- [config-tips-roadmap.md](config-tips-roadmap.md) — config-tip kinds and the
+- [config-tips-roadmap.md](../discover/config-tips-roadmap.md) — config-tip kinds and the
   plugin-discovery funnel this must not break.

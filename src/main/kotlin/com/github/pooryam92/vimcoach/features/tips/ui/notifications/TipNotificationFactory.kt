@@ -150,6 +150,7 @@ class TipNotificationFactory {
         val TIP_RELOAD_IDEAVIMRC_ACTION_TEXT: String = MyBundle.message("tipReloadIdeaVimRcAction")
         val TIP_ADDED_TO_IDEAVIMRC_TEXT: String = MyBundle.message("tipAddedToIdeaVimRcMessage")
         val TIP_ALREADY_IN_IDEAVIMRC_TEXT: String = MyBundle.message("tipAlreadyInIdeaVimRcMessage")
+        val TIP_CREATE_IDEAVIMRC_GUIDANCE_TEXT: String = MyBundle.message("tipCreateIdeaVimRcGuidanceMessage")
         val TIP_ADD_TO_IDEAVIMRC_READONLY_TEXT: String = MyBundle.message("tipAddToIdeaVimRcReadOnlyMessage")
         val TIP_ADD_TO_IDEAVIMRC_NOT_ACCESSIBLE_TEXT: String = MyBundle.message("tipAddToIdeaVimRcNotAccessibleMessage")
         val TIP_ADD_TO_IDEAVIMRC_NOTHING_TEXT: String = MyBundle.message("tipAddToIdeaVimRcNothingToAddMessage")
