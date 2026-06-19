@@ -40,9 +40,10 @@ worked before→after examples, and adding a new category.
   before → after** plus a one-line reason, get a go-ahead, *then* edit. Never
   bulk-rewrite silently.
 - **Search before adding.** `grep -rn` the keys *and* the behavior across
-  `tips/categories/` — the generator only catches identical summaries, so a
-  duplicate idea under different wording is yours to catch. If covered, merge or
-  drop instead of adding.
+  `tips/categories/`, and run `node scripts/lint-tips.mjs` — the generator only
+  catches identical summaries; the linter's duplicate check adds shared-config
+  and shared-key dups, but an idea reworded with neither is still yours to catch.
+  If covered, merge or drop instead of adding.
 - **Verify support before keeping a claim** (see `reference.md` → "Checking
   IdeaVim support"). Don't carry over upstream-Vim behavior IdeaVim doesn't
   replicate.
@@ -205,10 +206,13 @@ node scripts/lint-tips.mjs
 
 `lint-tips.mjs` is advisory (never gates, always exits 0). It reports
 over-length summaries/details, possible stray separators, legacy-array config
-tips, and possible duplicate keys taught twice — the soft checks the generator
-skips. Some hits are false positives by design (a `-` that is part of the keys
-like `Ctrl-w + / -`; a key like `%` that legitimately appears in several tips),
-so eyeball each before acting.
+tips, and **possible duplicate tips** — the soft checks the generator skips. The
+duplicate check pairs tips that share a config line (outside `plugins`, where an
+enable line is shared by design) or share both their trailing keys and ≥2 topic
+words; it catches the same behavior taught under *different* summaries, which the
+generator's identical-summary check cannot. Some hits are false positives by
+design (a `-` that is part of the keys like `Ctrl-w + / -`; intentional siblings
+like `gu / gU` in two modes), so eyeball each before acting.
 
 ## Gotchas (verified)
 

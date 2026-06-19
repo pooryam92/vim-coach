@@ -288,18 +288,6 @@
     },
     {
       "category": [
-        "pattern",
-        "cmdline"
-      ],
-      "summary": "Smart case search with smartcase",
-      "details": [
-        ":set ignorecase smartcase",
-        "Lowercase search ignores case",
-        "Add an uppercase letter to match case"
-      ]
-    },
-    {
-      "category": [
         "pattern"
       ],
       "summary": "Edit search history with q/",

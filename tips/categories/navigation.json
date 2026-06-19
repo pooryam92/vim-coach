@@ -67,11 +67,20 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to line start/end 0 / ^ / $",
+      "summary": "Jump to line start 0 / ^",
       "details": [
-        "0 start of line",
-        "^ first non-blank",
-        "$ end of line"
+        "0 goes to the very first column",
+        "^ stops at first non-blank char"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to line end $",
+      "details": [
+        "Lands on the last char of the line",
+        "Works as a motion: d$ deletes to end"
       ]
     },
     {

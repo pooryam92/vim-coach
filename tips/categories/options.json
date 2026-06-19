@@ -87,14 +87,17 @@
         "options",
         "pattern"
       ],
-      "summary": "Use smart case with ignorecase + smartcase",
+      "summary": "Smart case search with smartcase",
       "details": [
-        ":set ignorecase smartcase",
-        "Uppercase in pattern forces case-sensitive"
+        "/foo finds foo, Foo and FOO",
+        "/Foo finds only Foo"
       ],
-      "config": [
-        "set ignorecase smartcase"
-      ]
+      "config": {
+        "name": "Enable smart case",
+        "lines": [
+          "set ignorecase smartcase"
+        ]
+      }
     },
     {
       "category": [

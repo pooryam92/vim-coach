@@ -42,16 +42,38 @@ function keySignature(summary) {
   return run.join(" ");
 }
 
+// Stopwords that carry no topic signal, so word-overlap ignores them.
+const STOP = new Set(
+  "a an the to of in on at for with and or is it as be by from your you".split(" "),
+);
+
+// The "meaning" words in a summary — lowercased, stopwords and short/key-ish
+// tokens dropped. Used to spot duplicates the keySignature can't (two tips that
+// teach the same thing under different keys/wording).
+function topicWords(summary) {
+  return new Set(
+    summary
+      .toLowerCase()
+      .split(/[^a-z]+/)
+      .filter((w) => w.length > 2 && !STOP.has(w)),
+  );
+}
+
+function configLines(tip) {
+  const c = tip.config;
+  const lines = Array.isArray(c) ? c : c?.lines ?? [];
+  return lines.map((l) => l.trim());
+}
+
 const files = readdirSync(sourceDir).filter((n) => n.endsWith(".json")).sort();
 
 const longSummaries = [];
 const longDetails = [];
 const separators = [];
 const legacyConfig = [];
-const sigGroups = new Map();
+const allTips = [];
 
 for (const file of files) {
-  const category = file.slice(0, -".json".length);
   const { tips } = JSON.parse(readFileSync(join(sourceDir, file), "utf8"));
   for (const tip of tips) {
     const s = tip.summary;
@@ -74,11 +96,14 @@ for (const file of files) {
     // form falls back to a generic "Apply".
     if (Array.isArray(tip.config)) legacyConfig.push([file, s]);
 
-    const sig = keySignature(s);
-    if (sig) {
-      if (!sigGroups.has(sig)) sigGroups.set(sig, []);
-      sigGroups.get(sig).push([file, s]);
-    }
+    allTips.push({
+      file,
+      isPlugin: file === "plugins.json",
+      summary: s,
+      keySig: keySignature(s),
+      words: topicWords(s),
+      config: new Set(configLines(tip)),
+    });
   }
 }
 
@@ -107,9 +132,37 @@ section("Legacy array config form (no button label)", legacyConfig, ([f, s]) =>
   `${f.replace(".json", "").padEnd(12)} ${JSON.stringify(s)}`,
 );
 
-const dups = [...sigGroups.entries()].filter(([, g]) => g.length > 1);
-section("Possible duplicate keys taught twice (eyeball — some repeat legitimately)", dups, ([sig, g]) =>
-  `${JSON.stringify(sig)}\n      ` + g.map(([f, s]) => `${f.replace(".json", "")}: ${JSON.stringify(s)}`).join("\n      "),
+// Possible duplicate TIPS — the same behavior taught twice, which the generator
+// misses when summaries differ. Two precise signals (word-overlap alone is too
+// noisy — intentional siblings like diw/ciw reuse words and even details):
+//   1. a shared config line OUTSIDE plugins — near-certain duplication on its
+//      own. Plugin tips share an enable line (`Plug '...'` or `set classtextobj`)
+//      by design, so config overlap among them is ignored.
+//   2. the same keySignature PLUS ≥2 shared topic words — same keys, same topic.
+function intersects(a, b) {
+  for (const x of a) if (b.has(x)) return true;
+  return false;
+}
+const dupPairs = [];
+for (let i = 0; i < allTips.length; i++) {
+  for (let j = i + 1; j < allTips.length; j++) {
+    const a = allTips[i];
+    const b = allTips[j];
+    const sharedWords = [...a.words].filter((w) => b.words.has(w));
+
+    let reason = null;
+    if (!a.isPlugin && !b.isPlugin && intersects(a.config, b.config)) {
+      reason = "same config line";
+    } else if (a.keySig && a.keySig === b.keySig && sharedWords.length >= 2) {
+      reason = `shares "${a.keySig}" + words`;
+    }
+    if (reason) dupPairs.push([reason, sharedWords, a, b]);
+  }
+}
+section("Possible duplicate tips (eyeball — some repeat legitimately)", dupPairs, ([reason, words, a, b]) =>
+  `${reason}${words.length ? ` [${words.join(", ")}]` : ""}\n      ` +
+  `${a.file.replace(".json", "")}: ${JSON.stringify(a.summary)}\n      ` +
+  `${b.file.replace(".json", "")}: ${JSON.stringify(b.summary)}`,
 );
 
 console.log("\nlint-tips: advisory only — generate-tips.mjs owns the hard rules.");
