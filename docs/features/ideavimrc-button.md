@@ -4,7 +4,7 @@ When a tip has configuration lines (e.g. `set surround`, `Plug 'tpope/vim-surrou
 
 The button label comes from the tip's `config`: if `config.name` is set it is used **verbatim** (e.g. `Install vim-surround`); otherwise the generic **"Apply"** label is used. The lines written to the file come from `config.lines`. See the [tip schema](../tips/tip-format.md) for the `config` object shape (and the legacy array form still accepted for back-compat).
 
-**File creation is deliberately out of scope** — Vim Coach never creates a `.ideavimrc` itself. The button is gated only on **IdeaVim being installed** (not on a file existing), so a user who has IdeaVim but no config file still sees the affordance. When they click it and no `.ideavimrc` exists yet (`Result.NoVimRc`), they get a one-line guidance message pointing at IdeaVim's own "Create ~/.ideavimrc" (the Vim status-bar icon); once they create it, the next click appends as normal. This closes the **has-IdeaVim, no-file** dead-end without taking a dependency on IdeaVim's internal file-creation API. See [the indicator-gap notes](../TODO/plugin-tip-indicator-gap.md) for the still-open **no-IdeaVim** case and [the rejected create-on-click plan](../TODO/create-ideavimrc-on-click-plan.md) for why we don't write the file.
+**File creation is deliberately out of scope** — Vim Coach never creates a `.ideavimrc` itself. The button is gated only on **IdeaVim being installed** (not on a file existing), so a user who has IdeaVim but no config file still sees the affordance. When they click it and no `.ideavimrc` exists yet (`Result.NoVimRc`), they get a one-line guidance message pointing at IdeaVim's own "Create ~/.ideavimrc" (the Vim status-bar icon); once they create it, the next click appends as normal. This closes the **has-IdeaVim, no-file** dead-end without taking a dependency on IdeaVim's internal file-creation API (`VimRcService.findOrCreateIdeaVimRc()`, the unstable internal the codebase deliberately avoids). See [the indicator-gap notes](../TODO/plugin-tip-indicator-gap.md) for the still-open **no-IdeaVim** case.
 
 ## Vertical Slice
 
@@ -124,6 +124,8 @@ It deliberately does **not** append "just the missing lines": a snippet whose li
 When appending, a vimscript comment is written **above** the snippet so the user can tell which lines Vim Coach added — `AddTipToIdeaVimRc.stampFor` produces `" <name> — added by Vim Coach` when the tip's `config.name` is set, or `" Added by Vim Coach` otherwise. The stamp counts toward `addedCount` so the highlight covers the whole inserted block (stamp + lines).
 
 The stamp is **not** part of the already-present match: `findBlockStart` keys off the real config lines only. A snippet that was previously added with a stamp is still recognised on a re-add — neither the lines nor a second stamp are duplicated.
+
+The stamp is **attribution only** — it just marks the lines as Vim Coach's, deliberately not a description of what they do (a richer authored `comment` was considered and dropped as not worth the duplication/authoring cost). A multi-line config gets the single header stamp above the whole block; a closing-boundary marker (to show where a multi-line block *ends*) is deferred until multi-line configs actually exist — it would be a purely additive change to the insert builder, with no schema or dedup impact.
 
 **Limitation:** block matching is exact-match only. It will not detect semantic equivalents (e.g. `set surround` vs. `Plug 'tpope/vim-surround'` enabling the same feature). Key-aware dedup is tracked as future work.
 

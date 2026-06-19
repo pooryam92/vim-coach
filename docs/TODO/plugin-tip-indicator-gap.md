@@ -19,8 +19,8 @@ installed (`isAvailable()` keys on the `FindIdeaVimRc` service, not on a file).
 When no `.ideavimrc` exists, clicking returns `Result.NoVimRc` and the user is
 **guided** to create one through IdeaVim — Vim Coach never writes the file. That
 closes the **has-IdeaVim, no-file** hole without coupling to IdeaVim internals.
-See [ideavimrc-button.md](../features/ideavimrc-button.md) and the
-[rejected create-on-click plan](create-ideavimrc-on-click-plan.md).
+See [ideavimrc-button.md](../features/ideavimrc-button.md). (We rejected
+auto-creating the file via IdeaVim's unstable `VimRcService.findOrCreateIdeaVimRc()`.)
 
 ## The remaining gap
 
