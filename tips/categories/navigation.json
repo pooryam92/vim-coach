@@ -468,9 +468,10 @@
       "category": [
         "navigation"
       ],
-      "summary": "Create a fold zf{motion}",
+      "summary": "Create a fold zfip",
       "details": [
-        "zf{motion} folds a motion like zfip",
+        "zfip folds the current paragraph or block",
+        "Takes any motion, like zf} or zfa{",
         "Works where IDE folding is available"
       ]
     },

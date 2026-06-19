@@ -5,11 +5,11 @@
         "plugins",
         "editing"
       ],
-      "summary": "Add surroundings ys{motion}",
+      "summary": "Add surroundings ysiw)",
       "details": [
-        "ys then a motion, then a pair",
-        "ysiw) gives (word)",
-        "ysiw( pads it: ( word )",
+        "ys, then a motion, then a pair",
+        "ysiw) gives (word), ysiw( pads it: ( word )",
+        "Takes any motion, like ysip)",
         "Repeat on the next word with ."
       ],
       "config": {
@@ -213,10 +213,11 @@
         "plugins",
         "editing"
       ],
-      "summary": "Swap two regions cx",
+      "summary": "Swap two regions cxiw",
       "details": [
         "cxiw marks the first region",
-        "Repeat on a 2nd region to swap"
+        "Repeat on a 2nd region to swap",
+        "Takes any motion, like cxx or X"
       ],
       "config": {
         "name": "Install vim-exchange",
@@ -234,7 +235,7 @@
       "details": [
         "cia grabs just the argument",
         "caa takes the trailing comma too",
-        "Pairs with d, y and other operators"
+        "Pairs with any operator — d, y"
       ],
       "config": {
         "name": "Install argtextobj",
@@ -248,11 +249,10 @@
         "plugins",
         "visual"
       ],
-      "summary": "Act on a block by indent dii / cii",
+      "summary": "Act on a block by indent dii",
       "details": [
         "dii deletes lines at the current indent",
-        "cii changes them, yii yanks them",
-        "Works with any operator, even > and ="
+        "Pairs with any operator — c, y, >, ="
       ],
       "config": {
         "name": "Install vim-indent-object",
@@ -270,7 +270,7 @@
       "details": [
         "dai also takes the header line above",
         "daI takes the closing line below too",
-        "Pairs with c, y, > and other operators"
+        "Pairs with any operator — c, y, >"
       ],
       "config": {
         "name": "Install vim-indent-object",
@@ -433,10 +433,10 @@
         "plugins",
         "visual"
       ],
-      "summary": "Act on the whole file vae / yie",
+      "summary": "Act on the whole file vae",
       "details": [
         "vae selects the entire buffer",
-        "yie yanks all of it"
+        "Pairs with any operator — d, y, ="
       ],
       "config": {
         "name": "Install vim-textobj-entire",
@@ -518,10 +518,11 @@
         "plugins",
         "visual"
       ],
-      "summary": "Act on a method dam / cim",
+      "summary": "Act on a method dam / dim",
       "details": [
         "dam deletes the whole method",
-        "cim changes just the body"
+        "dim deletes just the body",
+        "Pairs with any operator — c, y"
       ],
       "config": {
         "name": "Install vim-textobj-function",
@@ -535,11 +536,10 @@
         "plugins",
         "visual"
       ],
-      "summary": "Act on a whole class dac / vac",
+      "summary": "Act on a whole class dac",
       "details": [
         "dac deletes the class, header and all",
-        "vac selects it, yac yanks it",
-        "Works with any operator"
+        "Pairs with any operator — c, y, v"
       ],
       "config": {
         "name": "Enable classtextobj",
@@ -553,11 +553,10 @@
         "plugins",
         "visual"
       ],
-      "summary": "Act on a class body cic / dic",
+      "summary": "Act on a class body cic",
       "details": [
         "cic changes the body, keeps the class line",
-        "dic clears the body only",
-        "Pairs with y, >, = and more"
+        "Pairs with any operator — d, y, >, ="
       ],
       "config": {
         "name": "Enable classtextobj",

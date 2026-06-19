@@ -98,11 +98,11 @@
       "category": [
         "editing"
       ],
-      "summary": "Target a sentence with is / as",
+      "summary": "Target a sentence cis / cas",
       "details": [
         "cis changes the current sentence",
-        "das deletes it and trailing space",
-        "Useful in prose and comments"
+        "cas includes the trailing space",
+        "Pairs with any operator — d, y"
       ]
     },
     {
@@ -200,7 +200,7 @@
       "summary": "Indent/outdent a block >ip / <ip",
       "details": [
         ">ip shifts the current paragraph or block right",
-        "Use other motions too, such as >} or <ap"
+        "Takes any motion, like >} or <ap"
       ]
     },
     {
