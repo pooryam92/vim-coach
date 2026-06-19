@@ -158,16 +158,6 @@
       "category": [
         "insert"
       ],
-      "summary": "Reinsert last inserted text Ctrl-a",
-      "details": [
-        "Repeats your last typed text",
-        "Ctrl-@ inserts it then exits"
-      ]
-    },
-    {
-      "category": [
-        "insert"
-      ],
       "summary": "Insert a literal key Ctrl-v",
       "details": [
         "Ctrl-v then a key inserts it raw",

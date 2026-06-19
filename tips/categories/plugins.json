@@ -111,10 +111,27 @@
         "plugins",
         "editing"
       ],
-      "summary": "Change or delete a tag cst / dst",
+      "summary": "Rename an HTML tag cst",
       "details": [
-        "cst<div> retags the block",
-        "dst removes the tag, keeps text"
+        "cst<div> makes <span> into <div>",
+        "Edits the open and close tag at once"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Delete an HTML tag dst",
+      "details": [
+        "dst turns <span>hi</span> into hi",
+        "Strips both tags, keeps the text"
       ],
       "config": {
         "name": "Install vim-surround",
@@ -285,9 +302,55 @@
       ],
       "summary": "Recase a word to camelCase crc",
       "details": [
-        "cr + a letter picks the case",
-        "c camel, s snake, m Mixed, u UPPER",
-        "e.g. foo_bar →crc fooBar"
+        "crc turns foo_bar into fooBar"
+      ],
+      "config": {
+        "name": "Install vim-abolish",
+        "lines": [
+          "Plug 'tpope/vim-abolish'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Recase a word to snake_case crs",
+      "details": [
+        "crs turns fooBar into foo_bar"
+      ],
+      "config": {
+        "name": "Install vim-abolish",
+        "lines": [
+          "Plug 'tpope/vim-abolish'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Recase a word to MixedCase crm",
+      "details": [
+        "crm turns foo_bar into FooBar"
+      ],
+      "config": {
+        "name": "Install vim-abolish",
+        "lines": [
+          "Plug 'tpope/vim-abolish'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Recase a word to UPPER_CASE cru",
+      "details": [
+        "cru turns fooBar into FOO_BAR"
       ],
       "config": {
         "name": "Install vim-abolish",
@@ -303,9 +366,8 @@
       ],
       "summary": "Edit the next () pair cin)",
       "details": [
-        "ci) edits inside; cin) seeks ahead",
-        "cil) goes back to the previous",
-        "Works for ) ] } \" ' too"
+        "Works even with the cursor outside it",
+        "Any bracket or quote works too"
       ],
       "config": {
         "name": "Install targets.vim",
@@ -319,10 +381,44 @@
         "plugins",
         "editing"
       ],
-      "summary": "Delete one list item da,",
+      "summary": "Edit the previous () pair cil)",
       "details": [
-        "da, deletes an item with its comma",
-        "Works for . ; : | and more too"
+        "Works even with the cursor outside it",
+        "Any bracket or quote works too"
+      ],
+      "config": {
+        "name": "Install targets.vim",
+        "lines": [
+          "Plug 'wellle/targets.vim'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Delete one comma-separated item da,",
+      "details": [
+        "da, takes the item and a comma",
+        "Any separator works — semicolon, pipe, more"
+      ],
+      "config": {
+        "name": "Install targets.vim",
+        "lines": [
+          "Plug 'wellle/targets.vim'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Delete inside a comma-separated item di,",
+      "details": [
+        "di, keeps the commas in place",
+        "Any separator works — semicolon, pipe, more"
       ],
       "config": {
         "name": "Install targets.vim",
