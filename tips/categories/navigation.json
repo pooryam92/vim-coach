@@ -555,17 +555,6 @@
         "gi jumps to the last insert spot and enters Insert mode",
         "Picks up exactly where you stopped typing"
       ]
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Repeat search and place line n then zz",
-      "details": [
-        "Press n to jump to the next match",
-        "Then zz centers that line on screen",
-        "Keeps the match comfortably in view"
-      ]
     }
   ]
 }

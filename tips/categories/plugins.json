@@ -230,10 +230,11 @@
         "plugins",
         "visual"
       ],
-      "summary": "Act on an argument cia / daa",
+      "summary": "Act on an argument cia / caa",
       "details": [
-        "cia changes one argument",
-        "daa deletes it with its comma"
+        "cia grabs just the argument",
+        "caa takes the trailing comma too",
+        "Pairs with d, y and other operators"
       ],
       "config": {
         "name": "Install argtextobj",

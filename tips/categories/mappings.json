@@ -52,18 +52,6 @@
         "Mode forms limit the scope",
         "Useful when debugging conflicting keys or resetting a mode"
       ]
-    },
-    {
-      "category": [
-        "mappings",
-        "ideavim"
-      ],
-      "summary": "Use <Action>(...) in IdeaVim mappings",
-      "details": [
-        "In ~/.ideavimrc, map IDE actions with <Action>(...)",
-        "Example: map <Leader>f <Action>(ReformatCode)",
-        "Use plain map for IDE actions, not noremap"
-      ]
     }
   ]
 }
