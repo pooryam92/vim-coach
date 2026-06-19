@@ -18,3 +18,12 @@ the **Add to .ideavimrc** button can safely append it:
 Anything that claims keys or sets shared state is *positional*, not shippable —
 don't author it. `lines` are **enable** lines only, verbatim — never usage
 mappings (`ysiw)` is usage, not config).
+
+**Skip plugins that need a separate Marketplace IDE plugin** — the button only
+appends the config line, so a tip whose `config` looks complete would silently do
+nothing. EasyMotion (needs IdeaVim-EasyMotion + AceJump), which-key (needs the
+Which-Key IDE plugin), and multiple-cursors (default keys unbound, VIM-2178) are
+**deferred** — see `docs/discover/config-tips-roadmap.md`. A `Plug`/`set` line is
+only shippable when IdeaVim emulates the plugin itself (surround, commentary,
+sneak, NERDTree, argtextobj…). The "Setup" block in
+`external/ideavim/doc/IdeaVim Plugins.md` reveals which need an extra install.

@@ -59,6 +59,26 @@ above.
 
 ---
 
+## Deferred: plugins that need an external IDE plugin
+
+Some IdeaVim "plugins" aren't pure emulation — they only work if the user *also*
+installs a separate JetBrains Marketplace plugin. The **Add to .ideavimrc**
+button can only append the config line, not install a Marketplace plugin, so a
+tip whose `config` looks complete would silently do nothing. Deferred until the
+button (or the tip UI) can surface the external dependency.
+
+- **EasyMotion** — `Plug 'easymotion/vim-easymotion'`; needs the
+  IdeaVim-EasyMotion **and** AceJump IDE plugins.
+- **which-key** — `set which-key`; needs the Which-Key IDE plugin.
+- **multiple-cursors** — `Plug 'terryma/vim-multiple-cursors'`; emulated, but
+  default keys don't bind in IdeaVim (VIM-2178) without manual `<Plug>` maps.
+
+Contrast — surround, commentary, sneak, NERDTree, argtextobj, exchange, abolish,
+etc. are emulated by IdeaVim itself: the `Plug` line alone works, so they're
+already shipped (Bucket A).
+
+---
+
 ## Coupling points (keep in sync)
 
 `tips/categories/<name>.json` (filename == a tip's **first** category) ·

@@ -1,7 +1,7 @@
 ---
 name: tips-maintain
-description: Add, edit, improve, reword, review, or maintain Vim Coach tips, and keep this skill itself up to date. Use when asked to write a new tip, fix or reword an existing tip, add or change a category, regenerate vim_tips_min.json, or work in tips/categories/.
-allowed-tools: Bash(node scripts/generate-tips.mjs*) Bash(node scripts/lint-tips.mjs*) Bash(grep*) Bash(git status*)
+description: Add, edit, improve, reword, review, or maintain Vim Coach tips, decide which new tips are most worth adding (coverage gaps + value), and keep this skill itself up to date. Use when asked to write a new tip, fix or reword an existing tip, find what's missing or worth adding, improve tip coverage, add or change a category, regenerate vim_tips_min.json, or work in tips/categories/.
+allowed-tools: Bash(node scripts/generate-tips.mjs*) Bash(node scripts/lint-tips.mjs*) Bash(node .claude/skills/tips-maintain/coverage.mjs*) Bash(grep*) Bash(git status*)
 ---
 
 # Maintaining Vim Coach tips
@@ -14,21 +14,19 @@ to the repo root. Everything to write or reword a tip is in this file; deeper
 detail is split into focused files you open **only when that need arises**:
 `checking-support.md` (prove IdeaVim supports a claim), `config-kinds.md`
 (authoring a `config` block), `examples.md` (worked before→after), and
-`categories.md` (add/rename/remove a category).
-
-> **This skill is self-evolving — that is part of the job.** You own and actively
-> maintain your own files (`SKILL.md`, the on-demand `*.md` references, the
-> helper scripts, and any new file that earns its place). Whenever an interaction
-> teaches a durable
-> rule, preference, IdeaVim/generator quirk, or smoother workflow, **fold it in
-> within the same change** — add, edit, split, or delete. Leave the skill sharper
-> than you found it. Full procedure: *Evolving this skill* below.
+`categories.md` (add/rename/remove a category). To find *which* tips are worth
+adding, `coverage.mjs` maps IdeaVim's real surface against the set (see *Finding
+the best tips to add*).
 
 ## How you work
 
 - **Revise in small batches (≤ 2 tips).** For each, show the **whole tip
   before → after** plus a one-line reason, get a go-ahead, *then* edit. Never
   bulk-rewrite silently.
+- **Decide what's worth adding before you add it.** When the ask is open-ended
+  ("what's missing," "what are the best tips to add," "improve coverage"), don't
+  free-associate — map the gap and rank by value first. See *Finding the best tips
+  to add* below.
 - **Search before adding.** `grep -rn` the keys *and* the behavior across
   `tips/categories/`, and run `node scripts/lint-tips.mjs`. Duplicate **summaries
   hard-fail** the generator across *all* files, but the same idea under a
@@ -42,6 +40,44 @@ detail is split into focused files you open **only when that need arises**:
   commands, and tips that only make sense after another (order is random).
   `node scripts/lint-tips.mjs` surfaces most of these (advisory — eyeball hits).
 - **Always close the loop.** An edit isn't done until `--check` reruns clean.
+
+## Finding the best tips to add
+
+Adding tips well is mostly **saying no**: a mechanically valid tip that's
+low-value dilutes the set. When the ask is open-ended (what's missing, what to add
+next, improve coverage), work gap-first, not idea-first.
+
+**Map the gap.** `node .claude/skills/tips-maintain/coverage.mjs` reads IdeaVim's
+real surface from the `external/ideavim` submodule (command keys, ex-commands, and
+the 21 bundled plugins) and flags what **no tip text mentions**. It is **advisory
+and textual** — a miss is a *candidate, not a verdict* (keys taught under a
+different notation show as misses; most of the long tail doesn't deserve a tip).
+`--plugins` narrows to plugin coverage; `--all` includes single-char keys. If the
+submodule is absent the script prints the checkout command (`checking-support.md`).
+
+**Score every candidate** on four axes; a tip earns its place only by winning on
+at least three:
+
+- **Reach** — how many users hit this. Daily motions and the IDE bridge beat
+  obscure ex-command corners.
+- **Leverage** — how much it saves vs. what the user does today. Replacing a mouse
+  trip or a 5-key dance scores high; a synonym for something they know scores low.
+- **IdeaVim fit** — is it *especially* worth knowing here? IDE-bridge actions,
+  plugin-backed power, and keys whose IdeaVim behavior differs from upstream Vim
+  are the sweet spot; a generic Vim factoid is weaker.
+- **Teachability** — can it stand alone in the balloon, read cold, in ≤35 chars?
+  If it only lands after setup, it's a worse tip than one that doesn't.
+
+**Candidate wells** the script and judgment surface: untaught **plugins**
+(`--plugins`; each needs the `plugins` category + a `config` block —
+`config-kinds.md`); untaught **IDE-bridge actions** (IdeaVim's edge, often framed
+as workflows the textual scan can't see); the rare high-**reach** untaught
+ex-command/key; **weak existing tips** a better one can replace without growing the
+set; and missing **workflows** (jump-and-center, change-inside-next-pair) no single
+key-miss reveals. Always verify support (`checking-support.md`) before proposing.
+
+Present a ranked short list with a one-line value rationale each and what you
+dropped, get a go-ahead, then author the survivors through *The loop* below.
 
 ## The loop (every change)
 
@@ -165,27 +201,5 @@ behavior under *different* summaries, which the generator's identical-summary
 check cannot. Some hits are false positives by design (a `-` that's part of the
 keys like `Ctrl-w + / -`; intentional siblings like `gu / gU` in two modes) — so
 eyeball each before acting.
-
-## Evolving this skill
-
-The standing mandate is the callout at the top; this is its procedure. Run it
-whenever a change earns it.
-
-1. **Recognize the trigger:** (a) the user corrects a tip/workflow in a way that
-   reveals a *general* rule; (b) a new stated preference or constraint; (c) an
-   IdeaVim quirk or generator/script behavior worth recording; (d) a repeated
-   manual step a script or check could own.
-2. **Classify before acting.** Durable + generalizable → fold in; one-off → skip
-   (don't bloat). A must-fire wording/format/workflow rule → this `SKILL.md`; a
-   worked example → `examples.md`; a support finding → `checking-support.md`; a
-   config-shape rule → `config-kinds.md`; a category-procedure change →
-   `categories.md`; a mechanical check or repeated chore → a helper script. New
-   files are fine when they pull weight; prefer extending an existing one.
-3. **Apply it, don't just note it.** Show the exact change — the rule/tool **plus
-   the before→after that prompted it** — and a one-line reason. Apply small
-   unambiguous edits directly; get a quick go-ahead for anything judgment-heavy.
-   Dedupe against what's here; delete rules that turn out wrong.
-4. **It rides the same change** as the work that taught it, so rule/tool and tip
-   edits commit together.
 </content>
 </invoke>
