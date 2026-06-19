@@ -1,14 +1,17 @@
 # Config-tip Roadmap (discover)
 
 Forward-looking work on `.ideavimrc` config tips. The **shippable, additive**
-config kinds are already documented in
-[../tips/tip-format.md](../tips/tip-format.md#config-tip-kinds-additive) — install a
+config kinds are already documented in the `tips-maintain` skill
+([../../.claude/skills/tips-maintain/SKILL.md](../../.claude/skills/tips-maintain/SKILL.md)
+→ "The three additive config kinds") — install a
 plugin, tune built-in behavior, IDE-bridge options. This file tracks the parts
 that are **not** shippable yet: positional/opinionated config and the code work
 that gates it.
 
 Status: the 14-category migration is **done** (the locked taxonomy lives in
-[../tips/categories.md](../tips/categories.md)). The additive config set is
+the `tips-maintain` skill
+([../../.claude/skills/tips-maintain/SKILL.md](../../.claude/skills/tips-maintain/SKILL.md)
+→ "Categories")). The additive config set is
 **documented and shippable today**. Everything below is still open.
 
 ---
@@ -59,6 +62,8 @@ above.
 ## Coupling points (keep in sync)
 
 `tips/categories/<name>.json` (filename == a tip's **first** category) ·
-[../tips/categories.md](../tips/categories.md) Categories table + notes ·
+the `tips-maintain` skill
+([../../.claude/skills/tips-maintain/SKILL.md](../../.claude/skills/tips-maintain/SKILL.md))
+Categories table + notes ·
 [../tips/tips-pipeline.md](../tips/tips-pipeline.md). After any change:
 `node scripts/generate-tips.mjs` must pass.

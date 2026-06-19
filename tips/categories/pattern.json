@@ -280,10 +280,10 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Keep only matching lines with :v / :g!",
+      "summary": "Keep only matching lines :v//d",
       "details": [
-        ":v/pat/d deletes lines that do not match",
-        "Use it when you want to keep only matching lines"
+        ":v/foo/d deletes lines lacking foo",
+        "What's left: only the foo lines"
       ]
     },
     {

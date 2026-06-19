@@ -1,8 +1,8 @@
 # Vim Tips Build Pipeline
 
 How the tip sources become the published file, and how CI keeps the two in sync.
-For writing and reviewing tip **content**, see
-[tips-authoring/](README.md).
+For writing and reviewing tip **content**, see the `tips-maintain` skill
+([../../.claude/skills/tips-maintain/SKILL.md](../../.claude/skills/tips-maintain/SKILL.md)).
 
 ## Sources and the generated file
 
@@ -23,11 +23,19 @@ For writing and reviewing tip **content**, see
 every `tips/categories/*.json` file, validates the tips, and writes
 `tips/vim_tips_min.json`.
 
-Run it directly whenever you change the sources:
+Day to day you only need to **validate** the sources — CI regenerates and commits
+the published file (see below), so you should not regenerate it yourself unless
+asked:
 
 ```bash
-node scripts/generate-tips.mjs
+node scripts/generate-tips.mjs --check   # validate sources, write nothing
+node scripts/generate-tips.mjs           # rebuild the artifact (CI / on request)
 ```
+
+For the soft, advisory quality checks the generator does not enforce
+(over-length lines, stray separators, legacy-array config, possible duplicate
+keys), run `node scripts/lint-tips.mjs`. It never gates — it just prints a report
+to eyeball.
 
 ### Ordering
 

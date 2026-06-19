@@ -3,8 +3,10 @@
 //
 // tips/vim_tips_min.json is a generated artifact and is never authored by hand.
 // It is always produced from the files in tips/categories/ by this script.
-// Run it directly (`node scripts/generate-tips.mjs`); CI also runs it and
-// commits the result so the published file can never drift from the sources.
+// CI runs it and commits the result so the published file can never drift from
+// the sources, so day to day you only need to validate, not regenerate:
+//   node scripts/generate-tips.mjs --check   # validate sources, write nothing
+//   node scripts/generate-tips.mjs           # regenerate the artifact (CI / on request)
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -13,6 +15,10 @@ import { fileURLToPath } from "node:url";
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repoRoot, "tips", "categories");
 const outputFile = join(repoRoot, "tips", "vim_tips_min.json");
+
+// --check validates the sources without touching the published artifact, so
+// editing tips never regenerates vim_tips_min.json by accident — CI owns that.
+const checkOnly = process.argv.includes("--check");
 
 function fail(message) {
   console.error(`generate-tips: ${message}`);
@@ -118,6 +124,11 @@ let json = "";
 for (let i = 0; i < raw.length; i++) {
   const code = raw.charCodeAt(i);
   json += code > 0x7e ? "\\u" + code.toString(16).padStart(4, "0") : raw[i];
+}
+
+if (checkOnly) {
+  console.log(`generate-tips: validated ${mergedTips.length} tips (--check, no file written)`);
+  process.exit(0);
 }
 
 mkdirSync(dirname(outputFile), { recursive: true });
