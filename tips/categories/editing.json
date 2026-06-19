@@ -2,196 +2,6 @@
   "tips": [
     {
       "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Edit another file with :edit {file}",
-      "details": [
-        ":edit {file} opens a file for editing",
-        "Use :edit! to discard unsaved changes first"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Find a file on 'path' with :find {file}",
-      "details": [
-        ":find searches Vim's 'path' and edits the match",
-        "Useful when the file is not in the current directory"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Open a file chooser with :browse",
-      "details": [
-        ":browse opens the file-open dialog",
-        "Pick a file instead of typing its name"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "List open buffers with :ls",
-      "details": [
-        ":ls, :buffers, and :files list known buffers",
-        "Then switch with :buffer, :bn, or :bp"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Jump to a listed buffer with :buffer {N}",
-      "details": [
-        ":buffer {N} jumps to buffer number N",
-        "Use it after :ls when you know the number"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Toggle last file Ctrl-^",
-      "details": [
-        "Jumps to the alternate file",
-        "Great for back-and-forth edits",
-        "Ctrl-^ is Ctrl-6 on many keyboards"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Next/previous buffer :bn / :bp",
-      "details": [
-        ":bn goes to the next buffer",
-        ":bp goes to the previous buffer"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Close current buffer :bd",
-      "details": [
-        ":bd closes the current buffer/editor tab",
-        "Use it when you are done with the file"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Reload file from disk :e and :e!",
-      "details": [
-        ":e reloads if no changes",
-        ":e! discards changes and reloads"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Save current file :w",
-      "details": [
-        ":w writes the file",
-        "In IdeaVim, this maps to IDE save"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Write a copy to another file :w {file}",
-      "details": [
-        ":w {file} writes the buffer to another file",
-        "Makes a copy without renaming the buffer"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Save all files :wa",
-      "details": [
-        ":wa writes all modified buffers",
-        "In IDE, typically saves all open editors"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Insert a file with :read {file}",
-      "details": [
-        ":read {file} inserts a file below the current line",
-        "Pulls file contents into this buffer"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Quit :q / :q!",
-      "details": [
-        ":q closes if no unsaved changes",
-        ":q! forces close/discard (if allowed)",
-        "ZQ is the key form of :q!"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Save and quit :wq / :x / ZZ",
-      "details": [
-        ":wq writes and quits",
-        ":x writes only if changed",
-        "ZZ also writes and quits the current file"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Quit every editor with :qa / :qall",
-      "details": [
-        ":qa exits unless there are changed buffers",
-        ":qall is the long form of :qa",
-        "The force form discards pending changes"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Write all and exit with :wqa / :xa",
-      "details": [
-        ":wqa writes changed buffers and exits",
-        ":xa is the equivalent all-files write-and-exit command"
-      ]
-    },
-    {
-      "category": [
         "editing"
       ],
       "summary": "Delete word text diw / daw",
@@ -288,53 +98,11 @@
       "category": [
         "editing"
       ],
-      "summary": "Target a sentence with is / as",
+      "summary": "Target a sentence cis / cas",
       "details": [
         "cis changes the current sentence",
-        "das deletes it and trailing space",
-        "Useful in prose and comments"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Yank inner/around word yiw / yaw",
-      "details": [
-        "yiw copies just the word",
-        "yaw copies the word and trailing space",
-        "Use i for inside and a for around"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Yank whole line yy",
-      "details": [
-        "yy yanks the current line",
-        "5yy yanks five lines",
-        "Y does the same as yy"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Yank line parts y0 / y$",
-      "details": [
-        "y0 yanks to start of line",
-        "y$ yanks to end of line"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Paste after/before p / P",
-      "details": [
-        "p puts after the cursor, or below for linewise text",
-        "P puts before the cursor, or above for linewise text"
+        "cas includes the trailing space",
+        "Pairs with any operator — d, y"
       ]
     },
     {
@@ -345,79 +113,6 @@
       "details": [
         "x deletes the char and p puts it after",
         "Useful for fixing adjacent typos quickly"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Paste and leave cursor after gp / gP",
-      "details": [
-        "gp pastes and moves to end of the pasted text",
-        "gP does the same for paste-before"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "ideavim"
-      ],
-      "summary": "Use system clipboard register \"+",
-      "details": [
-        "\"+y yanks to the OS clipboard",
-        "\"+p pastes from the OS clipboard",
-        "In IdeaVim this depends on IDE clipboard support"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Use the yank register \"0",
-      "details": [
-        "\"0 keeps the most recent yank",
-        "\"0p pastes it even after a delete"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Recover the last delete with \"1",
-      "details": [
-        "\"1 usually holds the most recent delete",
-        "Paste it with \"1p after an accidental dd"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Use named registers \"a / \"A",
-      "details": [
-        "\"ayiw stores text in register a",
-        "\"ap pastes it later",
-        "\"A appends more text instead of replacing the register"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Delete without clobbering registers with \"_",
-      "details": [
-        "\"_d deletes into the black-hole register",
-        "Keeps your yank safe for later pasting"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Paste and reindent ]p / [p",
-      "details": [
-        "]p pastes after and reindents",
-        "[p pastes before and reindents"
       ]
     },
     {
@@ -470,17 +165,6 @@
         "editing",
         "cmdline"
       ],
-      "summary": "Put a register with :put",
-      "details": [
-        ":put 0 inserts register 0 below the current line",
-        ":put + inserts clipboard text below the current line"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
       "summary": "Join a range with :join",
       "details": [
         ":10,12join joins the lines in that range",
@@ -516,7 +200,7 @@
       "summary": "Indent/outdent a block >ip / <ip",
       "details": [
         ">ip shifts the current paragraph or block right",
-        "Use other motions too, such as >} or <ap"
+        "Takes any motion, like >} or <ap"
       ]
     },
     {
@@ -553,128 +237,223 @@
     {
       "category": [
         "editing",
-        "ideavim",
-        "plugin"
+        "navigation"
       ],
-      "summary": "Flash yanked text with highlightedyank",
+      "summary": "Change/delete with operator + motion",
       "details": [
-        "Use :set highlightedyank to enable the plugin",
-        "Yanks briefly flash so you can confirm what was copied"
+        "d{motion} deletes text",
+        "c{motion} changes text"
       ]
     },
     {
       "category": [
         "editing",
-        "ideavim",
-        "plugin"
+        "navigation"
       ],
-      "summary": "Replace text with the current register",
+      "summary": "Delete/change to line start d0 / c0",
       "details": [
-        "Use :set ReplaceWithRegister to enable the plugin",
-        "gr{motion} replaces text with the current register"
+        "d0 deletes to line start",
+        "c0 changes to line start"
       ]
     },
     {
       "category": [
         "editing",
-        "ideavim",
-        "plugin"
+        "navigation"
       ],
-      "summary": "Comment text with commentary gcc / gc",
+      "summary": "Delete/change to first non-blank d^ / c^",
       "details": [
-        "Use :set commentary to enable the plugin",
-        "gcc comments a line",
-        "gc works with motions or Visual mode"
+        "d^ deletes to first non-blank",
+        "c^ changes to first non-blank"
       ]
     },
     {
       "category": [
         "editing",
-        "ideavim",
-        "plugin"
+        "navigation"
       ],
-      "summary": "Edit surroundings with surround",
+      "summary": "Delete/change to line end d$ / c$",
       "details": [
-        "Use :set surround to enable the plugin",
-        "ysiw) adds parens",
-        "cs\"' swaps quote types",
-        "ds\" removes them"
+        "d$ deletes to line end",
+        "c$ changes to line end"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Delete/change to line end D / C",
+      "details": [
+        "D is shorthand for d$",
+        "C is shorthand for c$"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Delete a character x / X",
+      "details": [
+        "x deletes under cursor",
+        "X deletes before cursor"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Delete lines dd",
+      "details": [
+        "dd deletes current line",
+        "3dd deletes three lines"
       ]
     },
     {
       "category": [
         "editing",
-        "ideavim",
-        "plugin"
+        "insert"
       ],
-      "summary": "Swap two regions with exchange",
+      "summary": "Substitute chars with s / S",
       "details": [
-        "Use :set exchange to enable the plugin",
-        "cxiw marks one region",
-        "Repeat on a second target to swap them"
+        "s changes one char and inserts",
+        "S changes whole line and inserts"
       ]
     },
     {
       "category": [
         "editing",
-        "ideavim",
-        "plugin"
+        "insert"
       ],
-      "summary": "Target arguments with ia / aa",
+      "summary": "Change whole line cc",
       "details": [
-        "Use :set argtextobj to enable the plugin",
-        "cia changes one argument",
-        "daa deletes one argument"
+        "cc clears the line",
+        "Keeps indent and enters Insert"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Replace one character r{char}",
+      "details": [
+        "r replaces the char under cursor",
+        "Stays in Normal mode"
       ]
     },
     {
       "category": [
         "editing",
-        "ideavim",
-        "plugin"
+        "navigation"
       ],
-      "summary": "Target an indent block with ii / ai",
+      "summary": "Change/delete a word cw / dw",
       "details": [
-        "Use :set textobj-indent to enable the plugin",
-        "vai selects the current indent block",
-        "dii deletes it"
+        "cw changes to word end",
+        "dw deletes to next word start"
       ]
     },
     {
       "category": [
         "editing",
-        "ideavim",
-        "plugin"
+        "navigation"
       ],
-      "summary": "Target functions with if / af",
+      "summary": "Delete to word end de",
       "details": [
-        "Use :set functiontextobj to enable the plugin",
-        "vif selects the inner function",
-        "yaf yanks the function"
+        "de deletes to current word end",
+        "Useful when dw goes too far"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Join lines J / gJ",
+      "details": [
+        "J joins with one space",
+        "gJ joins without a space"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Toggle case of a character ~",
+      "details": [
+        "~ toggles case and moves on",
+        "Counts work: 5~"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Change case over motion gu / gU",
+      "details": [
+        "gUw uppercases a word",
+        "guap lowercases a paragraph"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Toggle case over motion g~",
+      "details": [
+        "g~iw toggles current word",
+        "Useful for style fixes"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Change numbers Ctrl-a / Ctrl-x",
+      "details": [
+        "Ctrl-a increments a number",
+        "Ctrl-x decrements a number"
       ]
     },
     {
       "category": [
         "editing",
-        "ideavim",
-        "plugin"
+        "visual"
       ],
-      "summary": "Add cursors to the next whole-word match",
+      "summary": "Increment sequentially g Ctrl-a",
       "details": [
-        "Use :set multiple-cursors to enable the plugin",
-        "Press your mapped key to add the next whole-word match"
+        "Select lines, then press g Ctrl-a",
+        "Adds 1, 2, 3... to each line's number",
+        "Useful for building numbered lists"
       ]
     },
     {
       "category": [
         "editing",
-        "ideavim",
-        "plugin"
+        "visual"
       ],
-      "summary": "Toggle paired values with switch",
+      "summary": "Decrement sequentially g Ctrl-x",
       "details": [
-        "Use :set switch to enable the plugin",
-        "gs flips pairs like true/false and &&/||"
+        "Select lines, then press g Ctrl-x",
+        "Subtracts 1, 2, 3... from each number"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Undo and redo u / Ctrl-r",
+      "details": [
+        "u undoes the last change",
+        "Ctrl-r redoes the undone change"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "insert"
+      ],
+      "summary": "Split undo in Insert mode Ctrl-g u",
+      "details": [
+        "Starts a new undo step in Insert mode",
+        "Useful after punctuation or pauses"
       ]
     }
   ]

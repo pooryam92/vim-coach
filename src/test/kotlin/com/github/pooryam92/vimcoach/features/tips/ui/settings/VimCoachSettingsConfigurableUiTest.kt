@@ -3,9 +3,9 @@ package com.github.pooryam92.vimcoach.features.tips.ui.settings
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
 import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
-import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
-import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
-import com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsStore
+import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
+import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
+import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import java.awt.Container
@@ -22,7 +22,7 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
         settingsService().setShowTipsOnStartupEnabled(true)
         settingsService().setPeriodicTipsEnabled(false)
         settingsService().setTipIntervalHours(1)
-        settingsStore().loadState(VimCoachSettingsStore.State())
+        settingsStore().loadState(PersistentSettingsStore.State())
         tipService().saveTips(emptyList())
     }
 
@@ -31,7 +31,7 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
             settingsService().setShowTipsOnStartupEnabled(true)
             settingsService().setPeriodicTipsEnabled(false)
             settingsService().setTipIntervalHours(1)
-            settingsStore().loadState(VimCoachSettingsStore.State())
+            settingsStore().loadState(PersistentSettingsStore.State())
             tipService().saveTips(emptyList())
         } finally {
             super.tearDown()
@@ -277,15 +277,15 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
         }
     }
 
-    private fun settingsService(): VimCoachSettingsService {
+    private fun settingsService(): SettingsRepository {
         return service()
     }
 
-    private fun tipService(): VimTipService {
+    private fun tipService(): VimTipRepository {
         return service()
     }
 
-    private fun settingsStore(): VimCoachSettingsStore {
+    private fun settingsStore(): PersistentSettingsStore {
         return service()
     }
 

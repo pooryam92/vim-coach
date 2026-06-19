@@ -1,0 +1,569 @@
+{
+  "tips": [
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Add surroundings ysiw)",
+      "details": [
+        "ys, then a motion, then a pair",
+        "ysiw) gives (word), ysiw( pads it: ( word )",
+        "Takes any motion, like ysip)",
+        "Repeat on the next word with ."
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "yss) wraps the whole line",
+      "details": [
+        "2nd s = whole line, like dd/yy",
+        "Any bracket or quote works too",
+        "Skips leading whitespace"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Change surroundings cs",
+      "details": [
+        "cs\"' swaps quotes to single",
+        "cs)] changes parens to brackets",
+        "Press . to repeat it on the next match"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Delete surroundings ds",
+      "details": [
+        "ds\" removes surrounding quotes",
+        "ds( strips the parens"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "visual"
+      ],
+      "summary": "Surround a visual selection S",
+      "details": [
+        "In Visual mode, press S then a bracket or tag",
+        "S) wraps in ( ), S<em> in <em> tags"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Wrap in an HTML tag ysiwt",
+      "details": [
+        "t or < prompts for the tag",
+        "ysiw<em> wraps a word in <em>"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Rename an HTML tag cst",
+      "details": [
+        "cst<div> makes <span> into <div>",
+        "Edits the open and close tag at once"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Delete an HTML tag dst",
+      "details": [
+        "dst turns <span>hi</span> into hi",
+        "Strips both tags, keeps the text"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Wrap in a function call ysiwf",
+      "details": [
+        "f prompts for a function name",
+        "ysiwf then name gives name(word)"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Toggle comments gcc / gc",
+      "details": [
+        "gcc toggles the current line",
+        "gc works with a motion or selection"
+      ],
+      "config": {
+        "name": "Install vim-commentary",
+        "lines": [
+          "Plug 'tpope/vim-commentary'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "registers"
+      ],
+      "summary": "Flash text after you yank it",
+      "details": [
+        "Yanks briefly flash after y or Y",
+        "Confirms exactly what was copied"
+      ],
+      "config": {
+        "name": "Install vim-highlightedyank",
+        "lines": [
+          "Plug 'machakann/vim-highlightedyank'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "registers"
+      ],
+      "summary": "Replace with a register gr",
+      "details": [
+        "gr{motion} pastes over the motion",
+        "griw replaces a word in place"
+      ],
+      "config": {
+        "name": "Install ReplaceWithRegister",
+        "lines": [
+          "Plug 'vim-scripts/ReplaceWithRegister'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Swap two regions cxiw",
+      "details": [
+        "cxiw marks the first region",
+        "Repeat on a 2nd region to swap",
+        "Takes any motion, like cxx or X"
+      ],
+      "config": {
+        "name": "Install vim-exchange",
+        "lines": [
+          "Plug 'tommcdo/vim-exchange'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "visual"
+      ],
+      "summary": "Act on an argument cia / caa",
+      "details": [
+        "cia grabs just the argument",
+        "caa takes the trailing comma too",
+        "Pairs with any operator — d, y"
+      ],
+      "config": {
+        "name": "Install argtextobj",
+        "lines": [
+          "Plug 'vim-scripts/argtextobj.vim'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "visual"
+      ],
+      "summary": "Act on a block by indent dii",
+      "details": [
+        "dii deletes lines at the current indent",
+        "Pairs with any operator — c, y, >, ="
+      ],
+      "config": {
+        "name": "Install vim-indent-object",
+        "lines": [
+          "Plug 'michaeljsmith/vim-indent-object'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "visual"
+      ],
+      "summary": "Extend an indent block dai / daI",
+      "details": [
+        "dai also takes the header line above",
+        "daI takes the closing line below too",
+        "Pairs with any operator — c, y, >"
+      ],
+      "config": {
+        "name": "Install vim-indent-object",
+        "lines": [
+          "Plug 'michaeljsmith/vim-indent-object'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "pattern"
+      ],
+      "summary": "Substitute case variants with :S",
+      "details": [
+        ":S/foo/bar/g keeps case variants",
+        "Handles foo, Foo, and FOO"
+      ],
+      "config": {
+        "name": "Install vim-abolish",
+        "lines": [
+          "Plug 'tpope/vim-abolish'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Recase a word to camelCase crc",
+      "details": [
+        "crc turns foo_bar into fooBar"
+      ],
+      "config": {
+        "name": "Install vim-abolish",
+        "lines": [
+          "Plug 'tpope/vim-abolish'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Recase a word to snake_case crs",
+      "details": [
+        "crs turns fooBar into foo_bar"
+      ],
+      "config": {
+        "name": "Install vim-abolish",
+        "lines": [
+          "Plug 'tpope/vim-abolish'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Recase a word to MixedCase crm",
+      "details": [
+        "crm turns foo_bar into FooBar"
+      ],
+      "config": {
+        "name": "Install vim-abolish",
+        "lines": [
+          "Plug 'tpope/vim-abolish'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Recase a word to UPPER_CASE cru",
+      "details": [
+        "cru turns fooBar into FOO_BAR"
+      ],
+      "config": {
+        "name": "Install vim-abolish",
+        "lines": [
+          "Plug 'tpope/vim-abolish'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Edit the next () pair cin)",
+      "details": [
+        "Works even with the cursor outside it",
+        "Any bracket or quote works too"
+      ],
+      "config": {
+        "name": "Install targets.vim",
+        "lines": [
+          "Plug 'wellle/targets.vim'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Edit the previous () pair cil)",
+      "details": [
+        "Works even with the cursor outside it",
+        "Any bracket or quote works too"
+      ],
+      "config": {
+        "name": "Install targets.vim",
+        "lines": [
+          "Plug 'wellle/targets.vim'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Delete one comma-separated item da,",
+      "details": [
+        "da, takes the item and a comma",
+        "Any separator works — semicolon, pipe, more"
+      ],
+      "config": {
+        "name": "Install targets.vim",
+        "lines": [
+          "Plug 'wellle/targets.vim'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Delete inside a comma-separated item di,",
+      "details": [
+        "di, keeps the commas in place",
+        "Any separator works — semicolon, pipe, more"
+      ],
+      "config": {
+        "name": "Install targets.vim",
+        "lines": [
+          "Plug 'wellle/targets.vim'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "visual"
+      ],
+      "summary": "Act on the whole file vae",
+      "details": [
+        "vae selects the entire buffer",
+        "Pairs with any operator — d, y, ="
+      ],
+      "config": {
+        "name": "Install vim-textobj-entire",
+        "lines": [
+          "Plug 'kana/vim-textobj-entire'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "navigation"
+      ],
+      "summary": "Jump to two chars s / S",
+      "details": [
+        "sfo jumps forward to fo",
+        "Sfo searches backward"
+      ],
+      "config": {
+        "name": "Install vim-sneak",
+        "lines": [
+          "Plug 'justinmk/vim-sneak'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "navigation"
+      ],
+      "summary": "Match tags and blocks %",
+      "details": [
+        "% jumps across HTML/XML tag pairs",
+        "Also matches if/end style blocks"
+      ],
+      "config": {
+        "name": "Install matchit",
+        "lines": [
+          "Plug 'chrisbra/matchit'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "navigation"
+      ],
+      "summary": "{ } paragraph jumps stop at blanks",
+      "details": [
+        "By default { } skip lines holding only spaces",
+        "This plugin treats them as real paragraph breaks"
+      ],
+      "config": {
+        "name": "Install vim-paragraph-motion",
+        "lines": [
+          "Plug 'dbakker/vim-paragraph-motion'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "files"
+      ],
+      "summary": "Open a file tree :NERDTreeToggle",
+      "details": [
+        ":NERDTreeFind reveals the file",
+        "Toggle again to hide it"
+      ],
+      "config": {
+        "name": "Install NERDTree",
+        "lines": [
+          "Plug 'preservim/nerdtree'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "visual"
+      ],
+      "summary": "Act on a method dam / dim",
+      "details": [
+        "dam deletes the whole method",
+        "dim deletes just the body",
+        "Pairs with any operator — c, y"
+      ],
+      "config": {
+        "name": "Install vim-textobj-function",
+        "lines": [
+          "Plug 'kana/vim-textobj-function'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "visual"
+      ],
+      "summary": "Act on a whole class dac",
+      "details": [
+        "dac deletes the class, header and all",
+        "Pairs with any operator — c, y, v"
+      ],
+      "config": {
+        "name": "Enable classtextobj",
+        "lines": [
+          "set classtextobj"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "visual"
+      ],
+      "summary": "Act on a class body cic",
+      "details": [
+        "cic changes the body, keeps the class line",
+        "Pairs with any operator — d, y, >, ="
+      ],
+      "config": {
+        "name": "Enable classtextobj",
+        "lines": [
+          "set classtextobj"
+        ]
+      }
+    }
+  ]
+}

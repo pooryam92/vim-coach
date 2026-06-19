@@ -4,11 +4,11 @@ import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTi
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.ShowTips
 import com.github.pooryam92.vimcoach.features.tips.application.scheduling.ScheduleTips
 import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenController
-import com.github.pooryam92.vimcoach.features.tips.source.application.TipSourceService
-import com.github.pooryam92.vimcoach.features.tips.state.VimCoachSettingsService
-import com.github.pooryam92.vimcoach.features.tips.state.VimTipService
-import com.github.pooryam92.vimcoach.features.tips.state.store.VimCoachSettingsStore
-import com.github.pooryam92.vimcoach.features.tips.state.store.VimTipStore
+import com.github.pooryam92.vimcoach.features.tips.application.loading.TipSourceService
+import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
+import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
+import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
+import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
@@ -23,10 +23,10 @@ class PluginWiringIntTest : BasePlatformTestCase() {
     }
 
     fun testApplicationServicesAreRegistered() {
-        val tipStore = service<VimTipStore>()
-        val settingsStore = service<VimCoachSettingsStore>()
-        val tipService = service<VimTipService>()
-        val settingsService = service<VimCoachSettingsService>()
+        val tipStore = service<PersistentVimTipStore>()
+        val settingsStore = service<PersistentSettingsStore>()
+        val tipService = service<VimTipRepository>()
+        val settingsService = service<SettingsRepository>()
         val sourceService = service<TipSourceService>()
         val refreshTips = service<RefreshTips>()
         val settingsScreenService = service<VimCoachSettingsScreenController>()

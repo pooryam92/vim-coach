@@ -1,0 +1,57 @@
+{
+  "tips": [
+    {
+      "category": [
+        "mappings"
+      ],
+      "summary": "Inspect maps with :map / :nmap / :imap",
+      "details": [
+        ":map lists mappings",
+        "Mode forms narrow the list",
+        "Use :nmap or :imap when a key fails in one mode"
+      ]
+    },
+    {
+      "category": [
+        "mappings"
+      ],
+      "summary": "Use mode-specific maps in ~/.ideavimrc",
+      "details": [
+        "Use nmap, imap, or vmap for the target mode",
+        "Normal, Insert, and Visual maps should stay separate"
+      ]
+    },
+    {
+      "category": [
+        "mappings"
+      ],
+      "summary": "Remove a map with :unmap / :nunmap",
+      "details": [
+        ":unmap removes a mapping",
+        "Mode forms target one mode",
+        "Use :iunmap or :vunmap when only one mode is affected"
+      ]
+    },
+    {
+      "category": [
+        "mappings"
+      ],
+      "summary": "Use <Nop> to disable a key",
+      "details": [
+        "nnoremap Q <Nop> makes Q do nothing",
+        "Useful for disabling keys you hit by accident"
+      ]
+    },
+    {
+      "category": [
+        "mappings"
+      ],
+      "summary": "Clear mappings with :mapclear",
+      "details": [
+        ":mapclear removes mappings",
+        "Mode forms limit the scope",
+        "Useful when debugging conflicting keys or resetting a mode"
+      ]
+    }
+  ]
+}

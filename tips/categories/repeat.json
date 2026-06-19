@@ -3,12 +3,23 @@
     {
       "category": [
         "repeat",
+        "editing"
+      ],
+      "summary": "Repeat last change with .",
+      "details": [
+        ". redoes the last edit",
+        "Counts work, e.g. 3. repeats 3x"
+      ]
+    },
+    {
+      "category": [
+        "repeat",
         "insert"
       ],
       "summary": "Repeat last insert Ctrl-a / Ctrl-@",
       "details": [
-        "Ctrl-a repeats last inserted text",
-        "Ctrl-@ repeats it and exits Insert"
+        "In Insert mode, Ctrl-a re-types it",
+        "Ctrl-@ re-types it, then exits"
       ]
     },
     {
@@ -43,8 +54,7 @@
     },
     {
       "category": [
-        "repeat",
-        "cmdline"
+        "repeat"
       ],
       "summary": "Repeat a macro {count}@{reg}",
       "details": [
@@ -57,10 +67,10 @@
         "repeat",
         "cmdline"
       ],
-      "summary": "Run a macro on a range with :normal @r",
+      "summary": "Run a macro on lines :normal @r",
       "details": [
-        ":normal @r runs macro r on a range",
-        "Useful for line-by-line cleanup"
+        ":'<,'>normal @r runs macro r",
+        "Applies it to each line in range"
       ]
     },
     {

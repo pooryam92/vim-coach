@@ -3,8 +3,10 @@
 //
 // tips/vim_tips_min.json is a generated artifact and is never authored by hand.
 // It is always produced from the files in tips/categories/ by this script.
-// Run it directly (`node scripts/generate-tips.mjs`); CI also runs it and
-// commits the result so the published file can never drift from the sources.
+// CI runs it and commits the result so the published file can never drift from
+// the sources, so day to day you only need to validate, not regenerate:
+//   node scripts/generate-tips.mjs --check   # validate sources, write nothing
+//   node scripts/generate-tips.mjs           # regenerate the artifact (CI / on request)
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -14,12 +16,9 @@ const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repoRoot, "tips", "categories");
 const outputFile = join(repoRoot, "tips", "vim_tips_min.json");
 
-// Categories are emitted in this order; any others follow, sorted by name.
-const categoryOrder = [
-  "editing", "motion", "scroll", "insert", "change", "undo", "repeat",
-  "visual", "cmdline", "options", "pattern", "map", "windows", "tabpage",
-  "fold", "ideavim", "plugin",
-];
+// --check validates the sources without touching the published artifact, so
+// editing tips never regenerates vim_tips_min.json by accident — CI owns that.
+const checkOnly = process.argv.includes("--check");
 
 function fail(message) {
   console.error(`generate-tips: ${message}`);
@@ -40,6 +39,31 @@ function normalizeStrings(values) {
   return result;
 }
 
+// Config lines are written verbatim into .ideavimrc, so keep order and duplicates;
+// only trim and drop blanks.
+function normalizeConfigLines(values) {
+  return (values ?? [])
+    .map((l) => (typeof l === "string" ? l.trim() : ""))
+    .filter(Boolean);
+}
+
+// Accepts the object form { name, lines } or the legacy array form ["line", ...].
+// Returns the emitted config (object when named, array otherwise) or undefined when empty.
+function normalizeConfig(config) {
+  if (config == null) return undefined;
+  if (Array.isArray(config)) {
+    const lines = normalizeConfigLines(config);
+    return lines.length > 0 ? lines : undefined;
+  }
+  if (typeof config === "object") {
+    const lines = normalizeConfigLines(config.lines);
+    if (lines.length === 0) return undefined;
+    const name = typeof config.name === "string" ? config.name.trim() : "";
+    return name ? { name, lines } : lines;
+  }
+  return undefined;
+}
+
 const sourceFiles = readdirSync(sourceDir)
   .filter((name) => name.endsWith(".json"))
   .map((name) => name.slice(0, -".json".length));
@@ -48,10 +72,9 @@ if (sourceFiles.length === 0) {
   fail(`no tip category source files found in ${sourceDir}`);
 }
 
-const ordered = [
-  ...categoryOrder.filter((c) => sourceFiles.includes(c)),
-  ...sourceFiles.filter((c) => !categoryOrder.includes(c)).sort(),
-];
+// Categories are emitted alphabetically; tip selection is random at runtime,
+// so this order only affects how categories list in the settings UI.
+const ordered = [...sourceFiles].sort();
 
 const mergedTips = [];
 const summarySources = new Map();
@@ -87,7 +110,10 @@ for (const category of ordered) {
     }
     summarySources.set(summary, fileName);
 
-    mergedTips.push({ category: categories, summary, details });
+    const entry = { category: categories, summary, details };
+    const config = normalizeConfig(tip.config);
+    if (config) entry.config = config;
+    mergedTips.push(entry);
   });
 }
 
@@ -98,6 +124,11 @@ let json = "";
 for (let i = 0; i < raw.length; i++) {
   const code = raw.charCodeAt(i);
   json += code > 0x7e ? "\\u" + code.toString(16).padStart(4, "0") : raw[i];
+}
+
+if (checkOnly) {
+  console.log(`generate-tips: validated ${mergedTips.length} tips (--check, no file written)`);
+  process.exit(0);
 }
 
 mkdirSync(dirname(outputFile), { recursive: true });

@@ -17,6 +17,7 @@ Vim Coach is an IntelliJ Platform plugin designed to help developers learn and m
 -  **Periodic Tips**: Schedule reminder tips from the plugin settings
 -  **Category Filters**: Enable or disable tip categories from the settings UI, with newly added categories enabled by default
 -  **Tip Exclusions**: Exclude individual tips from notifications and restore them later from settings
+-  **Add to .ideavimrc**: When IdeaVim is installed, tips that ship a mapping or command show an apply button that appends it to your `.ideavimrc`, opens it at the added lines, and offers one-click reload. No `.ideavimrc` yet? The button points you to IdeaVim's "Create ~/.ideavimrc" — Vim Coach never creates the file for you
 -  **Settings UI**: Control startup tips, periodic reminders, active categories, and excluded tips from `Settings | Tools | Vim Coach`
 -  **Comprehensive Library**: Hundreds of Vim commands covering navigation, editing, searching, and more
 -  **Remote Updates**: Tips can be loaded from remote sources for fresh content
@@ -36,6 +37,7 @@ Once installed, you can:
 5. **Exclude Repeated Tips**: Use `Exclude tip` on a notification to hide that tip from future random selections. Restore excluded tips from `Settings | Tools | Vim Coach`.
 6. **Browse Tips**: Each tip includes a summary and detailed explanation with examples
 7. **Refresh Tips from Remote**: Use the `Vim Coach: Refresh Tips` action to update your tips library from the remote source
+8. **Apply Tips to `.ideavimrc`**: When a tip ships a mapping or command (for example a plugin tip's `Plug` line) and you have IdeaVim installed, click the apply button on the notification. Vim Coach appends the lines (skipping any already present), opens the file at the change, and offers a **Reload now** button. If you don't have a `.ideavimrc` yet, the button instead guides you to create one via IdeaVim's "Create ~/.ideavimrc" (Vim status-bar icon); create it, then click again.
 
 ### IdeaVim mapping with `<leader>`
 
@@ -50,6 +52,29 @@ Vim Coach no longer installs a default key binding for `Vim Coach: Show Tip`, so
 
 <!-- Plugin description end -->
 
+## Covered IdeaVim plugins
+
+Tips in the **plugins** category teach commands from these IdeaVim-emulated plugins. Each tip's
+"Add to .ideavimrc" button installs the matching `Plug` line for you:
+
+| Plugin | `.ideavimrc` | What the tips cover |
+| --- | --- | --- |
+| vim-surround | `Plug 'tpope/vim-surround'` | Add/change/delete surroundings, tags, repeats |
+| vim-commentary | `Plug 'tpope/vim-commentary'` | Toggle comments with `gcc` / `gc` |
+| vim-highlightedyank | `Plug 'machakann/vim-highlightedyank'` | Flash the yanked region |
+| ReplaceWithRegister | `Plug 'vim-scripts/ReplaceWithRegister'` | Replace text with a register via `gr` |
+| vim-exchange | `Plug 'tommcdo/vim-exchange'` | Swap two regions with `cx` |
+| argtextobj | `Plug 'vim-scripts/argtextobj.vim'` | Argument text object `ia` / `aa` |
+| vim-indent-object | `Plug 'michaeljsmith/vim-indent-object'` | Indent-block text object `ii` / `ai` |
+| switch.vim | `Plug 'AndrewRadev/switch.vim'` | Toggle `true`/`false` and similar pairs with `gs` |
+| vim-abolish | `Plug 'tpope/vim-abolish'` | Recase a word with `cr` coercions |
+| vim-multiple-cursors | `Plug 'terryma/vim-multiple-cursors'` | Add cursors to matches |
+| vim-textobj-entire | `Plug 'kana/vim-textobj-entire'` | Whole-buffer text object `ae` / `ie` |
+| vim-sneak | `Plug 'justinmk/vim-sneak'` | Jump to any two characters |
+| matchit | `Plug 'chrisbra/matchit'` | Extend `%` to tags and blocks |
+| vim-paragraph-motion | `Plug 'dbakker/vim-paragraph-motion'` | `{` / `}` ignore whitespace-only lines |
+| NERDTree | `Plug 'preservim/nerdtree'` | Browse the project tree |
+
 ### Development: load tips from local file
 
 Source selection is done with Gradle run tasks:
@@ -61,6 +86,8 @@ Source selection is done with Gradle run tasks:
 In `file` mode, the loader uses only `vimcoach.tip.file.path` (set by the run task).
 
 For periodic-tip testing, development mode also supports the JVM property `vimcoach.tip.interval.unit=minutes`.
+
+To point the plugin at an alternative remote tip source (for example a beta branch) without rebuilding, set the `vimcoach.tip.remote.url` JVM option via `Help | Edit Custom VM Options` and restart the IDE. When unset, tips load from the default GitHub source.
 
 ## Contributing
 

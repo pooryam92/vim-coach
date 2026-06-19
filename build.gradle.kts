@@ -15,6 +15,18 @@ plugins {
 group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
 
+val ideaVimPluginId = "IdeaVIM"
+val ideaVimPluginVersion = providers.gradleProperty("platformPlugins").map { pluginDependencies ->
+    val dependency = pluginDependencies.split(',')
+        .map(String::trim)
+        .firstOrNull { it.substringBefore(':') == ideaVimPluginId }
+        ?: throw GradleException("platformPlugins must declare $ideaVimPluginId:<version>")
+
+    dependency.substringAfter(':', missingDelimiterValue = "")
+        .substringBefore('@')
+        .ifEmpty { throw GradleException("$ideaVimPluginId platform plugin dependency must include a version") }
+}
+
 // Set the JVM language level used to build the project.
 kotlin {
     jvmToolchain(21)
@@ -44,7 +56,7 @@ dependencies {
         bundledPlugins(providers.gradleProperty("platformBundledPlugins").map { it.split(',') })
 
         // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file for plugin from JetBrains Marketplace.
-        plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
+        plugins(providers.gradleProperty("platformPlugins").map { it.split(',').filter(String::isNotEmpty) })
 
         // Module Dependencies. Uses `platformBundledModules` property from the gradle.properties file for bundled IntelliJ Platform modules.
         bundledModules(providers.gradleProperty("platformBundledModules").map { it.split(',') })
@@ -205,6 +217,10 @@ intellijPlatformTesting {
                     )
                 }
             }
+
+            plugins {
+                plugin(ideaVimPluginId, ideaVimPluginVersion.get())
+            }
         }
 
         register("runIdeWithMinuteTipSchedule") {
@@ -214,6 +230,10 @@ intellijPlatformTesting {
                 jvmArgumentProviders += CommandLineArgumentProvider {
                     listOf("-Dvimcoach.tip.interval.unit=minutes")
                 }
+            }
+
+            plugins {
+                plugin(ideaVimPluginId, ideaVimPluginVersion.get())
             }
         }
 
@@ -231,6 +251,7 @@ intellijPlatformTesting {
 
             plugins {
                 robotServerPlugin()
+                plugin(ideaVimPluginId, ideaVimPluginVersion.get())
             }
         }
     }

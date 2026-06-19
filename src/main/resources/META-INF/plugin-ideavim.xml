@@ -1,0 +1,7 @@
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService
+            serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.FindIdeaVimRc"
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.IdeaVimPluginFindVimRc"/>
+    </extensions>
+</idea-plugin>

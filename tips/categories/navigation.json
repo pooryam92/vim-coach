@@ -1,0 +1,570 @@
+{
+  "tips": [
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Use counts before motions and operators",
+      "details": [
+        "Put a number before a motion or operator",
+        "5j moves down 5 lines",
+        "3dw deletes 3 words"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to a specific line {count}G",
+      "details": [
+        "G goes to the last line",
+        "{count}G goes to that line number",
+        "Example: 120G jumps to line 120"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Move by words w / b / e",
+      "details": [
+        "w next word start",
+        "b previous word start",
+        "e moves to end of word"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to end of previous word ge",
+      "details": [
+        "ge goes to end of previous word",
+        "Nice for edits before punctuation"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Move by big WORDs W / B / E",
+      "details": [
+        "WORDs split on whitespace",
+        "Great for paths and long tokens"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to end of previous WORD gE",
+      "details": [
+        "gE goes to end of previous WORD",
+        "Useful on URLs / file paths"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to line start 0 / ^",
+      "details": [
+        "0 goes to the very first column",
+        "^ stops at first non-blank char"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to line end $",
+      "details": [
+        "Lands on the last char of the line",
+        "Works as a motion: d$ deletes to end"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to last non-blank on line g_",
+      "details": [
+        "g_ jumps to last non-space character",
+        "Handy near );}] and trailing spaces"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Move to first text + / -",
+      "details": [
+        "+ moves down to first non-blank",
+        "- moves up to first non-blank",
+        "These are motions",
+        "Use them with operators like d+"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to last changed/yanked lines '[ / ']",
+      "details": [
+        "'[ first line of the last change or yank",
+        "'] jumps to its last line"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to exact changed/yanked bounds `[ / `]",
+      "details": [
+        "`[ exact start of the last change or yank",
+        "`] jumps to its exact end"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to a column |",
+      "details": [
+        "80| jumps to column 80",
+        "Great for line-length edits"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to file top/bottom gg / G",
+      "details": [
+        "gg goes to first line",
+        "G goes to last line"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump by file percentage N%",
+      "details": [
+        "Use a count before % to jump by file percentage",
+        "50% jumps to middle of file",
+        "10% jumps near the top",
+        "Bare % jumps to a matching pair instead"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Screen top/middle/bottom H / M / L",
+      "details": [
+        "H top of screen, M middle, L bottom",
+        "Great for fast scanning"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Move by screen lines on wraps gj / gk",
+      "details": [
+        "gj and gk follow wrapped screen lines",
+        "Use them when one long line wraps"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Screen-line start/end g0 / g^ / g$",
+      "details": [
+        "g0 goes to screen-line start",
+        "g$ to screen-line end",
+        "g^ to first text"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Move by paragraphs { and }",
+      "details": [
+        "{ goes to previous paragraph",
+        "} goes to next paragraph",
+        "Moves across blank-line-separated blocks"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Move by sentences ( and )",
+      "details": [
+        "( moves to the previous sentence start",
+        ") moves to the next sentence start",
+        "Useful in prose, comments, and doc blocks"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to matching pair %",
+      "details": [
+        "% jumps between (), {}, and [] by default",
+        "Use a count like 50% to jump by file percentage instead",
+        "Use to inspect a whole block quickly"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to unmatched braces [{ / ]}",
+      "details": [
+        "[{ jumps to the previous unmatched {",
+        "]} jumps to the next unmatched }",
+        "Useful when you are inside nested code blocks"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to unmatched parens [( / ])",
+      "details": [
+        "[( jumps to previous unmatched (",
+        "]) jumps to the next unmatched )",
+        "Useful inside nested expressions"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Return after big jumps `` and ''",
+      "details": [
+        "`` returns to the exact previous spot",
+        "'' returns to the previous line (first non-blank)",
+        "Useful after big jumps like G, %, /, or file switches"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump list navigation Ctrl-o / Ctrl-i",
+      "details": [
+        "Ctrl-o goes back through older jump locations",
+        "Ctrl-i goes forward again",
+        "Useful after searches, definitions, and other big jumps"
+      ]
+    },
+    {
+      "category": [
+        "navigation",
+        "editing"
+      ],
+      "summary": "Jump to last edit location `.",
+      "details": [
+        "`. jumps to the exact last change",
+        "'. jumps to the line of the last change",
+        "Useful when you want to get back to where you were editing"
+      ]
+    },
+    {
+      "category": [
+        "navigation",
+        "editing"
+      ],
+      "summary": "Jump through changes g; / g,",
+      "details": [
+        "g; goes to an older change position",
+        "g, moves back toward newer ones"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Find a character forward on the line f{c}",
+      "details": [
+        "f; jumps to next ';' on the line",
+        "Great for long parameter lists"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Find a character backward on the line F{c}",
+      "details": [
+        "F; jumps to previous ';' on the line",
+        "Use to move precisely without searching"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Move till before a character t{c}",
+      "details": [
+        "t) stops just before ')'",
+        "Perfect for ct) edits"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Move backward till after a character T{c}",
+      "details": [
+        "T) stops just after ')'",
+        "Good for edits near opening brackets"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Repeat last character search ; / ,",
+      "details": [
+        "; repeats in same direction",
+        ", repeats in opposite direction"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Drop a mark before exploring with ma",
+      "details": [
+        "ma sets a mark before you jump elsewhere",
+        "`a returns to the exact position later"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to a mark with `a / 'a",
+      "details": [
+        "`a jumps to the exact marked position",
+        "'a jumps to the marked line"
+      ]
+    },
+    {
+      "category": [
+        "navigation",
+        "ideavim"
+      ],
+      "summary": "Go to definition with gd / gD",
+      "details": [
+        "gd jumps to definition through the IDE",
+        "gD jumps to declaration when the IDE provides one"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Move between methods with ]m / [m",
+      "details": [
+        "]m jumps to the next method start",
+        "[m jumps to the previous method start",
+        "Use ]M and [M for method ends"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump between sections [[ / ]]",
+      "details": [
+        "[[ jumps to previous section start",
+        "]] jumps to the next section start",
+        "[] and ][ jump to section ends"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Navigate misspelled words ]s / [s",
+      "details": [
+        "]s jumps to next misspelled word",
+        "[s jumps to the previous one",
+        "Requires active spell checking"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Place line top/center/bottom zt zz zb",
+      "details": [
+        "zt top, zz center, zb bottom",
+        "Use after searches and big jumps"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Half-page scroll Ctrl-d / Ctrl-u",
+      "details": [
+        "Ctrl-d scrolls down half a page",
+        "Ctrl-u scrolls up half a page"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Page scroll Ctrl-f / Ctrl-b",
+      "details": [
+        "Ctrl-f scrolls forward one page",
+        "Ctrl-b scrolls back one page"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Line scroll Ctrl-e / Ctrl-y",
+      "details": [
+        "Ctrl-e scrolls down one line",
+        "Ctrl-y scrolls up one line"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Scroll sideways by columns zh / zl",
+      "details": [
+        "zh scrolls left, zl scrolls right",
+        "Needs wrap off or soft-wrap off"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Scroll sideways half screen zH / zL",
+      "details": [
+        "zH and zL scroll half a screen",
+        "Needs wrap off or soft-wrap off"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Place cursor screen edge zs / ze",
+      "details": [
+        "zs shows cursor at screen start",
+        "ze shows cursor at screen end",
+        "Needs wrap off or soft-wrap off"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Create a fold zfip",
+      "details": [
+        "zfip folds the current paragraph or block",
+        "Takes any motion, like zf} or zfa{",
+        "Works where IDE folding is available"
+      ]
+    },
+    {
+      "category": [
+        "navigation",
+        "visual"
+      ],
+      "summary": "Fold a selection from Visual mode with zf",
+      "details": [
+        "Select text in Visual mode, then press zf",
+        "Easier than describing it with a motion"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Open/close folds zo / zc / za",
+      "details": [
+        "zo opens, zc closes, za toggles",
+        "Works where IDE folding is available"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Open/close nested folds zO / zC / zA",
+      "details": [
+        "zO opens nested folds, zC closes them",
+        "zA toggles the whole fold recursively"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump between folds zj / zk",
+      "details": [
+        "zj moves to the next fold start",
+        "zk moves to the previous fold start"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Delete folds zd / zD",
+      "details": [
+        "zd deletes one fold at the cursor",
+        "zD deletes nested folds there too"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Fold all / unfold all zM / zR",
+      "details": [
+        "zM closes all folds in view",
+        "zR opens all folds in view"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Control fold depth with zr / zm",
+      "details": [
+        "zr opens one fold level",
+        "zm closes one fold level"
+      ]
+    },
+    {
+      "category": [
+        "navigation",
+        "editing"
+      ],
+      "summary": "Resume insert at last edit gi",
+      "details": [
+        "gi jumps to the last insert spot and enters Insert mode",
+        "Picks up exactly where you stopped typing"
+      ]
+    }
+  ]
+}

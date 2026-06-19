@@ -5,3 +5,5 @@
 .kotlin
 .qodana
 build
+out
+.claude/settings.local.json

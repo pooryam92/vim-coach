@@ -4,6 +4,34 @@
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-06-19
+
+### Added
+
+- Tip notifications now include an **Apply** action that adds a tip's mapping or command directly to your `.ideavimrc` when the IdeaVim plugin is installed, with one-click reload and detection of lines already present. The action appears whenever IdeaVim is installed; if you have no config file yet, it guides you to create one through IdeaVim's "Create ~/.ideavimrc" — Vim Coach never creates the file itself
+
+### Changed
+
+- Reorganized and expanded the tip library, including new `files`, `registers`, and `plugins` categories, renamed `motion` → `navigation` and `map` → `mappings`, and improved plugin tips with additional tips across categories
+
+## [1.4.0-beta.2] - 2026-06-19
+
+### Changed
+
+- The **Apply to .ideavimrc** action now appears whenever IdeaVim is installed, not only when a `.ideavimrc` already exists. If you have no config file yet, clicking it guides you to create one through IdeaVim's "Create ~/.ideavimrc" — Vim Coach never creates the file itself
+- Expanded and refined the tip library, with improved plugin tips and additional tips across categories
+
+## [1.4.0-beta.1] - 2026-06-18
+
+### Added
+
+- Tip notifications now include an **Apply** action that adds a tip's mapping or command directly to your `.ideavimrc` when the IdeaVim plugin is installed, with one-click reload and detection of lines already present
+- Optional `vimcoach.tip.remote.url` JVM override to point the plugin at an alternative remote tip source (e.g. a beta branch) without rebuilding
+
+### Changed
+
+- Reorganized and expanded the tip library, including new `files`, `registers`, and `plugins` categories and renamed `motion` → `navigation` and `map` → `mappings`
+
 ## [1.3.0] - 2026-05-24
 
 ### Added
@@ -82,7 +110,10 @@
 - Support for remote tip sources
 - Action to refetch tips from remote source for updating the local tip library
 
-[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.3.0...HEAD
+[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.4.0...HEAD
+[1.4.0]: https://github.com/pooryam92/vim-coach/compare/1.4.0-beta.2...1.4.0
+[1.4.0-beta.2]: https://github.com/pooryam92/vim-coach/compare/1.4.0-beta.1...1.4.0-beta.2
+[1.4.0-beta.1]: https://github.com/pooryam92/vim-coach/compare/1.3.0...1.4.0-beta.1
 [1.3.0]: https://github.com/pooryam92/vim-coach/compare/1.2.2...1.3.0
 [1.2.2]: https://github.com/pooryam92/vim-coach/compare/1.2.1...1.2.2
 [1.2.1]: https://github.com/pooryam92/vim-coach/compare/1.2.0...1.2.1
