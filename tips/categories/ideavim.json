@@ -165,17 +165,6 @@
     {
       "category": [
         "ideavim",
-        "options"
-      ],
-      "summary": "Inspect popup keys with lookupkeys",
-      "details": [
-        ":set lookupkeys? lists them",
-        "Use it when Tab or Enter act oddly"
-      ]
-    },
-    {
-      "category": [
-        "ideavim",
         "mappings"
       ],
       "summary": "Route keys with sethandler",

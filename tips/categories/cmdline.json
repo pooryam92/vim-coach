@@ -118,17 +118,6 @@
         "cmdline",
         "navigation"
       ],
-      "summary": "Clear jump history with :clearjumps",
-      "details": [
-        ":clearjumps drops jump locations",
-        "Lets Ctrl-o / Ctrl-i start fresh"
-      ]
-    },
-    {
-      "category": [
-        "cmdline",
-        "navigation"
-      ],
       "summary": "Delete marks with :delmarks",
       "details": [
         ":delmarks removes given marks",

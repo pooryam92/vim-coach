@@ -48,7 +48,7 @@ the best tips to add*).
   `node scripts/lint-tips.mjs` surfaces most of these (advisory — eyeball hits).
 - **Always close the loop.** An edit isn't done until `--check` reruns clean.
 
-## Finding the best tips to add
+## Finding the best tips to add — or cut
 
 Adding tips well is mostly **saying no**: a mechanically valid tip that's
 low-value dilutes the set. When the ask is open-ended (what's missing, what to add
@@ -75,6 +75,14 @@ at least three:
 - **Teachability** — read cold in ≤35 chars, can the reader *try it on the spot
   and see the payoff* on the first attempt? If it only lands after setup or extra
   context, it's a worse tip than one that doesn't.
+
+**These axes also prune.** When the ask is to find dead weight ("which tip isn't
+useful"), score *existing* tips the same way — one losing on three axes is a
+removal candidate. Pure deletion that shrinks the set is a legitimate density
+win; no replacement tip is required. But niche-but-standalone is a keep — cut
+only when a tip is redundant with a stronger sibling or actively counterproductive
+(teaches a feature to do less, undoes a useful default). A weak tip that still
+teaches one real move in isolation stays.
 
 **Candidate wells** the script and judgment surface: untaught **plugins**
 (`--plugins`; each needs the `plugins` category + a `config` block —
