@@ -23,17 +23,3 @@ tips this session needed reworking to teach `:s` inline ("what is :s?",
 Generalizable coverage check (applies to `:g`, macros `q`, registers, etc.), but
 narrower than A/B — it's partly an instance of the existing standalone-in-
 knowledge rule plus coverage mapping. Borderline; parked rather than applied.
-
-## How it should land
-
-*Fold one clause into the "candidate wells" list* in *Finding the best tips to
-add* — do not add a section.
-
-Sketch (add to the wells list):
-> … a **base command taught only through its flags/sub-features** with no
-> foundational tip (e.g. `:s` variations but no plain `:%s/old/new/g`) — add the
-> base; it usually out-reaches every variation built on it.
-
-*Why:* turns a discovered gap into a standing prompt during coverage reviews,
-without restating the standalone rule. If a Phase 2 review finds the standalone
-bullet already implies this, skip — don't duplicate.

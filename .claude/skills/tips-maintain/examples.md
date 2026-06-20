@@ -90,6 +90,29 @@ teaches a reader who's never seen the concept.
 *Why:* a single `input → output` example teaches the whole thing; the letter dump
 makes the reader assemble it themselves.
 
+### Name press-vs-type when an example crosses into Insert mode
+
+❌ before:
+```json
+{
+  "category": ["plugins", "editing"],
+  "summary": "Edit every copy of a word Alt-n",
+  "details": ["Alt-n selects foo, repeat for more", "Then c bar replaces every foo"]
+}
+```
+✅ after:
+```json
+{
+  "category": ["plugins", "editing"],
+  "summary": "Edit every copy of a word Alt-n",
+  "details": ["Alt-n selects foo, repeat for more", "Then c, type bar, Esc — all to bar"]
+}
+```
+*Why:* from the reader's seat `c bar` is one mystery token (they ask "what is c
+bar?") — it jams a command and the text you type together. When an example crosses
+from a command into Insert-mode typing, name the action — press `c`, type `bar` —
+so keystrokes read apart from input.
+
 ### Split a dense tip into single-concept tips
 
 ❌ before (one tip cramming both directions):

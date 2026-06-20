@@ -22,13 +22,3 @@ a no-op.
 
 Generalizable authoring check for any option-backed tip, not specific to this
 option.
-
-## How it should land
-
-One line in `checking-support.md`:
-
-> Confirm the value you're setting differs from the option's default, or the tip
-> ships a no-op (check the option's default in IdeaVim's `IjOptions.kt` /
-> `OptionConstants`).
-
-Prose, not a script — cheap to check by hand.

@@ -43,22 +43,3 @@ conceptual/grammar material (text-object grammar, count grammar, operator+motion
 composability). The existing opening says theory is "a reference fact to file
 away" — i.e. reads as a flat ban — which is too absolute and doesn't tell the
 maintainer how to handle theory that *is* worth one consolidated, tryable tip.
-
-## How it should land
-
-*Refine the opening philosophy paragraph — do not add a section.* Keep the
-practical-first north star sharp; add the theory-consolidation allowance right
-after the "reference fact to file away" clause.
-
-Sketch (append to the opening paragraph):
-> Theory isn't banned — but it earns **at most one tip per concept**, and that
-> tip must still be tryable (a concrete key to press, not `d{motion}`-style
-> placeholders). When a concept has no tryable form, delete the standalone tip
-> and fold its rule into a concrete host as one detail line
-> (`"Same d/c works with any motion"` on `cw / dw`) — never an untryable grammar
-> tip, never the same rule repeated across siblings.
-
-*Why:* turns the flat "no reference facts" ban into an actionable rule (one tip,
-tryable, else delete-and-fold), without blunting practical-first. Before applying,
-check the pruning section and the placeholder Wording bullet — fold rather than
-restate if either already implies a piece of this.

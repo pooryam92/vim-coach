@@ -92,11 +92,13 @@ Layout:
 
 * `README.md` — index. One line per finding: priority, slug link, target
   file(s). Point to `did-not-qualify.md`.
-* `<priority>-<slug>.md` — one finding. Open with **target file(s)** and
-  **priority**, then the Phase 1 fields: **Learning / problem**, **Evidence**
-  (`file:line` or the session moment), **Why it qualifies**, **How it should
-  land** (the integration strategy, with a wording sketch — not just a
-  destination).
+* `<priority>-<slug>.md` — one finding. Record only the **problem/observation**,
+  not a solution. Open with **target file(s)** and **priority**, then:
+  **Learning / problem** (the observation — what changed or what was exposed),
+  **Evidence** (`file:line` or the session moment), **Why it qualifies**. Do
+  **not** write a fix, integration strategy, or wording sketch — the solution is
+  decided fresh in Phase 2, when the skill's current shape is in view. A solution
+  parked now is likely stale by the time it is picked up.
 * `did-not-qualify.md` — findings deliberately rejected, with the reason, so a
   later review does not re-litigate them.
 
@@ -110,7 +112,10 @@ a finding is better worked in a focused session.
 Apply only the candidates the user approved. Skip everything else. Candidates may
 come from this session's Phase 1 or from the [backlog](#backlog) — when the user
 points at a backlog file (or asks to clear the backlog), treat it as the source
-of truth and read it cold; do not assume the originating session's context.
+of truth and read it cold; do not assume the originating session's context. A
+backlog finding records only the problem/observation, so work out its integration
+strategy now against the skill's current shape — propose how it should land, get
+approval, then apply it like any other candidate.
 
 For each approved candidate:
 

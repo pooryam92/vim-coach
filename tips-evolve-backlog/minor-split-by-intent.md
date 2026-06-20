@@ -31,16 +31,3 @@ splitting is the right call semantically.
 A reusable decision rule that resolved two distinct calls in one session, and the
 same logic generalizes to any key-family tip (`0`/`^`/`$`, `i`/`a` text objects,
 `</>` indent, etc.). Durable.
-
-## How it should land
-
-*Refine the existing bullet — fold in one clause, no new section.*
-
-Sketch (append to the "split an overloaded tip" sentence):
-> … into self-contained ones — split when the keys serve **different intents**
-> (toggle vs force: `za` vs `zo`/`zc`), but keep a **same-intent direction pair**
-> as one tip (`g0`/`g$` = go to the edge). Each split tip must still earn a
-> distinct summary; the generator rejects duplicates.
-
-*Why:* keeps the mechanical gate but adds the missing semantic one, so future
-splits don't fragment a coherent pair or bundle two intents.

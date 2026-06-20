@@ -10,8 +10,19 @@ allowed-tools: Bash(node scripts/generate-tips.mjs*) Bash(node scripts/lint-tips
 high-leverage, IdeaVim-true move the reader can **try the moment they read it and
 see the payoff** — bite-sized practice that makes them better at (Idea)Vim, not a
 reference fact to file away. Growth is not success — density is; when a change
-won't raise it, cut instead of add. Everything below — what to add, how to word
-it, what to reject — serves this one test.
+won't raise it, cut instead of add.
+
+**Judge every tip from the reader's seat, not the author's.** You write with full
+context; the reader gets one tip *alone*, in random order, in a 240px balloon,
+with nothing around it. So read each summary and detail **cold** — it must say
+*which* behavior it teaches and *how* to try it on the spot. Most wording defects
+(an unnamed mode, a key cluster, `c bar` blurring press-vs-type, a `{motion}`
+placeholder, a plugin that reads like a synonym for a built-in) are invisible from
+the author's seat and obvious from the reader's. Switching seats is how you find
+them.
+
+Everything below — what to add, how to word it, what to reject — serves these two
+tests: **density** and the **reader's seat**.
 
 You are the **maintainer** of the Vim Coach tip set: you add, revise, improve,
 and co-edit tips on request. Tips are authored by hand in
@@ -142,7 +153,9 @@ Config-backed tip (renders an **Add to .ideavimrc** button):
   discovery.
 - **`summary`** — one command-first line; what to do or what you gain. **≤ 35
   chars.** When it ends with the keys it teaches, attach them with a **single
-  space** — never `-`, `:`, `→`, or `(…)`.
+  space** — never `-`, `:`, `→`, or `(…)`. Carry **at most one key or one clean
+  pair** (`gj / gk`); 3+ keys or a chord/backtick cluster (`Ctrl-w _ / Ctrl-w |`,
+  `zo / zc / za`) name the outcome instead and map each key in the details.
 - **`details`** — short factual lines (≤ 35 chars each): what it does, context, a
   caveat, or a quick example. **Prefer 2; no hard cap, but every line past 2 is
   a cost and must earn its place** — a distinct mechanic, breadth, or a
@@ -161,6 +174,9 @@ Config-backed tip (renders an **Add to .ideavimrc** button):
   is not a defect to clean up.
 
 ## Wording rules
+
+Each rule below is the **reader's-seat test** (top of file) made concrete — a
+defect that hides from the author and shows from the reader.
 
 - **Command-first, concrete outcome over Vim taxonomy.** Verb-first, not a noun
   label (`Show line numbers with number`, not `Line numbers`). Prefer a real,
@@ -184,18 +200,19 @@ Config-backed tip (renders an **Add to .ideavimrc** button):
 - **Spell out abbreviations in user-facing text.** `command-line`, not `cmdline`
   (that's the category slug only). `char`/`msg`/`prev` are fine only when
   spelling out would wrap.
-- **Name modes explicitly when context helps:** `Normal mode`, `Insert mode`,
-  `Visual mode`.
-- **For IdeaVim/plugin tips, put the user outcome in the summary**, the
-  plugin/option name in `config`/details (`Add surroundings ysiw)`, not
-  `Surround text with vim-surround`).
+- **The summary must disambiguate, not just label.** Read cold it must pin the one
+  behavior the tip teaches: name the mode when the key is mode-ambiguous (`O`, `I`,
+  `A`, `Ctrl-w` → `Swap corner in Visual block O`); when a plugin overlaps a
+  built-in, carry the differentiator (`Paste over a word, keep yank griw`, not
+  `Paste a yank over a word griw`); and name the user *outcome*, not a key dump or
+  the plugin name — for interchangeable keys name the family in prose with one
+  example (`Any bracket or quote works too`), and put the plugin/option name in
+  `config`/details (`Add surroundings ysiw)`, not `Surround text with
+  vim-surround`). Name any mode whenever it removes doubt.
 - **Don't restate the summary in detail line 1** — the most-read line; spend it
   on the mechanic, value, or mnemonic. For a jargon-heavy command give a typeable
   example + plain-words result (`:v/foo/d deletes lines lacking foo`), not the
-  syntax anatomy. Read each line cold: if it only parses once you know the
-  concept, rewrite it.
-- **Never dump alternative keys as a symbol list** — name the family in prose
-  (`Any bracket or quote works too`) and keep at most one concrete example.
+  syntax anatomy.
 - **Consistent pair phrasing** — `next/previous`, `before/after`, `top/bottom`.
   In a slashed pair, vary one axis and keep the operator fixed.
 
