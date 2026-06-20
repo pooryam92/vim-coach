@@ -36,10 +36,11 @@
       "category": [
         "visual"
       ],
-      "summary": "Swap block corner O",
+      "summary": "Swap corner in Visual block O",
       "details": [
-        "In block mode O swaps the corner",
-        "Useful for column edits"
+        "1. Ctrl-v to start the block",
+        "2. O swaps to the other edge",
+        "3. Grow the block from that side"
       ]
     },
     {
@@ -167,10 +168,12 @@
         "visual",
         "insert"
       ],
-      "summary": "Block insert Ctrl-v then I",
+      "summary": "Insert same text on many lines",
       "details": [
-        "Select a column, then press I",
-        "Esc applies it to all lines"
+        "1. Ctrl-v, then j to span lines",
+        "2. Press I to insert at left",
+        "3. Type — shows on one line",
+        "4. Esc copies it to them all"
       ]
     },
     {
@@ -178,10 +181,12 @@
         "visual",
         "insert"
       ],
-      "summary": "Block append Ctrl-v then A",
+      "summary": "Append same text on many lines",
       "details": [
-        "Select a column, then press A",
-        "Esc applies it to all lines"
+        "1. Ctrl-v, then j to span lines",
+        "2. Press A to append at right",
+        "3. Type — shows on one line",
+        "4. Esc copies it to them all"
       ]
     },
     {
@@ -189,10 +194,12 @@
         "visual",
         "insert"
       ],
-      "summary": "Append at line ends Ctrl-v $ A",
+      "summary": "Append to every line's end",
       "details": [
-        "Ctrl-v $ selects to each end",
-        "A appends to every line"
+        "1. Ctrl-v, then j to span lines",
+        "2. Press $ to reach each end",
+        "3. Press A, then type your text",
+        "4. Esc adds it to every line"
       ]
     },
     {
@@ -200,10 +207,12 @@
         "visual",
         "editing"
       ],
-      "summary": "Block change Ctrl-v then c",
+      "summary": "Replace a block on many lines",
       "details": [
-        "Select a block, then press c",
-        "Esc applies it to all lines"
+        "1. Ctrl-v selects the block",
+        "2. Press c to delete it",
+        "3. Type the new text",
+        "4. Esc fills every line"
       ]
     },
     {

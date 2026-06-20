@@ -75,10 +75,10 @@
       "category": [
         "insert"
       ],
-      "summary": "Delete the previous word Ctrl-w",
+      "summary": "Delete a word in Insert mode Ctrl-w",
       "details": [
-        "Deletes word left of cursor",
-        "Good for quick typo fixes"
+        "Removes the word before the cursor",
+        "Faster than holding backspace"
       ]
     },
     {

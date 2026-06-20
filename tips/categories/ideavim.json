@@ -164,17 +164,6 @@
     },
     {
       "category": [
-        "ideavim",
-        "mappings"
-      ],
-      "summary": "Route keys with sethandler",
-      "details": [
-        "sethandler <C-V> a:vim",
-        "Decides IDE vs Vim per key"
-      ]
-    },
-    {
-      "category": [
         "ideavim"
       ],
       "summary": "Open quick docs with K",
