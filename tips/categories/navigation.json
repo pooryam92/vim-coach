@@ -4,11 +4,10 @@
       "category": [
         "navigation"
       ],
-      "summary": "Use counts before motions and operators",
+      "summary": "Repeat a motion with a count 5j",
       "details": [
-        "Put a number before a motion or operator",
-        "5j moves down 5 lines",
-        "3dw deletes 3 words"
+        "Operators take counts too — 3dw deletes 3 words",
+        "Counts multiply: 2d3w deletes 6 words"
       ]
     },
     {
@@ -562,7 +561,7 @@
       ],
       "summary": "Resume insert at last edit gi",
       "details": [
-        "gi jumps to the last insert spot and enters Insert mode",
+        "Lands you in Insert mode, not Normal",
         "Picks up exactly where you stopped typing"
       ]
     }

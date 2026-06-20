@@ -1,10 +1,17 @@
 ---
 name: tips-maintain
-description: Add, edit, improve, reword, review, or maintain Vim Coach tips, decide which new tips are most worth adding (coverage gaps + value), and keep this skill itself up to date. Use when asked to write a new tip, fix or reword an existing tip, find what's missing or worth adding, improve tip coverage, add or change a category, regenerate vim_tips_min.json, or work in tips/categories/.
+description: Add, edit, improve, reword, review, or maintain Vim Coach tips, decide which new tips are most worth adding (coverage gaps + value), and keep this skill itself up to date. Use when asked to write a new tip, fix or reword an existing tip, find what's missing or worth adding, improve tip coverage, add or change a category, regenerate vim_tips_min.json, or work in tips/categories/. Not for the plugin's Kotlin/UI code or the tip-rendering pipeline.
 allowed-tools: Bash(node scripts/generate-tips.mjs*) Bash(node scripts/lint-tips.mjs*) Bash(node .claude/skills/tips-maintain/coverage.mjs*) Bash(grep*) Bash(git status*)
 ---
 
 # Maintaining Vim Coach tips
+
+**Primary goal: maximize value per tip, not tip count.** Every tip must teach one
+high-leverage, IdeaVim-true move the reader can **try the moment they read it and
+see the payoff** — bite-sized practice that makes them better at (Idea)Vim, not a
+reference fact to file away. Growth is not success — density is; when a change
+won't raise it, cut instead of add. Everything below — what to add, how to word
+it, what to reject — serves this one test.
 
 You are the **maintainer** of the Vim Coach tip set: you add, revise, improve,
 and co-edit tips on request. Tips are authored by hand in
@@ -20,7 +27,7 @@ the best tips to add*).
 
 ## How you work
 
-- **Revise in small batches (≤ 2 tips).** For each, show the **whole tip
+- **Revise in small batches (≤ 1 tips).** For each, show the **whole tip
   before → after** plus a one-line reason, get a go-ahead, *then* edit. Never
   bulk-rewrite silently.
 - **Decide what's worth adding before you add it.** When the ask is open-ended
@@ -65,8 +72,9 @@ at least three:
 - **IdeaVim fit** — is it *especially* worth knowing here? IDE-bridge actions,
   plugin-backed power, and keys whose IdeaVim behavior differs from upstream Vim
   are the sweet spot; a generic Vim factoid is weaker.
-- **Teachability** — can it stand alone in the balloon, read cold, in ≤35 chars?
-  If it only lands after setup, it's a worse tip than one that doesn't.
+- **Teachability** — read cold in ≤35 chars, can the reader *try it on the spot
+  and see the payoff* on the first attempt? If it only lands after setup or extra
+  context, it's a worse tip than one that doesn't.
 
 **Candidate wells** the script and judgment surface: untaught **plugins**
 (`--plugins`; each needs the `plugins` category + a `config` block —
@@ -109,8 +117,8 @@ Config-backed tip (renders an **Add to .ideavimrc** button):
 ```json
 {
   "category": ["plugins", "editing"],
-  "summary": "Add surroundings ys{motion}",
-  "details": ["ysiw) wraps a word in parens", "ys$\" quotes to end of line"],
+  "summary": "Add surroundings ysiw)",
+  "details": ["ys, then a motion, then a pair", "ys$\" quotes to end of line"],
   "config": { "name": "Install vim-surround", "lines": ["Plug 'tpope/vim-surround'"] }
 }
 ```
@@ -124,8 +132,10 @@ Config-backed tip (renders an **Add to .ideavimrc** button):
   chars.** When it ends with the keys it teaches, attach them with a **single
   space** — never `-`, `:`, `→`, or `(…)`.
 - **`details`** — short factual lines (≤ 35 chars each): what it does, context, a
-  caveat, or a quick example. Two short lines beat one wrapped line. Blank lines
-  are stripped — don't add them.
+  caveat, or a quick example. **Up to 3 lines, but prefer 2** — add a 3rd only
+  when it earns its place (e.g. mnemonic *and* mechanic *and* breadth), never to
+  pad. Two short lines beat one wrapped line. Blank lines are stripped — don't
+  add them.
 - **`config`** (optional) — `{ "name": ..., "lines": [...] }` for the `.ideavimrc`
   snippet the button appends. Must be one of the **three additive kinds**
   (`config-kinds.md`). `name` is the button label, verbatim — add it **only when
@@ -137,13 +147,19 @@ Config-backed tip (renders an **Add to .ideavimrc** button):
 ## Wording rules
 
 - **Command-first, concrete outcome over Vim taxonomy.** Verb-first, not a noun
-  label (`Show line numbers with number`, not `Line numbers`).
+  label (`Show line numbers with number`, not `Line numbers`). Prefer a real,
+  typeable form over a placeholder — `griw`, not `gr{motion}`; reserve
+  `{count}`/`{char}` for genuinely variable args (`r{char}`, `{count}G`).
 - **Keys attach with a plain space only** — never a `-`/`:`/`→`/`(…)` separator
-  (`Add surroundings ys{motion}`, not `… - ys{motion}`). `with` is allowed as
+  (`Add surroundings ysiw)`, not `… - ysiw)`). `with` is allowed as
   genuine prose, not as a separator.
 - **Every keystroke shown must do something when typed.** A bare text object
   (`iw`, `ac`, `ii`, `ai`, `am`) does nothing alone — lead with an operator
   (`Act on a class dac / cic`, not `Select a class ac`).
+- **A transform tip names both ends.** Replace/swap/substitute/paste-over tips
+  must show *what changes and what it becomes* — `Paste a yank over a word griw`,
+  not `Replace a word` (with what?). The reader can't see the payoff if half the
+  operation is implied.
 - **Each tip stands alone — in knowledge, not just sequence.** Order is random,
   so a tip can't assume the reader just saw another, nor that they grasp the
   concept it teaches. Fold a dependent point into its host, or split an
@@ -155,7 +171,7 @@ Config-backed tip (renders an **Add to .ideavimrc** button):
 - **Name modes explicitly when context helps:** `Normal mode`, `Insert mode`,
   `Visual mode`.
 - **For IdeaVim/plugin tips, put the user outcome in the summary**, the
-  plugin/option name in `config`/details (`Add surroundings ys{motion}`, not
+  plugin/option name in `config`/details (`Add surroundings ysiw)`, not
   `Surround text with vim-surround`).
 - **Don't restate the summary in detail line 1** — the most-read line; spend it
   on the mechanic, value, or mnemonic. For a jargon-heavy command give a typeable
@@ -167,14 +183,15 @@ Config-backed tip (renders an **Add to .ideavimrc** button):
 - **Consistent pair phrasing** — `next/previous`, `before/after`, `top/bottom`.
   In a slashed pair, vary one axis and keep the operator fixed.
 
-Display: tips render in a 240px IntelliJ balloon (~30–35 chars/line, ~2 wrapped
-body lines visible). Worked before→after examples: `examples.md`.
+Display: tips render in a 240px IntelliJ balloon (~30–35 chars/line). 2 body
+lines read cleanest; a 3rd is fine when it pays its way (no hard cap in the
+renderer). Worked before→after examples: `examples.md`.
 
 Reword only when it's a real improvement — **renaming a summary resets the user's
 hide preference** for that tip (the hide key hashes the trimmed summary).
 
 ## Categories (14)
-
+ 
 `navigation` (motion/scroll/fold) · `editing` (change text/undo) · `registers`
 (yank/paste/registers) · `visual` (selecting) · `insert` (typing while
 inserting) · `repeat` (repeat/automate) · `pattern` (search & replace) ·

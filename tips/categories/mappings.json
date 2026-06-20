@@ -52,6 +52,18 @@
         "Mode forms limit the scope",
         "Useful when debugging conflicting keys or resetting a mode"
       ]
+    },
+    {
+      "category": [
+        "mappings",
+        "insert"
+      ],
+      "summary": "Auto-expand text with :iabbrev",
+      "details": [
+        ":iab teh the fixes that typo",
+        "Expands after Space or Enter",
+        "Great for boilerplate or signatures"
+      ]
     }
   ]
 }

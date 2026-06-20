@@ -65,16 +65,6 @@
       "category": [
         "insert"
       ],
-      "summary": "Return to last insert spot gi",
-      "details": [
-        "gi returns to last insert spot",
-        "Then it enters Insert again"
-      ]
-    },
-    {
-      "category": [
-        "insert"
-      ],
       "summary": "Run one Normal command with Ctrl-o",
       "details": [
         "Run one Normal command",

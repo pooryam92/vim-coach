@@ -196,10 +196,10 @@
         "plugins",
         "registers"
       ],
-      "summary": "Replace with a register gr",
+      "summary": "Paste a yank over a word griw",
       "details": [
-        "gr{motion} pastes over the motion",
-        "griw replaces a word in place"
+        "yiw copies a word, griw pastes it",
+        "Any motion works, e.g. grr a line"
       ],
       "config": {
         "name": "Install ReplaceWithRegister",

@@ -21,11 +21,28 @@
       "summary": "Show line numbers with number",
       "details": [
         ":set number shows line numbers",
-        ":set relativenumber helps with counts"
+        ":set nonumber hides them again"
       ],
       "config": [
         "set number"
       ]
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Count jumps with relativenumber",
+      "details": [
+        ":set relativenumber shows the gap",
+        "Reads 5j, d3k counts off the gutter",
+        "Add number too for a hybrid gutter"
+      ],
+      "config": {
+        "name": "Show relative line numbers",
+        "lines": [
+          "set relativenumber"
+        ]
+      }
     },
     {
       "category": [
