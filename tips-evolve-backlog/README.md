@@ -12,6 +12,5 @@ Target files live under `.claude/skills/tips-maintain/`:
 
 ## Findings
 
-- [candidate-b-gvar-extensions-nonshippable.md](candidate-b-gvar-extensions-nonshippable.md) — **GOOD.** Extensions that bind no keys without a `g:` var are non-shippable.
 - [candidate-c-verify-not-default.md](candidate-c-verify-not-default.md) — **MINOR.** Verify a `set` option isn't already the default.
 - [did-not-qualify.md](did-not-qualify.md) — recorded for context; no action.

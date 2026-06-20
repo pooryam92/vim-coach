@@ -20,7 +20,15 @@ Lines that satisfy both — the working examples:
 - **Install a plugin** — one `Plug '<github-alias>'` line. Primary category
   `plugins` + a functional secondary. Aliases:
   `external/ideavim/doc/IdeaVim Plugins.md`. Use `Plug`, not the legacy
-  `set <plugin>` form.
+  `set <plugin>` form. If the plugin binds *no* default keys, ship its binding
+  config in the **same block**: e.g. CamelCaseMotion exposes only `<Plug>`
+  targets until you set `g:camelcasemotion_key`, so ship
+  `Plug 'bkad/CamelCaseMotion'` **and** `let g:camelcasemotion_key = '<prefix>'`
+  together. The `g:` var is plugin-private (not leader-style shared state), and
+  IdeaVim inits extensions only after the whole rc is sourced, so the two lines
+  are order-independent. But it now *claims a key family*, so collision-check the
+  prefix like an action mapping — the upstream default `,` is both a built-in
+  motion and a common leader, so it's usually not a safe pick.
 - **Tune a built-in option** — e.g. `set scrolloff=5`, `hlsearch`. Primary
   `options`.
 - **IDE-bridge `set`** — e.g. `set ideajoin`, `set idearefactormode=keep`.
@@ -49,9 +57,13 @@ author them until the blocker is fixed.
   leader safely.
 - **Plugins that need a separate Marketplace IDE plugin** — fail test 1: the
   button appends only the config line, so a `config` that looks complete would
-  silently do nothing. EasyMotion (needs IdeaVim-EasyMotion + AceJump), which-key
-  (needs the Which-Key IDE plugin), and multiple-cursors (default keys unbound,
-  VIM-2178) are deferred — see `docs/discover/config-tips-roadmap.md`. A
-  `Plug`/`set` line is only shippable when IdeaVim emulates the plugin itself
-  (surround, commentary, sneak, NERDTree, argtextobj…). The "Setup" block in
-  `external/ideavim/doc/IdeaVim Plugins.md` reveals which need an extra install.
+  silently do nothing. EasyMotion (needs IdeaVim-EasyMotion + AceJump) and
+  which-key (needs the Which-Key IDE plugin) are deferred — see
+  `docs/discover/config-tips-roadmap.md`. A `Plug`/`set` line is only shippable
+  when IdeaVim emulates the plugin itself (surround, commentary, sneak, NERDTree,
+  argtextobj…). The "Setup" block in `external/ideavim/doc/IdeaVim Plugins.md`
+  reveals which need an extra install.
+- **multiple-cursors** — emulated, but its default keys don't bind and the
+  `<Plug>` workaround maps aren't verified to work (VIM-2178); deferred until
+  confirmed. (Unlike CamelCaseMotion above, where the prefix var *does* bind
+  working keys.)
