@@ -13,4 +13,5 @@ Target files live under `.claude/skills/tips-maintain/`:
 ## Findings
 
 - [candidate-c-verify-not-default.md](candidate-c-verify-not-default.md) — **MINOR.** Verify a `set` option isn't already the default.
+- [minor-keys-vs-typed-text.md](minor-keys-vs-typed-text.md) — **MINOR.** Distinguish keys pressed from text typed in worked examples (`examples.md`).
 - [did-not-qualify.md](did-not-qualify.md) — recorded for context; no action.
