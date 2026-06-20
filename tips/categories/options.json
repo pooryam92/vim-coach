@@ -76,7 +76,7 @@
         "options",
         "pattern"
       ],
-      "summary": "Show search matches while typing incsearch",
+      "summary": "Show matches while typing incsearch",
       "details": [
         ":set incsearch shows matches while typing",
         "Makes /pattern navigation feel instant"
@@ -90,7 +90,7 @@
         "options",
         "pattern"
       ],
-      "summary": "Keep search matches highlighted hlsearch",
+      "summary": "Keep matches highlighted hlsearch",
       "details": [
         ":set hlsearch keeps matches highlighted",
         "Clear temporarily with :noh"

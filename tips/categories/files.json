@@ -49,7 +49,7 @@
         "files",
         "cmdline"
       ],
-      "summary": "Jump to a listed buffer with :buffer {N}",
+      "summary": "Jump to buffer N :buffer {N}",
       "details": [
         ":buffer {N} jumps to buffer number N",
         "Use it after :ls when you know the number"

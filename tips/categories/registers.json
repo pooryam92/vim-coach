@@ -99,7 +99,7 @@
       "category": [
         "registers"
       ],
-      "summary": "Delete without clobbering registers with \"_",
+      "summary": "Delete without clobbering yanks \"_",
       "details": [
         "\"_d deletes into the black-hole register",
         "Keeps your yank safe for later pasting"

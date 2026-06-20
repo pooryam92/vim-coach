@@ -37,7 +37,7 @@
       "category": [
         "windows"
       ],
-      "summary": "Split from the keyboard Ctrl-w s / Ctrl-w v",
+      "summary": "Split a window Ctrl-w s / Ctrl-w v",
       "details": [
         "Ctrl-w s splits horizontally",
         "Ctrl-w v splits vertically"

@@ -106,7 +106,7 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to last changed/yanked lines '[ / ']",
+      "summary": "Jump to change/yank lines '[ / ']",
       "details": [
         "'[ first line of the last change or yank",
         "'] jumps to its last line"
@@ -116,7 +116,7 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to exact changed/yanked bounds `[ / `]",
+      "summary": "Jump to change/yank ends `[ / `]",
       "details": [
         "`[ exact start of the last change or yank",
         "`] jumps to its exact end"
@@ -289,7 +289,7 @@
       "category": [
         "navigation"
       ],
-      "summary": "Find a character forward on the line f{c}",
+      "summary": "Find a character forward f{c}",
       "details": [
         "f; jumps to next ';' on the line",
         "Great for long parameter lists"
@@ -299,7 +299,7 @@
       "category": [
         "navigation"
       ],
-      "summary": "Find a character backward on the line F{c}",
+      "summary": "Find a character backward F{c}",
       "details": [
         "F; jumps to previous ';' on the line",
         "Use to move precisely without searching"
@@ -319,7 +319,7 @@
       "category": [
         "navigation"
       ],
-      "summary": "Move backward till after a character T{c}",
+      "summary": "Move backward, stop after char T{c}",
       "details": [
         "T) stops just after ')'",
         "Good for edits near opening brackets"
@@ -486,7 +486,7 @@
         "navigation",
         "visual"
       ],
-      "summary": "Fold a selection from Visual mode with zf",
+      "summary": "Fold a Visual selection zf",
       "details": [
         "Select text in Visual mode, then press zf",
         "Easier than describing it with a motion"

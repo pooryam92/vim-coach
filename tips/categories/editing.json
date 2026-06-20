@@ -56,7 +56,7 @@
       "category": [
         "editing"
       ],
-      "summary": "Change inside parentheses with ci( / cib",
+      "summary": "Change inside parentheses ci( / cib",
       "details": [
         "ci( changes the text inside parentheses",
         "cib is an alias for the same text object"
@@ -261,7 +261,7 @@
         "editing",
         "navigation"
       ],
-      "summary": "Delete/change to first non-blank d^ / c^",
+      "summary": "Delete/change to first text d^ / c^",
       "details": [
         "d^ deletes to first non-blank",
         "c^ changes to first non-blank"

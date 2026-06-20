@@ -455,7 +455,7 @@
         "plugins",
         "editing"
       ],
-      "summary": "Delete inside a comma-separated item di,",
+      "summary": "Delete one comma-separated item di,",
       "details": [
         "di, keeps the commas in place",
         "Any separator works — semicolon, pipe, more"
