@@ -3,6 +3,25 @@
     {
       "category": [
         "plugins",
+        "navigation"
+      ],
+      "summary": "Move inside camelCase ,w",
+      "details": [
+        "Splits fooBar and foo_bar",
+        "Also ,b back, ,e end",
+        "ci,w changes one sub-word"
+      ],
+      "config": {
+        "name": "Install CamelCaseMotion",
+        "lines": [
+          "Plug 'bkad/CamelCaseMotion'",
+          "let g:camelcasemotion_key = ','"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
         "editing"
       ],
       "summary": "Edit every copy of a word Alt-n",

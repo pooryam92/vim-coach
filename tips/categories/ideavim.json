@@ -215,6 +215,24 @@
     {
       "category": [
         "ideavim",
+        "navigation"
+      ],
+      "summary": "Jump between git changes ]c / [c",
+      "details": [
+        "Moves between uncommitted hunks",
+        "Gutter marks vs the last commit"
+      ],
+      "config": {
+        "name": "Map VCS changes",
+        "lines": [
+          "nmap ]c <Action>(VcsShowNextChangeMarker)",
+          "nmap [c <Action>(VcsShowPrevChangeMarker)"
+        ]
+      }
+    },
+    {
+      "category": [
+        "ideavim",
         "editing"
       ],
       "summary": "Open the quick-fix menu ga",
