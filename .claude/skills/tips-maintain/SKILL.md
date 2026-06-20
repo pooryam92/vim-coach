@@ -38,7 +38,7 @@ the best tips to add*).
 
 ## How you work
 
-- **Revise in small batches (≤ 1 tips).** For each, show the **whole tip
+- **Revise in small batches (≤ 2 tips).** For each, show the **whole tip
   before → after** plus a one-line reason, get a go-ahead, *then* edit. Never
   bulk-rewrite silently. **Shape before wording:** past a light touch, agree the
   structure first — how many tips, the split axis, line order — then polish words;
@@ -49,11 +49,16 @@ the best tips to add*).
   ("what's missing," "what are the best tips to add," "improve coverage"), don't
   free-associate — map the gap and rank by value first. See *Finding the best tips
   to add* below.
+- **A category is its rendered set, not its file.** The app renders a category
+  from every tip that tags it — *primary* (its file) **or** *secondary* — so
+  `visual` includes tips that live in `editing.json`. Before scoring, improving,
+  or adding to a category, `grep -rn '"<category>"' tips/categories/` to see all of
+  it; reading the lone file misjudges coverage and hides cross-listed duplicates.
 - **Search before adding.** `grep -rn` the keys *and* the behavior across
-  `tips/categories/`, and run `node scripts/lint-tips.mjs`. Duplicate **summaries
-  hard-fail** the generator across *all* files, but the same idea under a
-  *different* summary slips through — that's yours to catch. If covered, merge or
-  drop instead of adding.
+  `tips/categories/`, then run `node scripts/lint-tips.mjs`. The generator only
+  blocks *identical* summaries, so a duplicate under different wording is yours to
+  catch — lint flags the likely ones (*Self-checks*). If covered, merge or drop
+  instead of adding.
 - **Verify support before keeping a claim** (`checking-support.md`). Don't carry
   over upstream-Vim behavior IdeaVim doesn't replicate.
 - **When improving, scan for:** bad/duplicate categories, misleading or
@@ -135,43 +140,24 @@ when the user explicitly asks. Build details: `docs/tips/tips-pipeline.md`.
 }
 ```
 
-Config-backed tip (renders an **Add to .ideavimrc** button):
-
-```json
-{
-  "category": ["plugins", "editing"],
-  "summary": "Add surroundings ysiw)",
-  "details": ["ys, then a motion, then a pair", "ys$\" quotes to end of line"],
-  "config": { "name": "Install vim-surround", "lines": ["Plug 'tpope/vim-surround'"] }
-}
-```
-
 ### Field rules
 
 - **`category`** — array; the **first** entry is primary and **must match the
   file name**. One by default; add a 2nd/3rd only when it genuinely aids
   discovery.
-- **`summary`** — one command-first line; what to do or what you gain. **≤ 35
-  chars.** When it ends with the keys it teaches, attach them with a **single
-  space** — never `-`, `:`, `→`, or `(…)`. Carry **at most one key or one clean
-  pair** (`gj / gk`); 3+ keys or a chord/backtick cluster (`Ctrl-w _ / Ctrl-w |`,
+- **`summary`** — one command-first line, **≤ 35 chars** (key-attachment and
+  disambiguation rules: *Wording rules*). Carry **at most one key or one clean
+  pair** (`gj / gk`); 3+ keys or a chord cluster (`Ctrl-w _ / Ctrl-w |`,
   `zo / zc / za`) name the outcome instead and map each key in the details.
 - **`details`** — short factual lines (≤ 35 chars each): what it does, context, a
   caveat, or a quick example. **Prefer 2; no hard cap, but every line past 2 is
-  a cost and must earn its place** — a distinct mechanic, breadth, or a
-  sequential step in a workflow, never padding. Two short lines beat one wrapped
-  line. Blank lines are stripped — don't add them.
-  - **Procedure tips** — when a move is *irreducibly multi-step* (many keys to
-    reproduce, no single step pays off alone, e.g. block insert), write it as
-    numbered steps (`1. … 2. …`): the **summary names the use**, the **steps show
-    how**. Only when every step is load-bearing — never pad an atomic tip into a list.
-- **`config`** (optional) — `{ "name": ..., "lines": [...] }` for the `.ideavimrc`
-  snippet the button appends. Must be a **self-contained, shared-state-free
-  block** the button can safely append (`config-kinds.md`). `name` is the button label, verbatim — add it **only when
-  it's a meaningful label**; otherwise omit it and the button reads a generic
-  `Apply`, which is fine. Don't convert a legacy array tip (`["<line>", ...]`,
-  still accepted) to the object form just to add a `name` — a labelless `Apply`
-  is not a defect to clean up.
+  a cost and must earn its place** — never padding. Two short lines beat one
+  wrapped line; blank lines are stripped. An *irreducibly* multi-step move (block
+  insert) becomes numbered steps (`1. … 2. …`) — summary names the use, steps show
+  how; only when every step is load-bearing.
+- **`config`** (optional) — `{ "name": ..., "lines": [...] }`; renders the **Add
+  to .ideavimrc** button. Shippability, the worked example, the `name`/`Apply`
+  nuance, and the legacy array form: `config-kinds.md`.
 
 ## Wording rules
 

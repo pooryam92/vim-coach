@@ -410,10 +410,10 @@
       "category": [
         "navigation"
       ],
-      "summary": "Place line top/center/bottom zt zz zb",
+      "summary": "Reposition the cursor line on screen",
       "details": [
         "zt top, zz center, zb bottom",
-        "Use after searches and big jumps"
+        "Use after a search or big jump"
       ]
     },
     {

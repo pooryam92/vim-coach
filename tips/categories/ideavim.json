@@ -269,6 +269,40 @@
           "nmap gm <Action>(Refactorings.QuickListPopupAction)"
         ]
       }
+    },
+    {
+      "category": [
+        "ideavim",
+        "navigation"
+      ],
+      "summary": "Find all usages gr",
+      "details": [
+        "Lists every call site, jump to any",
+        "Works on methods, classes, vars"
+      ],
+      "config": {
+        "name": "Map find usages",
+        "lines": [
+          "nmap gr <Action>(FindUsages)"
+        ]
+      }
+    },
+    {
+      "category": [
+        "ideavim",
+        "navigation"
+      ],
+      "summary": "Jump to implementation gi",
+      "details": [
+        "From an interface to its class",
+        "Overrides gi insert-at-last-edit"
+      ],
+      "config": {
+        "name": "Map implementation",
+        "lines": [
+          "nmap gi <Action>(GotoImplementation)"
+        ]
+      }
     }
   ]
 }

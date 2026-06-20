@@ -3,6 +3,23 @@
 Open when authoring or reviewing a tip's `config` block. Everyday format/wording
 is in `SKILL.md`.
 
+## The `config` field
+
+`{ "name": "<button label>", "lines": ["<rc line>", …] }`. `name` is the button
+label verbatim — set it **only when it's a meaningful label**; omit it and the
+button reads a generic `Apply`, which is fine. The legacy array form
+(`"config": ["<line>", …]`) is still accepted — don't convert it to the object
+form just to add a `name`; a labelless `Apply` is not a defect to clean up.
+
+```json
+{
+  "category": ["plugins", "editing"],
+  "summary": "Add surroundings ysiw)",
+  "details": ["ys, then a motion, then a pair", "ys$\" quotes to end of line"],
+  "config": { "name": "Install vim-surround", "lines": ["Plug 'tpope/vim-surround'"] }
+}
+```
+
 The **Add to .ideavimrc** button appends the whole `lines` block verbatim, in
 order, at the end of the file. It never reorders, and it skips re-adding only an
 *identical* contiguous block — it does **not** detect per-key or per-option
