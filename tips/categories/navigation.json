@@ -178,11 +178,18 @@
       "category": [
         "navigation"
       ],
-      "summary": "Screen-line start/end g0 / g^ / g$",
+      "summary": "Wrapped line start or end g0 / g$",
       "details": [
-        "g0 goes to screen-line start",
-        "g$ to screen-line end",
-        "g^ to first text"
+        "g0 jumps to start, g$ to end"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "First text on a wrapped line g^",
+      "details": [
+        "g^ jumps past indent to the first text"
       ]
     },
     {
@@ -496,9 +503,9 @@
       "category": [
         "navigation"
       ],
-      "summary": "Open/close folds zo / zc / za",
+      "summary": "Toggle a fold with za",
       "details": [
-        "zo opens, zc closes, za toggles",
+        "za opens the fold, or closes it if open",
         "Works where IDE folding is available"
       ]
     },
@@ -506,10 +513,30 @@
       "category": [
         "navigation"
       ],
-      "summary": "Open/close nested folds zO / zC / zA",
+      "summary": "Force a fold open or closed",
       "details": [
-        "zO opens nested folds, zC closes them",
-        "zA toggles the whole fold recursively"
+        "zo always opens, zc always closes",
+        "Use when toggle isn't enough"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Toggle nested folds with zA",
+      "details": [
+        "zA toggles the fold and all inside it",
+        "One key for the whole fold tree"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Force nested folds open or closed",
+      "details": [
+        "zO opens every level, zC closes them all",
+        "Use when toggle isn't enough"
       ]
     },
     {

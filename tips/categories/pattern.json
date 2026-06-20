@@ -146,6 +146,17 @@
         "pattern",
         "cmdline"
       ],
+      "summary": "Replace every match with :%s",
+      "details": [
+        ":%s/foo/bar/g swaps foo for bar in file",
+        "g means every match, not just the first"
+      ]
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
       "summary": "Reuse last / pattern in :s with //",
       "details": [
         "After searching /pat, use :%s//new/g",
@@ -168,10 +179,10 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Confirm each :s change with gc",
+      "summary": "Confirm each :s replace with gc",
       "details": [
-        "Use :%s/old/new/gc",
-        "y/n/a/q/l controls each match"
+        "Add c: :%s/foo/bar/gc asks first",
+        "y replaces, n skips, a all, q quit"
       ]
     },
     {
@@ -212,10 +223,11 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Reuse whole match in :s with &",
+      "summary": "Wrap or extend a match with &",
       "details": [
-        "In the replacement, & means the whole match",
-        "Example: :%s/foo/&_suffix/g"
+        ":s finds text and replaces it",
+        "& in the replacement reuses what matched",
+        ":%s/cat/&s/g changes every cat to cats"
       ]
     },
     {
@@ -284,8 +296,9 @@
       ],
       "summary": "Keep only matching lines :v//d",
       "details": [
-        ":v/foo/d deletes lines lacking foo",
-        "What's left: only the foo lines"
+        ":v acts on lines that don't match",
+        ":v/foo/d drops them, keeping foo lines",
+        "Short for :vglobal, the inverse of :g"
       ]
     },
     {

@@ -153,7 +153,7 @@
       "category": [
         "windows"
       ],
-      "summary": "Maximize a split Ctrl-w _ / Ctrl-w |",
+      "summary": "Maximize a split's height or width",
       "details": [
         "Ctrl-w _ gives this split max height",
         "Ctrl-w | gives it max width"

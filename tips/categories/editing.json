@@ -229,17 +229,6 @@
         "editing",
         "navigation"
       ],
-      "summary": "Change/delete with operator + motion",
-      "details": [
-        "d{motion} deletes text",
-        "c{motion} changes text"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "navigation"
-      ],
       "summary": "Delete/change to line start d0 / c0",
       "details": [
         "d0 deletes to line start",
@@ -338,7 +327,8 @@
       "summary": "Change/delete a word cw / dw",
       "details": [
         "cw changes to word end",
-        "dw deletes to next word start"
+        "dw deletes to next word start",
+        "Same d/c works with any motion"
       ]
     },
     {

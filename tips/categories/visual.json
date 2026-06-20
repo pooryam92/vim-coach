@@ -47,7 +47,7 @@
       "category": [
         "visual"
       ],
-      "summary": "Select the last change `[v`]",
+      "summary": "Select the last change you made",
       "details": [
         "`[ jumps to the change start",
         "v then `] reaches the end"
