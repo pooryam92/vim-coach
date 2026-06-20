@@ -233,10 +233,10 @@
         "visual",
         "editing"
       ],
-      "summary": "Replace a selection with p",
+      "summary": "Replace selection with your yank p",
       "details": [
-        "p swaps selection for the yank",
-        "Use \"_dP to keep your yank"
+        "Select in Visual mode, then press p",
+        "It overwrites with your last copy"
       ]
     }
   ]

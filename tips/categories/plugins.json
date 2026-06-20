@@ -234,9 +234,10 @@
         "plugins",
         "registers"
       ],
-      "summary": "Paste a yank over a word griw",
+      "summary": "Paste over a word, keep yank griw",
       "details": [
         "yiw copies a word, griw pastes it",
+        "Yank survives, repeat it anywhere",
         "Any motion works, e.g. grr a line"
       ],
       "config": {

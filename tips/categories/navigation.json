@@ -16,8 +16,7 @@
       ],
       "summary": "Jump to a specific line {count}G",
       "details": [
-        "G goes to the last line",
-        "{count}G goes to that line number",
+        "{count} is the line number",
         "Example: 120G jumps to line 120"
       ]
     },
@@ -96,12 +95,11 @@
       "category": [
         "navigation"
       ],
-      "summary": "Move to first text + / -",
+      "summary": "Jump to text on next line + / -",
       "details": [
-        "+ moves down to first non-blank",
-        "- moves up to first non-blank",
-        "These are motions",
-        "Use them with operators like d+"
+        "+ down to next line's first text",
+        "- up to previous line's first text",
+        "d+ deletes both lines"
       ]
     },
     {
