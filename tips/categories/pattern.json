@@ -103,20 +103,22 @@
         "pattern",
         "editing"
       ],
-      "summary": "Delete/change up to a search match",
+      "summary": "Delete up to the next match",
       "details": [
-        "d/pat<Enter> deletes up to the next match",
-        "c?pat<Enter> changes back to the previous match"
+        "d/foo<Enter> deletes up to next foo",
+        "Pair any operator with /pat",
+        "Append /e to include the match"
       ]
     },
     {
       "category": [
         "pattern"
       ],
-      "summary": "Use / offsets like /e and /+2",
+      "summary": "Delete back to the previous match",
       "details": [
-        "/pat/e lands on the end of the match",
-        "/pat/+2 lands two lines after the match"
+        "d?foo<Enter> deletes back to foo",
+        "Pair any operator with ?pat",
+        "Append ?e to include the match"
       ]
     },
     {

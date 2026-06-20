@@ -29,7 +29,11 @@ the best tips to add*).
 
 - **Revise in small batches (≤ 1 tips).** For each, show the **whole tip
   before → after** plus a one-line reason, get a go-ahead, *then* edit. Never
-  bulk-rewrite silently.
+  bulk-rewrite silently. **Shape before wording:** past a light touch, agree the
+  structure first — how many tips, the split axis, line order — then polish words;
+  wording on a still-moving shape gets discarded. If two rewords are rejected,
+  stop guessing single variants — put the decision or 2–3 concrete options in
+  front of the user (inline) in one turn.
 - **Decide what's worth adding before you add it.** When the ask is open-ended
   ("what's missing," "what are the best tips to add," "improve coverage"), don't
   free-associate — map the gap and rank by value first. See *Finding the best tips

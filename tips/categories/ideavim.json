@@ -6,10 +6,10 @@
         "options",
         "editing"
       ],
-      "summary": "Use OS clipboard with unnamedplus",
+      "summary": "Yank to the OS clipboard by default",
       "details": [
-        "unnamedplus uses the OS clipboard",
-        "ideaput routes put through the IDE"
+        "Now y and p use the system clipboard",
+        "Copy in a browser, paste with p in Vim"
       ],
       "config": {
         "name": "Enable OS clipboard",
