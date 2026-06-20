@@ -132,10 +132,10 @@ Config-backed tip (renders an **Add to .ideavimrc** button):
   chars.** When it ends with the keys it teaches, attach them with a **single
   space** — never `-`, `:`, `→`, or `(…)`.
 - **`details`** — short factual lines (≤ 35 chars each): what it does, context, a
-  caveat, or a quick example. **Up to 3 lines, but prefer 2** — add a 3rd only
-  when it earns its place (e.g. mnemonic *and* mechanic *and* breadth), never to
-  pad. Two short lines beat one wrapped line. Blank lines are stripped — don't
-  add them.
+  caveat, or a quick example. **Prefer 2; no hard cap, but every line past 2 is
+  a cost and must earn its place** — a distinct mechanic, breadth, or a
+  sequential step in a workflow, never padding. Two short lines beat one wrapped
+  line. Blank lines are stripped — don't add them.
 - **`config`** (optional) — `{ "name": ..., "lines": [...] }` for the `.ideavimrc`
   snippet the button appends. Must be a **self-contained, shared-state-free
   block** the button can safely append (`config-kinds.md`). `name` is the button label, verbatim — add it **only when

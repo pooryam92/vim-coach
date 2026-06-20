@@ -5,6 +5,25 @@
         "plugins",
         "editing"
       ],
+      "summary": "Edit every copy of a word Alt-n",
+      "details": [
+        "Put the cursor on foo, press Alt-n",
+        "Alt-n again adds the next foo",
+        "Then c, type bar, Esc — all to bar",
+        "Alt-x skips the copy you're on"
+      ],
+      "config": {
+        "name": "Install multiple-cursors",
+        "lines": [
+          "Plug 'terryma/vim-multiple-cursors'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
       "summary": "Add surroundings ysiw)",
       "details": [
         "ys, then a motion, then a pair",
