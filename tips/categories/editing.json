@@ -26,30 +26,20 @@
       "category": [
         "editing"
       ],
-      "summary": "Change inside quotes with ci\"",
+      "summary": "Change inside quotes ci\"",
       "details": [
-        "ci\" changes the text inside double quotes",
-        "You can trigger it from anywhere inside the string"
+        "Works from anywhere in the string",
+        "ca\" also changes the quotes"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Change quotes and content with ca\"",
+      "summary": "Delete a quoted string da\"",
       "details": [
-        "ca\" changes the text and the surrounding double quotes",
-        "Useful when you want to replace the whole quoted string"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Delete quotes and content with da\"",
-      "details": [
-        "da\" deletes the text and the quotes",
-        "Useful for removing the whole string"
+        "Removes the text and the quotes",
+        "di\" keeps quotes, clears inside"
       ]
     },
     {
@@ -360,6 +350,17 @@
       "details": [
         "de deletes to current word end",
         "Useful when dw goes too far"
+      ]
+    },
+    {
+      "category": [
+        "editing",
+        "navigation"
+      ],
+      "summary": "Delete or change up to a char dt)",
+      "details": [
+        "dt) deletes up to the next )",
+        "ct, changes up to it, df includes it"
       ]
     },
     {

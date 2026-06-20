@@ -5,10 +5,10 @@
         "visual",
         "editing"
       ],
-      "summary": "Paste over a selection \"_dP",
+      "summary": "Paste over a selection p",
       "details": [
-        "Select text, then \"_dP",
-        "Reuse one yank on many targets"
+        "Select, then p drops your yank in",
+        "But p then grabs the replaced text"
       ]
     },
     {
@@ -100,12 +100,11 @@
       "category": [
         "visual"
       ],
-      "summary": "Select inside word viw",
+      "summary": "Select a text object viw vip",
       "details": [
-        "viw selects the current word",
-        "vip selects the paragraph",
-        "vap adds the blank lines",
-        "i/a work with all text objects"
+        "viw a word, vip a paragraph",
+        "vap also grabs the blank lines",
+        "Swap i for a to include the edges"
       ]
     },
     {
@@ -242,10 +241,10 @@
         "visual",
         "editing"
       ],
-      "summary": "Replace selection with your yank p",
+      "summary": "Paste over, keep your yank P",
       "details": [
-        "Select in Visual mode, then press p",
-        "It overwrites with your last copy"
+        "Select, then P drops your yank in",
+        "Yank survives — repeat on more spots"
       ]
     }
   ]

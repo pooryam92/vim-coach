@@ -12,6 +12,7 @@ Target files live under `.claude/skills/tips-maintain/`:
 
 ## Findings
 
+- [important-mode-ambiguous-key-in-summary.md](important-mode-ambiguous-key-in-summary.md) — **IMPORTANT.** Mode-ambiguous keys (`O`, `Ctrl-w`) must name the mode in the summary (`SKILL.md` Wording rules).
 - [candidate-c-verify-not-default.md](candidate-c-verify-not-default.md) — **MINOR.** Verify a `set` option isn't already the default.
 - [minor-keys-vs-typed-text.md](minor-keys-vs-typed-text.md) — **MINOR.** Distinguish keys pressed from text typed in worked examples (`examples.md`).
 - [minor-plugin-vs-builtin-summary.md](minor-plugin-vs-builtin-summary.md) — **MINOR (borderline).** Plugin-vs-built-in tips should state the difference in the summary (`SKILL.md` Wording rules).

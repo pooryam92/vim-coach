@@ -148,6 +148,10 @@ Config-backed tip (renders an **Add to .ideavimrc** button):
   a cost and must earn its place** — a distinct mechanic, breadth, or a
   sequential step in a workflow, never padding. Two short lines beat one wrapped
   line. Blank lines are stripped — don't add them.
+  - **Procedure tips** — when a move is *irreducibly multi-step* (many keys to
+    reproduce, no single step pays off alone, e.g. block insert), write it as
+    numbered steps (`1. … 2. …`): the **summary names the use**, the **steps show
+    how**. Only when every step is load-bearing — never pad an atomic tip into a list.
 - **`config`** (optional) — `{ "name": ..., "lines": [...] }` for the `.ideavimrc`
   snippet the button appends. Must be a **self-contained, shared-state-free
   block** the button can safely append (`config-kinds.md`). `name` is the button label, verbatim — add it **only when
