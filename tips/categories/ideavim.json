@@ -204,6 +204,75 @@
         "Use Ctrl-Space in Insert mode",
         "Press it again to widen suggestions"
       ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "navigation"
+      ],
+      "summary": "Jump between errors ]e / [e",
+      "details": [
+        "Lands on the next/previous error",
+        "Covers inspection warnings too"
+      ],
+      "config": {
+        "name": "Map errors",
+        "lines": [
+          "nmap ]e <Action>(GotoNextError)",
+          "nmap [e <Action>(GotoPreviousError)"
+        ]
+      }
+    },
+    {
+      "category": [
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Open the quick-fix menu ga",
+      "details": [
+        "The IDE intention / lightbulb popup",
+        "Apply fixes and quick refactors"
+      ],
+      "config": {
+        "name": "Map quick-fix",
+        "lines": [
+          "nmap ga <Action>(ShowIntentionActions)"
+        ]
+      }
+    },
+    {
+      "category": [
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Rename a symbol everywhere gR",
+      "details": [
+        "Project-wide safe rename refactor",
+        "Updates every usage at once"
+      ],
+      "config": {
+        "name": "Map rename",
+        "lines": [
+          "nmap gR <Action>(RenameElement)"
+        ]
+      }
+    },
+    {
+      "category": [
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Open the refactor menu gm",
+      "details": [
+        "One list for extract, inline, move",
+        "Rename lives here too"
+      ],
+      "config": {
+        "name": "Map refactor",
+        "lines": [
+          "nmap gm <Action>(Refactorings.QuickListPopupAction)"
+        ]
+      }
     }
   ]
 }

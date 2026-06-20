@@ -1,6 +1,6 @@
 ---
 name: tips-evolve
-description: Use when the user asks whether the current session revealed durable improvements for the tips-maintain skill. Reviews the session, dedupes against the existing skill, proposes where and how each improvement should land, and waits for approval before editing.
+description: Use when the user asks whether the current session revealed durable improvements for the tips-maintain skill, or asks to apply/clear the tips-evolve backlog. Reviews the session, dedupes against the existing skill, proposes where and how each improvement should land (or parks findings in tips-evolve-backlog/ to pick up later), and waits for approval before editing.
 disable-model-invocation: true
 ------------------------------
 
@@ -17,6 +17,10 @@ itself up to date. Run it in two phases.
 
 Do **not** edit files in Phase 1. Present findings, then stop. Move to Phase 2
 only after the user explicitly approves one or more candidates.
+
+When a session surfaces more than fits one sitting, findings can be parked in a
+backlog (see [Backlog](#backlog) below) instead of being forced through now.
+Phase 2 can apply them inline or pick them up cold from the backlog later.
 
 ## Phase 1 — Review, propose, then stop
 
@@ -74,9 +78,39 @@ look productive.
 End Phase 1 by stopping for approval. Do not continue until the user chooses
 which candidates, if any, to apply.
 
+If the user wants to defer findings — or Phase 1 yields more than is worth
+applying in one sitting — write them to the [backlog](#backlog) instead of
+holding them in the conversation. Then stop as usual.
+
+## Backlog
+
+`tips-evolve-backlog/` (repo root) is a scratch queue for findings to apply
+later. Each file is one finding, self-contained enough to pick up cold in a fresh
+conversation — its originating chat will be gone.
+
+Layout:
+
+* `README.md` — index. One line per finding: priority, slug link, target
+  file(s). Point to `did-not-qualify.md`.
+* `<priority>-<slug>.md` — one finding. Open with **target file(s)** and
+  **priority**, then the Phase 1 fields: **Learning / problem**, **Evidence**
+  (`file:line` or the session moment), **Why it qualifies**, **How it should
+  land** (the integration strategy, with a wording sketch — not just a
+  destination).
+* `did-not-qualify.md` — findings deliberately rejected, with the reason, so a
+  later review does not re-litigate them.
+
+A backlog file must stand alone: name targets relative to the repo root and
+include enough evidence to act without the original conversation. Write a finding
+here when Phase 1 yields several candidates, when the user asks to defer, or when
+a finding is better worked in a focused session.
+
 ## Phase 2 — Rewrite only approved candidates
 
-Apply only the candidates the user approved. Skip everything else.
+Apply only the candidates the user approved. Skip everything else. Candidates may
+come from this session's Phase 1 or from the [backlog](#backlog) — when the user
+points at a backlog file (or asks to clear the backlog), treat it as the source
+of truth and read it cold; do not assume the originating session's context.
 
 For each approved candidate:
 
@@ -84,6 +118,9 @@ For each approved candidate:
 2. Explain briefly why the edit improves the skill’s shape.
 3. Make the edit.
 4. Re-validate the skill as needed.
+5. If the candidate came from the backlog, delete its file and drop its line from
+   `README.md` once applied — git history preserves it. A rejected backlog item
+   moves to `did-not-qualify.md` rather than lingering as an open finding.
 
 Integrate; do not accrete. The goal is a sharper skill, not a longer one.
 

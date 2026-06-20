@@ -1,12 +1,12 @@
 # Config-tip Roadmap (discover)
 
-Forward-looking work on `.ideavimrc` config tips. The **shippable, additive**
-config kinds are already documented in the `tips-maintain` skill
-([../../.claude/skills/tips-maintain/SKILL.md](../../.claude/skills/tips-maintain/SKILL.md)
-→ "The three additive config kinds") — install a
-plugin, tune built-in behavior, IDE-bridge options. This file tracks the parts
-that are **not** shippable yet: positional/opinionated config and the code work
-that gates it.
+Forward-looking work on `.ideavimrc` config tips. What's **shippable** is
+documented in the `tips-maintain` skill
+([config-kinds.md](../../.claude/skills/tips-maintain/config-kinds.md) →
+"What's safe to ship"): any block that is self-contained and sets no shared
+state — install a plugin, tune built-in behavior, IDE-bridge options, and
+non-leader `<Action>()` maps. This file tracks the parts that are **not**
+shippable yet: positional/opinionated config and the code work that gates it.
 
 Status: the 14-category migration is **done** (the locked taxonomy lives in
 the `tips-maintain` skill
@@ -22,7 +22,10 @@ These config kinds claim keys or set state others depend on; appending them
 blindly causes collisions, so they need key-aware dedup and a leader decision
 before they ship.
 
-- **`<Action>` maps** — `nmap gr <Action>(FindUsages)`. 0 today.
+- **`<Action>` maps** — `nmap gr <Action>(FindUsages)`. **Non-leader maps now
+  ship** with an authoring-time collision check
+  ([config-kinds.md](../../.claude/skills/tips-maintain/config-kinds.md));
+  leader-prefixed variants stay gated on the leader decision.
 - **Reshape the keyboard** — `inoremap jj <Esc>`, `nmap Y y$`. 0 today;
   collisions.
 - **Foundations** — `let mapleader=" "`, `sethandler`. 0 today; these *gate* the
@@ -45,7 +48,8 @@ work:
 4. Lock config conventions in the tip-authoring docs.
 5. Decide the `<leader>` convention — gates everything positional.
 6. Phase 2 key-aware dedup in `IdeaVimRcAppendPlan` — gates positional config.
-7. **Bucket C** — `<Action>` maps, non-leader first.
+7. **Bucket C** — `<Action>` maps, non-leader first. **Shipped** (authoring-time
+   collision check, no code change needed).
 8. Keyboard + foundations families last.
 
 ---

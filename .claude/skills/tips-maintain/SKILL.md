@@ -137,8 +137,8 @@ Config-backed tip (renders an **Add to .ideavimrc** button):
   pad. Two short lines beat one wrapped line. Blank lines are stripped — don't
   add them.
 - **`config`** (optional) — `{ "name": ..., "lines": [...] }` for the `.ideavimrc`
-  snippet the button appends. Must be one of the **three additive kinds**
-  (`config-kinds.md`). `name` is the button label, verbatim — add it **only when
+  snippet the button appends. Must be a **self-contained, shared-state-free
+  block** the button can safely append (`config-kinds.md`). `name` is the button label, verbatim — add it **only when
   it's a meaningful label**; otherwise omit it and the button reads a generic
   `Apply`, which is fine. Don't convert a legacy array tip (`["<line>", ...]`,
   still accepted) to the object form just to add a `name` — a labelless `Apply`
