@@ -71,10 +71,10 @@
       "category": [
         "pattern"
       ],
-      "summary": "Force search case with \\c / \\C",
+      "summary": "Override case in a single search",
       "details": [
-        "/foo\\c makes this search case-insensitive",
-        "/Foo\\C forces this search to be case-sensitive"
+        "/foo\\c ignores case anywhere in the pattern",
+        "/Foo\\C forces an exact-case match"
       ]
     },
     {
