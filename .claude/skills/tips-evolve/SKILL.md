@@ -2,7 +2,7 @@
 name: tips-evolve
 description: Use when the user asks whether the current session revealed durable improvements for the tips-maintain skill, or asks to apply/clear the tips-evolve backlog. Reviews the session, dedupes against the existing skill, proposes where and how each improvement should land (or parks findings in tips-evolve-backlog/ to pick up later), and waits for approval before editing.
 disable-model-invocation: true
-------------------------------
+---
 
 # Evolve the tips-maintain skill
 
@@ -42,45 +42,30 @@ For each qualifying candidate, report:
 3. **Why it qualifies** — why this is durable and generalizable, not a one-off.
 4. **How it should land** — the important part.
 
-Before proposing a candidate, ask whether the learning is better handled as:
+For the fourth — the integration strategy, not just a destination — decide which
+fits:
 
-* a refinement to existing skill guidance,
-* a deletion or merge of existing guidance,
-* detail moved to `reference.md`,
-* a script/check instead of prose,
-* memory because it is personal taste,
-* or no change because the existing skill already covers it well.
+* **no change** — the skill already covers it well (the most common answer);
+* **fold** into an existing section, or **replace** wording now wrong or too weak;
+* **merge** overlapping guidance, or **delete** stale or redundant text;
+* **move** detail from `SKILL.md` to a focused file (`examples.md`,
+  `config-kinds.md`, `checking-support.md`, `categories.md`);
+* **split or restructure** a section whose shape no longer fits;
+* turn prose into a **script/check** when the work is deterministic;
+* save as **memory** when it's personal taste, not skill guidance.
 
-“How it should land” must explain the integration strategy, not merely name a
-destination. Decide whether the change should:
+Name the exact target and what the change would touch, replace, merge, move, or
+remove.
 
-* fold into an existing section,
-* replace wording that is now wrong or too weak,
-* merge overlapping guidance,
-* delete stale or redundant text,
-* move detail from `SKILL.md` to `reference.md`,
-* split or restructure a section whose shape no longer fits,
-* become a script/check instead of prose,
-* or be saved as memory if it is personal taste rather than skill guidance.
+Always dedupe against the existing skill first: never propose what it already
+covers, and refine a weak passage rather than adding a parallel one.
 
-Name the target touched, such as `SKILL.md`, `reference.md`, a script, or memory.
-Also name what the change would touch, replace, merge, move, or remove.
+Sketch intent only — no final edits yet. If nothing qualifies, say so plainly;
+don't invent improvements to look productive. Either way, stop after presenting —
+Phase 2 begins only when the user picks candidates.
 
-Before proposing a candidate, dedupe it against the existing skill. If the skill
-already covers the point well, do not propose a duplicate. If the skill covers it
-poorly, propose a refinement to the existing passage instead of adding a new one.
-
-Do not write final edits in Phase 1. Sketch intent only.
-
-If nothing qualifies, say that plainly and stop. Do not invent improvements to
-look productive.
-
-End Phase 1 by stopping for approval. Do not continue until the user chooses
-which candidates, if any, to apply.
-
-If the user wants to defer findings — or Phase 1 yields more than is worth
-applying in one sitting — write them to the [backlog](#backlog) instead of
-holding them in the conversation. Then stop as usual.
+If the user wants to defer — or Phase 1 yields more than fits one sitting — write
+findings to the [backlog](#backlog) instead of holding them in the conversation.
 
 ## Backlog
 
@@ -135,7 +120,7 @@ and cut anything the edit makes redundant.
 
 When a section has outgrown its shape — too long, covering multiple concerns, or
 burying important behavior — restructure it. Split it, move detail to
-`reference.md`, collapse repeated guidance, or replace prose with a script/check.
+a focused file, collapse repeated guidance, or replace prose with a script/check.
 A good evolution may leave the file the same length or shorter.
 
 Personal taste belongs in memory, not the skill.
@@ -161,7 +146,10 @@ Hold these bars while editing:
 * **The body is recurring token cost.** Once loaded, it stays in context. State
   what to do; cut repeated mandates and narration.
 * **Use progressive disclosure.** Keep `SKILL.md` lean. Move detailed reference,
-  examples, and edge cases to `reference.md`.
+  examples, and edge cases to focused files opened on demand — the model
+  `tips-maintain` already uses (`examples.md`, `config-kinds.md`,
+  `checking-support.md`, `categories.md`); add a new focused file rather than
+  growing `SKILL.md`.
 * **Prefer scripts over prose for deterministic work.** Checks or transforms that
   a generator/linter can own should not be reasoned through manually every time.
 * **List routine commands in `allowed-tools`.** Avoid unnecessary permission
