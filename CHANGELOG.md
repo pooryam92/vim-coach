@@ -4,6 +4,15 @@
 
 ## [Unreleased]
 
+
+### Fixed
+
+- Config-bearing tips and their **Apply to .ideavimrc** button now appear automatically after upgrading the plugin, instead of requiring a manual **Refresh Tips**. The tip cache now records which plugin version parsed it and refetches once after an upgrade so a newer parser re-runs even when the remote tip content is unchanged
+
+### Changed
+
+- Tips that carry an `.ideavimrc` snippet are now hidden entirely when IdeaVim is not installed, rather than being shown without an actionable button
+
 ## [1.4.0] - 2026-06-19
 
 ### Added

@@ -1,6 +1,6 @@
 ---
 name: tips-evolve
-description: Use when the user asks whether the current session revealed durable improvements for the tips-maintain skill, or asks to apply/clear the tips-evolve backlog. Reviews the session, dedupes against the existing skill, proposes where and how each improvement should land (or parks findings in tips-evolve-backlog/ to pick up later), and waits for approval before editing.
+description: Use when the user asks whether the current session revealed durable improvements for the tips-maintain skill, or asks to apply/clear the tips-evolve backlog. Reviews the session, dedupes against the existing skill, proposes where and how each improvement should land (or parks findings in docs/tips/tips-evolve-backlog/ to pick up later), and waits for approval before editing.
 disable-model-invocation: true
 ---
 
@@ -69,7 +69,7 @@ findings to the [backlog](#backlog) instead of holding them in the conversation.
 
 ## Backlog
 
-`tips-evolve-backlog/` (repo root) is a scratch queue for findings to apply
+`docs/tips/tips-evolve-backlog/` is a scratch queue for findings to apply
 later. Each file is one finding, self-contained enough to pick up cold in a fresh
 conversation — its originating chat will be gone.
 
