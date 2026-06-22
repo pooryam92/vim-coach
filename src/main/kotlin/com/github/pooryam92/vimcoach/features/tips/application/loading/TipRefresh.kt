@@ -4,10 +4,8 @@ import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.TipSourceLoadResult
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
-import com.intellij.ide.plugins.PluginManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.diagnostic.Logger
-import com.intellij.openapi.extensions.PluginId
 import java.util.concurrent.atomic.AtomicBoolean
 
 class TipRefresh() : RefreshTips {
@@ -129,11 +127,18 @@ class TipRefresh() : RefreshTips {
     private fun currentPluginVersion(): String? =
         (injectedCurrentPluginVersion ?: ::resolvePluginVersion).invoke()
 
+    /**
+     * Reads the running plugin's version from a resource baked in at build time. The IDE plugin-registry
+     * APIs that expose a descriptor's version are @ApiStatus.Internal and rejected by the Plugin Verifier,
+     * so we avoid them entirely. Returns null if the resource is somehow absent.
+     */
     private fun resolvePluginVersion(): String? =
-        PluginManager.getInstance().findEnabledPlugin(PluginId.getId(VIM_COACH_PLUGIN_ID))?.version
+        javaClass.getResourceAsStream(VERSION_RESOURCE)
+            ?.use { it.readBytes().toString(Charsets.UTF_8).trim() }
+            ?.ifEmpty { null }
 
     private companion object {
-        const val VIM_COACH_PLUGIN_ID = "com.github.pooryam92.vimcoach"
+        const val VERSION_RESOURCE = "/vimcoach-version.txt"
         val logger = Logger.getInstance(TipRefresh::class.java)
     }
 }

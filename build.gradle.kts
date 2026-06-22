@@ -32,6 +32,26 @@ kotlin {
     jvmToolchain(21)
 }
 
+// Bake the plugin version into a bundled resource so runtime code can read its own version without
+// touching @ApiStatus.Internal plugin-registry APIs (PluginManagerCore.getPlugin /
+// PluginManager.findEnabledPlugin), which the IntelliJ Plugin Verifier rejects.
+val generateVersionResource by tasks.registering {
+    val pluginVersion = providers.gradleProperty("pluginVersion")
+    val outputFile = layout.buildDirectory.file("generated/vimcoach/vimcoach-version.txt")
+    inputs.property("pluginVersion", pluginVersion)
+    outputs.file(outputFile)
+    doLast {
+        outputFile.get().asFile.apply {
+            parentFile.mkdirs()
+            writeText(pluginVersion.get())
+        }
+    }
+}
+
+tasks.processResources {
+    from(generateVersionResource)
+}
+
 // Configure project's dependencies
 repositories {
     mavenCentral()
