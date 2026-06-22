@@ -1,22 +1,28 @@
 package com.github.pooryam92.vimcoach.features.tips.application.loading
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
+import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.TipSourceLoadResult
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
+import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.openapi.components.service
 import com.intellij.openapi.diagnostic.Logger
+import com.intellij.openapi.extensions.PluginId
 import java.util.concurrent.atomic.AtomicBoolean
 
 class TipRefresh() : RefreshTips {
     private var injectedTipService: VimTipRepository? = null
     private var injectedTipSource: TipSourceService? = null
+    private var injectedCurrentPluginVersion: (() -> String?)? = null
 
     internal constructor(
         tipService: VimTipRepository? = null,
-        tipSource: TipSourceService? = null
+        tipSource: TipSourceService? = null,
+        currentPluginVersion: (() -> String?)? = null
     ) : this() {
         injectedTipService = tipService
         injectedTipSource = tipSource
+        injectedCurrentPluginVersion = currentPluginVersion
     }
 
     private val updatesChecked = AtomicBoolean(false)
@@ -30,7 +36,23 @@ class TipRefresh() : RefreshTips {
             logger.info("Skipping Vim tip update check because it already ran in this application session")
             return TipLoadResult.NotModified
         }
-        return fetchAndSave(conditional = hasUsableCachedTips())
+        return fetchAndSave(conditional = hasUsableCachedTips() && !cacheStaleAfterUpgrade())
+    }
+
+    /**
+     * True when the cached tips were parsed by a different plugin version than the one running, so a
+     * conditional 304 would keep serving an under-parsed cache. A null current version (descriptor
+     * unresolvable) is treated as "not stale" to preserve the ETag optimization rather than refetch
+     * on every startup.
+     */
+    private fun cacheStaleAfterUpgrade(): Boolean {
+        val current = currentPluginVersion() ?: return false
+        val cached = tipService().getMetadata().pluginVersion
+        if (cached == current) {
+            return false
+        }
+        logger.info("Vim tip cache parsed by plugin version '$cached' but running '$current'; forcing unconditional refetch")
+        return true
     }
 
     private fun fetchAndSave(conditional: Boolean): TipLoadResult {
@@ -84,10 +106,13 @@ class TipRefresh() : RefreshTips {
 
     private fun saveFetchedTips(sourceResult: TipSourceLoadResult.Success): TipLoadResult {
         tipService().saveTips(sourceResult.tips)
-        tipService().saveMetadata(sourceResult.metadata)
+        tipService().saveMetadata(stampPluginVersion(sourceResult.metadata))
         logger.info("Saved ${sourceResult.tips.size} Vim tips from source")
         return TipLoadResult.Updated(sourceResult.tips.size)
     }
+
+    private fun stampPluginVersion(metadata: TipMetadata): TipMetadata =
+        metadata.copy(pluginVersion = currentPluginVersion())
 
     private fun markRefreshTimestamp(): TipLoadResult {
         val updatedMetadata = tipService().getMetadata().copy(
@@ -101,7 +126,14 @@ class TipRefresh() : RefreshTips {
 
     private fun tipSource(): TipSourceService = injectedTipSource ?: service()
 
+    private fun currentPluginVersion(): String? =
+        (injectedCurrentPluginVersion ?: ::resolvePluginVersion).invoke()
+
+    private fun resolvePluginVersion(): String? =
+        PluginManagerCore.getPlugin(PluginId.getId(VIM_COACH_PLUGIN_ID))?.version
+
     private companion object {
+        const val VIM_COACH_PLUGIN_ID = "com.github.pooryam92.vimcoach"
         val logger = Logger.getInstance(TipRefresh::class.java)
     }
 }

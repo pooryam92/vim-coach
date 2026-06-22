@@ -158,37 +158,6 @@
         "Ctrl-w _ gives this split max height",
         "Ctrl-w | gives it max width"
       ]
-    },
-    {
-      "category": [
-        "windows"
-      ],
-      "summary": "Move a split to an edge Ctrl-w H/J/K/L",
-      "details": [
-        "Ctrl-w H/J/K/L moves this split far left/down/up/right",
-        "It also re-orients between vertical and horizontal"
-      ]
-    },
-    {
-      "category": [
-        "windows"
-      ],
-      "summary": "Swap two splits Ctrl-w r / Ctrl-w x",
-      "details": [
-        "Ctrl-w r rotates the splits in a row or column",
-        "Ctrl-w x swaps this split with the next one"
-      ]
-    },
-    {
-      "category": [
-        "windows",
-        "cmdline"
-      ],
-      "summary": "New tab :tabnew / Ctrl-w T",
-      "details": [
-        ":tabnew opens an empty tab page",
-        "Ctrl-w T moves the current split into its own tab"
-      ]
     }
   ]
 }

@@ -14,6 +14,8 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
 class TipRefreshRefetchIntTest : BasePlatformTestCase() {
 
+    private val CURRENT_PLUGIN_VERSION = "9.9.9-test"
+
     fun testRefetchTipsReloadsEvenWhenTipsExist() {
         val tipService = service<VimTipRepository>()
         tipService.saveTips(listOf(VimTip("old-summary", listOf("old-details"))))
@@ -166,7 +168,8 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
             TipMetadata(
                 etag = "abc123",
                 githubSha = "def456",
-                lastFetchTimestamp = System.currentTimeMillis() - 3_600_000
+                lastFetchTimestamp = System.currentTimeMillis() - 3_600_000,
+                pluginVersion = CURRENT_PLUGIN_VERSION
             )
         )
 
@@ -229,7 +232,8 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
             TipMetadata(
                 etag = "etag",
                 githubSha = "sha",
-                lastFetchTimestamp = initialTimestamp
+                lastFetchTimestamp = initialTimestamp,
+                pluginVersion = CURRENT_PLUGIN_VERSION
             )
         )
 
@@ -249,7 +253,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         tipService.saveTips(
             listOf(VimTip("old", listOf("old-details"), listOf("motions")))
         )
-        tipService.saveMetadata(TipMetadata(etag = "old-etag"))
+        tipService.saveMetadata(TipMetadata(etag = "old-etag", pluginVersion = CURRENT_PLUGIN_VERSION))
 
         val updatedTips = listOf(
             VimTip("new-1", listOf("new-details-1")),
@@ -273,6 +277,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         tipService.saveTips(
             listOf(VimTip("existing", listOf("existing-details"), listOf("motions")))
         )
+        tipService.saveMetadata(TipMetadata(pluginVersion = CURRENT_PLUGIN_VERSION))
         val fakeTipSource = FakeTipSource(TipSourceLoadResult.NotModified)
         val loader = registerLoader(fakeTipSource)
 
@@ -335,7 +340,8 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
 
     private fun registerLoader(fakeTipSource: TipSourceService): RefreshTips {
         return TipRefresh(
-            tipSource = fakeTipSource
+            tipSource = fakeTipSource,
+            currentPluginVersion = { CURRENT_PLUGIN_VERSION }
         )
     }
 

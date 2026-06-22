@@ -109,10 +109,10 @@
       "category": [
         "registers"
       ],
-      "summary": "Paste and reindent ]p / [p",
+      "summary": "Paste keeping indent ]p / [p",
       "details": [
-        "]p pastes after and reindents",
-        "[p pastes before and reindents"
+        "]p pastes below without reindenting",
+        "[p pastes above without reindenting"
       ]
     },
     {

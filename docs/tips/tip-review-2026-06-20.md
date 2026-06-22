@@ -31,7 +31,7 @@ reader's-seat and wording rules.
 These tell the reader to do something that does nothing — or worse. Highest
 priority: a wrong tip in this set is worse than a missing one.
 
-### H1. `files.json` — "Find a file on 'path' with :find {file}"
+### H1. ✅ DONE (2026-06-22) — `files.json` — "Find a file on 'path' with :find {file}"
 - **Issue:** support-claim · **Rule 12** (verify support)
 - **Before:**
   - summary: `Find a file on 'path' with :find {file}`
@@ -48,7 +48,7 @@ priority: a wrong tip in this set is worse than a missing one.
   framing is upstream-Vim behavior IdeaVim doesn't replicate — a reader who
   tries it on a file outside the project sees no match.
 
-### H2. `pattern.json` — "Count matches with :s///n or %"  → **DELETE**
+### H2. ✅ DONE (2026-06-22) — `pattern.json` — "Count matches with :s///n or %"  → **DELETE**
 - **Issue:** support-claim · **Rule 12** + removal rule (actively destructive)
 - **Before:**
   - summary: `Count matches with :s///n or %`
@@ -64,7 +64,7 @@ priority: a wrong tip in this set is worse than a missing one.
   loses no stronger sibling. *(For counting, `pattern.json` could later gain a
   `:g/pat/` or status-line approach — separate task, verify first.)*
 
-### H3. `registers.json` — "Paste and reindent ]p / [p"
+### H3. ✅ DONE (2026-06-22) — `registers.json` — "Paste and reindent ]p / [p"
 - **Issue:** support-claim · **Rule 12** (the description is **backwards**)
 - **Before:**
   - summary: `Paste and reindent ]p / [p`
@@ -80,7 +80,7 @@ priority: a wrong tip in this set is worse than a missing one.
   (`if (indent) endOffset = doIndent(...)`) confirms `indent=false` skips
   reindent. The tip claims the reverse of what IdeaVim does.
 
-### H4. `windows.json` — "Swap two splits Ctrl-w r / Ctrl-w x"  → **DELETE**
+### H4. ✅ DONE (2026-06-22) — `windows.json` — "Swap two splits Ctrl-w r / Ctrl-w x"  → **DELETE**
 - **Issue:** support-claim · **Rule 12**
 - **Before:** summary `Swap two splits Ctrl-w r / Ctrl-w x`; details "rotates
   the splits…" / "swaps this split with the next one".
@@ -90,7 +90,7 @@ priority: a wrong tip in this set is worse than a missing one.
   registered `<C-W>` keys is `+ - = > < _ | c o s S v w W h j k l` (+ `<C-..>`/
   arrow variants). Both keys are no-ops.
 
-### H5. `windows.json` — "Move a split to an edge Ctrl-w H/J/K/L"  → **DELETE**
+### H5. ✅ DONE (2026-06-22) — `windows.json` — "Move a split to an edge Ctrl-w H/J/K/L"  → **DELETE**
 - **Issue:** support-claim · **Rule 12**
 - **Before:** summary `Move a split to an edge Ctrl-w H/J/K/L`; details
   "moves this split far left/down/up/right" / "re-orients…".
@@ -100,7 +100,7 @@ priority: a wrong tip in this set is worse than a missing one.
   to edge + re-orient) is not registered in the engine, frontend, or any bundled
   extension. Every keystroke and the "re-orients" claim is a no-op.
 
-### H6. `windows.json` — "New tab :tabnew / Ctrl-w T"  → **DELETE**
+### H6. ✅ DONE (2026-06-22) — `windows.json` — "New tab :tabnew / Ctrl-w T"  → **DELETE**
 - **Issue:** support-claim · **Rule 12** (both halves unsupported)
 - **Before:** summary `New tab :tabnew / Ctrl-w T`; details ":tabnew opens an
   empty tab page" / "Ctrl-w T moves the current split into its own tab".

@@ -44,9 +44,27 @@ adapters share `TipJsonParser`.
 
 `checkForUpdates()` also has a **once-per-session guard**: an `AtomicBoolean` inside `TipRefresh` means only the first call proceeds. Subsequent calls within the same IDE session return `NotModified` immediately. Since `RefreshTips` is an application service, this is JVM-wide — opening a second project window doesn't trigger a second network request.
 
-`checkForUpdates()` falls back to unconditional if either condition is false:
+`checkForUpdates()` falls back to unconditional if any of these hold:
 - cached tip count is zero
 - cached categories are empty (indicates a pre-category legacy cache)
+- the cache was parsed by a different plugin version than the one running
+  (`metadata.pluginVersion` mismatch — see [Plugin-version staleness](#plugin-version-staleness))
+
+### Plugin-version staleness
+
+The conditional fetch is keyed only on the **remote bytes** (ETag/SHA). That means a plugin upgrade
+which teaches the parser to extract a *new field* from the *same* remote JSON (the first case was
+`.ideavimrc` configs in 1.4.0) would otherwise keep serving the stale, under-parsed cache: the
+startup check sends the old ETag, GitHub replies `304`, and the new parser never runs. The fix runs
+unfetched data through the new parser exactly once after an upgrade.
+
+Every successful save stamps `metadata.pluginVersion` with the running plugin version (resolved via
+`PluginManagerCore`). On startup, `checkForUpdates()` forces an **unconditional** fetch whenever the
+cached `pluginVersion` differs from the running one, so the upgraded parser re-runs against the
+remote content. Legacy caches have no stored version (`null`) and self-heal on the first run of an
+upgraded build. The cost is one extra `200` (instead of a `304`) per upgrade, once per session — the
+ETag optimization is preserved for every same-version startup. If the running version can't be
+resolved (`null`), the check stays conditional rather than refetch on every startup.
 
 ## Conditional vs Unconditional
 
@@ -72,6 +90,7 @@ On a successful update, `TipRefresh` writes to `PersistentVimTipStore` via `VimT
 | `metadata.etag` | from GitHub response header |
 | `metadata.githubSha` | from GitHub response body |
 | `metadata.lastFetchTimestamp` | current time |
+| `metadata.pluginVersion` | running plugin version, via `PluginManagerCore` (drives upgrade-staleness detection) |
 
 On a 304 Not Modified, only `lastFetchTimestamp` is updated.
 

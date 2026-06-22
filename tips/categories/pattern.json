@@ -314,17 +314,6 @@
     },
     {
       "category": [
-        "pattern",
-        "cmdline"
-      ],
-      "summary": "Count matches with :s///n or %",
-      "details": [
-        ":%s/pat//gn counts matches without changing",
-        "Or after /pat, run :%s///gn"
-      ]
-    },
-    {
-      "category": [
         "pattern"
       ],
       "summary": "Recall last search with Ctrl-r /",
