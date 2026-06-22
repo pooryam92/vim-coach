@@ -16,10 +16,10 @@
         "files",
         "cmdline"
       ],
-      "summary": "Find a file on 'path' with :find {file}",
+      "summary": "Open a file by name :find {file}",
       "details": [
-        ":find searches Vim's 'path' and edits the match",
-        "Useful when the file is not in the current directory"
+        "Searches the project, not 'path'",
+        "Bare :find triggers Go to File"
       ]
     },
     {
