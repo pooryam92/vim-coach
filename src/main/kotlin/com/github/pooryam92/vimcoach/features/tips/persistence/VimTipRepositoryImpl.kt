@@ -28,13 +28,13 @@ class VimTipRepositoryImpl() : VimTipRepository {
         saveTipCache(tips)
     }
 
-    override fun getRandomTip(): VimTip {
-        return randomTipOrFallback(currentState().tips, FALLBACK_TIP)
+    override fun getRandomTip(includeConfigTips: Boolean): VimTip {
+        return randomTipOrFallback(currentState().tips, FALLBACK_TIP, includeConfigTips)
     }
 
-    override fun getRandomTip(categories: List<String>): VimTip {
+    override fun getRandomTip(categories: List<String>, includeConfigTips: Boolean): VimTip {
         val matchingTips = tipSelectionIndex(currentState().tips).matchingTips(categories)
-        return randomTipOrFallback(matchingTips, FILTERED_FALLBACK_TIP)
+        return randomTipOrFallback(matchingTips, FILTERED_FALLBACK_TIP, includeConfigTips)
     }
 
     override fun getTipsByHashes(hashes: List<String>): List<VimTip> {
@@ -95,19 +95,20 @@ class VimTipRepositoryImpl() : VimTipRepository {
         return TipSelectionIndex.fromTips(tips).also { cachedTipSelection = it }
     }
 
-    private fun randomTipOrFallback(tips: List<VimTip>, fallbackTip: VimTip): VimTip {
-        val visibleTips = visibleTips(tips)
+    private fun randomTipOrFallback(tips: List<VimTip>, fallbackTip: VimTip, includeConfigTips: Boolean): VimTip {
+        val visibleTips = visibleTips(tips, includeConfigTips)
         if (visibleTips.isEmpty()) {
             return fallbackTip
         }
         return visibleTips.random()
     }
 
-    private fun visibleTips(tips: List<VimTip>): List<VimTip> {
+    private fun visibleTips(tips: List<VimTip>, includeConfigTips: Boolean): List<VimTip> {
         val hiddenHashes = hiddenTipHashes()
         return tips
             .asSequence()
             .filterNot { TipHash.fromTip(it).value in hiddenHashes }
+            .filter { includeConfigTips || it.config?.lines.isNullOrEmpty() }
             .toList()
     }
 

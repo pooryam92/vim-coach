@@ -9,9 +9,14 @@ interface VimTipRepository {
 
     fun saveTips(tips: List<VimTip>)
 
-    fun getRandomTip(): VimTip
+    /**
+     * [includeConfigTips] = false drops tips carrying an .ideavimrc snippet ([VimTip.config]).
+     * Such tips are only actionable when IdeaVim is installed (their "Add to .ideavimrc" button
+     * needs it), so callers without IdeaVim exclude them rather than show an inapplicable tip.
+     */
+    fun getRandomTip(includeConfigTips: Boolean = true): VimTip
 
-    fun getRandomTip(categories: List<String>): VimTip
+    fun getRandomTip(categories: List<String>, includeConfigTips: Boolean = true): VimTip
 
     fun getTipsByHashes(hashes: List<String>): List<VimTip>
 

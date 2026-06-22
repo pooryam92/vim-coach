@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.persistence
 
+import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
 import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepositoryImpl
@@ -24,6 +25,23 @@ class VimTipPreferenceSelectionUnitTest {
 
         repeat(20) {
             assertEquals("visible", tipService.getRandomTip().summary)
+        }
+    }
+
+    @Test
+    fun configTipsAreExcludedWhenIncludeConfigTipsIsFalse() {
+        val configTip = VimTip(
+            "config", listOf("config-details"), listOf("editing"),
+            config = TipConfig(lines = listOf("set scrolloff=5"))
+        )
+        val plainTip = VimTip("plain", listOf("plain-details"), listOf("editing"))
+        val tipService = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
+            saveTips(listOf(configTip, plainTip))
+        }
+
+        repeat(20) {
+            assertEquals("plain", tipService.getRandomTip(includeConfigTips = false).summary)
+            assertEquals("plain", tipService.getRandomTip(listOf("editing"), includeConfigTips = false).summary)
         }
     }
 

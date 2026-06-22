@@ -33,11 +33,13 @@ graph LR
 
 ## Tip Selection
 
-`selectRandomTip()` in `TipNotifications` does two things before calling `.random()`:
+`selectRandomTip()` in `TipNotifications` does three things before calling `.random()`:
 
-1. **Category filter**: asks `SettingsRepository` for the enabled categories, then calls `VimTipRepository.getRandomTip(enabledCategories)`. If no categories are available yet (tips not loaded), falls back to `getRandomTip()` with no filter.
+1. **Category filter**: asks `SettingsRepository` for the enabled categories, then calls `VimTipRepository.getRandomTip(enabledCategories, includeConfigTips)`. If no categories are available yet (tips not loaded), falls back to `getRandomTip(includeConfigTips)` with no category filter.
 
-2. **Exclusion filter**: inside `VimTipRepositoryImpl.visibleTips()`, tips whose SHA-256 hash of the summary appears in the hidden-hashes list are stripped before the random draw. The hash is computed by `TipHash.fromTip()`.
+2. **Config filter**: `includeConfigTips` is `ideaVimAvailable()` — true only when IdeaVim is installed. When IdeaVim is absent, tips carrying an `.ideavimrc` snippet (`VimTip.config`) are dropped from the draw, since their only payoff is the "Add to .ideavimrc" button (see [Add to .ideavimrc](ideavimrc-button.md)), which is itself hidden without IdeaVim. This keeps users (e.g. WebStorm with no IdeaVim) from seeing tips they can't act on. The filtering happens in `VimTipRepositoryImpl.visibleTips()`.
+
+3. **Exclusion filter**: inside `VimTipRepositoryImpl.visibleTips()`, tips whose SHA-256 hash of the summary appears in the hidden-hashes list are stripped before the random draw. The hash is computed by `TipHash.fromTip()`.
 
 `TipSelectionIndex` is a lazy cache inside `VimTipRepositoryImpl` that groups tips by category. It is rebuilt only when the tip list reference changes (after a refresh), not on every call.
 

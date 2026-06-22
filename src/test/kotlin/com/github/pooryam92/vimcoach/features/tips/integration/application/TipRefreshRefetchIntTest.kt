@@ -3,6 +3,7 @@ package com.github.pooryam92.vimcoach.features.tips.integration.application
 import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTips
 import com.github.pooryam92.vimcoach.features.tips.application.loading.TipRefresh
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
+import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.application.loading.TipSourceService
@@ -282,6 +283,54 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         assertEquals(TipLoadResult.NotModified, secondResult)
         assertEquals(0, fakeTipSource.loadTipsCalls)
         assertEquals(1, fakeTipSource.loadTipsConditionalCalls)
+    }
+
+    /**
+     * Proves the plugin-upgrade staleness bug. EXPECTED TO FAIL while the bug is present.
+     *
+     * The conditional-fetch cache is keyed only on the *remote content* (ETag/SHA), not on the
+     * local parser version. Scenario from the field:
+     *   1. An older plugin version (no .ideavimrc config support) cached the remote tips, parsing
+     *      them WITHOUT [VimTip.config], and stored the remote's ETag/SHA.
+     *   2. The user upgrades to a config-aware version. On startup checkForUpdates() sees a usable
+     *      cache, so it does a *conditional* fetch sending the stored ETag/SHA.
+     *   3. The remote bytes are unchanged, so the server replies 304 Not Modified. The new,
+     *      config-aware parser never runs, and the cache keeps the config-less tips forever — so
+     *      config-bearing tips (and their "Add to .ideavimrc" button) never appear until a manual
+     *      unconditional refetch bypasses the ETag.
+     *
+     * Correct behavior: after a plugin upgrade, the startup check must surface the config-aware
+     * parse of the cached remote content rather than serving the stale, under-parsed cache.
+     */
+    fun testCheckForUpdatesSurfacesConfigsAfterPluginUpgrade() {
+        val tipService = service<VimTipRepository>()
+        val summary = "Enable OS clipboard"
+        // (1) Old plugin cached this tip parsed WITHOUT a config, plus the remote's ETag/SHA.
+        tipService.saveTips(listOf(VimTip(summary, listOf("yank to system clipboard"), listOf("clipboard"))))
+        tipService.saveMetadata(TipMetadata(etag = "remote-etag", githubSha = "remote-sha"))
+
+        // The config-aware parser produces the SAME remote tip WITH a config.
+        val configAwareTip = VimTip(
+            summary,
+            listOf("yank to system clipboard"),
+            listOf("clipboard"),
+            TipConfig("Enable OS clipboard", listOf("set clipboard+=unnamedplus"))
+        )
+        val fakeTipSource = FakeTipSource(
+            loadTipsResult = TipSourceLoadResult.Success(
+                listOf(configAwareTip),
+                TipMetadata(etag = "remote-etag", githubSha = "remote-sha")
+            ),
+            loadTipsConditionalResult = TipSourceLoadResult.NotModified
+        )
+        val loader = registerLoader(fakeTipSource)
+
+        // (2)+(3) Startup after upgrade.
+        loader.checkForUpdates()
+
+        // Expected after upgrade: the config-aware parse is surfaced. FAILS while the conditional
+        // 304 short-circuit serves the stale, config-less cache.
+        assertNotNull(tipService.getRandomTip(includeConfigTips = true).config)
     }
 
     private fun registerLoader(fakeTipSource: TipSourceService): RefreshTips {

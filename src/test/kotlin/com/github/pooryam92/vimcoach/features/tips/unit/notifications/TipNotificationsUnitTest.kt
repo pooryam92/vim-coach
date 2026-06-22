@@ -24,11 +24,13 @@ class TipNotificationsUnitTest {
         repository: FakeVimTipRepository = FakeVimTipRepository(),
         settings: FakeSettingsService = FakeSettingsService(),
         ideaVimRcAction: (VimTip) -> (() -> Unit)? = { null },
+        ideaVimAvailable: () -> Boolean = { true },
     ) = TipNotifications(
         notifier = notifier,
         tipRepository = { repository },
         settingsRepository = { settings },
         ideaVimRcAction = ideaVimRcAction,
+        ideaVimAvailable = ideaVimAvailable,
         openSettings = {},
     )
 
@@ -61,6 +63,24 @@ class TipNotificationsUnitTest {
         controller(ideaVimRcAction = { action }).showRandomTip()
 
         assertSame(action, notifier.lastActions!!.onAddToIdeaVimRc)
+    }
+
+    @Test
+    fun showRandomTipExcludesConfigTipsWhenIdeaVimUnavailable() {
+        val repository = FakeVimTipRepository(initialTips = listOf(VimTip("plain tip", listOf("details"))))
+
+        controller(repository, ideaVimAvailable = { false }).showRandomTip()
+
+        assertEquals(false, repository.lastIncludeConfigTips)
+    }
+
+    @Test
+    fun showRandomTipIncludesConfigTipsWhenIdeaVimAvailable() {
+        val repository = FakeVimTipRepository(initialTips = listOf(VimTip("plain tip", listOf("details"))))
+
+        controller(repository, ideaVimAvailable = { true }).showRandomTip()
+
+        assertEquals(true, repository.lastIncludeConfigTips)
     }
 
     @Test

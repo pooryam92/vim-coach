@@ -4,6 +4,8 @@ When a tip has configuration lines (e.g. `set surround`, `Plug 'tpope/vim-surrou
 
 The button label comes from the tip's `config`: if `config.name` is set it is used **verbatim** (e.g. `Install vim-surround`); otherwise the generic **"Apply"** label is used. The lines written to the file come from `config.lines`. See the `tips-maintain` skill ([../../.claude/skills/tips-maintain/SKILL.md](../../.claude/skills/tips-maintain/SKILL.md)) for the `config` object shape (and the legacy array form still accepted for back-compat).
 
+**Config tips are not shown at all without IdeaVim.** Since a config-bearing tip's only payoff is this button, showing such a tip when the button can't appear would leave the user with a snippet they can't apply. So tip *selection* itself excludes `config`-bearing tips when IdeaVim is absent — see the config filter in [Show Tip](show-tip.md#tip-selection). Because selection already guarantees this, `getAction` gates **only** on the tip having config lines (it does not re-check IdeaVim): any config tip that reaches it is one IdeaVim is already known to be present for, so the button always shows for a displayed config tip.
+
 **File creation is deliberately out of scope** — Vim Coach never creates a `.ideavimrc` itself. The button is gated only on **IdeaVim being installed** (not on a file existing), so a user who has IdeaVim but no config file still sees the affordance. When they click it and no `.ideavimrc` exists yet (`Result.NoVimRc`), they get a one-line guidance message pointing at IdeaVim's own "Create ~/.ideavimrc" (the Vim status-bar icon); once they create it, the next click appends as normal. This closes the **has-IdeaVim, no-file** dead-end without taking a dependency on IdeaVim's internal file-creation API (`VimRcService.findOrCreateIdeaVimRc()`, the unstable internal the codebase deliberately avoids). See [the indicator-gap notes](../TODO/plugin-tip-indicator-gap.md) for the still-open **no-IdeaVim** case.
 
 ## Vertical Slice
@@ -133,7 +135,7 @@ The stamp is **attribution only** — it just marks the lines as Vim Coach's, de
 
 | Condition | Result |
 |-----------|--------|
-| IdeaVim not installed | Button not shown (`FindIdeaVimRc` service unregistered → `isAvailable()` false) |
+| IdeaVim not installed | Config tip not even selected for display (`ideaVimAvailable()` false → config tips filtered from the draw). `getAction` itself no longer checks IdeaVim, since selection already guarantees it. |
 | `tip.config` absent or `config.lines` empty | Button not shown |
 | `.ideavimrc` does not exist (IdeaVim installed) | Button shown; click → `Result.NoVimRc` → guidance to create one via IdeaVim (no file written) |
 | `VirtualFile` not found | `Result.Failed` → warning notification |

@@ -32,7 +32,7 @@ If you use IdeaVim, you can map Vim Coach actions in your `~/.ideavimrc`:
 
 ```vim
 let mapleader = " "
-map <leader>tt <Action>(com.github.pooryam92.vimcoach.actions.ShowVimTipAction)
+map <leader>vt <Action>(com.github.pooryam92.vimcoach.actions.ShowVimTipAction)
 ```
 
 Vim Coach no longer installs a default key binding for `Vim Coach: Show Tip`, so custom IdeaVim mappings are the preferred way to add a shortcut without conflicting with existing IDE shortcuts.

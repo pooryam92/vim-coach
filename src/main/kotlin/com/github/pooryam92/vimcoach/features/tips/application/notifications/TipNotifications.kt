@@ -14,14 +14,18 @@ class TipNotifications internal constructor(
     private val tipRepository: () -> VimTipRepository,
     private val settingsRepository: () -> SettingsRepository,
     private val ideaVimRcAction: (VimTip) -> (() -> Unit)?,
+    private val ideaVimAvailable: () -> Boolean,
     private val openSettings: () -> Unit,
 ) : ShowTips {
 
-    constructor(project: Project) : this(
+    constructor(project: Project) : this(project, TipIdeaVimRc(project, project.service()))
+
+    private constructor(project: Project, tipIdeaVimRc: TipIdeaVimRc) : this(
         notifier = project.service(),
         tipRepository = { service() },
         settingsRepository = { service() },
-        ideaVimRcAction = TipIdeaVimRc(project, project.service())::getAction,
+        ideaVimRcAction = tipIdeaVimRc::getAction,
+        ideaVimAvailable = tipIdeaVimRc::isAvailable,
         openSettings = {
             ShowSettingsUtil.getInstance()
                 .showSettingsDialog(project, VimCoachSettingsConfigurable::class.java)
@@ -56,9 +60,10 @@ class TipNotifications internal constructor(
 
     private fun selectRandomTip(): VimTip {
         val tips = tipRepository()
+        val includeConfigTips = ideaVimAvailable()
         val availableCategories = tips.getCategories().values
-        if (availableCategories.isEmpty()) return tips.getRandomTip()
+        if (availableCategories.isEmpty()) return tips.getRandomTip(includeConfigTips)
         val enabledCategories = settingsRepository().getEnabledTipCategories(availableCategories)
-        return tips.getRandomTip(enabledCategories)
+        return tips.getRandomTip(enabledCategories, includeConfigTips)
     }
 }

@@ -29,11 +29,13 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
         }
     }
 
-    fun testGetActionReturnsNullWhenIdeaVimNotInstalled() {
+    fun testGetActionGatesOnConfigOnlyNotIdeaVimAvailability() {
+        // getAction no longer checks IdeaVim: selection suppresses config tips when IdeaVim is
+        // absent, so a config tip reaching getAction always gets its button.
         val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
         val sut = sut(findService = { null })
 
-        assertNull(sut.getAction(tip))
+        assertNotNull(sut.getAction(tip))
     }
 
     fun testGetActionReturnsNullWhenTipHasNoConfig() {
