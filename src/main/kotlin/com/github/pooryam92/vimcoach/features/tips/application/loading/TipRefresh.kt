@@ -4,7 +4,7 @@ import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.TipSourceLoadResult
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
-import com.intellij.ide.plugins.PluginManagerCore
+import com.intellij.ide.plugins.PluginManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.extensions.PluginId
@@ -130,7 +130,7 @@ class TipRefresh() : RefreshTips {
         (injectedCurrentPluginVersion ?: ::resolvePluginVersion).invoke()
 
     private fun resolvePluginVersion(): String? =
-        PluginManagerCore.getPlugin(PluginId.getId(VIM_COACH_PLUGIN_ID))?.version
+        PluginManager.getInstance().findEnabledPlugin(PluginId.getId(VIM_COACH_PLUGIN_ID))?.version
 
     private companion object {
         const val VIM_COACH_PLUGIN_ID = "com.github.pooryam92.vimcoach"
