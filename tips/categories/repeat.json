@@ -7,7 +7,7 @@
       ],
       "summary": "Repeat last change with .",
       "details": [
-        ". redoes the last edit",
+        "Replays the last edit at the cursor",
         "Counts work, e.g. 3. repeats 3x"
       ]
     },

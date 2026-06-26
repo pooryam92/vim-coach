@@ -253,18 +253,8 @@
       ],
       "summary": "Delete/change to line end d$ / c$",
       "details": [
-        "d$ deletes to line end",
-        "c$ changes to line end"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Delete/change to line end D / C",
-      "details": [
-        "D is shorthand for d$",
-        "C is shorthand for c$"
+        "D / C are the one-key forms",
+        "d$ deletes, c$ changes the rest"
       ]
     },
     {

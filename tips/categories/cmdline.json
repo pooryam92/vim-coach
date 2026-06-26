@@ -37,8 +37,8 @@
       ],
       "summary": "Cancel the : prompt Ctrl-c / Esc",
       "details": [
-        "Ctrl-c cancels the prompt",
-        "Esc cancels it too"
+        "Discards the line you typed",
+        "Still saved to : history"
       ]
     },
     {
@@ -77,7 +77,7 @@
       ],
       "summary": "Show command history with :history",
       "details": [
-        ":history shows : history",
+        "Lists past : commands, newest last",
         ":history / shows search history"
       ]
     },

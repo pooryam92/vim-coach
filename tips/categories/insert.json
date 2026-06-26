@@ -35,7 +35,7 @@
       "category": [
         "insert"
       ],
-      "summary": "Insert at line ends I / A",
+      "summary": "Insert at line start/end I / A",
       "details": [
         "I inserts at first non-blank",
         "A appends at end of line"
@@ -67,8 +67,8 @@
       ],
       "summary": "Run one Normal command with Ctrl-o",
       "details": [
-        "Run one Normal command",
-        "Then return to Insert mode"
+        "One Normal command, back to Insert",
+        "e.g. Ctrl-o dd deletes the line"
       ]
     },
     {
@@ -119,8 +119,8 @@
       ],
       "summary": "Insert digraphs with Ctrl-k",
       "details": [
-        "In Insert mode, type Ctrl-k {digraph}",
-        "Use :digraphs to list available digraphs"
+        "Ctrl-k a: gives ä, e' gives é",
+        ":digraphs lists all the codes"
       ]
     },
     {

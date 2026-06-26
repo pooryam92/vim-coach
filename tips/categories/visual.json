@@ -8,7 +8,7 @@
       "summary": "Paste over a selection p",
       "details": [
         "Select, then p drops your yank in",
-        "But p then grabs the replaced text"
+        "Replaced text overwrites your yank"
       ]
     },
     {
@@ -100,10 +100,10 @@
       "category": [
         "visual"
       ],
-      "summary": "Select a text object viw vip",
+      "summary": "Select a text object viw",
       "details": [
-        "viw a word, vip a paragraph",
-        "vap also grabs the blank lines",
+        "After v press i then w b ( {",
+        "vip grabs a paragraph, vap blanks",
         "Swap i for a to include the edges"
       ]
     },

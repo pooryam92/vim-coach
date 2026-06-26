@@ -106,9 +106,9 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to change/yank lines '[ / ']",
+      "summary": "Jump to last change lines '[ / ']",
       "details": [
-        "'[ first line of the last change or yank",
+        "'[ first line of the last change or paste",
         "'] jumps to its last line"
       ]
     },
@@ -116,9 +116,9 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to change/yank ends `[ / `]",
+      "summary": "Jump to last change ends `[ / `]",
       "details": [
-        "`[ exact start of the last change or yank",
+        "`[ start of last change or paste",
         "`] jumps to its exact end"
       ]
     },
