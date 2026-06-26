@@ -38,8 +38,8 @@
       ],
       "summary": "Append to a macro qA",
       "details": [
-        "qA appends to macro a",
-        "Use when one more step is needed"
+        "Uppercase register appends to it",
+        "Lowercase q{reg} would replace it"
       ]
     },
     {

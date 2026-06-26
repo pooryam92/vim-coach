@@ -117,8 +117,8 @@
       ],
       "summary": "Keep Vim mode during rename",
       "details": [
-        "set idearefactormode=keep",
-        "Rename won't force Select mode"
+        "Rename won't force Select mode",
+        "Stay in Normal mode as you rename"
       ],
       "config": {
         "name": "Keep mode on rename",
@@ -177,7 +177,7 @@
         "ideavim",
         "insert"
       ],
-      "summary": "IDE completion with Ctrl-Space",
+      "summary": "Complete code with Ctrl-Space",
       "details": [
         "Use Ctrl-Space in Insert mode",
         "Press it again to widen suggestions"

@@ -138,7 +138,7 @@
       "category": [
         "insert"
       ],
-      "summary": "Insert char above/below Ctrl-y/e",
+      "summary": "Insert char above/below",
       "details": [
         "Ctrl-y inserts char from above",
         "Ctrl-e inserts char from below"
