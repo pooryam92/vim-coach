@@ -106,9 +106,9 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to change/yank lines '[ / ']",
+      "summary": "Jump to last change lines '[ / ']",
       "details": [
-        "'[ first line of the last change or yank",
+        "'[ first line of the last change or paste",
         "'] jumps to its last line"
       ]
     },
@@ -116,9 +116,9 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to change/yank ends `[ / `]",
+      "summary": "Jump to last change ends `[ / `]",
       "details": [
-        "`[ exact start of the last change or yank",
+        "`[ start of last change or paste",
         "`] jumps to its exact end"
       ]
     },
@@ -262,7 +262,7 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump list navigation Ctrl-o / Ctrl-i",
+      "summary": "Jump back / forward Ctrl-o / Ctrl-i",
       "details": [
         "Ctrl-o goes back through older jump locations",
         "Ctrl-i goes forward again",
@@ -410,7 +410,7 @@
       "category": [
         "navigation"
       ],
-      "summary": "Reposition the cursor line on screen",
+      "summary": "Place cursor line top/center/bottom",
       "details": [
         "zt top, zz center, zb bottom",
         "Use after a search or big jump"

@@ -78,7 +78,7 @@
       ],
       "summary": "Show matches while typing incsearch",
       "details": [
-        ":set incsearch shows matches while typing",
+        "Jumps to the match as you type",
         "Makes /pattern navigation feel instant"
       ],
       "config": [
@@ -92,7 +92,7 @@
       ],
       "summary": "Keep matches highlighted hlsearch",
       "details": [
-        ":set hlsearch keeps matches highlighted",
+        "Every match of the search stays lit",
         "Clear temporarily with :noh"
       ],
       "config": [
@@ -121,7 +121,7 @@
         "options",
         "pattern"
       ],
-      "summary": "Wrap searches at EOF with wrapscan",
+      "summary": "Wrap search at file end wrapscan",
       "details": [
         ":set wrapscan continues from top",
         ":set nowrapscan stops at the end"

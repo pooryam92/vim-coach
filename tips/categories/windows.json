@@ -89,7 +89,7 @@
       "category": [
         "windows"
       ],
-      "summary": "Resize splits Ctrl-w + / - / = / < / >",
+      "summary": "Resize the current split",
       "details": [
         "Ctrl-w +/- change height, Ctrl-w </> change width",
         "Ctrl-w = makes all splits equal size"

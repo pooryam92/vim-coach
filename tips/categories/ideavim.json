@@ -117,8 +117,8 @@
       ],
       "summary": "Keep Vim mode during rename",
       "details": [
-        "set idearefactormode=keep",
-        "Rename won't force Select mode"
+        "Rename won't force Select mode",
+        "Stay in Normal mode as you rename"
       ],
       "config": {
         "name": "Keep mode on rename",
@@ -152,8 +152,8 @@
       ],
       "summary": "Make :w use IDE Save All",
       "details": [
-        "set ideawrite=all",
-        ":w then fires IDE save hooks"
+        ":w then saves every open file",
+        "Fires IDE save hooks like reformat"
       ],
       "config": {
         "name": "Enable ideawrite=all",
@@ -177,7 +177,7 @@
         "ideavim",
         "insert"
       ],
-      "summary": "IDE completion with Ctrl-Space",
+      "summary": "Complete code with Ctrl-Space",
       "details": [
         "Use Ctrl-Space in Insert mode",
         "Press it again to widen suggestions"
@@ -278,7 +278,8 @@
       "summary": "Find all usages gr",
       "details": [
         "Lists every call site, jump to any",
-        "Works on methods, classes, vars"
+        "Works on methods, classes, vars",
+        "Overrides gr ReplaceWithRegister"
       ],
       "config": {
         "name": "Map find usages",

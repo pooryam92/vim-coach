@@ -4,11 +4,11 @@
       "category": [
         "mappings"
       ],
-      "summary": "Inspect maps with :map / :nmap / :imap",
+      "summary": "List your mappings with :map",
       "details": [
-        ":map lists mappings",
-        "Mode forms narrow the list",
-        "Use :nmap or :imap when a key fails in one mode"
+        ":map lists maps for every mode",
+        ":nmap :imap :vmap show one mode",
+        "Check one mode when a key fails"
       ]
     },
     {

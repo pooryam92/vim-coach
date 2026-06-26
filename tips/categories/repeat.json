@@ -7,7 +7,7 @@
       ],
       "summary": "Repeat last change with .",
       "details": [
-        ". redoes the last edit",
+        "Replays the last edit at the cursor",
         "Counts work, e.g. 3. repeats 3x"
       ]
     },
@@ -38,8 +38,8 @@
       ],
       "summary": "Append to a macro qA",
       "details": [
-        "qA appends to macro a",
-        "Use when one more step is needed"
+        "Uppercase register appends to it",
+        "Lowercase q{reg} would replace it"
       ]
     },
     {

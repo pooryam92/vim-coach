@@ -438,27 +438,11 @@
         "plugins",
         "editing"
       ],
-      "summary": "Delete one comma-separated item da,",
+      "summary": "Delete a comma item da, / di,",
       "details": [
         "da, takes the item and a comma",
-        "Any separator works — semicolon, pipe, more"
-      ],
-      "config": {
-        "name": "Install targets.vim",
-        "lines": [
-          "Plug 'wellle/targets.vim'"
-        ]
-      }
-    },
-    {
-      "category": [
-        "plugins",
-        "editing"
-      ],
-      "summary": "Delete one comma-separated item di,",
-      "details": [
         "di, keeps the commas in place",
-        "Any separator works — semicolon, pipe, more"
+        "Any separator works, e.g. ; or |"
       ],
       "config": {
         "name": "Install targets.vim",
