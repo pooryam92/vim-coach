@@ -304,6 +304,23 @@
           "nmap gi <Action>(GotoImplementation)"
         ]
       }
+    },
+    {
+      "category": [
+        "ideavim"
+      ],
+      "summary": "Jump to any UI target Ctrl-Shift-\\",
+      "details": [
+        "A S D F labels appear on clickables",
+        "Type a label to jump there, no mouse",
+        "On macOS press Ctrl-Cmd-\\"
+      ],
+      "config": {
+        "name": "Enable VimEverywhere",
+        "lines": [
+          "set VimEverywhere"
+        ]
+      }
     }
   ]
 }

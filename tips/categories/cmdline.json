@@ -15,6 +15,16 @@
       "category": [
         "cmdline"
       ],
+      "summary": "Tab-complete commands and files",
+      "details": [
+        ":se<Tab> cycles command names",
+        ":e <Tab> cycles matching file names"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
       "summary": "Jump to ends of : Ctrl-b / Ctrl-e",
       "details": [
         "Ctrl-b jumps to the start",

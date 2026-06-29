@@ -35,6 +35,16 @@
       "category": [
         "insert"
       ],
+      "summary": "Accept a completion with Ctrl-y",
+      "details": [
+        "While the popup is open, takes the item",
+        "Ctrl-e dismisses the popup, keeps typing"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
       "summary": "Insert at line start/end I / A",
       "details": [
         "I inserts at first non-blank",

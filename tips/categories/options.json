@@ -162,6 +162,23 @@
       "config": [
         "set textwidth=80"
       ]
+    },
+    {
+      "category": [
+        "options",
+        "pattern"
+      ],
+      "summary": "Preview :substitute as you type",
+      "details": [
+        "Type :s/old/new/ and watch it apply",
+        "Esc cancels and reverts the preview"
+      ],
+      "config": {
+        "name": "Enable live substitute preview",
+        "lines": [
+          "set inccommand=nosplit"
+        ]
+      }
     }
   ]
 }

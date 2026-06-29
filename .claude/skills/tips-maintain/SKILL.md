@@ -79,8 +79,12 @@ real surface from the `external/ideavim` submodule (command keys, ex-commands, a
 the 21 bundled plugins) and flags what **no tip text mentions**. It is **advisory
 and textual** — a miss is a *candidate, not a verdict* (keys taught under a
 different notation show as misses; most of the long tail doesn't deserve a tip).
-`--plugins` narrows to plugin coverage; `--all` includes single-char keys. If the
-submodule is absent the script prints the checkout command (`checking-support.md`).
+`--plugins` narrows to plugin coverage; `--all` includes single-char keys. When
+mining a *release* for new tips, fast-forward the submodule first (`git -C
+external/ideavim fetch && git -C external/ideavim merge --ff-only origin/master`)
+— it can be tens of commits behind, so a stale checkout silently hides the newest
+features. If the submodule is absent the script prints the checkout command
+(`checking-support.md`).
 
 **Score every candidate** on four axes; a tip earns its place only by winning on
 at least three:

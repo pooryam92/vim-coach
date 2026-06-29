@@ -587,6 +587,41 @@
           "set classtextobj"
         ]
       }
+    },
+    {
+      "category": [
+        "plugins",
+        "insert"
+      ],
+      "summary": "Tab through IDE completions",
+      "details": [
+        "Ctrl-Space opens the completion popup",
+        "Tab/Shift-Tab move, Enter accepts"
+      ],
+      "config": {
+        "name": "Enable youcompleteme",
+        "lines": [
+          "set youcompleteme"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "navigation"
+      ],
+      "summary": "Move by indentation level",
+      "details": [
+        "]= /[= next/previous same-indent line",
+        "]+ deeper, ]- shallower indent",
+        "]% /[% jump to block end/start"
+      ],
+      "config": {
+        "name": "Install indentwise",
+        "lines": [
+          "Plug 'jeetsukumaran/vim-indentwise'"
+        ]
+      }
     }
   ]
 }
