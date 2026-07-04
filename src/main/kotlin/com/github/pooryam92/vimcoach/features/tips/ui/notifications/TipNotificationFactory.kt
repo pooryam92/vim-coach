@@ -7,6 +7,8 @@ import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.util.IconLoader
+import com.intellij.ui.ColorUtil
+import com.intellij.util.ui.UIUtil
 
 class TipNotificationFactory {
 
@@ -126,7 +128,7 @@ class TipNotificationFactory {
             append(detailsHtml)
             append(DETAILS_CLOSE)
             tip.mnemonic?.takeIf(String::isNotBlank)?.let { mnemonic ->
-                append(MNEMONIC_OPEN)
+                append(mnemonicOpen(ColorUtil.toHex(UIUtil.getContextHelpForeground())))
                 append(escapeHtml(TIP_MNEMONIC_LABEL))
                 append(" ")
                 append(escapeHtml(mnemonic))
@@ -135,6 +137,10 @@ class TipNotificationFactory {
             append(WRAPPER_CLOSE)
             append(HTML_CLOSE)
         }
+    }
+
+    private fun mnemonicOpen(color: String): String {
+        return "<div style=\"margin-top:4px;font-style:italic;color:#$color;\">"
     }
 
     private fun escapeHtml(text: String): String {
@@ -175,7 +181,6 @@ class TipNotificationFactory {
         private const val SUMMARY_CLOSE = "</b>"
         private const val SUMMARY_DIV_OPEN = "<div style=\"margin-top:5px;\">"
         private const val SUMMARY_DIV_CLOSE = "</div>"
-        private const val MNEMONIC_OPEN = "<div style=\"margin-top:4px;font-style:italic;\">"
         private const val MNEMONIC_CLOSE = "</div>"
         private const val DETAILS_OPEN = "<div style=\"margin-top:8px;margin-bottom:8px;\">"
         private const val DETAILS_CLOSE = "</div>"

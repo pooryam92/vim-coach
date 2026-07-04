@@ -9,8 +9,7 @@
         "diw deletes just the word",
         "daw deletes the word and trailing space",
         "Use i for inside and a for around"
-      ],
-      "mnemonic": "delete inner/a word"
+      ]
     },
     {
       "category": [
@@ -21,8 +20,7 @@
         "ciw changes just the word, even mid-word",
         "caw changes the word and trailing space",
         "Use i for inside and a for around"
-      ],
-      "mnemonic": "change inner/a word"
+      ]
     },
     {
       "category": [
@@ -87,8 +85,7 @@
         "cit changes text inside the current tag",
         "cat changes the tag and its contents",
         "Useful in XML, HTML, and markup-like code"
-      ],
-      "mnemonic": "cit = change inner tag"
+      ]
     },
     {
       "category": [
@@ -99,8 +96,7 @@
         "cis changes the current sentence",
         "cas includes the trailing space",
         "Pairs with any operator — d, y"
-      ],
-      "mnemonic": "change inner/a sentence"
+      ]
     },
     {
       "category": [
@@ -122,8 +118,7 @@
         ":m+1 moves the current line down",
         ":m-2 moves it up",
         ":m0 moves it to the top, :m$ to the end, :m2 after line 2"
-      ],
-      "mnemonic": "m = move"
+      ]
     },
     {
       "category": [

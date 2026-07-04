@@ -29,8 +29,7 @@
         "w next word start",
         "b previous word start",
         "e moves to end of word"
-      ],
-      "mnemonic": "word, back, end"
+      ]
     },
     {
       "category": [
@@ -227,8 +226,7 @@
         "% jumps between (), {}, and [] by default",
         "50% jumps to the file's middle",
         "Use to inspect a whole block quickly"
-      ],
-      "mnemonic": "percent = pair match"
+      ]
     },
     {
       "category": [
@@ -316,8 +314,7 @@
       "details": [
         "F; jumps to previous ';' on the line",
         "Use to move precisely without searching"
-      ],
-      "mnemonic": "F = find backward"
+      ]
     },
     {
       "category": [
@@ -393,8 +390,7 @@
         "]m jumps to the next method start",
         "[m jumps to the previous method start",
         "Use ]M and [M for method ends"
-      ],
-      "mnemonic": "m = method"
+      ]
     },
     {
       "category": [
@@ -416,8 +412,7 @@
         "]s jumps to next misspelled word",
         "[s jumps to the previous one",
         "Requires active spell checking"
-      ],
-      "mnemonic": "s = spell"
+      ]
     },
     {
       "category": [
@@ -499,8 +494,7 @@
         "zfip folds the current paragraph or block",
         "Takes any motion, like zf} or zfa{",
         "Works where IDE folding is available"
-      ],
-      "mnemonic": "zf = fold"
+      ]
     },
     {
       "category": [

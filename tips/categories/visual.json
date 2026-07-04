@@ -20,8 +20,7 @@
         "v selects characters",
         "V selects whole lines",
         "Ctrl-v selects a block"
-      ],
-      "mnemonic": "v visual, V visual line"
+      ]
     },
     {
       "category": [
@@ -109,8 +108,7 @@
         "After v press i then w b ( {",
         "vip grabs a paragraph, vap blanks",
         "Swap i for a to include the edges"
-      ],
-      "mnemonic": "viw = visual inner word"
+      ]
     },
     {
       "category": [

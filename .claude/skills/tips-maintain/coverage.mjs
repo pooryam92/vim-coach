@@ -24,7 +24,7 @@ if (!existsSync(ENGINE_KSP)) {
   console.error(
     `IdeaVim submodule not checked out at ${IDEAVIM}.\n` +
     `Run:  git submodule update --init external/ideavim\n` +
-    `(see the tips-maintain skill's checking-support.md for sparse-checkout setup).`,
+    `(see the tips-maintain skill's reference.md for sparse-checkout setup).`,
   )
   process.exit(0)
 }

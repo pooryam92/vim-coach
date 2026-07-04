@@ -19,8 +19,7 @@
       "details": [
         "Use nmap, imap, or vmap for the target mode",
         "Normal, Insert, and Visual maps should stay separate"
-      ],
-      "mnemonic": "n/i/v = normal/insert/visual"
+      ]
     },
     {
       "category": [
@@ -54,8 +53,7 @@
         ":iab teh the fixes that typo",
         "Expands after Space or Enter",
         "Great for boilerplate or signatures"
-      ],
-      "mnemonic": "i = insert abbrev"
+      ]
     }
   ]
 }

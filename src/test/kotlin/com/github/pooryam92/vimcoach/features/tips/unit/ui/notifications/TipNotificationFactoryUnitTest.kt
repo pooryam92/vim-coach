@@ -62,6 +62,22 @@ class TipNotificationFactoryUnitTest {
     }
 
     @Test
+    fun createNotificationDimsOnlyTheMnemonic() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(
+            summary = "Change inner word ciw",
+            details = listOf("ciw replaces the word under the cursor"),
+            mnemonic = "change inner word"
+        )
+
+        val notification = notifier.createNotification(tip)
+
+        val dimmedBlocks = Regex("color:#[0-9a-fA-F]{6}").findAll(notification.content).count()
+        assertEquals(1, dimmedBlocks)
+        assertTrue(notification.content.contains("<div style=\"margin-top:8px;margin-bottom:8px;\">"))
+    }
+
+    @Test
     fun createNotificationRendersMnemonicInItalicWhenPresent() {
         val notifier = TipNotificationFactory()
         val tip = VimTip(

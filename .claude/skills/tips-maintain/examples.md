@@ -1,7 +1,29 @@
-# Worked examples (before → after)
+# The style guide — worked examples (before → after)
 
-Open when you want the `SKILL.md` wording rules shown in action. Each entry shows
-the **whole tip object** ❌ before and ✅ after, then *why*.
+This file is how tip style is taught: **read it before authoring or rewording
+anything.** Each entry shows the **whole tip object** ❌ before and ✅ after,
+then *why*. When the user corrects or rejects a wording call, the lesson lands
+here as a new entry (or sharpens the one that failed) — this file is the
+skill's memory.
+
+## Contents
+
+- Name the family in prose, never dump symbols
+- Don't restate the summary in detail line 1
+- Explain the effect, not the anatomy — a tip must read cold
+- One worked example beats a meta description + letter dump
+- Name press-vs-type when an example crosses into Insert mode
+- Split by intent, not key count
+- Cut lines that don't earn their place
+- In a slashed pair, vary one axis — keep the operator fixed
+- Operator + motion tips — lead concrete, generalize the open axis
+- Verify the claim against IdeaVim source, not Vim lore
+- Search existing tips before adding — kill semantic duplicates
+- Decode every key in a mnemonic, not just the ends
+- Give the decoded words, don't echo the key
+- Drop a mnemonic whose decode is obvious — don't fill the slot
+- Join symbol pairs with `and` — a slash between glyphs is a pileup
+- Theory earns one tip at most — and it must still be tryable
 
 ### Name the family in prose, never dump symbols
 
@@ -113,33 +135,36 @@ bar?") — it jams a command and the text you type together. When an example cro
 from a command into Insert-mode typing, name the action — press `c`, type `bar` —
 so keystrokes read apart from input.
 
-### Split a dense tip into single-concept tips
+### Split by intent, not key count
 
-❌ before (one tip cramming both directions):
+❌ before (one tip cramming two intents):
 ```json
 {
-  "category": ["editing"],
-  "summary": "Edit the next/previous () pair",
-  "details": ["cin) edits the next pair", "cil) edits the previous pair"]
+  "category": ["navigation"],
+  "summary": "Open, close, or toggle a fold",
+  "details": ["za toggles the fold under you", "zo forces open, zc forces closed"]
 }
 ```
-✅ after (two self-contained tips):
+✅ after (one tip per intent):
 ```json
 {
-  "category": ["editing"],
-  "summary": "Edit the next () pair cin)",
-  "details": ["Works even with the cursor outside it", "Searches forward to the pair"]
+  "category": ["navigation"],
+  "summary": "Toggle a fold with za",
+  "details": ["Opens it if closed, closes if open", "One key covers most fold work"]
 }
 ```
 ```json
 {
-  "category": ["editing"],
-  "summary": "Edit the previous () pair cil)",
-  "details": ["Reaches back to the pair behind you", "Searches backward to the pair"]
+  "category": ["navigation"],
+  "summary": "Force a fold open or closed",
+  "details": ["zo opens the fold, zc closes it", "Works when you know the end state"]
 }
 ```
-*Why:* display order is random, so a tip can't lean on another. Only split when
-each earns a *distinct* summary — the generator rejects duplicates.
+*Why:* toggle and force are *different intents*, so they are different tips; a
+same-intent direction pair (`gj / gk`, `g0 / g$`) stays together as one tip.
+Key count alone decides nothing. Display order is random, so each split tip
+must stand alone and earn a *distinct* summary — the generator rejects
+duplicates.
 
 ### Cut lines that don't earn their place
 
@@ -311,3 +336,74 @@ them all; a half-decode leaves the reader guessing the part they most need. Keep
 `gm =` restates the key twice before the hook lands. Author just the decoded words —
 `go menu` already maps g→go, m→menu on its own. This doesn't contradict "decode
 every key": the letters still all map, you just drop the redundant `key =` echo.
+
+### Drop a mnemonic whose decode is obvious — don't fill the slot
+
+❌ before:
+```json
+{
+  "category": ["mappings"],
+  "summary": "Use mode-specific maps in ~/.ideavimrc",
+  "details": ["Use nmap, imap, or vmap for the target mode", "Normal, Insert, and Visual maps should stay separate"],
+  "mnemonic": "n/i/v = normal/insert/visual"
+}
+```
+✅ after:
+```json
+{
+  "category": ["mappings"],
+  "summary": "Use mode-specific maps in ~/.ideavimrc",
+  "details": ["Use nmap, imap, or vmap for the target mode", "Normal, Insert, and Visual maps should stay separate"]
+}
+```
+*Why:* `n`/`i`/`v` → normal/insert/visual is self-evident to anyone reading a maps
+tip — the hook teaches nothing, and here it even restates detail line 2 word for
+word. A mnemonic earns its line only when the keys wouldn't otherwise stick; when
+the decode is obvious or already stated, delete it rather than fill the slot.
+
+### Join symbol pairs with `and` — a slash between glyphs is a pileup
+
+❌ before:
+```json
+{
+  "category": ["navigation"],
+  "summary": "Move by paragraphs { / }",
+  "details": ["{ jumps back a paragraph, } forward", "Blank lines are the boundaries"]
+}
+```
+✅ after:
+```json
+{
+  "category": ["navigation"],
+  "summary": "Move by paragraphs { and }",
+  "details": ["{ jumps back a paragraph, } forward", "Blank lines are the boundaries"]
+}
+```
+*Why:* ` / ` is the default joiner for letter-key pairs (`gj / gk`), but between
+bracket/symbol glyphs it reads as three symbols in a row. `and` keeps the pair
+readable. (A proposed "consistency" edit normalizing `and` back to ` / ` was
+rejected for exactly this reason.)
+
+### Theory earns one tip at most — and it must still be tryable
+
+❌ before (a grammar tip with nothing to press):
+```json
+{
+  "category": ["editing"],
+  "summary": "Change/delete with operator + motion",
+  "details": ["d{motion} deletes text", "c{motion} changes text"]
+}
+```
+✅ after (tip deleted; its rule folds into one concrete host):
+```json
+{
+  "category": ["editing"],
+  "summary": "Change/delete a word cw / dw",
+  "details": ["cw retypes the word, dw removes it", "Same d/c works with any motion"]
+}
+```
+*Why:* `{motion}` placeholders give the reader nothing to try, and rewording
+around them keeps failing. When a concept has no tryable form, delete the
+standalone tip and fold its rule into exactly *one* concrete host — never echo
+it across every sibling. Practical tips lead; theory gets at most one
+consolidated line.

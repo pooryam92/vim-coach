@@ -294,8 +294,7 @@
         ":g/TODO/p prints matching lines",
         ":g/pat/d deletes matching lines",
         ":g/pat/s/foo/bar/g substitutes only on matching lines"
-      ],
-      "mnemonic": "g = global"
+      ]
     },
     {
       "category": [

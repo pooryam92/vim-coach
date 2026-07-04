@@ -107,8 +107,7 @@
         "gt goes to the next tab",
         "gT goes to the previous tab",
         ":tabn and :tabp are the Ex forms"
-      ],
-      "mnemonic": "gt = go tab"
+      ]
     },
     {
       "category": [

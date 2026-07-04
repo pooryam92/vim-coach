@@ -286,7 +286,6 @@
         "Works on methods, classes, vars",
         "Overrides gr ReplaceWithRegister"
       ],
-      "mnemonic": "gr = go references",
       "config": {
         "name": "Map find usages",
         "lines": [

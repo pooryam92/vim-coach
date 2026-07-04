@@ -70,9 +70,14 @@ Dismissing the tip balloon is the adapter's responsibility: `IntelliJTipNotifier
 
 ```html
 <html><div>
-  <b>summary</b>
-  <div style="margin-top:12px;margin-bottom:12px;">detail line 1<br/>detail line 2</div>
+  <div style="margin-top:5px;"><b>summary</b></div>
+  <div style="margin-top:8px;margin-bottom:8px;">detail line 1<br/>detail line 2</div>
+  <div style="margin-top:4px;font-style:italic;color:#8c8c8c;">Mnemonic: hook</div>
 </div></html>
 ```
+
+The mnemonic line is omitted when the tip has none; when present it is dimmed with
+the theme's context-help foreground (hex resolved at render time), keeping the
+summary and details at full strength.
 
 Actions — "Next tip", "Exclude tip", and the apply-to-`.ideavimrc` action (when `tip.config?.lines` is non-empty; labelled by `config.name` or the generic "Apply") — are all standard `NotificationAction` buttons appended to the balloon.

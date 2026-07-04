@@ -9,8 +9,7 @@
         "yiw copies just the word",
         "yaw copies the word and trailing space",
         "Use i for inside and a for around"
-      ],
-      "mnemonic": "y=yank, i=inner, a=around"
+      ]
     },
     {
       "category": [
@@ -21,8 +20,7 @@
         "yy yanks the current line",
         "5yy yanks five lines",
         "Y does the same as yy"
-      ],
-      "mnemonic": "yy = yank line"
+      ]
     },
     {
       "category": [
