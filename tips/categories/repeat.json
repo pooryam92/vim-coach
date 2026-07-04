@@ -26,10 +26,10 @@
       "category": [
         "repeat"
       ],
-      "summary": "Record a macro q{reg}",
+      "summary": "Record a macro qa, replay @a",
       "details": [
-        "qa records into register a",
-        "Press q again to stop"
+        "qa records, do edits, q stops",
+        "@a replays it, @@ repeats"
       ]
     },
     {
@@ -40,16 +40,6 @@
       "details": [
         "Uppercase register appends to it",
         "Lowercase q{reg} would replace it"
-      ]
-    },
-    {
-      "category": [
-        "repeat"
-      ],
-      "summary": "Play and repeat macros @ / @@",
-      "details": [
-        "@a plays macro a",
-        "@@ repeats the last macro"
       ]
     },
     {

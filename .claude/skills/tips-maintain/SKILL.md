@@ -87,6 +87,8 @@ versions in examples.md:
 - Every keystroke shown must do something when typed — lead a bare text object
   with an operator (`Act on a class dac`, not `Select a class ac`).
 - A transform names both ends — what changes *and* what it becomes.
+- Name the use-site — a motion tip's second line points at the edit it sets up
+  (`Perfect for ct) edits`), not more motion trivia (`;`/`,` repeat).
 - Each tip stands alone — in knowledge, not just sequence; order is random.
 - Split by *intent*, not key count: different intents (toggle `za` vs force
   `zo`/`zc`) are separate tips; same intent, different direction (`gj / gk`)

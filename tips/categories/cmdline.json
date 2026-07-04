@@ -65,10 +65,10 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Recall matching history Up / Down",
+      "summary": "Recall history by prefix Up / Down",
       "details": [
-        "Up finds older matching entries",
-        "Down moves toward newer ones"
+        "Type :s then Up recalls past :s lines",
+        "Down steps back toward newer matches"
       ]
     },
     {

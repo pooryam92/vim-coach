@@ -72,9 +72,9 @@
       "summary": "Change inside brackets with ci[ / ci{",
       "details": [
         "ci[ changes text inside square brackets",
-        "ci{ changes text inside braces",
-        "Use ca[ or ca{ when you also want the delimiters"
-      ]
+        "ci{ changes text inside braces"
+      ],
+      "mnemonic": "ci = change inner"
     },
     {
       "category": [
