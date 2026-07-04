@@ -16,6 +16,7 @@ class TipNotifications internal constructor(
     private val ideaVimRcAction: (VimTip) -> (() -> Unit)?,
     private val ideaVimAvailable: () -> Boolean,
     private val openSettings: () -> Unit,
+    private val recordTipNote: RecordTipNote? = RecordTipNote.fromEnvironment(),
 ) : ShowTips {
 
     constructor(project: Project) : this(project, TipIdeaVimRc(project, project.service()))
@@ -47,6 +48,7 @@ class TipNotifications internal constructor(
                 onShowNextTip = ::showRandomTip,
                 onExcludeTip = { excludeTip(tip) },
                 onAddToIdeaVimRc = ideaVimRcAction(tip),
+                onRecordNote = recordTipNote?.let { recorder -> { note -> recorder.record(tip, note) } },
             )
         )
     }

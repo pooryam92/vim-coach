@@ -7,6 +7,7 @@ import com.github.pooryam92.vimcoach.features.tips.application.notifications.Tip
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.intellij.notification.Notification
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.ui.Messages
 
 /**
  * IntelliJ adapter for [TipNotifier]: renders notifications as platform balloons via
@@ -71,7 +72,22 @@ class IntelliJTipNotifier(private val project: Project) : TipNotifier {
                 activeTip.expire(notification)
             },
             onAddToIdeaVimRc = actions.onAddToIdeaVimRc,
+            onRecordNote = actions.onRecordNote?.let { record -> { promptAndRecordNote(record) } },
         )
+
+    /** Asks the maintainer for a note, records it, then confirms where it was saved. */
+    private fun promptAndRecordNote(record: (String) -> Unit) {
+        val note = Messages.showMultilineInputDialog(
+            project,
+            TipNotificationFactory.TIP_NOTE_DIALOG_MESSAGE,
+            TipNotificationFactory.TIP_NOTE_DIALOG_TITLE,
+            null,
+            null,
+            null,
+        )?.takeIf(String::isNotBlank) ?: return
+        record(note)
+        message(factory.createAddedToIdeaVimRcNotification(TipNotificationFactory.TIP_NOTE_SAVED_TEXT))
+    }
 }
 
 private fun TipMessageHandle(onDismiss: () -> Unit): TipMessageHandle =

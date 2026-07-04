@@ -7,3 +7,6 @@
 build
 out
 .claude/settings.local.json
+
+# Dev-only maintainer notes flagged from the tip "Note…" action (see docs/tips/tips-pipeline.md)
+docs/tips/tip-feedback.md

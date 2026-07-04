@@ -1,0 +1,161 @@
+# Tips reference — support checks, config blocks, categories
+
+On-demand companion to `SKILL.md`. Open the section you need:
+
+- [Checking IdeaVim support](#checking-ideavim-support) — prove a
+  command/behavior is supported before keeping a claim.
+- [Config tips — what's safe to ship](#config-tips--whats-safe-to-ship) —
+  authoring or reviewing a tip's `config` block.
+- [Adding or changing a category](#adding-or-changing-a-category) — the coupled
+  code+docs change.
+
+## Checking IdeaVim support
+
+These tips target **IdeaVim**, where keys are often remapped or collapsed onto IDE
+actions — many keys bind to the *same* IDE action, and upstream-Vim semantics
+often don't carry over. Vim docs give *meaning*; the IdeaVim submodule proves
+*support*. Be conservative when ambiguous: bang forms (`:e!`, `:q!`) can be valid
+even when only the base command is indexed; some pattern/mapping behaviors are
+syntax inside a supported command, not standalone commands.
+
+**Before keeping a tip:** is the command/behavior clearly supported by IdeaVim? Is
+the summary honest about mode/prompt/plugin requirements? Plugin-backed → tagged
+`plugins`? IdeaVim-specific but not a plugin → is `ideavim` enough?
+
+**Option-backed `config`:** check the value isn't already the default
+(`IjOptions.kt` / option definitions in the submodule) — `set
+ideavimsupport=dialog` was once proposed, but `dialog` *is* the default, so the
+button would ship a no-op.
+
+The submodule is checked out at `external/ideavim/`. Its KSP-generated JSON lists
+the real commands/options/functions:
+
+- **engine** (`commands`, `ex_commands`, `vimscript_functions`):
+  `external/ideavim/vim-engine/src/main/resources/ksp-generated/`
+- **frontend-only** (`:buffer`, `:ls`, `:help`, `:read`, `:actionlist`…):
+  `external/ideavim/src/main/resources/ksp-generated/`
+- **plugins** — `ideavim_extensions.json` (both paths). Check before claiming a
+  plugin exists.
+
+If the submodule needs refreshing or a wider checkout:
+
+```bash
+git submodule update --init external/ideavim
+git -C external/ideavim sparse-checkout init --cone
+git -C external/ideavim sparse-checkout set \
+  src/main/resources/ksp-generated \
+  vim-engine/src/main/resources/ksp-generated
+git submodule update --remote external/ideavim   # refresh to latest master
+# Need more than KSP JSON (an action's @CommandOrMotion keys, an option in
+# IjOptions.kt)? widen the checkout:
+git -C external/ideavim sparse-checkout add \
+  annotation-processors vimscript-info src vim-engine
+```
+
+**Vim docs** (for *meaning*, not support): https://vimhelp.org/, user manual
+https://vimhelp.org/usr_toc.txt.html. Category → page: `editing`→editing.txt,
+`navigation`→motion.txt/scroll.txt/fold.txt, `pattern`→pattern.txt,
+`cmdline`→cmdline.txt, `options`→options.txt, `visual`→visual.txt,
+`mappings`→map.txt, `windows`→windows.txt/tabpage.txt. Setup/usage not in the
+tree: [IdeaVim wiki](https://github.com/JetBrains/ideavim/wiki).
+
+## Config tips — what's safe to ship
+
+### The `config` field
+
+`{ "name": "<button label>", "lines": ["<rc line>", …] }`. `name` is the button
+label verbatim — set it **only when it's a meaningful label**; omit it and the
+button reads a generic `Apply`, which is fine. The legacy array form
+(`"config": ["<line>", …]`) is still accepted — don't convert it to the object
+form just to add a `name`; a labelless `Apply` is not a defect to clean up.
+
+```json
+{
+  "category": ["plugins", "editing"],
+  "summary": "Add surroundings ysiw)",
+  "details": ["ys, then a motion, then a pair", "ys$\" quotes to end of line"],
+  "config": { "name": "Install vim-surround", "lines": ["Plug 'tpope/vim-surround'"] }
+}
+```
+
+The **Add to .ideavimrc** button appends the whole `lines` block verbatim, in
+order, at the end of the file. It never reorders, and it skips re-adding only an
+*identical* contiguous block — it does **not** detect per-key or per-option
+clashes. So a block is shippable only when both hold:
+
+1. **Self-contained & order-independent** — it stands alone and works wherever it
+   lands. Multi-line is fine, and a later line *may* depend on an earlier line in
+   the **same** block (they ship together); it just can't depend on anything
+   outside the block.
+2. **Sets no shared state others rely on** — nothing that silently changes the
+   meaning of the user's other config, or that their config overrides.
+
+Lines that satisfy both — the working examples:
+
+- **Install a plugin** — one `Plug '<github-alias>'` line. Primary category
+  `plugins` + a functional secondary. Aliases:
+  `external/ideavim/doc/IdeaVim Plugins.md`. Use `Plug`, not the legacy
+  `set <plugin>` form. If the plugin binds *no* default keys, ship its binding
+  config in the **same block**: e.g. CamelCaseMotion exposes only `<Plug>`
+  targets until you set `g:camelcasemotion_key`, so ship
+  `Plug 'bkad/CamelCaseMotion'` **and** `let g:camelcasemotion_key = '<prefix>'`
+  together. The `g:` var is plugin-private (not leader-style shared state), and
+  IdeaVim inits extensions only after the whole rc is sourced, so the two lines
+  are order-independent. But it now *claims a key family*, so collision-check the
+  prefix like an action mapping — the upstream default `,` is both a built-in
+  motion and a common leader, so it's usually not a safe pick.
+- **Tune a built-in option** — e.g. `set scrolloff=5`, `hlsearch`. Primary
+  `options`.
+- **IDE-bridge `set`** — e.g. `set ideajoin`, `set idearefactormode=keep`.
+  Primary `ideavim`.
+- **IDE-bridge action mapping** — `nmap <keys> <Action>(ActionId)`. Use a
+  recursive `map`/`nmap`, never `noremap` (`<Action>()` needs a recursive map).
+  Primary `ideavim`; short button label, e.g. `Map errors`. This is the one
+  shippable line that *claims a key*: it sets no shared state, but appending
+  always wins and dedup won't catch a clash, so the button can **override a
+  user's existing binding**. Pick keys by convention first: use the established
+  Vim/Neovim binding for the action (the LSP-style `gd`/`gr`/`gi` family) even
+  when it shadows a built-in or an already-taught key — and disclose the shadow
+  in a detail line (`Overrides built-in gi insert spot`). Only when no
+  convention exists, fall back to an idiomatic free slot (the `]e`/`[e`
+  bracket-pair family, an unused `g`-prefix). Collision-check either way, so you
+  know what to disclose.
+
+`lines` are **enable**/action lines only, verbatim — never usage mappings
+(`ysiw)` is usage, not config).
+
+### Not shippable yet
+
+These look complete but fail a test above, so the button would misfire. Don't
+author them until the blocker is fixed.
+
+- **Leader-dependent mappings** (`<leader>…`, or maps relying on a custom
+  `mapleader`) — fail test 2. The mapping needs `let mapleader` too, which is
+  shared state: appending it can clobber the user's leader, and the button can't
+  guarantee leader is set first. Revisit once the snippet can establish or detect
+  leader safely.
+- **Plugins that need a separate Marketplace IDE plugin** — fail test 1: the
+  button appends only the config line, so a `config` that looks complete would
+  silently do nothing. EasyMotion (needs IdeaVim-EasyMotion + AceJump) and
+  which-key (needs the Which-Key IDE plugin) are deferred — see
+  `docs/discover/config-tips-roadmap.md`. A `Plug`/`set` line is only shippable
+  when IdeaVim emulates the plugin itself (surround, commentary, sneak, NERDTree,
+  argtextobj…). The "Setup" block in `external/ideavim/doc/IdeaVim Plugins.md`
+  reveals which need an extra install.
+- **multiple-cursors** — emulated, but its default keys don't bind and the
+  `<Plug>` workaround maps aren't verified to work (VIM-2178); deferred until
+  confirmed. (Unlike CamelCaseMotion above, where the prefix var *does* bind
+  working keys.)
+
+## Adding or changing a category
+
+The 14 current categories and picking rules are in `SKILL.md`. Coupled across
+code + docs — update together:
+
+1. `tips/categories/<name>.json` — adding a category = a new file (its name is the
+   category); removing one = migrate or delete its tips first.
+2. The category list + picking rules in `SKILL.md`.
+3. `docs/discover/config-tips-roadmap.md` if it affects the config roadmap.
+
+Ordering needs no change — categories sort alphabetically automatically. Then run
+`node scripts/generate-tips.mjs` to confirm it validates.

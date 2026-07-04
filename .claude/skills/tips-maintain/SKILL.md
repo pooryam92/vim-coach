@@ -37,11 +37,10 @@ blocks and the .ideavimrc button, adding/renaming/removing a category.
 2. **Verify support** against the IdeaVim submodule (reference.md →
    "Checking IdeaVim support") —
    don't carry over upstream-Vim behavior IdeaVim doesn't replicate.
-3. **Propose before editing.** ≤ 2 tips per batch; show each whole tip
-   before → after with a one-line reason and get a go-ahead — never bulk-rewrite
-   silently. Agree shape first (how many tips, the split axis) before polishing
-   words. Two rejected rewords → stop guessing single variants; offer 2–3
-   concrete options inline.
+3. **Propose before editing.** Show each whole tip before → after with a
+   one-line reason and get a go-ahead. Agree shape first (how many tips, the
+   split axis) before polishing words. Two rejected rewords → stop guessing
+   single variants; offer 2–3 concrete options inline.
 4. **Edit** `tips/categories/<primary>.json` — a tip lives in the file named by
    its first category.
 5. **Validate:** `node scripts/generate-tips.mjs --check` must pass (it is the

@@ -191,6 +191,32 @@ class TipNotificationFactoryUnitTest {
     }
 
     @Test
+    fun noteActionIsAddedLastWhenRecordNoteCallbackProvided() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(summary = "surround", details = listOf("edit surroundings"))
+
+        val notification = notifier.createNotificationWithActions(
+            tip,
+            TipNotificationActions(onShowNextTip = {}, onExcludeTip = {}, onAddToIdeaVimRc = {}, onRecordNote = {})
+        )
+
+        assertEquals(4, notification.actions.size)
+        assertEquals(TipNotificationFactory.TIP_NOTE_ACTION_TEXT, notification.actions.last().templateText)
+    }
+
+    @Test
+    fun noNoteActionWhenRecordNoteCallbackAbsent() {
+        val notifier = TipNotificationFactory()
+
+        val notification = notifier.createNotificationWithActions(
+            VimTip(summary = "tip"),
+            TipNotificationActions(onShowNextTip = {}, onExcludeTip = {})
+        )
+
+        assertFalse(notification.actions.any { it.templateText == TipNotificationFactory.TIP_NOTE_ACTION_TEXT })
+    }
+
+    @Test
     fun notificationWithoutIdeaVimRcCallbackHasTwoActionButtons() {
         val notifier = TipNotificationFactory()
         val tip = VimTip(summary = "jump", details = listOf("use %"))

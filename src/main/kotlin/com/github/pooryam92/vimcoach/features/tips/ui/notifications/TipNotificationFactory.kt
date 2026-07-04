@@ -36,6 +36,11 @@ class TipNotificationFactory {
                 onAddToIdeaVimRc()
             })
         }
+        actions.onRecordNote?.let { onRecordNote ->
+            notification.addAction(NotificationAction.createSimple(TIP_NOTE_ACTION_TEXT) {
+                onRecordNote()
+            })
+        }
         return notification
     }
 
@@ -128,7 +133,7 @@ class TipNotificationFactory {
             append(detailsHtml)
             append(DETAILS_CLOSE)
             tip.mnemonic?.takeIf(String::isNotBlank)?.let { mnemonic ->
-                append(mnemonicOpen(ColorUtil.toHex(UIUtil.getContextHelpForeground())))
+                append(mnemonicOpen(ColorUtil.toHex(mnemonicForeground())))
                 append(escapeHtml(TIP_MNEMONIC_LABEL))
                 append(" ")
                 append(escapeHtml(mnemonic))
@@ -137,6 +142,10 @@ class TipNotificationFactory {
             append(WRAPPER_CLOSE)
             append(HTML_CLOSE)
         }
+    }
+
+    private fun mnemonicForeground(): java.awt.Color {
+        return ColorUtil.mix(UIUtil.getLabelForeground(), UIUtil.getContextHelpForeground(), MNEMONIC_DIM_RATIO)
     }
 
     private fun mnemonicOpen(color: String): String {
@@ -170,6 +179,10 @@ class TipNotificationFactory {
         val TIP_RELOADED_IDEAVIMRC_TEXT: String = MyBundle.message("tipReloadedIdeaVimRcMessage")
         val TIP_RELOAD_IDEAVIMRC_FAILED_TEXT: String = MyBundle.message("tipReloadIdeaVimRcFailedMessage")
         val TIP_MNEMONIC_LABEL: String = MyBundle.message("tipMnemonicLabel")
+        val TIP_NOTE_ACTION_TEXT: String = MyBundle.message("tipNoteAction")
+        val TIP_NOTE_DIALOG_TITLE: String = MyBundle.message("tipNoteDialogTitle")
+        val TIP_NOTE_DIALOG_MESSAGE: String = MyBundle.message("tipNoteDialogMessage")
+        val TIP_NOTE_SAVED_TEXT: String = MyBundle.message("tipNoteSavedMessage")
         val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", TipNotificationFactory::class.java)
 
         private const val DETAILS_SEPARATOR = "<br/>"
@@ -182,6 +195,7 @@ class TipNotificationFactory {
         private const val SUMMARY_DIV_OPEN = "<div style=\"margin-top:5px;\">"
         private const val SUMMARY_DIV_CLOSE = "</div>"
         private const val MNEMONIC_CLOSE = "</div>"
+        private const val MNEMONIC_DIM_RATIO = 0.55
         private const val DETAILS_OPEN = "<div style=\"margin-top:8px;margin-bottom:8px;\">"
         private const val DETAILS_CLOSE = "</div>"
     }
@@ -190,5 +204,6 @@ class TipNotificationFactory {
 internal data class TipNotificationActions(
     val onShowNextTip: (() -> Unit)? = null,
     val onExcludeTip: ((Notification) -> Unit)? = null,
-    val onAddToIdeaVimRc: (() -> Unit)? = null
+    val onAddToIdeaVimRc: (() -> Unit)? = null,
+    val onRecordNote: (() -> Unit)? = null
 )

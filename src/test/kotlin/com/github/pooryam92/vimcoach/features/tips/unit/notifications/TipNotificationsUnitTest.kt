@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
+import com.github.pooryam92.vimcoach.features.tips.application.notifications.RecordTipNote
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipActions
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipMessageHandle
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotifications
@@ -14,9 +15,15 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
+import java.nio.file.Files
 
 class TipNotificationsUnitTest {
+
+    @get:Rule
+    val tempFolder = TemporaryFolder()
 
     private val notifier = FakeTipNotifier()
 
@@ -25,6 +32,7 @@ class TipNotificationsUnitTest {
         settings: FakeSettingsService = FakeSettingsService(),
         ideaVimRcAction: (VimTip) -> (() -> Unit)? = { null },
         ideaVimAvailable: () -> Boolean = { true },
+        recordTipNote: RecordTipNote? = null,
     ) = TipNotifications(
         notifier = notifier,
         tipRepository = { repository },
@@ -32,6 +40,7 @@ class TipNotificationsUnitTest {
         ideaVimRcAction = ideaVimRcAction,
         ideaVimAvailable = ideaVimAvailable,
         openSettings = {},
+        recordTipNote = recordTipNote,
     )
 
     @Test
@@ -129,6 +138,31 @@ class TipNotificationsUnitTest {
         controller(settings = noHint).showRandomTip()
         notifier.lastActions!!.onExcludeTip()
         assertEquals("no extra management hint shown", 1, notifier.tipExcludedShown)
+    }
+
+    @Test
+    fun doesNotWireRecordNoteWhenNoNoteFileConfigured() {
+        controller(recordTipNote = null).showRandomTip()
+
+        assertNull(notifier.lastActions!!.onRecordNote)
+    }
+
+    @Test
+    fun recordNoteAppendsToConfiguredFileWithTheShownTip() {
+        val file = tempFolder.root.toPath().resolve("notes.md")
+        val tip = VimTip("editing tip", listOf("details"), listOf("editing"))
+        val repository = FakeVimTipRepository(initialTips = listOf(tip))
+        controller(
+            repository = repository,
+            settings = FakeSettingsService(enabledCategories = listOf("editing")),
+            recordTipNote = RecordTipNote(file),
+        ).showRandomTip()
+
+        notifier.lastActions!!.onRecordNote!!("needs a clearer summary")
+
+        val content = Files.readString(file)
+        assertTrue(content.contains("editing tip"))
+        assertTrue(content.contains("needs a clearer summary"))
     }
 
     private class FakeTipNotifier : TipNotifier {

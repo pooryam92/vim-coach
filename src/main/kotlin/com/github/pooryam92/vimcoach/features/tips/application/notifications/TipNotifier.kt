@@ -51,10 +51,13 @@ interface TipMessageHandle {
 
 /**
  * Callbacks wired into a tip notification's affordances. [onAddToIdeaVimRc] is null when the
- * tip has no config lines or IdeaVim is not installed.
+ * tip has no config lines or IdeaVim is not installed. [onRecordNote] appends a maintainer note
+ * (its argument) about this tip; it is null unless the dev-only notes file is configured, so
+ * released builds never expose it.
  */
 data class TipActions(
     val onShowNextTip: () -> Unit,
     val onExcludeTip: () -> Unit,
     val onAddToIdeaVimRc: (() -> Unit)?,
+    val onRecordNote: ((String) -> Unit)? = null,
 )

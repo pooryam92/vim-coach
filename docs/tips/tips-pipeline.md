@@ -94,3 +94,17 @@ edits to `tips/vim_tips_min.json` are simply overwritten on the next run.
   with `-Dvimcoach.tip.source=file` pointed at the local
   `tips/vim_tips_min.json`. Run `node scripts/generate-tips.mjs` first if you
   have edited the category sources, since this task does not regenerate it.
+
+## Flagging a tip that needs fixing (dev only)
+
+While a tip balloon is open during a dev IDE run, a **"Note…"** action appears
+alongside the other actions. Clicking it opens a text box; whatever you type is
+appended to `docs/tips/tip-feedback.md` — an append-only markdown log stamped
+with a timestamp, the tip's summary, and its `TipHash`. That file is
+`.gitignore`d and is where the maintainer (or an agent) later picks up which
+tips to revise.
+
+This is wired only for the `runIde*` Gradle tasks, which set
+`-Dvimcoach.tip.notes.file=<repo>/docs/tips/tip-feedback.md`. The action is
+gated entirely on that system property: a released build never sets it, so the
+"Note…" action never appears and nothing is written in production.
