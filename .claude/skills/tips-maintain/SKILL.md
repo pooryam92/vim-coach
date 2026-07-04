@@ -140,7 +140,8 @@ when the user explicitly asks. Build details: `docs/tips/tips-pipeline.md`.
 {
   "category": ["navigation"],
   "summary": "Jump to matching bracket %",
-  "details": ["Cursor on ( [ { jumps to its pair", "Works in Normal and Visual mode"]
+  "details": ["Cursor on ( [ { jumps to its pair", "Works in Normal and Visual mode"],
+  "mnemonic": "percent = pair match"
 }
 ```
 
@@ -159,6 +160,16 @@ when the user explicitly asks. Build details: `docs/tips/tips-pipeline.md`.
   wrapped line; blank lines are stripped. An *irreducibly* multi-step move (block
   insert) becomes numbered steps (`1. … 2. …`) — summary names the use, steps show
   how; only when every step is load-bearing.
+- **`mnemonic`** (optional — **omit by default**) — one short string, rendered in
+  *italics* on its own line under the summary. **Most tips should not have one.**
+  Add it *only* when a genuine memory hook makes the *keys* stick — usually the
+  words the letters stand for (`ciw` → `change inner word`, `t` → `till`). If the
+  hook is forced, obvious, or just restates the summary, leave it out — a mnemonic
+  on every tip is noise and bloats the balloon, exactly what this field is meant to
+  avoid. Never add one to fill the slot. **≤ 40 chars, one line** (lint flags
+  longer). It reinforces the keys, not the behavior — don't restate a detail here.
+  The renderer prepends a `Mnemonic:` label automatically, so author only the hook
+  itself (`change inner word`, not `Mnemonic: change inner word`).
 - **`config`** (optional) — `{ "name": ..., "lines": [...] }`; renders the **Add
   to .ideavimrc** button. Shippability, the worked example, the `name`/`Apply`
   nuance, and the legacy array form: `config-kinds.md`.
@@ -200,7 +211,8 @@ defect that hides from the author and shows from the reader.
   `config`/details (`Add surroundings ysiw)`, not `Surround text with
   vim-surround`). Name any mode whenever it removes doubt.
 - **Don't restate the summary in detail line 1** — the most-read line; spend it
-  on the mechanic, value, or mnemonic. For a jargon-heavy command give a typeable
+  on the mechanic or value. A memory hook goes in the dedicated `mnemonic` field
+  (its own italic line), not buried in a detail. For a jargon-heavy command give a typeable
   example + plain-words result (`:v/foo/d deletes lines lacking foo`), not the
   syntax anatomy.
 - **Consistent pair phrasing** — `next/previous`, `before/after`, `top/bottom`.

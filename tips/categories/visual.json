@@ -20,7 +20,8 @@
         "v selects characters",
         "V selects whole lines",
         "Ctrl-v selects a block"
-      ]
+      ],
+      "mnemonic": "v visual, V visual line"
     },
     {
       "category": [
@@ -30,7 +31,8 @@
       "details": [
         "o moves cursor to the other end",
         "Great for precise adjustments"
-      ]
+      ],
+      "mnemonic": "o = other end"
     },
     {
       "category": [
@@ -61,7 +63,8 @@
       "details": [
         "gv reselects the last selection",
         "Handy after Esc or an edit"
-      ]
+      ],
+      "mnemonic": "gv = go visual again"
     },
     {
       "category": [
@@ -72,7 +75,8 @@
       "details": [
         "gn selects the next match",
         "gN selects the previous one"
-      ]
+      ],
+      "mnemonic": "gn = go to next"
     },
     {
       "category": [
@@ -105,7 +109,8 @@
         "After v press i then w b ( {",
         "vip grabs a paragraph, vap blanks",
         "Swap i for a to include the edges"
-      ]
+      ],
+      "mnemonic": "viw = visual inner word"
     },
     {
       "category": [
@@ -160,7 +165,8 @@
       "details": [
         "Select text then press gq",
         "Runs the IDE code reformat"
-      ]
+      ],
+      "mnemonic": "gq = format"
     },
     {
       "category": [

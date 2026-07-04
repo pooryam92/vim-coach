@@ -193,6 +193,7 @@
         "Lands on the next/previous error",
         "Covers inspection warnings too"
       ],
+      "mnemonic": "e = error",
       "config": {
         "name": "Map errors",
         "lines": [
@@ -211,6 +212,7 @@
         "Moves between uncommitted hunks",
         "Gutter marks vs the last commit"
       ],
+      "mnemonic": "c = change",
       "config": {
         "name": "Map VCS changes",
         "lines": [
@@ -229,6 +231,7 @@
         "The IDE intention / lightbulb popup",
         "Apply fixes and quick refactors"
       ],
+      "mnemonic": "ga = go actions (quick-fix)",
       "config": {
         "name": "Map quick-fix",
         "lines": [
@@ -246,6 +249,7 @@
         "Project-wide safe rename refactor",
         "Updates every usage at once"
       ],
+      "mnemonic": "gR = go rename",
       "config": {
         "name": "Map rename",
         "lines": [
@@ -263,6 +267,7 @@
         "One list for extract, inline, move",
         "Rename lives here too"
       ],
+      "mnemonic": "go menu (refactor)",
       "config": {
         "name": "Map refactor",
         "lines": [
@@ -281,6 +286,7 @@
         "Works on methods, classes, vars",
         "Overrides gr ReplaceWithRegister"
       ],
+      "mnemonic": "gr = go references",
       "config": {
         "name": "Map find usages",
         "lines": [
@@ -298,6 +304,7 @@
         "From an interface to its class",
         "Overrides gi insert-at-last-edit"
       ],
+      "mnemonic": "gi = go implementation",
       "config": {
         "name": "Map implementation",
         "lines": [

@@ -111,6 +111,8 @@ for (const category of ordered) {
     summarySources.set(summary, fileName);
 
     const entry = { category: categories, summary, details };
+    const mnemonic = typeof tip.mnemonic === "string" ? tip.mnemonic.trim() : "";
+    if (mnemonic) entry.mnemonic = mnemonic;
     const config = normalizeConfig(tip.config);
     if (config) entry.config = config;
     mergedTips.push(entry);

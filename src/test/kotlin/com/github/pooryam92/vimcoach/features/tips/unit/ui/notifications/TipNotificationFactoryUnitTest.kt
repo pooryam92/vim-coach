@@ -62,6 +62,48 @@ class TipNotificationFactoryUnitTest {
     }
 
     @Test
+    fun createNotificationRendersMnemonicInItalicWhenPresent() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(
+            summary = "Change inner word ciw",
+            details = listOf("ciw replaces the word under the cursor"),
+            mnemonic = "change inner word"
+        )
+
+        val notification = notifier.createNotification(tip)
+
+        assertTrue(notification.content.contains("font-style:italic"))
+        assertTrue(notification.content.contains(TipNotificationFactory.TIP_MNEMONIC_LABEL))
+        assertTrue(notification.content.contains("change inner word"))
+    }
+
+    @Test
+    fun createNotificationEscapesHtmlInMnemonic() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(
+            summary = "Delete to end D",
+            details = listOf("D deletes to end of line"),
+            mnemonic = "<Delete> & \"go\""
+        )
+
+        val notification = notifier.createNotification(tip)
+
+        assertTrue(notification.content.contains("&lt;Delete&gt;"))
+        assertTrue(notification.content.contains("&amp;"))
+        assertTrue(notification.content.contains("&quot;"))
+    }
+
+    @Test
+    fun createNotificationOmitsMnemonicBlockWhenAbsent() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(summary = "jump", details = listOf("use %"))
+
+        val notification = notifier.createNotification(tip)
+
+        assertFalse(notification.content.contains("font-style:italic"))
+    }
+
+    @Test
     fun notificationHasCorrectGroupIdAndIcon() {
         val tip = VimTip(summary = "Test", details = listOf("Test details"))
         val notifier = TipNotificationFactory()

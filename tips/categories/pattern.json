@@ -65,7 +65,8 @@
       "details": [
         ":noh (or :nohlsearch) clears highlighting",
         "The current search pattern still stays active"
-      ]
+      ],
+      "mnemonic": "noh = no highlight"
     },
     {
       "category": [
@@ -75,7 +76,8 @@
       "details": [
         "/foo\\c ignores case anywhere in the pattern",
         "/Foo\\C forces an exact-case match"
-      ]
+      ],
+      "mnemonic": "\\c = ignore case, \\C = exact Case"
     },
     {
       "category": [
@@ -129,7 +131,8 @@
       "details": [
         "\\V makes most characters literal",
         "Good for paths, JSON, and punctuation"
-      ]
+      ],
+      "mnemonic": "V = Very nomagic (literal)"
     },
     {
       "category": [
@@ -139,7 +142,8 @@
       "details": [
         "\\v makes +, ?, (, |, {, } special automatically",
         "/\\v(foo|bar) matches foo or bar, no backslashes"
-      ]
+      ],
+      "mnemonic": "v = very magic"
     },
     {
       "category": [
@@ -150,7 +154,8 @@
       "details": [
         ":%s/foo/bar/g swaps foo for bar in file",
         "g means every match, not just the first"
-      ]
+      ],
+      "mnemonic": "s = substitute"
     },
     {
       "category": [
@@ -183,7 +188,8 @@
       "details": [
         "Add c: :%s/foo/bar/gc asks first",
         "y replaces, n skips, a all, q quit"
-      ]
+      ],
+      "mnemonic": "c = confirm"
     },
     {
       "category": [
@@ -252,7 +258,8 @@
         "Search first with /, *, or #",
         "cgn changes the next match and enters Insert",
         ". repeats the same edit on later matches"
-      ]
+      ],
+      "mnemonic": "cgn = change, go to next"
     },
     {
       "category": [
@@ -287,7 +294,8 @@
         ":g/TODO/p prints matching lines",
         ":g/pat/d deletes matching lines",
         ":g/pat/s/foo/bar/g substitutes only on matching lines"
-      ]
+      ],
+      "mnemonic": "g = global"
     },
     {
       "category": [
@@ -299,7 +307,8 @@
         ":v acts on lines that don't match",
         ":v/foo/d drops them, keeping foo lines",
         "Short for :vglobal, the inverse of :g"
-      ]
+      ],
+      "mnemonic": "v = inverse of g"
     },
     {
       "category": [

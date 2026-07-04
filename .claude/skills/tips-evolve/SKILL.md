@@ -1,7 +1,6 @@
 ---
 name: tips-evolve
 description: Use when the user asks whether the current session revealed durable improvements for the tips-maintain skill, or asks to apply/clear the tips-evolve backlog. Reviews the session, dedupes against the existing skill, proposes where and how each improvement should land (or parks findings in docs/tips/tips-evolve-backlog/ to pick up later), and waits for approval before editing.
-disable-model-invocation: true
 ---
 
 # Evolve the tips-maintain skill

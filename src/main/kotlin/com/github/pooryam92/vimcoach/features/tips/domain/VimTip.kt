@@ -4,5 +4,6 @@ data class VimTip(
     var summary: String = "",
     var details: List<String> = emptyList(),
     var category: List<String> = emptyList(),
-    var config: TipConfig? = null
+    var config: TipConfig? = null,
+    var mnemonic: String? = null
 )

@@ -18,7 +18,8 @@
       "details": [
         "i inserts before cursor",
         "a inserts after cursor"
-      ]
+      ],
+      "mnemonic": "i = insert, a = append"
     },
     {
       "category": [

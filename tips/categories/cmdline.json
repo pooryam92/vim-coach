@@ -143,7 +143,8 @@
       "details": [
         "Ctrl-r then a register name",
         "Great for reusing text in :s"
-      ]
+      ],
+      "mnemonic": "r = register"
     },
     {
       "category": [
@@ -153,7 +154,8 @@
       "details": [
         "Inserts the word under cursor",
         "Reuse names without retyping"
-      ]
+      ],
+      "mnemonic": "r = register, w = word"
     },
     {
       "category": [
@@ -164,7 +166,8 @@
       "details": [
         "Inserts the file under cursor",
         "Handy for file Ex commands"
-      ]
+      ],
+      "mnemonic": "r = register, f = file"
     },
     {
       "category": [

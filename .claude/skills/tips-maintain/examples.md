@@ -257,3 +257,57 @@ distinction.
 *Why:* the generator only rejects *identical* summaries, so the same idea under
 different wording slips through. Grep both the keys *and* the behavior first; drop
 or merge instead of adding.
+
+### Decode every key in a mnemonic, not just the ends
+
+❌ before:
+```json
+{
+  "category": ["plugins", "editing"],
+  "summary": "Wrap in an HTML tag ysiwt",
+  "details": ["t or < prompts for the tag", "ysiw<em> wraps a word in <em>"],
+  "mnemonic": "ys you surround, t tag",
+  "config": { "name": "Install vim-surround", "lines": ["Plug 'tpope/vim-surround'"] }
+}
+```
+✅ after:
+```json
+{
+  "category": ["plugins", "editing"],
+  "summary": "Wrap in an HTML tag ysiwt",
+  "details": ["t or < prompts for the tag", "ysiw<em> wraps a word in <em>"],
+  "mnemonic": "ys you surround, iw inner word, t tag",
+  "config": { "name": "Install vim-surround", "lines": ["Plug 'tpope/vim-surround'"] }
+}
+```
+*Why:* the summary key is `ysiwt` but the mnemonic decoded only `ys` and `t`,
+skipping `iw` — the confusing middle. A mnemonic that maps some keystrokes must map
+them all; a half-decode leaves the reader guessing the part they most need. Keep it
+≤40 chars (drop `=` separators before you drop a keystroke).
+
+### Give the decoded words, don't echo the key — the summary already shows it
+
+❌ before:
+```json
+{
+  "category": ["ideavim", "editing"],
+  "summary": "Open the refactor menu gm",
+  "details": ["One list for extract, inline, move", "Rename lives here too"],
+  "mnemonic": "gm = go menu (refactor)",
+  "config": { "name": "Map refactor", "lines": ["nmap gm <Action>(Refactorings.QuickListPopupAction)"] }
+}
+```
+✅ after:
+```json
+{
+  "category": ["ideavim", "editing"],
+  "summary": "Open the refactor menu gm",
+  "details": ["One list for extract, inline, move", "Rename lives here too"],
+  "mnemonic": "go menu (refactor)",
+  "config": { "name": "Map refactor", "lines": ["nmap gm <Action>(Refactorings.QuickListPopupAction)"] }
+}
+```
+*Why:* the summary already shows `gm` and the renderer prepends `Mnemonic:`, so
+`gm =` restates the key twice before the hook lands. Author just the decoded words —
+`go menu` already maps g→go, m→menu on its own. This doesn't contradict "decode
+every key": the letters still all map, you just drop the redundant `key =` echo.

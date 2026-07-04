@@ -9,7 +9,8 @@
         "diw deletes just the word",
         "daw deletes the word and trailing space",
         "Use i for inside and a for around"
-      ]
+      ],
+      "mnemonic": "delete inner/a word"
     },
     {
       "category": [
@@ -20,7 +21,8 @@
         "ciw changes just the word, even mid-word",
         "caw changes the word and trailing space",
         "Use i for inside and a for around"
-      ]
+      ],
+      "mnemonic": "change inner/a word"
     },
     {
       "category": [
@@ -30,7 +32,8 @@
       "details": [
         "Works from anywhere in the string",
         "ca\" also changes the quotes"
-      ]
+      ],
+      "mnemonic": "change inner quotes"
     },
     {
       "category": [
@@ -40,7 +43,8 @@
       "details": [
         "Removes the text and the quotes",
         "di\" keeps quotes, clears inside"
-      ]
+      ],
+      "mnemonic": "delete around quotes"
     },
     {
       "category": [
@@ -50,7 +54,8 @@
       "details": [
         "ci( changes the text inside parentheses",
         "cib is an alias for the same text object"
-      ]
+      ],
+      "mnemonic": "cib = change inner block"
     },
     {
       "category": [
@@ -82,7 +87,8 @@
         "cit changes text inside the current tag",
         "cat changes the tag and its contents",
         "Useful in XML, HTML, and markup-like code"
-      ]
+      ],
+      "mnemonic": "cit = change inner tag"
     },
     {
       "category": [
@@ -93,7 +99,8 @@
         "cis changes the current sentence",
         "cas includes the trailing space",
         "Pairs with any operator — d, y"
-      ]
+      ],
+      "mnemonic": "change inner/a sentence"
     },
     {
       "category": [
@@ -115,7 +122,8 @@
         ":m+1 moves the current line down",
         ":m-2 moves it up",
         ":m0 moves it to the top, :m$ to the end, :m2 after line 2"
-      ]
+      ],
+      "mnemonic": "m = move"
     },
     {
       "category": [
@@ -126,7 +134,8 @@
       "details": [
         ":t. copies the current line below itself",
         "Useful when you want a quick duplicate without yanking"
-      ]
+      ],
+      "mnemonic": "t = copy to"
     },
     {
       "category": [
@@ -137,7 +146,8 @@
       "details": [
         ":1,5t. copies lines 1–5 below the cursor",
         "Use 0, $, line numbers, or Visual ranges as the destination"
-      ]
+      ],
+      "mnemonic": "t = copy to"
     },
     {
       "category": [
@@ -286,7 +296,8 @@
       "details": [
         "s changes one char and inserts",
         "S changes whole line and inserts"
-      ]
+      ],
+      "mnemonic": "s = substitute"
     },
     {
       "category": [
@@ -341,7 +352,8 @@
       "details": [
         "dt) deletes up to the next )",
         "ct, changes up to it, df includes it"
-      ]
+      ],
+      "mnemonic": "dt = delete till"
     },
     {
       "category": [

@@ -170,6 +170,60 @@ class TipJsonParserUnitTest {
     }
 
     @Test
+    fun parseTipsJsonReadsAndTrimsMnemonic() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"Change inner word ciw", "details":["ciw replaces the word"], "mnemonic":"  change inner word  "}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(1, tips.size)
+        assertEquals("change inner word", tips[0].mnemonic)
+    }
+
+    @Test
+    fun parseTipsJsonTreatsBlankMnemonicAsNull() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"jump", "details":["use %"], "mnemonic":"   "}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(1, tips.size)
+        assertNull(tips[0].mnemonic)
+    }
+
+    @Test
+    fun parseTipsJsonDefaultsMnemonicToNullWhenAbsent() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"jump", "details":["use %"]}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(1, tips.size)
+        assertNull(tips[0].mnemonic)
+    }
+
+    @Test
     fun parseTipsJsonReturnsEmptyWhenTipsFieldIsMissing() {
         val json = """
             {

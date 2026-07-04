@@ -60,9 +60,10 @@ The error message names the offending file and tip so you can fix it quickly.
 ### Normalization
 
 For each tip the generator trims surrounding whitespace, drops blank `details`
-lines, and removes duplicate `details` lines (preserving order). The output is
-compact JSON with non-ASCII characters escaped as `\uXXXX`, so the published file
-is deterministic and stays plain ASCII.
+lines, and removes duplicate `details` lines (preserving order). An optional
+`mnemonic` string is trimmed and emitted only when non-blank (dropped otherwise).
+The output is compact JSON with non-ASCII characters escaped as `\uXXXX`, so the
+published file is deterministic and stays plain ASCII.
 
 ## CI: the Generate Tips workflow
 

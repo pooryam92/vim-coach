@@ -125,6 +125,13 @@ class TipNotificationFactory {
             append(DETAILS_OPEN)
             append(detailsHtml)
             append(DETAILS_CLOSE)
+            tip.mnemonic?.takeIf(String::isNotBlank)?.let { mnemonic ->
+                append(MNEMONIC_OPEN)
+                append(escapeHtml(TIP_MNEMONIC_LABEL))
+                append(" ")
+                append(escapeHtml(mnemonic))
+                append(MNEMONIC_CLOSE)
+            }
             append(WRAPPER_CLOSE)
             append(HTML_CLOSE)
         }
@@ -156,6 +163,7 @@ class TipNotificationFactory {
         val TIP_ADD_TO_IDEAVIMRC_NOTHING_TEXT: String = MyBundle.message("tipAddToIdeaVimRcNothingToAddMessage")
         val TIP_RELOADED_IDEAVIMRC_TEXT: String = MyBundle.message("tipReloadedIdeaVimRcMessage")
         val TIP_RELOAD_IDEAVIMRC_FAILED_TEXT: String = MyBundle.message("tipReloadIdeaVimRcFailedMessage")
+        val TIP_MNEMONIC_LABEL: String = MyBundle.message("tipMnemonicLabel")
         val TIP_ICON = IconLoader.getIcon("/icons/vimCoach.svg", TipNotificationFactory::class.java)
 
         private const val DETAILS_SEPARATOR = "<br/>"
@@ -167,6 +175,8 @@ class TipNotificationFactory {
         private const val SUMMARY_CLOSE = "</b>"
         private const val SUMMARY_DIV_OPEN = "<div style=\"margin-top:5px;\">"
         private const val SUMMARY_DIV_CLOSE = "</div>"
+        private const val MNEMONIC_OPEN = "<div style=\"margin-top:4px;font-style:italic;\">"
+        private const val MNEMONIC_CLOSE = "</div>"
         private const val DETAILS_OPEN = "<div style=\"margin-top:8px;margin-bottom:8px;\">"
         private const val DETAILS_CLOSE = "</div>"
     }

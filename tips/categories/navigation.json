@@ -29,7 +29,8 @@
         "w next word start",
         "b previous word start",
         "e moves to end of word"
-      ]
+      ],
+      "mnemonic": "word, back, end"
     },
     {
       "category": [
@@ -39,7 +40,8 @@
       "details": [
         "ge goes to end of previous word",
         "Nice for edits before punctuation"
-      ]
+      ],
+      "mnemonic": "ge = go to end"
     },
     {
       "category": [
@@ -140,7 +142,8 @@
       "details": [
         "gg goes to first line",
         "G goes to last line"
-      ]
+      ],
+      "mnemonic": "gg = go top, G = go bottom"
     },
     {
       "category": [
@@ -162,7 +165,8 @@
       "details": [
         "H top of screen, M middle, L bottom",
         "Great for fast scanning"
-      ]
+      ],
+      "mnemonic": "High, Middle, Low"
     },
     {
       "category": [
@@ -221,9 +225,10 @@
       "summary": "Jump to matching pair %",
       "details": [
         "% jumps between (), {}, and [] by default",
-        "Use a count like 50% to jump by file percentage instead",
+        "50% jumps to the file's middle",
         "Use to inspect a whole block quickly"
-      ]
+      ],
+      "mnemonic": "percent = pair match"
     },
     {
       "category": [
@@ -300,7 +305,8 @@
       "details": [
         "f; jumps to next ';' on the line",
         "Great for long parameter lists"
-      ]
+      ],
+      "mnemonic": "f = find"
     },
     {
       "category": [
@@ -310,7 +316,8 @@
       "details": [
         "F; jumps to previous ';' on the line",
         "Use to move precisely without searching"
-      ]
+      ],
+      "mnemonic": "F = find backward"
     },
     {
       "category": [
@@ -320,7 +327,8 @@
       "details": [
         "t) stops just before ')'",
         "Perfect for ct) edits"
-      ]
+      ],
+      "mnemonic": "t = till"
     },
     {
       "category": [
@@ -330,7 +338,8 @@
       "details": [
         "T) stops just after ')'",
         "Good for edits near opening brackets"
-      ]
+      ],
+      "mnemonic": "T = till backward"
     },
     {
       "category": [
@@ -350,7 +359,8 @@
       "details": [
         "ma sets a mark before you jump elsewhere",
         "`a returns to the exact position later"
-      ]
+      ],
+      "mnemonic": "m = mark"
     },
     {
       "category": [
@@ -371,7 +381,8 @@
       "details": [
         "gd jumps to definition through the IDE",
         "gD jumps to declaration when the IDE provides one"
-      ]
+      ],
+      "mnemonic": "gd = go to definition"
     },
     {
       "category": [
@@ -382,7 +393,8 @@
         "]m jumps to the next method start",
         "[m jumps to the previous method start",
         "Use ]M and [M for method ends"
-      ]
+      ],
+      "mnemonic": "m = method"
     },
     {
       "category": [
@@ -404,7 +416,8 @@
         "]s jumps to next misspelled word",
         "[s jumps to the previous one",
         "Requires active spell checking"
-      ]
+      ],
+      "mnemonic": "s = spell"
     },
     {
       "category": [
@@ -486,7 +499,8 @@
         "zfip folds the current paragraph or block",
         "Takes any motion, like zf} or zfa{",
         "Works where IDE folding is available"
-      ]
+      ],
+      "mnemonic": "zf = fold"
     },
     {
       "category": [
@@ -517,7 +531,8 @@
       "details": [
         "zo always opens, zc always closes",
         "Use when toggle isn't enough"
-      ]
+      ],
+      "mnemonic": "zo = open, zc = close"
     },
     {
       "category": [
@@ -557,7 +572,8 @@
       "details": [
         "zd deletes one fold at the cursor",
         "zD deletes nested folds there too"
-      ]
+      ],
+      "mnemonic": "zd = delete fold"
     },
     {
       "category": [
@@ -588,7 +604,8 @@
       "details": [
         "Lands you in Insert mode, not Normal",
         "Picks up exactly where you stopped typing"
-      ]
+      ],
+      "mnemonic": "gi = go insert"
     }
   ]
 }
