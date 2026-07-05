@@ -77,7 +77,7 @@
         ":bn goes to the next buffer",
         ":bp goes to the previous buffer"
       ],
-      "mnemonic": "bn = buffer next"
+      "mnemonic": "buffer next/previous"
     },
     {
       "category": [
@@ -175,12 +175,12 @@
         "files",
         "cmdline"
       ],
-      "summary": "Quit every editor with :qa / :qall",
+      "summary": "Quit every editor with :qa",
       "details": [
-        ":qa exits unless there are changed buffers",
-        ":qall is the long form of :qa",
-        "The force form discards pending changes"
-      ]
+        "Closes all open editors at once",
+        ":qa! throws away unsaved changes"
+      ],
+      "mnemonic": "quit all"
     },
     {
       "category": [

@@ -115,10 +115,11 @@
       ],
       "summary": "Move a line with :m {address}",
       "details": [
-        ":m+1 moves the current line down",
-        ":m-2 moves it up",
-        ":m0 moves it to the top, :m$ to the end, :m2 after line 2"
-      ]
+        ":m+1 moves the line down",
+        ":m-2 moves it up two lines",
+        ":m0 to top, :m$ to end"
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -385,10 +386,10 @@
       "category": [
         "editing"
       ],
-      "summary": "Toggle case over motion g~",
+      "summary": "Toggle case with g~iw",
       "details": [
-        "g~iw toggles current word",
-        "Useful for style fixes"
+        "g~iw flips case in the word",
+        "Takes any motion, like g~$ or g~ap"
       ]
     },
     {
@@ -411,7 +412,8 @@
         "Select lines, then press g Ctrl-a",
         "Adds 1, 2, 3... to each line's number",
         "Useful for building numbered lists"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

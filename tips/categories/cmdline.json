@@ -91,9 +91,20 @@
       ],
       "summary": "Show command history with :history",
       "details": [
-        "Lists past : commands, newest last",
-        ":history / shows search history"
+        ":history lists past : commands",
+        ":history / lists past searches"
       ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Edit command history with q:",
+      "details": [
+        "q: opens past commands in a window",
+        "Edit a line and Enter to run it"
+      ],
+      "advanced": true
     },
     {
       "category": [

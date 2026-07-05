@@ -30,7 +30,8 @@
       "details": [
         "qa records, do edits, q stops",
         "@a replays it, @@ repeats"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

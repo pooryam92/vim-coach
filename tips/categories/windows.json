@@ -5,12 +5,11 @@
         "windows",
         "cmdline"
       ],
-      "summary": "Open a horizontal split :split",
+      "summary": "Open a horizontal split :sp",
       "details": [
-        ":split (or :sp) stacks another view of this file",
-        "Both windows share one buffer, so edits stay in sync"
-      ],
-      "mnemonic": "sp = split"
+        ":sp or :split stacks another view",
+        "Both share one buffer, edits stay in sync"
+      ]
     },
     {
       "category": [

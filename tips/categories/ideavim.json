@@ -313,6 +313,23 @@
     },
     {
       "category": [
+        "ideavim",
+        "navigation"
+      ],
+      "summary": "Map gD to type declaration",
+      "details": [
+        "By default gD just repeats gd",
+        "Jumps from a variable to its type"
+      ],
+      "config": {
+        "name": "Map type declaration",
+        "lines": [
+          "nmap gD <Action>(GotoTypeDeclaration)"
+        ]
+      }
+    },
+    {
+      "category": [
         "ideavim"
       ],
       "summary": "Jump to any UI target Ctrl-Shift-\\",

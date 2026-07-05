@@ -292,9 +292,9 @@
       "summary": "Edit search history with q/",
       "details": [
         "q/ opens past searches in a window",
-        "Edit a line and press Enter to run it",
-        "q: does the same for : commands"
-      ]
+        "Edit a line and Enter to run it"
+      ],
+      "advanced": true
     },
     {
       "category": [

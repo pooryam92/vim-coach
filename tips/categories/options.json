@@ -81,7 +81,6 @@
         "Jumps to the match as you type",
         "Makes /pattern navigation feel instant"
       ],
-      "mnemonic": "inc = incremental search",
       "config": [
         "set incsearch"
       ]

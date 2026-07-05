@@ -19,7 +19,8 @@
       "details": [
         "Use nmap, imap, or vmap for the target mode",
         "Normal, Insert, and Visual maps should stay separate"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

@@ -227,7 +227,8 @@
       "details": [
         "Select a block, then press r",
         "Replaces all selected chars"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

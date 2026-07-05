@@ -359,12 +359,12 @@
         "navigation",
         "ideavim"
       ],
-      "summary": "Go to definition with gd / gD",
+      "summary": "Go to definition with gd",
       "details": [
-        "gd jumps to definition through the IDE",
-        "gD jumps to declaration when the IDE provides one"
+        "gd jumps to the symbol through the IDE",
+        "Works across files, project-wide"
       ],
-      "mnemonic": "gd = go to definition"
+      "mnemonic": "go to definition"
     },
     {
       "category": [
