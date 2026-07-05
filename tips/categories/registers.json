@@ -71,8 +71,9 @@
       ],
       "summary": "Use the yank register \"0",
       "details": [
-        "\"0 keeps the most recent yank",
-        "\"0p pastes it even after a delete"
+        "Yank text, then delete something",
+        "p now pastes the delete, not your yank",
+        "\"0p still pastes what you yanked"
       ]
     },
     {

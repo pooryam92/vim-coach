@@ -258,10 +258,10 @@
       ],
       "summary": "Swap two regions cxiw",
       "details": [
-        "cxiw marks the first region",
-        "Repeat on a 2nd region to swap",
-        "Takes any motion, like cxx or X"
+        "cxiw on foo, then cxiw on bar",
+        "foo and bar trade places"
       ],
+      "mnemonic": "change exchange inner word",
       "config": {
         "name": "Install vim-exchange",
         "lines": [

@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+### Added
+
+- Tips can now carry a **mnemonic** — a short memory aid shown as a dimmed line beneath the tip to make its keystrokes easier to recall
+
+### Changed
+
+- Expanded and refreshed the tip library with new tips across categories
+
 ## [1.4.1] - 2026-06-22
 
 ### Fixed

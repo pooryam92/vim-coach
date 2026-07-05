@@ -126,9 +126,9 @@
       "summary": "Next/previous tab gt / gT",
       "details": [
         "gt goes to the next tab",
-        "gT goes to the previous tab",
-        ":tabn and :tabp are the Ex forms"
-      ]
+        "gT goes to the previous tab"
+      ],
+      "mnemonic": "go tab"
     },
     {
       "category": [

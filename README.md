@@ -19,6 +19,7 @@ Vim Coach is an IntelliJ Platform plugin designed to help developers learn and m
 -  **Tip Exclusions**: Exclude individual tips from notifications and restore them later from settings
 -  **Apply Tips to .ideavimrc**: When a tip ships a mapping or command (for example a plugin tip's `Plug` line) and you have IdeaVim installed, click the apply button on the notification. Vim Coach appends the lines (skipping any already present), opens the file at the change, and offers a Reload now button
 -  **Settings UI**: Control startup tips, periodic reminders, active categories, and excluded tips from `Settings | Tools | Vim Coach`
+-  **Mnemonics**: Tips can include a short memory aid, shown beneath the tip to make its keystrokes easier to recall
 -  **Comprehensive Library**: Hundreds of Vim commands covering navigation, editing, searching, and more
 -  **Remote Updates**: Tips can be loaded from remote sources for fresh content
 

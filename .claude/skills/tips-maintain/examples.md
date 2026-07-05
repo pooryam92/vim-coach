@@ -21,6 +21,7 @@ skill's memory.
 - Search existing tips before adding — kill semantic duplicates
 - Decode every key in a mnemonic, not just the ends
 - Give the decoded words, don't echo the key
+- One word per key — cut filler words with no keystroke behind them
 - Drop a mnemonic whose decode is obvious — don't fill the slot
 - Join symbol pairs with `and` — a slash between glyphs is a pileup
 - Theory earns one tip at most — and it must still be tryable
@@ -340,6 +341,32 @@ them all; a half-decode leaves the reader guessing the part they most need. Keep
 `gm =` restates the key twice before the hook lands. Author just the decoded words —
 `go menu` already maps g→go, m→menu on its own. This doesn't contradict "decode
 every key": the letters still all map, you just drop the redundant `key =` echo.
+
+### One word per key — cut filler words with no keystroke behind them
+
+❌ before:
+```json
+{
+  "category": ["windows"],
+  "summary": "Next/previous tab gt / gT",
+  "details": ["gt goes to the next tab", "gT goes to the previous tab"],
+  "mnemonic": "go to tab"
+}
+```
+✅ after:
+```json
+{
+  "category": ["windows"],
+  "summary": "Next/previous tab gt / gT",
+  "details": ["gt goes to the next tab", "gT goes to the previous tab"],
+  "mnemonic": "go tab"
+}
+```
+*Why:* the keys are `g` and `t`, so the mnemonic should be exactly two words —
+g→go, t→tab. "go to tab" reads more naturally as English, but the "to" maps to no
+keystroke, so it dilutes the hook the reader is trying to pin to the keys. This is
+the mirror of "decode every key": don't map *more* words than there are keys.
+Reach for the tight word-per-key form other users already share.
 
 ### Drop a mnemonic whose decode is obvious — don't fill the slot
 
