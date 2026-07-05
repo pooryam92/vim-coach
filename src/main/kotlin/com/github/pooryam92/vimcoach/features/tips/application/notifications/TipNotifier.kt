@@ -17,6 +17,9 @@ interface TipNotifier {
     /** Confirm a tip was excluded, offering a way to manage exclusions. */
     fun showTipExcluded(onManage: () -> Unit)
 
+    /** One-time nudge that advanced tips exist, offering a way to open settings and opt in. */
+    fun showAdvancedTipsAvailable(onOpenSettings: () -> Unit)
+
     /**
      * Report that config lines were appended to .ideavimrc. [onReload], when non-null, offers a
      * "reload now" affordance. Returns a handle so the caller can dismiss this message later

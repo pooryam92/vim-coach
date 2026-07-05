@@ -115,6 +115,15 @@ for (const category of ordered) {
     if (mnemonic) entry.mnemonic = mnemonic;
     const config = normalizeConfig(tip.config);
     if (config) entry.config = config;
+    // advanced is optional and defaults to normal; emit it only when true so the
+    // published artifact stays minimal, and reject non-boolean values so sources
+    // never carry a flag the runtime would silently ignore.
+    if (tip.advanced !== undefined) {
+      if (typeof tip.advanced !== "boolean") {
+        fail(`tip '${summary}' in ${fileName} has a non-boolean advanced value`);
+      }
+      if (tip.advanced) entry.advanced = true;
+    }
     mergedTips.push(entry);
   });
 }

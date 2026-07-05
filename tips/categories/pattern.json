@@ -304,7 +304,8 @@
       "details": [
         "In : or insert, Ctrl-r / pastes the last search",
         "Example: :%s/<C-r>//new/g reuses it"
-      ]
+      ],
+      "advanced": true
     }
   ]
 }

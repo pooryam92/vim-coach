@@ -85,6 +85,28 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
         }
     }
 
+    fun testAdvancedTipsCheckboxReflectsAndPersistsSetting() {
+        settingsService().setShowAdvancedTipsEnabled(false)
+        val configurable = VimCoachSettingsConfigurable()
+
+        try {
+            val component = configurable.createComponent()
+            val advancedCheckbox = findCheckBox(component, MyBundle.message("settingsShowAdvancedTips"))
+
+            assertFalse(advancedCheckbox.isSelected)
+
+            advancedCheckbox.isSelected = true
+            assertTrue(configurable.isModified())
+
+            configurable.apply()
+
+            assertTrue(settingsService().isShowAdvancedTipsEnabled())
+            assertFalse(configurable.isModified())
+        } finally {
+            configurable.disposeUIResources()
+        }
+    }
+
     fun testCreateComponentShowsCategoryCheckboxes() {
         tipService().saveTips(
             listOf(

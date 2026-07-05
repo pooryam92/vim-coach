@@ -101,6 +101,40 @@ class SettingsRepositoryImpl() : SettingsRepository {
         return true
     }
 
+    override fun isShowAdvancedTipsEnabled(): Boolean {
+        return currentState().showAdvancedTips
+    }
+
+    override fun setShowAdvancedTipsEnabled(enabled: Boolean) {
+        settingsStore().setShowAdvancedTips(enabled)
+        // A user who found the toggle on their own needs no discovery nudge — and must never be
+        // nudged to re-enable a setting they deliberately turned off later.
+        if (enabled) {
+            settingsStore().setAdvancedTipsHintShown(true)
+        }
+    }
+
+    override fun isAdvancedTipsHintShown(): Boolean {
+        return currentState().advancedTipsHintShown
+    }
+
+    override fun consumeAdvancedTipsHint(): Boolean {
+        if (currentState().advancedTipsHintShown) {
+            return false
+        }
+
+        settingsStore().setAdvancedTipsHintShown(true)
+        return true
+    }
+
+    override fun getTipsShownForAdvancedNudge(): Int {
+        return currentState().tipsShownForAdvancedNudge
+    }
+
+    override fun setTipsShownForAdvancedNudge(count: Int) {
+        settingsStore().setTipsShownForAdvancedNudge(count)
+    }
+
     private fun currentState(): PersistentSettingsStore.State {
         return settingsStore().state
     }

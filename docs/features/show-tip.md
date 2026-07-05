@@ -27,7 +27,7 @@ graph LR
 
 ## Notification Port
 
-`TipNotifications` (application layer) speaks only to the `TipNotifier` port — a platform-agnostic interface (`showTip`, `showTipExcluded`, `hasVisibleTip`, the `.ideavimrc` result messages). It holds **no** IntelliJ `Notification` types: wording, balloon rendering, and the active-notification lifecycle all live behind the port. This is the seam that lets the notification presentation be swapped (e.g. a different layout or surface) without touching application code, and it is what makes `TipNotifications` unit-testable against a fake.
+`TipNotifications` (application layer) speaks only to the `TipNotifier` port — a platform-agnostic interface (`showTip`, `showTipExcluded`, `showAdvancedTipsAvailable`, `hasVisibleTip`, the `.ideavimrc` result messages). It holds **no** IntelliJ `Notification` types: wording, balloon rendering, and the active-notification lifecycle all live behind the port. This is the seam that lets the notification presentation be swapped (e.g. a different layout or surface) without touching application code, and it is what makes `TipNotifications` unit-testable against a fake.
 
 `IntelliJTipNotifier` (UI layer) is the production adapter, registered as a project service (`TipNotifier` → `IntelliJTipNotifier`). It renders via `TipNotificationFactory`, owns the `ActiveTipNotificationTracker`, and is the only place that calls `Notification.notify()` / `expire()`.
 
@@ -41,6 +41,8 @@ graph LR
 
 3. **Exclusion filter**: inside `VimTipRepositoryImpl.visibleTips()`, tips whose SHA-256 hash of the summary appears in the hidden-hashes list are stripped before the random draw. The hash is computed by `TipHash.fromTip()`.
 
+4. **Advanced filter**: also in `VimTipRepositoryImpl.visibleTips()`, tips marked `VimTip.advanced` are dropped unless `SettingsRepository.isShowAdvancedTipsEnabled()` is on (default off). This is the single chokepoint for both `getRandomTip` overloads, so every entry point is gated. When the settings service is unavailable, advanced tips are hidden (the safe default). See [Settings](settings.md#advanced-tips-opt-in) for the toggle.
+
 `TipSelectionIndex` is a lazy cache inside `VimTipRepositoryImpl` that groups tips by category. It is rebuilt only when the tip list reference changes (after a refresh), not on every call.
 
 Fallback tips are returned when the candidate list is empty after filtering:
@@ -48,7 +50,9 @@ Fallback tips are returned when the candidate list is empty after filtering:
 | Condition | Fallback shown |
 |-----------|----------------|
 | No tips loaded at all | "No tips found." |
-| All tips filtered out by category | "No tips match the selected categories." |
+| All tips filtered out by category (or all remaining tips are advanced with the opt-in off) | "No tips match the selected categories." |
+
+The filtered fallback's detail line points at both remedies — enabling a matching category and turning on "Show advanced tips" — since either can be the reason the draw came up empty.
 
 ## Active Notification Tracking
 
@@ -63,6 +67,15 @@ Clicking "Don't show again" runs `TipNotifications`' exclude callback, which app
 3. Calls `settingsService.consumeExcludedTipsManagementHint()`. This returns `true` exactly once (on the first-ever exclusion) and flips a persistent flag. When it returns `true`, `TipNotifier.showTipExcluded()` presents a secondary notification prompting the user to manage excluded tips in Settings.
 
 Dismissing the tip balloon is the adapter's responsibility: `IntelliJTipNotifier` wires the action to run the application callback and then expire that notification, keeping `Notification` handling out of the application layer.
+
+## Advanced Tips Marker and Nudge
+
+The `advanced` flag is parsed leniently and the gate lives only in the new plugin, so marking a tip advanced hides it **only for users on this version or later** — an older plugin has no gate and shows it as a normal tip. This is acceptable (those users already saw every tip) but cannot be retroactive.
+
+Two presentation concerns support the advanced-tips opt-in (see [Settings](settings.md#advanced-tips-opt-in)):
+
+- **Title marker.** `TipNotificationFactory` suffixes the notification title with a `◆` (black diamond, the ski-slope "expert run" convention) — `Vim Coach ◆` — when `tip.advanced` is true; normal tips keep the plain `Vim Coach` title. Only opted-in users ever draw an advanced tip, so the marker needs no in-app legend.
+- **One-time nudge.** After showing any tip, `TipNotifications` asks `AdvancedTipsNudge.shouldNudgeAfterTipShown()` (a dedicated application use-case, mirroring `ExcludeTipFromNotifications`) whether to announce advanced tips; on `true` it calls `TipNotifier.showAdvancedTipsAvailable()`, which presents a notification with an "Open settings" action. `AdvancedTipsNudge` owns the whole rule — the guards, the sequencing, and the three-tip threshold (a constant private to the class) — while `SettingsRepository` only persists the plain state behind it: the hint flag and a tip counter (`tipsShownForAdvancedNudge`). The guards run cheapest-and-most-final first: the persistent hint flag is read first, so once it is set every later tip exits on a single boolean read instead of scanning the tip cache. Then the setting must be off, the cache must contain advanced tips (`VimTipRepository.hasAdvancedTips()`), and the counter must reach **three** tips seen while the nudge is pending — so a fresh install isn't ambushed with a settings pointer on its very first tip. The counter self-bounds: it stops writing once the threshold is reached, so it only ever costs three settings writes. Only then is `SettingsRepository.consumeAdvancedTipsHint()` called — a check-and-set that returns `true` exactly once and flips the persistent flag (mirroring the excluded-tips hint above), so the count is only spent while a nudge is genuinely pending. The hint is also retired when the user enables "Show advanced tips" on their own (`setShowAdvancedTipsEnabled(true)` sets the flag): someone who found the toggle and later turned it off is never nudged to re-enable it. Both the counter and the flag live in `PersistentSettingsStore` (which roams), so the nudge normally fires **once per user**, not once per machine. The check-and-set is local, though — two machines that each reach the count before settings sync propagates the flag can each show the nudge once, a rare and acceptable double. A pre-feature store deserializes the count to `0` and the flag to "not shown", correct for existing users.
 
 ## Notification Structure
 

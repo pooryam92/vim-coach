@@ -6,6 +6,7 @@ data class VimCoachSettingsScreenState(
     val tipIntervalHours: Int,
     val availableCategories: List<String>,
     val enabledCategories: List<String>,
+    val showAdvancedTips: Boolean = false,
     val excludedTips: List<ExcludedTipSettingsItem> = emptyList(),
     val restoredExcludedTipHashes: List<String> = emptyList()
 )

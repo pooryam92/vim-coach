@@ -189,6 +189,95 @@ class SettingsRepositoryUnitTest {
     }
 
     @Test
+    fun showAdvancedTipsIsDisabledByDefault() {
+        val service = createService()
+
+        assertFalse(service.isShowAdvancedTipsEnabled())
+    }
+
+    @Test
+    fun setShowAdvancedTipsEnabledUpdatesState() {
+        val service = createService()
+
+        service.setShowAdvancedTipsEnabled(true)
+
+        assertTrue(service.isShowAdvancedTipsEnabled())
+    }
+
+    @Test
+    fun enablingShowAdvancedTipsRetiresTheDiscoveryHint() {
+        val service = createService()
+
+        service.setShowAdvancedTipsEnabled(true)
+
+        assertTrue(service.isAdvancedTipsHintShown())
+        assertFalse(service.consumeAdvancedTipsHint())
+    }
+
+    @Test
+    fun disablingShowAdvancedTipsLeavesTheDiscoveryHintAvailable() {
+        val service = createService()
+
+        service.setShowAdvancedTipsEnabled(false)
+
+        assertFalse(service.isAdvancedTipsHintShown())
+    }
+
+    @Test
+    fun loadStateRestoresShowAdvancedTipsValue() {
+        val store = PersistentSettingsStore()
+        val service = createService(store)
+        val persistedState = PersistentSettingsStore.State(showAdvancedTips = true)
+
+        store.loadState(persistedState)
+
+        assertTrue(service.isShowAdvancedTipsEnabled())
+    }
+
+    @Test
+    fun advancedTipsHintIsAvailableOnceByDefault() {
+        val service = createService()
+
+        assertFalse(service.isAdvancedTipsHintShown())
+        assertTrue(service.consumeAdvancedTipsHint())
+        assertTrue(service.isAdvancedTipsHintShown())
+        assertFalse(service.consumeAdvancedTipsHint())
+    }
+
+    @Test
+    fun loadStateRestoresConsumedAdvancedTipsHint() {
+        val store = PersistentSettingsStore()
+        val service = createService(store)
+        val persistedState = PersistentSettingsStore.State(advancedTipsHintShown = true)
+
+        store.loadState(persistedState)
+
+        assertFalse(service.consumeAdvancedTipsHint())
+    }
+
+    @Test
+    fun tipsShownForAdvancedNudgeCountRoundTrips() {
+        val service = createService()
+
+        assertEquals(0, service.getTipsShownForAdvancedNudge())
+
+        service.setTipsShownForAdvancedNudge(2)
+
+        assertEquals(2, service.getTipsShownForAdvancedNudge())
+    }
+
+    @Test
+    fun loadStateRestoresRecordedAdvancedNudgeProgress() {
+        val store = PersistentSettingsStore()
+        val service = createService(store)
+        val persistedState = PersistentSettingsStore.State(tipsShownForAdvancedNudge = 2)
+
+        store.loadState(persistedState)
+
+        assertEquals(2, service.getTipsShownForAdvancedNudge())
+    }
+
+    @Test
     fun restoreTipRemovesExcludedTipHash() {
         val service = createService()
         service.hideTip(" hash-1 ")

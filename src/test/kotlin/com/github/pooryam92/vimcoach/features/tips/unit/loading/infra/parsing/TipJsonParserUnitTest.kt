@@ -3,7 +3,9 @@ package com.github.pooryam92.vimcoach.features.tips.unit.loading.infra.parsing
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.application.loading.infra.parsing.TipJsonParser
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.ByteArrayInputStream
 
@@ -221,6 +223,91 @@ class TipJsonParserUnitTest {
 
         assertEquals(1, tips.size)
         assertNull(tips[0].mnemonic)
+    }
+
+    @Test
+    fun parseTipsJsonDefaultsAdvancedToFalseWhenAbsent() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"jump", "details":["use %"]}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(1, tips.size)
+        assertFalse(tips[0].advanced)
+    }
+
+    @Test
+    fun parseTipsJsonReadsAdvancedFlag() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"paste last search", "details":["Ctrl-r /"], "advanced":true}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(1, tips.size)
+        assertTrue(tips[0].advanced)
+    }
+
+    // A malformed `advanced` must not abort the parse: user-supplied files (file mode, custom
+    // remote URL) rely on the documented leniency, and one bad tip must not blank out all tips.
+    @Test
+    fun parseTipsJsonIgnoresNonBooleanAdvancedValuesKeepingAllTips() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"number", "details":["d1"], "advanced":1},
+                {"summary":"object", "details":["d2"], "advanced":{"nested":true}},
+                {"summary":"array", "details":["d3"], "advanced":[true]},
+                {"summary":"null", "details":["d4"], "advanced":null},
+                {"summary":"string", "details":["d5"], "advanced":"true"},
+                {"summary":"boolean", "details":["d6"], "advanced":true}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(6, tips.size)
+        assertFalse(tips[0].advanced)
+        assertFalse(tips[1].advanced)
+        assertFalse(tips[2].advanced)
+        assertFalse(tips[3].advanced)
+        assertFalse("only a JSON boolean marks a tip advanced", tips[4].advanced)
+        assertTrue(tips[5].advanced)
+    }
+
+    @Test
+    fun parseTipsJsonIgnoresUnknownFields() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"jump", "details":["use %"], "someFutureField":{"nested":42}}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(1, tips.size)
+        assertEquals("jump", tips[0].summary)
+        assertFalse(tips[0].advanced)
     }
 
     @Test

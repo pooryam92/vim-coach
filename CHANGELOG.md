@@ -7,6 +7,7 @@
 ### Added
 
 - Tips can now carry a **mnemonic** — a short memory aid shown as a dimmed line beneath the tip to make its keystrokes easier to recall
+- A **Show advanced tips** setting (off by default) that keeps advanced, niche tips out of the default rotation until you opt in from Vim Coach settings. Advanced tips carry a **◆** marker in their notification title, and a one-time notification points you to the toggle the first time an advanced tip is available
 
 ### Changed
 

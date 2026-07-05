@@ -29,6 +29,40 @@ class TipNotificationFactoryUnitTest {
     }
 
     @Test
+    fun createNotificationMarksAdvancedTipsInTheTitle() {
+        val notifier = TipNotificationFactory()
+        val advancedTip = VimTip(
+            summary = "Paste last search Ctrl-r /",
+            details = listOf("Ctrl-r / pastes the last search"),
+            advanced = true
+        )
+        val normalTip = VimTip(summary = "jump", details = listOf("use %"))
+
+        val advancedNotification = notifier.createNotification(advancedTip)
+        val normalNotification = notifier.createNotification(normalTip)
+
+        assertEquals(
+            "${TipNotificationFactory.APP_TITLE} ${TipNotificationFactory.ADVANCED_TITLE_MARKER}",
+            advancedNotification.title
+        )
+        assertEquals(TipNotificationFactory.APP_TITLE, normalNotification.title)
+    }
+
+    @Test
+    fun advancedTipsAvailableNotificationOffersSettingsAction() {
+        val notifier = TipNotificationFactory()
+
+        val notification = notifier.createAdvancedTipsAvailableNotification {}
+
+        assertEquals(TipNotificationFactory.ADVANCED_TIPS_AVAILABLE_TEXT, notification.content)
+        assertEquals(1, notification.actions.size)
+        assertEquals(
+            TipNotificationFactory.ADVANCED_TIPS_OPEN_SETTINGS_ACTION_TEXT,
+            notification.actions.single().templateText
+        )
+    }
+
+    @Test
     fun createNotificationEscapesHtmlInTipContent() {
         val notifier = TipNotificationFactory()
         val tip = VimTip(

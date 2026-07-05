@@ -31,6 +31,7 @@ class VimCoachSettingsScreenController() {
             tipIntervalHours = settingsService.getTipIntervalHours(),
             availableCategories = availableCategories,
             enabledCategories = settingsService.getEnabledTipCategories(availableCategories),
+            showAdvancedTips = settingsService.isShowAdvancedTipsEnabled(),
             excludedTips = loadExcludedTips(settingsService.getHiddenTipHashes())
         )
     }
@@ -41,6 +42,7 @@ class VimCoachSettingsScreenController() {
         settingsService.setTipIntervalHours(state.tipIntervalHours)
         settingsService.setPeriodicTipsEnabled(state.periodicTipsEnabled)
         settingsService.setEnabledTipCategories(state.availableCategories, state.enabledCategories)
+        settingsService.setShowAdvancedTipsEnabled(state.showAdvancedTips)
         restoreTipsFromSettings(state.restoredExcludedTipHashes)
     }
 

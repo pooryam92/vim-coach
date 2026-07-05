@@ -20,6 +20,9 @@ interface VimTipRepository {
 
     fun getTipsByHashes(hashes: List<String>): List<VimTip>
 
+    /** Whether the cache holds any tip marked [VimTip.advanced]; drives the one-time opt-in nudge. */
+    fun hasAdvancedTips(): Boolean
+
     /**
      * Returns the persisted category cache.
      * If tips exist but cached categories are empty, implementations should

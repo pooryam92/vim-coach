@@ -17,6 +17,7 @@ object TipJsonParser {
     private const val TIPS_FIELD = "tips"
     private const val CONFIG_NAME_FIELD = "name"
     private const val CONFIG_LINES_FIELD = "lines"
+    private const val ADVANCED_FIELD = "advanced"
 
     private val logger = Logger.getInstance(TipJsonParser::class.java)
 
@@ -39,8 +40,22 @@ object TipJsonParser {
         if (element == null || !element.isJsonArray) {
             return emptyList()
         }
+        element.asJsonArray.forEach(::dropMalformedAdvancedFlag)
         val tips = gson.fromJson(element, Array<VimTip>::class.java) ?: return emptyList()
         return dropDuplicateSummaries(tips.mapNotNull(::normalizeTip))
+    }
+
+    // `advanced` is the only strictly-typed known field: Gson aborts the whole tips array on a
+    // non-boolean value, where every other malformed field degrades to a single dropped tip at
+    // worst. Parsing must stay lenient (see docs/tips/tips-pipeline.md, "Schema evolution"), so a
+    // malformed flag is stripped here and falls back to the default (not advanced).
+    private fun dropMalformedAdvancedFlag(tipElement: JsonElement) {
+        val tip = tipElement.takeIf(JsonElement::isJsonObject)?.asJsonObject ?: return
+        val advanced = tip.get(ADVANCED_FIELD) ?: return
+        if (!advanced.isJsonPrimitive || !advanced.asJsonPrimitive.isBoolean) {
+            logger.warn("Ignoring non-boolean \"$ADVANCED_FIELD\" value on tip: $advanced")
+            tip.remove(ADVANCED_FIELD)
+        }
     }
 
     // A tip's trimmed summary is its identity downstream (see TipHash): it keys hidden-tip
@@ -66,7 +81,7 @@ object TipJsonParser {
         val normalizedCategories = normalizeStrings(tip.category)
         val normalizedConfig = normalizeConfig(tip.config)
         val normalizedMnemonic = tip.mnemonic?.trim()?.takeIf(String::isNotBlank)
-        return VimTip(summary, details, normalizedCategories, normalizedConfig, normalizedMnemonic)
+        return VimTip(summary, details, normalizedCategories, normalizedConfig, normalizedMnemonic, tip.advanced)
     }
 
     private fun normalizeStrings(values: List<String>): List<String> {

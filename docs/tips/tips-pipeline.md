@@ -62,8 +62,30 @@ The error message names the offending file and tip so you can fix it quickly.
 For each tip the generator trims surrounding whitespace, drops blank `details`
 lines, and removes duplicate `details` lines (preserving order). An optional
 `mnemonic` string is trimmed and emitted only when non-blank (dropped otherwise).
+The optional `advanced` flag is emitted only when `true` (kept off the artifact
+otherwise, so it stays minimal); a non-boolean `advanced` value fails generation.
 The output is compact JSON with non-ASCII characters escaped as `\uXXXX`, so the
 published file is deterministic and stays plain ASCII.
+
+### Schema evolution and the `advanced` field
+
+The published schema grows **additively only** — new fields are optional and
+defaulted; existing fields are never renamed or removed. Tip parsing is
+**lenient**: unknown fields are ignored, so a newer published file never breaks
+an older plugin. Keep it that way — tightening the parser would break the
+forward compatibility every installed version relies on.
+
+The optional `advanced` flag rides this schema. The plugin models and reads it
+(advanced tips are hidden unless the user opts in; see
+[Advanced Tips Opt-In](../features/settings.md#advanced-tips-opt-in)) while
+keeping the leniency guarantee: `TipJsonParser` ignores a non-boolean
+`advanced` value (the tip parses as not advanced) instead of failing the whole
+file, which matters for hand-authored file-mode and custom-URL sources. The
+generator carries the flag through: it emits `advanced` only when `true` and
+`--check` rejects any non-boolean value, so a flag authored in
+`tips/categories/` reaches `vim_tips_min.json` instead of being silently dropped
+by the field whitelist. Author it via the `tips-maintain` skill, which documents
+the field and the tagging guidance.
 
 ## CI: the Generate Tips workflow
 

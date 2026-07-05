@@ -34,6 +34,10 @@ class IntelliJTipNotifier(private val project: Project) : TipNotifier {
         factory.createTipExcludedNotification(onManage).notify(project)
     }
 
+    override fun showAdvancedTipsAvailable(onOpenSettings: () -> Unit) {
+        factory.createAdvancedTipsAvailableNotification(onOpenSettings).notify(project)
+    }
+
     override fun showAddedToIdeaVimRc(onReload: (() -> Unit)?): TipMessageHandle {
         val notification = factory.createAddedToIdeaVimRcNotification(
             TipNotificationFactory.TIP_ADDED_TO_IDEAVIMRC_TEXT, onReload

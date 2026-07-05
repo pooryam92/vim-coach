@@ -59,7 +59,7 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
 
         assertEquals("No tips match the selected categories.", randomTip.summary)
         assertEquals(
-            "Enable at least one matching category in Vim Coach settings.",
+            "Enable a matching category, or turn on \"Show advanced tips\", in Vim Coach settings.",
             randomTip.details.single()
         )
     }

@@ -15,7 +15,7 @@ not tip count, not completeness of reference. Two working tests apply it:
   visible on the first try. Growth is not success; when a change won't raise
   density, cut instead of add.
 - **The reader's seat** — the reader gets one tip *alone*, in random order, in a
-  240px balloon (~30–35 chars per line; 2 body lines read cleanest). Read every
+  240px balloon (~30–35 chars per line; 2–3 body lines read cleanest). Read every
   summary and detail cold: it must say *which* behavior it teaches and *how* to
   try it on the spot. Wording defects are invisible from the author's seat.
 
@@ -68,15 +68,30 @@ Hard constraints:
   2nd/3rd only when it genuinely aids discovery.
 - `summary` — ≤ 35 chars, command-first; at most one key or one clean pair
   (`gj / gk`). 3+ keys: name the outcome, map each key in the details.
-- `details` — one balloon line ≈ 35 chars; lint flags past 68 (a 2-line wrap).
-  Prefer 2 details; every line past 2 must earn its place. Numbered steps only
+- `details` — one balloon line ≈ 35 chars; lint flags past 35 (it would wrap).
+  Prefer 2 details, 3 at most (lint flags a 4th). Numbered steps only
   for an irreducibly multi-step move.
 - `mnemonic` — optional, **omitted by default**; ≤ 40 chars; only when the
   decoded words make the keys stick; skip on 3+-detail tips. See examples.md.
 - `config` — optional; read reference.md → "Config tips" before authoring or
   reviewing one.
+- `advanced` — optional boolean, **omitted by default**. Add `"advanced": true`
+  only to hide a tip from newcomers' default rotation; opted-in users still see
+  it (and its `Vim Coach ◆` title). The generator emits it only when `true` and
+  rejects any non-boolean value. See "Tagging a tip advanced" below.
 - **Renaming a summary resets that tip's hide preference** (the hide key hashes
   the trimmed summary) — reword only when it's a real improvement.
+
+### Tagging a tip advanced
+
+`advanced` hides a tip from the default rotation for newcomers; users opt in
+from settings. There is no fixed rubric — it **emerges from doing**. Bias hard
+toward normal: over-tagging shrinks newcomers' default pool, which is the harm.
+Tag a few at a time, and when a pattern for "too advanced for a newcomer's first
+week" starts to repeat, write it down here as the rubric forms. So far:
+
+- `Recall last search with Ctrl-r /` — a register paste inside the `:`/insert
+  prompt; niche and mode-specific, not a first-week move.
 
 Wording quick list — each is the reader's-seat test made concrete; worked
 versions in examples.md:

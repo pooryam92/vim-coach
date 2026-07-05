@@ -30,6 +30,7 @@ skill's memory.
 - Anchor a family mnemonic in the real hook — and name the key a shape depicts
 - Merge a set-and-use pair when neither half stands alone
 - Cut a command you can't try cold — doubly so when the IDE already does it
+- Mode context gets its own short line, never a prefix that wraps line 1
 
 ### Name the family in prose, never dump symbols
 
@@ -553,3 +554,28 @@ cursor). It also loses on reach: when you *do* have a path in the text,
 IntelliJ's own `Ctrl-B` / Cmd-click is the move people already reach for. Fails
 teachability *and* reach → delete, don't reword. No rewording rescues a command
 that's fundamentally context-bound and redundant with a stronger IDE-native path.
+
+### Mode context gets its own short line, never a prefix that wraps line 1
+
+❌ before (rejected — the prefix pushes the detail past one balloon line):
+```json
+{
+  "category": ["cmdline"],
+  "summary": "Jump to ends of : Ctrl-b / Ctrl-e",
+  "details": ["In Command-line mode, Ctrl-b jumps to the start", "Ctrl-e jumps to the end"]
+}
+```
+✅ after:
+```json
+{
+  "category": ["cmdline"],
+  "summary": "Jump to ends of : Ctrl-b / Ctrl-e",
+  "details": ["Ctrl-b jumps to the start", "Ctrl-e jumps to the end", "Works in Command-line mode"]
+}
+```
+*Why:* when a mode-ambiguous key needs its mode named, don't bolt an
+`In X mode,` prefix onto an existing detail — at ~20 chars it wraps the line
+and buries the keystroke mid-sentence. Give the context its own trailing
+≤35-char line (`Works in Command-line mode`) and leave the key lines untouched:
+three clean lines beat two wrapped ones, and the same closing line reuses
+verbatim across sibling tips.
