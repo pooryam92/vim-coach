@@ -132,7 +132,8 @@
         "Target sets where: :t0 top, :t$ end",
         ":t. targets here, duplicating below"
       ],
-      "mnemonic": "t = copy to"
+      "mnemonic": "t = copy to",
+      "advanced": true
     },
     {
       "category": [
@@ -156,7 +157,8 @@
       "details": [
         ":delete removes the addressed lines",
         "Use a range like :10,20delete for line-based cleanup"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -167,7 +169,8 @@
       "details": [
         ":10,12join joins the lines in that range",
         "Use :join! when you do not want spacing adjusted"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -426,7 +429,8 @@
       "details": [
         "Select lines, then press g Ctrl-x",
         "Subtracts 1, 2, 3... from each number"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

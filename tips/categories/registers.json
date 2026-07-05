@@ -84,7 +84,8 @@
       "details": [
         "\"_d deletes into the black-hole register",
         "Keeps your yank safe for later pasting"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

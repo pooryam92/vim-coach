@@ -75,7 +75,8 @@
         "gn selects the next match",
         "gN selects the previous one"
       ],
-      "mnemonic": "gn = go to next"
+      "mnemonic": "gn = go to next",
+      "advanced": true
     },
     {
       "category": [

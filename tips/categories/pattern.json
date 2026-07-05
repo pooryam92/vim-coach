@@ -67,7 +67,8 @@
         "/foo\\c ignores case anywhere in the pattern",
         "/Foo\\C forces an exact-case match"
       ],
-      "mnemonic": "\\c = ignore case, \\C = exact Case"
+      "mnemonic": "\\c = ignore case, \\C = exact Case",
+      "advanced": true
     },
     {
       "category": [

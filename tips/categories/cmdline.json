@@ -30,7 +30,8 @@
         "Ctrl-b jumps to the start",
         "Ctrl-e jumps to the end",
         "Works in Command-line mode"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -41,7 +42,8 @@
         "S-Left to the previous word",
         "S-Right to the next word",
         "Works in Command-line mode"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -62,7 +64,8 @@
         "Ctrl-w deletes a word back",
         "Ctrl-u clears the whole line",
         "Works in Command-line mode"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -83,7 +86,8 @@
         "Ctrl-p goes to older history",
         "Ctrl-n goes to newer history",
         "Works in Command-line mode"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -93,7 +97,8 @@
       "details": [
         ":history lists past : commands",
         ":history / lists past searches"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -125,7 +130,8 @@
       "details": [
         "Lists stored jump locations",
         "Pair with Ctrl-o / Ctrl-i"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -136,7 +142,8 @@
       "details": [
         ":marks shows active marks",
         "Check before jumping with ' or `"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -162,7 +169,8 @@
         "Great for reusing text in :s",
         "Works in Command-line mode"
       ],
-      "mnemonic": "r = register"
+      "mnemonic": "r = register",
+      "advanced": true
     },
     {
       "category": [

@@ -457,7 +457,8 @@
       "details": [
         "zh scrolls left, zl scrolls right",
         "Needs wrap off or soft-wrap off"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -467,7 +468,8 @@
       "details": [
         "zH and zL scroll half a screen",
         "Needs wrap off or soft-wrap off"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -478,7 +480,8 @@
         "zs shows cursor at screen start",
         "ze shows cursor at screen end",
         "Needs wrap off or soft-wrap off"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -531,7 +534,8 @@
         "zA toggles the fold and all inside it",
         "One key for the whole fold tree"
       ],
-      "mnemonic": "z = a folded page; A = all nested"
+      "mnemonic": "z = a folded page; A = all nested",
+      "advanced": true
     },
     {
       "category": [
@@ -542,7 +546,8 @@
         "zO opens every nested level",
         "zC closes every nested level"
       ],
-      "mnemonic": "zO = open all, zC = close all"
+      "mnemonic": "zO = open all, zC = close all",
+      "advanced": true
     },
     {
       "category": [
@@ -553,7 +558,8 @@
         "zj moves to the next fold start",
         "zk moves to the previous fold start"
       ],
-      "mnemonic": "z = a folded page; j/k down/up"
+      "mnemonic": "z = a folded page; j/k down/up",
+      "advanced": true
     },
     {
       "category": [
@@ -564,7 +570,8 @@
         "zd deletes one fold at the cursor",
         "zD deletes nested folds there too"
       ],
-      "mnemonic": "zd = delete fold"
+      "mnemonic": "zd = delete fold",
+      "advanced": true
     },
     {
       "category": [
@@ -586,7 +593,8 @@
         "zr opens one fold level",
         "zm closes one fold level"
       ],
-      "mnemonic": "z = a folded page; r reduce, m more"
+      "mnemonic": "z = a folded page; r reduce, m more",
+      "advanced": true
     },
     {
       "category": [
