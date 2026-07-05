@@ -21,6 +21,7 @@ skill's memory.
 - Search existing tips before adding — kill semantic duplicates
 - Decode every key in a mnemonic, not just the ends
 - Give the decoded words, don't echo the key
+- Reach for the community mnemonic, not a homemade key-echo
 - One word per key — cut filler words with no keystroke behind them
 - Drop a mnemonic whose decode is obvious — don't fill the slot
 - Join symbol pairs with `and` — a slash between glyphs is a pileup
@@ -341,6 +342,35 @@ them all; a half-decode leaves the reader guessing the part they most need. Keep
 `gm =` restates the key twice before the hook lands. Author just the decoded words —
 `go menu` already maps g→go, m→menu on its own. This doesn't contradict "decode
 every key": the letters still all map, you just drop the redundant `key =` echo.
+
+### Reach for the community mnemonic, not a homemade key-echo
+
+❌ before:
+```json
+{
+  "category": ["plugins", "editing"],
+  "summary": "Rename an HTML tag cst",
+  "details": ["cst<div> makes <span> into <div>", "Edits the open and close tag at once"],
+  "mnemonic": "cs = change surround, t = tag",
+  "config": { "name": "Install vim-surround", "lines": ["Plug 'tpope/vim-surround'"] }
+}
+```
+✅ after:
+```json
+{
+  "category": ["plugins", "editing"],
+  "summary": "Rename an HTML tag cst",
+  "details": ["cst<div> makes <span> into <div>", "Edits the open and close tag at once"],
+  "mnemonic": "change surrounding tag",
+  "config": { "name": "Install vim-surround", "lines": ["Plug 'tpope/vim-surround'"] }
+}
+```
+*Why:* `cst` already has a reading the whole vim-surround community shares —
+*"change surrounding tag"* (tpope's own docs, every cheatsheet). Reach for that
+before minting your own gloss. It also happens to satisfy the two mnemonic
+rules at once: it decodes all three keys (c→change, s→surrounding, t→tag) and
+echoes none of them (no `cs =`/`t =`). When a plugin key has an idiomatic name,
+use it — a homemade key-echo is both less memorable and less standard.
 
 ### One word per key — cut filler words with no keystroke behind them
 
