@@ -62,7 +62,8 @@
         "Yank text, then delete something",
         "p now pastes the delete, not your yank",
         "\"0p still pastes what you yanked"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -72,7 +73,8 @@
       "details": [
         "\"1 usually holds the most recent delete",
         "Paste it with \"1p after an accidental dd"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -103,7 +105,8 @@
       "details": [
         ":0put pastes the last yank at the top",
         ":$put pastes it at the bottom"
-      ]
+      ],
+      "advanced": true
     }
   ]
 }

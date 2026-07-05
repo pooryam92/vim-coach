@@ -148,7 +148,8 @@
         "Marks are saved spots you set with ma",
         ":delmarks a b removes marks a and b",
         ":delmarks! clears every mark"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -173,7 +174,8 @@
         "Reuse names without retyping",
         "Works in Command-line mode"
       ],
-      "mnemonic": "r = register, w = word"
+      "mnemonic": "r = register, w = word",
+      "advanced": true
     },
     {
       "category": [
@@ -183,7 +185,8 @@
       "details": [
         ":ascii shows the char's codes",
         "ga does the same in normal mode"
-      ]
+      ],
+      "advanced": true
     }
   ]
 }

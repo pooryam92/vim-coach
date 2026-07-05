@@ -41,7 +41,8 @@
       "details": [
         "Uppercase register appends to it",
         "Lowercase q{reg} would replace it"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -51,7 +52,8 @@
       "details": [
         "10@a runs macro a ten times",
         "Use counts to scale the playback"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -62,7 +64,8 @@
       "details": [
         ":'<,'>normal @r runs macro r",
         "Applies it to each line in range"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

@@ -133,7 +133,8 @@
       "details": [
         "Ctrl-k a: gives ä, e' gives é",
         ":digraphs lists all the codes"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

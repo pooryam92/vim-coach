@@ -177,7 +177,8 @@
         "2. Press I to insert at left",
         "3. Type — shows on one line",
         "4. Esc copies it to them all"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -190,7 +191,8 @@
         "2. Press A to append at right",
         "3. Type — shows on one line",
         "4. Esc copies it to them all"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -203,7 +205,8 @@
         "2. Press $ to reach each end",
         "3. Press A, then type your text",
         "4. Esc adds it to every line"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -216,7 +219,8 @@
         "2. Press c to delete it",
         "3. Type the new text",
         "4. Esc fills every line"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

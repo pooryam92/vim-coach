@@ -121,7 +121,8 @@
       "details": [
         "`[ start of last change or paste",
         "`] jumps to its exact end"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

@@ -77,7 +77,8 @@
       "details": [
         "/\\<word\\> matches whole words only",
         "Use it to avoid partial-token matches"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -122,7 +123,8 @@
         "\\V makes most characters literal",
         "Good for paths, JSON, and punctuation"
       ],
-      "mnemonic": "V = Very nomagic (literal)"
+      "mnemonic": "V = Very nomagic (literal)",
+      "advanced": true
     },
     {
       "category": [
@@ -132,7 +134,8 @@
       "details": [
         "Prefix a search with \\v for normal regex",
         "/\\v(foo|bar) matches foo or bar"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -155,7 +158,8 @@
       "details": [
         "After searching /pat, use :%s//new/g",
         "The empty pattern reuses the last search"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -188,18 +192,8 @@
       "details": [
         "g& reruns the last :substitute on all lines",
         "Useful after checking the change on one line with &"
-      ]
-    },
-    {
-      "category": [
-        "pattern",
-        "cmdline"
       ],
-      "summary": "Use \\r to insert a newline in :s",
-      "details": [
-        "In the replacement, \\r inserts a newline",
-        "Useful for reformatting lists and code"
-      ]
+      "advanced": true
     },
     {
       "category": [
@@ -211,7 +205,8 @@
         ":s finds text and replaces it",
         "& in the replacement reuses what matched",
         ":%s/cat/&s/g changes every cat to cats"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -222,7 +217,8 @@
       "details": [
         "Group with \\(...\\), reuse as \\1, \\2",
         "Swap a,b: :%s/\\(\\w*\\),\\(\\w*\\)/\\2,\\1/"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -236,7 +232,8 @@
         "cgn changes the next match and enters Insert",
         ". repeats the same edit on later matches"
       ],
-      "mnemonic": "cgn = change, go to next"
+      "mnemonic": "cgn = change, go to next",
+      "advanced": true
     },
     {
       "category": [
@@ -271,7 +268,8 @@
         ":g/TODO/p prints matching lines",
         ":g/pat/d deletes matching lines",
         ":g/pat/s/foo/bar/g substitutes only on matching lines"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -283,7 +281,8 @@
         ":v acts on lines that don't match",
         ":v/foo/d drops them, keeping foo lines",
         "Short for :vglobal, the inverse of :g"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

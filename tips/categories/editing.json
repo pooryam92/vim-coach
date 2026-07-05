@@ -144,7 +144,8 @@
         ":1,5t. copies lines 1–5 below the cursor",
         "Use 0, $, line numbers, or Visual ranges as the destination"
       ],
-      "mnemonic": "t = copy to"
+      "mnemonic": "t = copy to",
+      "advanced": true
     },
     {
       "category": [
@@ -177,7 +178,8 @@
       "details": [
         ":%normal A; appends ; to every line",
         "Try a small range first"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -445,7 +447,8 @@
       "details": [
         "Starts a new undo step in Insert mode",
         "Useful after punctuation or pauses"
-      ]
+      ],
+      "advanced": true
     }
   ]
 }
