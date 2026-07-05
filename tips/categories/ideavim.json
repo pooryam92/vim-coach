@@ -62,7 +62,8 @@
       "details": [
         ":action ReformatCode for example",
         "Prefer <Action>() in mappings"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

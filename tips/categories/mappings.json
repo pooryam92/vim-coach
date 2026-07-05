@@ -31,7 +31,8 @@
         "nnoremap Q <Nop> makes Q do nothing",
         "Useful for disabling keys you hit by accident"
       ],
-      "mnemonic": "no operation"
+      "mnemonic": "no operation",
+      "advanced": true
     },
     {
       "category": [

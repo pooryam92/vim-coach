@@ -6,8 +6,9 @@
       ],
       "summary": "Repeat a motion with a count 5j",
       "details": [
-        "Operators take counts too — 3dw deletes 3 words",
-        "Counts multiply: 2d3w deletes 6 words"
+        "Operators take counts too",
+        "3dw deletes 3 words",
+        "2d3w multiplies to 6 words"
       ]
     },
     {
