@@ -101,7 +101,7 @@
         "ds\" removes surrounding quotes",
         "ds( strips the parens"
       ],
-      "mnemonic": "ds = delete surround",
+      "mnemonic": "delete surround",
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -136,7 +136,7 @@
         "t or < prompts for the tag",
         "ysiw<em> wraps a word in <em>"
       ],
-      "mnemonic": "ys = you surround, t = tag",
+      "mnemonic": "you surround inner word tag",
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -172,7 +172,7 @@
         "dst turns <span>hi</span> into hi",
         "Strips both tags, keeps the text"
       ],
-      "mnemonic": "ds = delete surround, t = tag",
+      "mnemonic": "delete surround tag",
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -190,7 +190,7 @@
         "f prompts for a function name",
         "ysiwf then name gives name(word)"
       ],
-      "mnemonic": "ys = you surround, f = function",
+      "mnemonic": "you surround inner word function",
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -208,7 +208,7 @@
         "gcc toggles the current line",
         "gc works with a motion or selection"
       ],
-      "mnemonic": "gc = go comment",
+      "mnemonic": "go comment",
       "config": {
         "name": "Install vim-commentary",
         "lines": [
@@ -297,7 +297,7 @@
         "dii deletes lines at the current indent",
         "Pairs with any operator — c, y, >, ="
       ],
-      "mnemonic": "i = indent",
+      "mnemonic": "delete inner indent",
       "config": {
         "name": "Install vim-indent-object",
         "lines": [
@@ -349,7 +349,7 @@
       "details": [
         "crc turns foo_bar into fooBar"
       ],
-      "mnemonic": "cr = coerce, c = camelCase",
+      "mnemonic": "coerce camelCase",
       "config": {
         "name": "Install vim-abolish",
         "lines": [
@@ -366,7 +366,7 @@
       "details": [
         "crs turns fooBar into foo_bar"
       ],
-      "mnemonic": "cr = coerce, s = snake_case",
+      "mnemonic": "coerce snake_case",
       "config": {
         "name": "Install vim-abolish",
         "lines": [
@@ -383,7 +383,7 @@
       "details": [
         "crm turns foo_bar into FooBar"
       ],
-      "mnemonic": "cr = coerce, m = MixedCase",
+      "mnemonic": "coerce MixedCase",
       "config": {
         "name": "Install vim-abolish",
         "lines": [
@@ -400,7 +400,7 @@
       "details": [
         "cru turns fooBar into FOO_BAR"
       ],
-      "mnemonic": "cr = coerce, u = UPPER",
+      "mnemonic": "coerce UPPER",
       "config": {
         "name": "Install vim-abolish",
         "lines": [
@@ -435,7 +435,7 @@
         "Works even with the cursor outside it",
         "Any bracket or quote works too"
       ],
-          "config": {
+      "config": {
         "name": "Install targets.vim",
         "lines": [
           "Plug 'wellle/targets.vim'"
@@ -573,7 +573,7 @@
         "dac deletes the class, header and all",
         "Pairs with any operator — c, y, v"
       ],
-      "mnemonic": "c = class",
+      "mnemonic": "delete around class",
       "config": {
         "name": "Enable classtextobj",
         "lines": [
@@ -591,7 +591,7 @@
         "cic changes the body, keeps the class line",
         "Pairs with any operator — d, y, >, ="
       ],
-      "mnemonic": "c = class",
+      "mnemonic": "change inner class",
       "config": {
         "name": "Enable classtextobj",
         "lines": [

@@ -95,7 +95,7 @@
         "Every match of the search stays lit",
         "Clear temporarily with :noh"
       ],
-      "mnemonic": "hl = highlight search",
+      "mnemonic": "highlight search",
       "config": [
         "set hlsearch"
       ]

@@ -31,7 +31,7 @@
         "o moves cursor to the other end",
         "Great for precise adjustments"
       ],
-      "mnemonic": "o = other end"
+      "mnemonic": "other end"
     },
     {
       "category": [
@@ -63,7 +63,7 @@
         "gv reselects the last selection",
         "Handy after Esc or an edit"
       ],
-      "mnemonic": "gv = go visual again"
+      "mnemonic": "go visual again"
     },
     {
       "category": [
@@ -75,7 +75,7 @@
         "gn selects the next match",
         "gN selects the previous one"
       ],
-      "mnemonic": "gn = go to next",
+      "mnemonic": "go next",
       "advanced": true
     },
     {
@@ -165,7 +165,7 @@
         "Select text then press gq",
         "Runs the IDE code reformat"
       ],
-      "mnemonic": "gq = format"
+      "mnemonic": "go format"
     },
     {
       "category": [

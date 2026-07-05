@@ -41,7 +41,7 @@
         "p puts after the cursor, or below for linewise text",
         "P puts before the cursor, or above for linewise text"
       ],
-      "mnemonic": "p = put"
+      "mnemonic": "put"
     },
     {
       "category": [

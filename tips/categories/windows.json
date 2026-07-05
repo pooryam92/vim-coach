@@ -33,7 +33,7 @@
         ":vsplit (or :vs) opens a side-by-side view",
         "Great for comparing two parts of a file"
       ],
-      "mnemonic": "v = vertical split"
+      "mnemonic": "vertical split"
     },
     {
       "category": [

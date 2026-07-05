@@ -169,7 +169,7 @@
         "Great for reusing text in :s",
         "Works in Command-line mode"
       ],
-      "mnemonic": "r = register",
+      "mnemonic": "register",
       "advanced": true
     },
     {
@@ -182,7 +182,7 @@
         "Reuse names without retyping",
         "Works in Command-line mode"
       ],
-      "mnemonic": "r = register, w = word",
+      "mnemonic": "register word",
       "advanced": true
     },
     {

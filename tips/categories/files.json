@@ -43,7 +43,7 @@
         ":ls, :buffers, and :files list known buffers",
         "Then switch with :buffer, :bn, or :bp"
       ],
-      "mnemonic": "ls = list buffers"
+      "mnemonic": "list buffers"
     },
     {
       "category": [
@@ -89,7 +89,7 @@
         ":bd closes the current buffer/editor tab",
         "Use it when you are done with the file"
       ],
-      "mnemonic": "bd = buffer delete"
+      "mnemonic": "buffer delete"
     },
     {
       "category": [

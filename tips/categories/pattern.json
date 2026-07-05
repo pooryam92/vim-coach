@@ -56,7 +56,7 @@
         ":noh (or :nohlsearch) clears highlighting",
         "The current search pattern still stays active"
       ],
-      "mnemonic": "noh = no highlight"
+      "mnemonic": "no highlight"
     },
     {
       "category": [
@@ -67,7 +67,7 @@
         "/foo\\c ignores case anywhere in the pattern",
         "/Foo\\C forces an exact-case match"
       ],
-      "mnemonic": "\\c = ignore case, \\C = exact Case",
+      "mnemonic": "\\c ignore case, \\C exact Case",
       "advanced": true
     },
     {
@@ -124,7 +124,7 @@
         "\\V makes most characters literal",
         "Good for paths, JSON, and punctuation"
       ],
-      "mnemonic": "V = Very nomagic (literal)",
+      "mnemonic": "Very nomagic (literal)",
       "advanced": true
     },
     {
@@ -148,7 +148,7 @@
         ":%s/foo/bar/g swaps foo for bar in file",
         "g means every match, not just the first"
       ],
-      "mnemonic": "s = substitute"
+      "mnemonic": "substitute"
     },
     {
       "category": [
@@ -233,7 +233,7 @@
         "cgn changes the next match and enters Insert",
         ". repeats the same edit on later matches"
       ],
-      "mnemonic": "cgn = change, go to next",
+      "mnemonic": "change go next",
       "advanced": true
     },
     {

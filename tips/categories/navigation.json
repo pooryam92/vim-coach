@@ -40,7 +40,7 @@
         "ge goes to end of previous word",
         "Nice for edits before punctuation"
       ],
-      "mnemonic": "ge = go to end"
+      "mnemonic": "go end"
     },
     {
       "category": [
@@ -143,7 +143,7 @@
         "gg goes to first line",
         "G goes to last line"
       ],
-      "mnemonic": "gg = go top, G = go bottom"
+      "mnemonic": "go top / go bottom"
     },
     {
       "category": [
@@ -301,7 +301,7 @@
         "f; jumps to next ';' on the line",
         "Great for long parameter lists"
       ],
-      "mnemonic": "f = find"
+      "mnemonic": "find"
     },
     {
       "category": [
@@ -322,7 +322,7 @@
         "t) stops just before ')'",
         "Perfect for ct) edits"
       ],
-      "mnemonic": "t = till"
+      "mnemonic": "till"
     },
     {
       "category": [
@@ -333,7 +333,7 @@
         "T) stops just after ')'",
         "Good for edits near opening brackets"
       ],
-      "mnemonic": "T = till backward"
+      "mnemonic": "till backward"
     },
     {
       "category": [
@@ -365,7 +365,7 @@
         "gd jumps to the symbol through the IDE",
         "Works across files, project-wide"
       ],
-      "mnemonic": "go to definition"
+      "mnemonic": "go definition"
     },
     {
       "category": [
@@ -534,7 +534,7 @@
         "zA toggles the fold and all inside it",
         "One key for the whole fold tree"
       ],
-      "mnemonic": "z = a folded page; A = all nested",
+      "mnemonic": "z = a folded page; A all nested",
       "advanced": true
     },
     {
@@ -546,7 +546,7 @@
         "zO opens every nested level",
         "zC closes every nested level"
       ],
-      "mnemonic": "zO = open all, zC = close all",
+      "mnemonic": "zO open all, zC close all",
       "advanced": true
     },
     {
@@ -570,7 +570,7 @@
         "zd deletes one fold at the cursor",
         "zD deletes nested folds there too"
       ],
-      "mnemonic": "zd = delete fold",
+      "mnemonic": "z = a folded page; d delete",
       "advanced": true
     },
     {
@@ -606,7 +606,7 @@
         "Lands you in Insert mode, not Normal",
         "Picks up exactly where you stopped typing"
       ],
-      "mnemonic": "gi = go insert"
+      "mnemonic": "go insert"
     }
   ]
 }

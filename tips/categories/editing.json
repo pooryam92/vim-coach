@@ -53,7 +53,7 @@
         "ci( changes the text inside parentheses",
         "cib is an alias for the same text object"
       ],
-      "mnemonic": "cib = change inner block"
+      "mnemonic": "change inner block"
     },
     {
       "category": [
@@ -74,7 +74,7 @@
         "ci[ changes text inside square brackets",
         "ci{ changes text inside braces"
       ],
-      "mnemonic": "ci = change inner"
+      "mnemonic": "change inner"
     },
     {
       "category": [
@@ -132,7 +132,7 @@
         "Target sets where: :t0 top, :t$ end",
         ":t. targets here, duplicating below"
       ],
-      "mnemonic": "t = copy to",
+      "mnemonic": "copy to",
       "advanced": true
     },
     {
@@ -145,7 +145,7 @@
         ":1,5t. copies lines 1–5 below the cursor",
         "Use 0, $, line numbers, or Visual ranges as the destination"
       ],
-      "mnemonic": "t = copy to",
+      "mnemonic": "copy to",
       "advanced": true
     },
     {
@@ -299,7 +299,7 @@
         "s changes one char and inserts",
         "S changes whole line and inserts"
       ],
-      "mnemonic": "s = substitute"
+      "mnemonic": "substitute"
     },
     {
       "category": [
@@ -355,7 +355,7 @@
         "dt) deletes up to the next )",
         "ct, changes up to it, df includes it"
       ],
-      "mnemonic": "dt = delete till"
+      "mnemonic": "delete till"
     },
     {
       "category": [
