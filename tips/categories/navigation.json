@@ -150,10 +150,8 @@
       ],
       "summary": "Jump by file percentage N%",
       "details": [
-        "Use a count before % to jump by file percentage",
-        "50% jumps to middle of file",
-        "10% jumps near the top",
-        "Bare % jumps to a matching pair instead"
+        "50% jumps halfway down the file",
+        "10% jumps near the top"
       ]
     },
     {
@@ -245,8 +243,7 @@
       "summary": "Jump to unmatched parens [( / ])",
       "details": [
         "[( jumps to previous unmatched (",
-        "]) jumps to the next unmatched )",
-        "Useful inside nested expressions"
+        "]) jumps to the next unmatched )"
       ]
     },
     {

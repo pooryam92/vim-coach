@@ -130,8 +130,9 @@
       ],
       "summary": "Delete marks with :delmarks",
       "details": [
-        ":delmarks removes given marks",
-        ":delmarks! clears all marks"
+        "Marks are saved spots you set with ma",
+        ":delmarks a b removes marks a and b",
+        ":delmarks! clears every mark"
       ]
     },
     {

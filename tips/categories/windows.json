@@ -19,8 +19,9 @@
       ],
       "summary": "Open a file in a split :split {file}",
       "details": [
-        ":split {file} opens that file in a new split",
-        ":vsplit {file} does it side by side"
+        "Relative paths start at the project root",
+        "~/ or an absolute path works too",
+        "A bare filename is found anywhere in the project"
       ]
     },
     {
@@ -34,6 +35,18 @@
         "Great for comparing two parts of a file"
       ],
       "mnemonic": "v = vertical split"
+    },
+    {
+      "category": [
+        "windows",
+        "cmdline"
+      ],
+      "summary": "Open a file in a vsplit :vsplit {file}",
+      "details": [
+        "Relative paths start at the project root",
+        "~/ or an absolute path works too",
+        "A bare filename is found anywhere in the project"
+      ]
     },
     {
       "category": [

@@ -55,18 +55,6 @@
     },
     {
       "category": [
-        "registers",
-        "ideavim"
-      ],
-      "summary": "Use system clipboard register \"+",
-      "details": [
-        "\"+y yanks to the OS clipboard",
-        "\"+p pastes from the OS clipboard",
-        "In IdeaVim this depends on IDE clipboard support"
-      ]
-    },
-    {
-      "category": [
         "registers"
       ],
       "summary": "Use the yank register \"0",

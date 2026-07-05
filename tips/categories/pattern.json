@@ -166,8 +166,7 @@
       "details": [
         "Add c: :%s/foo/bar/gc asks first",
         "y replaces, n skips, a all, q quit"
-      ],
-      "mnemonic": "c = confirm"
+      ]
     },
     {
       "category": [
