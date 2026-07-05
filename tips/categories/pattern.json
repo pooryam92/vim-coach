@@ -48,16 +48,6 @@
     },
     {
       "category": [
-        "pattern"
-      ],
-      "summary": "Search partial token g* / g#",
-      "details": [
-        "Like * and # but allows partial matches",
-        "Useful for camelCase and snake_case"
-      ]
-    },
-    {
-      "category": [
         "pattern",
         "cmdline"
       ],
@@ -138,12 +128,11 @@
       "category": [
         "pattern"
       ],
-      "summary": "Very magic mode \\v reduces escaping",
+      "summary": "Search with plain regex \\v",
       "details": [
-        "\\v makes +, ?, (, |, {, } special automatically",
-        "/\\v(foo|bar) matches foo or bar, no backslashes"
-      ],
-      "mnemonic": "v = very magic"
+        "Prefix a search with \\v for normal regex",
+        "/\\v(foo|bar) matches foo or bar"
+      ]
     },
     {
       "category": [
@@ -166,17 +155,6 @@
       "details": [
         "After searching /pat, use :%s//new/g",
         "The empty pattern reuses the last search"
-      ]
-    },
-    {
-      "category": [
-        "pattern",
-        "cmdline"
-      ],
-      "summary": "Use # or | as :s delimiters",
-      "details": [
-        "Use # or | when the pattern contains /",
-        "Example: :%s#old/path#new/path#g"
       ]
     },
     {
@@ -306,8 +284,7 @@
         ":v acts on lines that don't match",
         ":v/foo/d drops them, keeping foo lines",
         "Short for :vglobal, the inverse of :g"
-      ],
-      "mnemonic": "v = inverse of g"
+      ]
     },
     {
       "category": [

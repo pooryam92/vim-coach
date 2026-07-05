@@ -127,8 +127,9 @@
       ],
       "summary": "Duplicate a line with :t.",
       "details": [
-        ":t. copies the current line below itself",
-        "Useful when you want a quick duplicate without yanking"
+        ":t copies a line to a target",
+        "Target sets where: :t0 top, :t$ end",
+        ":t. targets here, duplicating below"
       ],
       "mnemonic": "t = copy to"
     },
@@ -258,8 +259,8 @@
       ],
       "summary": "Delete/change to line end d$ / c$",
       "details": [
-        "D / C are the one-key forms",
-        "d$ deletes, c$ changes the rest"
+        "d$ deletes to end of line, c$ changes it",
+        "D and C are the one-key shortcuts"
       ]
     },
     {

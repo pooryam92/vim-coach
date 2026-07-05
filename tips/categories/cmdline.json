@@ -159,18 +159,6 @@
     },
     {
       "category": [
-        "cmdline",
-        "files"
-      ],
-      "summary": "Insert filename in : Ctrl-r Ctrl-f",
-      "details": [
-        "Inserts the file under cursor",
-        "Handy for file Ex commands"
-      ],
-      "mnemonic": "r = register, f = file"
-    },
-    {
-      "category": [
         "cmdline"
       ],
       "summary": "Inspect a character with :ascii",

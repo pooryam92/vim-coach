@@ -27,9 +27,9 @@
       ],
       "summary": "Pick completions Ctrl-n / Ctrl-p",
       "details": [
+        "As you type, the IDE's autocomplete pops up",
         "Ctrl-n moves down the list",
-        "Ctrl-p moves up the list",
-        "Use it in the completion popup"
+        "Ctrl-p moves up the list"
       ]
     },
     {
@@ -108,8 +108,9 @@
       ],
       "summary": "Shift indent Ctrl-t / Ctrl-d",
       "details": [
-        "Ctrl-t shifts indent right",
-        "Ctrl-d shifts indent left"
+        "In insert mode",
+        "Ctrl-t shifts the line right",
+        "Ctrl-d shifts it left"
       ]
     },
     {
@@ -151,8 +152,9 @@
       ],
       "summary": "Insert char above/below",
       "details": [
-        "Ctrl-y inserts char from above",
-        "Ctrl-e inserts char from below"
+        "In insert mode, copy the char above or below",
+        "Ctrl-y grabs it from above",
+        "Ctrl-e grabs it from below"
       ]
     },
     {

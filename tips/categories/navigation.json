@@ -224,8 +224,7 @@
       "summary": "Jump to matching pair %",
       "details": [
         "% jumps between (), {}, and [] by default",
-        "50% jumps to the file's middle",
-        "Use to inspect a whole block quickly"
+        "d% or c% acts through the matching pair"
       ]
     },
     {
@@ -352,21 +351,10 @@
       "category": [
         "navigation"
       ],
-      "summary": "Drop a mark before exploring with ma",
+      "summary": "Set and jump to a mark ma / `a",
       "details": [
-        "ma sets a mark before you jump elsewhere",
-        "`a returns to the exact position later"
-      ],
-      "mnemonic": "m = mark"
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Jump to a mark with `a / 'a",
-      "details": [
-        "`a jumps to the exact marked position",
-        "'a jumps to the marked line"
+        "ma tags the current spot as mark a",
+        "`a jumps back exactly, 'a to the line"
       ]
     },
     {
@@ -388,8 +376,17 @@
       "summary": "Move between methods with ]m / [m",
       "details": [
         "]m jumps to the next method start",
-        "[m jumps to the previous method start",
-        "Use ]M and [M for method ends"
+        "[m jumps to the previous method start"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to method ends ]M / [M",
+      "details": [
+        "]M jumps to the next method end",
+        "[M jumps to the previous method end"
       ]
     },
     {
@@ -521,12 +518,11 @@
       "category": [
         "navigation"
       ],
-      "summary": "Force a fold open or closed",
+      "summary": "Force a fold open or closed zo / zc",
       "details": [
         "zo always opens, zc always closes",
-        "Use when toggle isn't enough"
-      ],
-      "mnemonic": "zo = open, zc = close"
+        "Use when toggle za isn't enough"
+      ]
     },
     {
       "category": [
@@ -536,7 +532,8 @@
       "details": [
         "zA toggles the fold and all inside it",
         "One key for the whole fold tree"
-      ]
+      ],
+      "mnemonic": "z = a folded page; A = all nested"
     },
     {
       "category": [
@@ -544,9 +541,10 @@
       ],
       "summary": "Force nested folds open or closed",
       "details": [
-        "zO opens every level, zC closes them all",
-        "Use when toggle isn't enough"
-      ]
+        "zO opens every nested level",
+        "zC closes every nested level"
+      ],
+      "mnemonic": "zO = open all, zC = close all"
     },
     {
       "category": [
@@ -556,7 +554,8 @@
       "details": [
         "zj moves to the next fold start",
         "zk moves to the previous fold start"
-      ]
+      ],
+      "mnemonic": "z = a folded page; j/k down/up"
     },
     {
       "category": [
@@ -577,7 +576,8 @@
       "details": [
         "zM closes all folds in view",
         "zR opens all folds in view"
-      ]
+      ],
+      "mnemonic": "z = a folded page; M more, R reduce"
     },
     {
       "category": [
@@ -587,7 +587,8 @@
       "details": [
         "zr opens one fold level",
         "zm closes one fold level"
-      ]
+      ],
+      "mnemonic": "z = a folded page; r reduce, m more"
     },
     {
       "category": [

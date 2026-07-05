@@ -15,7 +15,7 @@
       "category": [
         "visual"
       ],
-      "summary": "Enter Visual mode v V Ctrl-v",
+      "summary": "Enter Visual mode three ways",
       "details": [
         "v selects characters",
         "V selects whole lines",

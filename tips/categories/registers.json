@@ -89,17 +89,6 @@
       "category": [
         "registers"
       ],
-      "summary": "Use named registers \"a / \"A",
-      "details": [
-        "\"ayiw stores text in register a",
-        "\"ap pastes it later",
-        "\"A appends more text instead of replacing the register"
-      ]
-    },
-    {
-      "category": [
-        "registers"
-      ],
       "summary": "Delete without clobbering yanks \"_",
       "details": [
         "\"_d deletes into the black-hole register",
@@ -121,10 +110,10 @@
         "registers",
         "cmdline"
       ],
-      "summary": "Put a register with :put",
+      "summary": "Send a yank to top or end :put",
       "details": [
-        ":put 0 inserts register 0 below the current line",
-        ":put + inserts clipboard text below the current line"
+        ":0put pastes the last yank at the top",
+        ":$put pastes it at the bottom"
       ]
     }
   ]

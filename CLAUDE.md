@@ -1,6 +1,6 @@
 # Vim Coach — Agent Guide
 
-**Stack:** IntelliJ `2026.1.3` · Kotlin JVM `21` · Gradle `9.3.1`
+**Stack:** IntelliJ `2026.1.3` · Kotlin JVM `21` · Gradle `9.6.1`
 
 **Rules**
 - Always write or update tests when adding or changing behavior.
@@ -13,6 +13,6 @@
 
 **Docs — read when:**
 - Changing code structure or layers → [Architecture](docs/architecture/overview.md)
-- Working on a specific feature → [Features](docs/features/)
+- Working on a specific feature → [Features](docs/features)
 - Adding/editing/reviewing tips → the `tips-maintain` skill ([.claude/skills/tips-maintain/SKILL.md](.claude/skills/tips-maintain/SKILL.md))
 - Tip build pipeline (generator, CI, runtime fetch) → [Tips pipeline](docs/tips/tips-pipeline.md)

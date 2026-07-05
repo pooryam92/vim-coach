@@ -283,9 +283,9 @@
       "summary": "Find all usages gr",
       "details": [
         "Lists every call site, jump to any",
-        "Works on methods, classes, vars",
         "Overrides gr ReplaceWithRegister"
       ],
+      "mnemonic": "go references",
       "config": {
         "name": "Map find usages",
         "lines": [

@@ -154,19 +154,6 @@
     },
     {
       "category": [
-        "options"
-      ],
-      "summary": "Wrap text with :set textwidth=80",
-      "details": [
-        ":set textwidth=80 wraps text at 80 columns",
-        "gq uses textwidth when formatting prose and comments"
-      ],
-      "config": [
-        "set textwidth=80"
-      ]
-    },
-    {
-      "category": [
         "options",
         "pattern"
       ],

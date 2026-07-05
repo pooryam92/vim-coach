@@ -24,6 +24,10 @@ skill's memory.
 - Drop a mnemonic whose decode is obvious — don't fill the slot
 - Join symbol pairs with `and` — a slash between glyphs is a pileup
 - Theory earns one tip at most — and it must still be tryable
+- A bare register id is a hidden cross-tip dependency
+- Anchor a family mnemonic in the real hook — and name the key a shape depicts
+- Merge a set-and-use pair when neither half stands alone
+- Cut a command you can't try cold — doubly so when the IDE already does it
 
 ### Name the family in prose, never dump symbols
 
@@ -407,3 +411,88 @@ around them keeps failing. When a concept has no tryable form, delete the
 standalone tip and fold its rule into exactly *one* concrete host — never echo
 it across every sibling. Practical tips lead; theory gets at most one
 consolidated line.
+
+### Anchor a family mnemonic in the real hook — and name the key a shape depicts
+
+❌ before (invented hook, drifting through cute options like `z zips`/`z = zzz`):
+```json
+{
+  "category": ["navigation"],
+  "summary": "Fold all / unfold all zM / zR",
+  "details": ["zM closes all folds in view", "zR opens all folds in view"],
+  "mnemonic": "z zips code shut; M more, R reduce"
+}
+```
+✅ after:
+```json
+{
+  "category": ["navigation"],
+  "summary": "Fold all / unfold all zM / zR",
+  "details": ["zM closes all folds in view", "zR opens all folds in view"],
+  "mnemonic": "z = a folded page; M more, R reduce"
+}
+```
+*Why:* two lessons. **Decode the shared prefix, not just the distinguishing
+letter** — every fold command is `z`-prefixed, so the mnemonic must say what `z`
+buys, then `M`/`R`. **And anchor it in the documented hook, not an invention:**
+Vim's own `usr_28` says *"z looks like a folded piece of paper viewed from the
+side"* — reach for the real mnemonic other users share before minting `zip`/`zzz`.
+This is also the exception to "don't echo the key": a *shape* hook must name the
+key it depicts (`z = a folded page`), because unlike a letter→word decode
+(`g`→go), the glyph doesn't map from the letter on its own.
+
+### Merge a set-and-use pair when neither half stands alone
+
+❌ before (two adjacent tips; the jump tip leans on the set tip a reader may never see):
+```json
+{
+  "category": ["navigation"],
+  "summary": "Drop a mark before exploring with ma",
+  "details": ["ma sets a mark before you jump elsewhere", "`a returns to the exact position later"],
+  "mnemonic": "m = mark"
+}
+```
+```json
+{
+  "category": ["navigation"],
+  "summary": "Jump to a mark with `a / 'a",
+  "details": ["`a jumps to the exact marked position", "'a jumps to the marked line"]
+}
+```
+✅ after (one tip carrying the whole loop):
+```json
+{
+  "category": ["navigation"],
+  "summary": "Set and jump to a mark ma / `a",
+  "details": ["ma tags the current spot as mark a", "`a jumps back exactly, 'a to the line"]
+}
+```
+*Why:* display order is random, so a "jump to a mark" tip seen alone leaves the
+reader asking *"what is a mark? how do I make one?"* — it depends on a sibling
+that may never appear. When two tips split the *set* and *use* halves of one
+feature and neither stands alone, don't duplicate the shared prerequisite across
+both — merge them into a single tip that carries the whole loop (what it is → how
+to make it → how to use it). Merge beats cross-reference when the halves are that
+entangled.
+
+### Cut a command you can't try cold — doubly so when the IDE already does it
+
+❌ before (payoff needs a file path already sitting under the cursor):
+```json
+{
+  "category": ["cmdline", "files"],
+  "summary": "Insert filename in : Ctrl-r Ctrl-f",
+  "details": ["Inserts the file under cursor", "Handy for file Ex commands"],
+  "mnemonic": "r = register, f = file"
+}
+```
+✅ after: tip deleted.
+
+*Why:* a tip must be tryable *cold* — dropped into a random balloon mid-edit, the
+reader can act on it right now. `Ctrl-r Ctrl-f` does something only when a file
+path happens to sit under the cursor, so most of the time there's nothing to try
+(contrast its `Ctrl-r Ctrl-w` sibling — every buffer has a word under the
+cursor). It also loses on reach: when you *do* have a path in the text,
+IntelliJ's own `Ctrl-B` / Cmd-click is the move people already reach for. Fails
+teachability *and* reach → delete, don't reword. No rewording rescues a command
+that's fundamentally context-bound and redundant with a stronger IDE-native path.
