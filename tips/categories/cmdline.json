@@ -28,7 +28,8 @@
       "summary": "Jump to ends of : Ctrl-b / Ctrl-e",
       "details": [
         "Ctrl-b jumps to the start",
-        "Ctrl-e jumps to the end"
+        "Ctrl-e jumps to the end",
+        "Works in Command-line mode"
       ]
     },
     {
@@ -38,7 +39,8 @@
       "summary": "Move by word in : S-Left / S-Right",
       "details": [
         "S-Left to the previous word",
-        "S-Right to the next word"
+        "S-Right to the next word",
+        "Works in Command-line mode"
       ]
     },
     {
@@ -58,7 +60,8 @@
       "summary": "Erase in : Ctrl-w / Ctrl-u",
       "details": [
         "Ctrl-w deletes a word back",
-        "Ctrl-u clears the whole line"
+        "Ctrl-u clears the whole line",
+        "Works in Command-line mode"
       ]
     },
     {
@@ -78,7 +81,8 @@
       "summary": "Browse : history Ctrl-p / Ctrl-n",
       "details": [
         "Ctrl-p goes to older history",
-        "Ctrl-n goes to newer history"
+        "Ctrl-n goes to newer history",
+        "Works in Command-line mode"
       ]
     },
     {
@@ -143,7 +147,8 @@
       "summary": "Insert a register in : Ctrl-r",
       "details": [
         "Ctrl-r then a register name",
-        "Great for reusing text in :s"
+        "Great for reusing text in :s",
+        "Works in Command-line mode"
       ],
       "mnemonic": "r = register"
     },
@@ -154,7 +159,8 @@
       "summary": "Insert word in : Ctrl-r Ctrl-w",
       "details": [
         "Inserts the word under cursor",
-        "Reuse names without retyping"
+        "Reuse names without retyping",
+        "Works in Command-line mode"
       ],
       "mnemonic": "r = register, w = word"
     },
