@@ -76,8 +76,12 @@ Dismissing the tip balloon is the adapter's responsibility: `IntelliJTipNotifier
 </div></html>
 ```
 
-The mnemonic line is omitted when the tip has none; when present it is dimmed with
-the theme's context-help foreground (hex resolved at render time), keeping the
-summary and details at full strength.
+The mnemonic line is omitted when the tip has none; when present it is dimmed by
+mixing the theme's label foreground toward its context-help foreground (`MNEMONIC_DIM_RATIO`,
+resolved at render time), keeping the summary and details at full strength.
 
-Actions — "Next tip", "Exclude tip", and the apply-to-`.ideavimrc` action (when `tip.config?.lines` is non-empty; labelled by `config.name` or the generic "Apply") — are all standard `NotificationAction` buttons appended to the balloon.
+Actions are standard `NotificationAction` buttons appended to the balloon, in order:
+
+- **"Next tip"** and **"Exclude tip"** — always present.
+- **Apply-to-`.ideavimrc`** — when `tip.config?.lines` is non-empty; labelled by `config.name` or the generic "Apply".
+- **"Note…"** — a **dev-only** action for flagging a tip for maintainers. It appears only when the `vimcoach.tip.notes.file` system property is set, which the `runIdeWithFileTips` and `runIdeWithMinuteTipSchedule` Gradle tasks do (pointing at the git-ignored `docs/tips/tip-feedback.md`). Released builds never set it, so the action is absent. Clicking it opens a multiline input dialog and appends a timestamped markdown entry — summary, tip hash, and the note — to that file (see `RecordTipNote`). See [Tips pipeline](../tips/tips-pipeline.md) for the maintainer workflow.

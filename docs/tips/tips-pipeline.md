@@ -104,7 +104,8 @@ with a timestamp, the tip's summary, and its `TipHash`. That file is
 `.gitignore`d and is where the maintainer (or an agent) later picks up which
 tips to revise.
 
-This is wired only for the `runIde*` Gradle tasks, which set
+This is wired only for the `runIdeWithFileTips` and `runIdeWithMinuteTipSchedule`
+Gradle tasks, which set
 `-Dvimcoach.tip.notes.file=<repo>/docs/tips/tip-feedback.md`. The action is
 gated entirely on that system property: a released build never sets it, so the
 "Note…" action never appears and nothing is written in production.
