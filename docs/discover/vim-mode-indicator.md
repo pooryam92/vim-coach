@@ -18,7 +18,7 @@ Command-line-mode trick.
 Give each tip a mode signal, separate from `category`, shown as a small
 badge using vim's own mode letters (`n`/`i`/`v`/`c` — already the audience's
 mental model, no invented icon needed) next to the tip content, not in the
-notification title (title stays reserved for the `◆` advanced marker).
+notification title (title stays reserved for the `· Advanced` label).
 
 **Multiple modes**: if a tip applies to one or two modes, show them (e.g.
 `[N/V]`). If it applies to three or more — i.e. essentially everywhere —

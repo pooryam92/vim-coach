@@ -55,10 +55,10 @@ class TipNotificationFactory {
         }
     }
 
-    // Advanced tips carry a black-diamond suffix (the ski-slope "expert run" convention) so opted-in
-    // users can tell an advanced tip at a glance without an in-app legend.
+    // Advanced tips append a "· Advanced" label to the title so opted-in users can tell an
+    // advanced tip at a glance without an in-app legend.
     private fun notificationTitle(tip: VimTip): String {
-        return if (tip.advanced) "$APP_TITLE $ADVANCED_TITLE_MARKER" else APP_TITLE
+        return if (tip.advanced) "$APP_TITLE $ADVANCED_TITLE_LABEL" else APP_TITLE
     }
 
     /** A named config uses its name verbatim as the apply button label; otherwise it stays generic. */
@@ -196,7 +196,7 @@ class TipNotificationFactory {
         val TIP_MANAGE_EXCLUDED_ACTION_TEXT: String = MyBundle.message("tipManageExcludedAction")
         val ADVANCED_TIPS_AVAILABLE_TEXT: String = MyBundle.message("advancedTipsAvailableMessage")
         val ADVANCED_TIPS_OPEN_SETTINGS_ACTION_TEXT: String = MyBundle.message("advancedTipsOpenSettingsAction")
-        const val ADVANCED_TITLE_MARKER: String = "◆"
+        const val ADVANCED_TITLE_LABEL: String = "· Advanced"
         val TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT: String = MyBundle.message("tipAddToIdeaVimRcAction")
         val TIP_RELOAD_IDEAVIMRC_ACTION_TEXT: String = MyBundle.message("tipReloadIdeaVimRcAction")
         val TIP_ADDED_TO_IDEAVIMRC_TEXT: String = MyBundle.message("tipAddedToIdeaVimRcMessage")

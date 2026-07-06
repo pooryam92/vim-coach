@@ -253,17 +253,6 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Replace from here to end with :.,$s",
-      "details": [
-        ":.,$s/foo/bar/g starts at the current line",
-        "Useful for partial-file refactors"
-      ]
-    },
-    {
-      "category": [
-        "pattern",
-        "cmdline"
-      ],
       "summary": "Run a command on matching lines with :g",
       "details": [
         ":g/TODO/p prints matching lines",

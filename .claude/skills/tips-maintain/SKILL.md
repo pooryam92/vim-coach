@@ -77,7 +77,7 @@ Hard constraints:
   reviewing one.
 - `advanced` — optional boolean, **omitted by default**. Add `"advanced": true`
   only to hide a tip from newcomers' default rotation; opted-in users still see
-  it (and its `Vim Coach ◆` title). The generator emits it only when `true` and
+  it (and its `Vim Coach · Advanced` title). The generator emits it only when `true` and
   rejects any non-boolean value. See "Tagging a tip advanced" below.
 - **Renaming a summary resets that tip's hide preference** (the hide key hashes
   the trimmed summary) — reword only when it's a real improvement.

@@ -42,7 +42,7 @@ class TipNotificationFactoryUnitTest {
         val normalNotification = notifier.createNotification(normalTip)
 
         assertEquals(
-            "${TipNotificationFactory.APP_TITLE} ${TipNotificationFactory.ADVANCED_TITLE_MARKER}",
+            "${TipNotificationFactory.APP_TITLE} ${TipNotificationFactory.ADVANCED_TITLE_LABEL}",
             advancedNotification.title
         )
         assertEquals(TipNotificationFactory.APP_TITLE, normalNotification.title)
