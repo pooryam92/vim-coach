@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-07-07
+
 ### Added
 
 - Tips can now carry a **mnemonic** — a short memory aid shown as a dimmed line beneath the tip to make its keystrokes easier to recall
@@ -126,7 +128,8 @@
 - Support for remote tip sources
 - Action to refetch tips from remote source for updating the local tip library
 
-[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.4.1...HEAD
+[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.5.0...HEAD
+[1.5.0]: https://github.com/pooryam92/vim-coach/compare/1.4.1...1.5.0
 [1.4.1]: https://github.com/pooryam92/vim-coach/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/pooryam92/vim-coach/compare/1.4.0-beta.2...1.4.0
 [1.4.0-beta.2]: https://github.com/pooryam92/vim-coach/compare/1.4.0-beta.1...1.4.0-beta.2
