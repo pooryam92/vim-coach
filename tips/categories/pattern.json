@@ -48,16 +48,6 @@
     },
     {
       "category": [
-        "pattern"
-      ],
-      "summary": "Search partial token g* / g#",
-      "details": [
-        "Like * and # but allows partial matches",
-        "Useful for camelCase and snake_case"
-      ]
-    },
-    {
-      "category": [
         "pattern",
         "cmdline"
       ],
@@ -65,7 +55,8 @@
       "details": [
         ":noh (or :nohlsearch) clears highlighting",
         "The current search pattern still stays active"
-      ]
+      ],
+      "mnemonic": "no highlight"
     },
     {
       "category": [
@@ -75,7 +66,9 @@
       "details": [
         "/foo\\c ignores case anywhere in the pattern",
         "/Foo\\C forces an exact-case match"
-      ]
+      ],
+      "mnemonic": "\\c ignore case, \\C exact Case",
+      "advanced": true
     },
     {
       "category": [
@@ -85,7 +78,8 @@
       "details": [
         "/\\<word\\> matches whole words only",
         "Use it to avoid partial-token matches"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -129,17 +123,20 @@
       "details": [
         "\\V makes most characters literal",
         "Good for paths, JSON, and punctuation"
-      ]
+      ],
+      "mnemonic": "Very nomagic (literal)",
+      "advanced": true
     },
     {
       "category": [
         "pattern"
       ],
-      "summary": "Very magic mode \\v reduces escaping",
+      "summary": "Search with plain regex \\v",
       "details": [
-        "\\v makes +, ?, (, |, {, } special automatically",
-        "/\\v(foo|bar) matches foo or bar, no backslashes"
-      ]
+        "Prefix a search with \\v for normal regex",
+        "/\\v(foo|bar) matches foo or bar"
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -150,7 +147,8 @@
       "details": [
         ":%s/foo/bar/g swaps foo for bar in file",
         "g means every match, not just the first"
-      ]
+      ],
+      "mnemonic": "substitute"
     },
     {
       "category": [
@@ -161,18 +159,8 @@
       "details": [
         "After searching /pat, use :%s//new/g",
         "The empty pattern reuses the last search"
-      ]
-    },
-    {
-      "category": [
-        "pattern",
-        "cmdline"
       ],
-      "summary": "Use # or | as :s delimiters",
-      "details": [
-        "Use # or | when the pattern contains /",
-        "Example: :%s#old/path#new/path#g"
-      ]
+      "advanced": true
     },
     {
       "category": [
@@ -205,18 +193,8 @@
       "details": [
         "g& reruns the last :substitute on all lines",
         "Useful after checking the change on one line with &"
-      ]
-    },
-    {
-      "category": [
-        "pattern",
-        "cmdline"
       ],
-      "summary": "Use \\r to insert a newline in :s",
-      "details": [
-        "In the replacement, \\r inserts a newline",
-        "Useful for reformatting lists and code"
-      ]
+      "advanced": true
     },
     {
       "category": [
@@ -228,7 +206,8 @@
         ":s finds text and replaces it",
         "& in the replacement reuses what matched",
         ":%s/cat/&s/g changes every cat to cats"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -239,7 +218,8 @@
       "details": [
         "Group with \\(...\\), reuse as \\1, \\2",
         "Swap a,b: :%s/\\(\\w*\\),\\(\\w*\\)/\\2,\\1/"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -252,7 +232,9 @@
         "Search first with /, *, or #",
         "cgn changes the next match and enters Insert",
         ". repeats the same edit on later matches"
-      ]
+      ],
+      "mnemonic": "change go next",
+      "advanced": true
     },
     {
       "category": [
@@ -271,23 +253,13 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Replace from here to end with :.,$s",
-      "details": [
-        ":.,$s/foo/bar/g starts at the current line",
-        "Useful for partial-file refactors"
-      ]
-    },
-    {
-      "category": [
-        "pattern",
-        "cmdline"
-      ],
       "summary": "Run a command on matching lines with :g",
       "details": [
         ":g/TODO/p prints matching lines",
         ":g/pat/d deletes matching lines",
-        ":g/pat/s/foo/bar/g substitutes only on matching lines"
-      ]
+        ":g/pat/s/a/b/g edits only matches"
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -299,7 +271,8 @@
         ":v acts on lines that don't match",
         ":v/foo/d drops them, keeping foo lines",
         "Short for :vglobal, the inverse of :g"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -308,9 +281,9 @@
       "summary": "Edit search history with q/",
       "details": [
         "q/ opens past searches in a window",
-        "Edit a line and press Enter to run it",
-        "q: does the same for : commands"
-      ]
+        "Edit a line and Enter to run it"
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -320,7 +293,8 @@
       "details": [
         "In : or insert, Ctrl-r / pastes the last search",
         "Example: :%s/<C-r>//new/g reuses it"
-      ]
+      ],
+      "advanced": true
     }
   ]
 }

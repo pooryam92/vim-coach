@@ -2,8 +2,8 @@
 
 Forward-looking work on `.ideavimrc` config tips. What's **shippable** is
 documented in the `tips-maintain` skill
-([config-kinds.md](../../.claude/skills/tips-maintain/config-kinds.md) →
-"What's safe to ship"): any block that is self-contained and sets no shared
+([reference.md](../../.claude/skills/tips-maintain/reference.md) →
+"Config tips — what's safe to ship"): any block that is self-contained and sets no shared
 state — install a plugin, tune built-in behavior, IDE-bridge options, and
 non-leader `<Action>()` maps. This file tracks the parts that are **not**
 shippable yet: positional/opinionated config and the code work that gates it.
@@ -24,7 +24,7 @@ before they ship.
 
 - **`<Action>` maps** — `nmap gr <Action>(FindUsages)`. **Non-leader maps now
   ship** with an authoring-time collision check
-  ([config-kinds.md](../../.claude/skills/tips-maintain/config-kinds.md));
+  ([reference.md](../../.claude/skills/tips-maintain/reference.md));
   leader-prefixed variants stay gated on the leader decision.
 - **Reshape the keyboard** — `inoremap jj <Esc>`, `nmap Y y$`. 0 today;
   collisions.

@@ -8,7 +8,8 @@
       "details": [
         "Esc leaves Insert mode",
         "Ctrl-[ is the same command"
-      ]
+      ],
+      "mode": "insert"
     },
     {
       "category": [
@@ -18,7 +19,8 @@
       "details": [
         "i inserts before cursor",
         "a inserts after cursor"
-      ]
+      ],
+      "mnemonic": "insert / append"
     },
     {
       "category": [
@@ -26,10 +28,11 @@
       ],
       "summary": "Pick completions Ctrl-n / Ctrl-p",
       "details": [
+        "As you type, completions pop up",
         "Ctrl-n moves down the list",
-        "Ctrl-p moves up the list",
-        "Use it in the completion popup"
-      ]
+        "Ctrl-p moves up the list"
+      ],
+      "mode": "insert"
     },
     {
       "category": [
@@ -37,9 +40,10 @@
       ],
       "summary": "Accept a completion with Ctrl-y",
       "details": [
-        "While the popup is open, takes the item",
-        "Ctrl-e dismisses the popup, keeps typing"
-      ]
+        "Ctrl-y takes the open popup item",
+        "Ctrl-e dismisses it, keeps typing"
+      ],
+      "mode": "insert"
     },
     {
       "category": [
@@ -79,17 +83,19 @@
       "details": [
         "One Normal command, back to Insert",
         "e.g. Ctrl-o dd deletes the line"
-      ]
+      ],
+      "mode": "insert"
     },
     {
       "category": [
         "insert"
       ],
-      "summary": "Delete a word in Insert mode Ctrl-w",
+      "summary": "Delete a word Ctrl-w",
       "details": [
         "Removes the word before the cursor",
         "Faster than holding backspace"
-      ]
+      ],
+      "mode": "insert"
     },
     {
       "category": [
@@ -99,7 +105,8 @@
       "details": [
         "Deletes back to first non-blank",
         "Keeps text after the cursor"
-      ]
+      ],
+      "mode": "insert"
     },
     {
       "category": [
@@ -107,9 +114,10 @@
       ],
       "summary": "Shift indent Ctrl-t / Ctrl-d",
       "details": [
-        "Ctrl-t shifts indent right",
-        "Ctrl-d shifts indent left"
-      ]
+        "Ctrl-t shifts the line right",
+        "Ctrl-d shifts it left"
+      ],
+      "mode": "insert"
     },
     {
       "category": [
@@ -120,7 +128,8 @@
       "details": [
         "Ctrl-r 0 inserts last yank",
         "Ctrl-r + inserts clipboard"
-      ]
+      ],
+      "mode": "insert"
     },
     {
       "category": [
@@ -131,7 +140,9 @@
       "details": [
         "Ctrl-k a: gives ä, e' gives é",
         ":digraphs lists all the codes"
-      ]
+      ],
+      "advanced": true,
+      "mode": "insert"
     },
     {
       "category": [
@@ -150,9 +161,12 @@
       ],
       "summary": "Insert char above/below",
       "details": [
-        "Ctrl-y inserts char from above",
-        "Ctrl-e inserts char from below"
-      ]
+        "Copy the char above or below",
+        "Ctrl-y grabs it from above",
+        "Ctrl-e grabs it from below"
+      ],
+      "advanced": true,
+      "mode": "insert"
     },
     {
       "category": [
@@ -162,7 +176,10 @@
       "details": [
         "Ctrl-v then a key inserts it raw",
         "Ctrl-v Tab adds a real tab"
-      ]
+      ],
+      "mnemonic": "verbatim",
+      "advanced": true,
+      "mode": "insert"
     }
   ]
 }

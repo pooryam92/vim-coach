@@ -17,4 +17,20 @@ interface SettingsRepository {
     fun hideTip(hash: String)
     fun restoreTip(hash: String)
     fun consumeExcludedTipsManagementHint(): Boolean
+
+    fun isShowAdvancedTipsEnabled(): Boolean
+    fun setShowAdvancedTipsEnabled(enabled: Boolean)
+
+    /** Read-only view of the one-shot advanced-tips hint, so guards can check without spending it. */
+    fun isAdvancedTipsHintShown(): Boolean
+
+    /** Returns true exactly once — the first time the advanced-tips nudge should be shown. */
+    fun consumeAdvancedTipsHint(): Boolean
+
+    /**
+     * Persisted count of tips shown while the advanced-tips nudge is pending. Plain storage; the
+     * nudge policy (threshold, when to advance) lives in AdvancedTipsNudge.
+     */
+    fun getTipsShownForAdvancedNudge(): Int
+    fun setTipsShownForAdvancedNudge(count: Int)
 }

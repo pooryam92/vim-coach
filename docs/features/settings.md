@@ -1,6 +1,6 @@
 # Settings
 
-Exposes plugin configuration at `Settings | Tools | Vim Coach`. The screen manages startup tips, periodic reminders, category filters, and excluded tips.
+Exposes plugin configuration at `Settings | Tools | Vim Coach`. The screen manages startup tips, periodic reminders, category filters, the advanced-tips opt-in, and excluded tips.
 
 ## Components
 
@@ -35,6 +35,10 @@ This means any category that appears in the tip corpus but is absent from the di
 The UI shows tip summaries, but the store only holds SHA-256 hashes (`PersistentSettingsStore.hiddenTipHashes`). `loadExcludedTips()` resolves hashes back to summaries via `VimTipRepository.getTipsByHashes()`. Tips whose hashes no longer match any stored tip (e.g. deleted from the corpus) are silently dropped — `mapNotNull` discards them.
 
 Restoring an excluded tip from the UI does **not** call the repository immediately. `ExcludedTipsListPanel` accumulates restored hashes in `restoredExcludedTipHashes` on the screen state. The actual `restoreTip()` calls happen inside `saveState()` when the user clicks Apply.
+
+## Advanced Tips Opt-In
+
+The **"Show advanced tips"** checkbox toggles `PersistentSettingsStore.showAdvancedTips` (default **off**). It is orthogonal to categories: category filters decide *which topics* appear; this toggle decides whether advanced-level tips *within* those topics are included. A pre-feature store has no field and deserializes to off, so existing users see no change until they opt in. See [Show Tip](show-tip.md) for how the toggle gates the rotation, marks advanced tips, and drives the one-time discovery nudge.
 
 ## Legacy Category Backfill
 

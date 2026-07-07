@@ -6,215 +6,167 @@ allowed-tools: Bash(node scripts/generate-tips.mjs*) Bash(node scripts/lint-tips
 
 # Maintaining Vim Coach tips
 
-**Primary goal: maximize value per tip, not tip count.** Every tip must teach one
-high-leverage, IdeaVim-true move the reader can **try the moment they read it and
-see the payoff** — bite-sized practice that makes them better at (Idea)Vim, not a
-reference fact to file away. Growth is not success — density is; when a change
-won't raise it, cut instead of add.
+**The one rule everything serves: a tip is short, readable at a glance, has
+everything it needs in itself, and teaches one real (Idea)Vim move the reader
+can try right now and get better.** The skill's intent is that reader value —
+not tip count, not completeness of reference. Two working tests apply it:
 
-**Judge every tip from the reader's seat, not the author's.** You write with full
-context; the reader gets one tip *alone*, in random order, in a 240px balloon,
-with nothing around it. So read each summary and detail **cold** — it must say
-*which* behavior it teaches and *how* to try it on the spot. Most wording defects
-(an unnamed mode, a key cluster, `c bar` blurring press-vs-type, a `{motion}`
-placeholder, a plugin that reads like a synonym for a built-in) are invisible from
-the author's seat and obvious from the reader's. Switching seats is how you find
-them.
+- **Density** — each tip must be high-leverage and IdeaVim-true, with a payoff
+  visible on the first try. Growth is not success; when a change won't raise
+  density, cut instead of add.
+- **The reader's seat** — the reader gets one tip *alone*, in random order, in a
+  240px balloon (~30–35 chars per line; 2–3 body lines read cleanest). Read every
+  summary and detail cold: it must say *which* behavior it teaches and *how* to
+  try it on the spot. Wording defects are invisible from the author's seat.
 
-Everything below — what to add, how to word it, what to reject — serves these two
-tests: **density** and the **reader's seat**.
+Tips live in `tips/categories/<category>.json` (one file per primary category),
+compiled into `tips/vim_tips_min.json` by `scripts/generate-tips.mjs`.
 
-You are the **maintainer** of the Vim Coach tip set: you add, revise, improve,
-and co-edit tips on request. Tips are authored by hand in
-`tips/categories/<category>.json` (one file per primary category) and compiled
-into `tips/vim_tips_min.json` by `scripts/generate-tips.mjs`. Paths are relative
-to the repo root. Everything to write or reword a tip is in this file; deeper
-detail is split into focused files you open **only when that need arises**:
-`checking-support.md` (prove IdeaVim supports a claim), `config-kinds.md`
-(authoring a `config` block), `examples.md` (worked before→after), and
-`categories.md` (add/rename/remove a category). To find *which* tips are worth
-adding, `coverage.mjs` maps IdeaVim's real surface against the set (see *Finding
-the best tips to add*).
+**Style is taught by example, not rules: read [examples.md](examples.md) before
+authoring or rewording anything.** Each entry is a whole tip before → after with
+the principle it embodies. Everything else on-demand lives in one companion,
+[reference.md](reference.md): proving IdeaVim supports a claim, `config`
+blocks and the .ideavimrc button, adding/renaming/removing a category.
 
-## How you work
+## Every change — work this checklist
 
-- **Revise in small batches (≤ 2 tips).** For each, show the **whole tip
-  before → after** plus a one-line reason, get a go-ahead, *then* edit. Never
-  bulk-rewrite silently. **Shape before wording:** past a light touch, agree the
-  structure first — how many tips, the split axis, line order — then polish words;
-  wording on a still-moving shape gets discarded. If two rewords are rejected,
-  stop guessing single variants — put the decision or 2–3 concrete options in
-  front of the user (inline) in one turn.
-- **Decide what's worth adding before you add it.** When the ask is open-ended
-  ("what's missing," "what are the best tips to add," "improve coverage"), don't
-  free-associate — map the gap and rank by value first. See *Finding the best tips
-  to add* below.
-- **A category is its rendered set, not its file.** The app renders a category
-  from every tip that tags it — *primary* (its file) **or** *secondary* — so
-  `visual` includes tips that live in `editing.json`. Before scoring, improving,
-  or adding to a category, `grep -rn '"<category>"' tips/categories/` to see all of
-  it; reading the lone file misjudges coverage and hides cross-listed duplicates.
-- **Search before adding.** `grep -rn` the keys *and* the behavior across
-  `tips/categories/`, then run `node scripts/lint-tips.mjs`. The generator only
-  blocks *identical* summaries, so a duplicate under different wording is yours to
-  catch — lint flags the likely ones (*Self-checks*). If covered, merge or drop
-  instead of adding.
-- **Verify support before keeping a claim** (`checking-support.md`). Don't carry
-  over upstream-Vim behavior IdeaVim doesn't replicate.
-- **When improving, scan for:** bad/duplicate categories, misleading or
-  overloaded details, plugin/option-name-first or label-style summaries, mixed
-  pair phrasing, stray `-`/`:` key separators, bare text objects shown as
-  commands, and tips that only make sense after another (order is random).
-  `node scripts/lint-tips.mjs` surfaces most of these (advisory — eyeball hits).
-- **Always close the loop.** An edit isn't done until `--check` reruns clean.
+1. **Search first.** Grep the keys *and* the behavior across `tips/categories/`.
+   The generator blocks only *identical* summaries — semantic duplicates are
+   yours to catch. A category is its *rendered* set (primary + secondary tags):
+   check it with `grep -rn '"<cat>"' tips/categories/`, never one file alone.
+2. **Verify support** against the IdeaVim submodule (reference.md →
+   "Checking IdeaVim support") —
+   don't carry over upstream-Vim behavior IdeaVim doesn't replicate.
+3. **Propose before editing.** Show each whole tip before → after with a
+   one-line reason and get a go-ahead. Agree shape first (how many tips, the
+   split axis) before polishing words. Two rejected rewords → stop guessing
+   single variants; offer 2–3 concrete options inline.
+4. **Edit** `tips/categories/<primary>.json` — a tip lives in the file named by
+   its first category.
+5. **Validate:** `node scripts/generate-tips.mjs --check` must pass (it is the
+   source of truth — run it, don't reason about it). Then
+   `node scripts/lint-tips.mjs` — advisory; eyeball each hit.
+6. **`git status --short`** — only intended files changed. Never commit
+   `tips/vim_tips_min.json`: CI regenerates it (regenerate locally only on
+   explicit request; build details: docs/tips/tips-pipeline.md).
 
-## Finding the best tips to add — or cut
-
-Adding tips well is mostly **saying no**: a mechanically valid tip that's
-low-value dilutes the set. When the ask is open-ended (what's missing, what to add
-next, improve coverage), work gap-first, not idea-first.
-
-**Map the gap.** `node .claude/skills/tips-maintain/coverage.mjs` reads IdeaVim's
-real surface from the `external/ideavim` submodule (command keys, ex-commands, and
-the 21 bundled plugins) and flags what **no tip text mentions**. It is **advisory
-and textual** — a miss is a *candidate, not a verdict* (keys taught under a
-different notation show as misses; most of the long tail doesn't deserve a tip).
-`--plugins` narrows to plugin coverage; `--all` includes single-char keys. When
-mining a *release* for new tips, fast-forward the submodule first (`git -C
-external/ideavim fetch && git -C external/ideavim merge --ff-only origin/master`)
-— it can be tens of commits behind, so a stale checkout silently hides the newest
-features. If the submodule is absent the script prints the checkout command
-(`checking-support.md`).
-
-**Score every candidate** on four axes; a tip earns its place only by winning on
-at least three:
-
-- **Reach** — how many users hit this. Daily motions and the IDE bridge beat
-  obscure ex-command corners.
-- **Leverage** — how much it saves vs. what the user does today. Replacing a mouse
-  trip or a 5-key dance scores high; a synonym for something they know scores low.
-- **IdeaVim fit** — is it *especially* worth knowing here? IDE-bridge actions,
-  plugin-backed power, and keys whose IdeaVim behavior differs from upstream Vim
-  are the sweet spot; a generic Vim factoid is weaker.
-- **Teachability** — read cold in ≤35 chars, can the reader *try it on the spot
-  and see the payoff* on the first attempt? If it only lands after setup or extra
-  context, it's a worse tip than one that doesn't.
-
-**These axes also prune.** When the ask is to find dead weight ("which tip isn't
-useful"), score *existing* tips the same way — one losing on three axes is a
-removal candidate. Pure deletion that shrinks the set is a legitimate density
-win; no replacement tip is required. But niche-but-standalone is a keep — cut
-only when a tip is redundant with a stronger sibling or actively counterproductive
-(teaches a feature to do less, undoes a useful default). A weak tip that still
-teaches one real move in isolation stays.
-
-**Candidate wells** the script and judgment surface: untaught **plugins**
-(`--plugins`; each needs the `plugins` category + a `config` block —
-`config-kinds.md`); untaught **IDE-bridge actions** (IdeaVim's edge, often framed
-as workflows the textual scan can't see); the rare high-**reach** untaught
-ex-command/key; **weak existing tips** a better one can replace without growing the
-set; and missing **workflows** (jump-and-center, change-inside-next-pair) no single
-key-miss reveals. Always verify support (`checking-support.md`) before proposing.
-
-Present a ranked short list with a one-line value rationale each and what you
-dropped, get a go-ahead, then author the survivors through *The loop* below.
-
-## The loop (every change)
-
-1. Edit the right `tips/categories/<primary-category>.json` — a tip lives in the
-   file named by its **first** category (mismatch fails the generator).
-2. Validate (writes nothing): `node scripts/generate-tips.mjs --check` — prints
-   `validated <N> tips`, exits non-zero naming the offending file + tip. It is
-   the source of truth for validity; run it rather than reasoning about it. Then
-   `node scripts/lint-tips.mjs` for advisory quality checks.
-3. Confirm only what you intended changed: `git status --short`.
-
-**Commit only the source change.** `tips/vim_tips_min.json` is **generated, and
-CI rebuilds + commits it** — leave it out of your commits; hand edits to it are
-overwritten. Regenerate it yourself (bare `node scripts/generate-tips.mjs`) only
-when the user explicitly asks. Build details: `docs/tips/tips-pipeline.md`.
-
-## Tip object shape
+## Tip shape
 
 ```json
 {
-  "category": ["navigation"],
-  "summary": "Jump to matching bracket %",
-  "details": ["Cursor on ( [ { jumps to its pair", "Works in Normal and Visual mode"]
+  "category": ["plugins", "editing"],
+  "summary": "Make a word camelCase crc",
+  "details": ["crc turns foo_bar into fooBar", "Cursor can sit anywhere in the word"],
+  "mnemonic": "coerce case",
+  "config": { "name": "Install vim-abolish", "lines": ["Plug 'tpope/vim-abolish'"] }
 }
 ```
 
-### Field rules
+Hard constraints:
 
-- **`category`** — array; the **first** entry is primary and **must match the
-  file name**. One by default; add a 2nd/3rd only when it genuinely aids
-  discovery.
-- **`summary`** — one command-first line, **≤ 35 chars** (key-attachment and
-  disambiguation rules: *Wording rules*). Carry **at most one key or one clean
-  pair** (`gj / gk`); 3+ keys or a chord cluster (`Ctrl-w _ / Ctrl-w |`,
-  `zo / zc / za`) name the outcome instead and map each key in the details.
-- **`details`** — short factual lines (≤ 35 chars each): what it does, context, a
-  caveat, or a quick example. **Prefer 2; no hard cap, but every line past 2 is
-  a cost and must earn its place** — never padding. Two short lines beat one
-  wrapped line; blank lines are stripped. An *irreducibly* multi-step move (block
-  insert) becomes numbered steps (`1. … 2. …`) — summary names the use, steps show
-  how; only when every step is load-bearing.
-- **`config`** (optional) — `{ "name": ..., "lines": [...] }`; renders the **Add
-  to .ideavimrc** button. Shippability, the worked example, the `name`/`Apply`
-  nuance, and the legacy array form: `config-kinds.md`.
+- `category` — first entry is primary and **must match the file name**; add a
+  2nd/3rd only when it genuinely aids discovery.
+- `summary` — ≤ 35 chars, command-first; at most one key or one clean pair
+  (`gj / gk`). 3+ keys: name the outcome, map each key in the details.
+- `details` — one balloon line ≈ 35 chars; lint flags past 35 (it would wrap).
+  Prefer 2 details, 3 at most (lint flags a 4th). Numbered steps only
+  for an irreducibly multi-step move.
+- `mnemonic` — optional, **omitted by default**; ≤ 40 chars; only when the
+  decoded words make the keys stick; skip on 3+-detail tips. See examples.md.
+- `config` — optional; read reference.md → "Config tips" before authoring or
+  reviewing one.
+- `advanced` — optional boolean, **omitted by default**. Add `"advanced": true`
+  only to hide a tip from newcomers' default rotation; opted-in users still see
+  it (and its `Vim Coach · Advanced` title). The generator emits it only when `true` and
+  rejects any non-boolean value. See "Tagging a tip advanced" below.
+- `mode` — optional string, **omitted by default**. One of `insert`, `visual`,
+  `command` (Normal is the default and stays absent — never tag it). Names the
+  mode the reader must be in to press the keys; it renders as a dimmed
+  `Vim Coach · Insert mode` title label (informational only — it does *not*
+  hide, gate, or de-duplicate anything). The generator rejects any other value.
+  See "Tagging a tip's mode" below.
+- **Renaming a summary resets that tip's hide preference** (the hide key hashes
+  the trimmed summary) — reword only when it's a real improvement.
 
-## Wording rules
+### Tagging a tip advanced
 
-Each rule below is the **reader's-seat test** (top of file) made concrete — a
-defect that hides from the author and shows from the reader.
+`advanced` hides a tip from the default rotation for newcomers; users opt in
+from settings. There is no fixed rubric — it **emerges from doing**. Bias hard
+toward normal: over-tagging shrinks newcomers' default pool, which is the harm.
+Tag a few at a time, and when a pattern for "too advanced for a newcomer's first
+week" starts to repeat, write it down here as the rubric forms. So far:
 
-- **Command-first, concrete outcome over Vim taxonomy.** Verb-first, not a noun
-  label (`Show line numbers with number`, not `Line numbers`). Prefer a real,
-  typeable form over a placeholder — `griw`, not `gr{motion}`; reserve
-  `{count}`/`{char}` for genuinely variable args (`r{char}`, `{count}G`).
-- **Keys attach with a plain space only** — never a `-`/`:`/`→`/`(…)` separator
-  (`Add surroundings ysiw)`, not `… - ysiw)`). `with` is allowed as
-  genuine prose, not as a separator.
-- **Every keystroke shown must do something when typed.** A bare text object
-  (`iw`, `ac`, `ii`, `ai`, `am`) does nothing alone — lead with an operator
-  (`Act on a class dac / cic`, not `Select a class ac`).
-- **A transform tip names both ends.** Replace/swap/substitute/paste-over tips
-  must show *what changes and what it becomes* — `Paste a yank over a word griw`,
-  not `Replace a word` (with what?). The reader can't see the payoff if half the
-  operation is implied.
-- **Each tip stands alone — in knowledge, not just sequence.** Order is random,
-  so a tip can't assume the reader just saw another, nor that they grasp the
-  concept it teaches. Fold a dependent point into its host, or split an
-  overloaded tip into self-contained ones (only when each earns a distinct
-  summary — the generator rejects duplicates).
-- **Spell out abbreviations in user-facing text.** `command-line`, not `cmdline`
-  (that's the category slug only). `char`/`msg`/`prev` are fine only when
-  spelling out would wrap.
-- **The summary must disambiguate, not just label.** Read cold it must pin the one
-  behavior the tip teaches: name the mode when the key is mode-ambiguous (`O`, `I`,
-  `A`, `Ctrl-w` → `Swap corner in Visual block O`); when a plugin overlaps a
-  built-in, carry the differentiator (`Paste over a word, keep yank griw`, not
-  `Paste a yank over a word griw`); and name the user *outcome*, not a key dump or
-  the plugin name — for interchangeable keys name the family in prose with one
-  example (`Any bracket or quote works too`), and put the plugin/option name in
-  `config`/details (`Add surroundings ysiw)`, not `Surround text with
-  vim-surround`). Name any mode whenever it removes doubt.
-- **Don't restate the summary in detail line 1** — the most-read line; spend it
-  on the mechanic, value, or mnemonic. For a jargon-heavy command give a typeable
-  example + plain-words result (`:v/foo/d deletes lines lacking foo`), not the
-  syntax anatomy.
-- **Consistent pair phrasing** — `next/previous`, `before/after`, `top/bottom`.
-  In a slashed pair, vary one axis and keep the operator fixed.
+- `Recall last search with Ctrl-r /` — a register paste inside the `:`/insert
+  prompt; niche and mode-specific, not a first-week move.
 
-Display: tips render in a 240px IntelliJ balloon (~30–35 chars/line). 2 body
-lines read cleanest; a 3rd is fine when it pays its way (no hard cap in the
-renderer). Worked before→after examples: `examples.md`.
+### Tagging a tip's mode
 
-Reword only when it's a real improvement — **renaming a summary resets the user's
-hide preference** for that tip (the hide key hashes the trimmed summary).
+`mode` labels the non-Normal mode the reader presses the keys in, so a tip read
+cold isn't mistaken for a Normal-mode move. Tag only when the mode is not
+Normal *and* not already obvious from the summary:
 
-## Categories (14)
- 
+- Set it when the whole tip lives in one non-Normal mode — an Insert-mode
+  register paste (`Ctrl-r "`), a Visual-mode operator, a `:` command-line edit.
+  Use `command` for command-line (`:`) tips; the label shortens it to
+  `Command mode`.
+- Leave it off for Normal-mode tips (the default) and for a move that *enters* a
+  mode from Normal (`ciw`, `v`, `:s`) — the reader starts in Normal, so the tip
+  is a Normal-mode move even though it ends elsewhere.
+- `mode` is the machine label; it does not replace naming the mode in the
+  wording when a key is mode-ambiguous (see the wording quick list) — do both
+  where it helps.
+
+Wording quick list — each is the reader's-seat test made concrete; worked
+versions in examples.md:
+
+- Verb-first, concrete outcome; a typeable form over a placeholder (`griw`, not
+  `gr{motion}`; `{count}`/`{char}` only for genuinely variable args).
+- Keys attach with a plain space — never a `-` `:` `→` `(…)` separator.
+- Every keystroke shown must do something when typed — lead a bare text object
+  with an operator (`Act on a class dac`, not `Select a class ac`).
+- A transform names both ends — what changes *and* what it becomes.
+- Name the use-site — a motion tip's second line points at the edit it sets up
+  (`Perfect for ct) edits`), not more motion trivia (`;`/`,` repeat).
+- Each tip stands alone — in knowledge, not just sequence; order is random.
+- Split by *intent*, not key count: different intents (toggle `za` vs force
+  `zo`/`zc`) are separate tips; same intent, different direction (`gj / gk`)
+  stays one pair.
+- Name the mode when a key is mode-ambiguous; when a plugin overlaps a
+  built-in, the summary carries the differentiator.
+- Spell out abbreviations in user-facing text (`command-line`, not `cmdline`).
+- Pair phrasing stays consistent (`next/previous`, `before/after`); vary one
+  axis, keep the operator fixed. Symbol pairs join with `and`, not `/`
+  (`{ and }` — a slash between glyphs is a pileup).
+
+## Finding what to add — or cut
+
+Adding well is mostly saying no. When the ask is open-ended, map the gap first:
+`node .claude/skills/tips-maintain/coverage.mjs` (`--plugins`, `--all`) diffs
+IdeaVim's real surface (the `external/ideavim` submodule) against tip text.
+Advisory and textual — a miss is a candidate, not a verdict. Plugin misses
+often false-positive: the script matches internal ids while tips carry the Plug
+repo name, so grep the `Plug` lines before trusting one. When mining a release,
+fast-forward the submodule first (`git -C external/ideavim fetch && git -C
+external/ideavim merge --ff-only origin/master`).
+
+Score candidates on four axes; a tip earns its place by winning on at least 3:
+**reach** (how many users hit it) · **leverage** (keystrokes/mouse trips saved)
+· **IdeaVim fit** (IDE-bridge, plugin power, differs-from-upstream) ·
+**teachability** (tryable on the spot, cold, in ≤ 35 chars).
+
+The same axes prune: an existing tip losing on 3 is a removal candidate, and
+pure deletion is a legitimate density win. Niche-but-standalone stays; cut only
+redundant-with-a-stronger-sibling or actively counterproductive. Two gaps the
+script can't see: a command cluster taught only through its flags with no
+foundational tip (29 tips taught `:s` trimmings before `:%s/foo/bar/g` itself
+was added), and theory — a concept earns at most one tip and it must still be
+tryable; if no tryable form exists, fold one line into a concrete host instead.
+
+Present a ranked shortlist (one-line rationale each, plus what you dropped),
+get a go-ahead, then author survivors through the checklist above.
+
+## Categories
+
 `navigation` (motion/scroll/fold) · `editing` (change text/undo) · `registers`
 (yank/paste/registers) · `visual` (selecting) · `insert` (typing while
 inserting) · `repeat` (repeat/automate) · `pattern` (search & replace) ·
@@ -223,23 +175,15 @@ inserting) · `repeat` (repeat/automate) · `pattern` (search & replace) ·
 keyboard) · `ideavim` (IDE-bridge, not plugin-specific) · `plugins` (needs an
 IdeaVim plugin enabled).
 
-Picking: one primary; secondaries only when they aid discovery. `cmdline` only
-when entering `:` *is* the point — not just because a tip mentions `:set`/`:map`
-(keep `options`/`mappings`). Text objects → `editing` by default, `visual` when
-the summary is about selecting. `plugins` only when a plugin must be enabled
-(usually keep the functional category too). Adding a *new* category is a coupled
-code+docs change — see `categories.md`.
+One primary; `cmdline` only when entering `:` *is* the point (a tip mentioning
+`:set`/`:map` keeps `options`/`mappings`). Text objects → `editing` unless the
+point is selecting (`visual`). `plugins` only when a plugin must be enabled —
+usually keep the functional category too. Adding or renaming a category is a
+coupled code+docs change: reference.md → "Adding or changing a category".
 
-## Self-checks
+## When a call gets corrected
 
-`node scripts/lint-tips.mjs` is advisory (never gates, always exits 0). It
-reports over-length summaries/details, possible stray separators, and **possible
-duplicate tips** — the soft checks the generator skips. The duplicate check pairs
-tips that share a config line (outside `plugins`, where enable lines are shared
-by design) or share both trailing keys and ≥2 topic words; it catches the same
-behavior under *different* summaries, which the generator's identical-summary
-check cannot. Some hits are false positives by design (a `-` that's part of the
-keys like `Ctrl-w + / -`; intentional siblings like `gu / gU` in two modes) — so
-eyeball each before acting.
-</content>
-</invoke>
+When the user rejects or corrects a wording decision, capture it in the same
+session as a new before → after entry in examples.md (or sharpen the entry that
+failed to prevent it). That file is this skill's memory — there is no separate
+backlog.

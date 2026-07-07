@@ -9,13 +9,14 @@
       "details": [
         "Select, then p drops your yank in",
         "Replaced text overwrites your yank"
-      ]
+      ],
+      "mode": "visual"
     },
     {
       "category": [
         "visual"
       ],
-      "summary": "Enter Visual mode v V Ctrl-v",
+      "summary": "Enter Visual mode three ways",
       "details": [
         "v selects characters",
         "V selects whole lines",
@@ -30,7 +31,9 @@
       "details": [
         "o moves cursor to the other end",
         "Great for precise adjustments"
-      ]
+      ],
+      "mnemonic": "other end",
+      "mode": "visual"
     },
     {
       "category": [
@@ -41,7 +44,8 @@
         "1. Ctrl-v to start the block",
         "2. O swaps to the other edge",
         "3. Grow the block from that side"
-      ]
+      ],
+      "mode": "visual"
     },
     {
       "category": [
@@ -61,7 +65,8 @@
       "details": [
         "gv reselects the last selection",
         "Handy after Esc or an edit"
-      ]
+      ],
+      "mnemonic": "go visual again"
     },
     {
       "category": [
@@ -72,7 +77,9 @@
       "details": [
         "gn selects the next match",
         "gN selects the previous one"
-      ]
+      ],
+      "mnemonic": "go next",
+      "advanced": true
     },
     {
       "category": [
@@ -126,7 +133,8 @@
       "details": [
         "> indents, < outdents",
         "Then press . to repeat"
-      ]
+      ],
+      "mode": "visual"
     },
     {
       "category": [
@@ -135,9 +143,11 @@
       ],
       "summary": "Keep selection after shift >gv",
       "details": [
-        ">gv reselects after indenting",
-        "<gv reselects after outdenting"
-      ]
+        "> on a selection drops it",
+        ">gv indents and reselects",
+        "<gv does the same outdenting"
+      ],
+      "mode": "visual"
     },
     {
       "category": [
@@ -149,7 +159,8 @@
         "Select then gu to lowercase",
         "Select then gU to uppercase",
         "g~ toggles the case"
-      ]
+      ],
+      "mode": "visual"
     },
     {
       "category": [
@@ -160,7 +171,8 @@
       "details": [
         "Select text then press gq",
         "Runs the IDE code reformat"
-      ]
+      ],
+      "mode": "visual"
     },
     {
       "category": [
@@ -173,7 +185,8 @@
         "2. Press I to insert at left",
         "3. Type — shows on one line",
         "4. Esc copies it to them all"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -186,7 +199,8 @@
         "2. Press A to append at right",
         "3. Type — shows on one line",
         "4. Esc copies it to them all"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -199,7 +213,8 @@
         "2. Press $ to reach each end",
         "3. Press A, then type your text",
         "4. Esc adds it to every line"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -212,7 +227,8 @@
         "2. Press c to delete it",
         "3. Type the new text",
         "4. Esc fills every line"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -223,7 +239,8 @@
       "details": [
         "Select a block, then press r",
         "Replaces all selected chars"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -245,7 +262,8 @@
       "details": [
         "Select, then P drops your yank in",
         "Yank survives — repeat on more spots"
-      ]
+      ],
+      "mode": "visual"
     }
   ]
 }

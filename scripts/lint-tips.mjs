@@ -17,10 +17,16 @@ import { fileURLToPath } from "node:url";
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repoRoot, "tips", "categories");
 
-// A summary must fit one line in the ~240px balloon. Details may wrap to ~2
-// lines, so they get a looser cap. Tune here if the skill's guidance changes.
+// A summary must fit one line in the ~240px balloon. Each detail should too —
+// a longer detail wraps and grows the balloon. Tune here if the skill's
+// guidance changes.
 const SUMMARY_MAX = 35;
-const DETAIL_MAX = 68;
+const DETAIL_MAX = 35;
+// Past this many details the balloon stops being glanceable.
+const DETAILS_MAX_COUNT = 3;
+// A mnemonic is a one-line italic memory hook under the summary; keep it short so
+// it never becomes the reason the balloon grows.
+const MNEMONIC_MAX = 40;
 
 // Tokens that look like English words rather than Vim keys, so the duplicate
 // heuristic stops consuming the trailing key-run at them.
@@ -69,6 +75,8 @@ const files = readdirSync(sourceDir).filter((n) => n.endsWith(".json")).sort();
 
 const longSummaries = [];
 const longDetails = [];
+const tooManyDetails = [];
+const longMnemonics = [];
 const separators = [];
 const allTips = [];
 
@@ -81,6 +89,13 @@ for (const file of files) {
 
     for (const d of tip.details ?? []) {
       if (d.length > DETAIL_MAX) longDetails.push([d.length, file, d]);
+    }
+
+    const detailCount = (tip.details ?? []).length;
+    if (detailCount > DETAILS_MAX_COUNT) tooManyDetails.push([detailCount, file, s]);
+
+    if (typeof tip.mnemonic === "string" && tip.mnemonic.length > MNEMONIC_MAX) {
+      longMnemonics.push([tip.mnemonic.length, file, tip.mnemonic]);
     }
 
     // Keys must attach with a plain space, never a separator. The `-` case
@@ -113,12 +128,20 @@ function section(title, rows, render) {
 
 longSummaries.sort((a, b) => b[0] - a[0]);
 longDetails.sort((a, b) => b[0] - a[0]);
+tooManyDetails.sort((a, b) => b[0] - a[0]);
+longMnemonics.sort((a, b) => b[0] - a[0]);
 
 section(`Summaries over ${SUMMARY_MAX} chars`, longSummaries, ([n, f, s]) =>
   `${String(n).padEnd(3)} ${f.replace(".json", "").padEnd(12)} ${JSON.stringify(s)}`,
 );
-section(`Details over ${DETAIL_MAX} chars (won't fit ~2 wrapped lines)`, longDetails, ([n, f, d]) =>
+section(`Details over ${DETAIL_MAX} chars (will wrap past one balloon line)`, longDetails, ([n, f, d]) =>
   `${String(n).padEnd(3)} ${f.replace(".json", "").padEnd(12)} ${JSON.stringify(d)}`,
+);
+section(`Tips with more than ${DETAILS_MAX_COUNT} details`, tooManyDetails, ([n, f, s]) =>
+  `${String(n).padEnd(3)} ${f.replace(".json", "").padEnd(12)} ${JSON.stringify(s)}`,
+);
+section(`Mnemonics over ${MNEMONIC_MAX} chars (keep the italic line short)`, longMnemonics, ([n, f, m]) =>
+  `${String(n).padEnd(3)} ${f.replace(".json", "").padEnd(12)} ${JSON.stringify(m)}`,
 );
 section("Possible stray separators in summaries (eyeball — `-` may be part of keys)", separators, ([f, s]) =>
   `${f.replace(".json", "").padEnd(12)} ${JSON.stringify(s)}`,

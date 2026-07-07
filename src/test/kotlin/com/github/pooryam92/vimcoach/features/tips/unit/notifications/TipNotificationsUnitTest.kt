@@ -1,22 +1,29 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
+import com.github.pooryam92.vimcoach.features.tips.application.notifications.RecordTipNote
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipActions
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipMessageHandle
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotifications
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotifier
 import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
-import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
+import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeSettingsService
 import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeVimTipRepository
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
+import java.nio.file.Files
 
 class TipNotificationsUnitTest {
+
+    @get:Rule
+    val tempFolder = TemporaryFolder()
 
     private val notifier = FakeTipNotifier()
 
@@ -25,13 +32,16 @@ class TipNotificationsUnitTest {
         settings: FakeSettingsService = FakeSettingsService(),
         ideaVimRcAction: (VimTip) -> (() -> Unit)? = { null },
         ideaVimAvailable: () -> Boolean = { true },
+        recordTipNote: RecordTipNote? = null,
+        openSettings: () -> Unit = {},
     ) = TipNotifications(
         notifier = notifier,
         tipRepository = { repository },
         settingsRepository = { settings },
         ideaVimRcAction = ideaVimRcAction,
         ideaVimAvailable = ideaVimAvailable,
-        openSettings = {},
+        openSettings = openSettings,
+        recordTipNote = recordTipNote,
     )
 
     @Test
@@ -131,11 +141,71 @@ class TipNotificationsUnitTest {
         assertEquals("no extra management hint shown", 1, notifier.tipExcludedShown)
     }
 
+    @Test
+    fun doesNotWireRecordNoteWhenNoNoteFileConfigured() {
+        controller(recordTipNote = null).showRandomTip()
+
+        assertNull(notifier.lastActions!!.onRecordNote)
+    }
+
+    @Test
+    fun recordNoteAppendsToConfiguredFileWithTheShownTip() {
+        val file = tempFolder.root.toPath().resolve("notes.md")
+        val tip = VimTip("editing tip", listOf("details"), listOf("editing"))
+        val repository = FakeVimTipRepository(initialTips = listOf(tip))
+        controller(
+            repository = repository,
+            settings = FakeSettingsService(enabledCategories = listOf("editing")),
+            recordTipNote = RecordTipNote(file),
+        ).showRandomTip()
+
+        notifier.lastActions!!.onRecordNote!!("needs a clearer summary")
+
+        val content = Files.readString(file)
+        assertTrue(content.contains("editing tip"))
+        assertTrue(content.contains("needs a clearer summary"))
+    }
+
+    // The nudge policy itself (threshold, cache/setting gating) is covered by AdvancedTipsNudgeUnitTest;
+    // these two only pin the orchestrator's wiring: it forwards a positive verdict to the notifier with
+    // the openSettings callback, and honors a negative verdict by staying silent.
+    @Test
+    fun nudgesAdvancedTipsWithOpenSettingsWhenNudgeIsEligible() {
+        val openSettings = {}
+        val repository = FakeVimTipRepository(
+            initialTips = listOf(VimTip("advanced tip", listOf("details"), advanced = true))
+        )
+        val controller = controller(
+            repository,
+            FakeSettingsService(showAdvancedTips = false),
+            openSettings = openSettings,
+        )
+
+        repeat(5) { controller.showRandomTip() }
+
+        assertEquals(1, notifier.advancedTipsNudgeShown)
+        assertSame(openSettings, notifier.lastAdvancedTipsOpenSettings)
+    }
+
+    @Test
+    fun doesNotNudgeAdvancedTipsWhenNudgeIsIneligible() {
+        val repository = FakeVimTipRepository(
+            initialTips = listOf(VimTip("advanced tip", listOf("details"), advanced = true)),
+            showAdvancedTips = true
+        )
+
+        repeat(5) { controller(repository, FakeSettingsService(showAdvancedTips = true)).showRandomTip() }
+
+        assertEquals(0, notifier.advancedTipsNudgeShown)
+    }
+
     private class FakeTipNotifier : TipNotifier {
         var visibleTip = false
         val shownTips = mutableListOf<VimTip>()
         var lastActions: TipActions? = null
         var tipExcludedShown = 0
+        var advancedTipsNudgeShown = 0
+        var lastAdvancedTipsOpenSettings: (() -> Unit)? = null
 
         override fun hasVisibleTip(): Boolean = visibleTip
         override fun showTip(tip: VimTip, actions: TipActions) {
@@ -143,6 +213,10 @@ class TipNotificationsUnitTest {
             lastActions = actions
         }
         override fun showTipExcluded(onManage: () -> Unit) { tipExcludedShown += 1 }
+        override fun showAdvancedTipsAvailable(onOpenSettings: () -> Unit) {
+            advancedTipsNudgeShown += 1
+            lastAdvancedTipsOpenSettings = onOpenSettings
+        }
         override fun showAddedToIdeaVimRc(onReload: (() -> Unit)?): TipMessageHandle =
             object : TipMessageHandle { override fun dismiss() = Unit }
         override fun showAlreadyInIdeaVimRc() = Unit
@@ -150,25 +224,5 @@ class TipNotificationsUnitTest {
         override fun showAddToIdeaVimRcFailed(reason: AddTipToIdeaVimRc.FailureReason) = Unit
         override fun showReloadedIdeaVimRc() = Unit
         override fun showReloadIdeaVimRcFailed() = Unit
-    }
-
-    private class FakeSettingsService(
-        private val enabledCategories: List<String> = emptyList(),
-        private val managementHint: Boolean = false,
-    ) : SettingsRepository {
-        private val hiddenTipHashes = mutableListOf<String>()
-
-        override fun isShowTipsOnStartupEnabled(): Boolean = true
-        override fun setShowTipsOnStartupEnabled(enabled: Boolean) = Unit
-        override fun isPeriodicTipsEnabled(): Boolean = false
-        override fun setPeriodicTipsEnabled(enabled: Boolean) = Unit
-        override fun getTipIntervalHours(): Int = 1
-        override fun setTipIntervalHours(hours: Int) = Unit
-        override fun getEnabledTipCategories(availableCategories: List<String>): List<String> = enabledCategories
-        override fun setEnabledTipCategories(availableCategories: List<String>, enabledCategories: List<String>) = Unit
-        override fun getHiddenTipHashes(): List<String> = hiddenTipHashes.toList()
-        override fun hideTip(hash: String) { if (hash !in hiddenTipHashes) hiddenTipHashes.add(hash) }
-        override fun restoreTip(hash: String) { hiddenTipHashes.remove(hash) }
-        override fun consumeExcludedTipsManagementHint(): Boolean = managementHint
     }
 }

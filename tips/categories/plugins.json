@@ -45,10 +45,9 @@
       ],
       "summary": "Add surroundings ysiw)",
       "details": [
-        "ys, then a motion, then a pair",
-        "ysiw) gives (word), ysiw( pads it: ( word )",
-        "Takes any motion, like ysip)",
-        "Repeat on the next word with ."
+        "ysiw) → (word)",
+        "ysiw( → ( word )",
+        "Takes any motion, like ysip)"
       ],
       "config": {
         "name": "Install vim-surround",
@@ -64,9 +63,8 @@
       ],
       "summary": "yss) wraps the whole line",
       "details": [
-        "2nd s = whole line, like dd/yy",
-        "Any bracket or quote works too",
-        "Skips leading whitespace"
+        "yss) surrounds the line with ( )",
+        "Any bracket or quote works too"
       ],
       "config": {
         "name": "Install vim-surround",
@@ -103,6 +101,7 @@
         "ds\" removes surrounding quotes",
         "ds( strips the parens"
       ],
+      "mnemonic": "delete surround",
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -117,7 +116,7 @@
       ],
       "summary": "Surround a visual selection S",
       "details": [
-        "In Visual mode, press S then a bracket or tag",
+        "Press S then a bracket or tag",
         "S) wraps in ( ), S<em> in <em> tags"
       ],
       "config": {
@@ -125,7 +124,8 @@
         "lines": [
           "Plug 'tpope/vim-surround'"
         ]
-      }
+      },
+      "mode": "visual"
     },
     {
       "category": [
@@ -137,6 +137,7 @@
         "t or < prompts for the tag",
         "ysiw<em> wraps a word in <em>"
       ],
+      "mnemonic": "you surround inner word tag",
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -154,6 +155,7 @@
         "cst<div> makes <span> into <div>",
         "Edits the open and close tag at once"
       ],
+      "mnemonic": "change surrounding tag",
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -171,6 +173,7 @@
         "dst turns <span>hi</span> into hi",
         "Strips both tags, keeps the text"
       ],
+      "mnemonic": "delete surround tag",
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -188,6 +191,7 @@
         "f prompts for a function name",
         "ysiwf then name gives name(word)"
       ],
+      "mnemonic": "you surround inner word function",
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -205,6 +209,7 @@
         "gcc toggles the current line",
         "gc works with a motion or selection"
       ],
+      "mnemonic": "go comment",
       "config": {
         "name": "Install vim-commentary",
         "lines": [
@@ -254,10 +259,10 @@
       ],
       "summary": "Swap two regions cxiw",
       "details": [
-        "cxiw marks the first region",
-        "Repeat on a 2nd region to swap",
-        "Takes any motion, like cxx or X"
+        "cxiw on foo, then cxiw on bar",
+        "foo and bar trade places"
       ],
+      "mnemonic": "change exchange inner word",
       "config": {
         "name": "Install vim-exchange",
         "lines": [
@@ -293,6 +298,7 @@
         "dii deletes lines at the current indent",
         "Pairs with any operator — c, y, >, ="
       ],
+      "mnemonic": "delete inner indent",
       "config": {
         "name": "Install vim-indent-object",
         "lines": [
@@ -344,6 +350,7 @@
       "details": [
         "crc turns foo_bar into fooBar"
       ],
+      "mnemonic": "coerce camelCase",
       "config": {
         "name": "Install vim-abolish",
         "lines": [
@@ -360,6 +367,7 @@
       "details": [
         "crs turns fooBar into foo_bar"
       ],
+      "mnemonic": "coerce snake_case",
       "config": {
         "name": "Install vim-abolish",
         "lines": [
@@ -376,6 +384,7 @@
       "details": [
         "crm turns foo_bar into FooBar"
       ],
+      "mnemonic": "coerce MixedCase",
       "config": {
         "name": "Install vim-abolish",
         "lines": [
@@ -392,6 +401,7 @@
       "details": [
         "cru turns fooBar into FOO_BAR"
       ],
+      "mnemonic": "coerce UPPER",
       "config": {
         "name": "Install vim-abolish",
         "lines": [
@@ -544,9 +554,9 @@
       "summary": "Act on a method dam / dim",
       "details": [
         "dam deletes the whole method",
-        "dim deletes just the body",
-        "Pairs with any operator — c, y"
+        "dim deletes just the body"
       ],
+      "mnemonic": "delete around / inner method",
       "config": {
         "name": "Install vim-textobj-function",
         "lines": [
@@ -564,6 +574,7 @@
         "dac deletes the class, header and all",
         "Pairs with any operator — c, y, v"
       ],
+      "mnemonic": "delete around class",
       "config": {
         "name": "Enable classtextobj",
         "lines": [
@@ -581,6 +592,7 @@
         "cic changes the body, keeps the class line",
         "Pairs with any operator — d, y, >, ="
       ],
+      "mnemonic": "change inner class",
       "config": {
         "name": "Enable classtextobj",
         "lines": [
@@ -610,11 +622,44 @@
         "plugins",
         "navigation"
       ],
-      "summary": "Move by indentation level",
+      "summary": "Hop to same-indent lines ]= / [=",
       "details": [
-        "]= /[= next/previous same-indent line",
-        "]+ deeper, ]- shallower indent",
-        "]% /[% jump to block end/start"
+        "]= to the next line at this indent",
+        "[= to the previous one"
+      ],
+      "config": {
+        "name": "Install indentwise",
+        "lines": [
+          "Plug 'jeetsukumaran/vim-indentwise'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "navigation"
+      ],
+      "summary": "Step in or out by indent ]+ / ]-",
+      "details": [
+        "]+ to the next more-indented line",
+        "]- to the next less-indented line"
+      ],
+      "config": {
+        "name": "Install indentwise",
+        "lines": [
+          "Plug 'jeetsukumaran/vim-indentwise'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "navigation"
+      ],
+      "summary": "Jump to indent block edge ]% / [%",
+      "details": [
+        "]% to the end of this indent block",
+        "[% to the start"
       ],
       "config": {
         "name": "Install indentwise",

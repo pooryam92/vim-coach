@@ -8,7 +8,10 @@ import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 
 class FakeVimTipRepository(
     initialTips: List<VimTip> = listOf(DEFAULT_TIP),
-    initialMetadata: TipMetadata = TipMetadata()
+    initialMetadata: TipMetadata = TipMetadata(),
+    // Mirrors the production draw contract: advanced tips are excluded unless opted in, so tests
+    // cannot show an opted-out caller a tip that VimTipRepositoryImpl would never return.
+    private val showAdvancedTips: Boolean = false
 ) : VimTipRepository {
     private var tips = initialTips.toMutableList()
     private var categories = TipCategories.fromTips(initialTips)
@@ -38,7 +41,7 @@ class FakeVimTipRepository(
         getRandomTipCalls += 1
         lastRequestedCategories = null
         lastIncludeConfigTips = includeConfigTips
-        val tipPool = configFiltered(tips, includeConfigTips).ifEmpty { listOf(DEFAULT_TIP) }
+        val tipPool = visibleTips(tips, includeConfigTips).ifEmpty { listOf(DEFAULT_TIP) }
         val tip = tipPool[currentIndex % tipPool.size]
         currentIndex += 1
         return tip
@@ -50,7 +53,7 @@ class FakeVimTipRepository(
         lastIncludeConfigTips = includeConfigTips
 
         val allowedCategories = categories.toSet()
-        val tipPool = configFiltered(tips.filter { tip ->
+        val tipPool = visibleTips(tips.filter { tip ->
             tip.category.any(allowedCategories::contains)
         }, includeConfigTips).ifEmpty { listOf(FILTERED_DEFAULT_TIP) }
 
@@ -59,8 +62,14 @@ class FakeVimTipRepository(
         return tip
     }
 
-    private fun configFiltered(tips: List<VimTip>, includeConfigTips: Boolean): List<VimTip> =
-        tips.filter { includeConfigTips || it.config?.lines.isNullOrEmpty() }
+    private fun visibleTips(tips: List<VimTip>, includeConfigTips: Boolean): List<VimTip> =
+        tips
+            .filter { includeConfigTips || it.config?.lines.isNullOrEmpty() }
+            .filter { showAdvancedTips || !it.advanced }
+
+    override fun hasAdvancedTips(): Boolean {
+        return tips.any { it.advanced }
+    }
 
     override fun getTipsByHashes(hashes: List<String>): List<VimTip> {
         val tipsByHash = tips.associateBy { TipHash.fromTip(it).value }

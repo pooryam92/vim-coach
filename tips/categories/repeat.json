@@ -18,19 +18,22 @@
       ],
       "summary": "Repeat last insert Ctrl-a / Ctrl-@",
       "details": [
-        "In Insert mode, Ctrl-a re-types it",
+        "Ctrl-a re-types it",
         "Ctrl-@ re-types it, then exits"
-      ]
+      ],
+      "advanced": true,
+      "mode": "insert"
     },
     {
       "category": [
         "repeat"
       ],
-      "summary": "Record a macro q{reg}",
+      "summary": "Record a macro qa, replay @a",
       "details": [
-        "qa records into register a",
-        "Press q again to stop"
-      ]
+        "qa records, do edits, q stops",
+        "@a replays it, @@ repeats"
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -40,17 +43,8 @@
       "details": [
         "Uppercase register appends to it",
         "Lowercase q{reg} would replace it"
-      ]
-    },
-    {
-      "category": [
-        "repeat"
       ],
-      "summary": "Play and repeat macros @ / @@",
-      "details": [
-        "@a plays macro a",
-        "@@ repeats the last macro"
-      ]
+      "advanced": true
     },
     {
       "category": [
@@ -60,7 +54,8 @@
       "details": [
         "10@a runs macro a ten times",
         "Use counts to scale the playback"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -71,7 +66,8 @@
       "details": [
         ":'<,'>normal @r runs macro r",
         "Applies it to each line in range"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -82,7 +78,8 @@
       "details": [
         "@: reruns the last : command",
         "Useful after :s, :g, and :normal"
-      ]
+      ],
+      "mnemonic": "@ play, : last command"
     }
   ]
 }

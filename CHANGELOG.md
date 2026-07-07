@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Added
+
+- Tips can now carry a **mnemonic** — a short memory aid shown as a dimmed line beneath the tip to make its keystrokes easier to recall
+- A **Show advanced tips** setting (off by default) that keeps advanced, niche tips out of the default rotation until you opt in from Vim Coach settings. Advanced tips are labelled `Vim Coach · Advanced` in their notification title, and a one-time notification points you to the toggle once you've seen a few tips and an advanced tip is available
+- A **mode label** on tips whose keys are pressed outside Normal mode — the notification title now shows a dimmed `Vim Coach · Insert mode`, `Vim Coach · Visual mode`, or `Vim Coach · Command mode` so a tip read on its own isn't mistaken for a Normal-mode move
+
 ## [1.4.1] - 2026-06-22
 
 ### Fixed

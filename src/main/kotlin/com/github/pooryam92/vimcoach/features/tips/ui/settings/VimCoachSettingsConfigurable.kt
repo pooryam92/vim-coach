@@ -21,6 +21,7 @@ import javax.swing.SpinnerNumberModel
 class VimCoachSettingsConfigurable : SearchableConfigurable {
     private var startupCheckBox: JCheckBox? = null
     private var periodicCheckBox: JCheckBox? = null
+    private var advancedTipsCheckBox: JCheckBox? = null
     private var intervalSpinner: JSpinner? = null
     private var categoryToggleButton: JButton? = null
     private var excludedTipsListPanel: ExcludedTipsListPanel? = null
@@ -37,6 +38,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
         return panel {
             buildStartupRow()
             buildPeriodicRow()
+            buildAdvancedTipsRow()
             buildCategoriesSection(screenState.availableCategories)
             buildExcludedTipsSection()
         }.also { reset() }
@@ -55,6 +57,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
         screenState = settingsScreenService().loadState()
         startupCheckBox?.isSelected = screenState.showTipsOnStartup
         periodicCheckBox?.isSelected = screenState.periodicTipsEnabled
+        advancedTipsCheckBox?.isSelected = screenState.showAdvancedTips
         intervalSpinner?.value = screenState.tipIntervalHours
 
         val enabledCategories = screenState.enabledCategories.toSet()
@@ -68,6 +71,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
     override fun disposeUIResources() {
         startupCheckBox = null
         periodicCheckBox = null
+        advancedTipsCheckBox = null
         intervalSpinner = null
         categoryToggleButton = null
         excludedTipsListPanel = null
@@ -92,6 +96,15 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
                 .enabledIf(periodicCell.selected)
                 .component
             label(MyBundle.message("settingsTipIntervalSuffix"))
+        }
+    }
+
+    private fun Panel.buildAdvancedTipsRow() {
+        row {
+            advancedTipsCheckBox = checkBox(MyBundle.message("settingsShowAdvancedTips"))
+                .align(AlignX.LEFT)
+                .comment(MyBundle.message("settingsShowAdvancedTipsHint"))
+                .component
         }
     }
 
@@ -199,6 +212,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
             tipIntervalHours = MIN_TIP_INTERVAL_HOURS,
             availableCategories = emptyList(),
             enabledCategories = emptyList(),
+            showAdvancedTips = false,
             excludedTips = emptyList(),
             restoredExcludedTipHashes = emptyList()
         )
@@ -211,6 +225,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
             tipIntervalHours = currentIntervalValue(),
             availableCategories = availableCategories(),
             enabledCategories = selectedCategories(),
+            showAdvancedTips = advancedTipsCheckBox?.isSelected ?: screenState.showAdvancedTips,
             excludedTips = excludedTipsListPanel?.currentTips() ?: screenState.excludedTips,
             restoredExcludedTipHashes = excludedTipsListPanel?.restoredTipHashes()
                 ?: screenState.restoredExcludedTipHashes

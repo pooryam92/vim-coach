@@ -37,6 +37,10 @@ class VimTipRepositoryImpl() : VimTipRepository {
         return randomTipOrFallback(matchingTips, FILTERED_FALLBACK_TIP, includeConfigTips)
     }
 
+    override fun hasAdvancedTips(): Boolean {
+        return currentState().tips.any { it.advanced }
+    }
+
     override fun getTipsByHashes(hashes: List<String>): List<VimTip> {
         val requestedHashes = hashes
             .asSequence()
@@ -104,18 +108,17 @@ class VimTipRepositoryImpl() : VimTipRepository {
     }
 
     private fun visibleTips(tips: List<VimTip>, includeConfigTips: Boolean): List<VimTip> {
-        val hiddenHashes = hiddenTipHashes()
+        val settingsService = settingsServiceOrNull()
+        val hiddenHashes = settingsService?.getHiddenTipHashes()?.toSet() ?: emptySet()
+        // No settings service (e.g. an unconfigured cache) means we cannot know the opt-in, so we
+        // default to hiding advanced tips — the safe, spec-mandated default.
+        val showAdvancedTips = settingsService?.isShowAdvancedTipsEnabled() ?: false
         return tips
             .asSequence()
             .filterNot { TipHash.fromTip(it).value in hiddenHashes }
             .filter { includeConfigTips || it.config?.lines.isNullOrEmpty() }
+            .filter { showAdvancedTips || !it.advanced }
             .toList()
-    }
-
-    private fun hiddenTipHashes(): Set<String> {
-        val settingsService = settingsServiceOrNull()
-            ?: return emptySet()
-        return settingsService.getHiddenTipHashes().toSet()
     }
 
     private fun tipStore(): PersistentVimTipStore {
@@ -134,7 +137,9 @@ class VimTipRepositoryImpl() : VimTipRepository {
         )
         val FILTERED_FALLBACK_TIP = VimTip(
             summary = "No tips match the selected categories.",
-            details = listOf("Enable at least one matching category in Vim Coach settings.")
+            details = listOf(
+                "Enable a matching category, or turn on \"Show advanced tips\", in Vim Coach settings."
+            )
         )
     }
 }

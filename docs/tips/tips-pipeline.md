@@ -60,9 +60,47 @@ The error message names the offending file and tip so you can fix it quickly.
 ### Normalization
 
 For each tip the generator trims surrounding whitespace, drops blank `details`
-lines, and removes duplicate `details` lines (preserving order). The output is
-compact JSON with non-ASCII characters escaped as `\uXXXX`, so the published file
-is deterministic and stays plain ASCII.
+lines, and removes duplicate `details` lines (preserving order). An optional
+`mnemonic` string is trimmed and emitted only when non-blank (dropped otherwise).
+The optional `advanced` flag is emitted only when `true` (kept off the artifact
+otherwise, so it stays minimal); a non-boolean `advanced` value fails generation.
+The optional `mode` field is emitted only when set and must be one of `insert`,
+`visual`, or `command` — any other value fails generation (absent means Normal,
+which is never stored or labelled). The output is compact JSON with non-ASCII
+characters escaped as `\uXXXX`, so the published file is deterministic and stays
+plain ASCII.
+
+### Schema evolution and the `advanced` field
+
+The published schema grows **additively only** — new fields are optional and
+defaulted; existing fields are never renamed or removed. Tip parsing is
+**lenient**: unknown fields are ignored, so a newer published file never breaks
+an older plugin. Keep it that way — tightening the parser would break the
+forward compatibility every installed version relies on.
+
+The optional `advanced` flag rides this schema. The plugin models and reads it
+(advanced tips are hidden unless the user opts in; see
+[Advanced Tips Opt-In](../features/settings.md#advanced-tips-opt-in)) while
+keeping the leniency guarantee: `TipJsonParser` ignores a non-boolean
+`advanced` value (the tip parses as not advanced) instead of failing the whole
+file, which matters for hand-authored file-mode and custom-URL sources. The
+generator carries the flag through: it emits `advanced` only when `true` and
+`--check` rejects any non-boolean value, so a flag authored in
+`tips/categories/` reaches `vim_tips_min.json` instead of being silently dropped
+by the field whitelist. Author it via the `tips-maintain` skill, which documents
+the field and the tagging guidance.
+
+The optional `mode` field rides the same schema the same way. It names the mode
+the reader must be in to press the tip's keys — `insert`, `visual`, or `command`
+(absent = Normal, never labelled) — and renders as a dimmed label after the app
+name in the tip balloon title (see
+[Show a tip](../features/show-tip.md#advanced-tips-marker-and-nudge)). The generator validates
+the value strictly (`--check` rejects anything outside the enum), while
+`TipJsonParser` is lenient: an unknown or malformed `mode` (a value a future
+schema adds, or a non-string) is dropped and the tip renders with no mode label
+instead of failing the file — the same forward-compatibility the `advanced` field
+relies on. `mode` is informational only: unlike `advanced` it is not an opt-in
+setting and does not affect which tips are shown, hidden, or de-duplicated.
 
 ## CI: the Generate Tips workflow
 
@@ -93,3 +131,18 @@ edits to `tips/vim_tips_min.json` are simply overwritten on the next run.
   with `-Dvimcoach.tip.source=file` pointed at the local
   `tips/vim_tips_min.json`. Run `node scripts/generate-tips.mjs` first if you
   have edited the category sources, since this task does not regenerate it.
+
+## Flagging a tip that needs fixing (dev only)
+
+While a tip balloon is open during a dev IDE run, a **"Note…"** action appears
+alongside the other actions. Clicking it opens a text box; whatever you type is
+appended to `docs/tips/tip-feedback.md` — an append-only markdown log stamped
+with a timestamp, the tip's summary, and its `TipHash`. That file is
+`.gitignore`d and is where the maintainer (or an agent) later picks up which
+tips to revise.
+
+This is wired only for the `runIdeWithFileTips` and `runIdeWithMinuteTipSchedule`
+Gradle tasks, which set
+`-Dvimcoach.tip.notes.file=<repo>/docs/tips/tip-feedback.md`. The action is
+gated entirely on that system property: a released build never sets it, so the
+"Note…" action never appears and nothing is written in production.

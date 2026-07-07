@@ -46,6 +46,48 @@ class VimTipPreferenceSelectionUnitTest {
     }
 
     @Test
+    fun advancedTipsAreExcludedFromRandomSelectionWhenSettingIsOff() {
+        val advancedTip = VimTip("advanced", listOf("advanced-details"), listOf("editing"), advanced = true)
+        val normalTip = VimTip("normal", listOf("normal-details"), listOf("editing"))
+        val settingsService = SettingsRepositoryImpl(PersistentSettingsStore())
+        val tipService = VimTipRepositoryImpl(PersistentVimTipStore(), settingsService).apply {
+            saveTips(listOf(advancedTip, normalTip))
+        }
+
+        repeat(20) {
+            assertEquals("normal", tipService.getRandomTip(listOf("editing")).summary)
+        }
+    }
+
+    @Test
+    fun advancedTipsAreIncludedInRandomSelectionWhenSettingIsOn() {
+        val advancedTip = VimTip("advanced", listOf("advanced-details"), listOf("editing"), advanced = true)
+        val settingsService = SettingsRepositoryImpl(PersistentSettingsStore()).apply {
+            setShowAdvancedTipsEnabled(true)
+        }
+        val tipService = VimTipRepositoryImpl(PersistentVimTipStore(), settingsService).apply {
+            saveTips(listOf(advancedTip))
+        }
+
+        repeat(20) {
+            assertEquals("advanced", tipService.getRandomTip(listOf("editing")).summary)
+        }
+    }
+
+    @Test
+    fun filteredFallbackIsReturnedWhenOnlyAdvancedTipsMatchAndSettingIsOff() {
+        val advancedTip = VimTip("advanced", listOf("advanced-details"), listOf("editing"), advanced = true)
+        val settingsService = SettingsRepositoryImpl(PersistentSettingsStore())
+        val tipService = VimTipRepositoryImpl(PersistentVimTipStore(), settingsService).apply {
+            saveTips(listOf(advancedTip))
+        }
+
+        val selectedTip = tipService.getRandomTip(listOf("editing"))
+
+        assertEquals("No tips match the selected categories.", selectedTip.summary)
+    }
+
+    @Test
     fun filteredFallbackIsReturnedWhenAllMatchingTipsAreHidden() {
         val hiddenTip = VimTip("hidden", listOf("hidden-details"), listOf("editing"))
         val settingsService = SettingsRepositoryImpl(PersistentSettingsStore()).apply {

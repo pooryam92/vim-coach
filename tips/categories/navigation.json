@@ -6,8 +6,9 @@
       ],
       "summary": "Repeat a motion with a count 5j",
       "details": [
-        "Operators take counts too — 3dw deletes 3 words",
-        "Counts multiply: 2d3w deletes 6 words"
+        "Operators take counts too",
+        "3dw deletes 3 words",
+        "2d3w multiplies to 6 words"
       ]
     },
     {
@@ -39,7 +40,8 @@
       "details": [
         "ge goes to end of previous word",
         "Nice for edits before punctuation"
-      ]
+      ],
+      "mnemonic": "go end"
     },
     {
       "category": [
@@ -120,7 +122,8 @@
       "details": [
         "`[ start of last change or paste",
         "`] jumps to its exact end"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -140,7 +143,8 @@
       "details": [
         "gg goes to first line",
         "G goes to last line"
-      ]
+      ],
+      "mnemonic": "go top / go bottom"
     },
     {
       "category": [
@@ -148,10 +152,8 @@
       ],
       "summary": "Jump by file percentage N%",
       "details": [
-        "Use a count before % to jump by file percentage",
-        "50% jumps to middle of file",
-        "10% jumps near the top",
-        "Bare % jumps to a matching pair instead"
+        "50% jumps halfway down the file",
+        "10% jumps near the top"
       ]
     },
     {
@@ -162,7 +164,8 @@
       "details": [
         "H top of screen, M middle, L bottom",
         "Great for fast scanning"
-      ]
+      ],
+      "mnemonic": "High, Middle, Low"
     },
     {
       "category": [
@@ -221,8 +224,7 @@
       "summary": "Jump to matching pair %",
       "details": [
         "% jumps between (), {}, and [] by default",
-        "Use a count like 50% to jump by file percentage instead",
-        "Use to inspect a whole block quickly"
+        "d% or c% acts through the matching pair"
       ]
     },
     {
@@ -243,8 +245,7 @@
       "summary": "Jump to unmatched parens [( / ])",
       "details": [
         "[( jumps to previous unmatched (",
-        "]) jumps to the next unmatched )",
-        "Useful inside nested expressions"
+        "]) jumps to the next unmatched )"
       ]
     },
     {
@@ -300,7 +301,8 @@
       "details": [
         "f; jumps to next ';' on the line",
         "Great for long parameter lists"
-      ]
+      ],
+      "mnemonic": "find"
     },
     {
       "category": [
@@ -320,7 +322,8 @@
       "details": [
         "t) stops just before ')'",
         "Perfect for ct) edits"
-      ]
+      ],
+      "mnemonic": "till"
     },
     {
       "category": [
@@ -330,7 +333,8 @@
       "details": [
         "T) stops just after ')'",
         "Good for edits near opening brackets"
-      ]
+      ],
+      "mnemonic": "till backward"
     },
     {
       "category": [
@@ -346,20 +350,10 @@
       "category": [
         "navigation"
       ],
-      "summary": "Drop a mark before exploring with ma",
+      "summary": "Set and jump to a mark ma / `a",
       "details": [
-        "ma sets a mark before you jump elsewhere",
-        "`a returns to the exact position later"
-      ]
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Jump to a mark with `a / 'a",
-      "details": [
-        "`a jumps to the exact marked position",
-        "'a jumps to the marked line"
+        "ma tags the current spot as mark a",
+        "`a jumps back exactly, 'a to the line"
       ]
     },
     {
@@ -367,11 +361,12 @@
         "navigation",
         "ideavim"
       ],
-      "summary": "Go to definition with gd / gD",
+      "summary": "Go to definition with gd",
       "details": [
-        "gd jumps to definition through the IDE",
-        "gD jumps to declaration when the IDE provides one"
-      ]
+        "gd jumps to the symbol through the IDE",
+        "Works across files, project-wide"
+      ],
+      "mnemonic": "go definition"
     },
     {
       "category": [
@@ -380,8 +375,17 @@
       "summary": "Move between methods with ]m / [m",
       "details": [
         "]m jumps to the next method start",
-        "[m jumps to the previous method start",
-        "Use ]M and [M for method ends"
+        "[m jumps to the previous method start"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Jump to method ends ]M / [M",
+      "details": [
+        "]M jumps to the next method end",
+        "[M jumps to the previous method end"
       ]
     },
     {
@@ -424,7 +428,8 @@
       "details": [
         "Ctrl-d scrolls down half a page",
         "Ctrl-u scrolls up half a page"
-      ]
+      ],
+      "mnemonic": "d down, u up"
     },
     {
       "category": [
@@ -434,7 +439,8 @@
       "details": [
         "Ctrl-f scrolls forward one page",
         "Ctrl-b scrolls back one page"
-      ]
+      ],
+      "mnemonic": "f forward, b back"
     },
     {
       "category": [
@@ -454,7 +460,8 @@
       "details": [
         "zh scrolls left, zl scrolls right",
         "Needs wrap off or soft-wrap off"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -464,7 +471,8 @@
       "details": [
         "zH and zL scroll half a screen",
         "Needs wrap off or soft-wrap off"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -475,7 +483,8 @@
         "zs shows cursor at screen start",
         "ze shows cursor at screen end",
         "Needs wrap off or soft-wrap off"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -513,10 +522,10 @@
       "category": [
         "navigation"
       ],
-      "summary": "Force a fold open or closed",
+      "summary": "Force a fold open or closed zo / zc",
       "details": [
         "zo always opens, zc always closes",
-        "Use when toggle isn't enough"
+        "Use when toggle za isn't enough"
       ]
     },
     {
@@ -527,7 +536,9 @@
       "details": [
         "zA toggles the fold and all inside it",
         "One key for the whole fold tree"
-      ]
+      ],
+      "mnemonic": "z = a folded page; A all nested",
+      "advanced": true
     },
     {
       "category": [
@@ -535,9 +546,11 @@
       ],
       "summary": "Force nested folds open or closed",
       "details": [
-        "zO opens every level, zC closes them all",
-        "Use when toggle isn't enough"
-      ]
+        "zO opens every nested level",
+        "zC closes every nested level"
+      ],
+      "mnemonic": "zO open all, zC close all",
+      "advanced": true
     },
     {
       "category": [
@@ -547,7 +560,9 @@
       "details": [
         "zj moves to the next fold start",
         "zk moves to the previous fold start"
-      ]
+      ],
+      "mnemonic": "z = a folded page; j/k down/up",
+      "advanced": true
     },
     {
       "category": [
@@ -557,7 +572,9 @@
       "details": [
         "zd deletes one fold at the cursor",
         "zD deletes nested folds there too"
-      ]
+      ],
+      "mnemonic": "z = a folded page; d delete",
+      "advanced": true
     },
     {
       "category": [
@@ -567,7 +584,8 @@
       "details": [
         "zM closes all folds in view",
         "zR opens all folds in view"
-      ]
+      ],
+      "mnemonic": "z = a folded page; M more, R reduce"
     },
     {
       "category": [
@@ -577,7 +595,9 @@
       "details": [
         "zr opens one fold level",
         "zm closes one fold level"
-      ]
+      ],
+      "mnemonic": "z = a folded page; r reduce, m more",
+      "advanced": true
     },
     {
       "category": [
@@ -588,7 +608,8 @@
       "details": [
         "Lands you in Insert mode, not Normal",
         "Picks up exactly where you stopped typing"
-      ]
+      ],
+      "mnemonic": "go insert"
     }
   ]
 }

@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.ui.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
+import com.github.pooryam92.vimcoach.features.tips.domain.TipMode
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationActions
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationFactory
@@ -26,6 +27,88 @@ class TipNotificationFactoryUnitTest {
         assertEquals(TipNotificationFactory.APP_TITLE, notification.title)
         assertTrue(notification.content.contains("Move by word with w/b/e."))
         assertTrue(notification.content.contains("w next word start."))
+    }
+
+    @Test
+    fun createNotificationLeavesTitlePlainWhenNoLabels() {
+        val notifier = TipNotificationFactory()
+        val normalTip = VimTip(summary = "jump", details = listOf("use %"))
+
+        val notification = notifier.createNotification(normalTip)
+
+        assertEquals(TipNotificationFactory.APP_TITLE, notification.title)
+    }
+
+    @Test
+    fun createNotificationMarksAdvancedTipsInTheTitle() {
+        val notifier = TipNotificationFactory()
+        val advancedTip = VimTip(
+            summary = "Paste last search Ctrl-r /",
+            details = listOf("Ctrl-r / pastes the last search"),
+            advanced = true
+        )
+
+        val title = notifier.createNotification(advancedTip).title
+
+        assertTrue("advanced title renders HTML", title.startsWith("<html>"))
+        assertTrue(title.contains(TipNotificationFactory.APP_TITLE))
+        assertTrue("advanced label dimmed after separator", title.contains(" · ${TipNotificationFactory.ADVANCED_LABEL}"))
+        assertTrue("label tail is dimmed", Regex("<span style=\"color:#[0-9a-fA-F]{6};\">").containsMatchIn(title))
+    }
+
+    @Test
+    fun createNotificationLabelsTheModeInTheTitle() {
+        val notifier = TipNotificationFactory()
+        for (mode in TipMode.entries) {
+            val tip = VimTip(summary = "tip ${mode.wireValue}", details = listOf("d"), mode = mode.wireValue)
+
+            val title = notifier.createNotification(tip).title
+
+            assertTrue("mode ${mode.wireValue} renders HTML", title.startsWith("<html>"))
+            assertTrue("mode ${mode.wireValue} shows ${mode.label}", title.contains(" · ${mode.label}"))
+        }
+    }
+
+    @Test
+    fun createNotificationOrdersAdvancedBeforeMode() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(
+            summary = "Paste register Ctrl-r",
+            details = listOf("Ctrl-r pastes a register in Insert"),
+            advanced = true,
+            mode = "insert"
+        )
+
+        val title = notifier.createNotification(tip).title
+
+        val advancedAt = title.indexOf(TipNotificationFactory.ADVANCED_LABEL)
+        val modeAt = title.indexOf(TipMode.INSERT.label)
+        assertTrue("advanced label present", advancedAt >= 0)
+        assertTrue("advanced precedes mode", advancedAt < modeAt)
+    }
+
+    @Test
+    fun createNotificationLeavesTitlePlainForUnknownMode() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(summary = "jump", details = listOf("use %"), mode = "normal")
+
+        val notification = notifier.createNotification(tip)
+
+        assertEquals(TipNotificationFactory.APP_TITLE, notification.title)
+    }
+
+    @Test
+    fun advancedTipsAvailableNotificationOffersSettingsAction() {
+        val notifier = TipNotificationFactory()
+
+        val notification = notifier.createAdvancedTipsAvailableNotification {}
+
+        assertEquals(TipNotificationFactory.ADVANCED_TIPS_AVAILABLE_TEXT, notification.content)
+        assertEquals(1, notification.actions.size)
+        assertEquals(
+            TipNotificationFactory.ADVANCED_TIPS_OPEN_SETTINGS_ACTION_TEXT,
+            notification.actions.single().templateText
+        )
     }
 
     @Test
@@ -59,6 +142,64 @@ class TipNotificationFactoryUnitTest {
         assertTrue(notification.content.contains("5j → move down 5 lines"))
         assertTrue(notification.content.contains("literal &lt;tag&gt;"))
         assertFalse(notification.content.contains("literal <tag>"))
+    }
+
+    @Test
+    fun createNotificationDimsOnlyTheMnemonic() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(
+            summary = "Change inner word ciw",
+            details = listOf("ciw replaces the word under the cursor"),
+            mnemonic = "change inner word"
+        )
+
+        val notification = notifier.createNotification(tip)
+
+        val dimmedBlocks = Regex("color:#[0-9a-fA-F]{6}").findAll(notification.content).count()
+        assertEquals(1, dimmedBlocks)
+        assertTrue(notification.content.contains("<div style=\"margin-top:8px;margin-bottom:8px;\">"))
+    }
+
+    @Test
+    fun createNotificationRendersMnemonicInItalicWhenPresent() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(
+            summary = "Change inner word ciw",
+            details = listOf("ciw replaces the word under the cursor"),
+            mnemonic = "change inner word"
+        )
+
+        val notification = notifier.createNotification(tip)
+
+        assertTrue(notification.content.contains("font-style:italic"))
+        assertTrue(notification.content.contains(TipNotificationFactory.TIP_MNEMONIC_LABEL))
+        assertTrue(notification.content.contains("change inner word"))
+    }
+
+    @Test
+    fun createNotificationEscapesHtmlInMnemonic() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(
+            summary = "Delete to end D",
+            details = listOf("D deletes to end of line"),
+            mnemonic = "<Delete> & \"go\""
+        )
+
+        val notification = notifier.createNotification(tip)
+
+        assertTrue(notification.content.contains("&lt;Delete&gt;"))
+        assertTrue(notification.content.contains("&amp;"))
+        assertTrue(notification.content.contains("&quot;"))
+    }
+
+    @Test
+    fun createNotificationOmitsMnemonicBlockWhenAbsent() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(summary = "jump", details = listOf("use %"))
+
+        val notification = notifier.createNotification(tip)
+
+        assertFalse(notification.content.contains("font-style:italic"))
     }
 
     @Test
@@ -130,6 +271,32 @@ class TipNotificationFactoryUnitTest {
             TipNotificationFactory.TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT,
             notification.actions[2].templateText
         )
+    }
+
+    @Test
+    fun noteActionIsAddedLastWhenRecordNoteCallbackProvided() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(summary = "surround", details = listOf("edit surroundings"))
+
+        val notification = notifier.createNotificationWithActions(
+            tip,
+            TipNotificationActions(onShowNextTip = {}, onExcludeTip = {}, onAddToIdeaVimRc = {}, onRecordNote = {})
+        )
+
+        assertEquals(4, notification.actions.size)
+        assertEquals(TipNotificationFactory.TIP_NOTE_ACTION_TEXT, notification.actions.last().templateText)
+    }
+
+    @Test
+    fun noNoteActionWhenRecordNoteCallbackAbsent() {
+        val notifier = TipNotificationFactory()
+
+        val notification = notifier.createNotificationWithActions(
+            VimTip(summary = "tip"),
+            TipNotificationActions(onShowNextTip = {}, onExcludeTip = {})
+        )
+
+        assertFalse(notification.actions.any { it.templateText == TipNotificationFactory.TIP_NOTE_ACTION_TEXT })
     }
 
     @Test

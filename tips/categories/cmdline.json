@@ -19,7 +19,8 @@
       "details": [
         ":se<Tab> cycles command names",
         ":e <Tab> cycles matching file names"
-      ]
+      ],
+      "mode": "command"
     },
     {
       "category": [
@@ -29,7 +30,9 @@
       "details": [
         "Ctrl-b jumps to the start",
         "Ctrl-e jumps to the end"
-      ]
+      ],
+      "advanced": true,
+      "mode": "command"
     },
     {
       "category": [
@@ -39,7 +42,9 @@
       "details": [
         "S-Left to the previous word",
         "S-Right to the next word"
-      ]
+      ],
+      "advanced": true,
+      "mode": "command"
     },
     {
       "category": [
@@ -49,7 +54,8 @@
       "details": [
         "Discards the line you typed",
         "Still saved to : history"
-      ]
+      ],
+      "mode": "command"
     },
     {
       "category": [
@@ -59,17 +65,20 @@
       "details": [
         "Ctrl-w deletes a word back",
         "Ctrl-u clears the whole line"
-      ]
+      ],
+      "advanced": true,
+      "mode": "command"
     },
     {
       "category": [
         "cmdline"
       ],
-      "summary": "Recall matching history Up / Down",
+      "summary": "Recall history by prefix Up / Down",
       "details": [
-        "Up finds older matching entries",
-        "Down moves toward newer ones"
-      ]
+        "Type :s then Up recalls past :s",
+        "Down steps toward newer matches"
+      ],
+      "mode": "command"
     },
     {
       "category": [
@@ -79,7 +88,9 @@
       "details": [
         "Ctrl-p goes to older history",
         "Ctrl-n goes to newer history"
-      ]
+      ],
+      "advanced": true,
+      "mode": "command"
     },
     {
       "category": [
@@ -87,9 +98,21 @@
       ],
       "summary": "Show command history with :history",
       "details": [
-        "Lists past : commands, newest last",
-        ":history / shows search history"
-      ]
+        ":history lists past : commands",
+        ":history / lists past searches"
+      ],
+      "advanced": true
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Edit command history with q:",
+      "details": [
+        "q: opens past commands in a window",
+        "Edit a line and Enter to run it"
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -110,7 +133,8 @@
       "details": [
         "Lists stored jump locations",
         "Pair with Ctrl-o / Ctrl-i"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -121,7 +145,8 @@
       "details": [
         ":marks shows active marks",
         "Check before jumping with ' or `"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -130,9 +155,11 @@
       ],
       "summary": "Delete marks with :delmarks",
       "details": [
-        ":delmarks removes given marks",
-        ":delmarks! clears all marks"
-      ]
+        "Marks are saved spots you set with ma",
+        ":delmarks a b removes marks a and b",
+        ":delmarks! clears every mark"
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -143,7 +170,10 @@
       "details": [
         "Ctrl-r then a register name",
         "Great for reusing text in :s"
-      ]
+      ],
+      "mnemonic": "register",
+      "advanced": true,
+      "mode": "command"
     },
     {
       "category": [
@@ -153,18 +183,10 @@
       "details": [
         "Inserts the word under cursor",
         "Reuse names without retyping"
-      ]
-    },
-    {
-      "category": [
-        "cmdline",
-        "files"
       ],
-      "summary": "Insert filename in : Ctrl-r Ctrl-f",
-      "details": [
-        "Inserts the file under cursor",
-        "Handy for file Ex commands"
-      ]
+      "mnemonic": "register word",
+      "advanced": true,
+      "mode": "command"
     },
     {
       "category": [
@@ -174,7 +196,8 @@
       "details": [
         ":ascii shows the char's codes",
         "ga does the same in normal mode"
-      ]
+      ],
+      "advanced": true
     }
   ]
 }

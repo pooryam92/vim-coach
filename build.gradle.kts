@@ -225,6 +225,10 @@ tasks.register("uiTest") {
 
 intellijPlatformTesting {
     runIde {
+        // Dev-only: routes the tip "Note…" action to a repo file so flagged tips can be picked up
+        // later. Absent from released builds, so the action never appears in production.
+        val tipNotesFilePath = layout.projectDirectory.file("docs/tips/tip-feedback.md").asFile.absolutePath
+
         register("runIdeWithFileTips") {
             task {
                 description = "Run IDE with file tip source"
@@ -233,7 +237,8 @@ intellijPlatformTesting {
                 jvmArgumentProviders += CommandLineArgumentProvider {
                     listOf(
                         "-Dvimcoach.tip.source=file",
-                        "-Dvimcoach.tip.file.path=$tipsFilePath"
+                        "-Dvimcoach.tip.file.path=$tipsFilePath",
+                        "-Dvimcoach.tip.notes.file=$tipNotesFilePath"
                     )
                 }
             }
@@ -248,7 +253,10 @@ intellijPlatformTesting {
                 description = "Run IDE with periodic tip interval interpreted as minutes"
                 group = "ide"
                 jvmArgumentProviders += CommandLineArgumentProvider {
-                    listOf("-Dvimcoach.tip.interval.unit=minutes")
+                    listOf(
+                        "-Dvimcoach.tip.interval.unit=minutes",
+                        "-Dvimcoach.tip.notes.file=$tipNotesFilePath"
+                    )
                 }
             }
 

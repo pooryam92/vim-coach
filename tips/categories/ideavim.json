@@ -62,7 +62,8 @@
       "details": [
         ":action ReformatCode for example",
         "Prefer <Action>() in mappings"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -73,7 +74,8 @@
       "details": [
         ":actionlist extract filters them",
         "Add a word to narrow the list"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -179,9 +181,10 @@
       ],
       "summary": "Complete code with Ctrl-Space",
       "details": [
-        "Use Ctrl-Space in Insert mode",
+        "Press Ctrl-Space to complete",
         "Press it again to widen suggestions"
-      ]
+      ],
+      "mode": "insert"
     },
     {
       "category": [
@@ -193,6 +196,7 @@
         "Lands on the next/previous error",
         "Covers inspection warnings too"
       ],
+      "mnemonic": "error",
       "config": {
         "name": "Map errors",
         "lines": [
@@ -211,6 +215,7 @@
         "Moves between uncommitted hunks",
         "Gutter marks vs the last commit"
       ],
+      "mnemonic": "change",
       "config": {
         "name": "Map VCS changes",
         "lines": [
@@ -229,6 +234,7 @@
         "The IDE intention / lightbulb popup",
         "Apply fixes and quick refactors"
       ],
+      "mnemonic": "go actions (quick-fix)",
       "config": {
         "name": "Map quick-fix",
         "lines": [
@@ -246,6 +252,7 @@
         "Project-wide safe rename refactor",
         "Updates every usage at once"
       ],
+      "mnemonic": "go rename",
       "config": {
         "name": "Map rename",
         "lines": [
@@ -263,6 +270,7 @@
         "One list for extract, inline, move",
         "Rename lives here too"
       ],
+      "mnemonic": "go menu (refactor)",
       "config": {
         "name": "Map refactor",
         "lines": [
@@ -278,9 +286,9 @@
       "summary": "Find all usages gr",
       "details": [
         "Lists every call site, jump to any",
-        "Works on methods, classes, vars",
         "Overrides gr ReplaceWithRegister"
       ],
+      "mnemonic": "go references",
       "config": {
         "name": "Map find usages",
         "lines": [
@@ -298,10 +306,28 @@
         "From an interface to its class",
         "Overrides gi insert-at-last-edit"
       ],
+      "mnemonic": "go implementation",
       "config": {
         "name": "Map implementation",
         "lines": [
           "nmap gi <Action>(GotoImplementation)"
+        ]
+      }
+    },
+    {
+      "category": [
+        "ideavim",
+        "navigation"
+      ],
+      "summary": "Map gD to type declaration",
+      "details": [
+        "By default gD just repeats gd",
+        "Jumps from a variable to its type"
+      ],
+      "config": {
+        "name": "Map type declaration",
+        "lines": [
+          "nmap gD <Action>(GotoTypeDeclaration)"
         ]
       }
     },

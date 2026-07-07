@@ -5,10 +5,10 @@
         "windows",
         "cmdline"
       ],
-      "summary": "Open a horizontal split :split",
+      "summary": "Open a horizontal split :sp",
       "details": [
-        ":split (or :sp) stacks another view of this file",
-        "Both windows share one buffer, so edits stay in sync"
+        ":sp or :split stacks another view",
+        "Both share one buffer, edits stay in sync"
       ]
     },
     {
@@ -18,8 +18,9 @@
       ],
       "summary": "Open a file in a split :split {file}",
       "details": [
-        ":split {file} opens that file in a new split",
-        ":vsplit {file} does it side by side"
+        "Relative paths start at the project root",
+        "~/ or an absolute path works too",
+        "A bare filename is found anywhere in the project"
       ]
     },
     {
@@ -31,6 +32,19 @@
       "details": [
         ":vsplit (or :vs) opens a side-by-side view",
         "Great for comparing two parts of a file"
+      ],
+      "mnemonic": "vertical split"
+    },
+    {
+      "category": [
+        "windows",
+        "cmdline"
+      ],
+      "summary": "Open a file in a vsplit :vsplit {file}",
+      "details": [
+        "Relative paths start at the project root",
+        "~/ or an absolute path works too",
+        "A bare filename is found anywhere in the project"
       ]
     },
     {
@@ -41,7 +55,8 @@
       "details": [
         "Ctrl-w s splits horizontally",
         "Ctrl-w v splits vertically"
-      ]
+      ],
+      "mnemonic": "w window, s split, v vertical"
     },
     {
       "category": [
@@ -81,7 +96,8 @@
       ],
       "summary": "Move to a split Ctrl-w h/j/k/l",
       "details": [
-        "Ctrl-w h/j/k/l moves left/down/up/right",
+        "Ctrl-w then a direction key moves you",
+        "h left, l right, j down, k up",
         "Arrow keys also work after Ctrl-w"
       ]
     },
@@ -89,10 +105,30 @@
       "category": [
         "windows"
       ],
-      "summary": "Resize the current split",
+      "summary": "Make a split taller or shorter",
       "details": [
-        "Ctrl-w +/- change height, Ctrl-w </> change width",
-        "Ctrl-w = makes all splits equal size"
+        "Ctrl-w + grows it, Ctrl-w - shrinks it",
+        "Add a count for bigger steps: 10 Ctrl-w +"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Make a split wider or narrower",
+      "details": [
+        "Ctrl-w > grows it, Ctrl-w < shrinks it",
+        "Add a count for bigger steps: 10 Ctrl-w >"
+      ]
+    },
+    {
+      "category": [
+        "windows"
+      ],
+      "summary": "Even out all splits Ctrl-w =",
+      "details": [
+        "Ctrl-w = gives every split equal size",
+        "Handy to reset after manual resizing"
       ]
     },
     {
@@ -102,9 +138,9 @@
       "summary": "Next/previous tab gt / gT",
       "details": [
         "gt goes to the next tab",
-        "gT goes to the previous tab",
-        ":tabn and :tabp are the Ex forms"
-      ]
+        "gT goes to the previous tab"
+      ],
+      "mnemonic": "go tab"
     },
     {
       "category": [

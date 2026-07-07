@@ -30,7 +30,8 @@
       "details": [
         "Works from anywhere in the string",
         "ca\" also changes the quotes"
-      ]
+      ],
+      "mnemonic": "change inner quotes"
     },
     {
       "category": [
@@ -40,7 +41,8 @@
       "details": [
         "Removes the text and the quotes",
         "di\" keeps quotes, clears inside"
-      ]
+      ],
+      "mnemonic": "delete around quotes"
     },
     {
       "category": [
@@ -50,7 +52,8 @@
       "details": [
         "ci( changes the text inside parentheses",
         "cib is an alias for the same text object"
-      ]
+      ],
+      "mnemonic": "change inner block"
     },
     {
       "category": [
@@ -69,9 +72,9 @@
       "summary": "Change inside brackets with ci[ / ci{",
       "details": [
         "ci[ changes text inside square brackets",
-        "ci{ changes text inside braces",
-        "Use ca[ or ca{ when you also want the delimiters"
-      ]
+        "ci{ changes text inside braces"
+      ],
+      "mnemonic": "change inner"
     },
     {
       "category": [
@@ -112,10 +115,11 @@
       ],
       "summary": "Move a line with :m {address}",
       "details": [
-        ":m+1 moves the current line down",
-        ":m-2 moves it up",
-        ":m0 moves it to the top, :m$ to the end, :m2 after line 2"
-      ]
+        ":m+1 moves the line down",
+        ":m-2 moves it up two lines",
+        ":m0 to top, :m$ to end"
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -124,9 +128,12 @@
       ],
       "summary": "Duplicate a line with :t.",
       "details": [
-        ":t. copies the current line below itself",
-        "Useful when you want a quick duplicate without yanking"
-      ]
+        ":t copies a line to a target",
+        "Target sets where: :t0 top, :t$ end",
+        ":t. targets here, duplicating below"
+      ],
+      "mnemonic": "copy to",
+      "advanced": true
     },
     {
       "category": [
@@ -137,7 +144,9 @@
       "details": [
         ":1,5t. copies lines 1–5 below the cursor",
         "Use 0, $, line numbers, or Visual ranges as the destination"
-      ]
+      ],
+      "mnemonic": "copy to",
+      "advanced": true
     },
     {
       "category": [
@@ -148,7 +157,8 @@
       "details": [
         ":delete removes the addressed lines",
         "Use a range like :10,20delete for line-based cleanup"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -159,7 +169,8 @@
       "details": [
         ":10,12join joins the lines in that range",
         "Use :join! when you do not want spacing adjusted"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -170,7 +181,8 @@
       "details": [
         ":%normal A; appends ; to every line",
         "Try a small range first"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -253,8 +265,8 @@
       ],
       "summary": "Delete/change to line end d$ / c$",
       "details": [
-        "D / C are the one-key forms",
-        "d$ deletes, c$ changes the rest"
+        "d$ deletes to end of line, c$ changes it",
+        "D and C are the one-key shortcuts"
       ]
     },
     {
@@ -286,7 +298,8 @@
       "details": [
         "s changes one char and inserts",
         "S changes whole line and inserts"
-      ]
+      ],
+      "mnemonic": "substitute"
     },
     {
       "category": [
@@ -341,7 +354,8 @@
       "details": [
         "dt) deletes up to the next )",
         "ct, changes up to it, df includes it"
-      ]
+      ],
+      "mnemonic": "delete till"
     },
     {
       "category": [
@@ -377,10 +391,10 @@
       "category": [
         "editing"
       ],
-      "summary": "Toggle case over motion g~",
+      "summary": "Toggle case with g~iw",
       "details": [
-        "g~iw toggles current word",
-        "Useful for style fixes"
+        "g~iw flips case in the word",
+        "Takes any motion, like g~$ or g~ap"
       ]
     },
     {
@@ -403,7 +417,8 @@
         "Select lines, then press g Ctrl-a",
         "Adds 1, 2, 3... to each line's number",
         "Useful for building numbered lists"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -414,7 +429,8 @@
       "details": [
         "Select lines, then press g Ctrl-x",
         "Subtracts 1, 2, 3... from each number"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -431,11 +447,13 @@
         "editing",
         "insert"
       ],
-      "summary": "Split undo in Insert mode Ctrl-g u",
+      "summary": "Split undo Ctrl-g u",
       "details": [
-        "Starts a new undo step in Insert mode",
+        "Starts a new undo step",
         "Useful after punctuation or pauses"
-      ]
+      ],
+      "advanced": true,
+      "mode": "insert"
     }
   ]
 }

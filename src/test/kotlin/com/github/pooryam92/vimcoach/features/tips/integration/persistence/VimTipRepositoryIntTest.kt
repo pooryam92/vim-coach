@@ -7,6 +7,7 @@ import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
+import com.intellij.util.xmlb.XmlSerializer
 
 class VimTipRepositoryIntTest : BasePlatformTestCase() {
 
@@ -59,7 +60,7 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
 
         assertEquals("No tips match the selected categories.", randomTip.summary)
         assertEquals(
-            "Enable at least one matching category in Vim Coach settings.",
+            "Enable a matching category, or turn on \"Show advanced tips\", in Vim Coach settings.",
             randomTip.details.single()
         )
     }
@@ -134,6 +135,39 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
             TipCategories(listOf("basics", "editing")),
             tipStore().state.categories
         )
+    }
+
+    // The optional `mode`, `advanced`, and `mnemonic` fields are persisted only via reflective
+    // whole-object serialization of the tip cache (no explicit field wiring in PersistentVimTipStore).
+    // This round-trips the store State through the same xmlb serializer the platform uses for @State
+    // components, proving they survive save/load and that absent/default values stay that way — the
+    // one seam unit tests can't reach.
+    fun testOptionalTipFieldsSurviveStoreStateSerializationRoundTrip() {
+        tipService().saveTips(
+            listOf(
+                VimTip(
+                    "insert-tip",
+                    listOf("Ctrl-r pastes a register"),
+                    mnemonic = "control register",
+                    advanced = true,
+                    mode = "insert"
+                ),
+                VimTip("normal-tip", listOf("use %"))
+            )
+        )
+
+        val serialized = XmlSerializer.serialize(tipStore().state)
+        val restored = XmlSerializer.deserialize(serialized, PersistentVimTipStore.State::class.java)
+
+        val insertTip = restored.tips.single { it.summary == "insert-tip" }
+        assertEquals("insert", insertTip.mode)
+        assertTrue(insertTip.advanced)
+        assertEquals("control register", insertTip.mnemonic)
+
+        val normalTip = restored.tips.single { it.summary == "normal-tip" }
+        assertNull(normalTip.mode)
+        assertFalse(normalTip.advanced)
+        assertNull(normalTip.mnemonic)
     }
 
     fun testGetRandomTipReturnsEmptyMessageWhenEmpty() {

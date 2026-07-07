@@ -140,6 +140,20 @@ class IntelliJTipNotifierUiTest : BasePlatformTestCase() {
         assertTrue(excluded.actions.any { it.templateText == TipNotificationFactory.TIP_MANAGE_EXCLUDED_ACTION_TEXT })
     }
 
+    fun testShowAdvancedTipsAvailableOffersSettingsActionAndRunsCallback() {
+        val captured = captureProjectNotifications()
+        var openedSettings = false
+        notifier().showAdvancedTipsAvailable(onOpenSettings = { openedSettings = true })
+
+        val nudge = captured.first { it.content == TipNotificationFactory.ADVANCED_TIPS_AVAILABLE_TEXT }
+        val settingsAction = nudge.actions.single()
+        assertEquals(TipNotificationFactory.ADVANCED_TIPS_OPEN_SETTINGS_ACTION_TEXT, settingsAction.templateText)
+
+        invokeNotificationAction(settingsAction, nudge)
+
+        assertTrue(openedSettings)
+    }
+
     private fun tip(summary: String = "tip") = VimTip(summary, listOf("details"))
 
     private fun captureProjectNotifications(): MutableList<Notification> {

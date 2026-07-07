@@ -117,5 +117,17 @@ class TipSchedulerIntTest : BasePlatformTestCase() {
         override fun restoreTip(hash: String) = Unit
 
         override fun consumeExcludedTipsManagementHint(): Boolean = false
+
+        override fun isShowAdvancedTipsEnabled(): Boolean = false
+
+        override fun setShowAdvancedTipsEnabled(enabled: Boolean) = Unit
+
+        override fun isAdvancedTipsHintShown(): Boolean = true
+
+        override fun consumeAdvancedTipsHint(): Boolean = false
+
+        override fun getTipsShownForAdvancedNudge(): Int = 0
+
+        override fun setTipsShownForAdvancedNudge(count: Int) = Unit
     }
 }

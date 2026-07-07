@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.application.loading.infra.parsing
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
+import com.github.pooryam92.vimcoach.features.tips.domain.TipMode
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
@@ -17,6 +18,8 @@ object TipJsonParser {
     private const val TIPS_FIELD = "tips"
     private const val CONFIG_NAME_FIELD = "name"
     private const val CONFIG_LINES_FIELD = "lines"
+    private const val ADVANCED_FIELD = "advanced"
+    private const val MODE_FIELD = "mode"
 
     private val logger = Logger.getInstance(TipJsonParser::class.java)
 
@@ -39,8 +42,38 @@ object TipJsonParser {
         if (element == null || !element.isJsonArray) {
             return emptyList()
         }
+        element.asJsonArray.forEach(::dropMalformedAdvancedFlag)
+        element.asJsonArray.forEach(::dropUnknownMode)
         val tips = gson.fromJson(element, Array<VimTip>::class.java) ?: return emptyList()
         return dropDuplicateSummaries(tips.mapNotNull(::normalizeTip))
+    }
+
+    // `advanced` is the only strictly-typed known field: Gson aborts the whole tips array on a
+    // non-boolean value, where every other malformed field degrades to a single dropped tip at
+    // worst. Parsing must stay lenient (see docs/tips/tips-pipeline.md, "Schema evolution"), so a
+    // malformed flag is stripped here and falls back to the default (not advanced).
+    private fun dropMalformedAdvancedFlag(tipElement: JsonElement) {
+        val tip = tipElement.takeIf(JsonElement::isJsonObject)?.asJsonObject ?: return
+        val advanced = tip.get(ADVANCED_FIELD) ?: return
+        if (!advanced.isJsonPrimitive || !advanced.asJsonPrimitive.isBoolean) {
+            logger.warn("Ignoring non-boolean \"$ADVANCED_FIELD\" value on tip: $advanced")
+            tip.remove(ADVANCED_FIELD)
+        }
+    }
+
+    // `mode` names the mode the reader must be in to press the tip's keys; it renders as a quiet
+    // title label. Leniency mirrors `advanced` (see docs/tips/tips-pipeline.md, "Schema evolution"):
+    // an unknown or malformed value (a mode this plugin version doesn't know, or a non-string) is
+    // stripped so it falls back to no label, and a JSON object/array is removed before Gson would
+    // otherwise abort the whole tips array trying to coerce it into a String.
+    private fun dropUnknownMode(tipElement: JsonElement) {
+        val tip = tipElement.takeIf(JsonElement::isJsonObject)?.asJsonObject ?: return
+        val mode = tip.get(MODE_FIELD) ?: return
+        val value = mode.takeIf { it.isJsonPrimitive && it.asJsonPrimitive.isString }?.asString
+        if (TipMode.fromWire(value) == null) {
+            logger.warn("Ignoring unknown \"$MODE_FIELD\" value on tip: $mode")
+            tip.remove(MODE_FIELD)
+        }
     }
 
     // A tip's trimmed summary is its identity downstream (see TipHash): it keys hidden-tip
@@ -65,7 +98,17 @@ object TipJsonParser {
         }
         val normalizedCategories = normalizeStrings(tip.category)
         val normalizedConfig = normalizeConfig(tip.config)
-        return VimTip(summary, details, normalizedCategories, normalizedConfig)
+        val normalizedMnemonic = tip.mnemonic?.trim()?.takeIf(String::isNotBlank)
+        val normalizedMode = TipMode.fromWire(tip.mode)?.wireValue
+        return VimTip(
+            summary,
+            details,
+            normalizedCategories,
+            normalizedConfig,
+            normalizedMnemonic,
+            tip.advanced,
+            normalizedMode
+        )
     }
 
     private fun normalizeStrings(values: List<String>): List<String> {
