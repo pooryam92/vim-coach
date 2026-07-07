@@ -133,7 +133,8 @@
       "details": [
         "> indents, < outdents",
         "Then press . to repeat"
-      ]
+      ],
+      "mode": "visual"
     },
     {
       "category": [
@@ -142,9 +143,11 @@
       ],
       "summary": "Keep selection after shift >gv",
       "details": [
-        ">gv reselects after indenting",
-        "<gv reselects after outdenting"
-      ]
+        "> on a selection drops it",
+        ">gv indents and reselects",
+        "<gv does the same outdenting"
+      ],
+      "mode": "visual"
     },
     {
       "category": [
@@ -156,7 +159,8 @@
         "Select then gu to lowercase",
         "Select then gU to uppercase",
         "g~ toggles the case"
-      ]
+      ],
+      "mode": "visual"
     },
     {
       "category": [
@@ -168,7 +172,7 @@
         "Select text then press gq",
         "Runs the IDE code reformat"
       ],
-      "mnemonic": "go format"
+      "mode": "visual"
     },
     {
       "category": [

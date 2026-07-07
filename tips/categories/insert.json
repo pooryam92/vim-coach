@@ -177,6 +177,8 @@
         "Ctrl-v then a key inserts it raw",
         "Ctrl-v Tab adds a real tab"
       ],
+      "mnemonic": "verbatim",
+      "advanced": true,
       "mode": "insert"
     }
   ]
