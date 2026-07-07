@@ -7,6 +7,7 @@ import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
+import com.intellij.util.xmlb.XmlSerializer
 
 class VimTipRepositoryIntTest : BasePlatformTestCase() {
 
@@ -134,6 +135,25 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
             TipCategories(listOf("basics", "editing")),
             tipStore().state.categories
         )
+    }
+
+    // The optional `mode` field is persisted only via reflective whole-object serialization of the
+    // tip cache (no explicit field wiring in PersistentVimTipStore). This round-trips the store State
+    // through the same xmlb serializer the platform uses for @State components, proving mode survives
+    // save/load and that an absent mode stays absent — the one seam unit tests can't reach.
+    fun testModeSurvivesStoreStateSerializationRoundTrip() {
+        tipService().saveTips(
+            listOf(
+                VimTip("insert-tip", listOf("Ctrl-r pastes a register"), mode = "insert"),
+                VimTip("normal-tip", listOf("use %"))
+            )
+        )
+
+        val serialized = XmlSerializer.serialize(tipStore().state)
+        val restored = XmlSerializer.deserialize(serialized, PersistentVimTipStore.State::class.java)
+
+        assertEquals("insert", restored.tips.single { it.summary == "insert-tip" }.mode)
+        assertNull(restored.tips.single { it.summary == "normal-tip" }.mode)
     }
 
     fun testGetRandomTipReturnsEmptyMessageWhenEmpty() {

@@ -79,6 +79,12 @@ Hard constraints:
   only to hide a tip from newcomers' default rotation; opted-in users still see
   it (and its `Vim Coach · Advanced` title). The generator emits it only when `true` and
   rejects any non-boolean value. See "Tagging a tip advanced" below.
+- `mode` — optional string, **omitted by default**. One of `insert`, `visual`,
+  `command` (Normal is the default and stays absent — never tag it). Names the
+  mode the reader must be in to press the keys; it renders as a dimmed
+  `Vim Coach · Insert mode` title label (informational only — it does *not*
+  hide, gate, or de-duplicate anything). The generator rejects any other value.
+  See "Tagging a tip's mode" below.
 - **Renaming a summary resets that tip's hide preference** (the hide key hashes
   the trimmed summary) — reword only when it's a real improvement.
 
@@ -92,6 +98,23 @@ week" starts to repeat, write it down here as the rubric forms. So far:
 
 - `Recall last search with Ctrl-r /` — a register paste inside the `:`/insert
   prompt; niche and mode-specific, not a first-week move.
+
+### Tagging a tip's mode
+
+`mode` labels the non-Normal mode the reader presses the keys in, so a tip read
+cold isn't mistaken for a Normal-mode move. Tag only when the mode is not
+Normal *and* not already obvious from the summary:
+
+- Set it when the whole tip lives in one non-Normal mode — an Insert-mode
+  register paste (`Ctrl-r "`), a Visual-mode operator, a `:` command-line edit.
+  Use `command` for command-line (`:`) tips; the label shortens it to
+  `Command mode`.
+- Leave it off for Normal-mode tips (the default) and for a move that *enters* a
+  mode from Normal (`ciw`, `v`, `:s`) — the reader starts in Normal, so the tip
+  is a Normal-mode move even though it ends elsewhere.
+- `mode` is the machine label; it does not replace naming the mode in the
+  wording when a key is mode-ambiguous (see the wording quick list) — do both
+  where it helps.
 
 Wording quick list — each is the reader's-seat test made concrete; worked
 versions in examples.md:

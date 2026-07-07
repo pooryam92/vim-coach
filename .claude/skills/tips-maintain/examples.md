@@ -30,7 +30,7 @@ skill's memory.
 - Anchor a family mnemonic in the real hook — and name the key a shape depicts
 - Merge a set-and-use pair when neither half stands alone
 - Cut a command you can't try cold — doubly so when the IDE already does it
-- Mode context gets its own short line, never a prefix that wraps line 1
+- Prefer the `mode` label over a "Works in X mode" detail line
 
 ### Name the family in prose, never dump symbols
 
@@ -555,17 +555,9 @@ IntelliJ's own `Ctrl-B` / Cmd-click is the move people already reach for. Fails
 teachability *and* reach → delete, don't reword. No rewording rescues a command
 that's fundamentally context-bound and redundant with a stronger IDE-native path.
 
-### Mode context gets its own short line, never a prefix that wraps line 1
+### Prefer the `mode` label over a "Works in X mode" detail line
 
-❌ before (rejected — the prefix pushes the detail past one balloon line):
-```json
-{
-  "category": ["cmdline"],
-  "summary": "Jump to ends of : Ctrl-b / Ctrl-e",
-  "details": ["In Command-line mode, Ctrl-b jumps to the start", "Ctrl-e jumps to the end"]
-}
-```
-✅ after:
+❌ before (a hand-written mode line — what shipped *before* the `mode` label existed):
 ```json
 {
   "category": ["cmdline"],
@@ -573,9 +565,24 @@ that's fundamentally context-bound and redundant with a stronger IDE-native path
   "details": ["Ctrl-b jumps to the start", "Ctrl-e jumps to the end", "Works in Command-line mode"]
 }
 ```
-*Why:* when a mode-ambiguous key needs its mode named, don't bolt an
-`In X mode,` prefix onto an existing detail — at ~20 chars it wraps the line
-and buries the keystroke mid-sentence. Give the context its own trailing
-≤35-char line (`Works in Command-line mode`) and leave the key lines untouched:
-three clean lines beat two wrapped ones, and the same closing line reuses
-verbatim across sibling tips.
+✅ after (the rendered title carries the mode; drop the prose line):
+```json
+{
+  "category": ["cmdline"],
+  "summary": "Jump to ends of : Ctrl-b / Ctrl-e",
+  "details": ["Ctrl-b jumps to the start", "Ctrl-e jumps to the end"],
+  "mode": "command"
+}
+```
+*Why:* once the `mode` field renders as a dimmed `Vim Coach · Command mode`
+title label, a `Works in X mode` detail line is redundant boilerplate — it
+burns a balloon line to say what the label now says for free. Set `mode` and
+delete the line. This **supersedes** the earlier call to give the mode its own
+trailing detail line — that was the best fix only *before* the label shipped;
+the earlier alternative of an `In X mode,` prefix stays rejected (it wraps line
+1 and buries the keystroke). The mode word survives in the *wording* only when
+it's teaching payload or grammar — leaving Insert (`Leave Insert mode with Esc`),
+the momentary-Normal dip of `Ctrl-o` (`One Normal command, back to Insert`) —
+never when it just names where the keys live. And tag only the true press mode:
+a move that *enters* a mode from Normal (`ma`, `v`, `:s`, `i`/`a`/`o`) is a
+Normal tip and stays untagged, even when it lives in `insert.json`/`visual.json`.

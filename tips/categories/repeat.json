@@ -18,9 +18,10 @@
       ],
       "summary": "Repeat last insert Ctrl-a / Ctrl-@",
       "details": [
-        "In Insert mode, Ctrl-a re-types it",
+        "Ctrl-a re-types it",
         "Ctrl-@ re-types it, then exits"
-      ]
+      ],
+      "mode": "insert"
     },
     {
       "category": [

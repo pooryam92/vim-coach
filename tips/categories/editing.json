@@ -447,12 +447,13 @@
         "editing",
         "insert"
       ],
-      "summary": "Split undo in Insert mode Ctrl-g u",
+      "summary": "Split undo Ctrl-g u",
       "details": [
-        "Starts a new undo step in Insert mode",
+        "Starts a new undo step",
         "Useful after punctuation or pauses"
       ],
-      "advanced": true
+      "advanced": true,
+      "mode": "insert"
     }
   ]
 }

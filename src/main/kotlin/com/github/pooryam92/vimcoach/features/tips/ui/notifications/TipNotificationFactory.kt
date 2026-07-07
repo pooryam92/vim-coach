@@ -2,6 +2,7 @@ package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
 import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
+import com.github.pooryam92.vimcoach.features.tips.domain.TipMode
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
@@ -55,10 +56,20 @@ class TipNotificationFactory {
         }
     }
 
-    // Advanced tips append a "· Advanced" label to the title so opted-in users can tell an
-    // advanced tip at a glance without an in-app legend.
+    // The title carries quiet metadata after the app name: an "Advanced" tag and the mode the
+    // reader must be in to press the keys (Advanced first, both optional). The title renders HTML,
+    // so the app name stays full weight while the whole label tail is dimmed (mnemonicForeground) —
+    // the app name is the only prominent text and the metadata reads as secondary. A tip with
+    // neither label keeps the plain app title (no HTML wrapper).
     private fun notificationTitle(tip: VimTip): String {
-        return if (tip.advanced) "$APP_TITLE $ADVANCED_TITLE_LABEL" else APP_TITLE
+        val labels = buildList {
+            if (tip.advanced) add(ADVANCED_LABEL)
+            TipMode.fromWire(tip.mode)?.let { add(it.label) }
+        }
+        if (labels.isEmpty()) return APP_TITLE
+        val tail = labels.joinToString("") { "$TITLE_LABEL_SEPARATOR$it" }
+        val color = ColorUtil.toHex(mnemonicForeground())
+        return "$HTML_OPEN${escapeHtml(APP_TITLE)}<span style=\"color:#$color;\">$tail</span>$HTML_CLOSE"
     }
 
     /** A named config uses its name verbatim as the apply button label; otherwise it stays generic. */
@@ -196,7 +207,10 @@ class TipNotificationFactory {
         val TIP_MANAGE_EXCLUDED_ACTION_TEXT: String = MyBundle.message("tipManageExcludedAction")
         val ADVANCED_TIPS_AVAILABLE_TEXT: String = MyBundle.message("advancedTipsAvailableMessage")
         val ADVANCED_TIPS_OPEN_SETTINGS_ACTION_TEXT: String = MyBundle.message("advancedTipsOpenSettingsAction")
-        const val ADVANCED_TITLE_LABEL: String = "· Advanced"
+        // Title label tail: dimmed metadata after the app name. Mode labels come from TipMode;
+        // this is the only non-mode label, so it lives here.
+        const val ADVANCED_LABEL: String = "Advanced"
+        private const val TITLE_LABEL_SEPARATOR: String = " · "
         val TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT: String = MyBundle.message("tipAddToIdeaVimRcAction")
         val TIP_RELOAD_IDEAVIMRC_ACTION_TEXT: String = MyBundle.message("tipReloadIdeaVimRcAction")
         val TIP_ADDED_TO_IDEAVIMRC_TEXT: String = MyBundle.message("tipAddedToIdeaVimRcMessage")

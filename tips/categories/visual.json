@@ -9,7 +9,8 @@
       "details": [
         "Select, then p drops your yank in",
         "Replaced text overwrites your yank"
-      ]
+      ],
+      "mode": "visual"
     },
     {
       "category": [
@@ -31,7 +32,8 @@
         "o moves cursor to the other end",
         "Great for precise adjustments"
       ],
-      "mnemonic": "other end"
+      "mnemonic": "other end",
+      "mode": "visual"
     },
     {
       "category": [
@@ -42,7 +44,8 @@
         "1. Ctrl-v to start the block",
         "2. O swaps to the other edge",
         "3. Grow the block from that side"
-      ]
+      ],
+      "mode": "visual"
     },
     {
       "category": [
@@ -255,7 +258,8 @@
       "details": [
         "Select, then P drops your yank in",
         "Yank survives — repeat on more spots"
-      ]
+      ],
+      "mode": "visual"
     }
   ]
 }

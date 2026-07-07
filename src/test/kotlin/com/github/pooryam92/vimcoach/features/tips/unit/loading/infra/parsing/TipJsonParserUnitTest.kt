@@ -292,6 +292,75 @@ class TipJsonParserUnitTest {
     }
 
     @Test
+    fun parseTipsJsonDefaultsModeToNullWhenAbsent() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"jump", "details":["use %"]}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(1, tips.size)
+        assertNull(tips[0].mode)
+    }
+
+    @Test
+    fun parseTipsJsonReadsKnownModes() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"insert paste", "details":["Ctrl-r"], "mode":"insert"},
+                {"summary":"visual swap", "details":["o"], "mode":"visual"},
+                {"summary":"cmdline paste", "details":["Ctrl-r"], "mode":"command"}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(3, tips.size)
+        assertEquals("insert", tips[0].mode)
+        assertEquals("visual", tips[1].mode)
+        assertEquals("command", tips[2].mode)
+    }
+
+    // A mode this plugin version does not know (or a malformed value) must fall back to no label
+    // without aborting the parse — same forward-compat guarantee the `advanced` field relies on.
+    @Test
+    fun parseTipsJsonDropsUnknownOrMalformedModesKeepingAllTips() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"unknown", "details":["d1"], "mode":"normal"},
+                {"summary":"future", "details":["d2"], "mode":"operator-pending"},
+                {"summary":"number", "details":["d3"], "mode":7},
+                {"summary":"object", "details":["d4"], "mode":{"nested":true}},
+                {"summary":"array", "details":["d5"], "mode":["insert"]},
+                {"summary":"blank", "details":["d6"], "mode":"  "},
+                {"summary":"valid", "details":["d7"], "mode":"insert"}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = TipJsonParser.parseTipsJson(
+            ByteArrayInputStream(json.toByteArray(Charsets.UTF_8))
+        )
+
+        assertEquals(7, tips.size)
+        for (i in 0..5) {
+            assertNull("tip $i keeps no mode", tips[i].mode)
+        }
+        assertEquals("insert", tips[6].mode)
+    }
+
+    @Test
     fun parseTipsJsonIgnoresUnknownFields() {
         val json = """
             {

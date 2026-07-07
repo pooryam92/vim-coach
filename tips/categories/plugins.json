@@ -116,7 +116,7 @@
       ],
       "summary": "Surround a visual selection S",
       "details": [
-        "In Visual mode, press S then a bracket or tag",
+        "Press S then a bracket or tag",
         "S) wraps in ( ), S<em> in <em> tags"
       ],
       "config": {
@@ -124,7 +124,8 @@
         "lines": [
           "Plug 'tpope/vim-surround'"
         ]
-      }
+      },
+      "mode": "visual"
     },
     {
       "category": [

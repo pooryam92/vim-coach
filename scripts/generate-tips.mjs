@@ -20,6 +20,9 @@ const outputFile = join(repoRoot, "tips", "vim_tips_min.json");
 // editing tips never regenerates vim_tips_min.json by accident — CI owns that.
 const checkOnly = process.argv.includes("--check");
 
+// The non-Normal modes a tip may be tagged with; Normal is the untagged default and never stored.
+const VALID_MODES = new Set(["insert", "visual", "command"]);
+
 function fail(message) {
   console.error(`generate-tips: ${message}`);
   process.exit(1);
@@ -123,6 +126,17 @@ for (const category of ordered) {
         fail(`tip '${summary}' in ${fileName} has a non-boolean advanced value`);
       }
       if (tip.advanced) entry.advanced = true;
+    }
+    // mode is optional and names the mode the reader presses the keys in (absent = Normal, which
+    // is never labelled). Emit it only when set, and reject any value outside the known enum so a
+    // typo can't ship a mode the runtime would silently drop.
+    if (tip.mode !== undefined && tip.mode !== null) {
+      if (!VALID_MODES.has(tip.mode)) {
+        fail(
+          `tip '${summary}' in ${fileName} has an invalid mode '${tip.mode}' (expected one of ${[...VALID_MODES].join(", ")})`
+        );
+      }
+      entry.mode = tip.mode;
     }
     mergedTips.push(entry);
   });

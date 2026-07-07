@@ -19,7 +19,8 @@
       "details": [
         ":se<Tab> cycles command names",
         ":e <Tab> cycles matching file names"
-      ]
+      ],
+      "mode": "command"
     },
     {
       "category": [
@@ -28,10 +29,10 @@
       "summary": "Jump to ends of : Ctrl-b / Ctrl-e",
       "details": [
         "Ctrl-b jumps to the start",
-        "Ctrl-e jumps to the end",
-        "Works in Command-line mode"
+        "Ctrl-e jumps to the end"
       ],
-      "advanced": true
+      "advanced": true,
+      "mode": "command"
     },
     {
       "category": [
@@ -40,10 +41,10 @@
       "summary": "Move by word in : S-Left / S-Right",
       "details": [
         "S-Left to the previous word",
-        "S-Right to the next word",
-        "Works in Command-line mode"
+        "S-Right to the next word"
       ],
-      "advanced": true
+      "advanced": true,
+      "mode": "command"
     },
     {
       "category": [
@@ -53,7 +54,8 @@
       "details": [
         "Discards the line you typed",
         "Still saved to : history"
-      ]
+      ],
+      "mode": "command"
     },
     {
       "category": [
@@ -62,10 +64,10 @@
       "summary": "Erase in : Ctrl-w / Ctrl-u",
       "details": [
         "Ctrl-w deletes a word back",
-        "Ctrl-u clears the whole line",
-        "Works in Command-line mode"
+        "Ctrl-u clears the whole line"
       ],
-      "advanced": true
+      "advanced": true,
+      "mode": "command"
     },
     {
       "category": [
@@ -73,9 +75,10 @@
       ],
       "summary": "Recall history by prefix Up / Down",
       "details": [
-        "Type :s then Up recalls past :s lines",
-        "Down steps back toward newer matches"
-      ]
+        "Type :s then Up recalls past :s",
+        "Down steps toward newer matches"
+      ],
+      "mode": "command"
     },
     {
       "category": [
@@ -84,10 +87,10 @@
       "summary": "Browse : history Ctrl-p / Ctrl-n",
       "details": [
         "Ctrl-p goes to older history",
-        "Ctrl-n goes to newer history",
-        "Works in Command-line mode"
+        "Ctrl-n goes to newer history"
       ],
-      "advanced": true
+      "advanced": true,
+      "mode": "command"
     },
     {
       "category": [
@@ -166,11 +169,11 @@
       "summary": "Insert a register in : Ctrl-r",
       "details": [
         "Ctrl-r then a register name",
-        "Great for reusing text in :s",
-        "Works in Command-line mode"
+        "Great for reusing text in :s"
       ],
       "mnemonic": "register",
-      "advanced": true
+      "advanced": true,
+      "mode": "command"
     },
     {
       "category": [
@@ -179,11 +182,11 @@
       "summary": "Insert word in : Ctrl-r Ctrl-w",
       "details": [
         "Inserts the word under cursor",
-        "Reuse names without retyping",
-        "Works in Command-line mode"
+        "Reuse names without retyping"
       ],
       "mnemonic": "register word",
-      "advanced": true
+      "advanced": true,
+      "mode": "command"
     },
     {
       "category": [

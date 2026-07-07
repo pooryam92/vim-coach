@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.ui.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
+import com.github.pooryam92.vimcoach.features.tips.domain.TipMode
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationActions
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationFactory
@@ -29,6 +30,16 @@ class TipNotificationFactoryUnitTest {
     }
 
     @Test
+    fun createNotificationLeavesTitlePlainWhenNoLabels() {
+        val notifier = TipNotificationFactory()
+        val normalTip = VimTip(summary = "jump", details = listOf("use %"))
+
+        val notification = notifier.createNotification(normalTip)
+
+        assertEquals(TipNotificationFactory.APP_TITLE, notification.title)
+    }
+
+    @Test
     fun createNotificationMarksAdvancedTipsInTheTitle() {
         val notifier = TipNotificationFactory()
         val advancedTip = VimTip(
@@ -36,16 +47,54 @@ class TipNotificationFactoryUnitTest {
             details = listOf("Ctrl-r / pastes the last search"),
             advanced = true
         )
-        val normalTip = VimTip(summary = "jump", details = listOf("use %"))
 
-        val advancedNotification = notifier.createNotification(advancedTip)
-        val normalNotification = notifier.createNotification(normalTip)
+        val title = notifier.createNotification(advancedTip).title
 
-        assertEquals(
-            "${TipNotificationFactory.APP_TITLE} ${TipNotificationFactory.ADVANCED_TITLE_LABEL}",
-            advancedNotification.title
+        assertTrue("advanced title renders HTML", title.startsWith("<html>"))
+        assertTrue(title.contains(TipNotificationFactory.APP_TITLE))
+        assertTrue("advanced label dimmed after separator", title.contains(" · ${TipNotificationFactory.ADVANCED_LABEL}"))
+        assertTrue("label tail is dimmed", Regex("<span style=\"color:#[0-9a-fA-F]{6};\">").containsMatchIn(title))
+    }
+
+    @Test
+    fun createNotificationLabelsTheModeInTheTitle() {
+        val notifier = TipNotificationFactory()
+        for (mode in TipMode.entries) {
+            val tip = VimTip(summary = "tip ${mode.wireValue}", details = listOf("d"), mode = mode.wireValue)
+
+            val title = notifier.createNotification(tip).title
+
+            assertTrue("mode ${mode.wireValue} renders HTML", title.startsWith("<html>"))
+            assertTrue("mode ${mode.wireValue} shows ${mode.label}", title.contains(" · ${mode.label}"))
+        }
+    }
+
+    @Test
+    fun createNotificationOrdersAdvancedBeforeMode() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(
+            summary = "Paste register Ctrl-r",
+            details = listOf("Ctrl-r pastes a register in Insert"),
+            advanced = true,
+            mode = "insert"
         )
-        assertEquals(TipNotificationFactory.APP_TITLE, normalNotification.title)
+
+        val title = notifier.createNotification(tip).title
+
+        val advancedAt = title.indexOf(TipNotificationFactory.ADVANCED_LABEL)
+        val modeAt = title.indexOf(TipMode.INSERT.label)
+        assertTrue("advanced label present", advancedAt >= 0)
+        assertTrue("advanced precedes mode", advancedAt < modeAt)
+    }
+
+    @Test
+    fun createNotificationLeavesTitlePlainForUnknownMode() {
+        val notifier = TipNotificationFactory()
+        val tip = VimTip(summary = "jump", details = listOf("use %"), mode = "normal")
+
+        val notification = notifier.createNotification(tip)
+
+        assertEquals(TipNotificationFactory.APP_TITLE, notification.title)
     }
 
     @Test

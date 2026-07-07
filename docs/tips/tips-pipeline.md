@@ -64,8 +64,11 @@ lines, and removes duplicate `details` lines (preserving order). An optional
 `mnemonic` string is trimmed and emitted only when non-blank (dropped otherwise).
 The optional `advanced` flag is emitted only when `true` (kept off the artifact
 otherwise, so it stays minimal); a non-boolean `advanced` value fails generation.
-The output is compact JSON with non-ASCII characters escaped as `\uXXXX`, so the
-published file is deterministic and stays plain ASCII.
+The optional `mode` field is emitted only when set and must be one of `insert`,
+`visual`, or `command` — any other value fails generation (absent means Normal,
+which is never stored or labelled). The output is compact JSON with non-ASCII
+characters escaped as `\uXXXX`, so the published file is deterministic and stays
+plain ASCII.
 
 ### Schema evolution and the `advanced` field
 
@@ -86,6 +89,18 @@ generator carries the flag through: it emits `advanced` only when `true` and
 `tips/categories/` reaches `vim_tips_min.json` instead of being silently dropped
 by the field whitelist. Author it via the `tips-maintain` skill, which documents
 the field and the tagging guidance.
+
+The optional `mode` field rides the same schema the same way. It names the mode
+the reader must be in to press the tip's keys — `insert`, `visual`, or `command`
+(absent = Normal, never labelled) — and renders as a dimmed label after the app
+name in the tip balloon title (see
+[Show a tip](../features/show-tip.md#advanced-tips-marker-and-nudge)). The generator validates
+the value strictly (`--check` rejects anything outside the enum), while
+`TipJsonParser` is lenient: an unknown or malformed `mode` (a value a future
+schema adds, or a non-string) is dropped and the tip renders with no mode label
+instead of failing the file — the same forward-compatibility the `advanced` field
+relies on. `mode` is informational only: unlike `advanced` it is not an opt-in
+setting and does not affect which tips are shown, hidden, or de-duplicated.
 
 ## CI: the Generate Tips workflow
 

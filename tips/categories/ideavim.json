@@ -180,9 +180,10 @@
       ],
       "summary": "Complete code with Ctrl-Space",
       "details": [
-        "Use Ctrl-Space in Insert mode",
+        "Press Ctrl-Space to complete",
         "Press it again to widen suggestions"
-      ]
+      ],
+      "mode": "insert"
     },
     {
       "category": [
