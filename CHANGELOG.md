@@ -13,7 +13,7 @@
 ### Changed
 
 - Expanded and refreshed the tip library with new tips across categories
-- Tip notification titles now render the `Advanced` and mode labels dimmed after the app name, so the labels read as metadata below `Vim Coach` rather than as part of the title
+- Tip notification titles now render the `Advanced` and mode labels dimmed after the app name, so the labels read as secondary metadata rather than as part of the title
 
 ## [1.4.1] - 2026-06-22
 

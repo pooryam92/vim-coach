@@ -137,14 +137,21 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         )
     }
 
-    // The optional `mode` field is persisted only via reflective whole-object serialization of the
-    // tip cache (no explicit field wiring in PersistentVimTipStore). This round-trips the store State
-    // through the same xmlb serializer the platform uses for @State components, proving mode survives
-    // save/load and that an absent mode stays absent — the one seam unit tests can't reach.
-    fun testModeSurvivesStoreStateSerializationRoundTrip() {
+    // The optional `mode`, `advanced`, and `mnemonic` fields are persisted only via reflective
+    // whole-object serialization of the tip cache (no explicit field wiring in PersistentVimTipStore).
+    // This round-trips the store State through the same xmlb serializer the platform uses for @State
+    // components, proving they survive save/load and that absent/default values stay that way — the
+    // one seam unit tests can't reach.
+    fun testOptionalTipFieldsSurviveStoreStateSerializationRoundTrip() {
         tipService().saveTips(
             listOf(
-                VimTip("insert-tip", listOf("Ctrl-r pastes a register"), mode = "insert"),
+                VimTip(
+                    "insert-tip",
+                    listOf("Ctrl-r pastes a register"),
+                    mnemonic = "control register",
+                    advanced = true,
+                    mode = "insert"
+                ),
                 VimTip("normal-tip", listOf("use %"))
             )
         )
@@ -152,8 +159,15 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         val serialized = XmlSerializer.serialize(tipStore().state)
         val restored = XmlSerializer.deserialize(serialized, PersistentVimTipStore.State::class.java)
 
-        assertEquals("insert", restored.tips.single { it.summary == "insert-tip" }.mode)
-        assertNull(restored.tips.single { it.summary == "normal-tip" }.mode)
+        val insertTip = restored.tips.single { it.summary == "insert-tip" }
+        assertEquals("insert", insertTip.mode)
+        assertTrue(insertTip.advanced)
+        assertEquals("control register", insertTip.mnemonic)
+
+        val normalTip = restored.tips.single { it.summary == "normal-tip" }
+        assertNull(normalTip.mode)
+        assertFalse(normalTip.advanced)
+        assertNull(normalTip.mnemonic)
     }
 
     fun testGetRandomTipReturnsEmptyMessageWhenEmpty() {
