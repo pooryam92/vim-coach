@@ -5,8 +5,7 @@ package com.github.pooryam92.vimcoach.features.tips.domain
  * Normal is the untagged default and has no entry here — a tip with no mode carries no label.
  *
  * [wireValue] is the canonical value stored in tip JSON (`VimTip.mode`); [label] is how it renders
- * in the notification title. `command-line` is shortened to "Command" in the label only — tip body
- * text still spells it out.
+ * in the notification title.
  */
 enum class TipMode(val wireValue: String, val label: String) {
     INSERT("insert", "Insert mode"),
