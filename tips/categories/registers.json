@@ -108,6 +108,18 @@
         ":$put pastes it at the bottom"
       ],
       "advanced": true
+    },
+    {
+      "category": [
+        "registers"
+      ],
+      "summary": "Yank into register a \"ayy",
+      "details": [
+        "\"ayy yanks the line into a",
+        "\"ap pastes it back later",
+        "\"Ayy (capital) appends to a"
+      ],
+      "advanced": true
     }
   ]
 }

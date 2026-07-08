@@ -454,6 +454,17 @@
       ],
       "advanced": true,
       "mode": "insert"
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Act on a paragraph dip / dap",
+      "details": [
+        "dip deletes the paragraph",
+        "dap also takes the blank line",
+        "Works with c, y, >, = too"
+      ]
     }
   ]
 }

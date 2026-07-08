@@ -667,6 +667,25 @@
           "Plug 'jeetsukumaran/vim-indentwise'"
         ]
       }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Any bracket or quote cib / ciq",
+      "details": [
+        "cib changes inside any () [] {}",
+        "ciq changes inside \" ' or `",
+        "Grabs the nearest pair"
+      ],
+      "mnemonic": "change inside bracket or quote",
+      "config": {
+        "name": "Enable mini-ai",
+        "lines": [
+          "set mini-ai"
+        ]
+      }
     }
   ]
 }

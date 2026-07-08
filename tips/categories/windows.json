@@ -63,10 +63,10 @@
         "windows",
         "cmdline"
       ],
-      "summary": "Close current split :close / Ctrl-w c",
+      "summary": "Close a split Ctrl-w c",
       "details": [
-        ":close or Ctrl-w c closes this window",
-        "The buffer stays loaded; only the view closes"
+        "Ctrl-w c or :close shuts this split",
+        "The file stays open; only the view closes"
       ]
     },
     {
@@ -98,8 +98,17 @@
       "details": [
         "Ctrl-w then a direction key moves you",
         "h left, l right, j down, k up",
-        "Arrow keys also work after Ctrl-w"
-      ]
+        "Map Ctrl-h/j/k/l to skip the Ctrl-w"
+      ],
+      "config": {
+        "name": "Map split hops",
+        "lines": [
+          "nnoremap <C-h> <C-w>h",
+          "nnoremap <C-j> <C-w>j",
+          "nnoremap <C-k> <C-w>k",
+          "nnoremap <C-l> <C-w>l"
+        ]
+      }
     },
     {
       "category": [

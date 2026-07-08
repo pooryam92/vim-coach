@@ -586,3 +586,24 @@ the momentary-Normal dip of `Ctrl-o` (`One Normal command, back to Insert`) —
 never when it just names where the keys live. And tag only the true press mode:
 a move that *enters* a mode from Normal (`ma`, `v`, `:s`, `i`/`a`/`o`) is a
 Normal tip and stays untagged, even when it lives in `insert.json`/`visual.json`.
+
+### A mapping/config idiom is not a tip — it's general advice
+
+❌ rejected candidates (pitched to fill the thin `mappings` category):
+```json
+{ "category": ["mappings"], "summary": "Set a <leader> prefix key",
+  "details": ["let mapleader=\" \" makes Space the prefix", "Then map <leader>w to save, etc."] }
+{ "category": ["mappings"], "summary": "Map without recursion nnoremap",
+  "details": ["nnoremap won't re-trigger other maps", "Prefer it over map for safe bindings"] }
+```
+✅ after: don't add — no reproducible move exists.
+
+*Why:* both teach how to *write config*, not a keystroke the reader can press
+in the balloon and watch work. `<leader>` and `nnoremap` have no on-the-spot
+payoff — there's nothing to try, only advice to absorb later in an .ideavimrc.
+That fails the core rule (a tip teaches one real move the reader can try right
+now). A thin category is not a reason to add — density beats count. When mining
+a category for gaps, discard any candidate whose payoff is "understand this for
+when you edit your config" rather than "press this and see it happen." Config
+belongs in a tip only as the enabling `config` block *under* a tryable move, not
+as the lesson itself.
