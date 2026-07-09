@@ -13,6 +13,19 @@
     },
     {
       "category": [
+        "pattern"
+      ],
+      "summary": "Preview next match Ctrl-g / Ctrl-t",
+      "details": [
+        "Ctrl-g jumps to the next match",
+        "Ctrl-t jumps to the previous one",
+        "Works before pressing Enter"
+      ],
+      "advanced": true,
+      "mode": "command"
+    },
+    {
+      "category": [
         "pattern",
         "repeat"
       ],

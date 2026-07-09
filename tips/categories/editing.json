@@ -4,6 +4,16 @@
       "category": [
         "editing"
       ],
+      "summary": "Undo one line's changes U",
+      "details": [
+        "Undoes every edit made to the last-touched line",
+        "Press U again to redo them"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
       "summary": "Delete word text diw / daw",
       "details": [
         "diw deletes just the word",

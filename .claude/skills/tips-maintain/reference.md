@@ -140,12 +140,10 @@ author them until the blocker is fixed.
   which-key (needs the Which-Key IDE plugin) are deferred — see
   `docs/discover/config-tips-roadmap.md`. A `Plug`/`set` line is only shippable
   when IdeaVim emulates the plugin itself (surround, commentary, sneak, NERDTree,
-  argtextobj…). The "Setup" block in `external/ideavim/doc/IdeaVim Plugins.md`
-  reveals which need an extra install.
-- **multiple-cursors** — emulated, but its default keys don't bind and the
-  `<Plug>` workaround maps aren't verified to work (VIM-2178); deferred until
-  confirmed. (Unlike CamelCaseMotion above, where the prefix var *does* bind
-  working keys.)
+  argtextobj, multiple-cursors…). The "Setup" block in
+  `external/ideavim/doc/IdeaVim Plugins.md` reveals which need an extra install.
+  `multiple-cursors` shipped once VIM-2178 landed — its default keys now bind
+  correctly, matching upstream `terryma/vim-multiple-cursors`.
 
 ## Adding or changing a category
 

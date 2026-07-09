@@ -248,7 +248,8 @@
       "summary": "Open the quick-fix menu ga",
       "details": [
         "The IDE intention / lightbulb popup",
-        "Apply fixes and quick refactors"
+        "Apply fixes and quick refactors",
+        "Overrides ga ascii-inspect"
       ],
       "mnemonic": "go actions (quick-fix)",
       "config": {
@@ -284,7 +285,8 @@
       "summary": "Open the refactor menu gm",
       "details": [
         "One list for extract, inline, move",
-        "Rename lives here too"
+        "Rename lives here too",
+        "Overrides gm middle-column jump"
       ],
       "mnemonic": "go menu (refactor)",
       "config": {
@@ -364,23 +366,6 @@
         "name": "Map type declaration",
         "lines": [
           "nmap gD <Action>(GotoTypeDeclaration)"
-        ]
-      }
-    },
-    {
-      "category": [
-        "ideavim"
-      ],
-      "summary": "Jump to any UI target Ctrl-Shift-\\",
-      "details": [
-        "A S D F labels appear on clickables",
-        "Type a label to jump there, no mouse",
-        "On macOS press Ctrl-Cmd-\\"
-      ],
-      "config": {
-        "name": "Enable VimEverywhere",
-        "lines": [
-          "set VimEverywhere"
         ]
       }
     }

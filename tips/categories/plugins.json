@@ -24,12 +24,11 @@
         "plugins",
         "editing"
       ],
-      "summary": "Edit every copy of a word Alt-n",
+      "summary": "Edit every copy of a word Ctrl-n",
       "details": [
-        "Put the cursor on foo, press Alt-n",
-        "Alt-n again adds the next foo",
-        "Then c, type bar, Esc — all to bar",
-        "Alt-x skips the copy you're on"
+        "Put the cursor on foo, press Ctrl-n",
+        "Ctrl-n again adds the next foo",
+        "Then c, type bar, Esc — all to bar"
       ],
       "config": {
         "name": "Install multiple-cursors",

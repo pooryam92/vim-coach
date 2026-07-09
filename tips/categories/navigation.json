@@ -110,20 +110,9 @@
       ],
       "summary": "Jump to last change lines '[ / ']",
       "details": [
-        "'[ first line of the last change or paste",
+        "'[ jumps to the change's first line",
         "'] jumps to its last line"
       ]
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Jump to last change ends `[ / `]",
-      "details": [
-        "`[ start of last change or paste",
-        "`] jumps to its exact end"
-      ],
-      "advanced": true
     },
     {
       "category": [
@@ -231,10 +220,10 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to unmatched braces [{ / ]}",
+      "summary": "Jump to unmatched braces ]} / [{",
       "details": [
-        "[{ jumps to the previous unmatched {",
         "]} jumps to the next unmatched }",
+        "[{ jumps to the previous unmatched {",
         "Useful when you are inside nested code blocks"
       ]
     },
@@ -242,10 +231,10 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to unmatched parens [( / ])",
+      "summary": "Jump to unmatched parens ]) / [(",
       "details": [
-        "[( jumps to previous unmatched (",
-        "]) jumps to the next unmatched )"
+        "]) jumps to the next unmatched )",
+        "[( jumps to previous unmatched ("
       ]
     },
     {
@@ -333,8 +322,7 @@
       "details": [
         "T) stops just after ')'",
         "Good for edits near opening brackets"
-      ],
-      "mnemonic": "till backward"
+      ]
     },
     {
       "category": [
@@ -392,10 +380,10 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump between sections [[ / ]]",
+      "summary": "Jump between sections ]] / [[",
       "details": [
-        "[[ jumps to previous section start",
         "]] jumps to the next section start",
+        "[[ jumps to previous section start",
         "[] and ][ jump to section ends"
       ]
     },

@@ -74,12 +74,12 @@ button (or the tip UI) can surface the external dependency.
 - **EasyMotion** — `Plug 'easymotion/vim-easymotion'`; needs the
   IdeaVim-EasyMotion **and** AceJump IDE plugins.
 - **which-key** — `set which-key`; needs the Which-Key IDE plugin.
-- **multiple-cursors** — `Plug 'terryma/vim-multiple-cursors'`; emulated, but
-  default keys don't bind in IdeaVim (VIM-2178) without manual `<Plug>` maps.
 
 Contrast — surround, commentary, sneak, NERDTree, argtextobj, exchange, abolish,
-etc. are emulated by IdeaVim itself: the `Plug` line alone works, so they're
-already shipped (Bucket A).
+multiple-cursors, etc. are emulated by IdeaVim itself: the `Plug` line alone
+works, so they're already shipped (Bucket A). `multiple-cursors` moved here
+once VIM-2178 shipped — its default keys (`Ctrl-n`/`Ctrl-x`/`Ctrl-p`) now match
+upstream `terryma/vim-multiple-cursors` out of the box.
 
 ---
 
