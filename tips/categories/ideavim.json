@@ -383,23 +383,6 @@
           "set VimEverywhere"
         ]
       }
-    },
-    {
-      "category": [
-        "ideavim",
-        "windows"
-      ],
-      "summary": "Navigate tool windows Ctrl-w hjkl",
-      "details": [
-        "Works once inside a tool window",
-        "Reaches Project, Git, and more"
-      ],
-      "config": {
-        "name": "Enable VimEverywhere",
-        "lines": [
-          "set VimEverywhere"
-        ]
-      }
     }
   ]
 }
