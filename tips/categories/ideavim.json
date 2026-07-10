@@ -368,6 +368,42 @@
           "nmap gD <Action>(GotoTypeDeclaration)"
         ]
       }
+    },
+    {
+      "category": [
+        "ideavim",
+        "windows"
+      ],
+      "summary": "Flip split orientation Ctrl-w O",
+      "details": [
+        "Swaps side-by-side for top/bottom",
+        "IdeaVim binds no key for this"
+      ],
+      "advanced": true,
+      "config": {
+        "name": "Map split orientation",
+        "lines": [
+          "nmap <C-w>O <Action>(ChangeSplitOrientation)"
+        ]
+      }
+    },
+    {
+      "category": [
+        "ideavim",
+        "windows"
+      ],
+      "summary": "Move a file across splits Ctrl-w m",
+      "details": [
+        "Moves this tab to the other split",
+        "Fixes opening it in the wrong split"
+      ],
+      "advanced": true,
+      "config": {
+        "name": "Map cross-split move",
+        "lines": [
+          "nmap <C-w>m <Action>(MoveEditorToOppositeTabGroup)"
+        ]
+      }
     }
   ]
 }

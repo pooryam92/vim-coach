@@ -268,6 +268,53 @@ operators in the title.
 same `GotoDeclarationAction` — confirm in the submodule before claiming a
 distinction.
 
+This entry failed to prevent a second instance, so it hardens into a rule:
+**a lowercase/uppercase pair earns a slashed summary only once you've confirmed
+the two keys reach different handlers *and* produce different results.** Grep
+`keys = ["zd"]` in the submodule, open both handlers, and follow each down to
+the method that does the work.
+
+❌ before (shipped for months; upstream-Vim's `zD` recurses, IdeaVim's doesn't):
+```json
+{
+  "category": ["navigation"],
+  "summary": "Delete folds zd / zD",
+  "details": ["zd deletes one fold at the cursor", "zD deletes nested folds there too"],
+  "mnemonic": "z = a folded page; d delete",
+  "advanced": true
+}
+```
+✅ after: tip deleted; `zd` folds into its `zf` host as one line.
+```json
+{
+  "category": ["navigation"],
+  "summary": "Create a fold zfip",
+  "details": ["zfip folds the current paragraph", "Takes any motion, like zf} or zfa{", "zd deletes it; IDE folds come back"]
+}
+```
+*Why:* separate handlers were not enough. `VimDeleteFoldAtCursor` and
+`VimDeleteFoldsRecursivelyAtCursor` are distinct classes, so a keys-only grep
+looked like it confirmed the pair — but both resolve their target through
+`findInnermostFoldAtLine`, and an *innermost* fold has nothing nested inside it,
+so `zD`'s recursion almost never fires. Read to the bottom of the call chain,
+not just the binding.
+
+Two IdeaVim-specific traps this also surfaced. **A command can "work" and still
+show the reader nothing:** `zd` really does delete an IntelliJ code fold, but
+the folding builder regenerates it on the next reparse, so only manual `zf`
+folds visibly stay deleted (`VimEditor.kt` says so in its own KDoc — read the
+doc comment, not just the code). And **a fold/IDE-bridge command may be newer
+than the reader's plugin** — `zd` shipped in IdeaVim 2.29.0; check `git tag
+--contains <commit>` when a tip teaches a recently added key.
+
+Finally: **once a claim turns out to be false, re-score the tip before rewording
+it.** The first fix here kept `zd` and repaired its wording. But a tip that
+survives only by telling the reader to create a fold so they can delete it has
+nothing to try cold, and half its body is a disclaimer — it loses reach,
+leverage, and teachability, and belongs in "Cut a command you can't try cold"
+above. A false claim is often the symptom; a tip that never earned its place is
+the disease. Ask *should this exist* before asking *how should this read*.
+
 ### Search existing tips before adding — kill semantic duplicates
 
 ❌ before (a second tip teaching what `nzz` already covers):
@@ -607,3 +654,32 @@ a category for gaps, discard any candidate whose payoff is "understand this for
 when you edit your config" rather than "press this and see it happen." Config
 belongs in a tip only as the enabling `config` block *under* a tryable move, not
 as the lesson itself.
+
+### A vaguer rule already in a detail line — sharpen it, don't mint a sibling
+
+❌ pitched as a new tip, while the `yss` tip already carried a weaker version of
+the same rule:
+```json
+{ "category": ["plugins", "editing"], "summary": "Surround with any character ysiw*",
+  "details": ["ysiw* gives *word*", "Any non-letter works: _ | # $"] }
+```
+```json
+"summary": "yss) wraps the whole line",
+"details": ["yss) surrounds the line with ( )", "Any bracket or quote works too"]
+```
+✅ after: no new tip — expand the host's weak line in place:
+```json
+"summary": "yss) wraps the whole line",
+"details": ["yss) surrounds the line with ( )", "Any non-letter works, like yss*"]
+```
+
+*Why:* `Any bracket or quote works too` was the *same rule stated too narrowly* —
+IdeaVim's `getSurroundPair()` pairs any non-letter with itself. A new tip would
+have split one rule across two balloons that each half-teach it, and the reader
+who draws only the `yss` tip still leaves believing the narrow version. When a
+candidate's lesson is the general form of a line an existing tip already hedges,
+the win is a stricter detail line, not a new entry: same balloon count, one
+fewer half-truth. Search hits are for the *behavior*, not just the keys — a
+detail line that gestures at your candidate is a rewrite target, not a
+green light. Contrast this with a genuinely separate argument the host never
+gestures at (the shift-free `b`/`B`/`r`/`a` aliases), which does earn its own tip.

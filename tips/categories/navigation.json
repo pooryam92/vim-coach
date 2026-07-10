@@ -480,9 +480,9 @@
       ],
       "summary": "Create a fold zfip",
       "details": [
-        "zfip folds the current paragraph or block",
+        "zfip folds the current paragraph",
         "Takes any motion, like zf} or zfa{",
-        "Works where IDE folding is available"
+        "zd deletes it; IDE folds come back"
       ]
     },
     {
@@ -550,18 +550,6 @@
         "zk moves to the previous fold start"
       ],
       "mnemonic": "z = a folded page; j/k down/up",
-      "advanced": true
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Delete folds zd / zD",
-      "details": [
-        "zd deletes one fold at the cursor",
-        "zD deletes nested folds there too"
-      ],
-      "mnemonic": "z = a folded page; d delete",
       "advanced": true
     },
     {

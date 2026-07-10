@@ -52,6 +52,25 @@ git -C external/ideavim sparse-checkout add \
   annotation-processors vimscript-info src vim-engine
 ```
 
+The submodule pin is **updated on demand, never automatically** — `branch =
+master` in `.gitmodules` only names the branch `--remote` fast-forwards to; it
+does not float. Refresh it when mining a new IdeaVim release, then leave it.
+
+After a refresh `git status` shows `M external/ideavim` (the recorded commit
+moved). **That is expected and is not one of your intended files** — no
+workflow checks out submodules and no Gradle script reads the path, so the pin
+affects nothing but this local checkout. Leave it out of a tips commit; discard
+it with `git checkout -- external/ideavim` if you'd rather not carry it.
+
+**Is the key actually released?** A binding present in the submodule may be
+newer than the reader's plugin — `master` runs ahead of the marketplace build.
+Confirm before teaching a recently added key:
+
+```bash
+git -C external/ideavim log -1 --format=%h -S 'keys = ["zd"]' -- .  # commit that added it
+git -C external/ideavim tag --contains <commit> | head -1           # first release; empty = unreleased
+```
+
 **Vim docs** (for *meaning*, not support): https://vimhelp.org/, user manual
 https://vimhelp.org/usr_toc.txt.html. Category → page: `editing`→editing.txt,
 `navigation`→motion.txt/scroll.txt/fold.txt, `pattern`→pattern.txt,

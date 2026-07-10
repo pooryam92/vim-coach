@@ -48,7 +48,10 @@ blocks and the .ideavimrc button, adding/renaming/removing a category.
    `node scripts/lint-tips.mjs` — advisory; eyeball each hit.
 6. **`git status --short`** — only intended files changed. Never commit
    `tips/vim_tips_min.json`: CI regenerates it (regenerate locally only on
-   explicit request; build details: docs/tips/tips-pipeline.md).
+   explicit request; build details: docs/tips/tips-pipeline.md). A modified
+   `external/ideavim` is expected pointer churn if you refreshed the submodule —
+   nothing builds from it; leave it out of the commit (reference.md →
+   "Checking IdeaVim support").
 
 ## Tip shape
 

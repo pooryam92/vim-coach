@@ -63,7 +63,24 @@
       "summary": "yss) wraps the whole line",
       "details": [
         "yss) surrounds the line with ( )",
-        "Any bracket or quote works too"
+        "Any non-letter works, like yss*"
+      ],
+      "config": {
+        "name": "Install vim-surround",
+        "lines": [
+          "Plug 'tpope/vim-surround'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Wrap without Shift ysiwb",
+      "details": [
+        "b is ( ) and B is { }",
+        "r is [ ] and a is < >"
       ],
       "config": {
         "name": "Install vim-surround",
