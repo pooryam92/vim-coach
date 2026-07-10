@@ -235,12 +235,13 @@
         "visual",
         "editing"
       ],
-      "summary": "Block replace one char Ctrl-v r",
+      "summary": "Fill a block with one char r",
       "details": [
-        "Select a block, then press r",
-        "Replaces all selected chars"
+        "Ctrl-v starts Visual Block mode",
+        "hjkl extends the block",
+        "r x fills every cell with x"
       ],
-      "advanced": true
+      "mode": "visual"
     },
     {
       "category": [

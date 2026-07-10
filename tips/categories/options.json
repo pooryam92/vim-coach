@@ -167,6 +167,25 @@
           "set inccommand=nosplit"
         ]
       }
+    },
+    {
+      "category": [
+        "options"
+      ],
+      "summary": "Toggle relativenumber in insert",
+      "details": [
+        "Relative numbers outside insert",
+        "Absolute line number while typing"
+      ],
+      "advanced": true,
+      "config": {
+        "name": "Hybrid relative numbers",
+        "lines": [
+          "set relativenumber",
+          "autocmd InsertEnter * set norelativenumber",
+          "autocmd InsertLeave * set relativenumber"
+        ]
+      }
     }
   ]
 }

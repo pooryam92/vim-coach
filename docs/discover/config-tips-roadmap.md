@@ -74,6 +74,10 @@ button (or the tip UI) can surface the external dependency.
 - **EasyMotion** — `Plug 'easymotion/vim-easymotion'`; needs the
   IdeaVim-EasyMotion **and** AceJump IDE plugins.
 - **which-key** — `set which-key`; needs the Which-Key IDE plugin.
+- **FunctionTextObj** (`if`/`af` on functions, by Julien Phalip) — `set
+  functiontextobj`; needs the separate vim-functiontextobj Marketplace plugin.
+  Distinct from `functextobj` (the built-in `am`/`aM`/`im` extension, already
+  shipped as "Act on a method dam / dim").
 
 Contrast — surround, commentary, sneak, NERDTree, argtextobj, exchange, abolish,
 multiple-cursors, etc. are emulated by IdeaVim itself: the `Plug` line alone
