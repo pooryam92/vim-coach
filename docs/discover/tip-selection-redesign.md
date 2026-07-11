@@ -1,6 +1,6 @@
 # PRD: Tip Selection Redesign (unified filter pipeline)
 
-Status: **agreed, not started** (2026-07-11). Follow-up to the no-repeat
+Status: **implemented** (2026-07-11). Follow-up to the no-repeat
 rotation work, which landed inside the current structure.
 
 ## Problem

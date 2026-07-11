@@ -69,7 +69,7 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
         assertTrue(fakePeriodicScheduler.awaitStartCall())
         Thread.sleep(NO_TIP_WAIT_MS)
         PlatformTestUtil.dispatchAllEventsInIdeEventQueue()
-        assertEquals(0, fakeTipService.getRandomTipCalls)
+        assertEquals(0, fakeTipService.getTipsCalls)
     }
 
     fun testExecuteDoesNotStartPeriodicSchedulerWhenPeriodicTipsAreDisabled() {
@@ -119,12 +119,12 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
         val deadline = System.currentTimeMillis() + TIP_WAIT_TIMEOUT_MS
         while (System.currentTimeMillis() < deadline) {
             PlatformTestUtil.dispatchAllEventsInIdeEventQueue()
-            if (fakeTipService.getRandomTipCalls == expectedCalls) {
+            if (fakeTipService.getTipsCalls == expectedCalls) {
                 return
             }
             Thread.sleep(POLL_INTERVAL_MS)
         }
-        assertEquals(expectedCalls, fakeTipService.getRandomTipCalls)
+        assertEquals(expectedCalls, fakeTipService.getTipsCalls)
     }
 
     private fun settingsService(): SettingsRepository = service()

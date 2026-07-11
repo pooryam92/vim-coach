@@ -27,6 +27,8 @@
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepositoryImpl" />
         <applicationService
+            serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.selection.SelectNextTip" />
+        <applicationService
             serviceInterface="com.github.pooryam92.vimcoach.features.tips.application.loading.TipSourceService"
             serviceImplementation="com.github.pooryam92.vimcoach.features.tips.application.loading.TipSourceServiceImpl" />
         <applicationService

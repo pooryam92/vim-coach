@@ -10,12 +10,14 @@ graph LR
     A2[VimTipStartupActivity] -->|showRandomTipIfNoneActive| B
     A3[TipScheduler] -->|showRandomTipIfNoneActive| B
     B([ShowTips]) --> C[TipNotifications]
-    C --> D([VimTipRepository])
+    C --> S([SelectNextTip])
     C --> E([SettingsRepository])
     C --> N([TipNotifier])
     N --> NA[IntelliJTipNotifier]
     NA --> F[TipNotificationFactory]
     NA --> T[ActiveTipNotificationTracker]
+    S --> D([VimTipRepository])
+    S --> E
     D --> G[(PersistentVimTipStore)]
     E --> H[(PersistentSettingsStore)]
 ```
@@ -33,28 +35,28 @@ graph LR
 
 ## Tip Selection
 
-Selection runs five stages before a tip is drawn. The first happens in `TipNotifications`; the rest live in `TipSelector`, a pure component the repository delegates to — the single chokepoint for both `getRandomTip` overloads, so every entry point passes through the same filters and any future filter has an obvious home.
+`SelectNextTip` (application service, `features/tips/application/selection`) is the single chokepoint for "which tip does the user see next." `TipNotifications.selectRandomTip()` collapses to `selectNextTip.select(ideaVimAvailable())` — `includeConfigTips` stays a parameter because IdeaVim availability is resolved at the project-service seam, but every other input is read straight from `SettingsRepository` inside `SelectNextTip`.
 
-1. **Category filter**: `selectRandomTip()` in `TipNotifications` asks `SettingsRepository` for the enabled categories, then calls `VimTipRepository.getRandomTip(enabledCategories, includeConfigTips)`. If no categories are available yet (tips not loaded), falls back to `getRandomTip(includeConfigTips)` with no category filter.
+Each call to `select()`:
 
-2. **Config filter**: `includeConfigTips` is `ideaVimAvailable()` — true only when IdeaVim is installed. When IdeaVim is absent, tips carrying an `.ideavimrc` snippet (`VimTip.config`) are dropped from the draw, since their only payoff is the "Add to .ideavimrc" button (see [Add to .ideavimrc](ideavimrc-button.md)), which is itself hidden without IdeaVim. This keeps users (e.g. WebStorm with no IdeaVim) from seeing tips they can't act on.
+1. **Reads `VimTipRepository.getTips()`.** An empty cache short-circuits straight to the "No tips found." fallback — `VimTipRepository` is a plain query surface (`getTips`, `getTipsByHashes`, `hasAdvancedTips`, `getCategories`, metadata) with no `SettingsRepository` dependency and no selection logic.
 
-3. **Exclusion filter**: tips whose SHA-256 hash of the summary appears in the hidden-hashes list are stripped before the random draw. The hash is computed by `TipHash.fromTip()`.
+2. **Builds a `TipSelectionContext`** from `SettingsRepository`: enabled categories (`getEnabledTipCategories(availableCategories)`, skipped in favor of a pass-through when the cache has no categories at all yet — tips not loaded), hidden tip hashes, the advanced-tips opt-in, and the caller's `includeConfigTips`.
 
-4. **Advanced filter**: tips marked `VimTip.advanced` are dropped unless `SettingsRepository.isShowAdvancedTipsEnabled()` is on (default off). When the settings service is unavailable, advanced tips are hidden (the safe default). See [Settings](settings.md#advanced-tips-opt-in) for the toggle.
+3. **Runs the `TipFilter` chain**, left to right — `fun interface TipFilter { fun apply(pool, context): List<VimTip> }`, so adding a filter is adding one list element:
+   - **`categoryFilter`**: keeps tips in an enabled category; passes every tip through untouched when no categories exist yet.
+   - **`excludedTipsFilter`**: drops tips whose SHA-256 hash of the summary (`TipHash.fromTip()`) is in the hidden-hashes list.
+   - **`configTipsFilter`**: `includeConfigTips` is `ideaVimAvailable()` — true only when IdeaVim is installed. When IdeaVim is absent, tips carrying an `.ideavimrc` snippet (`VimTip.config`) are dropped, since their only payoff is the "Add to .ideavimrc" button (see [Add to .ideavimrc](ideavimrc-button.md)), which is itself hidden without IdeaVim. This keeps users (e.g. WebStorm with no IdeaVim) from seeing tips they can't act on.
+   - **`advancedTipsFilter`**: drops tips marked `VimTip.advanced` unless `SettingsRepository.isShowAdvancedTipsEnabled()` is on (default off). See [Settings](settings.md#advanced-tips-opt-in) for the toggle.
 
-`VimTipRepositoryImpl` packages the inputs to stages 2–4 as a `TipVisibilityCriteria` (read from `SettingsRepository` on each draw) and hands them to `TipSelector` together with the category-matched tips.
+4. **Draws via `TipRotation`** (owned by `SelectNextTip`, still deliberately in-memory and app-wide because `SelectNextTip` itself is an application service): a tip already shown this IDE session is not drawn again until every eligible tip has been shown once. The shown-tip memory is a set of `TipHash`es, so one rotation is shared across all projects and entry points. When the eligible pool is exhausted, only that pool's hashes are forgotten before redrawing, so cycling through one category filter never resets progress through another. Because rotation runs after the filter chain, an excluded tip can neither block the cycle nor be resurrected by a reset.
 
-5. **No-repeat rotation** (`TipRotation`, invoked by `TipSelector` on whatever survived stages 1–4): a tip already shown this IDE session is not drawn again until every eligible tip has been shown once. The shown-tip memory is a set of `TipHash`es held by the repository — an application service — so one rotation is shared across all projects and entry points. It is deliberately **in-memory only**: the cycle restarts with the IDE. When the eligible pool is exhausted, only that pool's hashes are forgotten before redrawing, so cycling through one category filter never resets progress through another. Because rotation runs after the exclusion filter, an excluded tip can neither block the cycle nor be resurrected by a reset. Fallback tips bypass the rotation entirely.
-
-`TipSelectionIndex` is a lazy cache inside `VimTipRepositoryImpl` that groups tips by category. It is rebuilt only when the tip list reference changes (after a refresh), not on every call.
-
-Fallback tips are returned when the candidate list is empty after filtering:
+5. **Falls back** when the pool is empty after filtering. Fallback tips bypass the rotation entirely.
 
 | Condition | Fallback shown |
 |-----------|----------------|
-| No tips loaded at all | "No tips found." |
-| All tips filtered out by category (or all remaining tips are advanced with the opt-in off) | "No tips match the selected categories." |
+| No tips loaded at all (`VimTipRepository.getTips()` empty) | "No tips found." |
+| Tips exist but none survive the filter chain — wrong category, all hidden, or all advanced with the opt-in off | "No tips match the selected categories." |
 
 The filtered fallback's detail line points at both remedies — enabling a matching category and turning on "Show advanced tips" — since either can be the reason the draw came up empty.
 

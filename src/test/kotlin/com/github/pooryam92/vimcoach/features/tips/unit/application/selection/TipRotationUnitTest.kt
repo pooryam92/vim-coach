@@ -1,7 +1,7 @@
-package com.github.pooryam92.vimcoach.features.tips.unit.persistence
+package com.github.pooryam92.vimcoach.features.tips.unit.application.selection
 
+import com.github.pooryam92.vimcoach.features.tips.application.selection.TipRotation
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
-import com.github.pooryam92.vimcoach.features.tips.persistence.TipRotation
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull

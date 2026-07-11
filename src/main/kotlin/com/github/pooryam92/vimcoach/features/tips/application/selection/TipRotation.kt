@@ -1,4 +1,4 @@
-package com.github.pooryam92.vimcoach.features.tips.persistence
+package com.github.pooryam92.vimcoach.features.tips.application.selection
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
