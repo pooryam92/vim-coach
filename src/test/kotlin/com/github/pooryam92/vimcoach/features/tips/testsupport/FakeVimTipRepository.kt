@@ -9,22 +9,12 @@ import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 class FakeVimTipRepository(
     initialTips: List<VimTip> = listOf(DEFAULT_TIP),
     initialMetadata: TipMetadata = TipMetadata(),
-    // Mirrors the production draw contract: advanced tips are excluded unless opted in, so tests
-    // cannot show an opted-out caller a tip that VimTipRepositoryImpl would never return.
-    private val showAdvancedTips: Boolean = false
 ) : VimTipRepository {
     private var tips = initialTips.toMutableList()
     private var categories = TipCategories.fromTips(initialTips)
     private var metadata = initialMetadata
-    private var currentIndex = 0
 
-    var getRandomTipCalls = 0
-        private set
-    var getRandomTipByCategoryCalls = 0
-        private set
-    var lastRequestedCategories: List<String>? = null
-        private set
-    var lastIncludeConfigTips: Boolean? = null
+    var getTipsCalls = 0
         private set
 
     override fun countTips(): Int {
@@ -34,38 +24,12 @@ class FakeVimTipRepository(
     override fun saveTips(tips: List<VimTip>) {
         this.tips = tips.toMutableList()
         categories = TipCategories.fromTips(tips)
-        currentIndex = 0
     }
 
-    override fun getRandomTip(includeConfigTips: Boolean): VimTip {
-        getRandomTipCalls += 1
-        lastRequestedCategories = null
-        lastIncludeConfigTips = includeConfigTips
-        val tipPool = visibleTips(tips, includeConfigTips).ifEmpty { listOf(DEFAULT_TIP) }
-        val tip = tipPool[currentIndex % tipPool.size]
-        currentIndex += 1
-        return tip
+    override fun getTips(): List<VimTip> {
+        getTipsCalls += 1
+        return tips.toList()
     }
-
-    override fun getRandomTip(categories: List<String>, includeConfigTips: Boolean): VimTip {
-        getRandomTipByCategoryCalls += 1
-        lastRequestedCategories = categories.toList()
-        lastIncludeConfigTips = includeConfigTips
-
-        val allowedCategories = categories.toSet()
-        val tipPool = visibleTips(tips.filter { tip ->
-            tip.category.any(allowedCategories::contains)
-        }, includeConfigTips).ifEmpty { listOf(FILTERED_DEFAULT_TIP) }
-
-        val tip = tipPool[currentIndex % tipPool.size]
-        currentIndex += 1
-        return tip
-    }
-
-    private fun visibleTips(tips: List<VimTip>, includeConfigTips: Boolean): List<VimTip> =
-        tips
-            .filter { includeConfigTips || it.config?.lines.isNullOrEmpty() }
-            .filter { showAdvancedTips || !it.advanced }
 
     override fun hasAdvancedTips(): Boolean {
         return tips.any { it.advanced }
@@ -92,10 +56,6 @@ class FakeVimTipRepository(
         val DEFAULT_TIP = VimTip(
             summary = "fallback",
             details = listOf("fallback-details")
-        )
-        val FILTERED_DEFAULT_TIP = VimTip(
-            summary = "filtered-fallback",
-            details = listOf("filtered-fallback-details")
         )
     }
 }

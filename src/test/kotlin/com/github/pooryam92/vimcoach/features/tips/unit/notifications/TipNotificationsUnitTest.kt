@@ -6,6 +6,8 @@ import com.github.pooryam92.vimcoach.features.tips.application.notifications.Tip
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipMessageHandle
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotifications
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotifier
+import com.github.pooryam92.vimcoach.features.tips.application.selection.SelectNextTip
+import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
 import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeSettingsService
@@ -34,37 +36,38 @@ class TipNotificationsUnitTest {
         ideaVimAvailable: () -> Boolean = { true },
         recordTipNote: RecordTipNote? = null,
         openSettings: () -> Unit = {},
-    ) = TipNotifications(
-        notifier = notifier,
-        tipRepository = { repository },
-        settingsRepository = { settings },
-        ideaVimRcAction = ideaVimRcAction,
-        ideaVimAvailable = ideaVimAvailable,
-        openSettings = openSettings,
-        recordTipNote = recordTipNote,
-    )
-
-    @Test
-    fun showRandomTipSelectsWithinEnabledCategoriesWhenCategoriesExist() {
-        val tip = VimTip("editing tip", listOf("details"), listOf("editing"))
-        val repository = FakeVimTipRepository(initialTips = listOf(tip))
-
-        controller(repository, FakeSettingsService(enabledCategories = listOf("editing"))).showRandomTip()
-
-        assertEquals(1, repository.getRandomTipByCategoryCalls)
-        assertEquals(listOf("editing"), repository.lastRequestedCategories)
-        assertEquals(listOf(tip), notifier.shownTips)
+    ): TipNotifications {
+        val selectNextTip = SelectNextTip(repository, settings)
+        return TipNotifications(
+            notifier = notifier,
+            tipRepository = { repository },
+            settingsRepository = { settings },
+            selectNextTip = { selectNextTip },
+            ideaVimRcAction = ideaVimRcAction,
+            ideaVimAvailable = ideaVimAvailable,
+            openSettings = openSettings,
+            recordTipNote = recordTipNote,
+        )
     }
 
     @Test
-    fun showRandomTipUsesUncategorizedSelectionWhenNoCategoriesExist() {
-        val tip = VimTip("plain tip", listOf("details"))
-        val repository = FakeVimTipRepository(initialTips = listOf(tip))
+    fun showRandomTipShowsConfigTipsWhenIdeaVimIsAvailable() {
+        val configTip = VimTip("config tip", listOf("details"), config = TipConfig(lines = listOf("set number")))
+        val repository = FakeVimTipRepository(initialTips = listOf(configTip))
 
-        controller(repository).showRandomTip()
+        controller(repository, ideaVimAvailable = { true }).showRandomTip()
 
-        assertEquals(1, repository.getRandomTipCalls)
-        assertEquals(0, repository.getRandomTipByCategoryCalls)
+        assertEquals(listOf(configTip), notifier.shownTips)
+    }
+
+    @Test
+    fun showRandomTipHidesConfigTipsWhenIdeaVimIsUnavailable() {
+        val configTip = VimTip("config tip", listOf("details"), config = TipConfig(lines = listOf("set number")))
+        val repository = FakeVimTipRepository(initialTips = listOf(configTip))
+
+        controller(repository, ideaVimAvailable = { false }).showRandomTip()
+
+        assertEquals("No tips match the selected categories.", notifier.shownTips.single().summary)
     }
 
     @Test
@@ -73,24 +76,6 @@ class TipNotificationsUnitTest {
         controller(ideaVimRcAction = { action }).showRandomTip()
 
         assertSame(action, notifier.lastActions!!.onAddToIdeaVimRc)
-    }
-
-    @Test
-    fun showRandomTipExcludesConfigTipsWhenIdeaVimUnavailable() {
-        val repository = FakeVimTipRepository(initialTips = listOf(VimTip("plain tip", listOf("details"))))
-
-        controller(repository, ideaVimAvailable = { false }).showRandomTip()
-
-        assertEquals(false, repository.lastIncludeConfigTips)
-    }
-
-    @Test
-    fun showRandomTipIncludesConfigTipsWhenIdeaVimAvailable() {
-        val repository = FakeVimTipRepository(initialTips = listOf(VimTip("plain tip", listOf("details"))))
-
-        controller(repository, ideaVimAvailable = { true }).showRandomTip()
-
-        assertEquals(true, repository.lastIncludeConfigTips)
     }
 
     @Test
@@ -112,7 +97,7 @@ class TipNotificationsUnitTest {
 
         assertFalse(shown)
         assertTrue(notifier.shownTips.isEmpty())
-        assertEquals(0, repository.getRandomTipCalls)
+        assertEquals(0, repository.getTipsCalls)
     }
 
     @Test
@@ -190,8 +175,7 @@ class TipNotificationsUnitTest {
     @Test
     fun doesNotNudgeAdvancedTipsWhenNudgeIsIneligible() {
         val repository = FakeVimTipRepository(
-            initialTips = listOf(VimTip("advanced tip", listOf("details"), advanced = true)),
-            showAdvancedTips = true
+            initialTips = listOf(VimTip("advanced tip", listOf("details"), advanced = true))
         )
 
         repeat(5) { controller(repository, FakeSettingsService(showAdvancedTips = true)).showRandomTip() }

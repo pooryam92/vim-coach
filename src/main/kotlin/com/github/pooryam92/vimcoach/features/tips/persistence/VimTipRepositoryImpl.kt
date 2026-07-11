@@ -9,15 +9,9 @@ import com.intellij.openapi.components.service
 
 class VimTipRepositoryImpl() : VimTipRepository {
     private var injectedTipStore: PersistentVimTipStore? = null
-    private var injectedSettingsService: SettingsRepository? = null
-    private var cachedTipSelection: TipSelectionIndex? = null
 
     internal constructor(tipStore: PersistentVimTipStore) : this() {
         injectedTipStore = tipStore
-    }
-
-    internal constructor(tipStore: PersistentVimTipStore, settingsService: SettingsRepository) : this(tipStore) {
-        injectedSettingsService = settingsService
     }
 
     override fun countTips(): Int {
@@ -28,13 +22,8 @@ class VimTipRepositoryImpl() : VimTipRepository {
         saveTipCache(tips)
     }
 
-    override fun getRandomTip(includeConfigTips: Boolean): VimTip {
-        return randomTipOrFallback(currentState().tips, FALLBACK_TIP, includeConfigTips)
-    }
-
-    override fun getRandomTip(categories: List<String>, includeConfigTips: Boolean): VimTip {
-        val matchingTips = tipSelectionIndex(currentState().tips).matchingTips(categories)
-        return randomTipOrFallback(matchingTips, FILTERED_FALLBACK_TIP, includeConfigTips)
+    override fun getTips(): List<VimTip> {
+        return currentState().tips
     }
 
     override fun hasAdvancedTips(): Boolean {
@@ -90,56 +79,7 @@ class VimTipRepositoryImpl() : VimTipRepository {
         return categories
     }
 
-    private fun tipSelectionIndex(tips: List<VimTip>): TipSelectionIndex {
-        val existingIndex = cachedTipSelection
-        if (existingIndex != null && existingIndex.isFor(tips)) {
-            return existingIndex
-        }
-
-        return TipSelectionIndex.fromTips(tips).also { cachedTipSelection = it }
-    }
-
-    private fun randomTipOrFallback(tips: List<VimTip>, fallbackTip: VimTip, includeConfigTips: Boolean): VimTip {
-        val visibleTips = visibleTips(tips, includeConfigTips)
-        if (visibleTips.isEmpty()) {
-            return fallbackTip
-        }
-        return visibleTips.random()
-    }
-
-    private fun visibleTips(tips: List<VimTip>, includeConfigTips: Boolean): List<VimTip> {
-        val settingsService = settingsServiceOrNull()
-        val hiddenHashes = settingsService?.getHiddenTipHashes()?.toSet() ?: emptySet()
-        // No settings service (e.g. an unconfigured cache) means we cannot know the opt-in, so we
-        // default to hiding advanced tips — the safe, spec-mandated default.
-        val showAdvancedTips = settingsService?.isShowAdvancedTipsEnabled() ?: false
-        return tips
-            .asSequence()
-            .filterNot { TipHash.fromTip(it).value in hiddenHashes }
-            .filter { includeConfigTips || it.config?.lines.isNullOrEmpty() }
-            .filter { showAdvancedTips || !it.advanced }
-            .toList()
-    }
-
     private fun tipStore(): PersistentVimTipStore {
         return injectedTipStore ?: service()
-    }
-
-    private fun settingsServiceOrNull(): SettingsRepository? {
-        injectedSettingsService?.let { return it }
-        return runCatching { service<SettingsRepository>() }.getOrNull()
-    }
-
-    private companion object {
-        val FALLBACK_TIP = VimTip(
-            summary = "No tips found.",
-            details = listOf("Tips have not been loaded yet.")
-        )
-        val FILTERED_FALLBACK_TIP = VimTip(
-            summary = "No tips match the selected categories.",
-            details = listOf(
-                "Enable a matching category, or turn on \"Show advanced tips\", in Vim Coach settings."
-            )
-        )
     }
 }

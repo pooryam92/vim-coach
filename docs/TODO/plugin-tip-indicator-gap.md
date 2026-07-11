@@ -31,9 +31,9 @@ user tried `ysiw)`, nothing happened, confusion.
 This is now resolved for config tips via **Option B (suppress)**: tip *selection*
 itself drops `config`-bearing tips when IdeaVim is absent, so they are never
 shown rather than shown without a usable button. `TipNotifications.selectRandomTip()`
-passes `includeConfigTips = ideaVimAvailable()` into `VimTipRepository.getRandomTip()`;
-`VimTipRepositoryImpl.visibleTips()` does the filtering. The button gate
-(`TipIdeaVimRc.getAction` → null) remains as a second line of defence.
+passes `includeConfigTips = ideaVimAvailable()` into `SelectNextTip.select()`;
+its `configTipsFilter` (`features/tips/application/selection`) does the filtering.
+The button gate (`TipIdeaVimRc.getAction` → null) remains as a second line of defence.
 
 The **install funnel is preserved**: the filter keys on *IdeaVim installed*, not
 on the specific plugin — a user with IdeaVim but not vim-surround still sees the

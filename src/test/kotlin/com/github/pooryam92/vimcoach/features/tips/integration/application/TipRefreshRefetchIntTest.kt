@@ -36,7 +36,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         assertEquals(TipLoadResult.Updated(2), result)
         assertEquals(2, tipService.countTips())
         assertEquals(listOf("motions", "editing"), tipService.getCategories().values)
-        assertTrue(remoteTips.contains(tipService.getRandomTip()))
+        assertEquals(remoteTips, tipService.getTips())
     }
 
     fun testRefetchTipsUpdatesExistingTips() {
@@ -62,7 +62,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.Updated(1), result)
         assertEquals(1, tipService.countTips())
-        assertEquals("updated-1", tipService.getRandomTip().summary)
+        assertEquals("updated-1", tipService.getTips().single().summary)
     }
 
     fun testRefetchTipsDoesNotSaveWhenRemoteReturnsFailure() {
@@ -78,7 +78,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.Failed("connection timeout"), result)
         assertEquals(1, tipService.countTips())
-        assertEquals("existing", tipService.getRandomTip().summary)
+        assertEquals("existing", tipService.getTips().single().summary)
     }
 
     fun testRefetchTipsDoesNotSaveWhenRemoteReturnsEmpty() {
@@ -94,7 +94,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.NoData, result)
         assertEquals(1, tipService.countTips())
-        assertEquals("existing", tipService.getRandomTip().summary)
+        assertEquals("existing", tipService.getTips().single().summary)
     }
 
     fun testRefetchTipsReturnsNotModifiedWhenNoChanges() {
@@ -113,7 +113,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         assertEquals(TipLoadResult.NotModified, result)
         assertEquals(1, tipService.countTips())
         assertEquals(listOf("motions"), tipService.getCategories().values)
-        assertEquals("existing", tipService.getRandomTip().summary)
+        assertEquals("existing", tipService.getTips().single().summary)
     }
 
     fun testRefetchTipsAlwaysForcesReload() {
@@ -139,7 +139,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.Updated(1), result)
         assertEquals(1, tipService.countTips())
-        assertEquals("new", tipService.getRandomTip().summary)
+        assertEquals("new", tipService.getTips().single().summary)
     }
 
     fun testCheckForUpdatesLoadsWhenNoTipsExist() {
@@ -182,7 +182,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         assertEquals(1, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.NotModified, result)
         assertEquals(1, tipService.countTips())
-        assertEquals("existing", tipService.getRandomTip().summary)
+        assertEquals("existing", tipService.getTips().single().summary)
     }
 
     fun testCheckForUpdatesReloadsLegacyCachedTipsWithoutCategories() {
@@ -335,7 +335,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
 
         // Expected after upgrade: the config-aware parse is surfaced. FAILS while the conditional
         // 304 short-circuit serves the stale, config-less cache.
-        assertNotNull(tipService.getRandomTip(includeConfigTips = true).config)
+        assertNotNull(tipService.getTips().single { it.summary == summary }.config)
     }
 
     private fun registerLoader(fakeTipSource: TipSourceService): RefreshTips {

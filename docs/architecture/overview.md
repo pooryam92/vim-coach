@@ -44,7 +44,7 @@ The plugin sits entirely inside IntelliJ. Entrypoints are registered as extensio
 | Layer | Responsibility | IntelliJ dependency |
 |-------|---------------|---------------------|
 | **Entrypoints** | Translate IDE events into application calls | Heavy — `AnAction`, `ProjectActivity`, `Configurable` |
-| **Application** | Orchestrate use cases; own no state | Light — `service<T>()`, `invokeLater` |
+| **Application** | Orchestrate use cases; own only deliberate in-memory state (e.g. tip rotation) | Light — `service<T>()`, `invokeLater` |
 | **Persistence** | Read and write durable state | Medium — `PersistentStateComponent` |
 | **Infrastructure** | Integrate with external systems | Medium — HTTP, VFS, Document API |
 | **Domain** | Data types and result shapes | None |
@@ -66,4 +66,7 @@ Classes have two constructors: a primary one that resolves dependencies via `ser
 Application services hold state shared across all open projects (tip cache, settings). Project services hold per-project state (the `TipNotifier` adapter and its notification tracker, periodic scheduler). Mixing these up causes either stale cross-project state or unnecessary duplication.
 
 ### Stores are dumb
-`PersistentStateComponent` implementations (`PersistentVimTipStore`, `PersistentSettingsStore`) are plain state snapshots with no logic. All derivation, filtering, and normalization happens in the repository layer above them. This keeps persistence concerns separate from business rules.
+`PersistentStateComponent` implementations (`PersistentVimTipStore`, `PersistentSettingsStore`) are plain state snapshots with no logic. Derivation and normalization that belong to persisted data (e.g. rebuilding `TipCategories` from stored tips) happens in the repository layer above them. This keeps persistence concerns separate from business rules.
+
+### Selection policy lives in the application layer
+`VimTipRepository` is a plain query surface with no `SettingsRepository` dependency. "Which tip does the user see next" — category, exclusion, config, and advanced-tips filtering, plus the no-repeat rotation — is owned entirely by `SelectNextTip` (`features/tips/application/selection`), the single chokepoint every entry point goes through. See [Tip Selection](../features/show-tip.md#tip-selection).

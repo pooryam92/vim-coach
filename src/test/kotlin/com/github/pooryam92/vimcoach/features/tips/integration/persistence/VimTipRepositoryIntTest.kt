@@ -26,43 +26,14 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         assertEquals(2, tipService().countTips())
     }
 
-    fun testGetRandomTipReturnsSavedTip() {
+    fun testGetTipsReturnsSavedTips() {
         val tips = listOf(
             VimTip("summary-1", listOf("details-1")),
             VimTip("summary-2", listOf("details-2"))
         )
         tipService().saveTips(tips)
 
-        assertTrue(tips.contains(tipService().getRandomTip()))
-    }
-
-    fun testGetRandomTipFiltersByCategories() {
-        val service = tipService()
-        service.saveTips(
-            listOf(
-                VimTip("summary-1", listOf("details-1"), listOf("basics")),
-                VimTip("summary-2", listOf("details-2"), listOf("editing"))
-            )
-        )
-
-        val randomTip = service.getRandomTip(listOf("editing"))
-
-        assertEquals("summary-2", randomTip.summary)
-    }
-
-    fun testGetRandomTipReturnsFilteredFallbackWhenNoCategoriesMatch() {
-        val service = tipService()
-        service.saveTips(
-            listOf(VimTip("summary-1", listOf("details-1"), listOf("basics")))
-        )
-
-        val randomTip = service.getRandomTip(listOf("editing"))
-
-        assertEquals("No tips match the selected categories.", randomTip.summary)
-        assertEquals(
-            "Enable a matching category, or turn on \"Show advanced tips\", in Vim Coach settings.",
-            randomTip.details.single()
-        )
+        assertEquals(tips, tipService().getTips())
     }
 
     fun testLoadStateReplacesTips() {
@@ -168,13 +139,6 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         assertNull(normalTip.mode)
         assertFalse(normalTip.advanced)
         assertNull(normalTip.mnemonic)
-    }
-
-    fun testGetRandomTipReturnsEmptyMessageWhenEmpty() {
-        val randomTip = tipService().getRandomTip()
-
-        assertEquals("No tips found.", randomTip.summary)
-        assertEquals("Tips have not been loaded yet.", randomTip.details.single())
     }
 
     private fun tipService(): VimTipRepository = service()

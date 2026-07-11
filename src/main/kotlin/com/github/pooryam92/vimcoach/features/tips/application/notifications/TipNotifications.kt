@@ -1,6 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.application.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.TipIdeaVimRc
+import com.github.pooryam92.vimcoach.features.tips.application.selection.SelectNextTip
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
@@ -13,6 +14,7 @@ class TipNotifications internal constructor(
     private val notifier: TipNotifier,
     private val tipRepository: () -> VimTipRepository,
     private val settingsRepository: () -> SettingsRepository,
+    private val selectNextTip: () -> SelectNextTip,
     private val ideaVimRcAction: (VimTip) -> (() -> Unit)?,
     private val ideaVimAvailable: () -> Boolean,
     private val openSettings: () -> Unit,
@@ -25,6 +27,7 @@ class TipNotifications internal constructor(
         notifier = project.service(),
         tipRepository = { service() },
         settingsRepository = { service() },
+        selectNextTip = { service() },
         ideaVimRcAction = tipIdeaVimRc::getAction,
         ideaVimAvailable = tipIdeaVimRc::isAvailable,
         openSettings = {
@@ -65,12 +68,5 @@ class TipNotifications internal constructor(
         }
     }
 
-    private fun selectRandomTip(): VimTip {
-        val tips = tipRepository()
-        val includeConfigTips = ideaVimAvailable()
-        val availableCategories = tips.getCategories().values
-        if (availableCategories.isEmpty()) return tips.getRandomTip(includeConfigTips)
-        val enabledCategories = settingsRepository().getEnabledTipCategories(availableCategories)
-        return tips.getRandomTip(enabledCategories, includeConfigTips)
-    }
+    private fun selectRandomTip(): VimTip = selectNextTip().select(ideaVimAvailable())
 }
