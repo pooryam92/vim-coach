@@ -170,6 +170,20 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         assertNull(normalTip.mnemonic)
     }
 
+    // The repository is one application service, so the rotation exercised here is the same
+    // instance every project and entry point shares. Summaries are unique to this test because
+    // that shared rotation also outlives sibling tests in this process.
+    fun testGetRandomTipCyclesThroughAllTipsBeforeRepeating() {
+        val tips = (1..5).map { VimTip("no-repeat-tip-$it", listOf("details-$it")) }
+        tipService().saveTips(tips)
+
+        val firstCycle = (1..tips.size).map { tipService().getRandomTip().summary }
+        val secondCycle = (1..tips.size).map { tipService().getRandomTip().summary }
+
+        assertEquals(tips.map { it.summary }.toSet(), firstCycle.toSet())
+        assertEquals(tips.map { it.summary }.toSet(), secondCycle.toSet())
+    }
+
     fun testGetRandomTipReturnsEmptyMessageWhenEmpty() {
         val randomTip = tipService().getRandomTip()
 

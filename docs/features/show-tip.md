@@ -33,15 +33,19 @@ graph LR
 
 ## Tip Selection
 
-`selectRandomTip()` in `TipNotifications` does three things before calling `.random()`:
+Selection runs five stages before a tip is drawn. The first happens in `TipNotifications`; the rest live in `TipSelector`, a pure component the repository delegates to — the single chokepoint for both `getRandomTip` overloads, so every entry point passes through the same filters and any future filter has an obvious home.
 
-1. **Category filter**: asks `SettingsRepository` for the enabled categories, then calls `VimTipRepository.getRandomTip(enabledCategories, includeConfigTips)`. If no categories are available yet (tips not loaded), falls back to `getRandomTip(includeConfigTips)` with no category filter.
+1. **Category filter**: `selectRandomTip()` in `TipNotifications` asks `SettingsRepository` for the enabled categories, then calls `VimTipRepository.getRandomTip(enabledCategories, includeConfigTips)`. If no categories are available yet (tips not loaded), falls back to `getRandomTip(includeConfigTips)` with no category filter.
 
-2. **Config filter**: `includeConfigTips` is `ideaVimAvailable()` — true only when IdeaVim is installed. When IdeaVim is absent, tips carrying an `.ideavimrc` snippet (`VimTip.config`) are dropped from the draw, since their only payoff is the "Add to .ideavimrc" button (see [Add to .ideavimrc](ideavimrc-button.md)), which is itself hidden without IdeaVim. This keeps users (e.g. WebStorm with no IdeaVim) from seeing tips they can't act on. The filtering happens in `VimTipRepositoryImpl.visibleTips()`.
+2. **Config filter**: `includeConfigTips` is `ideaVimAvailable()` — true only when IdeaVim is installed. When IdeaVim is absent, tips carrying an `.ideavimrc` snippet (`VimTip.config`) are dropped from the draw, since their only payoff is the "Add to .ideavimrc" button (see [Add to .ideavimrc](ideavimrc-button.md)), which is itself hidden without IdeaVim. This keeps users (e.g. WebStorm with no IdeaVim) from seeing tips they can't act on.
 
-3. **Exclusion filter**: inside `VimTipRepositoryImpl.visibleTips()`, tips whose SHA-256 hash of the summary appears in the hidden-hashes list are stripped before the random draw. The hash is computed by `TipHash.fromTip()`.
+3. **Exclusion filter**: tips whose SHA-256 hash of the summary appears in the hidden-hashes list are stripped before the random draw. The hash is computed by `TipHash.fromTip()`.
 
-4. **Advanced filter**: also in `VimTipRepositoryImpl.visibleTips()`, tips marked `VimTip.advanced` are dropped unless `SettingsRepository.isShowAdvancedTipsEnabled()` is on (default off). This is the single chokepoint for both `getRandomTip` overloads, so every entry point is gated. When the settings service is unavailable, advanced tips are hidden (the safe default). See [Settings](settings.md#advanced-tips-opt-in) for the toggle.
+4. **Advanced filter**: tips marked `VimTip.advanced` are dropped unless `SettingsRepository.isShowAdvancedTipsEnabled()` is on (default off). When the settings service is unavailable, advanced tips are hidden (the safe default). See [Settings](settings.md#advanced-tips-opt-in) for the toggle.
+
+`VimTipRepositoryImpl` packages the inputs to stages 2–4 as a `TipVisibilityCriteria` (read from `SettingsRepository` on each draw) and hands them to `TipSelector` together with the category-matched tips.
+
+5. **No-repeat rotation** (`TipRotation`, invoked by `TipSelector` on whatever survived stages 1–4): a tip already shown this IDE session is not drawn again until every eligible tip has been shown once. The shown-tip memory is a set of `TipHash`es held by the repository — an application service — so one rotation is shared across all projects and entry points. It is deliberately **in-memory only**: the cycle restarts with the IDE. When the eligible pool is exhausted, only that pool's hashes are forgotten before redrawing, so cycling through one category filter never resets progress through another. Because rotation runs after the exclusion filter, an excluded tip can neither block the cycle nor be resurrected by a reset. Fallback tips bypass the rotation entirely.
 
 `TipSelectionIndex` is a lazy cache inside `VimTipRepositoryImpl` that groups tips by category. It is rebuilt only when the tip list reference changes (after a refresh), not on every call.
 

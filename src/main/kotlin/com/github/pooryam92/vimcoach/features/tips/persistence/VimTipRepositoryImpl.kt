@@ -11,6 +11,7 @@ class VimTipRepositoryImpl() : VimTipRepository {
     private var injectedTipStore: PersistentVimTipStore? = null
     private var injectedSettingsService: SettingsRepository? = null
     private var cachedTipSelection: TipSelectionIndex? = null
+    private val tipSelector = TipSelector()
 
     internal constructor(tipStore: PersistentVimTipStore) : this() {
         injectedTipStore = tipStore
@@ -100,25 +101,18 @@ class VimTipRepositoryImpl() : VimTipRepository {
     }
 
     private fun randomTipOrFallback(tips: List<VimTip>, fallbackTip: VimTip, includeConfigTips: Boolean): VimTip {
-        val visibleTips = visibleTips(tips, includeConfigTips)
-        if (visibleTips.isEmpty()) {
-            return fallbackTip
-        }
-        return visibleTips.random()
+        return tipSelector.select(tips, visibilityCriteria(includeConfigTips)) ?: fallbackTip
     }
 
-    private fun visibleTips(tips: List<VimTip>, includeConfigTips: Boolean): List<VimTip> {
+    private fun visibilityCriteria(includeConfigTips: Boolean): TipVisibilityCriteria {
         val settingsService = settingsServiceOrNull()
-        val hiddenHashes = settingsService?.getHiddenTipHashes()?.toSet() ?: emptySet()
-        // No settings service (e.g. an unconfigured cache) means we cannot know the opt-in, so we
-        // default to hiding advanced tips — the safe, spec-mandated default.
-        val showAdvancedTips = settingsService?.isShowAdvancedTipsEnabled() ?: false
-        return tips
-            .asSequence()
-            .filterNot { TipHash.fromTip(it).value in hiddenHashes }
-            .filter { includeConfigTips || it.config?.lines.isNullOrEmpty() }
-            .filter { showAdvancedTips || !it.advanced }
-            .toList()
+        return TipVisibilityCriteria(
+            hiddenTipHashes = settingsService?.getHiddenTipHashes()?.toSet() ?: emptySet(),
+            includeConfigTips = includeConfigTips,
+            // No settings service (e.g. an unconfigured cache) means we cannot know the opt-in, so we
+            // default to hiding advanced tips — the safe, spec-mandated default.
+            showAdvancedTips = settingsService?.isShowAdvancedTipsEnabled() ?: false
+        )
     }
 
     private fun tipStore(): PersistentVimTipStore {
