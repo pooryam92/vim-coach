@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Tips now cycle through every tip once before repeating, instead of being picked uniformly at random each time — so you won't see the same tip twice until you've seen the rest. The cycle resets when the IDE restarts, and it tracks progress separately per filtered view, so exhausting the cycle under one category/advanced-tips filter doesn't reset progress under another
+
 ## [1.5.0] - 2026-07-07
 
 ### Added

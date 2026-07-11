@@ -90,6 +90,20 @@ class SelectNextTipFilteringUnitTest {
         assertEquals("No tips match the selected categories.", selectedTip.summary)
     }
 
+    // No settings service (e.g. an unconfigured cache outside a project) must hide advanced tips —
+    // the safe default. The single-arg constructor injects no settings and the platform service
+    // lookup fails in a plain unit test, so this exercises exactly that null fallback.
+    @Test
+    fun hidesAdvancedTipsWhenSettingsServiceUnavailable() {
+        val advancedTip = VimTip("advanced", listOf("advanced-details"), listOf("editing"), advanced = true)
+        val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
+            saveTips(listOf(advancedTip))
+        }
+        val selectNextTip = SelectNextTip(tipRepository)
+
+        assertEquals("No tips match the selected categories.", selectNextTip.select(includeConfigTips = true).summary)
+    }
+
     @Test
     fun filteredFallbackIsReturnedWhenAllTipsAreHidden() {
         val hiddenTip = VimTip("hidden", listOf("hidden-details"), listOf("editing"))

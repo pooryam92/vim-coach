@@ -44,7 +44,7 @@ The plugin sits entirely inside IntelliJ. Entrypoints are registered as extensio
 | Layer | Responsibility | IntelliJ dependency |
 |-------|---------------|---------------------|
 | **Entrypoints** | Translate IDE events into application calls | Heavy — `AnAction`, `ProjectActivity`, `Configurable` |
-| **Application** | Orchestrate use cases; own no state | Light — `service<T>()`, `invokeLater` |
+| **Application** | Orchestrate use cases; own only deliberate in-memory state (e.g. tip rotation) | Light — `service<T>()`, `invokeLater` |
 | **Persistence** | Read and write durable state | Medium — `PersistentStateComponent` |
 | **Infrastructure** | Integrate with external systems | Medium — HTTP, VFS, Document API |
 | **Domain** | Data types and result shapes | None |

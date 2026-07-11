@@ -16,6 +16,10 @@ class SelectNextTip() {
     private var injectedTipRepository: VimTipRepository? = null
     private var injectedSettingsService: SettingsRepository? = null
 
+    internal constructor(tipRepository: VimTipRepository) : this() {
+        injectedTipRepository = tipRepository
+    }
+
     internal constructor(
         tipRepository: VimTipRepository,
         settingsService: SettingsRepository
@@ -40,21 +44,29 @@ class SelectNextTip() {
     private fun buildContext(includeConfigTips: Boolean): TipSelectionContext {
         val settings = settingsService()
         val availableCategories = tipRepository().getCategories().values
-        val enabledCategories =
-            if (availableCategories.isEmpty()) emptyList() else settings.getEnabledTipCategories(availableCategories)
+        val enabledCategories = when {
+            availableCategories.isEmpty() -> emptyList()
+            settings == null -> availableCategories
+            else -> settings.getEnabledTipCategories(availableCategories)
+        }
 
         return TipSelectionContext(
             availableCategories = availableCategories,
             enabledCategories = enabledCategories,
-            hiddenTipHashes = settings.getHiddenTipHashes().toSet(),
-            showAdvancedTips = settings.isShowAdvancedTipsEnabled(),
+            hiddenTipHashes = settings?.getHiddenTipHashes()?.toSet() ?: emptySet(),
+            showAdvancedTips = settings?.isShowAdvancedTipsEnabled() ?: false,
             includeConfigTips = includeConfigTips,
         )
     }
 
     private fun tipRepository(): VimTipRepository = injectedTipRepository ?: service()
 
-    private fun settingsService(): SettingsRepository = injectedSettingsService ?: service()
+    // No settings service (e.g. an unconfigured cache outside a project) means we cannot know the
+    // user's opt-in, so we fall back to the safe defaults: hide advanced tips, hide nothing else.
+    private fun settingsService(): SettingsRepository? {
+        injectedSettingsService?.let { return it }
+        return runCatching { service<SettingsRepository>() }.getOrNull()
+    }
 
     private companion object {
         val FALLBACK_TIP = VimTip(
