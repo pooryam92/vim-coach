@@ -211,8 +211,8 @@
       ],
       "summary": "Indent/outdent a block >ip / <ip",
       "details": [
-        ">ip shifts the current paragraph or block right",
-        "Takes any motion, like >} or <ap"
+        ">ip indents the whole paragraph",
+        "<ip outdents it; takes any motion"
       ]
     },
     {

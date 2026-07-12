@@ -41,9 +41,9 @@
       ],
       "summary": "Swap corner in Visual block O",
       "details": [
-        "1. Ctrl-v to start the block",
-        "2. O swaps to the other edge",
-        "3. Grow the block from that side"
+        "Ctrl-v starts the block",
+        "O jumps to the opposite corner",
+        "Now grow it from that side"
       ],
       "mode": "visual"
     },
@@ -75,8 +75,9 @@
       ],
       "summary": "Select search match gn / gN",
       "details": [
-        "gn selects the next match",
-        "gN selects the previous one"
+        "/foo, then gn selects the match",
+        "Attach an operator: dgn, cgn, ygn",
+        "gN grabs the previous match"
       ],
       "mnemonic": "go next",
       "advanced": true
@@ -101,7 +102,8 @@
       "details": [
         "Select lines, then run :sort n",
         "Use :sort! n for descending"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

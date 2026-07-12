@@ -347,9 +347,10 @@
       ],
       "summary": "Substitute case variants with :S",
       "details": [
-        ":S/foo/bar/g keeps case variants",
-        "Handles foo, Foo, and FOO"
+        ":S/foo/bar/g replaces all casings",
+        "foo→bar, Foo→Bar, FOO→BAR"
       ],
+      "advanced": true,
       "config": {
         "name": "Install vim-abolish",
         "lines": [

@@ -5,10 +5,11 @@
         "windows",
         "cmdline"
       ],
-      "summary": "Open a horizontal split :sp",
+      "summary": "Split horizontally :sp",
       "details": [
-        ":sp or :split stacks another view",
-        "Both share one buffer, edits stay in sync"
+        ":sp stacks a view above/below",
+        "Ctrl-w s does the same from Normal",
+        "Both share the buffer; edits sync"
       ]
     },
     {
@@ -28,12 +29,12 @@
         "windows",
         "cmdline"
       ],
-      "summary": "Open a vertical split :vsplit",
+      "summary": "Split vertically :vs",
       "details": [
-        ":vsplit (or :vs) opens a side-by-side view",
-        "Great for comparing two parts of a file"
-      ],
-      "mnemonic": "vertical split"
+        ":vs opens a side-by-side view",
+        "Ctrl-w v does the same from Normal",
+        "Great for comparing two spots"
+      ]
     },
     {
       "category": [
@@ -46,17 +47,6 @@
         "~/ or an absolute path works too",
         "A bare filename is found anywhere in the project"
       ]
-    },
-    {
-      "category": [
-        "windows"
-      ],
-      "summary": "Split a window Ctrl-w s / Ctrl-w v",
-      "details": [
-        "Ctrl-w s splits horizontally",
-        "Ctrl-w v splits vertically"
-      ],
-      "mnemonic": "w window, s split, v vertical"
     },
     {
       "category": [

@@ -29,10 +29,10 @@
         "pattern",
         "repeat"
       ],
-      "summary": "Next/previous search match n / N",
+      "summary": "Next/previous match n / N",
       "details": [
-        "n goes to the next match",
-        "N goes to the previous match",
+        "/foo then n jumps to each foo",
+        "N goes back to the previous one",
         "Works after /, ?, *, and #"
       ]
     },
@@ -52,11 +52,11 @@
         "pattern",
         "repeat"
       ],
-      "summary": "Rename repeats with * cw n .",
+      "summary": "Rename a word across a file",
       "details": [
-        "* finds the next whole-word match",
-        "cw changes it",
-        "n . repeats on the next match"
+        "* finds the word, cw changes it",
+        "Type the new word, press Esc",
+        "Then n . repeats down the file"
       ]
     },
     {
@@ -66,8 +66,8 @@
       ],
       "summary": "Clear search highlighting :noh",
       "details": [
-        ":noh (or :nohlsearch) clears highlighting",
-        "The current search pattern still stays active"
+        ":noh clears the search highlight",
+        "Search stays active for n and N"
       ],
       "mnemonic": "no highlight"
     },
@@ -75,10 +75,10 @@
       "category": [
         "pattern"
       ],
-      "summary": "Override case in a single search",
+      "summary": "Override case in one search \\c \\C",
       "details": [
-        "/foo\\c ignores case anywhere in the pattern",
-        "/Foo\\C forces an exact-case match"
+        "/foo\\c matches Foo FOO foo",
+        "/Foo\\C matches only Foo, not foo"
       ],
       "mnemonic": "\\c ignore case, \\C exact Case",
       "advanced": true
@@ -89,8 +89,9 @@
       ],
       "summary": "Match whole words with \\< and \\>",
       "details": [
-        "/\\<word\\> matches whole words only",
-        "Use it to avoid partial-token matches"
+        "/ opens a search as usual",
+        "Wrap your word: \\<in\\>",
+        "/\\<in\\> finds in, not pin or into"
       ],
       "advanced": true
     },
@@ -132,21 +133,22 @@
       "category": [
         "pattern"
       ],
-      "summary": "Search for literal text with \\V",
+      "summary": "Search text as-is with \\V",
       "details": [
-        "\\V makes most characters literal",
-        "Good for paths, JSON, and punctuation"
+        "/ opens a search as usual",
+        "Add \\V to drop all regex",
+        "/\\Va.b finds a.b, not aXb"
       ],
-      "mnemonic": "Very nomagic (literal)",
+      "mnemonic": "Very nomagic",
       "advanced": true
     },
     {
       "category": [
         "pattern"
       ],
-      "summary": "Search with plain regex \\v",
+      "summary": "Search with full regex \\v",
       "details": [
-        "Prefix a search with \\v for normal regex",
+        "Add \\v so + ? ( ) need no \\",
         "/\\v(foo|bar) matches foo or bar"
       ],
       "advanced": true
@@ -182,9 +184,11 @@
       ],
       "summary": "Confirm each :s replace with gc",
       "details": [
-        "Add c: :%s/foo/bar/gc asks first",
+        "Replace foo with bar, asking first",
+        ":%s/foo/bar/gc stops at each foo",
         "y replaces, n skips, a all, q quit"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -193,9 +197,11 @@
       ],
       "summary": "Repeat last :s on this line with &",
       "details": [
-        "& repeats the last :s on the current line",
-        "Useful for applying the same :s line by line"
-      ]
+        "Change foo to bar with :s once",
+        "& repeats it on the current line",
+        "Move down, press & again"
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -225,26 +231,14 @@
     {
       "category": [
         "pattern",
-        "cmdline"
-      ],
-      "summary": "Reuse groups in :s with \\1, \\2",
-      "details": [
-        "Group with \\(...\\), reuse as \\1, \\2",
-        "Swap a,b: :%s/\\(\\w*\\),\\(\\w*\\)/\\2,\\1/"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "pattern",
         "editing",
         "repeat"
       ],
-      "summary": "Replace matches one by one with cgn",
+      "summary": "Rename a word with cgn",
       "details": [
-        "Search first with /, *, or #",
-        "cgn changes the next match and enters Insert",
-        ". repeats the same edit on later matches"
+        "/foo finds it, cgn changes it",
+        "Type the new word, press Esc",
+        "Then . alone repeats — no n"
       ],
       "mnemonic": "change go next",
       "advanced": true
@@ -302,10 +296,11 @@
       "category": [
         "pattern"
       ],
-      "summary": "Recall last search with Ctrl-r /",
+      "summary": "Paste last search into :s Ctrl-r /",
       "details": [
-        "In : or insert, Ctrl-r / pastes the last search",
-        "Example: :%s/<C-r>//new/g reuses it"
+        "Search /foo, then start :%s",
+        "Ctrl-r / pastes it: :%s/foo/new/g",
+        "Also works while typing in Insert"
       ],
       "advanced": true
     }
