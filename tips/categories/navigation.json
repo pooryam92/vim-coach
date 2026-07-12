@@ -49,7 +49,8 @@
       ],
       "summary": "Move by big WORDs W / B / E",
       "details": [
-        "WORDs split on whitespace",
+        "W next WORD, B back, E to end",
+        "A WORD is split only on spaces",
         "Great for paths and long tokens"
       ]
     },
@@ -131,9 +132,8 @@
       "summary": "Jump to file top/bottom gg / G",
       "details": [
         "gg goes to first line",
-        "G goes to last line"
-      ],
-      "mnemonic": "go top / go bottom"
+        "G (or 5G) goes to line 5 or last"
+      ]
     },
     {
       "category": [

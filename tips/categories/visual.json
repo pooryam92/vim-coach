@@ -254,7 +254,8 @@
       "details": [
         "Type : to get the '<,'> range",
         "Use :s, :sort, or :normal"
-      ]
+      ],
+      "mode": "visual"
     },
     {
       "category": [

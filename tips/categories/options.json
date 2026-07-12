@@ -139,7 +139,8 @@
       "details": [
         ":set number? shows its value",
         "Useful when debugging behavior"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
