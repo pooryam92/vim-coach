@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-07-11
+
 ### Added
 
 - Tips now cycle through every tip once before repeating, instead of being picked uniformly at random each time — so you won't see the same tip twice until you've seen the rest. The cycle resets when the IDE restarts, and it tracks progress separately per filtered view, so exhausting the cycle under one category/advanced-tips filter doesn't reset progress under another
@@ -132,7 +134,8 @@
 - Support for remote tip sources
 - Action to refetch tips from remote source for updating the local tip library
 
-[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.5.0...HEAD
+[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.5.1...HEAD
+[1.5.1]: https://github.com/pooryam92/vim-coach/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/pooryam92/vim-coach/compare/1.4.1...1.5.0
 [1.4.1]: https://github.com/pooryam92/vim-coach/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/pooryam92/vim-coach/compare/1.4.0-beta.2...1.4.0
