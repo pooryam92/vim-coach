@@ -71,6 +71,24 @@ git -C external/ideavim log -1 --format=%h -S 'keys = ["zd"]' -- .  # commit tha
 git -C external/ideavim tag --contains <commit> | head -1           # first release; empty = unreleased
 ```
 
+Cross-check `CHANGES.md`, the clearer signal when mining a release: find the
+feature's `VIM-` issue and read its heading. Under `## To Be Released` → **do not
+write the tip**; under `## X.Y.Z` → fine. Only release lines carry tags
+(`2.42.0-eap.1`; stable gets no plain `2.42.0` tag) and EAP precedes stable, so an
+empty `--contains` does mean unreleased.
+
+A **changed default** needs the same gate and is easier to miss — read the file as
+the *released* tag has it, not just `master`:
+
+```bash
+git -C external/ideavim show 2.42.0-eap.1:<path/to/Ext.kt> | grep parseKeys
+```
+
+This is how the `multiple-cursors` tip came to teach `<C-n>` while every shipped
+build still bound `<A-n>` (VIM-2178, unreleased). When a tip's keys ride on an
+unreleased default, pin them in its `config` via the plugin's `<Plug>` targets —
+stable across versions, so the taught key holds on both builds.
+
 **Vim docs** (for *meaning*, not support): https://vimhelp.org/, user manual
 https://vimhelp.org/usr_toc.txt.html. Category → page: `editing`→editing.txt,
 `navigation`→motion.txt/scroll.txt/fold.txt, `pattern`→pattern.txt,
@@ -161,8 +179,12 @@ author them until the blocker is fixed.
   when IdeaVim emulates the plugin itself (surround, commentary, sneak, NERDTree,
   argtextobj, multiple-cursors…). The "Setup" block in
   `external/ideavim/doc/IdeaVim Plugins.md` reveals which need an extra install.
-  `multiple-cursors` shipped once VIM-2178 landed — its default keys now bind
-  correctly, matching upstream `terryma/vim-multiple-cursors`.
+  `multiple-cursors` is shippable, but **not on its default keys**: VIM-2178
+  (which switches the defaults to upstream's `<C-n>` family) is on `master` and
+  unreleased, so every shipped build still binds `<A-n>`. Its tip therefore pins
+  `<C-n>` itself with `nmap`/`xmap <Plug>NextWholeOccurrence` — stable on both
+  builds. Drop the pin only once VIM-2178 appears under a released `## X.Y.Z`
+  changelog heading.
 
 ## Adding or changing a category
 

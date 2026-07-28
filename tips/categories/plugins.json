@@ -5,11 +5,11 @@
         "plugins",
         "navigation"
       ],
-      "summary": "Move inside camelCase ,w",
+      "summary": "Change one sub-word ci,w",
       "details": [
-        "Splits fooBar and foo_bar",
-        "Also ,b back, ,e end",
-        "ci,w changes one sub-word"
+        "In fooBar, ci,w replaces Bar",
+        "Also ,w ,b ,e move by sub-word",
+        "Splits foo_bar too"
       ],
       "config": {
         "name": "Install CamelCaseMotion",
@@ -33,7 +33,9 @@
       "config": {
         "name": "Install multiple-cursors",
         "lines": [
-          "Plug 'terryma/vim-multiple-cursors'"
+          "Plug 'terryma/vim-multiple-cursors'",
+          "nmap <C-n> <Plug>NextWholeOccurrence",
+          "xmap <C-n> <Plug>NextWholeOccurrence"
         ]
       }
     },

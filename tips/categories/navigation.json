@@ -68,6 +68,16 @@
       "category": [
         "navigation"
       ],
+      "summary": "Jump inside camelCase [w and [b",
+      "details": [
+        "In fooBarBaz, [w hops to Bar",
+        "[b hops back, d[w deletes ahead"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
       "summary": "Jump to line start 0 / ^",
       "details": [
         "0 goes to the very first column",

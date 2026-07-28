@@ -34,9 +34,13 @@ blocks and the .ideavimrc button, adding/renaming/removing a category.
    The generator blocks only *identical* summaries — semantic duplicates are
    yours to catch. A category is its *rendered* set (primary + secondary tags):
    check it with `grep -rn '"<cat>"' tips/categories/`, never one file alone.
-2. **Verify support** against the IdeaVim submodule (reference.md →
-   "Checking IdeaVim support") —
-   don't carry over upstream-Vim behavior IdeaVim doesn't replicate.
+2. **Verify support *and* release** against the IdeaVim submodule (reference.md →
+   "Checking IdeaVim support") — don't carry over upstream-Vim behavior IdeaVim
+   doesn't replicate, and don't teach a key that only exists on `master`. The
+   submodule runs ahead of the marketplace build, so "the source supports it" is
+   half the check: reference.md → "Is the key actually released?" is the other
+   half, and it is not optional when mining a changelog. Skipping it once already
+   shipped two tips readers could not use.
 3. **Propose before editing.** Show each whole tip before → after with a
    one-line reason and get a go-ahead. Agree shape first (how many tips, the
    split axis) before polishing words. Two rejected rewords → stop guessing
