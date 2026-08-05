@@ -72,10 +72,19 @@ git -C external/ideavim tag --contains <commit> | head -1           # first rele
 ```
 
 Cross-check `CHANGES.md`, the clearer signal when mining a release: find the
-feature's `VIM-` issue and read its heading. Under `## To Be Released` → **do not
-write the tip**; under `## X.Y.Z` → fine. Only release lines carry tags
-(`2.42.0-eap.1`; stable gets no plain `2.42.0` tag) and EAP precedes stable, so an
-empty `--contains` does mean unreleased.
+feature's `VIM-` issue and read its heading **on `master`**. Under `## To Be
+Released` → **do not write the tip**; under `## X.Y.Z` → fine. Every release
+carries a tag (`2.45.2`, `2.42.0-eap.1`), so an empty `--contains` does mean
+unreleased.
+
+Two quirks make the signals disagree — trust `--contains`, confirm on master:
+
+- **A release tag's own changelog is empty** — at tag `2.43.0`, `## 2.43.0` is a
+  bare heading with everything it shipped still under `## To Be Released` below
+  it. `git show <tag>:CHANGES.md` is *not* a release gate.
+- **Intermediate versions get rolled up** — `2.42.x`–`2.44.x` shipped as tags but
+  have no heading on master; their features sit under the next stable heading
+  (`## 2.45.0`). Released either way, so it never blocks a tip.
 
 A **changed default** needs the same gate and is easier to miss — read the file as
 the *released* tag has it, not just `master`:
@@ -135,12 +144,15 @@ Lines that satisfy both — the working examples:
   `set <plugin>` form. If the plugin binds *no* default keys, ship its binding
   config in the **same block**: e.g. CamelCaseMotion exposes only `<Plug>`
   targets until you set `g:camelcasemotion_key`, so ship
-  `Plug 'bkad/CamelCaseMotion'` **and** `let g:camelcasemotion_key = '<prefix>'`
-  together. The `g:` var is plugin-private (not leader-style shared state), and
-  IdeaVim inits extensions only after the whole rc is sourced, so the two lines
-  are order-independent. But it now *claims a key family*, so collision-check the
-  prefix like an action mapping — the upstream default `,` is both a built-in
-  motion and a common leader, so it's usually not a safe pick.
+  `Plug '<repo>'` **and** `let g:<plugin>_key = '<prefix>'` together. The `g:` var
+  is plugin-private (not leader-style shared state), and IdeaVim inits extensions
+  only after the whole rc is sourced, so the two lines are order-independent. But
+  it now *claims a key family*, so collision-check the prefix like an action
+  mapping. **CamelCaseMotion has no safe prefix and so no shippable `config`** —
+  IdeaVim's own doc recommends `<leader>` (banned, see "Not shippable yet") and
+  the upstream default `,` claims the built-in repeat-`f`/`t`-backwards motion. A
+  tip shipping `,` was cut for exactly that; the plugin-free `[w` / `[b` motions
+  cover the same ground.
 - **Tune a built-in option** — e.g. `set scrolloff=5`, `hlsearch`. Primary
   `options`.
 - **IDE-bridge `set`** — e.g. `set ideajoin`, `set idearefactormode=keep`.

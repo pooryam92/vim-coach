@@ -596,6 +596,16 @@
         "Picks up exactly where you stopped typing"
       ],
       "mnemonic": "go insert"
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Open the URL under the cursor gx",
+      "details": [
+        "Opens with your default browser",
+        "Cursor can sit anywhere in it"
+      ]
     }
   ]
 }
