@@ -105,6 +105,14 @@ week" starts to repeat, write it down here as the rubric forms. So far:
 
 - `Recall last search with Ctrl-r /` — a register paste inside the `:`/insert
   prompt; niche and mode-specific, not a first-week move.
+- **Read the category's own ratio before tagging** — the settled convention is
+  already in the files, and it differs sharply by category. `plugins` runs ~1 in
+  33 advanced: needing a `config` block is *itself* the opt-in, so a plugin tip
+  is normal even when its concept is deep (YankRing's paste-cycling stayed
+  normal on this rule). `pattern` runs ~15 in 25: a `:s`/search **flag** riding
+  inside a pattern (`gc`, `//`, `\c`, `\<\>`, `/n`) is reliably past a
+  newcomer's first week. Match the siblings you're landing beside rather than
+  scoring the tip in isolation.
 
 ### Tagging a tip's mode
 

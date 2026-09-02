@@ -175,6 +175,19 @@
         "pattern",
         "cmdline"
       ],
+      "summary": "Count matches with :%s/foo//n",
+      "details": [
+        "Reports 3 matches on 2 lines",
+        "n counts only, text is untouched",
+        "The empty replacement is ignored"
+      ],
+      "advanced": true
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
       "summary": "Reuse last / pattern in :s with //",
       "details": [
         "After searching /pat, use :%s//new/g",

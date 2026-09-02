@@ -585,6 +585,24 @@
           "set mini-ai"
         ]
       }
+    },
+    {
+      "category": [
+        "plugins",
+        "registers"
+      ],
+      "summary": "Paste an older yank p Ctrl-p",
+      "details": [
+        "Ctrl-p works right after a paste",
+        "Keep pressing back, Ctrl-n forward",
+        "Both stop being k and j in Normal"
+      ],
+      "config": {
+        "name": "Install YankRing",
+        "lines": [
+          "Plug 'vim-scripts/YankRing.vim'"
+        ]
+      }
     }
   ]
 }

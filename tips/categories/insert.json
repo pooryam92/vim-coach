@@ -152,6 +152,7 @@
       "summary": "Enter Replace mode with R",
       "details": [
         "Type to overwrite text",
+        "Backspace brings the old text back",
         "Esc leaves Replace mode"
       ]
     },
