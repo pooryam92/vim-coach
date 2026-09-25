@@ -2,17 +2,6 @@
   "tips": [
     {
       "category": [
-        "cmdline",
-        "registers"
-      ],
-      "summary": "Inspect registers with :reg",
-      "details": [
-        ":reg lists registers and macros",
-        "Check what you yanked or recorded"
-      ]
-    },
-    {
-      "category": [
         "cmdline"
       ],
       "summary": "Tab-complete commands and files",
@@ -38,10 +27,10 @@
       "category": [
         "cmdline"
       ],
-      "summary": "Move by word in : S-Left / S-Right",
+      "summary": "Move by word in : Ctrl-Left",
       "details": [
-        "S-Left to the previous word",
-        "S-Right to the next word"
+        "Ctrl-Right hops to the next word",
+        "Shift-Left and Shift-Right work too"
       ],
       "advanced": true,
       "mode": "command"
@@ -66,7 +55,6 @@
         "Ctrl-w deletes a word back",
         "Ctrl-u clears the whole line"
       ],
-      "advanced": true,
       "mode": "command"
     },
     {
@@ -76,32 +64,9 @@
       "summary": "Recall history by prefix Up / Down",
       "details": [
         "Type :s then Up recalls past :s",
-        "Down steps toward newer matches"
+        "Ctrl-p and Ctrl-n ignore the prefix"
       ],
       "mode": "command"
-    },
-    {
-      "category": [
-        "cmdline"
-      ],
-      "summary": "Browse : history Ctrl-p / Ctrl-n",
-      "details": [
-        "Ctrl-p goes to older history",
-        "Ctrl-n goes to newer history"
-      ],
-      "advanced": true,
-      "mode": "command"
-    },
-    {
-      "category": [
-        "cmdline"
-      ],
-      "summary": "Show command history with :history",
-      "details": [
-        ":history lists past : commands",
-        ":history / lists past searches"
-      ],
-      "advanced": true
     },
     {
       "category": [
@@ -110,69 +75,10 @@
       "summary": "Edit command history with q:",
       "details": [
         "q: opens past commands in a window",
-        "Edit a line and Enter to run it"
+        "Edit a line, press Enter to run it",
+        "q/ does the same for searches"
       ],
       "advanced": true
-    },
-    {
-      "category": [
-        "cmdline"
-      ],
-      "summary": "Go to a specific line :N",
-      "details": [
-        "Type :N then Enter",
-        ":120 jumps to line 120"
-      ]
-    },
-    {
-      "category": [
-        "cmdline",
-        "navigation"
-      ],
-      "summary": "See your jump history :jumps",
-      "details": [
-        "Lists stored jump locations",
-        "Pair with Ctrl-o / Ctrl-i"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "cmdline",
-        "navigation"
-      ],
-      "summary": "List marks with :marks",
-      "details": [
-        ":marks shows active marks",
-        "Check before jumping with ' or `"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "cmdline",
-        "navigation"
-      ],
-      "summary": "Delete marks with :delmarks",
-      "details": [
-        "Marks are saved spots you set with ma",
-        ":delmarks a b removes marks a and b",
-        ":delmarks! clears every mark"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "cmdline",
-        "registers"
-      ],
-      "summary": "Insert a register in : Ctrl-r",
-      "details": [
-        "Ctrl-r then a register name",
-        "Great for reusing text in :s"
-      ],
-      "advanced": true,
-      "mode": "command"
     },
     {
       "category": [
@@ -180,8 +86,8 @@
       ],
       "summary": "Insert word in : Ctrl-r Ctrl-w",
       "details": [
-        "Inserts the word under cursor",
-        "Reuse names without retyping"
+        "Cursor on foo, type :%s/",
+        "Ctrl-r Ctrl-w fills in foo for you"
       ],
       "advanced": true,
       "mode": "command"
@@ -192,10 +98,52 @@
       ],
       "summary": "Inspect a character with :ascii",
       "details": [
-        ":ascii shows the char's codes",
-        "ga does the same in normal mode"
+        ":ascii on a shows 97, Hex 61",
+        "Unmasks look-alike or hidden chars"
       ],
       "advanced": true
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Run a shell command with :!",
+      "details": [
+        ":!git status shows its output",
+        "Runs in the project root"
+      ]
+    },
+    {
+      "category": [
+        "cmdline"
+      ],
+      "summary": "Prefill a line range with 3:",
+      "details": [
+        ":.,.+2 means this line + 2 below",
+        "Then type s/a/b/ and press Enter"
+      ]
+    },
+    {
+      "category": [
+        "cmdline",
+        "editing"
+      ],
+      "summary": "Insert shell output :r! date",
+      "details": [
+        ":r! date puts the date below you",
+        "Try :r! uuidgen for a fresh UUID"
+      ]
+    },
+    {
+      "category": [
+        "cmdline",
+        "ideavim"
+      ],
+      "summary": "Open the IDE terminal with :sh",
+      "details": [
+        "Your editor stays open, unlike Vim",
+        "Run a quick git or build there"
+      ]
     }
   ]
 }

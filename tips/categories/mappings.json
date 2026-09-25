@@ -6,42 +6,9 @@
       ],
       "summary": "List your mappings with :map",
       "details": [
-        ":map lists maps for every mode",
-        ":nmap :imap :vmap show one mode",
-        "Check one mode when a key fails"
-      ]
-    },
-    {
-      "category": [
-        "mappings"
-      ],
-      "summary": "Use mode-specific maps in ~/.ideavimrc",
-      "details": [
-        "Use nmap, imap, or vmap for the target mode",
-        "Normal, Insert, and Visual maps should stay separate"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "mappings"
-      ],
-      "summary": "Use <Nop> to disable a key",
-      "details": [
-        "nnoremap Q <Nop> makes Q do nothing",
-        "Useful for disabling keys you hit by accident"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "mappings"
-      ],
-      "summary": "Clear mappings with :mapclear",
-      "details": [
-        ":mapclear removes mappings",
-        "Mode forms limit the scope",
-        "Useful when debugging conflicting keys or resetting a mode"
+        ":map shows Normal and Visual maps",
+        ":imap shows the Insert-mode ones",
+        ":nmap gd shows just gd's mapping"
       ]
     },
     {
@@ -52,8 +19,7 @@
       "summary": "Auto-expand text with :iabbrev",
       "details": [
         ":iab teh the fixes that typo",
-        "Expands after Space or Enter",
-        "Great for boilerplate or signatures"
+        "Expands after Space or Enter"
       ]
     }
   ]

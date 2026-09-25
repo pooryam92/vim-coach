@@ -8,7 +8,7 @@
       "summary": "Edit every copy of a word Ctrl-n",
       "details": [
         "Put the cursor on foo, press Ctrl-n",
-        "Ctrl-n again adds the next foo",
+        "Ctrl-n adds next foo, Ctrl-x skips",
         "Then c, type bar, Esc — all to bar"
       ],
       "config": {
@@ -16,7 +16,26 @@
         "lines": [
           "Plug 'terryma/vim-multiple-cursors'",
           "nmap <C-n> <Plug>NextWholeOccurrence",
-          "xmap <C-n> <Plug>NextWholeOccurrence"
+          "xmap <C-n> <Plug>NextWholeOccurrence",
+          "xmap <C-x> <Plug>SkipOccurrence"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Grab all copies at once Alt-n",
+      "details": [
+        "Alt-n on foo selects every foo",
+        "Then c, type bar, Esc — all to bar"
+      ],
+      "config": {
+        "name": "Install multiple-cursors",
+        "lines": [
+          "Plug 'terryma/vim-multiple-cursors'",
+          "nmap <A-n> <Plug>AllWholeOccurrences"
         ]
       }
     },
@@ -27,8 +46,8 @@
       ],
       "summary": "Add surroundings ysiw)",
       "details": [
-        "ysiw) → (word)",
-        "ysiw( → ( word )",
+        "ysiw) turns word into (word)",
+        "ysiw( gives ( word ), with spaces",
         "Takes any motion, like ysip)"
       ],
       "config": {
@@ -60,11 +79,11 @@
         "plugins",
         "editing"
       ],
-      "summary": "Change surroundings cs",
+      "summary": "Change surroundings cs\"'",
       "details": [
-        "cs\"' swaps quotes to single",
-        "cs)] changes parens to brackets",
-        "Press . to repeat it on the next match"
+        "cs\"' turns \"hi\" into 'hi'",
+        "cs)] turns (x) into [x]",
+        "Move to the next one, . repeats it"
       ],
       "config": {
         "name": "Install vim-surround",
@@ -78,10 +97,10 @@
         "plugins",
         "editing"
       ],
-      "summary": "Delete surroundings ds",
+      "summary": "Delete surroundings ds\"",
       "details": [
-        "ds\" removes surrounding quotes",
-        "ds( strips the parens"
+        "ds\" turns \"hi\" into hi",
+        "ds( strips parens the same way"
       ],
       "config": {
         "name": "Install vim-surround",
@@ -115,8 +134,8 @@
       ],
       "summary": "Wrap in an HTML tag ysiwt",
       "details": [
-        "t or < prompts for the tag",
-        "ysiw<em> wraps a word in <em>"
+        "ysiwt prompts for a tag name",
+        "Type em, Enter — <em>word</em>"
       ],
       "config": {
         "name": "Install vim-surround",
@@ -133,7 +152,7 @@
       "summary": "Rename an HTML tag cst",
       "details": [
         "cst<div> makes <span> into <div>",
-        "Edits the open and close tag at once"
+        "Edits both open and close tags"
       ],
       "config": {
         "name": "Install vim-surround",
@@ -166,8 +185,8 @@
       ],
       "summary": "Wrap in a function call ysiwf",
       "details": [
-        "f prompts for a function name",
-        "ysiwf then name gives name(word)"
+        "ysiwf asks for a function name",
+        "Type print, Enter — print(word)"
       ],
       "config": {
         "name": "Install vim-surround",
@@ -181,10 +200,62 @@
         "plugins",
         "editing"
       ],
-      "summary": "Toggle comments gcc / gc",
+      "summary": "Toggle comments gcc / gcip",
       "details": [
-        "gcc toggles the current line",
-        "gc works with a motion or selection"
+        "gcc toggles the line you're on",
+        "gcip does the whole paragraph",
+        "Or select lines, then press gc"
+      ],
+      "config": {
+        "name": "Install vim-commentary",
+        "lines": [
+          "Plug 'tpope/vim-commentary'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Uncomment a whole block gcu",
+      "details": [
+        "Cursor on any commented-out line",
+        "Every line in it is uncommented"
+      ],
+      "config": {
+        "name": "Install vim-commentary",
+        "lines": [
+          "Plug 'tpope/vim-commentary'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Comment out one word gciw",
+      "details": [
+        "Uses a block comment, like /* */",
+        "Takes any motion, like gci("
+      ],
+      "config": {
+        "name": "Install vim-commentary",
+        "lines": [
+          "Plug 'tpope/vim-commentary'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Delete a comment block dgc",
+      "details": [
+        "Cursor anywhere in the comment",
+        "All its lines go, /** */ docs too"
       ],
       "config": {
         "name": "Install vim-commentary",
@@ -200,7 +271,7 @@
       ],
       "summary": "Flash text after you yank it",
       "details": [
-        "Yanks briefly flash after y or Y",
+        "Try yip — the paragraph flashes",
         "Confirms exactly what was copied"
       ],
       "config": {
@@ -248,11 +319,11 @@
     {
       "category": [
         "plugins",
-        "visual"
+        "editing"
       ],
       "summary": "Act on an argument cia / caa",
       "details": [
-        "cia grabs just the argument",
+        "cia changes just the argument",
         "caa takes the trailing comma too",
         "Pairs with any operator — d, y"
       ],
@@ -266,30 +337,13 @@
     {
       "category": [
         "plugins",
-        "visual"
+        "editing"
       ],
       "summary": "Act on a block by indent dii",
       "details": [
-        "dii deletes lines at the current indent",
-        "Pairs with any operator — c, y, >, ="
-      ],
-      "config": {
-        "name": "Install vim-indent-object",
-        "lines": [
-          "Plug 'michaeljsmith/vim-indent-object'"
-        ]
-      }
-    },
-    {
-      "category": [
-        "plugins",
-        "visual"
-      ],
-      "summary": "Extend an indent block dai / daI",
-      "details": [
-        "dai also takes the header line above",
-        "daI takes the closing line below too",
-        "Pairs with any operator — c, y, >"
+        "dii deletes lines at this indent",
+        "dai adds the header line above",
+        "daI adds the closing line below too"
       ],
       "config": {
         "name": "Install vim-indent-object",
@@ -308,7 +362,6 @@
         ":S/foo/bar/g replaces all casings",
         "foo→bar, Foo→Bar, FOO→BAR"
       ],
-      "advanced": true,
       "config": {
         "name": "Install vim-abolish",
         "lines": [
@@ -324,24 +377,8 @@
       "summary": "Recase a word to camelCase crc",
       "details": [
         "crc turns foo_bar into fooBar",
-        "crm gives FooBar, cru FOO_BAR",
+        "crs goes back, crm makes FooBar",
         "Cursor can sit anywhere in the word"
-      ],
-      "config": {
-        "name": "Install vim-abolish",
-        "lines": [
-          "Plug 'tpope/vim-abolish'"
-        ]
-      }
-    },
-    {
-      "category": [
-        "plugins",
-        "editing"
-      ],
-      "summary": "Recase a word to snake_case crs",
-      "details": [
-        "crs turns fooBar into foo_bar"
       ],
       "config": {
         "name": "Install vim-abolish",
@@ -389,17 +426,34 @@
     {
       "category": [
         "plugins",
-        "visual"
+        "editing"
       ],
-      "summary": "Act on the whole file vae",
+      "summary": "Copy the whole file yae",
       "details": [
-        "vae selects the entire buffer",
-        "Pairs with any operator — d, y, ="
+        "dae empties it, =ae reindents it",
+        "vae selects it, no gg needed"
       ],
       "config": {
         "name": "Install vim-textobj-entire",
         "lines": [
           "Plug 'kana/vim-textobj-entire'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "editing"
+      ],
+      "summary": "Yank a line minus indent yil",
+      "details": [
+        "Skips indent and the line break",
+        "p then pastes it inline, not below"
+      ],
+      "config": {
+        "name": "Install vim-textobj-line",
+        "lines": [
+          "Plug 'kana/vim-textobj-line'"
         ]
       }
     },
@@ -442,10 +496,10 @@
         "plugins",
         "navigation"
       ],
-      "summary": "{ } paragraph jumps stop at blanks",
+      "summary": "Stop { and } on whitespace lines",
       "details": [
-        "By default { } skip lines holding only spaces",
-        "This plugin treats them as real paragraph breaks"
+        "Plain { and } skip space-only lines",
+        "Blank lines often keep stray indent"
       ],
       "config": {
         "name": "Install vim-paragraph-motion",
@@ -461,8 +515,8 @@
       ],
       "summary": "Open a file tree :NERDTreeToggle",
       "details": [
-        ":NERDTreeFind reveals the file",
-        "Toggle again to hide it"
+        "In the tree, j / k move, o opens",
+        ":NERDTreeFind shows this file there"
       ],
       "config": {
         "name": "Install NERDTree",
@@ -474,7 +528,7 @@
     {
       "category": [
         "plugins",
-        "visual"
+        "editing"
       ],
       "summary": "Act on a method dam / dim",
       "details": [
@@ -491,13 +545,12 @@
     {
       "category": [
         "plugins",
-        "visual"
+        "editing"
       ],
       "summary": "Act on a whole class dac",
       "details": [
-        "dac deletes the whole class",
-        "cic changes just the body",
-        "Pairs with any operator"
+        "dac deletes it from anywhere inside",
+        "yac copies it, vac selects it"
       ],
       "config": {
         "name": "Enable classtextobj",
@@ -513,22 +566,24 @@
       ],
       "summary": "Tab through IDE completions",
       "details": [
-        "Ctrl-Space opens the completion popup",
-        "Tab/Shift-Tab move, Enter accepts"
+        "Tab moves down the popup list",
+        "Shift-Tab moves up, Enter accepts",
+        "No popup open? Tab still indents"
       ],
       "config": {
         "name": "Enable youcompleteme",
         "lines": [
           "set youcompleteme"
         ]
-      }
+      },
+      "mode": "insert"
     },
     {
       "category": [
         "plugins",
         "navigation"
       ],
-      "summary": "Hop to same-indent lines ]= / [=",
+      "summary": "Hop to same-indent lines ]= and [=",
       "details": [
         "]= to the next line at this indent",
         "[= to the previous one"
@@ -545,7 +600,7 @@
         "plugins",
         "navigation"
       ],
-      "summary": "Step in or out by indent ]+ / ]-",
+      "summary": "Step in or out by indent ]+ and ]-",
       "details": [
         "]+ to the next more-indented line",
         "]- to the next less-indented line"
@@ -562,11 +617,10 @@
         "plugins",
         "editing"
       ],
-      "summary": "Any bracket or quote cib / ciq",
+      "summary": "Change inside any pair cib / ciq",
       "details": [
-        "cib changes inside any () [] {}",
-        "ciq changes inside \" ' or `",
-        "Grabs the nearest pair"
+        "cib changes in the nearest bracket",
+        "ciq does the same for quotes"
       ],
       "config": {
         "name": "Enable mini-ai",
@@ -590,6 +644,60 @@
         "name": "Install YankRing",
         "lines": [
           "Plug 'vim-scripts/YankRing.vim'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "pattern"
+      ],
+      "summary": "Search for the selected text *",
+      "details": [
+        "Finds arr[0] as typed, no escaping",
+        "# searches backward, n repeats"
+      ],
+      "config": {
+        "name": "Install visual-star-search",
+        "lines": [
+          "Plug 'bronson/vim-visual-star-search'"
+        ]
+      },
+      "mode": "visual"
+    },
+    {
+      "category": [
+        "plugins",
+        "ideavim"
+      ],
+      "summary": "Click the UI by keys Ctrl-Shift-\\",
+      "details": [
+        "Labels cover buttons, tabs, fields",
+        "Type a label's letters to click it",
+        "On macOS press Ctrl-Cmd-\\ instead"
+      ],
+      "config": {
+        "name": "Enable VimEverywhere",
+        "lines": [
+          "set VimEverywhere"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "windows"
+      ],
+      "summary": "Hop into tool windows Ctrl-w h",
+      "details": [
+        "Ctrl-w h enters the Project panel",
+        "Ctrl-w l comes back to the editor",
+        "Ctrl-w j reaches a bottom panel"
+      ],
+      "config": {
+        "name": "Enable VimEverywhere",
+        "lines": [
+          "set VimEverywhere"
         ]
       }
     }

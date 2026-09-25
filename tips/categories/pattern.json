@@ -6,28 +6,9 @@
       ],
       "summary": "Search forward/backward / and ?",
       "details": [
-        "/pattern searches forward",
-        "?pattern searches backward",
-        "Press Enter to search, Esc to cancel"
+        "/foo Enter jumps to the next foo",
+        "?foo Enter searches backward"
       ]
-    },
-    {
-      "category": [
-        "pattern"
-      ],
-      "summary": "Preview next match Ctrl-g / Ctrl-t",
-      "details": [
-        "Ctrl-g next, Ctrl-t previous match",
-        "While still typing the / pattern"
-      ],
-      "config": {
-        "name": "Enable incsearch",
-        "lines": [
-          "set incsearch"
-        ]
-      },
-      "advanced": true,
-      "mode": "command"
     },
     {
       "category": [
@@ -37,7 +18,7 @@
       "summary": "Next/previous match n / N",
       "details": [
         "/foo then n jumps to each foo",
-        "N goes back to the previous one",
+        "N goes the opposite way",
         "Works after /, ?, *, and #"
       ]
     },
@@ -46,40 +27,31 @@
         "pattern",
         "navigation"
       ],
-      "summary": "Search word under cursor * / #",
+      "summary": "Search word under cursor * and #",
       "details": [
-        "* jumps to next whole word under cursor",
-        "# jumps to previous whole word under cursor"
+        "* jumps to the next copy of it",
+        "# jumps to the previous copy",
+        "Whole word only, so foo skips food"
       ]
     },
     {
       "category": [
         "pattern",
+        "editing",
         "repeat"
       ],
       "summary": "Rename a word across a file",
       "details": [
-        "* finds the word, cw changes it",
+        "* picks the word, cgn changes it",
         "Type the new word, press Esc",
-        "Then n . repeats down the file"
-      ]
-    },
-    {
-      "category": [
-        "pattern",
-        "cmdline"
-      ],
-      "summary": "Clear search highlighting :noh",
-      "details": [
-        ":noh clears the search highlight",
-        "Search stays active for n and N"
+        "Then . fixes each next copy"
       ]
     },
     {
       "category": [
         "pattern"
       ],
-      "summary": "Override case in one search \\c \\C",
+      "summary": "Override case in a search \\c and \\C",
       "details": [
         "/foo\\c matches Foo FOO foo",
         "/Foo\\C matches only Foo, not foo"
@@ -105,8 +77,8 @@
       ],
       "summary": "Recenter search results with nzz",
       "details": [
-        "After a search, use nzz to jump and recenter",
-        "Use Nzz to go back and recenter too"
+        "n finds the next match, zz centers",
+        "Nzz does it the other way"
       ]
     },
     {
@@ -114,22 +86,11 @@
         "pattern",
         "editing"
       ],
-      "summary": "Delete up to the next match",
+      "summary": "Delete up to a match d/foo",
       "details": [
-        "d/foo<Enter> deletes up to next foo",
-        "Pair any operator with /pat",
-        "Append /e to include the match"
-      ]
-    },
-    {
-      "category": [
-        "pattern"
-      ],
-      "summary": "Delete back to the previous match",
-      "details": [
-        "d?foo<Enter> deletes back to foo",
-        "Pair any operator with ?pat",
-        "Append ?e to include the match"
+        "d/foo Enter deletes up to foo",
+        "d/foo/e Enter deletes foo too",
+        "d?foo Enter deletes back over foo"
       ]
     },
     {
@@ -150,8 +111,8 @@
       ],
       "summary": "Search with full regex \\v",
       "details": [
-        "Add \\v so + ? ( ) need no \\",
-        "/\\v(foo|bar) matches foo or bar"
+        "/\\v(foo|bar) finds foo or bar",
+        "Plain / needs \\(foo\\|bar\\)"
       ],
       "advanced": true
     },
@@ -162,8 +123,8 @@
       ],
       "summary": "Replace every match with :%s",
       "details": [
-        ":%s/foo/bar/g swaps foo for bar in file",
-        "g means every match, not just the first"
+        ":%s/foo/bar/g turns foo into bar",
+        "% is the whole file, g every match"
       ]
     },
     {
@@ -186,8 +147,9 @@
       ],
       "summary": "Reuse last / pattern in :s with //",
       "details": [
-        "After searching /pat, use :%s//new/g",
-        "The empty pattern reuses the last search"
+        "Search /foo, then :%s//bar/g",
+        "The empty pattern reuses foo",
+        "Ctrl-r / pastes foo to edit it"
       ],
       "advanced": true
     },
@@ -198,9 +160,9 @@
       ],
       "summary": "Confirm each :s replace with gc",
       "details": [
-        "Replace foo with bar, asking first",
         ":%s/foo/bar/gc stops at each foo",
-        "y replaces, n skips, a all, q quit"
+        "y replaces it, n skips it",
+        "a replaces all, q quits"
       ],
       "advanced": true
     },
@@ -209,23 +171,11 @@
         "pattern",
         "repeat"
       ],
-      "summary": "Repeat last :s on this line with &",
+      "summary": "Repeat last :s with & and g&",
       "details": [
-        "Change foo to bar with :s once",
-        "& repeats it on the current line",
-        "Move down, press & again"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "pattern",
-        "repeat"
-      ],
-      "summary": "Repeat last :s across the file with g&",
-      "details": [
-        "g& reruns the last :substitute on all lines",
-        "Useful after checking the change on one line with &"
+        ":s/foo/bar/ changes one line",
+        "& reruns it on the line you're on",
+        "g& reruns it across the whole file"
       ],
       "advanced": true
     },
@@ -234,25 +184,10 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Wrap or extend a match with &",
+      "summary": "Reuse the match in :s with &",
       "details": [
-        ":s finds text and replaces it",
-        "& in the replacement reuses what matched",
-        ":%s/cat/&s/g changes every cat to cats"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "pattern",
-        "editing",
-        "repeat"
-      ],
-      "summary": "Rename a word with cgn",
-      "details": [
-        "/foo finds it, cgn changes it",
-        "Type the new word, press Esc",
-        "Then . alone repeats — no n"
+        ":%s/cat/&s/g turns cat into cats",
+        "& stands for whatever matched"
       ],
       "advanced": true
     },
@@ -264,8 +199,8 @@
       ],
       "summary": "Limit :s to a range",
       "details": [
-        ":10,20s/a/b/g changes only those lines",
-        "Visual :s starts with the '<,'> range"
+        ":10,20s/a/b/g edits lines 10 to 20",
+        "Or select lines first, then :s"
       ]
     },
     {
@@ -273,11 +208,10 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Run a command on matching lines with :g",
+      "summary": "Act on matching lines with :g",
       "details": [
-        ":g/TODO/p prints matching lines",
-        ":g/pat/d deletes matching lines",
-        ":g/pat/s/a/b/g edits only matches"
+        ":g/TODO/d deletes every TODO line",
+        ":g/TODO/s/a/b/ edits just those"
       ],
       "advanced": true
     },
@@ -286,34 +220,10 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Keep only matching lines :v//d",
+      "summary": "Keep only matching lines :v/foo/d",
       "details": [
-        ":v acts on lines that don't match",
-        ":v/foo/d drops them, keeping foo lines",
-        "Short for :vglobal, the inverse of :g"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "pattern"
-      ],
-      "summary": "Edit search history with q/",
-      "details": [
-        "q/ opens past searches in a window",
-        "Edit a line and Enter to run it"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "pattern"
-      ],
-      "summary": "Paste last search into :s Ctrl-r /",
-      "details": [
-        "Search /foo, then start :%s",
-        "Ctrl-r / pastes it: :%s/foo/new/g",
-        "Also works while typing in Insert"
+        ":v/foo/d deletes lines lacking foo",
+        "What's left: only the foo lines"
       ],
       "advanced": true
     }

@@ -31,9 +31,9 @@
       "summary": "Record a macro qa, replay @a",
       "details": [
         "qa records, do edits, q stops",
-        "@a replays it, @@ repeats"
-      ],
-      "advanced": true
+        "@a replays it, @@ repeats",
+        "10@a replays it ten times"
+      ]
     },
     {
       "category": [
@@ -48,24 +48,13 @@
     },
     {
       "category": [
-        "repeat"
-      ],
-      "summary": "Repeat a macro {count}@{reg}",
-      "details": [
-        "10@a runs macro a ten times",
-        "Use counts to scale the playback"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
         "repeat",
         "cmdline"
       ],
       "summary": "Run a macro on lines :normal @r",
       "details": [
-        ":'<,'>normal @r runs macro r",
-        "Applies it to each line in range"
+        "Select lines with V, then press :",
+        "Type normal @r to run r per line"
       ],
       "advanced": true
     },
@@ -76,8 +65,8 @@
       ],
       "summary": "Repeat last : command with @:",
       "details": [
-        "@: reruns the last : command",
-        "Useful after :s, :g, and :normal"
+        "Run :s/a/b/, go down a line, @:",
+        "Then @@ repeats it once more"
       ]
     }
   ]

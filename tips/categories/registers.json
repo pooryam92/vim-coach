@@ -7,8 +7,7 @@
       "summary": "Yank inner/around word yiw / yaw",
       "details": [
         "yiw copies just the word",
-        "yaw copies the word and trailing space",
-        "Use i for inside and a for around"
+        "yaw takes the trailing space too"
       ]
     },
     {
@@ -38,18 +37,18 @@
       ],
       "summary": "Paste after/before p / P",
       "details": [
-        "p puts after the cursor, or below for linewise text",
-        "P puts before the cursor, or above for linewise text"
+        "p pastes after, or below for lines",
+        "P pastes before, or above for lines"
       ]
     },
     {
       "category": [
         "registers"
       ],
-      "summary": "Paste and leave cursor after gp / gP",
+      "summary": "Paste and move past it gp / gP",
       "details": [
-        "gp pastes and moves to end of the pasted text",
-        "gP does the same for paste-before"
+        "Cursor lands just past the paste",
+        "gP does it for paste-before"
       ]
     },
     {
@@ -59,10 +58,9 @@
       "summary": "Use the yank register \"0",
       "details": [
         "Yank text, then delete something",
-        "p now pastes the delete, not your yank",
+        "p now pastes the delete instead",
         "\"0p still pastes what you yanked"
-      ],
-      "advanced": true
+      ]
     },
     {
       "category": [
@@ -70,8 +68,8 @@
       ],
       "summary": "Recover the last delete with \"1",
       "details": [
-        "\"1 usually holds the most recent delete",
-        "Paste it with \"1p after an accidental dd"
+        "Deleted lines queue up in \"1 to \"9",
+        "\"1p still works after a new yank"
       ],
       "advanced": true
     },
@@ -81,8 +79,8 @@
       ],
       "summary": "Delete without clobbering yanks \"_",
       "details": [
-        "\"_d deletes into the black-hole register",
-        "Keeps your yank safe for later pasting"
+        "\"_dd deletes to the black hole",
+        "p still pastes your earlier yank"
       ],
       "advanced": true
     },
@@ -103,7 +101,7 @@
       ],
       "summary": "Send a yank to top or end :put",
       "details": [
-        ":0put pastes the last yank at the top",
+        ":0put pastes your yank at the top",
         ":$put pastes it at the bottom"
       ],
       "advanced": true
@@ -117,8 +115,28 @@
         "\"ayy yanks the line into a",
         "\"ap pastes it back later",
         "\"Ayy (capital) appends to a"
+      ]
+    },
+    {
+      "category": [
+        "registers",
+        "cmdline"
       ],
-      "advanced": true
+      "summary": "Inspect registers with :reg",
+      "details": [
+        ":reg lists registers and macros",
+        "Check what you yanked or recorded"
+      ]
+    },
+    {
+      "category": [
+        "registers"
+      ],
+      "summary": "Copy to the OS clipboard \"+yy",
+      "details": [
+        "Paste it into any other app",
+        "\"+p pastes what another app copied"
+      ]
     }
   ]
 }

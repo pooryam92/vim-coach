@@ -4,12 +4,12 @@
       "category": [
         "ideavim",
         "options",
-        "editing"
+        "registers"
       ],
       "summary": "Yank to the OS clipboard by default",
       "details": [
-        "Now y and p use the system clipboard",
-        "Copy in a browser, paste with p in Vim"
+        "y and p now use the OS clipboard",
+        "Copy in a browser, p pastes it"
       ],
       "config": {
         "name": "Enable OS clipboard",
@@ -26,8 +26,21 @@
       ],
       "summary": "Reload ~/.ideavimrc with :source",
       "details": [
+        ":e ~/.ideavimrc opens it to edit",
         ":source ~/.ideavimrc reloads it",
         "No IDE restart needed"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
+        "files"
+      ],
+      "summary": "Open ~/.ideavimrc in two clicks",
+      "details": [
+        "Click Vim's icon in the status bar",
+        "Pick Open ~/.ideavimrc to edit it",
+        "No file yet? Pick Create instead"
       ]
     },
     {
@@ -37,9 +50,9 @@
       ],
       "summary": "Test options live with :set",
       "details": [
-        ":set number turns line numbers on now",
-        "It only lasts this session",
-        "Add it to .ideavimrc to keep it"
+        ":set nonumber hides line numbers",
+        ":set invnumber flips them back",
+        "Add to .ideavimrc to keep it"
       ]
     },
     {
@@ -47,45 +60,22 @@
         "ideavim",
         "cmdline"
       ],
-      "summary": "Toggle IdeaVim with :action",
+      "summary": "Run any IDE action with :action",
       "details": [
-        ":action VimPluginToggle toggles it",
-        "Useful when keys conflict"
+        ":action ReformatCode reformats now",
+        ":actionlist format finds more IDs"
       ]
     },
     {
       "category": [
         "ideavim",
-        "cmdline"
-      ],
-      "summary": "Run IDE actions with :action {id}",
-      "details": [
-        ":action ReformatCode for example",
-        "Prefer <Action>() in mappings"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "ideavim",
-        "cmdline"
-      ],
-      "summary": "Find action IDs with :actionlist",
-      "details": [
-        ":actionlist extract filters them",
-        "Add a word to narrow the list"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "ideavim",
-        "options"
+        "options",
+        "mappings"
       ],
       "summary": "Show action IDs with trackactionids",
       "details": [
-        "set trackactionids turns it on",
-        "IDs show in IDE notices"
+        "Run any IDE action: its ID pops up",
+        "Paste it into <Action>(ID) maps"
       ],
       "config": {
         "name": "Enable trackactionids",
@@ -97,13 +87,25 @@
     {
       "category": [
         "ideavim",
+        "mappings"
+      ],
+      "summary": "Hand a Ctrl key back to the IDE",
+      "details": [
+        "Settings | Editor | Vim lists them",
+        "Pick IDE or Vim for each Ctrl key",
+        ".ideavimrc: sethandler <C-f> a:ide"
+      ]
+    },
+    {
+      "category": [
+        "ideavim",
         "options",
         "editing"
       ],
       "summary": "Smarter J join with ideajoin",
       "details": [
-        "J then uses the IDE smart join",
-        "It fixes up syntax as it joins"
+        "J on two // lines keeps one //",
+        "Nested ifs join into if (a && b)"
       ],
       "config": {
         "name": "Enable ideajoin",
@@ -120,7 +122,7 @@
       "summary": "Keep Vim mode during rename",
       "details": [
         "Rename won't force Select mode",
-        "Stay in Normal mode as you rename"
+        "From Normal, edit the name with ciw"
       ],
       "config": {
         "name": "Keep mode on rename",
@@ -131,60 +133,13 @@
     },
     {
       "category": [
-        "ideavim",
-        "options"
-      ],
-      "summary": "Sync marks with :set ideamarks",
-      "details": [
-        "A-Z marks sync to IDE bookmarks",
-        "Great for cross-file jumps"
-      ],
-      "config": {
-        "name": "Enable ideamarks",
-        "lines": [
-          "set ideamarks"
-        ]
-      }
-    },
-    {
-      "category": [
-        "ideavim",
-        "options",
-        "files"
-      ],
-      "summary": "Make :w use IDE Save All",
-      "details": [
-        ":w then saves every open file",
-        "Fires IDE save hooks like reformat"
-      ],
-      "config": {
-        "name": "Enable ideawrite=all",
-        "lines": [
-          "set ideawrite=all"
-        ]
-      }
-    },
-    {
-      "category": [
         "ideavim"
       ],
       "summary": "Open quick docs with K",
       "details": [
-        "K opens the IDE quick docs popup",
-        "Works on any symbol in Normal mode"
+        "On a method call, K shows its docs",
+        "Params and return type, no hover"
       ]
-    },
-    {
-      "category": [
-        "ideavim",
-        "insert"
-      ],
-      "summary": "Complete code with Ctrl-Space",
-      "details": [
-        "Press Ctrl-Space to complete",
-        "Press it again to widen suggestions"
-      ],
-      "mode": "insert"
     },
     {
       "category": [
@@ -193,8 +148,8 @@
       ],
       "summary": "Jump between errors ]e / [e",
       "details": [
-        "Lands on the next/previous error",
-        "Covers inspection warnings too"
+        "Stops on warnings too",
+        "Then Alt-Enter offers a quick fix"
       ],
       "config": {
         "name": "Map errors",
@@ -210,8 +165,8 @@
       ],
       "summary": "Show error details with Ctrl-k",
       "details": [
-        "Shows the IDE's warning/error popup",
-        "Pairs well with ]e / [e jumps"
+        "Pops up the error at the cursor",
+        "Warnings too, no mouse hover needed"
       ],
       "config": {
         "name": "Map error popup",
@@ -245,9 +200,8 @@
       ],
       "summary": "Open the quick-fix menu ga",
       "details": [
-        "The IDE intention / lightbulb popup",
-        "Apply fixes and quick refactors",
-        "Overrides ga ascii-inspect"
+        "Same popup as Alt-Enter's lightbulb",
+        "Replaces ga, which shows char codes"
       ],
       "config": {
         "name": "Map quick-fix",
@@ -263,8 +217,8 @@
       ],
       "summary": "Rename a symbol everywhere gR",
       "details": [
-        "Project-wide safe rename refactor",
-        "Updates every usage at once"
+        "Type the new name right in place",
+        "Same as Shift-F6, no chord needed"
       ],
       "config": {
         "name": "Map rename",
@@ -280,9 +234,8 @@
       ],
       "summary": "Open the refactor menu gm",
       "details": [
-        "One list for extract, inline, move",
-        "Rename lives here too",
-        "Overrides gm middle-column jump"
+        "Extract, inline, move in one list",
+        "Replaces gm, the mid-line jump"
       ],
       "config": {
         "name": "Map refactor",
@@ -365,6 +318,40 @@
     {
       "category": [
         "ideavim",
+        "navigation"
+      ],
+      "summary": "Outline this file gO",
+      "details": [
+        "Pops up every method and field",
+        "Type to filter, Enter to jump there"
+      ],
+      "config": {
+        "name": "Map file structure",
+        "lines": [
+          "nmap gO <Action>(FileStructurePopup)"
+        ]
+      }
+    },
+    {
+      "category": [
+        "ideavim",
+        "cmdline"
+      ],
+      "summary": "Jump to the test file :A",
+      "details": [
+        ":A flips between code and its test",
+        "No test? It offers to create one"
+      ],
+      "config": {
+        "name": "Add :A for tests",
+        "lines": [
+          "command! A action GotoTest"
+        ]
+      }
+    },
+    {
+      "category": [
+        "ideavim",
         "windows"
       ],
       "summary": "Flip split orientation Ctrl-w O",
@@ -372,7 +359,6 @@
         "Swaps side-by-side for top/bottom",
         "IdeaVim binds no key for this"
       ],
-      "advanced": true,
       "config": {
         "name": "Map split orientation",
         "lines": [
@@ -390,24 +376,12 @@
         "Moves this tab to the other split",
         "Fixes opening it in the wrong split"
       ],
-      "advanced": true,
       "config": {
         "name": "Map cross-split move",
         "lines": [
           "nmap <C-w>m <Action>(MoveEditorToOppositeTabGroup)"
         ]
       }
-    },
-    {
-      "category": [
-        "ideavim",
-        "editing"
-      ],
-      "summary": "Teach the dictionary a word zg",
-      "details": [
-        "zg accepts the word under cursor",
-        "zw removes it from the dictionary"
-      ]
     }
   ]
 }

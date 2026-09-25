@@ -13,12 +13,13 @@
     },
     {
       "category": [
-        "navigation"
+        "navigation",
+        "cmdline"
       ],
-      "summary": "Jump to a specific line {count}G",
+      "summary": "Jump to a line number 120G",
       "details": [
-        "{count} is the line number",
-        "Example: 120G jumps to line 120"
+        "Handy for line numbers in errors",
+        ":120 then Enter does the same"
       ]
     },
     {
@@ -36,9 +37,9 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to end of previous word ge",
+      "summary": "Jump to previous word end ge / gE",
       "details": [
-        "ge goes to end of previous word",
+        "gE counts foo.bar() as one word",
         "Nice for edits before punctuation"
       ]
     },
@@ -50,17 +51,7 @@
       "details": [
         "W next WORD, B back, E to end",
         "A WORD is split only on spaces",
-        "Great for paths and long tokens"
-      ]
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Jump to end of previous WORD gE",
-      "details": [
-        "gE goes to end of previous WORD",
-        "Useful on URLs / file paths"
+        "W hops over foo.bar() in one go"
       ]
     },
     {
@@ -90,7 +81,7 @@
       "summary": "Jump to line end $",
       "details": [
         "Lands on the last char of the line",
-        "Works as a motion: d$ deletes to end"
+        "d$ deletes to the end of the line"
       ]
     },
     {
@@ -99,15 +90,15 @@
       ],
       "summary": "Jump to last non-blank on line g_",
       "details": [
-        "g_ jumps to last non-space character",
-        "Handy near );}] and trailing spaces"
+        "Unlike $, it skips trailing spaces",
+        "vg_ selects without the line break"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Jump to text on next line + / -",
+      "summary": "Jump to text on next line + and -",
       "details": [
         "+ down to next line's first text",
         "- up to previous line's first text",
@@ -118,7 +109,7 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to last change lines '[ / ']",
+      "summary": "Jump to last change lines '[ and ']",
       "details": [
         "'[ jumps to the change's first line",
         "'] jumps to its last line"
@@ -131,7 +122,7 @@
       "summary": "Jump to a column |",
       "details": [
         "80| jumps to column 80",
-        "Great for line-length edits"
+        "81|D trims the line to 80 chars"
       ]
     },
     {
@@ -140,8 +131,9 @@
       ],
       "summary": "Jump to file top/bottom gg / G",
       "details": [
-        "gg goes to first line",
-        "G (or 5G) goes to line 5 or last"
+        "gg goes to the first line",
+        "G goes to the last line",
+        "dG deletes to the end of the file"
       ]
     },
     {
@@ -161,17 +153,18 @@
       "summary": "Screen top/middle/bottom H / M / L",
       "details": [
         "H top of screen, M middle, L bottom",
-        "Great for fast scanning"
+        "No scrolling, just the cursor moves"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Move by screen lines on wraps gj / gk",
+      "summary": "Move by wrapped lines gj / gk",
       "details": [
-        "gj and gk follow wrapped screen lines",
-        "Use them when one long line wraps"
+        "j skips a wrapped line in one go",
+        "gj and gk stop at each screen row",
+        "Turn on soft wrap with :set wrap"
       ]
     },
     {
@@ -180,16 +173,9 @@
       ],
       "summary": "Wrapped line start or end g0 / g$",
       "details": [
-        "g0 jumps to start, g$ to end"
-      ]
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "First text on a wrapped line g^",
-      "details": [
-        "g^ jumps past indent to the first text"
+        "g0 goes to this screen row's start",
+        "g$ to its end, g^ to its first text",
+        "Turn on soft wrap with :set wrap"
       ]
     },
     {
@@ -200,7 +186,7 @@
       "details": [
         "{ goes to previous paragraph",
         "} goes to next paragraph",
-        "Moves across blank-line-separated blocks"
+        "d} deletes to the next blank line"
       ]
     },
     {
@@ -209,9 +195,9 @@
       ],
       "summary": "Move by sentences ( and )",
       "details": [
-        "( moves to the previous sentence start",
-        ") moves to the next sentence start",
-        "Useful in prose, comments, and doc blocks"
+        "( jumps back a sentence",
+        ") jumps forward a sentence",
+        "d) deletes the rest of a sentence"
       ]
     },
     {
@@ -220,29 +206,19 @@
       ],
       "summary": "Jump to matching pair %",
       "details": [
-        "% jumps between (), {}, and [] by default",
-        "d% or c% acts through the matching pair"
+        "Cursor can sit before the bracket",
+        "d% deletes through its partner"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Jump to unmatched braces ]} / [{",
+      "summary": "Jump to unmatched braces ]} and [{",
       "details": [
-        "]} jumps to the next unmatched }",
-        "[{ jumps to the previous unmatched {",
-        "Useful when you are inside nested code blocks"
-      ]
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Jump to unmatched parens ]) / [(",
-      "details": [
-        "]) jumps to the next unmatched )",
-        "[( jumps to previous unmatched ("
+        "]} jumps to the closing }, [{ to {",
+        "]) and [( do the same for parens",
+        "d]} deletes to the block end"
       ]
     },
     {
@@ -251,9 +227,9 @@
       ],
       "summary": "Return after big jumps `` and ''",
       "details": [
-        "`` returns to the exact previous spot",
-        "'' returns to the previous line (first non-blank)",
-        "Useful after big jumps like G, %, /, or file switches"
+        "`` jumps back to the exact spot",
+        "'' jumps back to that line",
+        "Repeat it to hop back and forth"
       ]
     },
     {
@@ -262,10 +238,22 @@
       ],
       "summary": "Jump back / forward Ctrl-o / Ctrl-i",
       "details": [
-        "Ctrl-o goes back through older jump locations",
-        "Ctrl-i goes forward again",
-        "Useful after searches, definitions, and other big jumps"
+        "Ctrl-o steps back to older jumps",
+        "Ctrl-i steps forward again",
+        "Works across files, like after gd"
       ]
+    },
+    {
+      "category": [
+        "navigation",
+        "cmdline"
+      ],
+      "summary": "See your jump history :jumps",
+      "details": [
+        "Lists stored jump locations",
+        "Pair with Ctrl-o / Ctrl-i"
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -274,9 +262,8 @@
       ],
       "summary": "Jump to last edit location `.",
       "details": [
-        "`. jumps to the exact last change",
-        "'. jumps to the line of the last change",
-        "Useful when you want to get back to where you were editing"
+        "Lands on the exact spot you changed",
+        "'. goes to the line instead"
       ]
     },
     {
@@ -294,29 +281,20 @@
       "category": [
         "navigation"
       ],
-      "summary": "Find a character forward f{c}",
+      "summary": "Find a character on the line f / F",
       "details": [
-        "f; jumps to next ';' on the line",
-        "Great for long parameter lists"
+        "fx jumps to the next x on the line",
+        "Fx jumps back to the previous x"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Find a character backward F{c}",
+      "summary": "Move till a character t / T",
       "details": [
-        "F; jumps to previous ';' on the line",
-        "Use to move precisely without searching"
-      ]
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Move till before a character t{c}",
-      "details": [
-        "t) stops just before ')'",
+        "t) stops just before the next )",
+        "T( stops just after the previous (",
         "Perfect for ct) edits"
       ]
     },
@@ -324,17 +302,7 @@
       "category": [
         "navigation"
       ],
-      "summary": "Move backward, stop after char T{c}",
-      "details": [
-        "T) stops just after ')'",
-        "Good for edits near opening brackets"
-      ]
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Repeat last character search ; / ,",
+      "summary": "Repeat character search ; and ,",
       "details": [
         "; repeats in same direction",
         ", repeats in opposite direction"
@@ -347,8 +315,43 @@
       "summary": "Set and jump to a mark ma / `a",
       "details": [
         "ma tags the current spot as mark a",
-        "`a jumps back exactly, 'a to the line"
+        "`a returns exactly, 'a to the line"
       ]
+    },
+    {
+      "category": [
+        "navigation",
+        "ideavim"
+      ],
+      "summary": "Mark a spot across files mA",
+      "details": [
+        "'A jumps back to it from any file",
+        "It shows as an IDE bookmark too"
+      ]
+    },
+    {
+      "category": [
+        "navigation",
+        "cmdline"
+      ],
+      "summary": "List marks with :marks",
+      "details": [
+        ":marks shows active marks",
+        "Check before jumping with ' or `"
+      ],
+      "advanced": true
+    },
+    {
+      "category": [
+        "navigation",
+        "cmdline"
+      ],
+      "summary": "Delete marks with :delmarks",
+      "details": [
+        ":delmarks a b removes marks a and b",
+        ":delmarks! clears marks a to z"
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -357,8 +360,19 @@
       ],
       "summary": "Go to definition with gd",
       "details": [
-        "gd jumps to the symbol through the IDE",
-        "Works across files, project-wide"
+        "Works across files and libraries",
+        "Ctrl-o jumps back when you're done"
+      ]
+    },
+    {
+      "category": [
+        "navigation",
+        "ideavim"
+      ],
+      "summary": "Go to definition and back Ctrl-]",
+      "details": [
+        "Ctrl-t returns to where you jumped",
+        "Even after moving around there"
       ]
     },
     {
@@ -368,39 +382,8 @@
       "summary": "Move between methods with ]m / [m",
       "details": [
         "]m jumps to the next method start",
-        "[m jumps to the previous method start"
-      ]
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Jump to method ends ]M / [M",
-      "details": [
-        "]M jumps to the next method end",
-        "[M jumps to the previous method end"
-      ]
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Jump between sections ]] / [[",
-      "details": [
-        "]] jumps to the next section start",
-        "[[ jumps to previous section start",
-        "[] and ][ jump to section ends"
-      ]
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Navigate misspelled words ]s / [s",
-      "details": [
-        "]s jumps to next misspelled word",
-        "[s jumps to the previous one",
-        "Requires active spell checking"
+        "[m jumps to the previous one",
+        "]M and [M do the same for the ends"
       ]
     },
     {
@@ -447,21 +430,11 @@
       "category": [
         "navigation"
       ],
-      "summary": "Scroll sideways by columns zh / zl",
+      "summary": "Scroll sideways zh / zl",
       "details": [
         "zh scrolls left, zl scrolls right",
-        "Needs wrap off or soft-wrap off"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "navigation"
-      ],
-      "summary": "Scroll sideways half screen zH / zL",
-      "details": [
-        "zH and zL scroll half a screen",
-        "Needs wrap off or soft-wrap off"
+        "zH and zL move half a screen",
+        "Needs soft wrap off, the default"
       ],
       "advanced": true
     },
@@ -473,7 +446,7 @@
       "details": [
         "zs shows cursor at screen start",
         "ze shows cursor at screen end",
-        "Needs wrap off or soft-wrap off"
+        "Needs soft wrap off, the default"
       ],
       "advanced": true
     },
@@ -495,8 +468,8 @@
       ],
       "summary": "Fold a Visual selection zf",
       "details": [
-        "Select text in Visual mode, then press zf",
-        "Easier than describing it with a motion"
+        "Select lines with V, then press zf",
+        "za then toggles your new fold"
       ]
     },
     {
@@ -505,8 +478,8 @@
       ],
       "summary": "Toggle a fold with za",
       "details": [
-        "za opens the fold, or closes it if open",
-        "Works where IDE folding is available"
+        "Opens it if closed, closes if open",
+        "One key covers most fold work"
       ]
     },
     {
@@ -525,7 +498,7 @@
       ],
       "summary": "Toggle nested folds with zA",
       "details": [
-        "zA toggles the fold and all inside it",
+        "zA toggles it and every inner fold",
         "One key for the whole fold tree"
       ],
       "advanced": true
@@ -572,17 +545,6 @@
         "zm closes one fold level"
       ],
       "advanced": true
-    },
-    {
-      "category": [
-        "navigation",
-        "editing"
-      ],
-      "summary": "Resume insert at last edit gi",
-      "details": [
-        "Lands you in Insert mode, not Normal",
-        "Picks up exactly where you stopped typing"
-      ]
     },
     {
       "category": [
