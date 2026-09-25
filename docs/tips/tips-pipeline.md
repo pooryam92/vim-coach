@@ -40,7 +40,7 @@ report to eyeball:
   (one such line clamps the whole balloon to 240px, so fix these first) and
   36–43 chars (wraps once the balloon is clamped). Both thresholds are
   estimates for a 13px font.
-- tips with more than 3 details (numbered-step tips, `1. ` `2. `…, are exempt)
+- tips with more than 3 details, and details numbered as steps (`1. ` `2. `…)
 - stray separators in summaries (` - `, `→`, a trailing `(keys)`), and a ` / `
   between two all-symbol keys (`{ / }`; symbol pairs join with `and`)
 - details opening with filler (Useful, Handy, Use it, Good for, Great)

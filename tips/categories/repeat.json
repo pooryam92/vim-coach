@@ -14,6 +14,30 @@
     {
       "category": [
         "repeat",
+        "editing"
+      ],
+      "summary": "Add ; to line ends A; then j.",
+      "details": [
+        "Press A, type ;, press Esc",
+        "j. adds it to the next line too",
+        "A ignores the column, so . works"
+      ]
+    },
+    {
+      "category": [
+        "repeat",
+        "navigation"
+      ],
+      "summary": "Space out commas with ;.",
+      "details": [
+        "f, jumps to a comma",
+        "Press a, Space, Esc to add a space",
+        "Then ;. ;. does each next comma"
+      ]
+    },
+    {
+      "category": [
+        "repeat",
         "insert"
       ],
       "summary": "Repeat last insert Ctrl-a / Ctrl-@",

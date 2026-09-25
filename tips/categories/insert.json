@@ -46,6 +46,16 @@
       "category": [
         "insert"
       ],
+      "summary": "Type a char many times 80i-",
+      "details": [
+        "Press 80i, type -, press Esc",
+        "You get a line of 80 dashes"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
       "summary": "Insert at true line start gI",
       "details": [
         "gI inserts at column 1",

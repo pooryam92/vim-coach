@@ -2,24 +2,14 @@
   "tips": [
     {
       "category": [
-        "pattern"
-      ],
-      "summary": "Search forward/backward / and ?",
-      "details": [
-        "/foo Enter jumps to the next foo",
-        "?foo Enter searches backward"
-      ]
-    },
-    {
-      "category": [
         "pattern",
         "repeat"
       ],
-      "summary": "Next/previous match n / N",
+      "summary": "Search and hop through matches /",
       "details": [
-        "/foo then n jumps to each foo",
-        "N goes the opposite way",
-        "Works after /, ?, *, and #"
+        "/foo Enter jumps to the next foo",
+        "n goes to the next one, N back",
+        "? searches backward instead"
       ]
     },
     {
@@ -201,7 +191,8 @@
       "details": [
         ":10,20s/a/b/g edits lines 10 to 20",
         "Or select lines first, then :s"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

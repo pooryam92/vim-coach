@@ -171,6 +171,16 @@
       "category": [
         "editing"
       ],
+      "summary": "Indent a block's body >i{",
+      "details": [
+        "Shifts every line inside { } right",
+        "Also =i{ reindents, yi{ yanks"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
       "summary": "Reindent a line ==",
       "details": [
         "== reindents the current line",
@@ -333,6 +343,16 @@
       "category": [
         "editing"
       ],
+      "summary": "Uppercase a whole line gUU",
+      "details": [
+        "Doubled operators act on the line",
+        "Like dd, yy, cc and g~~"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
       "summary": "Toggle case with g~iw",
       "details": [
         "g~iw flips case in the word",
@@ -412,14 +432,15 @@
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "navigation"
       ],
-      "summary": "Force an operator linewise dVe",
+      "summary": "Delete up to a mark d'a",
       "details": [
-        "V between d and e takes whole lines",
-        "Use when a motion stops mid-line"
-      ],
-      "advanced": true
+        "ma marks this line, then move away",
+        "d'a deletes from there back to a",
+        "y'a yanks the same span instead"
+      ]
     }
   ]
 }

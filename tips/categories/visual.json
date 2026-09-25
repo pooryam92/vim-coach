@@ -181,9 +181,9 @@
       ],
       "summary": "Replace a block on many lines",
       "details": [
-        "1. Ctrl-v and hjkl mark the block",
-        "2. Press c, type the new text",
-        "3. Esc fills every line"
+        "Ctrl-v and hjkl mark the block",
+        "Press c, type the new text",
+        "Esc fills every line"
       ]
     },
     {

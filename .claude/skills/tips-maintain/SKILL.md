@@ -82,8 +82,8 @@ Hard constraints:
   (`gj / gk`). 3+ keys: name the outcome, map each key in the details.
 - `details` — one balloon line ≈ 35 chars; lint flags past 35 (it would wrap),
   and a line past ~43 first (it clamps the whole balloon).
-  Prefer 2 details, 3 at most (lint flags a 4th). Numbered steps only
-  for an irreducibly multi-step move.
+  Prefer 2 details, 3 at most (lint flags a 4th). Never number steps —
+  line order already reads as the sequence.
 - `config` — optional; read reference.md → "Config tips" before authoring or
   reviewing one.
 - `advanced` — optional boolean, **omitted by default**. Add `"advanced": true`

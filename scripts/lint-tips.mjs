@@ -31,7 +31,8 @@ const DETAILS_MAX_COUNT = 3;
 const FILLER_OPENER = /^(Useful|Handy|Use it|Good for|Great)\b/;
 // "{ / }" reads as a pileup; symbol pairs join with "and".
 const SYMBOL_SLASH = /(?:^|\s)([^\sA-Za-z0-9]+) \/ ([^\sA-Za-z0-9]+)(?=\s|$)/;
-const isNumberedSteps = (details) => /^1\.\s/.test(details[0] ?? "") && /^2\.\s/.test(details[1] ?? "");
+// Line order already reads as a sequence; "1. " prefixes only cost width.
+const NUMBERED_STEP = /^\d+\.\s/;
 const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 // True when `text` contains `keys` as a standalone run, not inside a word.
@@ -91,6 +92,7 @@ const tooManyDetails = [];
 const separators = [];
 const symbolSlashes = [];
 const fillerOpeners = [];
+const numberedSteps = [];
 const restatedKeys = [];
 const allTips = [];
 
@@ -106,12 +108,13 @@ for (const file of files) {
       if (d.length > DETAIL_CLAMP) clampingDetails.push([d.length, file, d]);
       else if (d.length > DETAIL_MAX) longDetails.push([d.length, file, d]);
       if (FILLER_OPENER.test(d)) fillerOpeners.push([file, d]);
+      if (NUMBERED_STEP.test(d)) numberedSteps.push([file, d]);
     }
     for (const line of [s, ...details]) {
       if (SYMBOL_SLASH.test(line)) symbolSlashes.push([file, line]);
     }
 
-    if (details.length > DETAILS_MAX_COUNT && !isNumberedSteps(details)) {
+    if (details.length > DETAILS_MAX_COUNT) {
       tooManyDetails.push([details.length, file, s]);
     }
 
@@ -171,7 +174,8 @@ section(
   longDetails,
   lengthRow,
 );
-section(`Tips with more than ${DETAILS_MAX_COUNT} details (numbered steps exempt)`, tooManyDetails, lengthRow);
+section(`Tips with more than ${DETAILS_MAX_COUNT} details`, tooManyDetails, lengthRow);
+section("Numbered-step details (drop the 1. 2. prefixes; line order is the sequence)", numberedSteps, fileRow);
 section("Possible stray separators in summaries (eyeball — `-` may be part of keys)", separators, fileRow);
 section('Slash between symbol keys (join symbol pairs with "and": { and })', symbolSlashes, fileRow);
 section("Details opening with filler (Useful/Handy/Use it/Good for/Great)", fillerOpeners, fileRow);

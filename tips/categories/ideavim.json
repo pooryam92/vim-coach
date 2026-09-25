@@ -116,23 +116,6 @@
     },
     {
       "category": [
-        "ideavim",
-        "options"
-      ],
-      "summary": "Keep Vim mode during rename",
-      "details": [
-        "Rename won't force Select mode",
-        "From Normal, edit the name with ciw"
-      ],
-      "config": {
-        "name": "Keep mode on rename",
-        "lines": [
-          "set idearefactormode=keep"
-        ]
-      }
-    },
-    {
-      "category": [
         "ideavim"
       ],
       "summary": "Open quick docs with K",

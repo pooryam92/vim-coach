@@ -31,6 +31,8 @@ one that failed) — this file is the skill's memory.
 - A config button that sets the default is a no-op
 - A vaguer rule already in a detail line — sharpen it, don't mint a sibling
 - A search-flag tip shows the keystrokes to type, not the concept
+- Never number steps — line order is the sequence
+- Split setting a command up from using it
 
 ### Name the family in prose, never dump symbols
 
@@ -244,6 +246,12 @@ both — merge them into a single tip that carries the whole loop (what it is �
 to make it → how to use it). Merge beats cross-reference when the halves are that
 entangled.
 
+A reader caught a looser case: `Search forward/backward / and ?` and
+`Next/previous match n / N` each stood alone, but a reader drawing the n/N tip
+asked where the search tip was. One loop taught across two popups → merge into
+`Search and hop through matches /` (`["/foo Enter jumps to the next foo", "n goes
+to the next one, N back", "? searches backward instead"]`).
+
 ### Cut a command you can't try cold — doubly so when the IDE already does it
 
 ❌ before (payoff needs a file path already under the cursor):
@@ -316,6 +324,13 @@ the default before authoring a `set` config (reference.md → "Checking IdeaVim
 support"); when it's already on, the behavior is already live, so teach the
 keystroke that shows it and drop the button.
 
+The near-miss is a button whose new behavior is *no better* than the default for
+the move the tip shows. `Keep Vim mode during rename` (`set
+idearefactormode=keep`) taught `ciw` on the name — but the default Select mode
+already replaces the name as you type, so the reader saw `ciw` delete and enter
+Insert and asked what the point was. Cut: the win (Vim edits inside a rename
+field) is too niche to earn a tip.
+
 ### A vaguer rule already in a detail line — sharpen it, don't mint a sibling
 
 ❌ pitched as a new tip, while the `yss` tip already carried a weaker version of the same rule:
@@ -355,3 +370,26 @@ and drop any describe-the-concept line. The three type-along lines earn their
 length even on an advanced tip — the user rejected a trimmed 2-line version because
 the dropped line was *where the flag goes*, the exact thing that was unclear.
 Concreteness over brevity when the keystrokes are the lesson.
+
+### Never number steps — line order is the sequence
+
+summary: `Replace a block on many lines`
+❌ `"details": ["1. Ctrl-v and hjkl mark the block", "2. Press c, type the new text", "3. Esc fills every line"]`
+✅ `"details": ["Ctrl-v and hjkl mark the block", "Press c, type the new text", "Esc fills every line"]`
+
+*Why:* details already render one per line, top to bottom, so `1.` `2.` `3.`
+spend width on order the reader gets for free — and the user rejected the
+numbered style outright. This supersedes the old "numbered steps for an
+irreducibly multi-step move" allowance; lint now flags any numbered detail.
+
+### Split setting a command up from using it
+
+summary: `Auto-expand text with :iabbrev`
+❌ `"details": [":iab teh the fixes that typo", "Expands after Space or Enter"]`
+✅ `"details": [":iab teh the, then press Enter", "Typing teh then Space gives the"]`
+
+*Why:* in `:iab teh the fixes that typo` the reader couldn't tell `teh` was the
+typo they'd type — the command, its arguments and the prose ran together. When
+a tip sets something up (`:iab`, `:map`, a mark) and then uses it, give each its
+own line: finish the setup (`then press Enter`), then show the typing that
+triggers it and what comes out. Same lesson as press-vs-type, one level up.

@@ -18,8 +18,8 @@
       ],
       "summary": "Auto-expand text with :iabbrev",
       "details": [
-        ":iab teh the fixes that typo",
-        "Expands after Space or Enter"
+        ":iab teh the, then press Enter",
+        "Typing teh then Space gives the"
       ]
     }
   ]
