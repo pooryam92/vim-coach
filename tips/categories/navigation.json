@@ -68,6 +68,16 @@
       "category": [
         "navigation"
       ],
+      "summary": "Jump inside camelCase [w and [b",
+      "details": [
+        "In fooBarBaz, [w hops to Bar",
+        "[b hops back, d[w deletes ahead"
+      ]
+    },
+    {
+      "category": [
+        "navigation"
+      ],
       "summary": "Jump to line start 0 / ^",
       "details": [
         "0 goes to the very first column",
@@ -586,6 +596,16 @@
         "Picks up exactly where you stopped typing"
       ],
       "mnemonic": "go insert"
+    },
+    {
+      "category": [
+        "navigation"
+      ],
+      "summary": "Open the URL under the cursor gx",
+      "details": [
+        "Opens with your default browser",
+        "Cursor can sit anywhere in it"
+      ]
     }
   ]
 }

@@ -34,9 +34,13 @@ blocks and the .ideavimrc button, adding/renaming/removing a category.
    The generator blocks only *identical* summaries — semantic duplicates are
    yours to catch. A category is its *rendered* set (primary + secondary tags):
    check it with `grep -rn '"<cat>"' tips/categories/`, never one file alone.
-2. **Verify support** against the IdeaVim submodule (reference.md →
-   "Checking IdeaVim support") —
-   don't carry over upstream-Vim behavior IdeaVim doesn't replicate.
+2. **Verify support *and* release** against the IdeaVim submodule (reference.md →
+   "Checking IdeaVim support") — don't carry over upstream-Vim behavior IdeaVim
+   doesn't replicate, and don't teach a key that only exists on `master`. The
+   submodule runs ahead of the marketplace build, so "the source supports it" is
+   half the check: reference.md → "Is the key actually released?" is the other
+   half, and it is not optional when mining a changelog. Skipping it once already
+   shipped two tips readers could not use.
 3. **Propose before editing.** Show each whole tip before → after with a
    one-line reason and get a go-ahead. Agree shape first (how many tips, the
    split axis) before polishing words. Two rejected rewords → stop guessing
@@ -101,6 +105,14 @@ week" starts to repeat, write it down here as the rubric forms. So far:
 
 - `Recall last search with Ctrl-r /` — a register paste inside the `:`/insert
   prompt; niche and mode-specific, not a first-week move.
+- **Read the category's own ratio before tagging** — the settled convention is
+  already in the files, and it differs sharply by category. `plugins` runs ~1 in
+  33 advanced: needing a `config` block is *itself* the opt-in, so a plugin tip
+  is normal even when its concept is deep (YankRing's paste-cycling stayed
+  normal on this rule). `pattern` runs ~15 in 25: a `:s`/search **flag** riding
+  inside a pattern (`gc`, `//`, `\c`, `\<\>`, `/n`) is reliably past a
+  newcomer's first week. Match the siblings you're landing beside rather than
+  scoring the tip in isolation.
 
 ### Tagging a tip's mode
 

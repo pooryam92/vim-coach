@@ -17,10 +17,15 @@
       ],
       "summary": "Preview next match Ctrl-g / Ctrl-t",
       "details": [
-        "Ctrl-g jumps to the next match",
-        "Ctrl-t jumps to the previous one",
-        "Works before pressing Enter"
+        "Ctrl-g next, Ctrl-t previous match",
+        "While still typing the / pattern"
       ],
+      "config": {
+        "name": "Enable incsearch",
+        "lines": [
+          "set incsearch"
+        ]
+      },
       "advanced": true,
       "mode": "command"
     },
@@ -164,6 +169,19 @@
         "g means every match, not just the first"
       ],
       "mnemonic": "substitute"
+    },
+    {
+      "category": [
+        "pattern",
+        "cmdline"
+      ],
+      "summary": "Count matches with :%s/foo//n",
+      "details": [
+        "Reports 3 matches on 2 lines",
+        "n counts only, text is untouched",
+        "The empty replacement is ignored"
+      ],
+      "advanced": true
     },
     {
       "category": [

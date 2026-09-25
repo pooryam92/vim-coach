@@ -404,6 +404,18 @@
           "nmap <C-w>m <Action>(MoveEditorToOppositeTabGroup)"
         ]
       }
+    },
+    {
+      "category": [
+        "ideavim",
+        "editing"
+      ],
+      "summary": "Teach the dictionary a word zg",
+      "details": [
+        "zg accepts the word under cursor",
+        "zw removes it from the dictionary"
+      ],
+      "mnemonic": "z good, z wrong"
     }
   ]
 }

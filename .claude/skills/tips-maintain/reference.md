@@ -71,6 +71,33 @@ git -C external/ideavim log -1 --format=%h -S 'keys = ["zd"]' -- .  # commit tha
 git -C external/ideavim tag --contains <commit> | head -1           # first release; empty = unreleased
 ```
 
+Cross-check `CHANGES.md`, the clearer signal when mining a release: find the
+feature's `VIM-` issue and read its heading **on `master`**. Under `## To Be
+Released` → **do not write the tip**; under `## X.Y.Z` → fine. Every release
+carries a tag (`2.45.2`, `2.42.0-eap.1`), so an empty `--contains` does mean
+unreleased.
+
+Two quirks make the signals disagree — trust `--contains`, confirm on master:
+
+- **A release tag's own changelog is empty** — at tag `2.43.0`, `## 2.43.0` is a
+  bare heading with everything it shipped still under `## To Be Released` below
+  it. `git show <tag>:CHANGES.md` is *not* a release gate.
+- **Intermediate versions get rolled up** — `2.42.x`–`2.44.x` shipped as tags but
+  have no heading on master; their features sit under the next stable heading
+  (`## 2.45.0`). Released either way, so it never blocks a tip.
+
+A **changed default** needs the same gate and is easier to miss — read the file as
+the *released* tag has it, not just `master`:
+
+```bash
+git -C external/ideavim show 2.42.0-eap.1:<path/to/Ext.kt> | grep parseKeys
+```
+
+This is how the `multiple-cursors` tip came to teach `<C-n>` while every shipped
+build still bound `<A-n>` (VIM-2178, unreleased). When a tip's keys ride on an
+unreleased default, pin them in its `config` via the plugin's `<Plug>` targets —
+stable across versions, so the taught key holds on both builds.
+
 **Vim docs** (for *meaning*, not support): https://vimhelp.org/, user manual
 https://vimhelp.org/usr_toc.txt.html. Category → page: `editing`→editing.txt,
 `navigation`→motion.txt/scroll.txt/fold.txt, `pattern`→pattern.txt,
@@ -117,12 +144,15 @@ Lines that satisfy both — the working examples:
   `set <plugin>` form. If the plugin binds *no* default keys, ship its binding
   config in the **same block**: e.g. CamelCaseMotion exposes only `<Plug>`
   targets until you set `g:camelcasemotion_key`, so ship
-  `Plug 'bkad/CamelCaseMotion'` **and** `let g:camelcasemotion_key = '<prefix>'`
-  together. The `g:` var is plugin-private (not leader-style shared state), and
-  IdeaVim inits extensions only after the whole rc is sourced, so the two lines
-  are order-independent. But it now *claims a key family*, so collision-check the
-  prefix like an action mapping — the upstream default `,` is both a built-in
-  motion and a common leader, so it's usually not a safe pick.
+  `Plug '<repo>'` **and** `let g:<plugin>_key = '<prefix>'` together. The `g:` var
+  is plugin-private (not leader-style shared state), and IdeaVim inits extensions
+  only after the whole rc is sourced, so the two lines are order-independent. But
+  it now *claims a key family*, so collision-check the prefix like an action
+  mapping. **CamelCaseMotion has no safe prefix and so no shippable `config`** —
+  IdeaVim's own doc recommends `<leader>` (banned, see "Not shippable yet") and
+  the upstream default `,` claims the built-in repeat-`f`/`t`-backwards motion. A
+  tip shipping `,` was cut for exactly that; the plugin-free `[w` / `[b` motions
+  cover the same ground.
 - **Tune a built-in option** — e.g. `set scrolloff=5`, `hlsearch`. Primary
   `options`.
 - **IDE-bridge `set`** — e.g. `set ideajoin`, `set idearefactormode=keep`.
@@ -161,8 +191,12 @@ author them until the blocker is fixed.
   when IdeaVim emulates the plugin itself (surround, commentary, sneak, NERDTree,
   argtextobj, multiple-cursors…). The "Setup" block in
   `external/ideavim/doc/IdeaVim Plugins.md` reveals which need an extra install.
-  `multiple-cursors` shipped once VIM-2178 landed — its default keys now bind
-  correctly, matching upstream `terryma/vim-multiple-cursors`.
+  `multiple-cursors` is shippable, but **not on its default keys**: VIM-2178
+  (which switches the defaults to upstream's `<C-n>` family) is on `master` and
+  unreleased, so every shipped build still binds `<A-n>`. Its tip therefore pins
+  `<C-n>` itself with `nmap`/`xmap <Plug>NextWholeOccurrence` — stable on both
+  builds. Drop the pin only once VIM-2178 appears under a released `## X.Y.Z`
+  changelog heading.
 
 ## Adding or changing a category
 
