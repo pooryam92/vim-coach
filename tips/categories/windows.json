@@ -87,18 +87,8 @@
       "summary": "Move to a split Ctrl-w h/j/k/l",
       "details": [
         "Ctrl-w then a direction key moves you",
-        "h left, l right, j down, k up",
-        "Map Ctrl-h/j/k/l to skip the Ctrl-w"
-      ],
-      "config": {
-        "name": "Map split hops",
-        "lines": [
-          "nnoremap <C-h> <C-w>h",
-          "nnoremap <C-j> <C-w>j",
-          "nnoremap <C-k> <C-w>k",
-          "nnoremap <C-l> <C-w>l"
-        ]
-      }
+        "h left, l right, j down, k up"
+      ]
     },
     {
       "category": [
