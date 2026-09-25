@@ -14,22 +14,11 @@
       "category": [
         "editing"
       ],
-      "summary": "Delete word text diw / daw",
-      "details": [
-        "diw deletes just the word",
-        "daw deletes the word and trailing space",
-        "Use i for inside and a for around"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
       "summary": "Change word text ciw / caw",
       "details": [
-        "ciw changes just the word, even mid-word",
-        "caw changes the word and trailing space",
-        "Use i for inside and a for around"
+        "ciw changes the word, even mid-word",
+        "caw takes the trailing space too",
+        "diw / daw delete instead"
       ]
     },
     {
@@ -39,20 +28,9 @@
       "summary": "Change inside quotes ci\"",
       "details": [
         "Works from anywhere in the string",
-        "ca\" also changes the quotes"
-      ],
-      "mnemonic": "change inner quotes"
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Delete a quoted string da\"",
-      "details": [
-        "Removes the text and the quotes",
-        "di\" keeps quotes, clears inside"
-      ],
-      "mnemonic": "delete around quotes"
+        "ca\" includes the quotes too",
+        "Swap c for d to delete instead"
+      ]
     },
     {
       "category": [
@@ -60,19 +38,9 @@
       ],
       "summary": "Change inside parentheses ci( / cib",
       "details": [
-        "ci( changes the text inside parentheses",
-        "cib is an alias for the same text object"
-      ],
-      "mnemonic": "change inner block"
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Delete inside or around pairs di( / da(",
-      "details": [
-        "di( deletes the content and keeps the parentheses",
-        "da( deletes the content and the surrounding pair"
+        "ci( changes the text inside ( )",
+        "cib is an alias for the same object",
+        "Swap c for d to delete instead"
       ]
     },
     {
@@ -136,24 +104,11 @@
         "editing",
         "cmdline"
       ],
-      "summary": "Duplicate a line with :t.",
+      "summary": "Copy lines with :t",
       "details": [
-        ":t copies a line to a target",
-        "Target sets where: :t0 top, :t$ end",
-        ":t. targets here, duplicating below"
-      ],
-      "mnemonic": "copy to",
-      "advanced": true
-    },
-    {
-      "category": [
-        "editing",
-        "cmdline"
-      ],
-      "summary": "Copy lines with :t {address}",
-      "details": [
-        ":1,5t. copies lines 1–5 below the cursor",
-        "Use 0, $, line numbers, or Visual ranges as the destination"
+        ":t. duplicates this line below",
+        ":1,5t0 copies lines 1-5 to the top",
+        "Also :t$ for the end of the file"
       ],
       "mnemonic": "copy to",
       "advanced": true
@@ -202,17 +157,7 @@
       "details": [
         ">> shifts the current line right",
         "<< shifts it left",
-        "Counts work too"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Indent/outdent a block >ip / <ip",
-      "details": [
-        ">ip indents the whole paragraph",
-        "<ip outdents it; takes any motion"
+        ">ip indents a whole paragraph"
       ]
     },
     {
@@ -221,18 +166,9 @@
       ],
       "summary": "Reindent a line ==",
       "details": [
-        "== recalculates indent for the current line",
-        "Use it when manual shifting is not enough"
-      ]
-    },
-    {
-      "category": [
-        "editing"
-      ],
-      "summary": "Reindent a block =ip",
-      "details": [
-        "=ip recalculates indent for a paragraph or block",
-        "Useful after paste or structural edits"
+        "== reindents the current line",
+        "=ip reindents a whole paragraph",
+        "Great after a paste"
       ]
     },
     {
@@ -425,20 +361,8 @@
       "summary": "Increment sequentially g Ctrl-a",
       "details": [
         "Select lines, then press g Ctrl-a",
-        "Adds 1, 2, 3... to each line's number",
-        "Useful for building numbered lists"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "editing",
-        "visual"
-      ],
-      "summary": "Decrement sequentially g Ctrl-x",
-      "details": [
-        "Select lines, then press g Ctrl-x",
-        "Subtracts 1, 2, 3... from each number"
+        "Adds 1, 2, 3... down the lines",
+        "g Ctrl-x subtracts instead"
       ],
       "advanced": true
     },
@@ -475,6 +399,28 @@
         "dap also takes the blank line",
         "Works with c, y, >, = too"
       ]
+    },
+    {
+      "category": [
+        "editing",
+        "ideavim"
+      ],
+      "summary": "Fix a misspelled word z=",
+      "details": [
+        "z= lists spelling suggestions",
+        "Pick one to replace the word"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Force an operator linewise dVe",
+      "details": [
+        "V between d and e takes whole lines",
+        "Use when a motion stops mid-line"
+      ],
+      "advanced": true
     }
   ]
 }

@@ -152,6 +152,7 @@
       "summary": "Enter Replace mode with R",
       "details": [
         "Type to overwrite text",
+        "Backspace brings the old text back",
         "Esc leaves Replace mode"
       ]
     },
@@ -179,6 +180,28 @@
       ],
       "mnemonic": "verbatim",
       "advanced": true,
+      "mode": "insert"
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Complete a whole line Ctrl-x Ctrl-l",
+      "details": [
+        "Type its start, then Ctrl-x Ctrl-l",
+        "Finds a matching line in the file"
+      ],
+      "mode": "insert"
+    },
+    {
+      "category": [
+        "insert"
+      ],
+      "summary": "Complete a file path Ctrl-x Ctrl-f",
+      "details": [
+        "Type part of a path, then the keys",
+        "Completes it from the file system"
+      ],
       "mode": "insert"
     }
   ]
