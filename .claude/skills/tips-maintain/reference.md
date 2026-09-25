@@ -14,18 +14,41 @@ On-demand companion to `SKILL.md`. Open the section you need:
 These tips target **IdeaVim**, where keys are often remapped or collapsed onto IDE
 actions — many keys bind to the *same* IDE action, and upstream-Vim semantics
 often don't carry over. Vim docs give *meaning*; the IdeaVim submodule proves
-*support*. Be conservative when ambiguous: bang forms (`:e!`, `:q!`) can be valid
-even when only the base command is indexed; some pattern/mapping behaviors are
+*support*. Be conservative when ambiguous: some pattern/mapping behaviors are
 syntax inside a supported command, not standalone commands.
 
 **Before keeping a tip:** is the command/behavior clearly supported by IdeaVim? Is
 the summary honest about mode/prompt/plugin requirements? Plugin-backed → tagged
 `plugins`? IdeaVim-specific but not a plugin → is `ideavim` enough?
 
-**Option-backed `config`:** check the value isn't already the default
-(`IjOptions.kt` / option definitions in the submodule) — `set
-ideavimsupport=dialog` was once proposed, but `dialog` *is* the default, so the
-button would ship a no-op.
+**A `!` that parses is not a `!` that works.** Ex-commands accept a bang
+whenever the base command is indexed, and many then ignore it. `QuitCommand`,
+`ExitCommand` and `EditFileCommand` never read it: `:q!` keeps your edits,
+`:e!` reloads nothing, and `:qa` / `:wqa` / `:xa` only close editors — they
+never save and never exit the IDE — the corpus's worst truth bug was a cluster
+of quit/edit tips promising exactly those upstream-Vim semantics. Before
+teaching a bang form, grep the command for its modifier — no hit means the bang
+is ignored:
+
+```bash
+grep -n 'CommandModifier.BANG' $(find external/ideavim/vim-engine -name QuitCommand.kt)
+```
+
+Then read its `processCommand` to see what the base command really does.
+
+**Option-backed `config`:** check the value isn't already the default — a
+button that appends IdeaVim's default ships a no-op and costs trust in Apply.
+`wrapscan`, `ideamarks` and `ideawrite=all` all shipped that way, and `set
+ideavimsupport=dialog` nearly did. The default is the last constructor
+argument of the option's definition — engine options in `Options.kt`,
+IDE-bridge ones in `IjOptions.kt`:
+
+```bash
+grep -n '"wrapscan"\|"ideamarks"\|"ideawrite"' \
+  external/ideavim/vim-engine/src/main/kotlin/com/maddyhome/idea/vim/api/Options.kt \
+  external/ideavim/src/main/java/com/maddyhome/idea/vim/group/IjOptions.kt
+# ToggleOption("wrapscan", GLOBAL, "ws", true)  → already on
+```
 
 The submodule is checked out at `external/ideavim/`. Its KSP-generated JSON lists
 the real commands/options/functions:
@@ -46,6 +69,7 @@ git -C external/ideavim sparse-checkout set \
   src/main/resources/ksp-generated \
   vim-engine/src/main/resources/ksp-generated
 git submodule update --remote external/ideavim   # refresh to latest master
+git -C external/ideavim fetch --tags origin      # release tags for the checks below
 # Need more than KSP JSON (an action's @CommandOrMotion keys, an option in
 # IjOptions.kt)? widen the checkout:
 git -C external/ideavim sparse-checkout add \
@@ -77,7 +101,8 @@ Released` → **do not write the tip**; under `## X.Y.Z` → fine. Every release
 carries a tag (`2.45.2`, `2.42.0-eap.1`), so an empty `--contains` does mean
 unreleased.
 
-Two quirks make the signals disagree — trust `--contains`, confirm on master:
+Three quirks make the signals disagree — trust `--contains` for released vs
+unreleased, confirm on master:
 
 - **A release tag's own changelog is empty** — at tag `2.43.0`, `## 2.43.0` is a
   bare heading with everything it shipped still under `## To Be Released` below
@@ -85,6 +110,12 @@ Two quirks make the signals disagree — trust `--contains`, confirm on master:
 - **Intermediate versions get rolled up** — `2.42.x`–`2.44.x` shipped as tags but
   have no heading on master; their features sit under the next stable heading
   (`## 2.45.0`). Released either way, so it never blocks a tip.
+- **After 2.37.0 `--contains` names an eap tag** — the stable tags sit on
+  release branches `master` never reaches, so the first tag it reports is an eap
+  (`2.47.0-eap.1`), which most readers don't run. When it matters, confirm the
+  stable release on the Marketplace:
+  `curl -s 'https://plugins.jetbrains.com/api/plugins/164/updates?size=3'`
+  lists the latest versions.
 
 A **changed default** needs the same gate and is easier to miss — read the file as
 the *released* tag has it, not just `master`:
@@ -94,9 +125,11 @@ git -C external/ideavim show 2.42.0-eap.1:<path/to/Ext.kt> | grep parseKeys
 ```
 
 This is how the `multiple-cursors` tip came to teach `<C-n>` while every shipped
-build still bound `<A-n>` (VIM-2178, unreleased). When a tip's keys ride on an
-unreleased default, pin them in its `config` via the plugin's `<Plug>` targets —
-stable across versions, so the taught key holds on both builds.
+build still bound `<A-n>` (VIM-2178, then unreleased). When a tip's keys ride on
+an unreleased default, pin them in its `config` via the plugin's `<Plug>`
+targets — stable across versions, so the taught key holds on both builds. Lift
+the pin once the default ships, and re-read the gate whenever you refresh the
+submodule: a stale one hides a shipped change.
 
 **Vim docs** (for *meaning*, not support): https://vimhelp.org/, user manual
 https://vimhelp.org/usr_toc.txt.html. Category → page: `editing`→editing.txt,
@@ -191,12 +224,12 @@ author them until the blocker is fixed.
   when IdeaVim emulates the plugin itself (surround, commentary, sneak, NERDTree,
   argtextobj, multiple-cursors…). The "Setup" block in
   `external/ideavim/doc/IdeaVim Plugins.md` reveals which need an extra install.
-  `multiple-cursors` is shippable, but **not on its default keys**: VIM-2178
-  (which switches the defaults to upstream's `<C-n>` family) is on `master` and
-  unreleased, so every shipped build still binds `<A-n>`. Its tip therefore pins
-  `<C-n>` itself with `nmap`/`xmap <Plug>NextWholeOccurrence` — stable on both
-  builds. Drop the pin only once VIM-2178 appears under a released `## X.Y.Z`
-  changelog heading.
+  `multiple-cursors` is shippable. A past example of the release gate: VIM-2178
+  switched its defaults to upstream's `<C-n>` family while every shipped build
+  still bound `<A-n>`, so its tip pinned `<C-n>` with `nmap`/`xmap
+  <Plug>NextWholeOccurrence` — stable on both builds. VIM-2178 shipped in
+  2.43.0, so the pin is now optional; keeping it only helps readers still on an
+  older build.
 
 ## Adding or changing a category
 

@@ -16,9 +16,11 @@ one that failed) — this file is the skill's memory.
 - Name press-vs-type when an example crosses into Insert mode
 - Split by intent, not key count
 - Cut lines that don't earn their place
+- A Useful/Handy/Great opener is a cut, not a reword
 - In a slashed pair, vary one axis — keep the operator fixed
 - Operator + motion tips — lead concrete, generalize the open axis
 - Verify the claim against IdeaVim source, not Vim lore
+- A `!` that parses isn't a `!` that works
 - Search existing tips before adding — kill semantic duplicates
 - Join symbol pairs with `and` — a slash between glyphs is a pileup
 - Theory earns one tip at most — and it must still be tryable
@@ -26,6 +28,7 @@ one that failed) — this file is the skill's memory.
 - Cut a command you can't try cold — doubly so when the IDE already does it
 - Prefer the `mode` label over a "Works in X mode" detail line
 - A mapping/config idiom is not a tip — it's general advice
+- A config button that sets the default is a no-op
 - A vaguer rule already in a detail line — sharpen it, don't mint a sibling
 - A search-flag tip shows the keystrokes to type, not the concept
 
@@ -67,9 +70,10 @@ makes the reader assemble it themselves.
 
 ### Name press-vs-type when an example crosses into Insert mode
 
-summary: `Edit every copy of a word Alt-n`
-❌ `"details": ["Alt-n selects foo, repeat for more", "Then c bar replaces every foo"]`
-✅ `"details": ["Alt-n selects foo, repeat for more", "Then c, type bar, Esc — all to bar"]`
+summary: `Grab all copies at once Alt-n` (multiple-cursors; `Alt-n` selects every
+copy since IdeaVim 2.43.0)
+❌ `"details": ["Alt-n on foo selects every foo", "Then c bar replaces every foo"]`
+✅ `"details": ["Alt-n on foo selects every foo", "Then c, type bar, Esc — all to bar"]`
 
 *Why:* from the reader's seat `c bar` is one mystery token (they ask "what is c
 bar?") — it jams a command and the text you type together. When an example crosses
@@ -104,6 +108,18 @@ summary: `Make a word camelCase crc`
 
 *Why:* the trailing `cr + a letter sets the style` repeated on every case tip adds
 nothing — replace filler with a fact the reader doesn't already have.
+
+### A Useful/Handy/Great opener is a cut, not a reword
+
+summary: `Jump back / forward Ctrl-o / Ctrl-i`
+❌ `"details": ["Ctrl-o goes back through older jump locations", "Ctrl-i goes forward again", "Useful after searches, definitions, and other big jumps"]`
+✅ `"details": ["Ctrl-o steps back to older jumps", "Ctrl-i steps forward again", "Works across files, like after gd"]`
+
+*Why:* a line opening with Useful / Handy / Great / Good for *announces* value
+instead of delivering it — no key to press, no result to watch. Rewording keeps
+the empty frame, so delete the line or swap in a use-site the reader can try
+(`like after gd`). It's also where the length goes: most tips with a 44+ char
+line that clamped the whole balloon got there on filler like this one.
 
 ### In a slashed pair, vary one axis — keep the operator fixed
 
@@ -160,10 +176,24 @@ to *make* a fold so they can delete it has nothing to try cold and is half
 disclaimer. That's the disease → it belongs in "Cut a command you can't try cold."
 Ask *should this exist* before *how should this read*.
 
+### A `!` that parses isn't a `!` that works
+
+❌ `"summary": "Quit :q / :q!"` · `[":q closes if no unsaved changes", ":q! forces close/discard (if allowed)", "ZQ is the key form of :q!"]`
+✅ `"summary": "Close this editor tab :q"` · `[":q!, ZQ and :bd do the same", "Edits are kept, nothing discarded"]`
+
+*Why:* IdeaVim parses a bang on any indexed ex-command, so `:q!` runs without
+error — but `QuitCommand` never reads it, and the IDE keeps the edits the tip
+promised to throw away. The same trap sat under `:e!` (reloads nothing) and
+`:qa!` / `:wqa` / `:xa` (close editors, never save or exit). Before a bang form
+lands in a tip, grep the command for `CommandModifier.BANG` (reference.md →
+"Checking IdeaVim support"). If the bang is ignored, that *is* the lesson —
+"do the same" beats a promise the IDE won't keep.
+
 ### Search existing tips before adding — kill semantic duplicates
 
 ❌ new tip: `"summary": "Repeat search then center n zz"` · `["n jumps to the next match", "zz centers the line"]`
-✅ drop it — `"summary": "Recenter search results nzz"` already exists.
+✅ drop it — `"summary": "Recenter search results with nzz"` already exists
+(`["n finds the next match, zz centers", "Nzz does it the other way"]`).
 
 *Why:* the generator only rejects *identical* summaries, so the same idea under
 different wording slips through. Grep both the keys *and* the behavior first; drop
@@ -204,7 +234,7 @@ consolidated line.
 ✅ after (one tip carrying the whole loop):
 ```json
 { "summary": "Set and jump to a mark ma / `a",
-  "details": ["ma tags the current spot as mark a", "`a jumps back exactly, 'a to the line"] }
+  "details": ["ma tags the current spot as mark a", "`a returns exactly, 'a to the line"] }
 ```
 *Why:* display order is random, so a "jump to a mark" tip seen alone leaves the
 reader asking *"what is a mark? how do I make one?"* — it depends on a sibling
@@ -265,6 +295,26 @@ category is not a reason to add — density beats count. When mining a category 
 gaps, discard any candidate whose payoff is "understand this for when you edit
 your config" rather than "press this and see it happen." Config belongs in a tip
 only as the enabling `config` block *under* a tryable move, not as the lesson.
+
+### A config button that sets the default is a no-op
+
+❌ before (`ideavim.json`):
+```json
+{ "summary": "Sync marks with :set ideamarks",
+  "details": ["A-Z marks sync to IDE bookmarks", "Great for cross-file jumps"],
+  "config": { "name": "Enable ideamarks", "lines": ["set ideamarks"] } }
+```
+✅ after (`navigation.json`, no `config`):
+```json
+{ "summary": "Mark a spot across files mA",
+  "details": ["'A jumps back to it from any file", "It shows as an IDE bookmark too"] }
+```
+*Why:* `ideamarks` is already on in `IjOptions.kt`, so Apply appended a line
+that changed nothing — the reader clicks, sees no difference, and stops
+trusting the button. `wrapscan` and `ideawrite=all` shipped the same way. Check
+the default before authoring a `set` config (reference.md → "Checking IdeaVim
+support"); when it's already on, the behavior is already live, so teach the
+keystroke that shows it and drop the button.
 
 ### A vaguer rule already in a detail line — sharpen it, don't mint a sibling
 
