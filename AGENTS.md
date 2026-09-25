@@ -1,6 +1,5 @@
 # Vim Coach — Agent Guide
 
-**Stack:** IntelliJ `2026.1.3` · Kotlin JVM `21` · Gradle `9.3.1`
 
 **Rules**
 - Always write or update tests when adding or changing behavior.
