@@ -32,10 +32,47 @@ node scripts/generate-tips.mjs --check   # validate sources, write nothing
 node scripts/generate-tips.mjs           # rebuild the artifact (CI / on request)
 ```
 
-For the soft, advisory quality checks the generator does not enforce
-(over-length lines, stray separators, legacy-array config, possible duplicate
-keys), run `node scripts/lint-tips.mjs`. It never gates — it just prints a report
-to eyeball.
+For the soft, advisory checks the generator does not enforce, run
+`node scripts/lint-tips.mjs`. It never gates (always exits 0); it prints a
+report to eyeball:
+
+- summaries over 35 chars, and details in two approximate tiers: 44+ chars
+  (one such line clamps the whole balloon to 240px, so fix these first) and
+  36–43 chars (wraps once the balloon is clamped). Both thresholds are
+  estimates for a 13px font.
+- tips with more than 3 details, and details numbered as steps (`1. ` `2. `…)
+- stray separators in summaries (` - `, `→`, a trailing `(keys)`), and a ` / `
+  between two all-symbol keys (`{ / }`; symbol pairs join with `and`)
+- details opening with filler (Useful, Handy, Use it, Good for, Great)
+- a first detail that repeats the summary's keys
+- possible duplicate tips (a shared non-plugin config line, or the same keys
+  plus shared topic words), and tips sharing 2 or more detail lines
+- summaries renamed or removed compared with the committed
+  `HEAD:tips/vim_tips_min.json`, each with a best-guess new name. The hide key
+  hashes the summary, so each one resets that tip's hide preference for users.
+  The section is skipped with a note when git or the file is unavailable.
+
+### Coverage report
+
+`node .claude/skills/tips-maintain/coverage.mjs` compares IdeaVim's real
+surface (the KSP-generated command, ex-command and plugin lists in the
+`external/ideavim` submodule) against the text of every tip, and lists what no
+tip mentions. `--all` includes single-character keys, and `--plugins` reports
+plugins only. It is advisory and textual (a miss is a candidate, not a
+verdict), always exits 0, and exits early with setup instructions if the
+submodule is not checked out. Run it from the repo root. How it matches:
+
+- **Command keys** match case-sensitively (`zD` is not `zd`), either verbatim
+  or in the notation tips use: `<C-W>h` → `Ctrl-w h`, `<CR>` → `Enter`,
+  `<BS>` → `Backspace`, `<A-j>` → `Alt-j`, `<S-Tab>` → `Shift-Tab`.
+- **Ex-commands** match only as `:name` (any abbreviation, optionally after a
+  range such as `:%s`), or as the first word of a `config` line, since
+  `.ideavimrc` lines carry no colon.
+- **Plugins** match by source id, `set` name, or any `Plug` alias listed in
+  `external/ideavim/doc/IdeaVim Plugins.md`, so
+  `Plug 'michaeljsmith/vim-indent-object'` counts as `textobjindent`.
+
+The `tips-maintain` skill uses it to find candidate tips worth adding.
 
 ### Ordering
 
@@ -50,20 +87,35 @@ the alphabetical sequence automatically.
 The generator **fails with a non-zero exit code** (and writes nothing) if any
 tip:
 
-- has a blank `summary`
-- has no `details` lines
-- does not use its file's category name as its first `category` entry
+- has a key other than `category`, `summary`, `details`, `advanced`, `mode`
+  and `config`
+- has a blank or non-string `summary`
+- has no `details` lines, a non-string detail, or the same detail twice
+- has a `category` that is not an array of strings, does not use its file's
+  category name as its first entry, names a category with no matching
+  `tips/categories/<name>.json`, or lists more than 3 categories
+- has a `config` without a non-empty array of string `lines` (the object form
+  `{ "name", "lines" }` or the legacy array form `["line", …]`), a non-string
+  `name`, or an unknown key inside the object
+- has a `Plug` line in its `config` but no `plugins` category
+- has a non-boolean `advanced` or a `mode` outside `insert`, `visual` and
+  `command`
 - repeats a `summary` already used by another tip, in any file
+
+Length and wording limits (such as the 35-char summary target) are not hard
+rules: `lint-tips.mjs` reports them. The runtime `TipJsonParser` stays lenient
+on all of these on purpose (see "Schema evolution" below). The strict checks
+guard only the authored sources.
 
 The error message names the offending file and tip so you can fix it quickly.
 
 ### Normalization
 
-For each tip the generator trims surrounding whitespace, drops blank `details`
-lines, and removes duplicate `details` lines (preserving order). An optional
-`mnemonic` string is trimmed and emitted only when non-blank (dropped otherwise).
-The optional `advanced` flag is emitted only when `true` (kept off the artifact
-otherwise, so it stays minimal); a non-boolean `advanced` value fails generation.
+For each tip the generator trims surrounding whitespace and drops blank
+`details` and `config` lines (a repeated detail fails validation instead of
+being removed). The optional
+`advanced` flag is emitted only when `true` (kept off the artifact otherwise, so
+it stays minimal); a non-boolean `advanced` value fails generation.
 The optional `mode` field is emitted only when set and must be one of `insert`,
 `visual`, or `command` — any other value fails generation (absent means Normal,
 which is never stored or labelled). The output is compact JSON with non-ASCII
@@ -77,6 +129,12 @@ defaulted; existing fields are never renamed or removed. Tip parsing is
 **lenient**: unknown fields are ignored, so a newer published file never breaks
 an older plugin. Keep it that way — tightening the parser would break the
 forward compatibility every installed version relies on.
+
+The one exception so far is the optional `mnemonic` string, dropped after 1.5.x.
+Removing it was safe only because it was optional: older plugins default a
+missing `mnemonic` to none, and the current parser and tip cache ignore one
+still present in a stale file or cache. Only an optional field can be retired
+this way.
 
 The optional `advanced` flag rides this schema. The plugin models and reads it
 (advanced tips are hidden unless the user opts in; see
@@ -112,13 +170,19 @@ one of these changes:
 - `scripts/generate-tips.mjs`
 - the workflow file itself
 
-The job checks out the branch, runs `node scripts/generate-tips.mjs`, and — if
-the regenerated `tips/vim_tips_min.json` differs from what is committed — commits
-the result back to the branch with `[skip ci]`.
+What it does depends on the event:
+
+- **On a pull request** it only validates:
+  `node scripts/generate-tips.mjs --check`, with read-only permissions. It
+  never pushes, because `GITHUB_TOKEN` is read-only on pull requests from forks.
+- **On a push to `main`** it runs `node scripts/generate-tips.mjs` and, if the
+  regenerated `tips/vim_tips_min.json` differs from what is committed, commits
+  the result to `main` with `[skip ci]`.
 
 Because of this, you never have to keep the generated file in sync by hand: edit
-the category sources, and CI regenerates and commits the published file. Hand
-edits to `tips/vim_tips_min.json` are simply overwritten on the next run.
+the category sources, and CI regenerates and commits the published file once
+the change lands on `main`. Hand edits to `tips/vim_tips_min.json` are simply
+overwritten on the next run.
 
 ## How the published file is consumed
 

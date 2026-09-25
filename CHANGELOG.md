@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Removed
+
+- Tip **mnemonics** — the dimmed memory-aid line beneath some tips is gone; tip notifications now show just the summary and details
+
 ## [1.5.1] - 2026-07-11
 
 ### Added

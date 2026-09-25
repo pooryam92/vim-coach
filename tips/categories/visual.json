@@ -3,12 +3,14 @@
     {
       "category": [
         "visual",
-        "editing"
+        "editing",
+        "registers"
       ],
-      "summary": "Paste over a selection p",
+      "summary": "Paste over a selection p / P",
       "details": [
         "Select, then p drops your yank in",
-        "Replaced text overwrites your yank"
+        "p swaps the old text into your yank",
+        "P keeps your yank for the next spot"
       ],
       "mode": "visual"
     },
@@ -30,9 +32,8 @@
       "summary": "Swap selection ends o",
       "details": [
         "o moves cursor to the other end",
-        "Great for precise adjustments"
+        "Grow or trim the start from there"
       ],
-      "mnemonic": "other end",
       "mode": "visual"
     },
     {
@@ -42,10 +43,9 @@
       "summary": "Swap corner in Visual block O",
       "details": [
         "Ctrl-v starts the block",
-        "O jumps to the opposite corner",
+        "O hops to the other end of the row",
         "Now grow it from that side"
-      ],
-      "mode": "visual"
+      ]
     },
     {
       "category": [
@@ -63,10 +63,9 @@
       ],
       "summary": "Reselect last selection gv",
       "details": [
-        "gv reselects the last selection",
-        "Handy after Esc or an edit"
-      ],
-      "mnemonic": "go visual again"
+        "Esc dropped it? gv brings it back",
+        "Then act on it again, like y or >"
+      ]
     },
     {
       "category": [
@@ -79,7 +78,6 @@
         "Attach an operator: dgn, cgn, ygn",
         "gN grabs the previous match"
       ],
-      "mnemonic": "go next",
       "advanced": true
     },
     {
@@ -90,20 +88,9 @@
       "summary": "Sort selected lines :sort",
       "details": [
         "Select lines, then run :sort",
-        "Use :sort u to keep unique lines"
+        "Use :sort u to keep unique lines",
+        ":sort n sorts by number"
       ]
-    },
-    {
-      "category": [
-        "visual",
-        "cmdline"
-      ],
-      "summary": "Sort numbers :sort n",
-      "details": [
-        "Select lines, then run :sort n",
-        "Use :sort! n for descending"
-      ],
-      "advanced": true
     },
     {
       "category": [
@@ -111,8 +98,8 @@
       ],
       "summary": "Select a text object viw",
       "details": [
-        "After v press i then w b ( {",
-        "vip grabs a paragraph, vap blanks",
+        "vi( grabs the text inside parens",
+        "vip grabs the whole paragraph",
         "Swap i for a to include the edges"
       ]
     },
@@ -131,7 +118,7 @@
         "visual",
         "editing"
       ],
-      "summary": "Shift a selection > / <",
+      "summary": "Shift a selection > and <",
       "details": [
         "> indents, < outdents",
         "Then press . to repeat"
@@ -156,11 +143,10 @@
         "visual",
         "editing"
       ],
-      "summary": "Case change selection gu / gU",
+      "summary": "Change case of a selection u / U",
       "details": [
-        "Select then gu to lowercase",
-        "Select then gU to uppercase",
-        "g~ toggles the case"
+        "Select, then u makes it lowercase",
+        "U makes it uppercase, ~ flips it"
       ],
       "mode": "visual"
     },
@@ -181,42 +167,12 @@
         "visual",
         "insert"
       ],
-      "summary": "Insert same text on many lines",
+      "summary": "Type on many lines at once Ctrl-v",
       "details": [
-        "1. Ctrl-v, then j to span lines",
-        "2. Press I to insert at left",
-        "3. Type — shows on one line",
-        "4. Esc copies it to them all"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "visual",
-        "insert"
-      ],
-      "summary": "Append same text on many lines",
-      "details": [
-        "1. Ctrl-v, then j to span lines",
-        "2. Press A to append at right",
-        "3. Type — shows on one line",
-        "4. Esc copies it to them all"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "visual",
-        "insert"
-      ],
-      "summary": "Append to every line's end",
-      "details": [
-        "1. Ctrl-v, then j to span lines",
-        "2. Press $ to reach each end",
-        "3. Press A, then type your text",
-        "4. Esc adds it to every line"
-      ],
-      "advanced": true
+        "Ctrl-v, j to span lines, then I",
+        "Type, then Esc fills every line",
+        "$A instead adds at each line end"
+      ]
     },
     {
       "category": [
@@ -225,12 +181,10 @@
       ],
       "summary": "Replace a block on many lines",
       "details": [
-        "1. Ctrl-v selects the block",
-        "2. Press c to delete it",
-        "3. Type the new text",
-        "4. Esc fills every line"
-      ],
-      "advanced": true
+        "Ctrl-v and hjkl mark the block",
+        "Press c, type the new text",
+        "Esc fills every line"
+      ]
     },
     {
       "category": [
@@ -241,7 +195,7 @@
       "details": [
         "Ctrl-v starts Visual Block mode",
         "hjkl extends the block",
-        "r x fills every cell with x"
+        "rx fills every cell with x"
       ],
       "mode": "visual"
     },
@@ -252,20 +206,8 @@
       ],
       "summary": "Run : commands on a selection",
       "details": [
-        "Type : to get the '<,'> range",
-        "Use :s, :sort, or :normal"
-      ],
-      "mode": "visual"
-    },
-    {
-      "category": [
-        "visual",
-        "editing"
-      ],
-      "summary": "Paste over, keep your yank P",
-      "details": [
-        "Select, then P drops your yank in",
-        "Yank survives — repeat on more spots"
+        "Select lines, press :, type s/a/b/",
+        "Enter edits only the selected lines"
       ],
       "mode": "visual"
     }

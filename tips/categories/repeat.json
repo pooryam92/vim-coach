@@ -14,6 +14,30 @@
     {
       "category": [
         "repeat",
+        "editing"
+      ],
+      "summary": "Add ; to line ends A; then j.",
+      "details": [
+        "Press A, type ;, press Esc",
+        "j. adds it to the next line too",
+        "A ignores the column, so . works"
+      ]
+    },
+    {
+      "category": [
+        "repeat",
+        "navigation"
+      ],
+      "summary": "Space out commas with ;.",
+      "details": [
+        "f, jumps to a comma",
+        "Press a, Space, Esc to add a space",
+        "Then ;. ;. does each next comma"
+      ]
+    },
+    {
+      "category": [
+        "repeat",
         "insert"
       ],
       "summary": "Repeat last insert Ctrl-a / Ctrl-@",
@@ -31,9 +55,9 @@
       "summary": "Record a macro qa, replay @a",
       "details": [
         "qa records, do edits, q stops",
-        "@a replays it, @@ repeats"
-      ],
-      "advanced": true
+        "@a replays it, @@ repeats",
+        "10@a replays it ten times"
+      ]
     },
     {
       "category": [
@@ -48,24 +72,13 @@
     },
     {
       "category": [
-        "repeat"
-      ],
-      "summary": "Repeat a macro {count}@{reg}",
-      "details": [
-        "10@a runs macro a ten times",
-        "Use counts to scale the playback"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
         "repeat",
         "cmdline"
       ],
       "summary": "Run a macro on lines :normal @r",
       "details": [
-        ":'<,'>normal @r runs macro r",
-        "Applies it to each line in range"
+        "Select lines with V, then press :",
+        "Type normal @r to run r per line"
       ],
       "advanced": true
     },
@@ -76,10 +89,9 @@
       ],
       "summary": "Repeat last : command with @:",
       "details": [
-        "@: reruns the last : command",
-        "Useful after :s, :g, and :normal"
-      ],
-      "mnemonic": "@ play, : last command"
+        "Run :s/a/b/, go down a line, @:",
+        "Then @@ repeats it once more"
+      ]
     }
   ]
 }

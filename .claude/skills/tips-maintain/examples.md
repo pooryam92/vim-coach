@@ -2,7 +2,7 @@
 
 This file is how tip style is taught: **read it before authoring or rewording
 anything.** Each entry shows the tip ❌ before and ✅ after — trimmed to the
-fields the lesson touches (unchanged `category`/`config`/`mnemonic` are omitted;
+fields the lesson touches (unchanged `category`/`config` are omitted;
 the canonical full shape lives in SKILL.md) — then *why*. When the user corrects
 or rejects a wording call, the lesson lands here as a new entry (or sharpens the
 one that failed) — this file is the skill's memory.
@@ -16,24 +16,23 @@ one that failed) — this file is the skill's memory.
 - Name press-vs-type when an example crosses into Insert mode
 - Split by intent, not key count
 - Cut lines that don't earn their place
+- A Useful/Handy/Great opener is a cut, not a reword
 - In a slashed pair, vary one axis — keep the operator fixed
 - Operator + motion tips — lead concrete, generalize the open axis
 - Verify the claim against IdeaVim source, not Vim lore
+- A `!` that parses isn't a `!` that works
 - Search existing tips before adding — kill semantic duplicates
-- Decode every key in a mnemonic, not just the ends
-- Give the decoded words, don't echo the key
-- Reach for the community mnemonic, not a homemade key-echo
-- One word per key — cut filler words with no keystroke behind them
-- Drop a mnemonic whose decode is obvious — don't fill the slot
 - Join symbol pairs with `and` — a slash between glyphs is a pileup
 - Theory earns one tip at most — and it must still be tryable
-- Anchor a family mnemonic in the real hook — and name the key a shape depicts
 - Merge a set-and-use pair when neither half stands alone
 - Cut a command you can't try cold — doubly so when the IDE already does it
 - Prefer the `mode` label over a "Works in X mode" detail line
 - A mapping/config idiom is not a tip — it's general advice
+- A config button that sets the default is a no-op
 - A vaguer rule already in a detail line — sharpen it, don't mint a sibling
 - A search-flag tip shows the keystrokes to type, not the concept
+- Never number steps — line order is the sequence
+- Split setting a command up from using it
 
 ### Name the family in prose, never dump symbols
 
@@ -73,9 +72,10 @@ makes the reader assemble it themselves.
 
 ### Name press-vs-type when an example crosses into Insert mode
 
-summary: `Edit every copy of a word Alt-n`
-❌ `"details": ["Alt-n selects foo, repeat for more", "Then c bar replaces every foo"]`
-✅ `"details": ["Alt-n selects foo, repeat for more", "Then c, type bar, Esc — all to bar"]`
+summary: `Grab all copies at once Alt-n` (multiple-cursors; `Alt-n` selects every
+copy since IdeaVim 2.43.0)
+❌ `"details": ["Alt-n on foo selects every foo", "Then c bar replaces every foo"]`
+✅ `"details": ["Alt-n on foo selects every foo", "Then c, type bar, Esc — all to bar"]`
 
 *Why:* from the reader's seat `c bar` is one mystery token (they ask "what is c
 bar?") — it jams a command and the text you type together. When an example crosses
@@ -110,6 +110,18 @@ summary: `Make a word camelCase crc`
 
 *Why:* the trailing `cr + a letter sets the style` repeated on every case tip adds
 nothing — replace filler with a fact the reader doesn't already have.
+
+### A Useful/Handy/Great opener is a cut, not a reword
+
+summary: `Jump back / forward Ctrl-o / Ctrl-i`
+❌ `"details": ["Ctrl-o goes back through older jump locations", "Ctrl-i goes forward again", "Useful after searches, definitions, and other big jumps"]`
+✅ `"details": ["Ctrl-o steps back to older jumps", "Ctrl-i steps forward again", "Works across files, like after gd"]`
+
+*Why:* a line opening with Useful / Handy / Great / Good for *announces* value
+instead of delivering it — no key to press, no result to watch. Rewording keeps
+the empty frame, so delete the line or swap in a use-site the reader can try
+(`like after gd`). It's also where the length goes: most tips with a 44+ char
+line that clamped the whole balloon got there on filler like this one.
 
 ### In a slashed pair, vary one axis — keep the operator fixed
 
@@ -166,73 +178,28 @@ to *make* a fold so they can delete it has nothing to try cold and is half
 disclaimer. That's the disease → it belongs in "Cut a command you can't try cold."
 Ask *should this exist* before *how should this read*.
 
+### A `!` that parses isn't a `!` that works
+
+❌ `"summary": "Quit :q / :q!"` · `[":q closes if no unsaved changes", ":q! forces close/discard (if allowed)", "ZQ is the key form of :q!"]`
+✅ `"summary": "Close this editor tab :q"` · `[":q!, ZQ and :bd do the same", "Edits are kept, nothing discarded"]`
+
+*Why:* IdeaVim parses a bang on any indexed ex-command, so `:q!` runs without
+error — but `QuitCommand` never reads it, and the IDE keeps the edits the tip
+promised to throw away. The same trap sat under `:e!` (reloads nothing) and
+`:qa!` / `:wqa` / `:xa` (close editors, never save or exit). Before a bang form
+lands in a tip, grep the command for `CommandModifier.BANG` (reference.md →
+"Checking IdeaVim support"). If the bang is ignored, that *is* the lesson —
+"do the same" beats a promise the IDE won't keep.
+
 ### Search existing tips before adding — kill semantic duplicates
 
 ❌ new tip: `"summary": "Repeat search then center n zz"` · `["n jumps to the next match", "zz centers the line"]`
-✅ drop it — `"summary": "Recenter search results nzz"` already exists.
+✅ drop it — `"summary": "Recenter search results with nzz"` already exists
+(`["n finds the next match, zz centers", "Nzz does it the other way"]`).
 
 *Why:* the generator only rejects *identical* summaries, so the same idea under
 different wording slips through. Grep both the keys *and* the behavior first; drop
 or merge instead of adding.
-
-### Decode every key in a mnemonic, not just the ends
-
-summary: `Wrap in an HTML tag ysiwt`
-❌ `"mnemonic": "ys you surround, t tag"`
-✅ `"mnemonic": "ys you surround, iw inner word, t tag"`
-
-*Why:* the summary key is `ysiwt` but the mnemonic decoded only `ys` and `t`,
-skipping `iw` — the confusing middle. A mnemonic that maps some keystrokes must map
-them all; a half-decode leaves the reader guessing the part they most need. Keep it
-≤40 chars (drop `=` separators before you drop a keystroke).
-
-### Give the decoded words, don't echo the key — the summary already shows it
-
-summary: `Open the refactor menu gm`
-❌ `"mnemonic": "gm = go menu (refactor)"`
-✅ `"mnemonic": "go menu (refactor)"`
-
-*Why:* the summary already shows `gm` and the renderer prepends `Mnemonic:`, so
-`gm =` restates the key twice before the hook lands. Author just the decoded words —
-`go menu` already maps g→go, m→menu on its own. This doesn't contradict "decode
-every key": the letters still all map, you just drop the redundant `key =` echo.
-
-### Reach for the community mnemonic, not a homemade key-echo
-
-summary: `Rename an HTML tag cst`
-❌ `"mnemonic": "cs = change surround, t = tag"`
-✅ `"mnemonic": "change surrounding tag"`
-
-*Why:* `cst` already has a reading the whole vim-surround community shares —
-*"change surrounding tag"* (tpope's own docs, every cheatsheet). Reach for that
-before minting your own gloss. It also satisfies both mnemonic rules at once: it
-decodes all three keys (c→change, s→surrounding, t→tag) and echoes none of them.
-When a plugin key has an idiomatic name, use it — a homemade key-echo is both less
-memorable and less standard.
-
-### One word per key — cut filler words with no keystroke behind them
-
-summary: `Next/previous tab gt / gT`
-❌ `"mnemonic": "go to tab"`
-✅ `"mnemonic": "go tab"`
-
-*Why:* the keys are `g` and `t`, so the mnemonic should be exactly two words —
-g→go, t→tab. "go to tab" reads more naturally as English, but the "to" maps to no
-keystroke, so it dilutes the hook. This is the mirror of "decode every key": don't
-map *more* words than there are keys. Reach for the tight word-per-key form other
-users already share.
-
-### Drop a mnemonic whose decode is obvious — don't fill the slot
-
-summary: `Use mode-specific maps in ~/.ideavimrc`
-details: `["Use nmap, imap, or vmap for the target mode", "Normal, Insert, and Visual maps should stay separate"]`
-❌ `"mnemonic": "n/i/v = normal/insert/visual"`
-✅ (no mnemonic)
-
-*Why:* `n`/`i`/`v` → normal/insert/visual is self-evident to anyone reading a maps
-tip — the hook teaches nothing, and here it even restates detail line 2 word for
-word. A mnemonic earns its line only when the keys wouldn't otherwise stick; when
-the decode is obvious or already stated, delete it rather than fill the slot.
 
 ### Join symbol pairs with `and` — a slash between glyphs is a pileup
 
@@ -257,21 +224,6 @@ standalone tip and fold its rule into exactly *one* concrete host — never echo
 it across every sibling. Practical tips lead; theory gets at most one
 consolidated line.
 
-### Anchor a family mnemonic in the real hook — and name the key a shape depicts
-
-summary: `Fold all / unfold all zM / zR`
-❌ `"mnemonic": "z zips code shut; M more, R reduce"` (invented hook, drifting through `z zips`/`z = zzz`)
-✅ `"mnemonic": "z = a folded page; M more, R reduce"`
-
-*Why:* two lessons. **Decode the shared prefix, not just the distinguishing
-letter** — every fold command is `z`-prefixed, so the mnemonic must say what `z`
-buys, then `M`/`R`. **And anchor it in the documented hook, not an invention:**
-Vim's own `usr_28` says *"z looks like a folded piece of paper viewed from the
-side"* — reach for the real mnemonic before minting `zip`/`zzz`. This is also the
-exception to "don't echo the key": a *shape* hook must name the key it depicts
-(`z = a folded page`), because unlike a letter→word decode (`g`→go), the glyph
-doesn't map from the letter on its own.
-
 ### Merge a set-and-use pair when neither half stands alone
 
 ❌ before (two adjacent tips; the jump tip leans on the set tip a reader may never see):
@@ -284,7 +236,7 @@ doesn't map from the letter on its own.
 ✅ after (one tip carrying the whole loop):
 ```json
 { "summary": "Set and jump to a mark ma / `a",
-  "details": ["ma tags the current spot as mark a", "`a jumps back exactly, 'a to the line"] }
+  "details": ["ma tags the current spot as mark a", "`a returns exactly, 'a to the line"] }
 ```
 *Why:* display order is random, so a "jump to a mark" tip seen alone leaves the
 reader asking *"what is a mark? how do I make one?"* — it depends on a sibling
@@ -293,6 +245,12 @@ feature and neither stands alone, don't duplicate the shared prerequisite across
 both — merge them into a single tip that carries the whole loop (what it is → how
 to make it → how to use it). Merge beats cross-reference when the halves are that
 entangled.
+
+A reader caught a looser case: `Search forward/backward / and ?` and
+`Next/previous match n / N` each stood alone, but a reader drawing the n/N tip
+asked where the search tip was. One loop taught across two popups → merge into
+`Search and hop through matches /` (`["/foo Enter jumps to the next foo", "n goes
+to the next one, N back", "? searches backward instead"]`).
 
 ### Cut a command you can't try cold — doubly so when the IDE already does it
 
@@ -346,6 +304,33 @@ gaps, discard any candidate whose payoff is "understand this for when you edit
 your config" rather than "press this and see it happen." Config belongs in a tip
 only as the enabling `config` block *under* a tryable move, not as the lesson.
 
+### A config button that sets the default is a no-op
+
+❌ before (`ideavim.json`):
+```json
+{ "summary": "Sync marks with :set ideamarks",
+  "details": ["A-Z marks sync to IDE bookmarks", "Great for cross-file jumps"],
+  "config": { "name": "Enable ideamarks", "lines": ["set ideamarks"] } }
+```
+✅ after (`navigation.json`, no `config`):
+```json
+{ "summary": "Mark a spot across files mA",
+  "details": ["'A jumps back to it from any file", "It shows as an IDE bookmark too"] }
+```
+*Why:* `ideamarks` is already on in `IjOptions.kt`, so Apply appended a line
+that changed nothing — the reader clicks, sees no difference, and stops
+trusting the button. `wrapscan` and `ideawrite=all` shipped the same way. Check
+the default before authoring a `set` config (reference.md → "Checking IdeaVim
+support"); when it's already on, the behavior is already live, so teach the
+keystroke that shows it and drop the button.
+
+The near-miss is a button whose new behavior is *no better* than the default for
+the move the tip shows. `Keep Vim mode during rename` (`set
+idearefactormode=keep`) taught `ciw` on the name — but the default Select mode
+already replaces the name as you type, so the reader saw `ciw` delete and enter
+Insert and asked what the point was. Cut: the win (Vim edits inside a rename
+field) is too niche to earn a tip.
+
 ### A vaguer rule already in a detail line — sharpen it, don't mint a sibling
 
 ❌ pitched as a new tip, while the `yss` tip already carried a weaker version of the same rule:
@@ -385,3 +370,26 @@ and drop any describe-the-concept line. The three type-along lines earn their
 length even on an advanced tip — the user rejected a trimmed 2-line version because
 the dropped line was *where the flag goes*, the exact thing that was unclear.
 Concreteness over brevity when the keystrokes are the lesson.
+
+### Never number steps — line order is the sequence
+
+summary: `Replace a block on many lines`
+❌ `"details": ["1. Ctrl-v and hjkl mark the block", "2. Press c, type the new text", "3. Esc fills every line"]`
+✅ `"details": ["Ctrl-v and hjkl mark the block", "Press c, type the new text", "Esc fills every line"]`
+
+*Why:* details already render one per line, top to bottom, so `1.` `2.` `3.`
+spend width on order the reader gets for free — and the user rejected the
+numbered style outright. This supersedes the old "numbered steps for an
+irreducibly multi-step move" allowance; lint now flags any numbered detail.
+
+### Split setting a command up from using it
+
+summary: `Auto-expand text with :iabbrev`
+❌ `"details": [":iab teh the fixes that typo", "Expands after Space or Enter"]`
+✅ `"details": [":iab teh the, then press Enter", "Typing teh then Space gives the"]`
+
+*Why:* in `:iab teh the fixes that typo` the reader couldn't tell `teh` was the
+typo they'd type — the command, its arguments and the prose ran together. When
+a tip sets something up (`:iab`, `:map`, a mark) and then uses it, give each its
+own line: finish the setup (`then press Enter`), then show the typing that
+triggers it and what comes out. Same lesson as press-vs-type, one level up.

@@ -2,9 +2,13 @@
 #
 # tips/vim_tips_min.json is a generated artifact and is never authored by hand.
 # It is always produced from the files in tips/categories/ by
-# scripts/generate-tips.mjs. This workflow regenerates it whenever the sources
-# change and commits the result, so the published file can never drift from the
-# category sources.
+# scripts/generate-tips.mjs.
+#
+# - Pull requests only validate the sources (--check). They never push: the
+#   GITHUB_TOKEN is read-only on fork PRs, so a regenerate-and-push job there
+#   fails and leaves the PR's tips unvalidated.
+# - Pushes to main regenerate the file and commit it if it changed, so the
+#   published file can never drift from the category sources.
 
 name: Generate Tips
 
@@ -22,24 +26,35 @@ on:
       - '.github/workflows/generate-tips.yml'
 
 jobs:
+  check:
+    name: Validate tip sources
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v7
+
+      - name: Validate tips/categories
+        run: node scripts/generate-tips.mjs --check
+
   generate:
     name: Generate vim_tips_min.json
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      # Check out the branch under test so we can commit back to it
       - name: Fetch Sources
         uses: actions/checkout@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: ${{ github.head_ref }}
 
-      # Regenerate the published file from the category sources
+      # Regenerating also validates: the generator fails before writing on any bad source.
       - name: Generate vim_tips_min.json
         run: node scripts/generate-tips.mjs
 
-      # Commit the regenerated file if it changed
       - name: Commit regenerated file
         run: |
           if git diff --quiet tips/vim_tips_min.json; then

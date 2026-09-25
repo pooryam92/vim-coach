@@ -18,19 +18,6 @@
       "category": [
         "options"
       ],
-      "summary": "Show line numbers with number",
-      "details": [
-        ":set number shows line numbers",
-        ":set nonumber hides them again"
-      ],
-      "config": [
-        "set number"
-      ]
-    },
-    {
-      "category": [
-        "options"
-      ],
       "summary": "Count jumps with relativenumber",
       "details": [
         ":set relativenumber shows the gap",
@@ -50,7 +37,7 @@
       ],
       "summary": "Show invisible characters with list",
       "details": [
-        ":set list shows tabs and trailing spaces",
+        ":set list reveals spaces and tabs",
         ":set nolist hides them again"
       ],
       "config": [
@@ -64,8 +51,8 @@
       ],
       "summary": "Wrap long lines with wrap",
       "details": [
-        ":set wrap makes long lines wrap on screen",
-        "IDE soft-wrap settings can affect this too"
+        ":set wrap soft-wraps long lines",
+        "Same as the IDE's soft-wrap toggle"
       ],
       "config": [
         "set wrap"
@@ -79,7 +66,7 @@
       "summary": "Show matches while typing incsearch",
       "details": [
         "Jumps to the match as you type",
-        "Makes /pattern navigation feel instant"
+        "Ctrl-g / Ctrl-t hop between matches"
       ],
       "config": [
         "set incsearch"
@@ -95,7 +82,6 @@
         "Every match of the search stays lit",
         "Clear temporarily with :noh"
       ],
-      "mnemonic": "highlight search",
       "config": [
         "set hlsearch"
       ]
@@ -122,41 +108,6 @@
         "options",
         "pattern"
       ],
-      "summary": "Wrap search at file end wrapscan",
-      "details": [
-        ":set wrapscan continues from top",
-        ":set nowrapscan stops at the end"
-      ],
-      "config": [
-        "set wrapscan"
-      ]
-    },
-    {
-      "category": [
-        "options"
-      ],
-      "summary": "Check an option with :set option?",
-      "details": [
-        ":set number? shows its value",
-        "Useful when debugging behavior"
-      ],
-      "advanced": true
-    },
-    {
-      "category": [
-        "options"
-      ],
-      "summary": "Toggle an option with :set invoption",
-      "details": [
-        ":set invnumber toggles the option",
-        "Quick way to flip a boolean option"
-      ]
-    },
-    {
-      "category": [
-        "options",
-        "pattern"
-      ],
       "summary": "Preview :substitute as you type",
       "details": [
         "Type :s/old/new/ and watch it apply",
@@ -173,18 +124,15 @@
       "category": [
         "options"
       ],
-      "summary": "Toggle relativenumber in insert",
+      "summary": "Silence the error beep visualbell",
       "details": [
-        "Relative numbers outside insert",
-        "Absolute line number while typing"
+        "Press k on line 1: it beeps",
+        ":set visualbell mutes it right now"
       ],
-      "advanced": true,
       "config": {
-        "name": "Hybrid relative numbers",
+        "name": "Silence beeps",
         "lines": [
-          "set relativenumber",
-          "autocmd InsertEnter * set norelativenumber",
-          "autocmd InsertLeave * set relativenumber"
+          "set visualbell"
         ]
       }
     }

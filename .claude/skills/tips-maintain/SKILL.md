@@ -15,9 +15,12 @@ not tip count, not completeness of reference. Two working tests apply it:
   visible on the first try. Growth is not success; when a change won't raise
   density, cut instead of add.
 - **The reader's seat** — the reader gets one tip *alone*, in random order, in a
-  240px balloon (~30–35 chars per line; 2–3 body lines read cleanest). Read every
-  summary and detail cold: it must say *which* behavior it teaches and *how* to
-  try it on the spot. Wording defects are invisible from the author's seat.
+  balloon up to ~300px wide — but one line past ~43 chars clamps the whole body
+  to 240px (~35 chars), wrapping every long line in it. So aim for ≤ 35 chars a
+  line and 2–3 body lines (the thresholds are estimates for a 13px font). Read
+  every summary and detail cold: it must say *which* behavior it teaches and
+  *how* to try it on the spot. Wording defects are invisible from the author's
+  seat.
 
 Tips live in `tips/categories/<category>.json` (one file per primary category),
 compiled into `tips/vim_tips_min.json` by `scripts/generate-tips.mjs`.
@@ -48,8 +51,11 @@ blocks and the .ideavimrc button, adding/renaming/removing a category.
 4. **Edit** `tips/categories/<primary>.json` — a tip lives in the file named by
    its first category.
 5. **Validate:** `node scripts/generate-tips.mjs --check` must pass (it is the
-   source of truth — run it, don't reason about it). Then
-   `node scripts/lint-tips.mjs` — advisory; eyeball each hit.
+   source of truth — run it, don't reason about it). It is strict on source
+   shape — unknown keys, a bad `config`, duplicate details, a `Plug` line
+   without `plugins` all fail (docs/tips/tips-pipeline.md → Validation) — but
+   never on length. Then `node scripts/lint-tips.mjs` — advisory, and the only
+   length check; eyeball each hit.
 6. **`git status --short`** — only intended files changed. Never commit
    `tips/vim_tips_min.json`: CI regenerates it (regenerate locally only on
    explicit request; build details: docs/tips/tips-pipeline.md). A modified
@@ -64,7 +70,6 @@ blocks and the .ideavimrc button, adding/renaming/removing a category.
   "category": ["plugins", "editing"],
   "summary": "Make a word camelCase crc",
   "details": ["crc turns foo_bar into fooBar", "Cursor can sit anywhere in the word"],
-  "mnemonic": "coerce case",
   "config": { "name": "Install vim-abolish", "lines": ["Plug 'tpope/vim-abolish'"] }
 }
 ```
@@ -75,11 +80,10 @@ Hard constraints:
   2nd/3rd only when it genuinely aids discovery.
 - `summary` — ≤ 35 chars, command-first; at most one key or one clean pair
   (`gj / gk`). 3+ keys: name the outcome, map each key in the details.
-- `details` — one balloon line ≈ 35 chars; lint flags past 35 (it would wrap).
-  Prefer 2 details, 3 at most (lint flags a 4th). Numbered steps only
-  for an irreducibly multi-step move.
-- `mnemonic` — optional, **omitted by default**; ≤ 40 chars; only when the
-  decoded words make the keys stick; skip on 3+-detail tips. See examples.md.
+- `details` — one balloon line ≈ 35 chars; lint flags past 35 (it would wrap),
+  and a line past ~43 first (it clamps the whole balloon).
+  Prefer 2 details, 3 at most (lint flags a 4th). Never number steps —
+  line order already reads as the sequence.
 - `config` — optional; read reference.md → "Config tips" before authoring or
   reviewing one.
 - `advanced` — optional boolean, **omitted by default**. Add `"advanced": true`
@@ -103,16 +107,23 @@ toward normal: over-tagging shrinks newcomers' default pool, which is the harm.
 Tag a few at a time, and when a pattern for "too advanced for a newcomer's first
 week" starts to repeat, write it down here as the rubric forms. So far:
 
-- `Recall last search with Ctrl-r /` — a register paste inside the `:`/insert
-  prompt; niche and mode-specific, not a first-week move.
-- **Read the category's own ratio before tagging** — the settled convention is
-  already in the files, and it differs sharply by category. `plugins` runs ~1 in
-  33 advanced: needing a `config` block is *itself* the opt-in, so a plugin tip
-  is normal even when its concept is deep (YankRing's paste-cycling stayed
-  normal on this rule). `pattern` runs ~15 in 25: a `:s`/search **flag** riding
-  inside a pattern (`gc`, `//`, `\c`, `\<\>`, `/n`) is reliably past a
-  newcomer's first week. Match the siblings you're landing beside rather than
-  scoring the tip in isolation.
+- **Count the category's ratio before tagging** — the settled convention is
+  already in the rendered set (primary + secondary tags), and it differs sharply
+  by category. Count it, don't recall it:
+  ```bash
+  node -e 'const fs=require("fs"),c=process.argv[1],d="tips/categories/";const s=fs.readdirSync(d).flatMap(f=>JSON.parse(fs.readFileSync(d+f)).tips).filter(t=>t.category.includes(c));console.log(c,s.filter(t=>t.advanced).length+"/"+s.length)' pattern
+  ```
+  `plugins` sits near zero: needing a `config` block is *itself* the opt-in, so
+  a plugin tip is normal even when its concept is deep (YankRing's
+  paste-cycling stayed normal on this rule). `pattern` runs high: a `:s`/search
+  **flag** riding inside a pattern (`gc`, `//`, `\c`, `\<\>`, `/n` — e.g.
+  `Confirm each :s replace with gc`) is reliably past a newcomer's first week.
+  Match the siblings you're landing beside rather than scoring the tip in
+  isolation.
+- **Foundational base moves stay normal even when their variants are
+  advanced** — macros (`qa` / `@a`), a named register (`"ayy`), `:action`, the
+  Ctrl-v block. Hiding the base leaves newcomers seeing only its variants.
+  Untag a family together, never one member.
 
 ### Tagging a tip's mode
 
@@ -155,14 +166,16 @@ versions in examples.md:
 
 ## Finding what to add — or cut
 
-Adding well is mostly saying no. When the ask is open-ended, map the gap first:
+Adding well is mostly saying no. **Open-ended review:** triage
+[docs/tips/tip-feedback.md](../../../docs/tips/tip-feedback.md) first — a
+reader's report outranks any audit hunch; delete an entry once it's acted on.
+Then map the gap:
 `node .claude/skills/tips-maintain/coverage.mjs` (`--plugins`, `--all`) diffs
 IdeaVim's real surface (the `external/ideavim` submodule) against tip text.
-Advisory and textual — a miss is a candidate, not a verdict. Plugin misses
-often false-positive: the script matches internal ids while tips carry the Plug
-repo name, so grep the `Plug` lines before trusting one. When mining a release,
-fast-forward the submodule first (`git -C external/ideavim fetch && git -C
-external/ideavim merge --ff-only origin/master`).
+Advisory and textual — a miss is a candidate, not a verdict (plugins are matched
+through their `Plug` aliases, so a plugin miss is usually real). When mining a release,
+fast-forward the submodule first (`git -C external/ideavim fetch --tags origin
+&& git -C external/ideavim merge --ff-only origin/master`).
 
 Score candidates on four axes; a tip earns its place by winning on at least 3:
 **reach** (how many users hit it) · **leverage** (keystrokes/mouse trips saved)

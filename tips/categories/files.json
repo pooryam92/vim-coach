@@ -7,8 +7,9 @@
       ],
       "summary": "Edit another file with :edit {file}",
       "details": [
-        ":edit {file} opens a file for editing",
-        "Use :edit! to discard unsaved changes first"
+        ":e %:h/, press Tab to see files",
+        "%:h is this file's folder",
+        "Bare :e opens the Open File dialog"
       ]
     },
     {
@@ -27,33 +28,10 @@
         "files",
         "cmdline"
       ],
-      "summary": "Open a file chooser with :browse",
-      "details": [
-        ":browse opens the file-open dialog",
-        "Pick a file instead of typing its name"
-      ]
-    },
-    {
-      "category": [
-        "files",
-        "cmdline"
-      ],
       "summary": "List open buffers with :ls",
       "details": [
-        ":ls, :buffers, and :files list known buffers",
-        "Then switch with :buffer, :bn, or :bp"
-      ],
-      "mnemonic": "list buffers"
-    },
-    {
-      "category": [
-        "files",
-        "cmdline"
-      ],
-      "summary": "Jump to buffer N :buffer {N}",
-      "details": [
-        ":buffer {N} jumps to buffer number N",
-        "Use it after :ls when you know the number"
+        ":ls numbers every open file",
+        ":b 3 then jumps to file number 3"
       ]
     },
     {
@@ -62,8 +40,7 @@
       ],
       "summary": "Toggle last file Ctrl-^",
       "details": [
-        "Jumps to the alternate file",
-        "Great for back-and-forth edits",
+        "Back to the file you just left",
         "Ctrl-^ is Ctrl-6 on many keyboards"
       ]
     },
@@ -76,30 +53,18 @@
       "details": [
         ":bn goes to the next buffer",
         ":bp goes to the previous buffer"
-      ],
-      "mnemonic": "buffer next/previous"
+      ]
     },
     {
       "category": [
         "files",
-        "cmdline"
+        "ideavim"
       ],
-      "summary": "Close current buffer :bd",
+      "summary": "Save every open file with :w",
       "details": [
-        ":bd closes the current buffer/editor tab",
-        "Use it when you are done with the file"
-      ],
-      "mnemonic": "buffer delete"
-    },
-    {
-      "category": [
-        "files",
-        "cmdline"
-      ],
-      "summary": "Reload file from disk :e and :e!",
-      "details": [
-        ":e reloads if no changes",
-        ":e! discards changes and reloads"
+        ":w saves all open files by default",
+        "Fires IDE save hooks like reformat",
+        ":set ideawrite=file saves just one"
       ]
     },
     {
@@ -107,21 +72,11 @@
         "files",
         "cmdline"
       ],
-      "summary": "Save current file :w",
+      "summary": "Save a copy with :w {file}",
       "details": [
-        ":w writes the file",
-        "In IdeaVim, this maps to IDE save"
-      ]
-    },
-    {
-      "category": [
-        "files",
-        "cmdline"
-      ],
-      "summary": "Write a copy to another file :w {file}",
-      "details": [
-        ":w {file} writes the buffer to another file",
-        "Makes a copy without renaming the buffer"
+        ":w bak.kt writes a copy as bak.kt",
+        "You keep editing the original",
+        ":w! overwrites a file that exists"
       ]
     },
     {
@@ -131,8 +86,8 @@
       ],
       "summary": "Save all files :wa",
       "details": [
-        ":wa writes all modified buffers",
-        "In IDE, typically saves all open editors"
+        ":wa runs the IDE's Save All",
+        ":w does too, unless ideawrite=file"
       ]
     },
     {
@@ -142,8 +97,8 @@
       ],
       "summary": "Insert a file with :read {file}",
       "details": [
-        ":read {file} inserts a file below the current line",
-        "Pulls file contents into this buffer"
+        ":r ~/a.txt drops it below this line",
+        "Use ~/ or a full path, not a name"
       ]
     },
     {
@@ -151,11 +106,10 @@
         "files",
         "cmdline"
       ],
-      "summary": "Quit :q / :q!",
+      "summary": "Close this editor tab :q",
       "details": [
-        ":q closes if no unsaved changes",
-        ":q! forces close/discard (if allowed)",
-        "ZQ is the key form of :q!"
+        ":q!, ZQ and :bd do the same",
+        "Edits are kept, nothing discarded"
       ]
     },
     {
@@ -163,11 +117,10 @@
         "files",
         "cmdline"
       ],
-      "summary": "Save and quit :wq / :x / ZZ",
+      "summary": "Save and close a file ZZ",
       "details": [
-        ":wq writes and quits",
-        ":x writes only if changed",
-        "ZZ also writes and quits the current file"
+        "Closes only the tab, not the IDE",
+        ":wq and :x do exactly the same"
       ]
     },
     {
@@ -177,20 +130,8 @@
       ],
       "summary": "Quit every editor with :qa",
       "details": [
-        "Closes all open editors at once",
-        ":qa! throws away unsaved changes"
-      ],
-      "mnemonic": "quit all"
-    },
-    {
-      "category": [
-        "files",
-        "cmdline"
-      ],
-      "summary": "Write all and exit with :wqa / :xa",
-      "details": [
-        ":wqa writes changed buffers and exits",
-        ":xa is the equivalent all-files write-and-exit command"
+        ":qa!, :wqa and :xa do the same",
+        "The IDE stays open, edits kept"
       ]
     }
   ]

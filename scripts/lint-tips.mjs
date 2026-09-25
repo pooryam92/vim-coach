@@ -2,14 +2,16 @@
 // Advisory lint for the tip sources — the soft, eyeball-it checks that
 // generate-tips.mjs deliberately does NOT enforce.
 //
-// generate-tips.mjs owns the hard rules (blank summary, no details, wrong
-// primary category, duplicate summaries) and FAILS the build on them. This
-// script never gates anything: it prints a review report and exits 0. Run it
+// generate-tips.mjs owns the hard rules (source shape, categories, duplicate
+// summaries and details, Plug lines tagged plugins) and FAILS the build on them.
+// Length and wording stay here on purpose: they are judgment calls. This script
+// never gates anything: it prints a review report and exits 0. Run it
 // before/after editing tips/categories/*.json to catch the things a human
 // would otherwise have to scan for by hand.
 //
 //   node scripts/lint-tips.mjs
 
+import { spawnSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -17,16 +19,26 @@ import { fileURLToPath } from "node:url";
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repoRoot, "tips", "categories");
 
-// A summary must fit one line in the ~240px balloon. Each detail should too —
-// a longer detail wraps and grows the balloon. Tune here if the skill's
+// The balloon grows to ~300px for its longest line, but one line past ~43 chars
+// clamps the whole body to 240px (~35 chars), wrapping every long line in it.
+// Both thresholds are estimates for a 13px font. Tune here if the skill's
 // guidance changes.
 const SUMMARY_MAX = 35;
 const DETAIL_MAX = 35;
+const DETAIL_CLAMP = 43;
 // Past this many details the balloon stops being glanceable.
 const DETAILS_MAX_COUNT = 3;
-// A mnemonic is a one-line italic memory hook under the summary; keep it short so
-// it never becomes the reason the balloon grows.
-const MNEMONIC_MAX = 40;
+const FILLER_OPENER = /^(Useful|Handy|Use it|Good for|Great)\b/;
+// "{ / }" reads as a pileup; symbol pairs join with "and".
+const SYMBOL_SLASH = /(?:^|\s)([^\sA-Za-z0-9]+) \/ ([^\sA-Za-z0-9]+)(?=\s|$)/;
+// Line order already reads as a sequence; "1. " prefixes only cost width.
+const NUMBERED_STEP = /^\d+\.\s/;
+const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// True when `text` contains `keys` as a standalone run, not inside a word.
+function containsKeys(text, keys) {
+  return new RegExp(`(?<![A-Za-z0-9])${escapeRegex(keys)}(?![A-Za-z0-9])`).test(text);
+}
 
 // Tokens that look like English words rather than Vim keys, so the duplicate
 // heuristic stops consuming the trailing key-run at them.
@@ -74,10 +86,14 @@ function configLines(tip) {
 const files = readdirSync(sourceDir).filter((n) => n.endsWith(".json")).sort();
 
 const longSummaries = [];
+const clampingDetails = [];
 const longDetails = [];
 const tooManyDetails = [];
-const longMnemonics = [];
 const separators = [];
+const symbolSlashes = [];
+const fillerOpeners = [];
+const numberedSteps = [];
+const restatedKeys = [];
 const allTips = [];
 
 for (const file of files) {
@@ -87,32 +103,43 @@ for (const file of files) {
 
     if (s.length > SUMMARY_MAX) longSummaries.push([s.length, file, s]);
 
-    for (const d of tip.details ?? []) {
-      if (d.length > DETAIL_MAX) longDetails.push([d.length, file, d]);
+    const details = tip.details ?? [];
+    for (const d of details) {
+      if (d.length > DETAIL_CLAMP) clampingDetails.push([d.length, file, d]);
+      else if (d.length > DETAIL_MAX) longDetails.push([d.length, file, d]);
+      if (FILLER_OPENER.test(d)) fillerOpeners.push([file, d]);
+      if (NUMBERED_STEP.test(d)) numberedSteps.push([file, d]);
+    }
+    for (const line of [s, ...details]) {
+      if (SYMBOL_SLASH.test(line)) symbolSlashes.push([file, line]);
     }
 
-    const detailCount = (tip.details ?? []).length;
-    if (detailCount > DETAILS_MAX_COUNT) tooManyDetails.push([detailCount, file, s]);
-
-    if (typeof tip.mnemonic === "string" && tip.mnemonic.length > MNEMONIC_MAX) {
-      longMnemonics.push([tip.mnemonic.length, file, tip.mnemonic]);
+    if (details.length > DETAILS_MAX_COUNT) {
+      tooManyDetails.push([details.length, file, s]);
     }
 
     // Keys must attach with a plain space, never a separator. The `-` case
     // false-positives when a dash is part of the keys (Ctrl-w), so flag for
     // eyeballing, not as error. (`:` is skipped — it's usually the prompt being
-    // taught, not a separator.)
-    if (/\s-\s/.test(s) || /\s→\s/.test(s) || /\([^)]*\)\s*$/.test(s)) {
+    // taught, not a separator.) A trailing `(dw)` is a separator; `( and )` is
+    // the keys themselves.
+    if (/\s-\s/.test(s) || /\s→\s/.test(s) || /\s\([^\s()]+\)\s*$/.test(s)) {
       separators.push([file, s]);
+    }
+
+    const keySig = keySignature(s);
+    if (keySig && details[0] && containsKeys(details[0], keySig)) {
+      restatedKeys.push([file, s, details[0]]);
     }
 
     allTips.push({
       file,
       isPlugin: file === "plugins.json",
       summary: s,
-      keySig: keySignature(s),
+      keySig,
       words: topicWords(s),
       config: new Set(configLines(tip)),
+      details: new Set(details.map((d) => d.trim())),
     });
   }
 }
@@ -127,24 +154,33 @@ function section(title, rows, render) {
 }
 
 longSummaries.sort((a, b) => b[0] - a[0]);
+clampingDetails.sort((a, b) => b[0] - a[0]);
 longDetails.sort((a, b) => b[0] - a[0]);
 tooManyDetails.sort((a, b) => b[0] - a[0]);
-longMnemonics.sort((a, b) => b[0] - a[0]);
 
 section(`Summaries over ${SUMMARY_MAX} chars`, longSummaries, ([n, f, s]) =>
   `${String(n).padEnd(3)} ${f.replace(".json", "").padEnd(12)} ${JSON.stringify(s)}`,
 );
-section(`Details over ${DETAIL_MAX} chars (will wrap past one balloon line)`, longDetails, ([n, f, d]) =>
-  `${String(n).padEnd(3)} ${f.replace(".json", "").padEnd(12)} ${JSON.stringify(d)}`,
+const lengthRow = ([n, f, text]) => `${String(n).padEnd(3)} ${f.replace(".json", "").padEnd(12)} ${JSON.stringify(text)}`;
+const fileRow = ([f, text]) => `${f.replace(".json", "").padEnd(12)} ${JSON.stringify(text)}`;
+
+section(
+  `Details over ~${DETAIL_CLAMP} chars (approx.; clamps the whole balloon to 240px, fix first)`,
+  clampingDetails,
+  lengthRow,
 );
-section(`Tips with more than ${DETAILS_MAX_COUNT} details`, tooManyDetails, ([n, f, s]) =>
-  `${String(n).padEnd(3)} ${f.replace(".json", "").padEnd(12)} ${JSON.stringify(s)}`,
+section(
+  `Details of ~${DETAIL_MAX + 1}-${DETAIL_CLAMP} chars (approx.; wrap once the balloon is clamped)`,
+  longDetails,
+  lengthRow,
 );
-section(`Mnemonics over ${MNEMONIC_MAX} chars (keep the italic line short)`, longMnemonics, ([n, f, m]) =>
-  `${String(n).padEnd(3)} ${f.replace(".json", "").padEnd(12)} ${JSON.stringify(m)}`,
-);
-section("Possible stray separators in summaries (eyeball — `-` may be part of keys)", separators, ([f, s]) =>
-  `${f.replace(".json", "").padEnd(12)} ${JSON.stringify(s)}`,
+section(`Tips with more than ${DETAILS_MAX_COUNT} details`, tooManyDetails, lengthRow);
+section("Numbered-step details (drop the 1. 2. prefixes; line order is the sequence)", numberedSteps, fileRow);
+section("Possible stray separators in summaries (eyeball — `-` may be part of keys)", separators, fileRow);
+section('Slash between symbol keys (join symbol pairs with "and": { and })', symbolSlashes, fileRow);
+section("Details opening with filler (Useful/Handy/Use it/Good for/Great)", fillerOpeners, fileRow);
+section("First detail repeats the summary's keys (spend the line on what they do)", restatedKeys, ([f, s, d]) =>
+  `${f.replace(".json", "").padEnd(12)} ${JSON.stringify(s)}\n      ${JSON.stringify(d)}`,
 );
 
 // Possible duplicate TIPS — the same behavior taught twice, which the generator
@@ -179,5 +215,67 @@ section("Possible duplicate tips (eyeball — some repeat legitimately)", dupPai
   `${a.file.replace(".json", "")}: ${JSON.stringify(a.summary)}\n      ` +
   `${b.file.replace(".json", "")}: ${JSON.stringify(b.summary)}`,
 );
+
+// Tips sharing two or more detail lines usually teach the same thing twice, or
+// copy-pasted lines that fit only one of them.
+const sharedDetails = [];
+for (let i = 0; i < allTips.length; i++) {
+  for (let j = i + 1; j < allTips.length; j++) {
+    const shared = [...allTips[i].details].filter((d) => allTips[j].details.has(d));
+    if (shared.length >= 2) sharedDetails.push([shared, allTips[i], allTips[j]]);
+  }
+}
+section("Tips sharing 2+ detail lines", sharedDetails, ([shared, a, b]) =>
+  `${a.file.replace(".json", "")}: ${JSON.stringify(a.summary)}\n      ` +
+  `${b.file.replace(".json", "")}: ${JSON.stringify(b.summary)}\n      ` +
+  shared.map((d) => JSON.stringify(d)).join("\n      "),
+);
+
+// The hide key hashes the trimmed summary, so every summary that disappears
+// relative to the committed artifact resets that tip's hide for its users.
+function publishedSummaries() {
+  const result = spawnSync("git", ["show", "HEAD:tips/vim_tips_min.json"], {
+    cwd: repoRoot,
+    encoding: "utf8",
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  if (result.error) return { skipped: `git unavailable (${result.error.message})` };
+  if (result.status !== 0) return { skipped: (result.stderr || "git show failed").trim() };
+  try {
+    return { tips: JSON.parse(result.stdout).tips ?? [] };
+  } catch (error) {
+    return { skipped: `HEAD:tips/vim_tips_min.json is not valid JSON (${error.message})` };
+  }
+}
+
+const published = publishedSummaries();
+const resetTitle = "Summaries renamed or removed vs HEAD:tips/vim_tips_min.json (each resets a hide)";
+if (published.skipped) {
+  console.log(`\n${resetTitle}\n  skipped: ${published.skipped}`);
+} else {
+  const current = new Set(allTips.map((t) => t.summary.trim()));
+  const oldSummaries = new Set(published.tips.map((t) => (t.summary ?? "").trim()));
+  const added = allTips.filter((t) => !oldSummaries.has(t.summary.trim()));
+  const gone = published.tips.filter((t) => !current.has((t.summary ?? "").trim()));
+  // Best-guess rename target: a new summary with the same key signature, or one
+  // sharing 2+ topic words (modifier names like "ctrl" carry no topic).
+  const MODIFIER_WORDS = new Set(["ctrl", "shift", "alt"]);
+  const likelyRename = (old) => {
+    const sig = keySignature(old);
+    const words = [...topicWords(old)].filter((w) => !MODIFIER_WORDS.has(w));
+    let best = null;
+    let bestScore = 1;
+    for (const t of added) {
+      const score = (sig && sig === t.keySig ? 10 : 0) + words.filter((w) => t.words.has(w)).length;
+      if (score > bestScore) [best, bestScore] = [t, score];
+    }
+    return best;
+  };
+  section(resetTitle, gone, (old) => {
+    const guess = likelyRename(old.summary ?? "");
+    return `${(old.category?.[0] ?? "?").padEnd(12)} ${JSON.stringify(old.summary)}` +
+      (guess ? `  -> maybe ${JSON.stringify(guess.summary)}` : "");
+  });
+}
 
 console.log("\nlint-tips: advisory only — generate-tips.mjs owns the hard rules.");

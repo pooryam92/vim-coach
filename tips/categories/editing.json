@@ -6,8 +6,8 @@
       ],
       "summary": "Undo one line's changes U",
       "details": [
-        "Undoes every edit made to the last-touched line",
-        "Press U again to redo them"
+        "Reverts the last-changed line",
+        "Press U again to redo it"
       ]
     },
     {
@@ -25,6 +25,16 @@
       "category": [
         "editing"
       ],
+      "summary": "Change a whole token ciW",
+      "details": [
+        "ciW grabs all of user.getName()",
+        "ciw would stop at the dot"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
       "summary": "Change inside quotes ci\"",
       "details": [
         "Works from anywhere in the string",
@@ -36,23 +46,22 @@
       "category": [
         "editing"
       ],
-      "summary": "Change inside parentheses ci( / cib",
+      "summary": "Change inside brackets ci(",
       "details": [
         "ci( changes the text inside ( )",
-        "cib is an alias for the same object",
-        "Swap c for d to delete instead"
+        "ci[ and ci{ work the same way",
+        "Cursor can sit anywhere inside"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Change inside brackets with ci[ / ci{",
+      "summary": "Change a generic type ci<",
       "details": [
-        "ci[ changes text inside square brackets",
-        "ci{ changes text inside braces"
-      ],
-      "mnemonic": "change inner"
+        "In List<String>, ci< edits String",
+        "Works anywhere between < and >"
+      ]
     },
     {
       "category": [
@@ -60,9 +69,8 @@
       ],
       "summary": "Change inside tags with cit / cat",
       "details": [
-        "cit changes text inside the current tag",
-        "cat changes the tag and its contents",
-        "Useful in XML, HTML, and markup-like code"
+        "cit keeps the tags, swaps the text",
+        "cat replaces the whole element"
       ]
     },
     {
@@ -82,8 +90,8 @@
       ],
       "summary": "Swap two characters with xp",
       "details": [
-        "x deletes the char and p puts it after",
-        "Useful for fixing adjacent typos quickly"
+        "On the e of teh, xp gives the",
+        "x cuts the char, p puts it after"
       ]
     },
     {
@@ -93,8 +101,8 @@
       ],
       "summary": "Move a line with :m {address}",
       "details": [
-        ":m+1 moves the line down",
-        ":m-2 moves it up two lines",
+        ":m+1 moves the line down one",
+        ":m-2 moves it up one line",
         ":m0 to top, :m$ to end"
       ],
       "advanced": true
@@ -107,10 +115,9 @@
       "summary": "Copy lines with :t",
       "details": [
         ":t. duplicates this line below",
-        ":1,5t0 copies lines 1-5 to the top",
+        ":-5t. copies the line 5 above here",
         "Also :t$ for the end of the file"
       ],
-      "mnemonic": "copy to",
       "advanced": true
     },
     {
@@ -120,8 +127,8 @@
       ],
       "summary": "Delete a range with :delete",
       "details": [
-        ":delete removes the addressed lines",
-        "Use a range like :10,20delete for line-based cleanup"
+        ":10,20d deletes lines 10 to 20",
+        "No need to move there first"
       ],
       "advanced": true
     },
@@ -132,8 +139,8 @@
       ],
       "summary": "Join a range with :join",
       "details": [
-        ":10,12join joins the lines in that range",
-        "Use :join! when you do not want spacing adjusted"
+        ":10,12j joins lines 10 to 12",
+        ":10,12j! keeps the spacing as is"
       ],
       "advanced": true
     },
@@ -145,7 +152,7 @@
       "summary": "Bulk-edit lines with :normal",
       "details": [
         ":%normal A; appends ; to every line",
-        "Try a small range first"
+        "Select lines first to limit it"
       ],
       "advanced": true
     },
@@ -153,11 +160,21 @@
       "category": [
         "editing"
       ],
-      "summary": "Indent/outdent a line >> / <<",
+      "summary": "Indent/outdent a line >> and <<",
       "details": [
         ">> shifts the current line right",
         "<< shifts it left",
         ">ip indents a whole paragraph"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Indent a block's body >i{",
+      "details": [
+        "Shifts every line inside { } right",
+        "Also =i{ reindents, yi{ yanks"
       ]
     },
     {
@@ -177,9 +194,8 @@
       ],
       "summary": "Format a paragraph with gqap",
       "details": [
-        "gqap reformats the current paragraph",
-        "Use it for wrapped prose or comments",
-        "textwidth affects the result"
+        "Runs the IDE reformat on it",
+        "With :set tw=80 it wraps lines too"
       ]
     },
     {
@@ -187,21 +203,11 @@
         "editing",
         "navigation"
       ],
-      "summary": "Delete/change to line start d0 / c0",
+      "summary": "Delete back to line start d0 / d^",
       "details": [
-        "d0 deletes to line start",
-        "c0 changes to line start"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "navigation"
-      ],
-      "summary": "Delete/change to first text d^ / c^",
-      "details": [
-        "d^ deletes to first non-blank",
-        "c^ changes to first non-blank"
+        "d0 deletes back to column one",
+        "d^ stops at the indent, keeps it",
+        "Swap d for c to retype instead"
       ]
     },
     {
@@ -211,7 +217,7 @@
       ],
       "summary": "Delete/change to line end d$ / c$",
       "details": [
-        "d$ deletes to end of line, c$ changes it",
+        "d$ deletes to line end, c$ retypes",
         "D and C are the one-key shortcuts"
       ]
     },
@@ -240,12 +246,11 @@
         "editing",
         "insert"
       ],
-      "summary": "Substitute chars with s / S",
+      "summary": "Substitute a char with s",
       "details": [
-        "s changes one char and inserts",
-        "S changes whole line and inserts"
-      ],
-      "mnemonic": "substitute"
+        "s deletes the char, enters Insert",
+        "3s replaces the next three chars"
+      ]
     },
     {
       "category": [
@@ -255,7 +260,8 @@
       "summary": "Change whole line cc",
       "details": [
         "cc clears the line",
-        "Keeps indent and enters Insert"
+        "Keeps indent and enters Insert",
+        "S does exactly the same"
       ]
     },
     {
@@ -266,6 +272,17 @@
       "details": [
         "r replaces the char under cursor",
         "Stays in Normal mode"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
+      "summary": "Split a line with r Enter",
+      "details": [
+        "Cursor on a space, press r Enter",
+        "The space becomes a line break",
+        "Keeps the indent, stays in Normal"
       ]
     },
     {
@@ -285,23 +302,12 @@
         "editing",
         "navigation"
       ],
-      "summary": "Delete to word end de",
-      "details": [
-        "de deletes to current word end",
-        "Useful when dw goes too far"
-      ]
-    },
-    {
-      "category": [
-        "editing",
-        "navigation"
-      ],
       "summary": "Delete or change up to a char dt)",
       "details": [
         "dt) deletes up to the next )",
-        "ct, changes up to it, df includes it"
-      ],
-      "mnemonic": "delete till"
+        "df) takes the ) too",
+        "ct) changes up to it instead"
+      ]
     },
     {
       "category": [
@@ -337,6 +343,16 @@
       "category": [
         "editing"
       ],
+      "summary": "Uppercase a whole line gUU",
+      "details": [
+        "Doubled operators act on the line",
+        "Like dd, yy, cc and g~~"
+      ]
+    },
+    {
+      "category": [
+        "editing"
+      ],
       "summary": "Toggle case with g~iw",
       "details": [
         "g~iw flips case in the word",
@@ -349,8 +365,9 @@
       ],
       "summary": "Change numbers Ctrl-a / Ctrl-x",
       "details": [
-        "Ctrl-a increments a number",
-        "Ctrl-x decrements a number"
+        "Ctrl-a adds 1, Ctrl-x subtracts 1",
+        "Finds the next number on the line",
+        "5 Ctrl-a adds 5"
       ]
     },
     {
@@ -364,7 +381,8 @@
         "Adds 1, 2, 3... down the lines",
         "g Ctrl-x subtracts instead"
       ],
-      "advanced": true
+      "advanced": true,
+      "mode": "visual"
     },
     {
       "category": [
@@ -383,8 +401,8 @@
       ],
       "summary": "Split undo Ctrl-g u",
       "details": [
-        "Starts a new undo step",
-        "Useful after punctuation or pauses"
+        "Type, Ctrl-g u, type more, then Esc",
+        "u now undoes only the second part"
       ],
       "advanced": true,
       "mode": "insert"
@@ -405,22 +423,24 @@
         "editing",
         "ideavim"
       ],
-      "summary": "Fix a misspelled word z=",
+      "summary": "Fix a typo with ]s then z=",
       "details": [
-        "z= lists spelling suggestions",
-        "Pick one to replace the word"
+        "]s jumps to the next flagged typo",
+        "z= lists fixes — pick one",
+        "zg instead marks the word correct"
       ]
     },
     {
       "category": [
-        "editing"
+        "editing",
+        "navigation"
       ],
-      "summary": "Force an operator linewise dVe",
+      "summary": "Delete up to a mark d'a",
       "details": [
-        "V between d and e takes whole lines",
-        "Use when a motion stops mid-line"
-      ],
-      "advanced": true
+        "ma marks this line, then move away",
+        "d'a deletes from there back to a",
+        "y'a yanks the same span instead"
+      ]
     }
   ]
 }

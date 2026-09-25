@@ -9,19 +9,7 @@
       "details": [
         ":sp stacks a view above/below",
         "Ctrl-w s does the same from Normal",
-        "Both share the buffer; edits sync"
-      ]
-    },
-    {
-      "category": [
-        "windows",
-        "cmdline"
-      ],
-      "summary": "Open a file in a split :split {file}",
-      "details": [
-        "Relative paths start at the project root",
-        "~/ or an absolute path works too",
-        "A bare filename is found anywhere in the project"
+        ":sp Foo.kt opens Foo.kt below"
       ]
     },
     {
@@ -33,30 +21,18 @@
       "details": [
         ":vs opens a side-by-side view",
         "Ctrl-w v does the same from Normal",
-        "Great for comparing two spots"
+        ":vs Foo.kt opens Foo.kt beside it"
       ]
     },
     {
       "category": [
-        "windows",
-        "cmdline"
-      ],
-      "summary": "Open a file in a vsplit :vsplit {file}",
-      "details": [
-        "Relative paths start at the project root",
-        "~/ or an absolute path works too",
-        "A bare filename is found anywhere in the project"
-      ]
-    },
-    {
-      "category": [
-        "windows",
-        "cmdline"
+        "windows"
       ],
       "summary": "Close a split Ctrl-w c",
       "details": [
-        "Ctrl-w c or :close shuts this split",
-        "The file stays open; only the view closes"
+        "Closes this split and its tabs",
+        "Files open elsewhere stay open",
+        "Ctrl-w q does the same"
       ]
     },
     {
@@ -66,8 +42,8 @@
       ],
       "summary": "Keep only this split :only",
       "details": [
-        ":only keeps the current split",
-        "Ctrl-w o does the same from Normal mode"
+        "Other splits close with their tabs",
+        "Ctrl-w o does the same from Normal"
       ]
     },
     {
@@ -86,8 +62,8 @@
       ],
       "summary": "Move to a split Ctrl-w h/j/k/l",
       "details": [
-        "Ctrl-w then a direction key moves you",
-        "h left, l right, j down, k up"
+        "Ctrl-w l jumps to the right split",
+        "h left, j down, k up work the same"
       ]
     },
     {
@@ -96,8 +72,8 @@
       ],
       "summary": "Make a split taller or shorter",
       "details": [
-        "Ctrl-w + grows it, Ctrl-w - shrinks it",
-        "Add a count for bigger steps: 10 Ctrl-w +"
+        "Ctrl-w + grows, Ctrl-w - shrinks",
+        "10 Ctrl-w + adds ten rows at once"
       ]
     },
     {
@@ -106,8 +82,8 @@
       ],
       "summary": "Make a split wider or narrower",
       "details": [
-        "Ctrl-w > grows it, Ctrl-w < shrinks it",
-        "Add a count for bigger steps: 10 Ctrl-w >"
+        "Ctrl-w > widens, Ctrl-w < narrows",
+        "10 Ctrl-w > adds ten columns"
       ]
     },
     {
@@ -116,8 +92,8 @@
       ],
       "summary": "Even out all splits Ctrl-w =",
       "details": [
-        "Ctrl-w = gives every split equal size",
-        "Handy to reset after manual resizing"
+        "Every split gets the same size",
+        "Undoes drags and Ctrl-w + tweaks"
       ]
     },
     {
@@ -128,28 +104,16 @@
       "details": [
         "gt goes to the next tab",
         "gT goes to the previous tab"
-      ],
-      "mnemonic": "go tab"
+      ]
     },
     {
       "category": [
         "windows"
       ],
-      "summary": "Jump to a tab by number {count}gt",
+      "summary": "Jump to a tab by number 3gt",
       "details": [
-        "2gt jumps to tab 2, 5gt jumps to tab 5",
-        "Useful when you have several tabs open"
-      ]
-    },
-    {
-      "category": [
-        "windows",
-        "cmdline"
-      ],
-      "summary": "Close current tab :tabclose",
-      "details": [
-        ":tabclose closes the active tab page",
-        "Use it when you want to keep the rest"
+        "Tabs count from 1, left to right",
+        "Counts only this split's tabs"
       ]
     },
     {
@@ -159,8 +123,8 @@
       ],
       "summary": "Keep only this tab :tabonly",
       "details": [
-        ":tabonly closes all other tab pages",
-        "Use it to reduce a crowded tab layout"
+        "Closes the other tabs in this split",
+        "Same as the IDE's Close Other Tabs"
       ]
     },
     {
@@ -170,8 +134,8 @@
       ],
       "summary": "Reorder tabs :tabmove",
       "details": [
-        ":tabmove 0 moves the tab to the start",
-        ":tabmove with no count moves it to the end"
+        ":tabmove 0 moves it to the start",
+        "Bare :tabmove moves it to the end"
       ]
     },
     {
@@ -180,8 +144,8 @@
       ],
       "summary": "Maximize a split's height or width",
       "details": [
-        "Ctrl-w _ gives this split max height",
-        "Ctrl-w | gives it max width"
+        "Ctrl-w _ maxes this split's height",
+        "Ctrl-w | maxes its width"
       ]
     }
   ]

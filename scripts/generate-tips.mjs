@@ -28,43 +28,43 @@ function fail(message) {
   process.exit(1);
 }
 
-// Trim, drop blanks, and de-duplicate (preserving order).
-function normalizeStrings(values) {
-  const seen = new Set();
-  const result = [];
-  for (const value of values ?? []) {
-    if (typeof value !== "string") continue;
-    const trimmed = value.trim();
-    if (trimmed === "" || seen.has(trimmed)) continue;
-    seen.add(trimmed);
-    result.push(trimmed);
-  }
-  return result;
-}
+// The source fields a tip may carry. Sources are validated strictly so a typo'd
+// key fails here instead of being silently dropped; the runtime TipJsonParser
+// stays lenient on purpose (forward compatibility with newer published files).
+const ALLOWED_KEYS = new Set(["category", "summary", "details", "advanced", "mode", "config"]);
+const MAX_CATEGORIES = 3;
 
 // Config lines are written verbatim into .ideavimrc, so keep order and duplicates;
 // only trim and drop blanks.
-function normalizeConfigLines(values) {
-  return (values ?? [])
-    .map((l) => (typeof l === "string" ? l.trim() : ""))
-    .filter(Boolean);
+function normalizeConfigLines(lines) {
+  return lines.map((l) => l.trim()).filter(Boolean);
 }
 
-// Accepts the object form { name, lines } or the legacy array form ["line", ...].
-// Returns the emitted config (object when named, array otherwise) or undefined when empty.
-function normalizeConfig(config) {
-  if (config == null) return undefined;
-  if (Array.isArray(config)) {
-    const lines = normalizeConfigLines(config);
-    return lines.length > 0 ? lines : undefined;
+// Accepts the object form { name?, lines } or the legacy array form ["line", ...].
+// Returns the emitted config (object when named, array otherwise); fails on any
+// other shape, a non-string line or name, or a config with no lines.
+function normalizeConfig(config, where) {
+  const named = config !== null && typeof config === "object" && !Array.isArray(config);
+  const lines = named ? config.lines : config;
+  if (!Array.isArray(lines)) {
+    fail(`${where} has a config without a lines array (expected { name, lines } or ["line", ...])`);
   }
-  if (typeof config === "object") {
-    const lines = normalizeConfigLines(config.lines);
-    if (lines.length === 0) return undefined;
-    const name = typeof config.name === "string" ? config.name.trim() : "";
-    return name ? { name, lines } : lines;
-  }
-  return undefined;
+  if (lines.some((l) => typeof l !== "string")) fail(`${where} has a non-string config line`);
+  const normalized = normalizeConfigLines(lines);
+  if (normalized.length === 0) fail(`${where} has a config with no lines`);
+  if (!named) return normalized;
+  const unknown = Object.keys(config).filter((k) => k !== "name" && k !== "lines");
+  if (unknown.length > 0) fail(`${where} has unknown config key(s): ${unknown.join(", ")}`);
+  if (config.name === undefined) return normalized;
+  if (typeof config.name !== "string") fail(`${where} has a non-string config name`);
+  const name = config.name.trim();
+  return name ? { name, lines: normalized } : normalized;
+}
+
+function requireStringArray(value, field, where) {
+  if (!Array.isArray(value)) fail(`${where} must have a ${field} array`);
+  if (value.some((v) => typeof v !== "string")) fail(`${where} has a non-string ${field} entry`);
+  return value.map((v) => v.trim()).filter(Boolean);
 }
 
 const sourceFiles = readdirSync(sourceDir)
@@ -74,6 +74,8 @@ const sourceFiles = readdirSync(sourceDir)
 if (sourceFiles.length === 0) {
   fail(`no tip category source files found in ${sourceDir}`);
 }
+
+const knownCategories = new Set(sourceFiles);
 
 // Categories are emitted alphabetically; tip selection is random at runtime,
 // so this order only affects how categories list in the settings UI.
@@ -95,18 +97,35 @@ for (const category of ordered) {
   }
 
   root.tips.forEach((tip, index) => {
-    if (tip === null || typeof tip !== "object") {
+    if (tip === null || typeof tip !== "object" || Array.isArray(tip)) {
       fail(`tip ${index + 1} in ${fileName} must be a JSON object`);
     }
-    const categories = normalizeStrings(tip.category);
     const summary = (typeof tip.summary === "string" ? tip.summary : "").trim();
-    const details = normalizeStrings(tip.details);
+    if (summary === "") fail(`tip ${index + 1} in ${fileName} has a blank or missing summary`);
+    const where = `tip '${summary}' in ${fileName}`;
 
-    if (summary === "") fail(`tip ${index + 1} in ${fileName} has a blank summary`);
-    if (details.length === 0) fail(`tip '${summary}' in ${fileName} has no details`);
-    if (categories[0] !== category) {
-      fail(`tip '${summary}' in ${fileName} must use '${category}' as its first category`);
+    const unknownKeys = Object.keys(tip).filter((key) => !ALLOWED_KEYS.has(key));
+    if (unknownKeys.length > 0) {
+      fail(`${where} has unknown key(s): ${unknownKeys.join(", ")} (allowed: ${[...ALLOWED_KEYS].join(", ")})`);
     }
+
+    const categories = [...new Set(requireStringArray(tip.category, "category", where))];
+    if (categories[0] !== category) {
+      fail(`${where} must use '${category}' as its first category`);
+    }
+    if (categories.length > MAX_CATEGORIES) {
+      fail(`${where} has ${categories.length} categories (at most ${MAX_CATEGORIES})`);
+    }
+    const unknownCategories = categories.filter((c) => !knownCategories.has(c));
+    if (unknownCategories.length > 0) {
+      fail(`${where} uses unknown category '${unknownCategories.join("', '")}' (no tips/categories/<name>.json)`);
+    }
+
+    const details = requireStringArray(tip.details, "details", where);
+    if (details.length === 0) fail(`${where} has no details`);
+    const repeated = details.find((d, i) => details.indexOf(d) !== i);
+    if (repeated !== undefined) fail(`${where} repeats the detail '${repeated}'`);
+
     const previous = summarySources.get(summary);
     if (previous !== undefined) {
       fail(`duplicate tip summary '${summary}' found in ${fileName} and ${previous}`);
@@ -114,16 +133,21 @@ for (const category of ordered) {
     summarySources.set(summary, fileName);
 
     const entry = { category: categories, summary, details };
-    const mnemonic = typeof tip.mnemonic === "string" ? tip.mnemonic.trim() : "";
-    if (mnemonic) entry.mnemonic = mnemonic;
-    const config = normalizeConfig(tip.config);
-    if (config) entry.config = config;
+    if (tip.config !== undefined && tip.config !== null) {
+      const config = normalizeConfig(tip.config, where);
+      const configLines = Array.isArray(config) ? config : config.lines;
+      // Plug lines install a plugin, and plugin tips must be findable under plugins.
+      if (configLines.some((l) => /^Plug\s/.test(l)) && !categories.includes("plugins")) {
+        fail(`${where} has a Plug config line but no 'plugins' category`);
+      }
+      entry.config = config;
+    }
     // advanced is optional and defaults to normal; emit it only when true so the
     // published artifact stays minimal, and reject non-boolean values so sources
     // never carry a flag the runtime would silently ignore.
     if (tip.advanced !== undefined) {
       if (typeof tip.advanced !== "boolean") {
-        fail(`tip '${summary}' in ${fileName} has a non-boolean advanced value`);
+        fail(`${where} has a non-boolean advanced value`);
       }
       if (tip.advanced) entry.advanced = true;
     }
@@ -133,7 +157,7 @@ for (const category of ordered) {
     if (tip.mode !== undefined && tip.mode !== null) {
       if (!VALID_MODES.has(tip.mode)) {
         fail(
-          `tip '${summary}' in ${fileName} has an invalid mode '${tip.mode}' (expected one of ${[...VALID_MODES].join(", ")})`
+          `${where} has an invalid mode '${tip.mode}' (expected one of ${[...VALID_MODES].join(", ")})`
         );
       }
       entry.mode = tip.mode;
