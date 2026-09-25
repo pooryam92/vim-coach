@@ -114,8 +114,6 @@ for (const category of ordered) {
     summarySources.set(summary, fileName);
 
     const entry = { category: categories, summary, details };
-    const mnemonic = typeof tip.mnemonic === "string" ? tip.mnemonic.trim() : "";
-    if (mnemonic) entry.mnemonic = mnemonic;
     const config = normalizeConfig(tip.config);
     if (config) entry.config = config;
     // advanced is optional and defaults to normal; emit it only when true so the

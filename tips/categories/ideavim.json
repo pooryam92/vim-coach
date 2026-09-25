@@ -196,7 +196,6 @@
         "Lands on the next/previous error",
         "Covers inspection warnings too"
       ],
-      "mnemonic": "error",
       "config": {
         "name": "Map errors",
         "lines": [
@@ -231,7 +230,6 @@
         "Moves between uncommitted hunks",
         "Gutter marks vs the last commit"
       ],
-      "mnemonic": "change",
       "config": {
         "name": "Map VCS changes",
         "lines": [
@@ -251,7 +249,6 @@
         "Apply fixes and quick refactors",
         "Overrides ga ascii-inspect"
       ],
-      "mnemonic": "go actions (quick-fix)",
       "config": {
         "name": "Map quick-fix",
         "lines": [
@@ -269,7 +266,6 @@
         "Project-wide safe rename refactor",
         "Updates every usage at once"
       ],
-      "mnemonic": "go rename",
       "config": {
         "name": "Map rename",
         "lines": [
@@ -288,7 +284,6 @@
         "Rename lives here too",
         "Overrides gm middle-column jump"
       ],
-      "mnemonic": "go menu (refactor)",
       "config": {
         "name": "Map refactor",
         "lines": [
@@ -326,7 +321,6 @@
         "Lists every call site, jump to any",
         "Overrides gr ReplaceWithRegister"
       ],
-      "mnemonic": "go references",
       "config": {
         "name": "Map find usages",
         "lines": [
@@ -344,7 +338,6 @@
         "From an interface to its class",
         "Overrides gi insert-at-last-edit"
       ],
-      "mnemonic": "go implementation",
       "config": {
         "name": "Map implementation",
         "lines": [
@@ -414,8 +407,7 @@
       "details": [
         "zg accepts the word under cursor",
         "zw removes it from the dictionary"
-      ],
-      "mnemonic": "z good, z wrong"
+      ]
     }
   ]
 }

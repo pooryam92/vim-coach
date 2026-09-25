@@ -2,7 +2,7 @@
 
 This file is how tip style is taught: **read it before authoring or rewording
 anything.** Each entry shows the tip ❌ before and ✅ after — trimmed to the
-fields the lesson touches (unchanged `category`/`config`/`mnemonic` are omitted;
+fields the lesson touches (unchanged `category`/`config` are omitted;
 the canonical full shape lives in SKILL.md) — then *why*. When the user corrects
 or rejects a wording call, the lesson lands here as a new entry (or sharpens the
 one that failed) — this file is the skill's memory.
@@ -20,14 +20,8 @@ one that failed) — this file is the skill's memory.
 - Operator + motion tips — lead concrete, generalize the open axis
 - Verify the claim against IdeaVim source, not Vim lore
 - Search existing tips before adding — kill semantic duplicates
-- Decode every key in a mnemonic, not just the ends
-- Give the decoded words, don't echo the key
-- Reach for the community mnemonic, not a homemade key-echo
-- One word per key — cut filler words with no keystroke behind them
-- Drop a mnemonic whose decode is obvious — don't fill the slot
 - Join symbol pairs with `and` — a slash between glyphs is a pileup
 - Theory earns one tip at most — and it must still be tryable
-- Anchor a family mnemonic in the real hook — and name the key a shape depicts
 - Merge a set-and-use pair when neither half stands alone
 - Cut a command you can't try cold — doubly so when the IDE already does it
 - Prefer the `mode` label over a "Works in X mode" detail line
@@ -175,65 +169,6 @@ Ask *should this exist* before *how should this read*.
 different wording slips through. Grep both the keys *and* the behavior first; drop
 or merge instead of adding.
 
-### Decode every key in a mnemonic, not just the ends
-
-summary: `Wrap in an HTML tag ysiwt`
-❌ `"mnemonic": "ys you surround, t tag"`
-✅ `"mnemonic": "ys you surround, iw inner word, t tag"`
-
-*Why:* the summary key is `ysiwt` but the mnemonic decoded only `ys` and `t`,
-skipping `iw` — the confusing middle. A mnemonic that maps some keystrokes must map
-them all; a half-decode leaves the reader guessing the part they most need. Keep it
-≤40 chars (drop `=` separators before you drop a keystroke).
-
-### Give the decoded words, don't echo the key — the summary already shows it
-
-summary: `Open the refactor menu gm`
-❌ `"mnemonic": "gm = go menu (refactor)"`
-✅ `"mnemonic": "go menu (refactor)"`
-
-*Why:* the summary already shows `gm` and the renderer prepends `Mnemonic:`, so
-`gm =` restates the key twice before the hook lands. Author just the decoded words —
-`go menu` already maps g→go, m→menu on its own. This doesn't contradict "decode
-every key": the letters still all map, you just drop the redundant `key =` echo.
-
-### Reach for the community mnemonic, not a homemade key-echo
-
-summary: `Rename an HTML tag cst`
-❌ `"mnemonic": "cs = change surround, t = tag"`
-✅ `"mnemonic": "change surrounding tag"`
-
-*Why:* `cst` already has a reading the whole vim-surround community shares —
-*"change surrounding tag"* (tpope's own docs, every cheatsheet). Reach for that
-before minting your own gloss. It also satisfies both mnemonic rules at once: it
-decodes all three keys (c→change, s→surrounding, t→tag) and echoes none of them.
-When a plugin key has an idiomatic name, use it — a homemade key-echo is both less
-memorable and less standard.
-
-### One word per key — cut filler words with no keystroke behind them
-
-summary: `Next/previous tab gt / gT`
-❌ `"mnemonic": "go to tab"`
-✅ `"mnemonic": "go tab"`
-
-*Why:* the keys are `g` and `t`, so the mnemonic should be exactly two words —
-g→go, t→tab. "go to tab" reads more naturally as English, but the "to" maps to no
-keystroke, so it dilutes the hook. This is the mirror of "decode every key": don't
-map *more* words than there are keys. Reach for the tight word-per-key form other
-users already share.
-
-### Drop a mnemonic whose decode is obvious — don't fill the slot
-
-summary: `Use mode-specific maps in ~/.ideavimrc`
-details: `["Use nmap, imap, or vmap for the target mode", "Normal, Insert, and Visual maps should stay separate"]`
-❌ `"mnemonic": "n/i/v = normal/insert/visual"`
-✅ (no mnemonic)
-
-*Why:* `n`/`i`/`v` → normal/insert/visual is self-evident to anyone reading a maps
-tip — the hook teaches nothing, and here it even restates detail line 2 word for
-word. A mnemonic earns its line only when the keys wouldn't otherwise stick; when
-the decode is obvious or already stated, delete it rather than fill the slot.
-
 ### Join symbol pairs with `and` — a slash between glyphs is a pileup
 
 ❌ `"summary": "Move by paragraphs { / }"`
@@ -256,21 +191,6 @@ around them keeps failing. When a concept has no tryable form, delete the
 standalone tip and fold its rule into exactly *one* concrete host — never echo
 it across every sibling. Practical tips lead; theory gets at most one
 consolidated line.
-
-### Anchor a family mnemonic in the real hook — and name the key a shape depicts
-
-summary: `Fold all / unfold all zM / zR`
-❌ `"mnemonic": "z zips code shut; M more, R reduce"` (invented hook, drifting through `z zips`/`z = zzz`)
-✅ `"mnemonic": "z = a folded page; M more, R reduce"`
-
-*Why:* two lessons. **Decode the shared prefix, not just the distinguishing
-letter** — every fold command is `z`-prefixed, so the mnemonic must say what `z`
-buys, then `M`/`R`. **And anchor it in the documented hook, not an invention:**
-Vim's own `usr_28` says *"z looks like a folded piece of paper viewed from the
-side"* — reach for the real mnemonic before minting `zip`/`zzz`. This is also the
-exception to "don't echo the key": a *shape* hook must name the key it depicts
-(`z = a folded page`), because unlike a letter→word decode (`g`→go), the glyph
-doesn't map from the letter on its own.
 
 ### Merge a set-and-use pair when neither half stands alone
 

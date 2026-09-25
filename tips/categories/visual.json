@@ -32,7 +32,6 @@
         "o moves cursor to the other end",
         "Great for precise adjustments"
       ],
-      "mnemonic": "other end",
       "mode": "visual"
     },
     {
@@ -65,8 +64,7 @@
       "details": [
         "gv reselects the last selection",
         "Handy after Esc or an edit"
-      ],
-      "mnemonic": "go visual again"
+      ]
     },
     {
       "category": [
@@ -79,7 +77,6 @@
         "Attach an operator: dgn, cgn, ygn",
         "gN grabs the previous match"
       ],
-      "mnemonic": "go next",
       "advanced": true
     },
     {

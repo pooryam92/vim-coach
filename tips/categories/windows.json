@@ -128,8 +128,7 @@
       "details": [
         "gt goes to the next tab",
         "gT goes to the previous tab"
-      ],
-      "mnemonic": "go tab"
+      ]
     },
     {
       "category": [

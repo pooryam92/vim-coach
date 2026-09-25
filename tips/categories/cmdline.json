@@ -171,7 +171,6 @@
         "Ctrl-r then a register name",
         "Great for reusing text in :s"
       ],
-      "mnemonic": "register",
       "advanced": true,
       "mode": "command"
     },
@@ -184,7 +183,6 @@
         "Inserts the word under cursor",
         "Reuse names without retyping"
       ],
-      "mnemonic": "register word",
       "advanced": true,
       "mode": "command"
     },

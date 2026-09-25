@@ -98,14 +98,12 @@ object TipJsonParser {
         }
         val normalizedCategories = normalizeStrings(tip.category)
         val normalizedConfig = normalizeConfig(tip.config)
-        val normalizedMnemonic = tip.mnemonic?.trim()?.takeIf(String::isNotBlank)
         val normalizedMode = TipMode.fromWire(tip.mode)?.wireValue
         return VimTip(
             summary,
             details,
             normalizedCategories,
             normalizedConfig,
-            normalizedMnemonic,
             tip.advanced,
             normalizedMode
         )

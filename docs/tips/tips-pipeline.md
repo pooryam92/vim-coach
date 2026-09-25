@@ -60,10 +60,9 @@ The error message names the offending file and tip so you can fix it quickly.
 ### Normalization
 
 For each tip the generator trims surrounding whitespace, drops blank `details`
-lines, and removes duplicate `details` lines (preserving order). An optional
-`mnemonic` string is trimmed and emitted only when non-blank (dropped otherwise).
-The optional `advanced` flag is emitted only when `true` (kept off the artifact
-otherwise, so it stays minimal); a non-boolean `advanced` value fails generation.
+lines, and removes duplicate `details` lines (preserving order). The optional
+`advanced` flag is emitted only when `true` (kept off the artifact otherwise, so
+it stays minimal); a non-boolean `advanced` value fails generation.
 The optional `mode` field is emitted only when set and must be one of `insert`,
 `visual`, or `command` — any other value fails generation (absent means Normal,
 which is never stored or labelled). The output is compact JSON with non-ASCII
@@ -77,6 +76,12 @@ defaulted; existing fields are never renamed or removed. Tip parsing is
 **lenient**: unknown fields are ignored, so a newer published file never breaks
 an older plugin. Keep it that way — tightening the parser would break the
 forward compatibility every installed version relies on.
+
+The one exception so far is the optional `mnemonic` string, dropped after 1.5.x.
+Removing it was safe only because it was optional: older plugins default a
+missing `mnemonic` to none, and the current parser and tip cache ignore one
+still present in a stale file or cache. Only an optional field can be retired
+this way.
 
 The optional `advanced` flag rides this schema. The plugin models and reads it
 (advanced tips are hidden unless the user opts in; see

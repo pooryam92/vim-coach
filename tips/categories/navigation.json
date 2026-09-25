@@ -40,8 +40,7 @@
       "details": [
         "ge goes to end of previous word",
         "Nice for edits before punctuation"
-      ],
-      "mnemonic": "go end"
+      ]
     },
     {
       "category": [
@@ -163,8 +162,7 @@
       "details": [
         "H top of screen, M middle, L bottom",
         "Great for fast scanning"
-      ],
-      "mnemonic": "High, Middle, Low"
+      ]
     },
     {
       "category": [
@@ -300,8 +298,7 @@
       "details": [
         "f; jumps to next ';' on the line",
         "Great for long parameter lists"
-      ],
-      "mnemonic": "find"
+      ]
     },
     {
       "category": [
@@ -321,8 +318,7 @@
       "details": [
         "t) stops just before ')'",
         "Perfect for ct) edits"
-      ],
-      "mnemonic": "till"
+      ]
     },
     {
       "category": [
@@ -363,8 +359,7 @@
       "details": [
         "gd jumps to the symbol through the IDE",
         "Works across files, project-wide"
-      ],
-      "mnemonic": "go definition"
+      ]
     },
     {
       "category": [
@@ -426,8 +421,7 @@
       "details": [
         "Ctrl-d scrolls down half a page",
         "Ctrl-u scrolls up half a page"
-      ],
-      "mnemonic": "d down, u up"
+      ]
     },
     {
       "category": [
@@ -437,8 +431,7 @@
       "details": [
         "Ctrl-f scrolls forward one page",
         "Ctrl-b scrolls back one page"
-      ],
-      "mnemonic": "f forward, b back"
+      ]
     },
     {
       "category": [
@@ -535,7 +528,6 @@
         "zA toggles the fold and all inside it",
         "One key for the whole fold tree"
       ],
-      "mnemonic": "z = a folded page; A all nested",
       "advanced": true
     },
     {
@@ -547,7 +539,6 @@
         "zO opens every nested level",
         "zC closes every nested level"
       ],
-      "mnemonic": "zO open all, zC close all",
       "advanced": true
     },
     {
@@ -559,7 +550,6 @@
         "zj moves to the next fold start",
         "zk moves to the previous fold start"
       ],
-      "mnemonic": "z = a folded page; j/k down/up",
       "advanced": true
     },
     {
@@ -570,8 +560,7 @@
       "details": [
         "zM closes all folds in view",
         "zR opens all folds in view"
-      ],
-      "mnemonic": "z = a folded page; M more, R reduce"
+      ]
     },
     {
       "category": [
@@ -582,7 +571,6 @@
         "zr opens one fold level",
         "zm closes one fold level"
       ],
-      "mnemonic": "z = a folded page; r reduce, m more",
       "advanced": true
     },
     {
@@ -594,8 +582,7 @@
       "details": [
         "Lands you in Insert mode, not Normal",
         "Picks up exactly where you stopped typing"
-      ],
-      "mnemonic": "go insert"
+      ]
     },
     {
       "category": [

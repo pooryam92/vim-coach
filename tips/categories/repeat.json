@@ -78,8 +78,7 @@
       "details": [
         "@: reruns the last : command",
         "Useful after :s, :g, and :normal"
-      ],
-      "mnemonic": "@ play, : last command"
+      ]
     }
   ]
 }

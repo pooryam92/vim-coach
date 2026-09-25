@@ -51,8 +51,7 @@
       "details": [
         "ci[ changes text inside square brackets",
         "ci{ changes text inside braces"
-      ],
-      "mnemonic": "change inner"
+      ]
     },
     {
       "category": [
@@ -110,7 +109,6 @@
         ":1,5t0 copies lines 1-5 to the top",
         "Also :t$ for the end of the file"
       ],
-      "mnemonic": "copy to",
       "advanced": true
     },
     {
@@ -244,8 +242,7 @@
       "details": [
         "s changes one char and inserts",
         "S changes whole line and inserts"
-      ],
-      "mnemonic": "substitute"
+      ]
     },
     {
       "category": [
@@ -300,8 +297,7 @@
       "details": [
         "dt) deletes up to the next )",
         "ct, changes up to it, df includes it"
-      ],
-      "mnemonic": "delete till"
+      ]
     },
     {
       "category": [

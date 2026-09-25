@@ -73,8 +73,7 @@
       "details": [
         ":noh clears the search highlight",
         "Search stays active for n and N"
-      ],
-      "mnemonic": "no highlight"
+      ]
     },
     {
       "category": [
@@ -85,7 +84,6 @@
         "/foo\\c matches Foo FOO foo",
         "/Foo\\C matches only Foo, not foo"
       ],
-      "mnemonic": "\\c ignore case, \\C exact Case",
       "advanced": true
     },
     {
@@ -144,7 +142,6 @@
         "Add \\V to drop all regex",
         "/\\Va.b finds a.b, not aXb"
       ],
-      "mnemonic": "Very nomagic",
       "advanced": true
     },
     {
@@ -167,8 +164,7 @@
       "details": [
         ":%s/foo/bar/g swaps foo for bar in file",
         "g means every match, not just the first"
-      ],
-      "mnemonic": "substitute"
+      ]
     },
     {
       "category": [
@@ -258,7 +254,6 @@
         "Type the new word, press Esc",
         "Then . alone repeats — no n"
       ],
-      "mnemonic": "change go next",
       "advanced": true
     },
     {
