@@ -150,6 +150,7 @@
         "Type 19*7 at the = prompt",
         "Enter inserts 133 at the cursor"
       ],
+      "advanced": true,
       "mode": "insert"
     },
     {
@@ -209,6 +210,7 @@
         "Type its start, then Ctrl-x Ctrl-l",
         "Finds a matching line in the file"
       ],
+      "advanced": true,
       "mode": "insert"
     },
     {
@@ -220,6 +222,7 @@
         "Type part of a path, then the keys",
         "Completes it from the file system"
       ],
+      "advanced": true,
       "mode": "insert"
     }
   ]

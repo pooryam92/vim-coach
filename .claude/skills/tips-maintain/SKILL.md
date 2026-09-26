@@ -113,9 +113,10 @@ week" starts to repeat, write it down here as the rubric forms. So far:
   ```bash
   node -e 'const fs=require("fs"),c=process.argv[1],d="tips/categories/";const s=fs.readdirSync(d).flatMap(f=>JSON.parse(fs.readFileSync(d+f)).tips).filter(t=>t.category.includes(c));console.log(c,s.filter(t=>t.advanced).length+"/"+s.length)' pattern
   ```
-  `plugins` sits near zero: needing a `config` block is *itself* the opt-in, so
-  a plugin tip is normal even when its concept is deep (YankRing's
-  paste-cycling stayed normal on this rule). `pattern` runs high: a `:s`/search
+  `plugins` stays low: needing a `config` block is *itself* the opt-in, so a
+  plugin's headline move is normal even when its concept is deep (YankRing's
+  paste-cycling, `ysiw)`, `gcc`, `dam`). Tag only a plugin's secondary or niche
+  moves — `ysiwf`, `gciw`, `cxiw`, `:S`, `cin)`, `]=`/`]+` indent hops. `pattern` runs high: a `:s`/search
   **flag** riding inside a pattern (`gc`, `//`, `\c`, `\<\>`, `/n` — e.g.
   `Confirm each :s replace with gc`) is reliably past a newcomer's first week.
   Match the siblings you're landing beside rather than scoring the tip in
@@ -124,6 +125,11 @@ week" starts to repeat, write it down here as the rubric forms. So far:
   advanced** — macros (`qa` / `@a`), a named register (`"ayy`), `:action`, the
   Ctrl-v block. Hiding the base leaves newcomers seeing only its variants.
   Untag a family together, never one member.
+- **Refinements of a base move are advanced** — `g_` beside `$`, `gp`/`]p`
+  beside `p`, `g0`/`g$` beside `gj`/`gk`, `O` in a Visual block, and the change
+  marks `'[`/`']`. So are manual folds (`zf`), because the IDE already makes
+  folds, and Insert-mode completion submodes (`Ctrl-x Ctrl-l`), because the IDE
+  popup already handles the common case.
 
 ### Tagging a tip's mode
 

@@ -45,7 +45,8 @@
         "Ctrl-v starts the block",
         "O hops to the other end of the row",
         "Now grow it from that side"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -55,7 +56,8 @@
       "details": [
         "`[ jumps to the change start",
         "v then `] reaches the end"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

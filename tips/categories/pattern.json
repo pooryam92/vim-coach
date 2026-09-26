@@ -81,7 +81,8 @@
         "d/foo Enter deletes up to foo",
         "d/foo/e Enter deletes foo too",
         "d?foo Enter deletes back over foo"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

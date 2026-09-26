@@ -121,7 +121,8 @@
       "details": [
         ":.,.+2 means this line + 2 below",
         "Then type s/a/b/ and press Enter"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

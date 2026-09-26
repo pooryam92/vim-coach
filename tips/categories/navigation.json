@@ -92,7 +92,8 @@
       "details": [
         "Unlike $, it skips trailing spaces",
         "vg_ selects without the line break"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -113,7 +114,8 @@
       "details": [
         "'[ jumps to the change's first line",
         "'] jumps to its last line"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -123,7 +125,8 @@
       "details": [
         "80| jumps to column 80",
         "81|D trims the line to 80 chars"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -176,7 +179,8 @@
         "g0 goes to this screen row's start",
         "g$ to its end, g^ to its first text",
         "Turn on soft wrap with :set wrap"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -459,7 +463,8 @@
         "zfip folds the current paragraph",
         "Takes any motion, like zf} or zfa{",
         "zd deletes it; IDE folds come back"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -470,7 +475,8 @@
       "details": [
         "Select lines with V, then press zf",
         "za then toggles your new fold"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

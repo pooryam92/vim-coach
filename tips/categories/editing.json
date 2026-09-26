@@ -440,7 +440,8 @@
         "ma marks this line, then move away",
         "d'a deletes from there back to a",
         "y'a yanks the same span instead"
-      ]
+      ],
+      "advanced": true
     }
   ]
 }

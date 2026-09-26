@@ -188,6 +188,7 @@
         "ysiwf asks for a function name",
         "Type print, Enter — print(word)"
       ],
+      "advanced": true,
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -240,6 +241,7 @@
         "Uses a block comment, like /* */",
         "Takes any motion, like gci("
       ],
+      "advanced": true,
       "config": {
         "name": "Install vim-commentary",
         "lines": [
@@ -309,6 +311,7 @@
         "cxiw on foo, then cxiw on bar",
         "foo and bar trade places"
       ],
+      "advanced": true,
       "config": {
         "name": "Install vim-exchange",
         "lines": [
@@ -362,6 +365,7 @@
         ":S/foo/bar/g replaces all casings",
         "foo→bar, Foo→Bar, FOO→BAR"
       ],
+      "advanced": true,
       "config": {
         "name": "Install vim-abolish",
         "lines": [
@@ -398,6 +402,7 @@
         "cil) targets the previous pair",
         "Any bracket or quote works too"
       ],
+      "advanced": true,
       "config": {
         "name": "Install targets.vim",
         "lines": [
@@ -450,6 +455,7 @@
         "Skips indent and the line break",
         "p then pastes it inline, not below"
       ],
+      "advanced": true,
       "config": {
         "name": "Install vim-textobj-line",
         "lines": [
@@ -501,6 +507,7 @@
         "Plain { and } skip space-only lines",
         "Blank lines often keep stray indent"
       ],
+      "advanced": true,
       "config": {
         "name": "Install vim-paragraph-motion",
         "lines": [
@@ -588,6 +595,7 @@
         "]= to the next line at this indent",
         "[= to the previous one"
       ],
+      "advanced": true,
       "config": {
         "name": "Install indentwise",
         "lines": [
@@ -605,6 +613,7 @@
         "]+ to the next more-indented line",
         "]- to the next less-indented line"
       ],
+      "advanced": true,
       "config": {
         "name": "Install indentwise",
         "lines": [

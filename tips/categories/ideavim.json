@@ -77,6 +77,7 @@
         "Run any IDE action: its ID pops up",
         "Paste it into <Action>(ID) maps"
       ],
+      "advanced": true,
       "config": {
         "name": "Enable trackactionids",
         "lines": [
