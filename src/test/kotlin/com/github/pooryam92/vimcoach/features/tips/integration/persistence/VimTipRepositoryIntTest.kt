@@ -109,11 +109,7 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         )
     }
 
-    // The optional `mode` and `advanced` fields are persisted only via reflective
-    // whole-object serialization of the tip cache (no explicit field wiring in PersistentVimTipStore).
-    // This round-trips the store State through the same xmlb serializer the platform uses for @State
-    // components, proving they survive save/load and that absent/default values stay that way — the
-    // one seam unit tests can't reach.
+    // Optional fields persist only via reflective xmlb serialization, which unit tests can't reach.
     fun testOptionalTipFieldsSurviveStoreStateSerializationRoundTrip() {
         tipService().saveTips(
             listOf(
@@ -139,12 +135,10 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         assertFalse(normalTip.advanced)
     }
 
-    // Caches written by 1.5.x persist a `mnemonic` option on each tip; the field has since been
-    // removed, and such a cache must still load rather than lose the tips.
     fun testStoreStateWithLegacyMnemonicOptionStillDeserializes() {
         tipService().saveTips(listOf(VimTip("insert-tip", listOf("Ctrl-r pastes a register"))))
         val serialized = XmlSerializer.serialize(tipStore().state)
-        val tipElement = findElements(serialized, "VimTip").single()
+        val tipElement = serialized.descendants().single { it.name == "VimTip" }
         tipElement.addContent(Element("option").setAttribute("name", "mnemonic").setAttribute("value", "control register"))
 
         val restored = XmlSerializer.deserialize(serialized, PersistentVimTipStore.State::class.java)
@@ -152,11 +146,8 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         assertEquals(listOf("Ctrl-r pastes a register"), restored.tips.single { it.summary == "insert-tip" }.details)
     }
 
-    private fun findElements(root: Element, name: String): List<Element> {
-        return root.children.flatMap { child ->
-            (if (child.name == name) listOf(child) else emptyList()) + findElements(child, name)
-        }
-    }
+    private fun Element.descendants(): Sequence<Element> =
+        children.asSequence().flatMap { sequenceOf(it) + it.descendants() }
 
     private fun tipService(): VimTipRepository = service()
 

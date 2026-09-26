@@ -4,15 +4,7 @@
 // quality or prove a gap is worth filling — it surfaces raw candidates for the
 // tips-maintain "Finding the best tips to add" value rubric to score. A "miss"
 // means no tip text mentions that command's keys; a textual heuristic, so eyeball
-// every hit (some keys are taught in a form the matcher can't see, and not every
-// supported feature is worth a tip).
-//
-// Matching rules:
-//   - command keys match case-sensitively (zD is not zd), either verbatim or in
-//     the notation tips use: <C-W>h -> "Ctrl-w h", <CR> -> Enter, <A-j> -> Alt-j
-//   - ex-commands match only as `:name` (any abbreviation, optional range), or as
-//     the first word of a config line, where rc commands carry no colon
-//   - plugins match by id, `set` name or any Plug alias from IdeaVim Plugins.md
+// every hit.
 //
 //   node .claude/skills/tips-maintain/coverage.mjs            # summary + top misses
 //   node .claude/skills/tips-maintain/coverage.mjs --all      # every miss, incl. 1-char keys
@@ -55,9 +47,7 @@ for (const path of [`${ENGINE_KSP}/engine_ex_commands.json`, `${FRONTEND_KSP}/fr
   for (const name of Object.keys(readJson(path))) exCommands.add(name)
 }
 
-// A plugin's source directory name often differs from the token a user actually
-// writes to enable it (dir `multiplecursors` -> `set multiple-cursors`, dir
-// `hints` -> `VimEverywhere`), so read the real name from getName() too.
+// A plugin's source dir often differs from its enable name (`hints` -> `VimEverywhere`).
 function pluginEnableName(dir) {
   const path = `${PLUGIN_DIR}/${dir}`
   for (const f of readdirSync(path)) {
@@ -71,22 +61,19 @@ function pluginEnableName(dir) {
 
 const squash = (s) => s.toLowerCase().replace(/[-_]/g, '')
 
-// Each <h2> block of IdeaVim Plugins.md documents one plugin: its heading
-// name, its `set <name>` forms and its Plug aliases. Tips install plugins with
-// Plug lines (`Plug 'michaeljsmith/vim-indent-object'`), which share nothing
-// with the source dir (`textobjindent`), so match through these aliases.
+// Tips install plugins with Plug lines that share nothing with the source dir, so
+// match through the aliases each <h2> block of IdeaVim Plugins.md lists.
 function pluginDocSections() {
   if (!existsSync(PLUGIN_DOC)) return []
-  // Split on <h2>, not <details>: the "Alternative syntax" aliases sit in a nested <details>.
   return readFileSync(PLUGIN_DOC, 'utf8').split('<h2>').slice(1).map((block) => {
     const heading = block.match(/^([^:<]+)/)?.[1]?.trim()
-    // Only code-formatted `set` lines; prose like "set to <leader>" would alias "to".
     const setNames = [...block.matchAll(/(?:`|<code>)set ([A-Za-z][\w.-]*)/g)].map((m) => m[1])
     const plugRefs = [...block.matchAll(/Plug '([^']+)'/g)]
       .map((m) => m[1].replace(/^https:\/\/github\.com\//, ''))
       .filter((ref) => !ref.includes('://') && !ref.startsWith('<'))
     const names = [heading, ...setNames].filter(Boolean)
-    return { ids: new Set(names.map(squash)), aliases: [...names, ...plugRefs, ...plugRefs.map((r) => r.split('/').pop())] }
+    const repoNames = plugRefs.map((r) => r.split('/').pop())
+    return { ids: new Set(names.map(squash)), aliases: [...names, ...plugRefs, ...repoNames] }
   })
 }
 const docSections = pluginDocSections()
@@ -124,8 +111,6 @@ for (const f of readdirSync(TIPS_DIR)) {
   }
 }
 
-// Words for plugin matching: whole tokens, plus the repo part of owner/repo, so
-// the word "signatures" doesn't count as the signature plugin.
 const haystackWords = new Set()
 for (const token of haystack.split(/[\s'"`,;:()]+/)) {
   if (!token) continue
@@ -143,43 +128,40 @@ const NAMED_KEYS = {
 const LITERAL_KEYS = { lt: '<', Bar: '|', Bslash: '\\' }
 const MODIFIERS = { C: 'Ctrl', S: 'Shift', A: 'Alt', M: 'Alt', D: 'Cmd' }
 
-// One <...> key in the notation tips use: <C-X> -> Ctrl-x, <kLeft> -> Left.
+// <C-X> -> Ctrl-x, <kLeft> -> Left
 function keyName(inner) {
-  const parts = inner.split('-')
-  let key = parts.pop()
-  if (key === '' && inner.endsWith('-')) key = '-'
-  const mods = parts.map((m) => MODIFIERS[m] ?? m)
+  const [, modPart, key] = inner.match(/^((?:[^-]+-)*)(.+)$/)
+  const mods = modPart.split('-').filter(Boolean).map((m) => MODIFIERS[m] ?? m)
   const base = key.replace(/^k(?=[A-Z])/, '')
   let name = NAMED_KEYS[base] ?? base
   if (mods.includes('Ctrl') && /^[A-Za-z]$/.test(name)) name = name.toLowerCase()
   return [...mods, name].join('-')
 }
 
-// <C-W>h -> "Ctrl-w h", g<C-X> -> "g Ctrl-x"; plain runs stay glued (gg, i<).
-// `spell` renders one <...> key; tips mostly write keyName, a few bare Vim (S-Left).
+// <C-W>h -> "Ctrl-w h", g<C-X> -> "g Ctrl-x"
 function tipNotation(keys, spell = keyName) {
   const segments = []
   let plain = ''
-  for (const m of keys.matchAll(/<([^<>]+)>|[\s\S]/g)) {
-    if (m[1] === undefined || LITERAL_KEYS[m[1]]) {
-      plain += m[1] === undefined ? m[0] : LITERAL_KEYS[m[1]]
+  for (const [token, inner] of keys.matchAll(/<([^<>]+)>|[\s\S]/g)) {
+    const literal = inner === undefined ? token : LITERAL_KEYS[inner]
+    if (literal !== undefined) {
+      plain += literal
       continue
     }
-    if (plain) segments.push(plain), (plain = '')
-    segments.push(spell(m[1]))
+    if (plain) segments.push(plain)
+    plain = ''
+    segments.push(spell(inner))
   }
   if (plain) segments.push(plain)
   return segments.join(' ')
 }
 
-// Bare, these read as the mode or the verb far more often than as the key.
 const ENGLISH_KEY_NAMES = new Set(['Insert', 'Undo'])
 
 function mentionsKeys(keys) {
   if (haystack.includes(keys)) return true
   const notations = new Set([tipNotation(keys), tipNotation(keys, (inner) => inner)])
   notations.delete(keys)
-  // Word boundaries so <Tab> isn't found inside Shift-Tab and <Up> not in "Update".
   return [...notations].some((n) => !ENGLISH_KEY_NAMES.has(n) &&
     new RegExp(`(?<![A-Za-z0-9-])${escapeRegex(n)}(?![A-Za-z0-9])`).test(haystack))
 }
@@ -189,7 +171,6 @@ const exName = (n) => n.replace(/[\[\]]/g, '') // ab[breviate] -> abbreviate
 const exShort = (n) => n.replace(/\[.*$/, '') // ab[breviate] -> ab
 const EX_RANGE = String.raw`(?:[%.$\d,;+\-]|'[<>a-zA-Z])*`
 
-// `:ab`, `:abbrev` and `:%s` all count; `:set` does not count for `:s`.
 function mentionsExCommand(n) {
   const short = exShort(n)
   const tail = exName(n).slice(short.length)

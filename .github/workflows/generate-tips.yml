@@ -2,13 +2,8 @@
 #
 # tips/vim_tips_min.json is a generated artifact and is never authored by hand.
 # It is always produced from the files in tips/categories/ by
-# scripts/generate-tips.mjs.
-#
-# - Pull requests only validate the sources (--check). They never push: the
-#   GITHUB_TOKEN is read-only on fork PRs, so a regenerate-and-push job there
-#   fails and leaves the PR's tips unvalidated.
-# - Pushes to main regenerate the file and commit it if it changed, so the
-#   published file can never drift from the category sources.
+# scripts/generate-tips.mjs. PRs only validate, since fork PR tokens can't push;
+# pushes to main regenerate and commit.
 
 name: Generate Tips
 
@@ -51,7 +46,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Regenerating also validates: the generator fails before writing on any bad source.
       - name: Generate vim_tips_min.json
         run: node scripts/generate-tips.mjs
 

@@ -171,8 +171,6 @@ class TipJsonParserUnitTest {
         assertEquals("other", tips[1].summary)
     }
 
-    // Mnemonics were dropped from the schema; published JSON (or a stale cache) may still
-    // carry the field, and it must be ignored rather than break parsing.
     @Test
     fun parseTipsJsonIgnoresLegacyMnemonicField() {
         val json = """

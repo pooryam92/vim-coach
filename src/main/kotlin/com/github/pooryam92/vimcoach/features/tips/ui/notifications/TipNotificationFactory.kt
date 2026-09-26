@@ -58,11 +58,6 @@ class TipNotificationFactory {
         }
     }
 
-    // The title carries metadata after the app name: an "Advanced" tag and the mode the reader
-    // must be in to press the keys (Advanced first, both optional). Each label gets its own
-    // theme-aware colour so it stands out from the app name (which readers skip, since it never
-    // changes), while the separators stay dimmed. A tip with neither label keeps the plain app
-    // title (no HTML wrapper).
     private fun notificationTitle(tip: VimTip): String {
         val labels = buildList {
             if (tip.advanced) add(ADVANCED_LABEL to ADVANCED_LABEL_COLOR)
@@ -74,9 +69,7 @@ class TipNotificationFactory {
         return "$HTML_OPEN${escapeHtml(APP_TITLE)}$tail$HTML_CLOSE"
     }
 
-    // Mirrors the hues of IdeaVim's default ("Term") mode widget so a label reads like the status
-    // bar the user already knows. Command shares Normal's green there, as IdeaVim has no distinct
-    // colour for the command line.
+    // Hues match IdeaVim's default mode widget, where Command shares Normal's green.
     private fun modeLabelColor(mode: TipMode): Color = when (mode) {
         TipMode.INSERT -> INSERT_MODE_LABEL_COLOR
         TipMode.VISUAL -> VISUAL_MODE_LABEL_COLOR
@@ -211,13 +204,8 @@ class TipNotificationFactory {
         val TIP_MANAGE_EXCLUDED_ACTION_TEXT: String = MyBundle.message("tipManageExcludedAction")
         val ADVANCED_TIPS_AVAILABLE_TEXT: String = MyBundle.message("advancedTipsAvailableMessage")
         val ADVANCED_TIPS_OPEN_SETTINGS_ACTION_TEXT: String = MyBundle.message("advancedTipsOpenSettingsAction")
-        // Title label tail: metadata after the app name. Mode labels come from TipMode;
-        // this is the only non-mode label, so it lives here.
         const val ADVANCED_LABEL: String = "Advanced"
-        // Dark values are IdeaVim's own widget colours; light values are the same hues darkened to
-        // 4.5:1 contrast, since IdeaVim paints them as backgrounds and they wash out as text on white.
-        // Advanced is a muted slate: it marks a tier, not a mode, so it stays quieter than the mode
-        // hues while still reading clearly against the dimmed separators.
+        // Light variants are IdeaVim's hues darkened to 4.5:1 contrast on white.
         private val ADVANCED_LABEL_COLOR = JBColor(0x60748E, 0x98A7B9)
         private val INSERT_MODE_LABEL_COLOR = JBColor(0xA2640D, 0xF4BF75)
         private val VISUAL_MODE_LABEL_COLOR = JBColor(0x46788D, 0x6A9FB5)

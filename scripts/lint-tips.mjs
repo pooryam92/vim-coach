@@ -2,12 +2,8 @@
 // Advisory lint for the tip sources — the soft, eyeball-it checks that
 // generate-tips.mjs deliberately does NOT enforce.
 //
-// generate-tips.mjs owns the hard rules (source shape, categories, duplicate
-// summaries and details, Plug lines tagged plugins) and FAILS the build on them.
-// Length and wording stay here on purpose: they are judgment calls. This script
-// never gates anything: it prints a review report and exits 0. Run it
-// before/after editing tips/categories/*.json to catch the things a human
-// would otherwise have to scan for by hand.
+// generate-tips.mjs owns the hard rules and fails the build on them. This script
+// never gates anything: it prints a review report and exits 0.
 //
 //   node scripts/lint-tips.mjs
 
@@ -19,23 +15,17 @@ import { fileURLToPath } from "node:url";
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repoRoot, "tips", "categories");
 
-// The balloon grows to ~300px for its longest line, but one line past ~43 chars
-// clamps the whole body to 240px (~35 chars), wrapping every long line in it.
-// Both thresholds are estimates for a 13px font. Tune here if the skill's
-// guidance changes.
+// Estimates for a 13px font: one line past DETAIL_CLAMP clamps the whole balloon to ~35 chars.
 const SUMMARY_MAX = 35;
 const DETAIL_MAX = 35;
 const DETAIL_CLAMP = 43;
 // Past this many details the balloon stops being glanceable.
 const DETAILS_MAX_COUNT = 3;
 const FILLER_OPENER = /^(Useful|Handy|Use it|Good for|Great)\b/;
-// "{ / }" reads as a pileup; symbol pairs join with "and".
 const SYMBOL_SLASH = /(?:^|\s)([^\sA-Za-z0-9]+) \/ ([^\sA-Za-z0-9]+)(?=\s|$)/;
-// Line order already reads as a sequence; "1. " prefixes only cost width.
 const NUMBERED_STEP = /^\d+\.\s/;
 const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-// True when `text` contains `keys` as a standalone run, not inside a word.
 function containsKeys(text, keys) {
   return new RegExp(`(?<![A-Za-z0-9])${escapeRegex(keys)}(?![A-Za-z0-9])`).test(text);
 }
@@ -121,8 +111,7 @@ for (const file of files) {
     // Keys must attach with a plain space, never a separator. The `-` case
     // false-positives when a dash is part of the keys (Ctrl-w), so flag for
     // eyeballing, not as error. (`:` is skipped — it's usually the prompt being
-    // taught, not a separator.) A trailing `(dw)` is a separator; `( and )` is
-    // the keys themselves.
+    // taught, not a separator.)
     if (/\s-\s/.test(s) || /\s→\s/.test(s) || /\s\([^\s()]+\)\s*$/.test(s)) {
       separators.push([file, s]);
     }
@@ -158,12 +147,11 @@ clampingDetails.sort((a, b) => b[0] - a[0]);
 longDetails.sort((a, b) => b[0] - a[0]);
 tooManyDetails.sort((a, b) => b[0] - a[0]);
 
-section(`Summaries over ${SUMMARY_MAX} chars`, longSummaries, ([n, f, s]) =>
-  `${String(n).padEnd(3)} ${f.replace(".json", "").padEnd(12)} ${JSON.stringify(s)}`,
-);
-const lengthRow = ([n, f, text]) => `${String(n).padEnd(3)} ${f.replace(".json", "").padEnd(12)} ${JSON.stringify(text)}`;
-const fileRow = ([f, text]) => `${f.replace(".json", "").padEnd(12)} ${JSON.stringify(text)}`;
+const label = (file) => file.replace(".json", "");
+const fileRow = ([f, text]) => `${label(f).padEnd(12)} ${JSON.stringify(text)}`;
+const lengthRow = ([n, f, text]) => `${String(n).padEnd(3)} ${fileRow([f, text])}`;
 
+section(`Summaries over ${SUMMARY_MAX} chars`, longSummaries, lengthRow);
 section(
   `Details over ~${DETAIL_CLAMP} chars (approx.; clamps the whole balloon to 240px, fix first)`,
   clampingDetails,
@@ -180,7 +168,7 @@ section("Possible stray separators in summaries (eyeball — `-` may be part of 
 section('Slash between symbol keys (join symbol pairs with "and": { and })', symbolSlashes, fileRow);
 section("Details opening with filler (Useful/Handy/Use it/Good for/Great)", fillerOpeners, fileRow);
 section("First detail repeats the summary's keys (spend the line on what they do)", restatedKeys, ([f, s, d]) =>
-  `${f.replace(".json", "").padEnd(12)} ${JSON.stringify(s)}\n      ${JSON.stringify(d)}`,
+  `${fileRow([f, s])}\n      ${JSON.stringify(d)}`,
 );
 
 // Possible duplicate TIPS — the same behavior taught twice, which the generator
@@ -212,12 +200,10 @@ for (let i = 0; i < allTips.length; i++) {
 }
 section("Possible duplicate tips (eyeball — some repeat legitimately)", dupPairs, ([reason, words, a, b]) =>
   `${reason}${words.length ? ` [${words.join(", ")}]` : ""}\n      ` +
-  `${a.file.replace(".json", "")}: ${JSON.stringify(a.summary)}\n      ` +
-  `${b.file.replace(".json", "")}: ${JSON.stringify(b.summary)}`,
+  `${label(a.file)}: ${JSON.stringify(a.summary)}\n      ` +
+  `${label(b.file)}: ${JSON.stringify(b.summary)}`,
 );
 
-// Tips sharing two or more detail lines usually teach the same thing twice, or
-// copy-pasted lines that fit only one of them.
 const sharedDetails = [];
 for (let i = 0; i < allTips.length; i++) {
   for (let j = i + 1; j < allTips.length; j++) {
@@ -226,13 +212,12 @@ for (let i = 0; i < allTips.length; i++) {
   }
 }
 section("Tips sharing 2+ detail lines", sharedDetails, ([shared, a, b]) =>
-  `${a.file.replace(".json", "")}: ${JSON.stringify(a.summary)}\n      ` +
-  `${b.file.replace(".json", "")}: ${JSON.stringify(b.summary)}\n      ` +
+  `${label(a.file)}: ${JSON.stringify(a.summary)}\n      ` +
+  `${label(b.file)}: ${JSON.stringify(b.summary)}\n      ` +
   shared.map((d) => JSON.stringify(d)).join("\n      "),
 );
 
-// The hide key hashes the trimmed summary, so every summary that disappears
-// relative to the committed artifact resets that tip's hide for its users.
+// The hide key hashes the summary, so a renamed or removed summary resets that tip's hide.
 function publishedSummaries() {
   const result = spawnSync("git", ["show", "HEAD:tips/vim_tips_min.json"], {
     cwd: repoRoot,
@@ -257,8 +242,6 @@ if (published.skipped) {
   const oldSummaries = new Set(published.tips.map((t) => (t.summary ?? "").trim()));
   const added = allTips.filter((t) => !oldSummaries.has(t.summary.trim()));
   const gone = published.tips.filter((t) => !current.has((t.summary ?? "").trim()));
-  // Best-guess rename target: a new summary with the same key signature, or one
-  // sharing 2+ topic words (modifier names like "ctrl" carry no topic).
   const MODIFIER_WORDS = new Set(["ctrl", "shift", "alt"]);
   const likelyRename = (old) => {
     const sig = keySignature(old);

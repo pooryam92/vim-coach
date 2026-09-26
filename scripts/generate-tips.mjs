@@ -28,21 +28,11 @@ function fail(message) {
   process.exit(1);
 }
 
-// The source fields a tip may carry. Sources are validated strictly so a typo'd
-// key fails here instead of being silently dropped; the runtime TipJsonParser
-// stays lenient on purpose (forward compatibility with newer published files).
+// Strict here so typos fail; the runtime TipJsonParser stays lenient for forward compatibility.
 const ALLOWED_KEYS = new Set(["category", "summary", "details", "advanced", "mode", "config"]);
 const MAX_CATEGORIES = 3;
 
-// Config lines are written verbatim into .ideavimrc, so keep order and duplicates;
-// only trim and drop blanks.
-function normalizeConfigLines(lines) {
-  return lines.map((l) => l.trim()).filter(Boolean);
-}
-
-// Accepts the object form { name?, lines } or the legacy array form ["line", ...].
-// Returns the emitted config (object when named, array otherwise); fails on any
-// other shape, a non-string line or name, or a config with no lines.
+// Accepts { name?, lines } or the legacy array form ["line", ...].
 function normalizeConfig(config, where) {
   const named = config !== null && typeof config === "object" && !Array.isArray(config);
   const lines = named ? config.lines : config;
@@ -50,7 +40,7 @@ function normalizeConfig(config, where) {
     fail(`${where} has a config without a lines array (expected { name, lines } or ["line", ...])`);
   }
   if (lines.some((l) => typeof l !== "string")) fail(`${where} has a non-string config line`);
-  const normalized = normalizeConfigLines(lines);
+  const normalized = lines.map((l) => l.trim()).filter(Boolean);
   if (normalized.length === 0) fail(`${where} has a config with no lines`);
   if (!named) return normalized;
   const unknown = Object.keys(config).filter((k) => k !== "name" && k !== "lines");
@@ -136,7 +126,6 @@ for (const category of ordered) {
     if (tip.config !== undefined && tip.config !== null) {
       const config = normalizeConfig(tip.config, where);
       const configLines = Array.isArray(config) ? config : config.lines;
-      // Plug lines install a plugin, and plugin tips must be findable under plugins.
       if (configLines.some((l) => /^Plug\s/.test(l)) && !categories.includes("plugins")) {
         fail(`${where} has a Plug config line but no 'plugins' category`);
       }
