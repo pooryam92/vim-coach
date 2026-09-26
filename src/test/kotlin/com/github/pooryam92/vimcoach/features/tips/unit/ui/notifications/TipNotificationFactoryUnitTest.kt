@@ -52,8 +52,8 @@ class TipNotificationFactoryUnitTest {
 
         assertTrue("advanced title renders HTML", title.startsWith("<html>"))
         assertTrue(title.contains(TipNotificationFactory.APP_TITLE))
-        assertTrue("advanced label dimmed after separator", title.contains(" · ${TipNotificationFactory.ADVANCED_LABEL}"))
-        assertTrue("label tail is dimmed", Regex("<span style=\"color:#[0-9a-fA-F]{6};\">").containsMatchIn(title))
+        assertNotNull("advanced label in its own coloured span", labelColor(title, TipNotificationFactory.ADVANCED_LABEL))
+        assertNotNull("separator precedes the label", labelColor(title, " · "))
     }
 
     @Test
@@ -65,8 +65,23 @@ class TipNotificationFactoryUnitTest {
             val title = notifier.createNotification(tip).title
 
             assertTrue("mode ${mode.wireValue} renders HTML", title.startsWith("<html>"))
-            assertTrue("mode ${mode.wireValue} shows ${mode.label}", title.contains(" · ${mode.label}"))
+            assertNotNull("mode ${mode.wireValue} shows ${mode.label} in a coloured span", labelColor(title, mode.label))
         }
+    }
+
+    @Test
+    fun createNotificationGivesEachLabelADistinctColourFromTheSeparator() {
+        val notifier = TipNotificationFactory()
+        val advancedTitle = notifier.createNotification(VimTip(summary = "a", details = listOf("d"), advanced = true)).title
+        val separatorColor = labelColor(advancedTitle, " · ")
+        val labelColors = listOf(labelColor(advancedTitle, TipNotificationFactory.ADVANCED_LABEL)) +
+            TipMode.entries.map { mode ->
+                val title = notifier.createNotification(VimTip(summary = "m", details = listOf("d"), mode = mode.wireValue)).title
+                labelColor(title, mode.label)
+            }
+
+        assertEquals("every label has its own colour", labelColors.size, labelColors.toSet().size)
+        assertFalse("labels are not the dimmed separator colour", separatorColor in labelColors)
     }
 
     @Test
@@ -291,5 +306,10 @@ class TipNotificationFactoryUnitTest {
         assertEquals(TipNotificationFactory.TIP_EXCLUDED_WITH_MANAGEMENT_TEXT, notification.content)
         assertEquals(1, notification.actions.size)
         assertEquals(TipNotificationFactory.TIP_MANAGE_EXCLUDED_ACTION_TEXT, notification.actions.single().templateText)
+    }
+
+    private fun labelColor(title: String, label: String): String? {
+        return Regex("<span style=\"color:#([0-9a-fA-F]{6});\">${Regex.escape(label)}</span>")
+            .find(title)?.groupValues?.get(1)
     }
 }

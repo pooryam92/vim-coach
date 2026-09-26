@@ -9,7 +9,9 @@ import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.util.IconLoader
 import com.intellij.ui.ColorUtil
+import com.intellij.ui.JBColor
 import com.intellij.util.ui.UIUtil
+import java.awt.Color
 
 class TipNotificationFactory {
 
@@ -56,20 +58,33 @@ class TipNotificationFactory {
         }
     }
 
-    // The title carries quiet metadata after the app name: an "Advanced" tag and the mode the
-    // reader must be in to press the keys (Advanced first, both optional). The title renders HTML,
-    // so the app name stays full weight while the whole label tail is dimmed (titleLabelForeground) —
-    // the app name is the only prominent text and the metadata reads as secondary. A tip with
-    // neither label keeps the plain app title (no HTML wrapper).
+    // The title carries metadata after the app name: an "Advanced" tag and the mode the reader
+    // must be in to press the keys (Advanced first, both optional). Each label gets its own
+    // theme-aware colour so it stands out from the app name (which readers skip, since it never
+    // changes), while the separators stay dimmed. A tip with neither label keeps the plain app
+    // title (no HTML wrapper).
     private fun notificationTitle(tip: VimTip): String {
         val labels = buildList {
-            if (tip.advanced) add(ADVANCED_LABEL)
-            TipMode.fromWire(tip.mode)?.let { add(it.label) }
+            if (tip.advanced) add(ADVANCED_LABEL to ADVANCED_LABEL_COLOR)
+            TipMode.fromWire(tip.mode)?.let { add(it.label to modeLabelColor(it)) }
         }
         if (labels.isEmpty()) return APP_TITLE
-        val tail = labels.joinToString("") { "$TITLE_LABEL_SEPARATOR$it" }
-        val color = ColorUtil.toHex(titleLabelForeground())
-        return "$HTML_OPEN${escapeHtml(APP_TITLE)}<span style=\"color:#$color;\">$tail</span>$HTML_CLOSE"
+        val separator = coloredSpan(TITLE_LABEL_SEPARATOR, titleSeparatorForeground())
+        val tail = labels.joinToString("") { (label, color) -> separator + coloredSpan(label, color) }
+        return "$HTML_OPEN${escapeHtml(APP_TITLE)}$tail$HTML_CLOSE"
+    }
+
+    // Mirrors the hues of IdeaVim's default ("Term") mode widget so a label reads like the status
+    // bar the user already knows. Command shares Normal's green there, as IdeaVim has no distinct
+    // colour for the command line.
+    private fun modeLabelColor(mode: TipMode): Color = when (mode) {
+        TipMode.INSERT -> INSERT_MODE_LABEL_COLOR
+        TipMode.VISUAL -> VISUAL_MODE_LABEL_COLOR
+        TipMode.COMMAND -> COMMAND_MODE_LABEL_COLOR
+    }
+
+    private fun coloredSpan(text: String, color: Color): String {
+        return "<span style=\"color:#${ColorUtil.toHex(color)};\">${escapeHtml(text)}</span>"
     }
 
     /** A named config uses its name verbatim as the apply button label; otherwise it stays generic. */
@@ -174,8 +189,8 @@ class TipNotificationFactory {
         }
     }
 
-    private fun titleLabelForeground(): java.awt.Color {
-        return ColorUtil.mix(UIUtil.getLabelForeground(), UIUtil.getContextHelpForeground(), TITLE_LABEL_DIM_RATIO)
+    private fun titleSeparatorForeground(): Color {
+        return ColorUtil.mix(UIUtil.getLabelForeground(), UIUtil.getContextHelpForeground(), TITLE_SEPARATOR_DIM_RATIO)
     }
 
     private fun escapeHtml(text: String): String {
@@ -196,9 +211,17 @@ class TipNotificationFactory {
         val TIP_MANAGE_EXCLUDED_ACTION_TEXT: String = MyBundle.message("tipManageExcludedAction")
         val ADVANCED_TIPS_AVAILABLE_TEXT: String = MyBundle.message("advancedTipsAvailableMessage")
         val ADVANCED_TIPS_OPEN_SETTINGS_ACTION_TEXT: String = MyBundle.message("advancedTipsOpenSettingsAction")
-        // Title label tail: dimmed metadata after the app name. Mode labels come from TipMode;
+        // Title label tail: metadata after the app name. Mode labels come from TipMode;
         // this is the only non-mode label, so it lives here.
         const val ADVANCED_LABEL: String = "Advanced"
+        // Dark values are IdeaVim's own widget colours; light values are the same hues darkened to
+        // 4.5:1 contrast, since IdeaVim paints them as backgrounds and they wash out as text on white.
+        // Advanced is a muted slate: it marks a tier, not a mode, so it stays quieter than the mode
+        // hues while still reading clearly against the dimmed separators.
+        private val ADVANCED_LABEL_COLOR = JBColor(0x60748E, 0x98A7B9)
+        private val INSERT_MODE_LABEL_COLOR = JBColor(0xA2640D, 0xF4BF75)
+        private val VISUAL_MODE_LABEL_COLOR = JBColor(0x46788D, 0x6A9FB5)
+        private val COMMAND_MODE_LABEL_COLOR = JBColor(0x67793F, 0x90A959)
         private const val TITLE_LABEL_SEPARATOR: String = " · "
         val TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT: String = MyBundle.message("tipAddToIdeaVimRcAction")
         val TIP_RELOAD_IDEAVIMRC_ACTION_TEXT: String = MyBundle.message("tipReloadIdeaVimRcAction")
@@ -225,7 +248,7 @@ class TipNotificationFactory {
         private const val SUMMARY_CLOSE = "</b>"
         private const val SUMMARY_DIV_OPEN = "<div style=\"margin-top:5px;\">"
         private const val SUMMARY_DIV_CLOSE = "</div>"
-        private const val TITLE_LABEL_DIM_RATIO = 0.55
+        private const val TITLE_SEPARATOR_DIM_RATIO = 0.55
         private const val DETAILS_OPEN = "<div style=\"margin-top:8px;margin-bottom:8px;\">"
         private const val DETAILS_CLOSE = "</div>"
     }
