@@ -4,6 +4,15 @@
 
 ## [Unreleased]
 
+### Added
+
+- Keys in a tip (`dd`, `Ctrl-w h`, `:%s/a/b/g`) are now shown in a soft teal, so the part you type stands out from the explanation
+
+### Changed
+
+- Refreshed the tip library: redundant and low-value tips are gone, the rest are reworded to fit on one line of the notification, and a few high-value tips are new (`>i{`, `gUU`, `d'a`, `80i-`, `;.`). The library goes from 308 to 282 tips
+- More niche tips are now marked **Advanced** (70 in total) and stay hidden unless **Show advanced tips** is on
+
 ### Removed
 
 - Tip **mnemonics** — the dimmed memory-aid line beneath some tips is gone; tip notifications now show just the summary and details
