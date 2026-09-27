@@ -8,8 +8,8 @@
       ],
       "summary": "Yank to the OS clipboard by default",
       "details": [
-        "y and p now use the OS clipboard",
-        "Copy in a browser, p pastes it"
+        "«y» and «p» now use the OS clipboard",
+        "Copy in a browser, «p» pastes it"
       ],
       "config": {
         "name": "Enable OS clipboard",
@@ -24,10 +24,10 @@
         "ideavim",
         "cmdline"
       ],
-      "summary": "Reload ~/.ideavimrc with :source",
+      "summary": "Reload ~/.ideavimrc with «:source»",
       "details": [
-        ":e ~/.ideavimrc opens it to edit",
-        ":source ~/.ideavimrc reloads it",
+        "«:e ~/.ideavimrc» opens it to edit",
+        "«:source ~/.ideavimrc» reloads it",
         "No IDE restart needed"
       ]
     },
@@ -48,10 +48,10 @@
         "ideavim",
         "options"
       ],
-      "summary": "Test options live with :set",
+      "summary": "Test options live with «:set»",
       "details": [
-        ":set nonumber hides line numbers",
-        ":set invnumber flips them back",
+        "«:set nonumber» hides line numbers",
+        "«:set invnumber» flips them back",
         "Add to .ideavimrc to keep it"
       ]
     },
@@ -60,10 +60,10 @@
         "ideavim",
         "cmdline"
       ],
-      "summary": "Run any IDE action with :action",
+      "summary": "Run any IDE action with «:action»",
       "details": [
-        ":action ReformatCode reformats now",
-        ":actionlist format finds more IDs"
+        "«:action ReformatCode» reformats now",
+        "«:actionlist format» finds more IDs"
       ]
     },
     {
@@ -72,10 +72,10 @@
         "options",
         "mappings"
       ],
-      "summary": "Show action IDs with trackactionids",
+      "summary": "Show action IDs with «trackactionids»",
       "details": [
         "Run any IDE action: its ID pops up",
-        "Paste it into <Action>(ID) maps"
+        "Paste it into «<Action>(ID)» maps"
       ],
       "advanced": true,
       "config": {
@@ -94,7 +94,7 @@
       "details": [
         "Settings | Editor | Vim lists them",
         "Pick IDE or Vim for each Ctrl key",
-        ".ideavimrc: sethandler <C-f> a:ide"
+        ".ideavimrc: «sethandler <C-f> a:ide»"
       ]
     },
     {
@@ -103,9 +103,9 @@
         "options",
         "editing"
       ],
-      "summary": "Smarter J join with ideajoin",
+      "summary": "Smarter «J» join with «ideajoin»",
       "details": [
-        "J on two // lines keeps one //",
+        "«J» on two // lines keeps one //",
         "Nested ifs join into if (a && b)"
       ],
       "config": {
@@ -119,9 +119,9 @@
       "category": [
         "ideavim"
       ],
-      "summary": "Open quick docs with K",
+      "summary": "Open quick docs with «K»",
       "details": [
-        "On a method call, K shows its docs",
+        "On a method call, «K» shows its docs",
         "Params and return type, no hover"
       ]
     },
@@ -130,10 +130,10 @@
         "ideavim",
         "navigation"
       ],
-      "summary": "Jump between errors ]e / [e",
+      "summary": "Jump between errors «]e» / «[e»",
       "details": [
         "Stops on warnings too",
-        "Then Alt-Enter offers a quick fix"
+        "Then «Alt-Enter» offers a quick fix"
       ],
       "config": {
         "name": "Map errors",
@@ -147,7 +147,7 @@
       "category": [
         "ideavim"
       ],
-      "summary": "Show error details with Ctrl-k",
+      "summary": "Show error details with «Ctrl-k»",
       "details": [
         "Pops up the error at the cursor",
         "Warnings too, no mouse hover needed"
@@ -164,7 +164,7 @@
         "ideavim",
         "navigation"
       ],
-      "summary": "Jump between git changes ]c / [c",
+      "summary": "Jump between git changes «]c» / «[c»",
       "details": [
         "Moves between uncommitted hunks",
         "Gutter marks vs the last commit"
@@ -182,10 +182,10 @@
         "ideavim",
         "editing"
       ],
-      "summary": "Open the quick-fix menu ga",
+      "summary": "Open the quick-fix menu «ga»",
       "details": [
-        "Same popup as Alt-Enter's lightbulb",
-        "Replaces ga, which shows char codes"
+        "Same popup as «Alt-Enter»'s lightbulb",
+        "Replaces «ga», which shows char codes"
       ],
       "config": {
         "name": "Map quick-fix",
@@ -199,10 +199,10 @@
         "ideavim",
         "editing"
       ],
-      "summary": "Rename a symbol everywhere gR",
+      "summary": "Rename a symbol everywhere «gR»",
       "details": [
         "Type the new name right in place",
-        "Same as Shift-F6, no chord needed"
+        "Same as «Shift-F6», no chord needed"
       ],
       "config": {
         "name": "Map rename",
@@ -216,10 +216,10 @@
         "ideavim",
         "editing"
       ],
-      "summary": "Open the refactor menu gm",
+      "summary": "Open the refactor menu «gm»",
       "details": [
         "Extract, inline, move in one list",
-        "Replaces gm, the mid-line jump"
+        "Replaces «gm», the mid-line jump"
       ],
       "config": {
         "name": "Map refactor",
@@ -233,7 +233,7 @@
         "ideavim",
         "editing"
       ],
-      "summary": "Move a line down/up Alt-j / Alt-k",
+      "summary": "Move a line down/up «Alt-j» / «Alt-k»",
       "details": [
         "Tap again to nudge it further",
         "Select lines first to move a block"
@@ -253,10 +253,10 @@
         "ideavim",
         "navigation"
       ],
-      "summary": "Find all usages gr",
+      "summary": "Find all usages «gr»",
       "details": [
         "Lists every call site, jump to any",
-        "Overrides gr ReplaceWithRegister"
+        "Overrides «gr» ReplaceWithRegister"
       ],
       "config": {
         "name": "Map find usages",
@@ -270,10 +270,10 @@
         "ideavim",
         "navigation"
       ],
-      "summary": "Jump to implementation gi",
+      "summary": "Jump to implementation «gi»",
       "details": [
         "From an interface to its class",
-        "Overrides gi insert-at-last-edit"
+        "Overrides «gi» insert-at-last-edit"
       ],
       "config": {
         "name": "Map implementation",
@@ -287,9 +287,9 @@
         "ideavim",
         "navigation"
       ],
-      "summary": "Map gD to type declaration",
+      "summary": "Map «gD» to type declaration",
       "details": [
-        "By default gD just repeats gd",
+        "By default «gD» just repeats «gd»",
         "Jumps from a variable to its type"
       ],
       "config": {
@@ -304,10 +304,10 @@
         "ideavim",
         "navigation"
       ],
-      "summary": "Outline this file gO",
+      "summary": "Outline this file «gO»",
       "details": [
         "Pops up every method and field",
-        "Type to filter, Enter to jump there"
+        "Type to filter, «Enter» to jump there"
       ],
       "config": {
         "name": "Map file structure",
@@ -321,9 +321,9 @@
         "ideavim",
         "cmdline"
       ],
-      "summary": "Jump to the test file :A",
+      "summary": "Jump to the test file «:A»",
       "details": [
-        ":A flips between code and its test",
+        "«:A» flips between code and its test",
         "No test? It offers to create one"
       ],
       "config": {
@@ -338,7 +338,7 @@
         "ideavim",
         "windows"
       ],
-      "summary": "Flip split orientation Ctrl-w O",
+      "summary": "Flip split orientation «Ctrl-w O»",
       "details": [
         "Swaps side-by-side for top/bottom",
         "IdeaVim binds no key for this"
@@ -355,7 +355,7 @@
         "ideavim",
         "windows"
       ],
-      "summary": "Move a file across splits Ctrl-w m",
+      "summary": "Move a file across splits «Ctrl-w m»",
       "details": [
         "Moves this tab to the other split",
         "Fixes opening it in the wrong split"

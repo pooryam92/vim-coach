@@ -1,10 +1,12 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.ui.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
+import com.github.pooryam92.vimcoach.features.tips.domain.TipKeySpan
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMode
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationActions
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationFactory
+import com.intellij.ui.ColorUtil
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
@@ -52,8 +54,7 @@ class TipNotificationFactoryUnitTest {
 
         assertTrue("advanced title renders HTML", title.startsWith("<html>"))
         assertTrue(title.contains(TipNotificationFactory.APP_TITLE))
-        assertNotNull("advanced label in its own coloured span", labelColor(title, TipNotificationFactory.ADVANCED_LABEL))
-        assertNotNull("separator precedes the label", labelColor(title, " · "))
+        assertTrue("dimmed separator precedes the label", followsDimmedSeparator(title, TipNotificationFactory.ADVANCED_LABEL))
     }
 
     @Test
@@ -65,23 +66,23 @@ class TipNotificationFactoryUnitTest {
             val title = notifier.createNotification(tip).title
 
             assertTrue("mode ${mode.wireValue} renders HTML", title.startsWith("<html>"))
-            assertNotNull("mode ${mode.wireValue} shows ${mode.label} in a coloured span", labelColor(title, mode.label))
+            assertTrue("mode ${mode.wireValue} shows ${mode.label} after a separator", followsDimmedSeparator(title, mode.label))
         }
     }
 
+    // The keys in the body carry the balloon's accent colour, so the title labels stay uncoloured.
     @Test
-    fun createNotificationGivesEachLabelADistinctColourFromTheSeparator() {
+    fun createNotificationKeepsTitleLabelsUncoloured() {
         val notifier = TipNotificationFactory()
-        val advancedTitle = notifier.createNotification(VimTip(summary = "a", details = listOf("d"), advanced = true)).title
-        val separatorColor = labelColor(advancedTitle, " · ")
-        val labelColors = listOf(labelColor(advancedTitle, TipNotificationFactory.ADVANCED_LABEL)) +
-            TipMode.entries.map { mode ->
-                val title = notifier.createNotification(VimTip(summary = "m", details = listOf("d"), mode = mode.wireValue)).title
-                labelColor(title, mode.label)
-            }
+        for (mode in TipMode.entries) {
+            val tip = VimTip(summary = "m ${mode.wireValue}", details = listOf("d"), advanced = true, mode = mode.wireValue)
 
-        assertEquals("every label has its own colour", labelColors.size, labelColors.toSet().size)
-        assertFalse("labels are not the dimmed separator colour", separatorColor in labelColors)
+            val title = notifier.createNotification(tip).title
+
+            assertNull("advanced label is plain", labelColor(title, TipNotificationFactory.ADVANCED_LABEL))
+            assertNull("${mode.label} is plain", labelColor(title, mode.label))
+            assertEquals("only the two separators are coloured", 2, Regex("<span ").findAll(title).count())
+        }
     }
 
     @Test
@@ -157,6 +158,69 @@ class TipNotificationFactoryUnitTest {
         assertTrue(notification.content.contains("5j → move down 5 lines"))
         assertTrue(notification.content.contains("literal &lt;tag&gt;"))
         assertFalse(notification.content.contains("literal <tag>"))
+    }
+
+    @Test
+    fun createNotificationStylesKeysInSummaryAndDetails() {
+        val summary = "Pick completions Ctrl-n / Ctrl-p"
+        val details = listOf("As you type, completions pop up", "Ctrl-y accepts")
+        val tip = VimTip(
+            summary = summary,
+            details = details,
+            keys = listOf(keySpan(0, summary, "Ctrl-n"), keySpan(0, summary, "Ctrl-p"), keySpan(2, details[1], "Ctrl-y"))
+        )
+
+        val content = TipNotificationFactory().createNotification(tip).content
+
+        assertEquals(listOf("Ctrl-n", "Ctrl-p", "Ctrl-y"), styledKeys(content))
+        assertTrue(content.contains("Pick completions "))
+        assertTrue(content.contains("As you type, completions pop up"))
+        assertTrue(content.contains(" accepts"))
+    }
+
+    @Test
+    fun createNotificationEscapesHtmlInsideStyledKeys() {
+        val summary = "Indent lines >> and <<"
+        val tip = VimTip(
+            summary = summary,
+            details = listOf("d"),
+            keys = listOf(keySpan(0, summary, ">>"), keySpan(0, summary, "<<"))
+        )
+
+        val content = TipNotificationFactory().createNotification(tip).content
+
+        assertEquals(listOf("&gt;&gt;", "&lt;&lt;"), styledKeys(content))
+    }
+
+    @Test
+    fun createNotificationSkipsOverlappingAndOutOfRangeKeysKeepingTheText() {
+        val tip = VimTip(
+            summary = "dd deletes",
+            details = listOf("x"),
+            keys = listOf(
+                TipKeySpan(0, 1, 3),
+                TipKeySpan(0, 0, 2),
+                TipKeySpan(0, 5, 99),
+                TipKeySpan(7, 0, 1),
+                TipKeySpan(1, 1, 1)
+            )
+        )
+
+        val content = TipNotificationFactory().createNotification(tip).content
+
+        assertEquals(listOf("dd"), styledKeys(content))
+        assertTrue(content.contains("</span> deletes"))
+        assertTrue(content.contains("x"))
+    }
+
+    @Test
+    fun createNotificationLeavesTextUnstyledWithoutKeys() {
+        val tip = VimTip(summary = "Delete lines dd", details = listOf("dd deletes"))
+
+        val content = TipNotificationFactory().createNotification(tip).content
+
+        assertEquals(emptyList<String>(), styledKeys(content))
+        assertTrue(content.contains("Delete lines dd"))
     }
 
     @Test
@@ -306,6 +370,21 @@ class TipNotificationFactoryUnitTest {
         assertEquals(TipNotificationFactory.TIP_EXCLUDED_WITH_MANAGEMENT_TEXT, notification.content)
         assertEquals(1, notification.actions.size)
         assertEquals(TipNotificationFactory.TIP_MANAGE_EXCLUDED_ACTION_TEXT, notification.actions.single().templateText)
+    }
+
+    private fun followsDimmedSeparator(title: String, label: String): Boolean {
+        return Regex("<span style=\"color:#[0-9a-fA-F]{6};\"> · </span>${Regex.escape(label)}").containsMatchIn(title)
+    }
+
+    private fun keySpan(line: Int, text: String, key: String): TipKeySpan {
+        val start = text.indexOf(key)
+        return TipKeySpan(line, start, start + key.length)
+    }
+
+    private fun styledKeys(content: String): List<String> {
+        val keyColor = ColorUtil.toHex(TipNotificationFactory.KEY_COLOR)
+        return Regex("<span style=\"color:#$keyColor;\">(.*?)</span>")
+            .findAll(content).map { it.groupValues[1] }.toList()
     }
 
     private fun labelColor(title: String, label: String): String? {

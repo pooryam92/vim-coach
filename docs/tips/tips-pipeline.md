@@ -30,11 +30,12 @@ asked:
 ```bash
 node scripts/generate-tips.mjs --check   # validate sources, write nothing
 node scripts/generate-tips.mjs           # rebuild the artifact (CI / on request)
+node scripts/generate-tips.mjs --out f   # write to another file instead
 ```
 
 For the soft, advisory checks the generator does not enforce, run
-`node scripts/lint-tips.mjs`. It never gates (always exits 0); it prints a
-report to eyeball:
+`node scripts/lint-tips.mjs`. It never gates (always exits 0), judges the text
+readers see (key markers stripped), and prints a report to eyeball:
 
 - summaries over 35 chars, and details in two approximate tiers: 44+ chars
   (one such line clamps the whole balloon to 240px, so fix these first) and
@@ -74,6 +75,26 @@ submodule is not checked out. Run it from the repo root. How it matches:
 
 The `tips-maintain` skill uses it to find candidate tips worth adding.
 
+### Key markers
+
+Authors wrap every key the reader types in guillemets inside `summary` and
+`details`: `"«Ctrl-n» down, «Ctrl-p» up the list"`. Every printable ASCII
+character is a Vim key, so the markers have to be non-ASCII. What counts as a
+key, and how to split spans, is authoring guidance in the `tips-maintain` skill.
+
+The generator (through `scripts/tip-keys.mjs`, shared with the lint and coverage
+scripts) strips the markers, so the published `summary` and `details` stay plain
+text, and emits their positions as an optional `keys` array of
+`[line, start, end]` triples: line 0 is the summary, 1.. the details, and
+`start`/`end` are UTF-16 offsets into that line (the units both JavaScript and
+Kotlin strings index by). The plugin styles those ranges in the balloon (see
+[Show a tip](../features/show-tip.md#key-styling)). Keeping the markers out of
+the text is what keeps older plugins, which ignore `keys`, showing clean tips.
+The summary a tip is hashed by is the unmarked one, so marking a key never
+resets a hide preference.
+
+`node --test scripts/tip-keys.test.mjs` covers the marker parser.
+
 ### Ordering
 
 Tips are emitted grouped by category, with categories sorted **alphabetically**
@@ -101,6 +122,13 @@ tip:
 - has a non-boolean `advanced` or a `mode` outside `insert`, `visual` and
   `command`
 - repeats a `summary` already used by another tip, in any file
+- has malformed key markers in `summary` or `details`: an unclosed or unopened
+  marker, a nested one, or an empty key or one with spaces just inside the
+  markers (`« dd»`). A `keys` field in the source is rejected as an unknown key;
+  only the generator writes it.
+- has a key marker (`«` or `»`) in a `config` line or `config` name. Those are
+  written verbatim into the user's `.ideavimrc`, where a marker would break the
+  line.
 
 Length and wording limits (such as the 35-char summary target) are not hard
 rules: `lint-tips.mjs` reports them. The runtime `TipJsonParser` stays lenient
@@ -111,9 +139,11 @@ The error message names the offending file and tip so you can fix it quickly.
 
 ### Normalization
 
-For each tip the generator trims surrounding whitespace and drops blank
+For each tip the generator trims surrounding whitespace, drops blank
 `details` and `config` lines (a repeated detail fails validation instead of
-being removed). The optional
+being removed), and turns key markers into the `keys` field, emitted only when a
+tip has at least one key. Duplicate summaries and details are judged on the
+unmarked text. The optional
 `advanced` flag is emitted only when `true` (kept off the artifact otherwise, so
 it stays minimal); a non-boolean `advanced` value fails generation.
 The optional `mode` field is emitted only when set and must be one of `insert`,
@@ -150,7 +180,7 @@ the field and the tagging guidance.
 
 The optional `mode` field rides the same schema the same way. It names the mode
 the reader must be in to press the tip's keys — `insert`, `visual`, or `command`
-(absent = Normal, never labelled) — and renders as a dimmed label after the app
+(absent = Normal, never labelled) — and renders as a plain label after the app
 name in the tip balloon title (see
 [Show a tip](../features/show-tip.md#advanced-tips-marker-and-nudge)). The generator validates
 the value strictly (`--check` rejects anything outside the enum), while
@@ -160,6 +190,24 @@ instead of failing the file — the same forward-compatibility the `advanced` fi
 relies on. `mode` is informational only: unlike `advanced` it is not an opt-in
 setting and does not affect which tips are shown, hidden, or de-duplicated.
 
+The optional `keys` field rides the same schema. `TipJsonParser` keeps it lenient
+too: a `keys` value that is not an array, or an entry that is not three
+integers, is dropped (Gson would otherwise abort the whole tips array), and so
+is a span that falls outside its line. Offsets point into the text exactly as
+published, so if the parser has to normalize a tip's text (trim a line, drop a
+blank or repeated detail) it drops all of that tip's keys rather than style the
+wrong characters. The keys are stored with the tip in the local cache.
+`BundledTipsContractUnitTest` checks that every key survives parsing.
+
+The contract test runs against a fresh build of the sources, not the committed
+file: the committed file only picks up source changes once CI regenerates it on
+`main`, so on a branch it would test stale data. The `generateTestTips` Gradle
+task runs `node scripts/generate-tips.mjs --out
+build/generated/tips/vim_tips_min.json` before every test run and passes the
+path in the `vimcoach.test.tipsFile` system property, so `./gradlew test` needs
+`node` on the `PATH`. Run from the IDE without that property, the test falls
+back to the committed `tips/vim_tips_min.json`.
+
 ## CI: the Generate Tips workflow
 
 `.github/workflows/generate-tips.yml` keeps the published file in sync
@@ -167,12 +215,13 @@ automatically. It runs on pushes to `main` and on pull requests, but only when
 one of these changes:
 
 - `tips/categories/**`
-- `scripts/generate-tips.mjs`
+- `scripts/generate-tips.mjs` or the key-marker module `scripts/tip-keys.mjs`
+  (and its test)
 - the workflow file itself
 
 What it does depends on the event:
 
-- **On a pull request** it only validates:
+- **On a pull request** it only validates: it runs the key-marker tests and
   `node scripts/generate-tips.mjs --check`, with read-only permissions. It
   never pushes, because `GITHUB_TOKEN` is read-only on pull requests from forks.
 - **On a push to `main`** it runs `node scripts/generate-tips.mjs` and, if the

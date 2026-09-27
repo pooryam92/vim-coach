@@ -171,8 +171,24 @@ tasks {
     }
 }
 
+// The committed tips/vim_tips_min.json only catches up with the sources after CI regenerates it on
+// main, so the tips contract test checks a fresh build of the sources instead.
+val generateTestTips = tasks.register<Exec>("generateTestTips") {
+    description = "Generates tips from tips/categories for the tips contract test."
+    val outputFile = layout.buildDirectory.file("generated/tips/vim_tips_min.json")
+    inputs.dir("tips/categories")
+    inputs.files("scripts/generate-tips.mjs", "scripts/tip-keys.mjs")
+    outputs.file(outputFile)
+    commandLine("node", "scripts/generate-tips.mjs", "--out", outputFile.get().asFile.absolutePath)
+}
+
 tasks.withType<Test>().configureEach {
     useJUnit()
+    dependsOn(generateTestTips)
+    systemProperty(
+        "vimcoach.test.tipsFile",
+        layout.buildDirectory.file("generated/tips/vim_tips_min.json").get().asFile.absolutePath
+    )
 }
 
 val requestedTasks = gradle.startParameter.taskNames

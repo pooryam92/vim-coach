@@ -13,11 +13,13 @@ on:
     paths:
       - 'tips/categories/**'
       - 'scripts/generate-tips.mjs'
+      - 'scripts/tip-keys*.mjs'
       - '.github/workflows/generate-tips.yml'
   pull_request:
     paths:
       - 'tips/categories/**'
       - 'scripts/generate-tips.mjs'
+      - 'scripts/tip-keys*.mjs'
       - '.github/workflows/generate-tips.yml'
 
 jobs:
@@ -30,6 +32,9 @@ jobs:
     steps:
       - name: Fetch Sources
         uses: actions/checkout@v7
+
+      - name: Test the key-marker parser
+        run: node --test scripts/tip-keys.test.mjs
 
       - name: Validate tips/categories
         run: node scripts/generate-tips.mjs --check

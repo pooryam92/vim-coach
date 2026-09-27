@@ -5,11 +5,11 @@
         "pattern",
         "repeat"
       ],
-      "summary": "Search and hop through matches /",
+      "summary": "Search and hop through matches «/»",
       "details": [
-        "/foo Enter jumps to the next foo",
-        "n goes to the next one, N back",
-        "? searches backward instead"
+        "«/foo Enter» jumps to the next foo",
+        "«n» goes to the next one, «N» back",
+        "«?» searches backward instead"
       ]
     },
     {
@@ -17,10 +17,10 @@
         "pattern",
         "navigation"
       ],
-      "summary": "Search word under cursor * and #",
+      "summary": "Search word under cursor «*» and «#»",
       "details": [
-        "* jumps to the next copy of it",
-        "# jumps to the previous copy",
+        "«*» jumps to the next copy of it",
+        "«#» jumps to the previous copy",
         "Whole word only, so foo skips food"
       ]
     },
@@ -32,19 +32,19 @@
       ],
       "summary": "Rename a word across a file",
       "details": [
-        "* picks the word, cgn changes it",
-        "Type the new word, press Esc",
-        "Then . fixes each next copy"
+        "«*» picks the word, «cgn» changes it",
+        "Type the new word, press «Esc»",
+        "Then «.» fixes each next copy"
       ]
     },
     {
       "category": [
         "pattern"
       ],
-      "summary": "Override case in a search \\c and \\C",
+      "summary": "Override case in a search «\\c» and «\\C»",
       "details": [
-        "/foo\\c matches Foo FOO foo",
-        "/Foo\\C matches only Foo, not foo"
+        "«/foo\\c» matches Foo FOO foo",
+        "«/Foo\\C» matches only Foo, not foo"
       ],
       "advanced": true
     },
@@ -52,11 +52,11 @@
       "category": [
         "pattern"
       ],
-      "summary": "Match whole words with \\< and \\>",
+      "summary": "Match whole words with «\\<» and «\\>»",
       "details": [
-        "/ opens a search as usual",
-        "Wrap your word: \\<in\\>",
-        "/\\<in\\> finds in, not pin or into"
+        "«/» opens a search as usual",
+        "Wrap your word: «\\<in\\>»",
+        "«/\\<in\\>» finds in, not pin or into"
       ],
       "advanced": true
     },
@@ -65,10 +65,10 @@
         "pattern",
         "navigation"
       ],
-      "summary": "Recenter search results with nzz",
+      "summary": "Recenter search results with «nzz»",
       "details": [
-        "n finds the next match, zz centers",
-        "Nzz does it the other way"
+        "«n» finds the next match, «zz» centers",
+        "«Nzz» does it the other way"
       ]
     },
     {
@@ -76,11 +76,11 @@
         "pattern",
         "editing"
       ],
-      "summary": "Delete up to a match d/foo",
+      "summary": "Delete up to a match «d/foo»",
       "details": [
-        "d/foo Enter deletes up to foo",
-        "d/foo/e Enter deletes foo too",
-        "d?foo Enter deletes back over foo"
+        "«d/foo Enter» deletes up to foo",
+        "«d/foo/e Enter» deletes foo too",
+        "«d?foo Enter» deletes back over foo"
       ],
       "advanced": true
     },
@@ -88,11 +88,11 @@
       "category": [
         "pattern"
       ],
-      "summary": "Search text as-is with \\V",
+      "summary": "Search text as-is with «\\V»",
       "details": [
-        "/ opens a search as usual",
-        "Add \\V to drop all regex",
-        "/\\Va.b finds a.b, not aXb"
+        "«/» opens a search as usual",
+        "Add «\\V» to drop all regex",
+        "«/\\Va.b» finds a.b, not aXb"
       ],
       "advanced": true
     },
@@ -100,10 +100,10 @@
       "category": [
         "pattern"
       ],
-      "summary": "Search with full regex \\v",
+      "summary": "Search with full regex «\\v»",
       "details": [
-        "/\\v(foo|bar) finds foo or bar",
-        "Plain / needs \\(foo\\|bar\\)"
+        "«/\\v(foo|bar)» finds foo or bar",
+        "Plain «/» needs «\\(foo\\|bar\\)»"
       ],
       "advanced": true
     },
@@ -112,10 +112,10 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Replace every match with :%s",
+      "summary": "Replace every match with «:%s»",
       "details": [
-        ":%s/foo/bar/g turns foo into bar",
-        "% is the whole file, g every match"
+        "«:%s/foo/bar/g» turns foo into bar",
+        "«%» is the whole file, «g» every match"
       ]
     },
     {
@@ -123,10 +123,10 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Count matches with :%s/foo//n",
+      "summary": "Count matches with «:%s/foo//n»",
       "details": [
         "Reports 3 matches on 2 lines",
-        "n counts only, text is untouched",
+        "«n» counts only, text is untouched",
         "The empty replacement is ignored"
       ],
       "advanced": true
@@ -136,11 +136,11 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Reuse last / pattern in :s with //",
+      "summary": "Reuse last «/» pattern in «:s» with «//»",
       "details": [
-        "Search /foo, then :%s//bar/g",
+        "Search «/foo», then «:%s//bar/g»",
         "The empty pattern reuses foo",
-        "Ctrl-r / pastes foo to edit it"
+        "«Ctrl-r /» pastes foo to edit it"
       ],
       "advanced": true
     },
@@ -149,11 +149,11 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Confirm each :s replace with gc",
+      "summary": "Confirm each «:s» replace with «gc»",
       "details": [
-        ":%s/foo/bar/gc stops at each foo",
-        "y replaces it, n skips it",
-        "a replaces all, q quits"
+        "«:%s/foo/bar/gc» stops at each foo",
+        "«y» replaces it, «n» skips it",
+        "«a» replaces all, «q» quits"
       ],
       "advanced": true
     },
@@ -162,11 +162,11 @@
         "pattern",
         "repeat"
       ],
-      "summary": "Repeat last :s with & and g&",
+      "summary": "Repeat last «:s» with «&» and «g&»",
       "details": [
-        ":s/foo/bar/ changes one line",
-        "& reruns it on the line you're on",
-        "g& reruns it across the whole file"
+        "«:s/foo/bar/» changes one line",
+        "«&» reruns it on the line you're on",
+        "«g&» reruns it across the whole file"
       ],
       "advanced": true
     },
@@ -175,10 +175,10 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Reuse the match in :s with &",
+      "summary": "Reuse the match in «:s» with «&»",
       "details": [
-        ":%s/cat/&s/g turns cat into cats",
-        "& stands for whatever matched"
+        "«:%s/cat/&s/g» turns cat into cats",
+        "«&» stands for whatever matched"
       ],
       "advanced": true
     },
@@ -188,10 +188,10 @@
         "cmdline",
         "visual"
       ],
-      "summary": "Limit :s to a range",
+      "summary": "Limit «:s» to a range",
       "details": [
-        ":10,20s/a/b/g edits lines 10 to 20",
-        "Or select lines first, then :s"
+        "«:10,20s/a/b/g» edits lines 10 to 20",
+        "Or select lines first, then «:s»"
       ],
       "advanced": true
     },
@@ -200,10 +200,10 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Act on matching lines with :g",
+      "summary": "Act on matching lines with «:g»",
       "details": [
-        ":g/TODO/d deletes every TODO line",
-        ":g/TODO/s/a/b/ edits just those"
+        "«:g/TODO/d» deletes every TODO line",
+        "«:g/TODO/s/a/b/» edits just those"
       ],
       "advanced": true
     },
@@ -212,9 +212,9 @@
         "pattern",
         "cmdline"
       ],
-      "summary": "Keep only matching lines :v/foo/d",
+      "summary": "Keep only matching lines «:v/foo/d»",
       "details": [
-        ":v/foo/d deletes lines lacking foo",
+        "«:v/foo/d» deletes lines lacking foo",
         "What's left: only the foo lines"
       ],
       "advanced": true

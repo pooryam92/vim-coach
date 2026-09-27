@@ -59,6 +59,17 @@ class BundledTipsContractUnitTest {
     }
 
     @Test
+    fun everyKeySpanSurvivesParsing() {
+        val parsedBySummary = parsedTips.associateBy(VimTip::summary)
+        val violations = rawTips.filter { it.has("keys") }.mapNotNull { tip ->
+            val raw = tip.getAsJsonArray("keys").size()
+            val parsed = parsedBySummary[rawSummary(tip)]?.keys?.size ?: 0
+            if (raw == parsed) null else "${rawSummary(tip)}: $parsed of $raw keys parsed"
+        }
+        assertNoViolations("tips that lost key spans in TipJsonParser", violations)
+    }
+
+    @Test
     fun summariesAreUnique() {
         val violations = rawTips.map(::rawSummary)
             .groupingBy { it }.eachCount()
@@ -91,7 +102,9 @@ class BundledTipsContractUnitTest {
             "options", "pattern", "plugins", "registers", "repeat", "visual", "windows",
         )
 
+        // Gradle passes a fresh build of tips/categories; the committed file is the fallback for IDE runs.
         fun locateMinJson(): File {
+            System.getProperty("vimcoach.test.tipsFile")?.let { return File(it) }
             val start = File(System.getProperty("user.dir")).absoluteFile
             return generateSequence(start) { it.parentFile }
                 .map { File(it, "tips/vim_tips_min.json") }

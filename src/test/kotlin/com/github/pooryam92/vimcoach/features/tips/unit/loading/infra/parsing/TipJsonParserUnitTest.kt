@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.loading.infra.parsing
 
+import com.github.pooryam92.vimcoach.features.tips.domain.TipKeySpan
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.application.loading.infra.parsing.TipJsonParser
 import org.junit.Assert.assertEquals
@@ -326,6 +327,69 @@ class TipJsonParserUnitTest {
     }
 
     @Test
+    fun parseTipsJsonDefaultsKeysToEmptyWhenAbsent() {
+        val tips = parse("""{"tips":[{"summary":"jump","details":["use %"]}]}""")
+
+        assertEquals(emptyList<TipKeySpan>(), tips.single().keys)
+    }
+
+    @Test
+    fun parseTipsJsonReadsKeySpansForSummaryAndDetails() {
+        val json = """
+            {"tips":[{"summary":"Delete lines dd","details":["x deletes a char","3dd deletes three"],
+                      "keys":[[0,13,15],[2,0,3]]}]}
+        """.trimIndent()
+
+        val tip = parse(json).single()
+
+        assertEquals(listOf(TipKeySpan(0, 13, 15), TipKeySpan(2, 0, 3)), tip.keys)
+    }
+
+    // A malformed `keys` entry must not cost the tip (or the file) anything beyond that entry.
+    @Test
+    fun parseTipsJsonDropsMalformedOrOutOfRangeKeysKeepingAllTips() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"object", "details":["dd"], "keys":{"line":0}},
+                {"summary":"string", "details":["dd"], "keys":"dd"},
+                {"summary":"mixed", "details":["dd now"], "keys":[[1,0,2],[1,0],["1",0,2],[1,0.5,2],null,[1,3,6]]},
+                {"summary":"range", "details":["dd"], "keys":[[1,0,3],[2,0,1],[1,2,2],[1,-1,1],[1,0,2]]}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = parse(json)
+
+        assertEquals(4, tips.size)
+        assertEquals(emptyList<TipKeySpan>(), tips[0].keys)
+        assertEquals(emptyList<TipKeySpan>(), tips[1].keys)
+        assertEquals(listOf(TipKeySpan(1, 0, 2), TipKeySpan(1, 3, 6)), tips[2].keys)
+        assertEquals(listOf(TipKeySpan(1, 0, 2)), tips[3].keys)
+    }
+
+    // Offsets index the text as published; once normalization shifts a line they could point at
+    // the wrong characters, so the tip is shown unstyled instead.
+    @Test
+    fun parseTipsJsonDropsKeysWhenNormalizationShiftsTheText() {
+        val json = """
+            {
+              "tips": [
+                {"summary":"padded", "details":["  dd deletes"], "keys":[[1,2,4]]},
+                {"summary":"blank", "details":["", "dd deletes"], "keys":[[2,0,2]]},
+                {"summary":"clean", "details":["dd deletes"], "keys":[[1,0,2]]}
+              ]
+            }
+        """.trimIndent()
+
+        val tips = parse(json)
+
+        assertEquals(emptyList<TipKeySpan>(), tips[0].keys)
+        assertEquals(emptyList<TipKeySpan>(), tips[1].keys)
+        assertEquals(listOf(TipKeySpan(1, 0, 2)), tips[2].keys)
+    }
+
+    @Test
     fun parseTipsJsonIgnoresUnknownFields() {
         val json = """
             {
@@ -360,4 +424,7 @@ class TipJsonParserUnitTest {
 
         assertEquals(emptyList<VimTip>(), tips)
     }
+
+    private fun parse(json: String) =
+        TipJsonParser.parseTipsJson(ByteArrayInputStream(json.toByteArray(Charsets.UTF_8)))
 }

@@ -1,9 +1,11 @@
-# Tips reference — support checks, config blocks, categories
+# Tips reference — support checks, key markers, config blocks, categories
 
 On-demand companion to `SKILL.md`. Open the section you need:
 
 - [Checking IdeaVim support](#checking-ideavim-support) — prove a
   command/behavior is supported before keeping a claim.
+- [Marking keys](#marking-keys) — which text gets `«…»` and how to split
+  spans.
 - [Config tips — what's safe to ship](#config-tips--whats-safe-to-ship) —
   authoring or reviewing a tip's `config` block.
 - [Adding or changing a category](#adding-or-changing-a-category) — the coupled
@@ -137,6 +139,54 @@ https://vimhelp.org/usr_toc.txt.html. Category → page: `editing`→editing.txt
 `cmdline`→cmdline.txt, `options`→options.txt, `visual`→visual.txt,
 `mappings`→map.txt, `windows`→windows.txt/tabpage.txt. Setup/usage not in the
 tree: [IdeaVim wiki](https://github.com/JetBrains/ideavim/wiki).
+
+## Marking keys
+
+The balloon styles keys in soft teal (the balloon's own font), and the sources mark them with
+guillemets: `"«Ctrl-n» down, «Ctrl-p» up the list"`. Every printable ASCII
+character is a Vim key, so nothing ASCII can be the marker. The generator
+strips the markers and publishes their positions (docs/tips/tips-pipeline.md →
+Key markers).
+
+**Mark what the reader types in (Idea)Vim, exactly as written:**
+
+- keys and sequences: `«dd»`, `«ciw»`, `«5j»`, `«"ayy»`, `«'a»`, `«``»`
+- chords and named keys: `«Ctrl-w»`, `«Alt-j»`, `«Shift-Tab»`, `«Esc»`,
+  `«Enter»`, `«Backspace»`, `«Up»`; IDE shortcuts a tip tells you to press
+  count too (`«Alt-Enter»`, `«Shift-F6»`)
+- ex commands with what is typed after them: `«:w»`, `«:%s/a/b/g»`,
+  `«:set hlsearch»`, `«:action ReformatCode»`
+- search input typed after a key: `«/foo»`, `«d/foo Enter»`, `«\v»`, `«\<»`
+- a bare prompt key naming its prompt: `the «:» prompt`, `the «=» prompt`
+- placeholders inside the key they belong to: `«r{char}»`, `«:edit {file}»`,
+  `«N%»`
+- option names the reader sets: `«scrolloff»`, `«ideajoin»`
+- digraph and register input: `«Ctrl-k a:» gives ä`, `«Ctrl-r 0»`
+
+**Split spans by what is typed in one go.** One span per unit, spaces included
+(`«Ctrl-w h»`, `«g Ctrl-a»`, `«r Enter»`, `«10 Ctrl-w >»`); alternatives and
+lists are separate spans with the joiners outside (`«p» / «P»`, `«{» and «}»`,
+`«d», «y»`, `«d»/«c»`: one span `«d/c»` would read as a command). A compact
+set with no spaces stays one span (`«Ctrl-w h/j/k/l»`, `«hjkl»`). Keep prose
+punctuation outside (`«x», then`, `(«gv»)`).
+
+**Don't mark:**
+
+- English words that happen to be key names ("**Enter** Visual mode",
+  "editor **tab**")
+- mode names, UI names, plugin names, bare file paths (`~/.ideavimrc`)
+- example buffer text, inserted text and results (`foo`, `arr[0]`, `19*7`,
+  `133`, "type **bar**", the `-` typed after `«80i»`)
+- register and mark names used as nouns ("into **a**", "marks **a** and
+  **b**"), unlike the typed form `«"a»`
+- `config` lines and `category` values; only `summary` and `details` carry
+  markers (the generator rejects a marker in a config line or name, since it
+  would be written into the user's `.ideavimrc`)
+
+The generator fails on malformed markers (unclosed, nested, empty, or with a
+space just inside), and `lint-tips.mjs` lists tips with no marked key and any
+chord or `:command` left outside markers. A few tips genuinely have no key
+(`Open ~/.ideavimrc in two clicks` is all clicks); leave those unmarked.
 
 ## Config tips — what's safe to ship
 

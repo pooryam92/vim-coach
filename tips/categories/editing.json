@@ -4,52 +4,52 @@
       "category": [
         "editing"
       ],
-      "summary": "Undo one line's changes U",
+      "summary": "Undo one line's changes «U»",
       "details": [
         "Reverts the last-changed line",
-        "Press U again to redo it"
+        "Press «U» again to redo it"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Change word text ciw / caw",
+      "summary": "Change word text «ciw» / «caw»",
       "details": [
-        "ciw changes the word, even mid-word",
-        "caw takes the trailing space too",
-        "diw / daw delete instead"
+        "«ciw» changes the word, even mid-word",
+        "«caw» takes the trailing space too",
+        "«diw» / «daw» delete instead"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Change a whole token ciW",
+      "summary": "Change a whole token «ciW»",
       "details": [
-        "ciW grabs all of user.getName()",
-        "ciw would stop at the dot"
+        "«ciW» grabs all of user.getName()",
+        "«ciw» would stop at the dot"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Change inside quotes ci\"",
+      "summary": "Change inside quotes «ci\"»",
       "details": [
         "Works from anywhere in the string",
-        "ca\" includes the quotes too",
-        "Swap c for d to delete instead"
+        "«ca\"» includes the quotes too",
+        "Swap «c» for «d» to delete instead"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Change inside brackets ci(",
+      "summary": "Change inside brackets «ci(»",
       "details": [
-        "ci( changes the text inside ( )",
-        "ci[ and ci{ work the same way",
+        "«ci(» changes the text inside ( )",
+        "«ci[» and «ci{» work the same way",
         "Cursor can sit anywhere inside"
       ]
     },
@@ -57,9 +57,9 @@
       "category": [
         "editing"
       ],
-      "summary": "Change a generic type ci<",
+      "summary": "Change a generic type «ci<»",
       "details": [
-        "In List<String>, ci< edits String",
+        "In List<String>, «ci<» edits String",
         "Works anywhere between < and >"
       ]
     },
@@ -67,31 +67,31 @@
       "category": [
         "editing"
       ],
-      "summary": "Change inside tags with cit / cat",
+      "summary": "Change inside tags with «cit» / «cat»",
       "details": [
-        "cit keeps the tags, swaps the text",
-        "cat replaces the whole element"
+        "«cit» keeps the tags, swaps the text",
+        "«cat» replaces the whole element"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Target a sentence cis / cas",
+      "summary": "Target a sentence «cis» / «cas»",
       "details": [
-        "cis changes the current sentence",
-        "cas includes the trailing space",
-        "Pairs with any operator — d, y"
+        "«cis» changes the current sentence",
+        "«cas» includes the trailing space",
+        "Pairs with any operator — «d», «y»"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Swap two characters with xp",
+      "summary": "Swap two characters with «xp»",
       "details": [
-        "On the e of teh, xp gives the",
-        "x cuts the char, p puts it after"
+        "On the e of teh, «xp» gives the",
+        "«x» cuts the char, «p» puts it after"
       ]
     },
     {
@@ -99,11 +99,11 @@
         "editing",
         "cmdline"
       ],
-      "summary": "Move a line with :m {address}",
+      "summary": "Move a line with «:m {address}»",
       "details": [
-        ":m+1 moves the line down one",
-        ":m-2 moves it up one line",
-        ":m0 to top, :m$ to end"
+        "«:m+1» moves the line down one",
+        "«:m-2» moves it up one line",
+        "«:m0» to top, «:m$» to end"
       ],
       "advanced": true
     },
@@ -112,11 +112,11 @@
         "editing",
         "cmdline"
       ],
-      "summary": "Copy lines with :t",
+      "summary": "Copy lines with «:t»",
       "details": [
-        ":t. duplicates this line below",
-        ":-5t. copies the line 5 above here",
-        "Also :t$ for the end of the file"
+        "«:t.» duplicates this line below",
+        "«:-5t.» copies the line 5 above here",
+        "Also «:t$» for the end of the file"
       ],
       "advanced": true
     },
@@ -125,9 +125,9 @@
         "editing",
         "cmdline"
       ],
-      "summary": "Delete a range with :delete",
+      "summary": "Delete a range with «:delete»",
       "details": [
-        ":10,20d deletes lines 10 to 20",
+        "«:10,20d» deletes lines 10 to 20",
         "No need to move there first"
       ],
       "advanced": true
@@ -137,10 +137,10 @@
         "editing",
         "cmdline"
       ],
-      "summary": "Join a range with :join",
+      "summary": "Join a range with «:join»",
       "details": [
-        ":10,12j joins lines 10 to 12",
-        ":10,12j! keeps the spacing as is"
+        "«:10,12j» joins lines 10 to 12",
+        "«:10,12j!» keeps the spacing as is"
       ],
       "advanced": true
     },
@@ -149,9 +149,9 @@
         "editing",
         "cmdline"
       ],
-      "summary": "Bulk-edit lines with :normal",
+      "summary": "Bulk-edit lines with «:normal»",
       "details": [
-        ":%normal A; appends ; to every line",
+        "«:%normal A;» appends ; to every line",
         "Select lines first to limit it"
       ],
       "advanced": true
@@ -160,31 +160,31 @@
       "category": [
         "editing"
       ],
-      "summary": "Indent/outdent a line >> and <<",
+      "summary": "Indent/outdent a line «>>» and «<<»",
       "details": [
-        ">> shifts the current line right",
-        "<< shifts it left",
-        ">ip indents a whole paragraph"
+        "«>>» shifts the current line right",
+        "«<<» shifts it left",
+        "«>ip» indents a whole paragraph"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Indent a block's body >i{",
+      "summary": "Indent a block's body «>i{»",
       "details": [
         "Shifts every line inside { } right",
-        "Also =i{ reindents, yi{ yanks"
+        "Also «=i{» reindents, «yi{» yanks"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Reindent a line ==",
+      "summary": "Reindent a line «==»",
       "details": [
-        "== reindents the current line",
-        "=ip reindents a whole paragraph",
+        "«==» reindents the current line",
+        "«=ip» reindents a whole paragraph",
         "Great after a paste"
       ]
     },
@@ -192,10 +192,10 @@
       "category": [
         "editing"
       ],
-      "summary": "Format a paragraph with gqap",
+      "summary": "Format a paragraph with «gqap»",
       "details": [
         "Runs the IDE reformat on it",
-        "With :set tw=80 it wraps lines too"
+        "With «:set tw=80» it wraps lines too"
       ]
     },
     {
@@ -203,11 +203,11 @@
         "editing",
         "navigation"
       ],
-      "summary": "Delete back to line start d0 / d^",
+      "summary": "Delete back to line start «d0» / «d^»",
       "details": [
-        "d0 deletes back to column one",
-        "d^ stops at the indent, keeps it",
-        "Swap d for c to retype instead"
+        "«d0» deletes back to column one",
+        "«d^» stops at the indent, keeps it",
+        "Swap «d» for «c» to retype instead"
       ]
     },
     {
@@ -215,30 +215,30 @@
         "editing",
         "navigation"
       ],
-      "summary": "Delete/change to line end d$ / c$",
+      "summary": "Delete/change to line end «d$» / «c$»",
       "details": [
-        "d$ deletes to line end, c$ retypes",
-        "D and C are the one-key shortcuts"
+        "«d$» deletes to line end, «c$» retypes",
+        "«D» and «C» are the one-key shortcuts"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Delete a character x / X",
+      "summary": "Delete a character «x» / «X»",
       "details": [
-        "x deletes under cursor",
-        "X deletes before cursor"
+        "«x» deletes under cursor",
+        "«X» deletes before cursor"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Delete lines dd",
+      "summary": "Delete lines «dd»",
       "details": [
-        "dd deletes current line",
-        "3dd deletes three lines"
+        "«dd» deletes current line",
+        "«3dd» deletes three lines"
       ]
     },
     {
@@ -246,10 +246,10 @@
         "editing",
         "insert"
       ],
-      "summary": "Substitute a char with s",
+      "summary": "Substitute a char with «s»",
       "details": [
-        "s deletes the char, enters Insert",
-        "3s replaces the next three chars"
+        "«s» deletes the char, enters Insert",
+        "«3s» replaces the next three chars"
       ]
     },
     {
@@ -257,20 +257,20 @@
         "editing",
         "insert"
       ],
-      "summary": "Change whole line cc",
+      "summary": "Change whole line «cc»",
       "details": [
-        "cc clears the line",
+        "«cc» clears the line",
         "Keeps indent and enters Insert",
-        "S does exactly the same"
+        "«S» does exactly the same"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Replace one character r{char}",
+      "summary": "Replace one character «r{char}»",
       "details": [
-        "r replaces the char under cursor",
+        "«r» replaces the char under cursor",
         "Stays in Normal mode"
       ]
     },
@@ -278,9 +278,9 @@
       "category": [
         "editing"
       ],
-      "summary": "Split a line with r Enter",
+      "summary": "Split a line with «r Enter»",
       "details": [
-        "Cursor on a space, press r Enter",
+        "Cursor on a space, press «r Enter»",
         "The space becomes a line break",
         "Keeps the indent, stays in Normal"
       ]
@@ -290,11 +290,11 @@
         "editing",
         "navigation"
       ],
-      "summary": "Change/delete a word cw / dw",
+      "summary": "Change/delete a word «cw» / «dw»",
       "details": [
-        "cw changes to word end",
-        "dw deletes to next word start",
-        "Same d/c works with any motion"
+        "«cw» changes to word end",
+        "«dw» deletes to next word start",
+        "Same «d»/«c» works with any motion"
       ]
     },
     {
@@ -302,72 +302,72 @@
         "editing",
         "navigation"
       ],
-      "summary": "Delete or change up to a char dt)",
+      "summary": "Delete or change up to a char «dt)»",
       "details": [
-        "dt) deletes up to the next )",
-        "df) takes the ) too",
-        "ct) changes up to it instead"
+        "«dt)» deletes up to the next )",
+        "«df)» takes the ) too",
+        "«ct)» changes up to it instead"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Join lines J / gJ",
+      "summary": "Join lines «J» / «gJ»",
       "details": [
-        "J joins with one space",
-        "gJ joins without a space"
+        "«J» joins with one space",
+        "«gJ» joins without a space"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Toggle case of a character ~",
+      "summary": "Toggle case of a character «~»",
       "details": [
-        "~ toggles case and moves on",
-        "Counts work: 5~"
+        "«~» toggles case and moves on",
+        "Counts work: «5~»"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Change case over motion gu / gU",
+      "summary": "Change case over motion «gu» / «gU»",
       "details": [
-        "gUw uppercases a word",
-        "guap lowercases a paragraph"
+        "«gUw» uppercases a word",
+        "«guap» lowercases a paragraph"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Uppercase a whole line gUU",
+      "summary": "Uppercase a whole line «gUU»",
       "details": [
         "Doubled operators act on the line",
-        "Like dd, yy, cc and g~~"
+        "Like «dd», «yy», «cc» and «g~~»"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Toggle case with g~iw",
+      "summary": "Toggle case with «g~iw»",
       "details": [
-        "g~iw flips case in the word",
-        "Takes any motion, like g~$ or g~ap"
+        "«g~iw» flips case in the word",
+        "Takes any motion, like «g~$» or «g~ap»"
       ]
     },
     {
       "category": [
         "editing"
       ],
-      "summary": "Change numbers Ctrl-a / Ctrl-x",
+      "summary": "Change numbers «Ctrl-a» / «Ctrl-x»",
       "details": [
-        "Ctrl-a adds 1, Ctrl-x subtracts 1",
+        "«Ctrl-a» adds 1, «Ctrl-x» subtracts 1",
         "Finds the next number on the line",
-        "5 Ctrl-a adds 5"
+        "«5 Ctrl-a» adds 5"
       ]
     },
     {
@@ -375,11 +375,11 @@
         "editing",
         "visual"
       ],
-      "summary": "Increment sequentially g Ctrl-a",
+      "summary": "Increment sequentially «g Ctrl-a»",
       "details": [
-        "Select lines, then press g Ctrl-a",
+        "Select lines, then press «g Ctrl-a»",
         "Adds 1, 2, 3... down the lines",
-        "g Ctrl-x subtracts instead"
+        "«g Ctrl-x» subtracts instead"
       ],
       "advanced": true,
       "mode": "visual"
@@ -388,10 +388,10 @@
       "category": [
         "editing"
       ],
-      "summary": "Undo and redo u / Ctrl-r",
+      "summary": "Undo and redo «u» / «Ctrl-r»",
       "details": [
-        "u undoes the last change",
-        "Ctrl-r redoes the undone change"
+        "«u» undoes the last change",
+        "«Ctrl-r» redoes the undone change"
       ]
     },
     {
@@ -399,10 +399,10 @@
         "editing",
         "insert"
       ],
-      "summary": "Split undo Ctrl-g u",
+      "summary": "Split undo «Ctrl-g u»",
       "details": [
-        "Type, Ctrl-g u, type more, then Esc",
-        "u now undoes only the second part"
+        "Type, «Ctrl-g u», type more, then «Esc»",
+        "«u» now undoes only the second part"
       ],
       "advanced": true,
       "mode": "insert"
@@ -411,11 +411,11 @@
       "category": [
         "editing"
       ],
-      "summary": "Act on a paragraph dip / dap",
+      "summary": "Act on a paragraph «dip» / «dap»",
       "details": [
-        "dip deletes the paragraph",
-        "dap also takes the blank line",
-        "Works with c, y, >, = too"
+        "«dip» deletes the paragraph",
+        "«dap» also takes the blank line",
+        "Works with «c», «y», «>», «=» too"
       ]
     },
     {
@@ -423,11 +423,11 @@
         "editing",
         "ideavim"
       ],
-      "summary": "Fix a typo with ]s then z=",
+      "summary": "Fix a typo with «]s» then «z=»",
       "details": [
-        "]s jumps to the next flagged typo",
-        "z= lists fixes — pick one",
-        "zg instead marks the word correct"
+        "«]s» jumps to the next flagged typo",
+        "«z=» lists fixes — pick one",
+        "«zg» instead marks the word correct"
       ]
     },
     {
@@ -435,11 +435,11 @@
         "editing",
         "navigation"
       ],
-      "summary": "Delete up to a mark d'a",
+      "summary": "Delete up to a mark «d'a»",
       "details": [
-        "ma marks this line, then move away",
-        "d'a deletes from there back to a",
-        "y'a yanks the same span instead"
+        "«ma» marks this line, then move away",
+        "«d'a» deletes from there back to a",
+        "«y'a» yanks the same span instead"
       ],
       "advanced": true
     }

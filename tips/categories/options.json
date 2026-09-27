@@ -5,10 +5,10 @@
         "options",
         "navigation"
       ],
-      "summary": "Keep lines around cursor scrolloff",
+      "summary": "Keep lines around cursor «scrolloff»",
       "details": [
         "Cursor stays 5 lines from the edge",
-        "sidescrolloff adds side margin too"
+        "«sidescrolloff» adds side margin too"
       ],
       "config": [
         "set scrolloff=5"
@@ -18,11 +18,11 @@
       "category": [
         "options"
       ],
-      "summary": "Count jumps with relativenumber",
+      "summary": "Count jumps with «relativenumber»",
       "details": [
-        ":set relativenumber shows the gap",
-        "Reads 5j, d3k counts off the gutter",
-        "Add number too for a hybrid gutter"
+        "«:set relativenumber» shows the gap",
+        "Reads «5j», «d3k» counts off the gutter",
+        "Add «number» too for a hybrid gutter"
       ],
       "config": {
         "name": "Show relative line numbers",
@@ -35,10 +35,10 @@
       "category": [
         "options"
       ],
-      "summary": "Show invisible characters with list",
+      "summary": "Show invisible characters with «list»",
       "details": [
-        ":set list reveals spaces and tabs",
-        ":set nolist hides them again"
+        "«:set list» reveals spaces and tabs",
+        "«:set nolist» hides them again"
       ],
       "config": [
         "set list"
@@ -49,9 +49,9 @@
         "options",
         "navigation"
       ],
-      "summary": "Wrap long lines with wrap",
+      "summary": "Wrap long lines with «wrap»",
       "details": [
-        ":set wrap soft-wraps long lines",
+        "«:set wrap» soft-wraps long lines",
         "Same as the IDE's soft-wrap toggle"
       ],
       "config": [
@@ -63,10 +63,10 @@
         "options",
         "pattern"
       ],
-      "summary": "Show matches while typing incsearch",
+      "summary": "Show matches while typing «incsearch»",
       "details": [
         "Jumps to the match as you type",
-        "Ctrl-g / Ctrl-t hop between matches"
+        "«Ctrl-g» / «Ctrl-t» hop between matches"
       ],
       "config": [
         "set incsearch"
@@ -77,10 +77,10 @@
         "options",
         "pattern"
       ],
-      "summary": "Keep matches highlighted hlsearch",
+      "summary": "Keep matches highlighted «hlsearch»",
       "details": [
         "Every match of the search stays lit",
-        "Clear temporarily with :noh"
+        "Clear temporarily with «:noh»"
       ],
       "config": [
         "set hlsearch"
@@ -91,10 +91,10 @@
         "options",
         "pattern"
       ],
-      "summary": "Smart case search with smartcase",
+      "summary": "Smart case search with «smartcase»",
       "details": [
-        "/foo finds foo, Foo and FOO",
-        "/Foo finds only Foo"
+        "«/foo» finds foo, Foo and FOO",
+        "«/Foo» finds only Foo"
       ],
       "config": {
         "name": "Enable smart case",
@@ -108,10 +108,10 @@
         "options",
         "pattern"
       ],
-      "summary": "Preview :substitute as you type",
+      "summary": "Preview «:substitute» as you type",
       "details": [
-        "Type :s/old/new/ and watch it apply",
-        "Esc cancels and reverts the preview"
+        "Type «:s/old/new/» and watch it apply",
+        "«Esc» cancels and reverts the preview"
       ],
       "config": {
         "name": "Enable live substitute preview",
@@ -124,10 +124,10 @@
       "category": [
         "options"
       ],
-      "summary": "Silence the error beep visualbell",
+      "summary": "Silence the error beep «visualbell»",
       "details": [
-        "Press k on line 1: it beeps",
-        ":set visualbell mutes it right now"
+        "Press «k» on line 1: it beeps",
+        "«:set visualbell» mutes it right now"
       ],
       "config": {
         "name": "Silence beeps",

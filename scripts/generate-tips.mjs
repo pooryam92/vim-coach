@@ -7,18 +7,22 @@
 // the sources, so day to day you only need to validate, not regenerate:
 //   node scripts/generate-tips.mjs --check   # validate sources, write nothing
 //   node scripts/generate-tips.mjs           # regenerate the artifact (CI / on request)
+//   node scripts/generate-tips.mjs --out <f> # write to another file (the Gradle test build)
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { hasKeyMarker, parseKeyMarkers } from "./tip-keys.mjs";
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repoRoot, "tips", "categories");
-const outputFile = join(repoRoot, "tips", "vim_tips_min.json");
+const outIndex = process.argv.indexOf("--out");
+const outputFile = outIndex === -1 ? join(repoRoot, "tips", "vim_tips_min.json") : process.argv[outIndex + 1];
 
 // --check validates the sources without touching the published artifact, so
 // editing tips never regenerates vim_tips_min.json by accident — CI owns that.
 const checkOnly = process.argv.includes("--check");
+if (outputFile === undefined) fail("--out needs a file path");
 
 // The non-Normal modes a tip may be tagged with; Normal is the untagged default and never stored.
 const VALID_MODES = new Set(["insert", "visual", "command"]);
@@ -29,6 +33,7 @@ function fail(message) {
 }
 
 // Strict here so typos fail; the runtime TipJsonParser stays lenient for forward compatibility.
+// `keys` is not authored: the generator derives it from the «…» markers in summary and details.
 const ALLOWED_KEYS = new Set(["category", "summary", "details", "advanced", "mode", "config"]);
 const MAX_CATEGORIES = 3;
 
@@ -42,11 +47,14 @@ function normalizeConfig(config, where) {
   if (lines.some((l) => typeof l !== "string")) fail(`${where} has a non-string config line`);
   const normalized = lines.map((l) => l.trim()).filter(Boolean);
   if (normalized.length === 0) fail(`${where} has a config with no lines`);
+  // Config lines are written verbatim into the user's .ideavimrc, where a marker would break the line.
+  if (normalized.some(hasKeyMarker)) fail(`${where} has a key marker in a config line`);
   if (!named) return normalized;
   const unknown = Object.keys(config).filter((k) => k !== "name" && k !== "lines");
   if (unknown.length > 0) fail(`${where} has unknown config key(s): ${unknown.join(", ")}`);
   if (config.name === undefined) return normalized;
   if (typeof config.name !== "string") fail(`${where} has a non-string config name`);
+  if (hasKeyMarker(config.name)) fail(`${where} has a key marker in its config name`);
   const name = config.name.trim();
   return name ? { name, lines: normalized } : normalized;
 }
@@ -90,9 +98,17 @@ for (const category of ordered) {
     if (tip === null || typeof tip !== "object" || Array.isArray(tip)) {
       fail(`tip ${index + 1} in ${fileName} must be a JSON object`);
     }
-    const summary = (typeof tip.summary === "string" ? tip.summary : "").trim();
-    if (summary === "") fail(`tip ${index + 1} in ${fileName} has a blank or missing summary`);
-    const where = `tip '${summary}' in ${fileName}`;
+    const markedSummary = (typeof tip.summary === "string" ? tip.summary : "").trim();
+    if (markedSummary === "") fail(`tip ${index + 1} in ${fileName} has a blank or missing summary`);
+    const where = `tip '${markedSummary}' in ${fileName}`;
+    const unmark = (text) => {
+      try {
+        return parseKeyMarkers(text);
+      } catch (error) {
+        fail(`${where} has malformed key markers: ${error.message}`);
+      }
+    };
+    const { text: summary, spans: summarySpans } = unmark(markedSummary);
 
     const unknownKeys = Object.keys(tip).filter((key) => !ALLOWED_KEYS.has(key));
     if (unknownKeys.length > 0) {
@@ -111,7 +127,8 @@ for (const category of ordered) {
       fail(`${where} uses unknown category '${unknownCategories.join("', '")}' (no tips/categories/<name>.json)`);
     }
 
-    const details = requireStringArray(tip.details, "details", where);
+    const markedDetails = requireStringArray(tip.details, "details", where).map(unmark);
+    const details = markedDetails.map((d) => d.text);
     if (details.length === 0) fail(`${where} has no details`);
     const repeated = details.find((d, i) => details.indexOf(d) !== i);
     if (repeated !== undefined) fail(`${where} repeats the detail '${repeated}'`);
@@ -123,6 +140,11 @@ for (const category of ordered) {
     summarySources.set(summary, fileName);
 
     const entry = { category: categories, summary, details };
+    // The published text carries no markers, so plugins that predate key styling still show it
+    // cleanly; keys travel as [line, start, end] with line 0 the summary and 1.. the details.
+    const keys = [summarySpans, ...markedDetails.map((d) => d.spans)]
+      .flatMap((spans, line) => spans.map(([start, end]) => [line, start, end]));
+    if (keys.length > 0) entry.keys = keys;
     if (tip.config !== undefined && tip.config !== null) {
       const config = normalizeConfig(tip.config, where);
       const configLines = Array.isArray(config) ? config : config.lines;
