@@ -32,7 +32,7 @@ function fail(message) {
 }
 
 // Strict here so typos fail; the runtime TipJsonParser stays lenient for forward compatibility.
-const ALLOWED_KEYS = new Set(["category", "summary", "details", "advanced", "mode", "config"]);
+const ALLOWED_KEYS = new Set(["category", "summary", "details", "mnemonic", "advanced", "mode", "config"]);
 const MAX_CATEGORIES = 3;
 
 // Accepts { name?, lines } or the legacy array form ["line", ...].
@@ -126,6 +126,11 @@ for (const category of ordered) {
     summarySources.set(summary, fileName);
 
     const entry = { category: categories, summary, details };
+    if (tip.mnemonic !== undefined) {
+      if (typeof tip.mnemonic !== "string") fail(`${where} has a non-string mnemonic`);
+      const mnemonic = tip.mnemonic.trim();
+      if (mnemonic) entry.mnemonic = mnemonic;
+    }
     if (tip.config !== undefined && tip.config !== null) {
       const config = normalizeConfig(tip.config, where);
       const configLines = Array.isArray(config) ? config : config.lines;

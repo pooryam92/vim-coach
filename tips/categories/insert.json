@@ -18,7 +18,8 @@
       "details": [
         "i inserts before cursor",
         "a inserts after cursor"
-      ]
+      ],
+      "mnemonic": "insert / append"
     },
     {
       "category": [
@@ -71,7 +72,8 @@
       "details": [
         "Wander off to read code, then gi",
         "Resumes typing where you left off"
-      ]
+      ],
+      "mnemonic": "go insert"
     },
     {
       "category": [
@@ -138,6 +140,7 @@
         "Ctrl-r + inserts clipboard",
         "Works at the : prompt too"
       ],
+      "mnemonic": "register",
       "mode": "insert"
     },
     {
@@ -198,6 +201,7 @@
         "Ctrl-v then a key inserts it raw",
         "Ctrl-v Tab adds a real tab"
       ],
+      "mnemonic": "verbatim",
       "advanced": true,
       "mode": "insert"
     },

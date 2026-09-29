@@ -92,6 +92,7 @@
         "Run :s/a/b/, go down a line, @:",
         "Then @@ repeats it once more"
       ],
+      "mnemonic": "@ play, : last command",
       "advanced": true
     }
   ]

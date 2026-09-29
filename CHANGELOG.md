@@ -4,15 +4,6 @@
 
 ## [Unreleased]
 
-### Changed
-
-- Refreshed the tip library: redundant and low-value tips are gone, the rest are reworded to fit on one line of the notification, and a few high-value tips are new (`>i{`, `gUU`, `d'a`, `80i-`, `;.`). The library goes from 308 to 282 tips
-- More niche tips are now marked **Advanced** (70 in total) and stay hidden unless **Show advanced tips** is on
-
-### Removed
-
-- Tip **mnemonics** — the dimmed memory-aid line beneath some tips is gone; tip notifications now show just the summary and details
-
 ## [1.5.1] - 2026-07-11
 
 ### Added

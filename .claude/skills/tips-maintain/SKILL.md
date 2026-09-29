@@ -70,6 +70,7 @@ blocks and the .ideavimrc button, adding/renaming/removing a category.
   "category": ["plugins", "editing"],
   "summary": "Make a word camelCase crc",
   "details": ["crc turns foo_bar into fooBar", "Cursor can sit anywhere in the word"],
+  "mnemonic": "coerce case",
   "config": { "name": "Install vim-abolish", "lines": ["Plug 'tpope/vim-abolish'"] }
 }
 ```
@@ -84,6 +85,8 @@ Hard constraints:
   and a line past ~43 first (it clamps the whole balloon).
   Prefer 2 details, 3 at most (lint flags a 4th). Never number steps —
   line order already reads as the sequence.
+- `mnemonic` — optional, **omitted by default**; ≤ 40 chars; only when the
+  decoded words make the keys stick; skip on 3+-detail tips. See examples.md.
 - `config` — optional; read reference.md → "Config tips" before authoring or
   reviewing one.
 - `advanced` — optional boolean, **omitted by default**. Add `"advanced": true`

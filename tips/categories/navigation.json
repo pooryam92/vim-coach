@@ -41,7 +41,8 @@
       "details": [
         "gE counts foo.bar() as one word",
         "Nice for edits before punctuation"
-      ]
+      ],
+      "mnemonic": "go end"
     },
     {
       "category": [
@@ -157,7 +158,8 @@
       "details": [
         "H top of screen, M middle, L bottom",
         "No scrolling, just the cursor moves"
-      ]
+      ],
+      "mnemonic": "High, Middle, Low"
     },
     {
       "category": [
@@ -289,7 +291,8 @@
       "details": [
         "fx jumps to the next x on the line",
         "Fx jumps back to the previous x"
-      ]
+      ],
+      "mnemonic": "find"
     },
     {
       "category": [
@@ -300,7 +303,8 @@
         "t) stops just before the next )",
         "T( stops just after the previous (",
         "Perfect for ct) edits"
-      ]
+      ],
+      "mnemonic": "till"
     },
     {
       "category": [
@@ -366,7 +370,8 @@
       "details": [
         "Works across files and libraries",
         "Ctrl-o jumps back when you're done"
-      ]
+      ],
+      "mnemonic": "go definition"
     },
     {
       "category": [
@@ -408,7 +413,8 @@
       "details": [
         "Ctrl-d scrolls down half a page",
         "Ctrl-u scrolls up half a page"
-      ]
+      ],
+      "mnemonic": "d down, u up"
     },
     {
       "category": [
@@ -418,7 +424,8 @@
       "details": [
         "Ctrl-f scrolls forward one page",
         "Ctrl-b scrolls back one page"
-      ]
+      ],
+      "mnemonic": "f forward, b back"
     },
     {
       "category": [
@@ -507,6 +514,7 @@
         "zA toggles it and every inner fold",
         "One key for the whole fold tree"
       ],
+      "mnemonic": "z = a folded page; A all nested",
       "advanced": true
     },
     {
@@ -518,6 +526,7 @@
         "zO opens every nested level",
         "zC closes every nested level"
       ],
+      "mnemonic": "zO open all, zC close all",
       "advanced": true
     },
     {
@@ -529,6 +538,7 @@
         "zj moves to the next fold start",
         "zk moves to the previous fold start"
       ],
+      "mnemonic": "z = a folded page; j/k down/up",
       "advanced": true
     },
     {
@@ -539,7 +549,8 @@
       "details": [
         "zM closes all folds in view",
         "zR opens all folds in view"
-      ]
+      ],
+      "mnemonic": "z = a folded page; M more, R reduce"
     },
     {
       "category": [
@@ -550,6 +561,7 @@
         "zr opens one fold level",
         "zm closes one fold level"
       ],
+      "mnemonic": "z = a folded page; r reduce, m more",
       "advanced": true
     },
     {

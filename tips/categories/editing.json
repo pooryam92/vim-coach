@@ -51,7 +51,8 @@
         "ci( changes the text inside ( )",
         "ci[ and ci{ work the same way",
         "Cursor can sit anywhere inside"
-      ]
+      ],
+      "mnemonic": "change inner"
     },
     {
       "category": [
@@ -118,6 +119,7 @@
         ":-5t. copies the line 5 above here",
         "Also :t$ for the end of the file"
       ],
+      "mnemonic": "copy to",
       "advanced": true
     },
     {
@@ -250,7 +252,8 @@
       "details": [
         "s deletes the char, enters Insert",
         "3s replaces the next three chars"
-      ]
+      ],
+      "mnemonic": "substitute"
     },
     {
       "category": [
@@ -307,7 +310,8 @@
         "dt) deletes up to the next )",
         "df) takes the ) too",
         "ct) changes up to it instead"
-      ]
+      ],
+      "mnemonic": "delete till"
     },
     {
       "category": [

@@ -89,6 +89,7 @@
         "Cursor on foo, type :%s/",
         "Ctrl-r Ctrl-w fills in foo for you"
       ],
+      "mnemonic": "register word",
       "advanced": true,
       "mode": "command"
     },

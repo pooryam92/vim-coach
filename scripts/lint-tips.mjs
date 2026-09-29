@@ -21,6 +21,9 @@ const DETAIL_MAX = 35;
 const DETAIL_CLAMP = 43;
 // Past this many details the balloon stops being glanceable.
 const DETAILS_MAX_COUNT = 3;
+// A mnemonic is a one-line italic memory hook under the details; keep it short so
+// it never becomes the reason the balloon grows.
+const MNEMONIC_MAX = 40;
 const FILLER_OPENER = /^(Useful|Handy|Use it|Good for|Great)\b/;
 const SYMBOL_SLASH = /(?:^|\s)([^\sA-Za-z0-9]+) \/ ([^\sA-Za-z0-9]+)(?=\s|$)/;
 const NUMBERED_STEP = /^\d+\.\s/;
@@ -79,6 +82,7 @@ const longSummaries = [];
 const clampingDetails = [];
 const longDetails = [];
 const tooManyDetails = [];
+const longMnemonics = [];
 const separators = [];
 const symbolSlashes = [];
 const fillerOpeners = [];
@@ -106,6 +110,10 @@ for (const file of files) {
 
     if (details.length > DETAILS_MAX_COUNT) {
       tooManyDetails.push([details.length, file, s]);
+    }
+
+    if (typeof tip.mnemonic === "string" && tip.mnemonic.length > MNEMONIC_MAX) {
+      longMnemonics.push([tip.mnemonic.length, file, tip.mnemonic]);
     }
 
     // Keys must attach with a plain space, never a separator. The `-` case
@@ -146,6 +154,7 @@ longSummaries.sort((a, b) => b[0] - a[0]);
 clampingDetails.sort((a, b) => b[0] - a[0]);
 longDetails.sort((a, b) => b[0] - a[0]);
 tooManyDetails.sort((a, b) => b[0] - a[0]);
+longMnemonics.sort((a, b) => b[0] - a[0]);
 
 const label = (file) => file.replace(".json", "");
 const fileRow = ([f, text]) => `${label(f).padEnd(12)} ${JSON.stringify(text)}`;
@@ -163,6 +172,7 @@ section(
   lengthRow,
 );
 section(`Tips with more than ${DETAILS_MAX_COUNT} details`, tooManyDetails, lengthRow);
+section(`Mnemonics over ${MNEMONIC_MAX} chars (keep the italic line short)`, longMnemonics, lengthRow);
 section("Numbered-step details (drop the 1. 2. prefixes; line order is the sequence)", numberedSteps, fileRow);
 section("Possible stray separators in summaries (eyeball — `-` may be part of keys)", separators, fileRow);
 section('Slash between symbol keys (join symbol pairs with "and": { and })', symbolSlashes, fileRow);

@@ -102,6 +102,7 @@
         "ds\" turns \"hi\" into hi",
         "ds( strips parens the same way"
       ],
+      "mnemonic": "delete surround",
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -137,6 +138,7 @@
         "ysiwt prompts for a tag name",
         "Type em, Enter — <em>word</em>"
       ],
+      "mnemonic": "you surround inner word tag",
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -154,6 +156,7 @@
         "cst<div> makes <span> into <div>",
         "Edits both open and close tags"
       ],
+      "mnemonic": "change surrounding tag",
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -171,6 +174,7 @@
         "dst turns <span>hi</span> into hi",
         "Strips both tags, keeps the text"
       ],
+      "mnemonic": "delete surround tag",
       "config": {
         "name": "Install vim-surround",
         "lines": [
@@ -188,6 +192,7 @@
         "ysiwf asks for a function name",
         "Type print, Enter — print(word)"
       ],
+      "mnemonic": "you surround inner word function",
       "advanced": true,
       "config": {
         "name": "Install vim-surround",
@@ -207,6 +212,7 @@
         "gcip does the whole paragraph",
         "Or select lines, then press gc"
       ],
+      "mnemonic": "go comment",
       "config": {
         "name": "Install vim-commentary",
         "lines": [
@@ -311,6 +317,7 @@
         "cxiw on foo, then cxiw on bar",
         "foo and bar trade places"
       ],
+      "mnemonic": "change exchange inner word",
       "advanced": true,
       "config": {
         "name": "Install vim-exchange",
@@ -348,6 +355,7 @@
         "dai adds the header line above",
         "daI adds the closing line below too"
       ],
+      "mnemonic": "delete inner indent",
       "config": {
         "name": "Install vim-indent-object",
         "lines": [
@@ -542,6 +550,7 @@
         "dam deletes the whole method",
         "dim deletes just the body"
       ],
+      "mnemonic": "delete around / inner method",
       "config": {
         "name": "Install vim-textobj-function",
         "lines": [
@@ -631,6 +640,7 @@
         "cib changes in the nearest bracket",
         "ciq does the same for quotes"
       ],
+      "mnemonic": "change inside bracket or quote",
       "config": {
         "name": "Enable mini-ai",
         "lines": [

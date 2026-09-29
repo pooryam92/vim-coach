@@ -8,7 +8,6 @@ import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentV
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.util.xmlb.XmlSerializer
-import org.jdom.Element
 
 class VimTipRepositoryIntTest : BasePlatformTestCase() {
 
@@ -109,13 +108,18 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         )
     }
 
-    // Optional fields persist only via reflective xmlb serialization, which unit tests can't reach.
+    // The optional `mode`, `advanced`, and `mnemonic` fields are persisted only via reflective
+    // whole-object serialization of the tip cache (no explicit field wiring in PersistentVimTipStore).
+    // This round-trips the store State through the same xmlb serializer the platform uses for @State
+    // components, proving they survive save/load and that absent/default values stay that way — the
+    // one seam unit tests can't reach.
     fun testOptionalTipFieldsSurviveStoreStateSerializationRoundTrip() {
         tipService().saveTips(
             listOf(
                 VimTip(
                     "insert-tip",
                     listOf("Ctrl-r pastes a register"),
+                    mnemonic = "control register",
                     advanced = true,
                     mode = "insert"
                 ),
@@ -129,25 +133,13 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         val insertTip = restored.tips.single { it.summary == "insert-tip" }
         assertEquals("insert", insertTip.mode)
         assertTrue(insertTip.advanced)
+        assertEquals("control register", insertTip.mnemonic)
 
         val normalTip = restored.tips.single { it.summary == "normal-tip" }
         assertNull(normalTip.mode)
         assertFalse(normalTip.advanced)
+        assertNull(normalTip.mnemonic)
     }
-
-    fun testStoreStateWithLegacyMnemonicOptionStillDeserializes() {
-        tipService().saveTips(listOf(VimTip("insert-tip", listOf("Ctrl-r pastes a register"))))
-        val serialized = XmlSerializer.serialize(tipStore().state)
-        val tipElement = serialized.descendants().single { it.name == "VimTip" }
-        tipElement.addContent(Element("option").setAttribute("name", "mnemonic").setAttribute("value", "control register"))
-
-        val restored = XmlSerializer.deserialize(serialized, PersistentVimTipStore.State::class.java)
-
-        assertEquals(listOf("Ctrl-r pastes a register"), restored.tips.single { it.summary == "insert-tip" }.details)
-    }
-
-    private fun Element.descendants(): Sequence<Element> =
-        children.asSequence().flatMap { sequenceOf(it) + it.descendants() }
 
     private fun tipService(): VimTipRepository = service()
 

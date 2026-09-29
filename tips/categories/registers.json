@@ -39,7 +39,8 @@
       "details": [
         "p pastes after, or below for lines",
         "P pastes before, or above for lines"
-      ]
+      ],
+      "mnemonic": "put"
     },
     {
       "category": [

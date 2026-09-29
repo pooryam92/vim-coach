@@ -135,6 +135,7 @@
         "Stops on warnings too",
         "Then Alt-Enter offers a quick fix"
       ],
+      "mnemonic": "error",
       "config": {
         "name": "Map errors",
         "lines": [
@@ -169,6 +170,7 @@
         "Moves between uncommitted hunks",
         "Gutter marks vs the last commit"
       ],
+      "mnemonic": "change",
       "config": {
         "name": "Map VCS changes",
         "lines": [
@@ -187,6 +189,7 @@
         "Same popup as Alt-Enter's lightbulb",
         "Replaces ga, which shows char codes"
       ],
+      "mnemonic": "go actions (quick-fix)",
       "config": {
         "name": "Map quick-fix",
         "lines": [
@@ -204,6 +207,7 @@
         "Type the new name right in place",
         "Same as Shift-F6, no chord needed"
       ],
+      "mnemonic": "go rename",
       "config": {
         "name": "Map rename",
         "lines": [
@@ -221,6 +225,7 @@
         "Extract, inline, move in one list",
         "Replaces gm, the mid-line jump"
       ],
+      "mnemonic": "go menu (refactor)",
       "config": {
         "name": "Map refactor",
         "lines": [
@@ -258,6 +263,7 @@
         "Lists every call site, jump to any",
         "Overrides gr ReplaceWithRegister"
       ],
+      "mnemonic": "go references",
       "config": {
         "name": "Map find usages",
         "lines": [
@@ -275,6 +281,7 @@
         "From an interface to its class",
         "Overrides gi insert-at-last-edit"
       ],
+      "mnemonic": "go implementation",
       "config": {
         "name": "Map implementation",
         "lines": [

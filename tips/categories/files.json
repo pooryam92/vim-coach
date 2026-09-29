@@ -32,7 +32,8 @@
       "details": [
         ":ls numbers every open file",
         ":b 3 then jumps to file number 3"
-      ]
+      ],
+      "mnemonic": "list buffers"
     },
     {
       "category": [
@@ -53,7 +54,8 @@
       "details": [
         ":bn goes to the next buffer",
         ":bp goes to the previous buffer"
-      ]
+      ],
+      "mnemonic": "buffer next/previous"
     },
     {
       "category": [
@@ -132,7 +134,8 @@
       "details": [
         ":qa!, :wqa and :xa do the same",
         "The IDE stays open, edits kept"
-      ]
+      ],
+      "mnemonic": "quit all"
     }
   ]
 }

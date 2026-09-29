@@ -88,8 +88,8 @@ the alphabetical sequence automatically.
 The generator **fails with a non-zero exit code** (and writes nothing) if any
 tip:
 
-- has a key other than `category`, `summary`, `details`, `advanced`, `mode`
-  and `config`
+- has a key other than `category`, `summary`, `details`, `mnemonic`,
+  `advanced`, `mode` and `config`
 - has a blank or non-string `summary`
 - has no `details` lines, a non-string detail, or the same detail twice
 - has a `category` that is not an array of strings, does not use its file's
@@ -99,6 +99,7 @@ tip:
   `{ "name", "lines" }` or the legacy array form `["line", …]`), a non-string
   `name`, or an unknown key inside the object
 - has a `Plug` line in its `config` but no `plugins` category
+- has a non-string `mnemonic`
 - has a non-boolean `advanced` or a `mode` outside `insert`, `visual` and
   `command`
 - repeats a `summary` already used by another tip, in any file
@@ -114,7 +115,8 @@ The error message names the offending file and tip so you can fix it quickly.
 
 For each tip the generator trims surrounding whitespace and drops blank
 `details` and `config` lines (a repeated detail fails validation instead of
-being removed). The optional
+being removed). An optional `mnemonic` string is trimmed and emitted only when
+non-blank (dropped otherwise). The optional
 `advanced` flag is emitted only when `true` (kept off the artifact otherwise, so
 it stays minimal); a non-boolean `advanced` value fails generation.
 The optional `mode` field is emitted only when set and must be one of `insert`,
@@ -131,12 +133,6 @@ defaulted; existing fields are never renamed or removed. Tip parsing is
 an older plugin. Keep it that way — tightening the parser would break the
 forward compatibility every installed version relies on.
 
-The one exception so far is the optional `mnemonic` string, dropped after 1.5.x.
-Removing it was safe only because it was optional: older plugins default a
-missing `mnemonic` to none, and the current parser and tip cache ignore one
-still present in a stale file or cache. Only an optional field can be retired
-this way.
-
 The optional `advanced` flag rides this schema. The plugin models and reads it
 (advanced tips are hidden unless the user opts in; see
 [Advanced Tips Opt-In](../features/settings.md#advanced-tips-opt-in)) while
@@ -151,7 +147,7 @@ the field and the tagging guidance.
 
 The optional `mode` field rides the same schema the same way. It names the mode
 the reader must be in to press the tip's keys — `insert`, `visual`, or `command`
-(absent = Normal, never labelled) — and renders as a coloured label after the app
+(absent = Normal, never labelled) — and renders as a dimmed label after the app
 name in the tip balloon title (see
 [Show a tip](../features/show-tip.md#advanced-tips-marker-and-nudge)). The generator validates
 the value strictly (`--check` rejects anything outside the enum), while

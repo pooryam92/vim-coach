@@ -46,6 +46,7 @@
         "/foo\\c matches Foo FOO foo",
         "/Foo\\C matches only Foo, not foo"
       ],
+      "mnemonic": "\\c ignore case, \\C exact Case",
       "advanced": true
     },
     {
@@ -94,6 +95,7 @@
         "Add \\V to drop all regex",
         "/\\Va.b finds a.b, not aXb"
       ],
+      "mnemonic": "Very nomagic",
       "advanced": true
     },
     {
@@ -116,7 +118,8 @@
       "details": [
         ":%s/foo/bar/g turns foo into bar",
         "% is the whole file, g every match"
-      ]
+      ],
+      "mnemonic": "substitute"
     },
     {
       "category": [
