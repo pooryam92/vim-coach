@@ -46,7 +46,7 @@ class TipNotifications internal constructor(
         return true
     }
 
-    private fun showTip(tip: VimTip) {
+    override fun showTip(tip: VimTip) {
         notifier.showTip(
             tip,
             TipActions(

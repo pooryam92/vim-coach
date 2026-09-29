@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- A **Find Tip** action: run `Vim Coach: Find Tip…` to open a searchable list of every tip, type to filter by the tip's text, category, mode or mnemonic, and press Enter to show that tip as the usual notification with its Next, Mute and Apply buttons. The list includes advanced and muted tips, labelled as such, and a tip you pick this way doesn't use up its turn in the no-repeat cycle
+
 ## [1.5.1] - 2026-07-11
 
 ### Added

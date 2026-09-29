@@ -183,6 +183,66 @@ class TipNotificationsUnitTest {
         assertEquals(0, notifier.advancedTipsNudgeShown)
     }
 
+    @Test
+    fun showTipShowsExactlyThatTipWithItsActions() {
+        val picked = VimTip("picked", listOf("details"), config = TipConfig(lines = listOf("set number")))
+        val repository = FakeVimTipRepository(initialTips = listOf(VimTip("other"), picked))
+        val apply = {}
+
+        controller(repository, ideaVimRcAction = { tip -> apply.takeIf { tip == picked } }).showTip(picked)
+
+        assertEquals(listOf(picked), notifier.shownTips)
+        assertSame(apply, notifier.lastActions!!.onAddToIdeaVimRc)
+    }
+
+    @Test
+    fun showTipBypassesSelection() {
+        val repository = FakeVimTipRepository(initialTips = listOf(VimTip("tip")))
+
+        controller(repository).showTip(VimTip("picked"))
+
+        assertEquals(0, repository.getTipsCalls)
+    }
+
+    @Test
+    fun showTipShowsMutedTip() {
+        val muted = VimTip("muted", listOf("details"))
+        val settings = FakeSettingsService().apply { hideTip(TipHash.fromTip(muted).value) }
+
+        controller(FakeVimTipRepository(initialTips = listOf(muted)), settings).showTip(muted)
+
+        assertEquals(listOf(muted), notifier.shownTips)
+    }
+
+    @Test
+    fun nextActionAfterPickedTipDrawsThroughSelection() {
+        val repository = FakeVimTipRepository(initialTips = listOf(VimTip("random")))
+        controller(repository).showTip(VimTip("picked"))
+
+        notifier.lastActions!!.onShowNextTip()
+
+        assertEquals(1, repository.getTipsCalls)
+        assertEquals("random", notifier.shownTips.last().summary)
+    }
+
+    @Test
+    fun pickedTipsCountTowardAdvancedTipsNudgeLikeRandomOnes() {
+        val openSettings = {}
+        val repository = FakeVimTipRepository(
+            initialTips = listOf(VimTip("advanced tip", listOf("details"), advanced = true))
+        )
+        val controller = controller(
+            repository,
+            FakeSettingsService(showAdvancedTips = false),
+            openSettings = openSettings,
+        )
+
+        repeat(5) { controller.showTip(VimTip("picked")) }
+
+        assertEquals(1, notifier.advancedTipsNudgeShown)
+        assertSame(openSettings, notifier.lastAdvancedTipsOpenSettings)
+    }
+
     private class FakeTipNotifier : TipNotifier {
         var visibleTip = false
         val shownTips = mutableListOf<VimTip>()

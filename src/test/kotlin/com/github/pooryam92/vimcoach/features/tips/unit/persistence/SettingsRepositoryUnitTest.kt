@@ -288,6 +288,16 @@ class SettingsRepositoryUnitTest {
         assertEquals(listOf("hash-2"), service.getHiddenTipHashes())
     }
 
+    @Test
+    fun hideTipIgnoresAlreadyHiddenHash() {
+        val service = createService()
+        service.hideTip("hash-1")
+
+        service.hideTip(" hash-1 ")
+
+        assertEquals(listOf("hash-1"), service.getHiddenTipHashes())
+    }
+
     private fun createService(
         store: PersistentSettingsStore = PersistentSettingsStore()
     ): SettingsRepository {

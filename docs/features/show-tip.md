@@ -1,6 +1,6 @@
 # Show Tip
 
-Displays a random tip as an IntelliJ balloon notification. The same flow is triggered by three entry points: the `ShowVimTipAction` (user-invoked from Find Action), startup (after the tip cache is refreshed), and the periodic scheduler.
+Displays a random tip as an IntelliJ balloon notification. The same flow is triggered by three entry points: the `ShowVimTipAction` (user-invoked from Find Action), startup (after the tip cache is refreshed), and the periodic scheduler. A fourth entry point, [Find Tip](find-tip.md), shows a tip the user picked by hand through the same balloon path but bypasses tip selection.
 
 ## Components
 
@@ -9,6 +9,7 @@ graph LR
     A1[ShowVimTipAction] -->|showRandomTip| B
     A2[VimTipStartupActivity] -->|showRandomTipIfNoneActive| B
     A3[TipScheduler] -->|showRandomTipIfNoneActive| B
+    A4[FindTipAction] -->|showTip| B
     B([ShowTips]) --> C[TipNotifications]
     C --> S([SelectNextTip])
     C --> E([SettingsRepository])
@@ -22,10 +23,11 @@ graph LR
     E --> H[(PersistentSettingsStore)]
 ```
 
-`ShowTips` is a project service. `TipNotifications` is its implementation. The interface has two methods:
+`ShowTips` is a project service. `TipNotifications` is its implementation. The interface has three methods:
 
 - `showRandomTip()` — always shows a tip, expiring any currently visible one first.
 - `showRandomTipIfNoneActive()` — skips silently if a tip balloon is already visible. Used by startup and the periodic scheduler so they don't interrupt the user.
+- `showTip(tip)` — shows the given tip, expiring any currently visible one first. It skips `SelectNextTip` entirely, so neither the filter chain nor `TipRotation` is involved. Used by [Find Tip](find-tip.md). The balloon, its actions and the advanced-tips nudge are the same as for a random tip, and **Next** returns to the random rotation.
 
 ## Notification Port
 
@@ -35,7 +37,7 @@ graph LR
 
 ## Tip Selection
 
-`SelectNextTip` (application service, `features/tips/application/selection`) is the single chokepoint for "which tip does the user see next." `TipNotifications.selectRandomTip()` collapses to `selectNextTip.select(ideaVimAvailable())` — `includeConfigTips` stays a parameter because IdeaVim availability is resolved at the project-service seam, but every other input is read straight from `SettingsRepository` inside `SelectNextTip`.
+`SelectNextTip` (application service, `features/tips/application/selection`) is the single chokepoint for "which tip does the user see next." The only exception is a tip hand-picked through [Find Tip](find-tip.md), which is shown directly with `ShowTips.showTip(tip)`. `TipNotifications.selectRandomTip()` collapses to `selectNextTip.select(ideaVimAvailable())` — `includeConfigTips` stays a parameter because IdeaVim availability is resolved at the project-service seam, but every other input is read straight from `SettingsRepository` inside `SelectNextTip`.
 
 Each call to `select()`:
 

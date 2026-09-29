@@ -13,6 +13,7 @@ Vim Coach is an IntelliJ Platform plugin designed to help developers learn and m
 
 -  **Vim Tips**: Get Vim tips displayed as notifications
 -  **On-Demand Action**: Run `Vim Coach: Show Tip` from Find Action (`Ctrl+Shift+A`)
+-  **Find Tip**: Run `Vim Coach: Find Tip…` to search every tip by its text, category, mode or mnemonic, then press Enter to show the one you want. Advanced and muted tips are included and labelled
 -  **Startup Tips**: See a Vim tip when you start your IDE
 -  **Periodic Tips**: Schedule reminder tips from the plugin settings
 -  **Category Filters**: Enable or disable tip categories from the settings UI, with newly added categories enabled by default
@@ -35,6 +36,7 @@ If you use IdeaVim, you can map Vim Coach actions in your `~/.ideavimrc`:
 ```vim
 let mapleader = " "
 map <leader>st <Action>(com.github.pooryam92.vimcoach.actions.ShowVimTipAction)
+map <leader>ft <Action>(com.github.pooryam92.vimcoach.actions.FindTipAction)
 ```
 
 Vim Coach no longer installs a default key binding for `Vim Coach: Show Tip`, so custom IdeaVim mappings are the preferred way to add a shortcut without conflicting with existing IDE shortcuts.

@@ -28,9 +28,9 @@ private const val IDEAVIM_RELOAD_ACTION_ID = "IdeaVim.ReloadVimRc.reload"
 /**
  * Handles the "Add to .ideavimrc" button on tip notifications.
  *
- * getAction() returns the button callback, or null if the tip has no config lines. It does not
- * gate on IdeaVim: selection already suppresses config tips when IdeaVim is absent (see
- * [isAvailable]), so any tip reaching here is already known to have IdeaVim available.
+ * getAction() returns the button callback, or null if IdeaVim is absent or the tip has no config
+ * lines. Random selection already hides config tips without IdeaVim (see [isAvailable]), but a
+ * tip can also be shown directly (Find Tip), so this is the gate every caller relies on.
  *
  * On click:
  *   Added          → opens .ideavimrc at the appended lines with a brief highlight;
@@ -50,14 +50,15 @@ class TipIdeaVimRc(
     private val reloadIdeaVimRc: (() -> Unit)? = null
 ) {
     fun getAction(tip: VimTip): (() -> Unit)? {
+        if (!isAvailable()) return null
         if (tip.config?.lines.isNullOrEmpty()) return null
         return { handle(tip) }
     }
 
     /**
-     * True when IdeaVim is installed. Used by tip *selection* to suppress config-bearing tips
-     * entirely when IdeaVim is absent (see TipNotifications), so by the time a config tip reaches
-     * [getAction], IdeaVim is guaranteed present — which is why [getAction] no longer re-checks it.
+     * True when IdeaVim is installed. Tip *selection* uses it to leave config-bearing tips out of
+     * the random draw when IdeaVim is absent, since their button couldn't appear. That is a UX
+     * filter only: [getAction] checks it again because a hand-picked tip skips selection.
      */
     fun isAvailable(): Boolean = addTipToIdeaVimRc.isAvailable()
 

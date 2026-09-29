@@ -6,10 +6,12 @@ import com.github.pooryam92.vimcoach.features.tips.application.scheduling.Schedu
 import com.github.pooryam92.vimcoach.features.tips.application.selection.SelectNextTip
 import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenController
 import com.github.pooryam92.vimcoach.features.tips.application.loading.TipSourceService
+import com.github.pooryam92.vimcoach.features.tips.entrypoints.notifications.FindTipAction
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
+import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
@@ -41,5 +43,11 @@ class PluginWiringIntTest : BasePlatformTestCase() {
         assertNotNull(sourceService)
         assertNotNull(refreshTips)
         assertNotNull(settingsScreenService)
+    }
+
+    fun testFindTipActionIsRegistered() {
+        val action = ActionManager.getInstance().getAction("com.github.pooryam92.vimcoach.actions.FindTipAction")
+
+        assertInstanceOf(action, FindTipAction::class.java)
     }
 }

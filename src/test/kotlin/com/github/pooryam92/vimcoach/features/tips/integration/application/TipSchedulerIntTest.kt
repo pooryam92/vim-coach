@@ -3,6 +3,7 @@ package com.github.pooryam92.vimcoach.features.tips.integration.application
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.ShowTips
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotifications
 import com.github.pooryam92.vimcoach.features.tips.application.scheduling.TipScheduler
+import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepositoryImpl
 import com.intellij.openapi.application.ApplicationManager
@@ -84,6 +85,10 @@ class TipSchedulerIntTest : BasePlatformTestCase() {
         override fun showRandomTipIfNoneActive(): Boolean {
             showIfNoneActiveCalls += 1
             return true
+        }
+
+        override fun showTip(tip: VimTip) {
+            error("Not expected in periodic scheduler tests")
         }
     }
 

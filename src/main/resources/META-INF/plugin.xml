@@ -55,6 +55,12 @@
             description="Show a Vim Coach tip notification">
         </action>
         <action
+            id="com.github.pooryam92.vimcoach.actions.FindTipAction"
+            class="com.github.pooryam92.vimcoach.features.tips.entrypoints.notifications.FindTipAction"
+            text="Vim Coach: Find Tip…"
+            description="Search Vim Coach tips and show one as a notification">
+        </action>
+        <action
             id="com.github.pooryam92.vimcoach.actions.RefetchVimTipsAction"
             class="com.github.pooryam92.vimcoach.features.tips.entrypoints.loading.RefetchVimTipsAction"
             text="Vim Coach: Refresh Tips"
