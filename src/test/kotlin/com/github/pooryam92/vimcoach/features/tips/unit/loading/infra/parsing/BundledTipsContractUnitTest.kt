@@ -59,17 +59,6 @@ class BundledTipsContractUnitTest {
     }
 
     @Test
-    fun everyKeySpanSurvivesParsing() {
-        val parsedBySummary = parsedTips.associateBy(VimTip::summary)
-        val violations = rawTips.filter { it.has("keys") }.mapNotNull { tip ->
-            val raw = tip.getAsJsonArray("keys").size()
-            val parsed = parsedBySummary[rawSummary(tip)]?.keys?.size ?: 0
-            if (raw == parsed) null else "${rawSummary(tip)}: $parsed of $raw keys parsed"
-        }
-        assertNoViolations("tips that lost key spans in TipJsonParser", violations)
-    }
-
-    @Test
     fun summariesAreUnique() {
         val violations = rawTips.map(::rawSummary)
             .groupingBy { it }.eachCount()

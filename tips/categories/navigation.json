@@ -4,11 +4,11 @@
       "category": [
         "navigation"
       ],
-      "summary": "Repeat a motion with a count «5j»",
+      "summary": "Repeat a motion with a count 5j",
       "details": [
         "Operators take counts too",
-        "«3dw» deletes 3 words",
-        "«2d3w» multiplies to 6 words"
+        "3dw deletes 3 words",
+        "2d3w multiplies to 6 words"
       ]
     },
     {
@@ -16,30 +16,30 @@
         "navigation",
         "cmdline"
       ],
-      "summary": "Jump to a line number «120G»",
+      "summary": "Jump to a line number 120G",
       "details": [
         "Handy for line numbers in errors",
-        "«:120» then «Enter» does the same"
+        ":120 then Enter does the same"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Move by words «w» / «b» / «e»",
+      "summary": "Move by words w / b / e",
       "details": [
-        "«w» next word start",
-        "«b» previous word start",
-        "«e» moves to end of word"
+        "w next word start",
+        "b previous word start",
+        "e moves to end of word"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Jump to previous word end «ge» / «gE»",
+      "summary": "Jump to previous word end ge / gE",
       "details": [
-        "«gE» counts foo.bar() as one word",
+        "gE counts foo.bar() as one word",
         "Nice for edits before punctuation"
       ]
     },
@@ -47,51 +47,51 @@
       "category": [
         "navigation"
       ],
-      "summary": "Move by big WORDs «W» / «B» / «E»",
+      "summary": "Move by big WORDs W / B / E",
       "details": [
-        "«W» next WORD, «B» back, «E» to end",
+        "W next WORD, B back, E to end",
         "A WORD is split only on spaces",
-        "«W» hops over foo.bar() in one go"
+        "W hops over foo.bar() in one go"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Jump inside camelCase «[w» and «[b»",
+      "summary": "Jump inside camelCase [w and [b",
       "details": [
-        "In fooBarBaz, «[w» hops to Bar",
-        "«[b» hops back, «d[w» deletes ahead"
+        "In fooBarBaz, [w hops to Bar",
+        "[b hops back, d[w deletes ahead"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Jump to line start «0» / «^»",
+      "summary": "Jump to line start 0 / ^",
       "details": [
-        "«0» goes to the very first column",
-        "«^» stops at first non-blank char"
+        "0 goes to the very first column",
+        "^ stops at first non-blank char"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Jump to line end «$»",
+      "summary": "Jump to line end $",
       "details": [
         "Lands on the last char of the line",
-        "«d$» deletes to the end of the line"
+        "d$ deletes to the end of the line"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Jump to last non-blank on line «g_»",
+      "summary": "Jump to last non-blank on line g_",
       "details": [
-        "Unlike «$», it skips trailing spaces",
-        "«vg_» selects without the line break"
+        "Unlike $, it skips trailing spaces",
+        "vg_ selects without the line break"
       ],
       "advanced": true
     },
@@ -99,21 +99,21 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to text on next line «+» and «-»",
+      "summary": "Jump to text on next line + and -",
       "details": [
-        "«+» down to next line's first text",
-        "«-» up to previous line's first text",
-        "«d+» deletes both lines"
+        "+ down to next line's first text",
+        "- up to previous line's first text",
+        "d+ deletes both lines"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Jump to last change lines «'[» and «']»",
+      "summary": "Jump to last change lines '[ and ']",
       "details": [
-        "«'[» jumps to the change's first line",
-        "«']» jumps to its last line"
+        "'[ jumps to the change's first line",
+        "'] jumps to its last line"
       ],
       "advanced": true
     },
@@ -121,10 +121,10 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to a column «|»",
+      "summary": "Jump to a column |",
       "details": [
-        "«80|» jumps to column 80",
-        "«81|D» trims the line to 80 chars"
+        "80| jumps to column 80",
+        "81|D trims the line to 80 chars"
       ],
       "advanced": true
     },
@@ -132,30 +132,30 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump to file top/bottom «gg» / «G»",
+      "summary": "Jump to file top/bottom gg / G",
       "details": [
-        "«gg» goes to the first line",
-        "«G» goes to the last line",
-        "«dG» deletes to the end of the file"
+        "gg goes to the first line",
+        "G goes to the last line",
+        "dG deletes to the end of the file"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Jump by file percentage «N%»",
+      "summary": "Jump by file percentage N%",
       "details": [
-        "«50%» jumps halfway down the file",
-        "«10%» jumps near the top"
+        "50% jumps halfway down the file",
+        "10% jumps near the top"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Screen top/middle/bottom «H» / «M» / «L»",
+      "summary": "Screen top/middle/bottom H / M / L",
       "details": [
-        "«H» top of screen, «M» middle, «L» bottom",
+        "H top of screen, M middle, L bottom",
         "No scrolling, just the cursor moves"
       ]
     },
@@ -163,22 +163,22 @@
       "category": [
         "navigation"
       ],
-      "summary": "Move by wrapped lines «gj» / «gk»",
+      "summary": "Move by wrapped lines gj / gk",
       "details": [
-        "«j» skips a wrapped line in one go",
-        "«gj» and «gk» stop at each screen row",
-        "Turn on soft wrap with «:set wrap»"
+        "j skips a wrapped line in one go",
+        "gj and gk stop at each screen row",
+        "Turn on soft wrap with :set wrap"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Wrapped line start or end «g0» / «g$»",
+      "summary": "Wrapped line start or end g0 / g$",
       "details": [
-        "«g0» goes to this screen row's start",
-        "«g$» to its end, «g^» to its first text",
-        "Turn on soft wrap with «:set wrap»"
+        "g0 goes to this screen row's start",
+        "g$ to its end, g^ to its first text",
+        "Turn on soft wrap with :set wrap"
       ],
       "advanced": true
     },
@@ -186,53 +186,53 @@
       "category": [
         "navigation"
       ],
-      "summary": "Move by paragraphs «{» and «}»",
+      "summary": "Move by paragraphs { and }",
       "details": [
-        "«{» goes to previous paragraph",
-        "«}» goes to next paragraph",
-        "«d}» deletes to the next blank line"
+        "{ goes to previous paragraph",
+        "} goes to next paragraph",
+        "d} deletes to the next blank line"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Move by sentences «(» and «)»",
+      "summary": "Move by sentences ( and )",
       "details": [
-        "«(» jumps back a sentence",
-        "«)» jumps forward a sentence",
-        "«d)» deletes the rest of a sentence"
+        "( jumps back a sentence",
+        ") jumps forward a sentence",
+        "d) deletes the rest of a sentence"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Jump to matching pair «%»",
+      "summary": "Jump to matching pair %",
       "details": [
         "Cursor can sit before the bracket",
-        "«d%» deletes through its partner"
+        "d% deletes through its partner"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Jump to unmatched braces «]}» and «[{»",
+      "summary": "Jump to unmatched braces ]} and [{",
       "details": [
-        "«]}» jumps to the closing }, «[{» to {",
-        "«])» and «[(» do the same for parens",
-        "«d]}» deletes to the block end"
+        "]} jumps to the closing }, [{ to {",
+        "]) and [( do the same for parens",
+        "d]} deletes to the block end"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Return after big jumps «``» and «''»",
+      "summary": "Return after big jumps `` and ''",
       "details": [
-        "«``» jumps back to the exact spot",
-        "«''» jumps back to that line",
+        "`` jumps back to the exact spot",
+        "'' jumps back to that line",
         "Repeat it to hop back and forth"
       ]
     },
@@ -240,11 +240,11 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump back / forward «Ctrl-o» / «Ctrl-i»",
+      "summary": "Jump back / forward Ctrl-o / Ctrl-i",
       "details": [
-        "«Ctrl-o» steps back to older jumps",
-        "«Ctrl-i» steps forward again",
-        "Works across files, like after «gd»"
+        "Ctrl-o steps back to older jumps",
+        "Ctrl-i steps forward again",
+        "Works across files, like after gd"
       ]
     },
     {
@@ -252,10 +252,10 @@
         "navigation",
         "cmdline"
       ],
-      "summary": "See your jump history «:jumps»",
+      "summary": "See your jump history :jumps",
       "details": [
         "Lists stored jump locations",
-        "Pair with «Ctrl-o» / «Ctrl-i»"
+        "Pair with Ctrl-o / Ctrl-i"
       ],
       "advanced": true
     },
@@ -264,10 +264,10 @@
         "navigation",
         "editing"
       ],
-      "summary": "Jump to last edit location «`.»",
+      "summary": "Jump to last edit location `.",
       "details": [
         "Lands on the exact spot you changed",
-        "«'.» goes to the line instead"
+        "'. goes to the line instead"
       ]
     },
     {
@@ -275,51 +275,51 @@
         "navigation",
         "editing"
       ],
-      "summary": "Jump through changes «g;» / «g,»",
+      "summary": "Jump through changes g; / g,",
       "details": [
-        "«g;» goes to an older change position",
-        "«g,» moves back toward newer ones"
+        "g; goes to an older change position",
+        "g, moves back toward newer ones"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Find a character on the line «f» / «F»",
+      "summary": "Find a character on the line f / F",
       "details": [
-        "«fx» jumps to the next x on the line",
-        "«Fx» jumps back to the previous x"
+        "fx jumps to the next x on the line",
+        "Fx jumps back to the previous x"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Move till a character «t» / «T»",
+      "summary": "Move till a character t / T",
       "details": [
-        "«t)» stops just before the next )",
-        "«T(» stops just after the previous (",
-        "Perfect for «ct)» edits"
+        "t) stops just before the next )",
+        "T( stops just after the previous (",
+        "Perfect for ct) edits"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Repeat character search «;» and «,»",
+      "summary": "Repeat character search ; and ,",
       "details": [
-        "«;» repeats in same direction",
-        "«,» repeats in opposite direction"
+        "; repeats in same direction",
+        ", repeats in opposite direction"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Set and jump to a mark «ma» / «`a»",
+      "summary": "Set and jump to a mark ma / `a",
       "details": [
-        "«ma» tags the current spot as mark a",
-        "«`a» returns exactly, «'a» to the line"
+        "ma tags the current spot as mark a",
+        "`a returns exactly, 'a to the line"
       ]
     },
     {
@@ -327,9 +327,9 @@
         "navigation",
         "ideavim"
       ],
-      "summary": "Mark a spot across files «mA»",
+      "summary": "Mark a spot across files mA",
       "details": [
-        "«'A» jumps back to it from any file",
+        "'A jumps back to it from any file",
         "It shows as an IDE bookmark too"
       ]
     },
@@ -338,10 +338,10 @@
         "navigation",
         "cmdline"
       ],
-      "summary": "List marks with «:marks»",
+      "summary": "List marks with :marks",
       "details": [
-        "«:marks» shows active marks",
-        "Check before jumping with «'» or «`»"
+        ":marks shows active marks",
+        "Check before jumping with ' or `"
       ],
       "advanced": true
     },
@@ -350,10 +350,10 @@
         "navigation",
         "cmdline"
       ],
-      "summary": "Delete marks with «:delmarks»",
+      "summary": "Delete marks with :delmarks",
       "details": [
-        "«:delmarks a b» removes marks a and b",
-        "«:delmarks!» clears marks a to z"
+        ":delmarks a b removes marks a and b",
+        ":delmarks! clears marks a to z"
       ],
       "advanced": true
     },
@@ -362,10 +362,10 @@
         "navigation",
         "ideavim"
       ],
-      "summary": "Go to definition with «gd»",
+      "summary": "Go to definition with gd",
       "details": [
         "Works across files and libraries",
-        "«Ctrl-o» jumps back when you're done"
+        "Ctrl-o jumps back when you're done"
       ]
     },
     {
@@ -373,9 +373,9 @@
         "navigation",
         "ideavim"
       ],
-      "summary": "Go to definition and back «Ctrl-]»",
+      "summary": "Go to definition and back Ctrl-]",
       "details": [
-        "«Ctrl-t» returns to where you jumped",
+        "Ctrl-t returns to where you jumped",
         "Even after moving around there"
       ]
     },
@@ -383,11 +383,11 @@
       "category": [
         "navigation"
       ],
-      "summary": "Move between methods with «]m» / «[m»",
+      "summary": "Move between methods with ]m / [m",
       "details": [
-        "«]m» jumps to the next method start",
-        "«[m» jumps to the previous one",
-        "«]M» and «[M» do the same for the ends"
+        "]m jumps to the next method start",
+        "[m jumps to the previous one",
+        "]M and [M do the same for the ends"
       ]
     },
     {
@@ -396,7 +396,7 @@
       ],
       "summary": "Place cursor line top/center/bottom",
       "details": [
-        "«zt» top, «zz» center, «zb» bottom",
+        "zt top, zz center, zb bottom",
         "Use after a search or big jump"
       ]
     },
@@ -404,40 +404,40 @@
       "category": [
         "navigation"
       ],
-      "summary": "Half-page scroll «Ctrl-d» / «Ctrl-u»",
+      "summary": "Half-page scroll Ctrl-d / Ctrl-u",
       "details": [
-        "«Ctrl-d» scrolls down half a page",
-        "«Ctrl-u» scrolls up half a page"
+        "Ctrl-d scrolls down half a page",
+        "Ctrl-u scrolls up half a page"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Page scroll «Ctrl-f» / «Ctrl-b»",
+      "summary": "Page scroll Ctrl-f / Ctrl-b",
       "details": [
-        "«Ctrl-f» scrolls forward one page",
-        "«Ctrl-b» scrolls back one page"
+        "Ctrl-f scrolls forward one page",
+        "Ctrl-b scrolls back one page"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Line scroll «Ctrl-e» / «Ctrl-y»",
+      "summary": "Line scroll Ctrl-e / Ctrl-y",
       "details": [
-        "«Ctrl-e» scrolls down one line",
-        "«Ctrl-y» scrolls up one line"
+        "Ctrl-e scrolls down one line",
+        "Ctrl-y scrolls up one line"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Scroll sideways «zh» / «zl»",
+      "summary": "Scroll sideways zh / zl",
       "details": [
-        "«zh» scrolls left, «zl» scrolls right",
-        "«zH» and «zL» move half a screen",
+        "zh scrolls left, zl scrolls right",
+        "zH and zL move half a screen",
         "Needs soft wrap off, the default"
       ],
       "advanced": true
@@ -446,10 +446,10 @@
       "category": [
         "navigation"
       ],
-      "summary": "Place cursor screen edge «zs» / «ze»",
+      "summary": "Place cursor screen edge zs / ze",
       "details": [
-        "«zs» shows cursor at screen start",
-        "«ze» shows cursor at screen end",
+        "zs shows cursor at screen start",
+        "ze shows cursor at screen end",
         "Needs soft wrap off, the default"
       ],
       "advanced": true
@@ -458,11 +458,11 @@
       "category": [
         "navigation"
       ],
-      "summary": "Create a fold «zfip»",
+      "summary": "Create a fold zfip",
       "details": [
-        "«zfip» folds the current paragraph",
-        "Takes any motion, like «zf}» or «zfa{»",
-        "«zd» deletes it; IDE folds come back"
+        "zfip folds the current paragraph",
+        "Takes any motion, like zf} or zfa{",
+        "zd deletes it; IDE folds come back"
       ],
       "advanced": true
     },
@@ -471,10 +471,10 @@
         "navigation",
         "visual"
       ],
-      "summary": "Fold a Visual selection «zf»",
+      "summary": "Fold a Visual selection zf",
       "details": [
-        "Select lines with «V», then press «zf»",
-        "«za» then toggles your new fold"
+        "Select lines with V, then press zf",
+        "za then toggles your new fold"
       ],
       "advanced": true
     },
@@ -482,7 +482,7 @@
       "category": [
         "navigation"
       ],
-      "summary": "Toggle a fold with «za»",
+      "summary": "Toggle a fold with za",
       "details": [
         "Opens it if closed, closes if open",
         "One key covers most fold work"
@@ -492,19 +492,19 @@
       "category": [
         "navigation"
       ],
-      "summary": "Force a fold open or closed «zo» / «zc»",
+      "summary": "Force a fold open or closed zo / zc",
       "details": [
-        "«zo» always opens, «zc» always closes",
-        "Use when toggle «za» isn't enough"
+        "zo always opens, zc always closes",
+        "Use when toggle za isn't enough"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Toggle nested folds with «zA»",
+      "summary": "Toggle nested folds with zA",
       "details": [
-        "«zA» toggles it and every inner fold",
+        "zA toggles it and every inner fold",
         "One key for the whole fold tree"
       ],
       "advanced": true
@@ -515,8 +515,8 @@
       ],
       "summary": "Force nested folds open or closed",
       "details": [
-        "«zO» opens every nested level",
-        "«zC» closes every nested level"
+        "zO opens every nested level",
+        "zC closes every nested level"
       ],
       "advanced": true
     },
@@ -524,10 +524,10 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump between folds «zj» / «zk»",
+      "summary": "Jump between folds zj / zk",
       "details": [
-        "«zj» moves to the next fold start",
-        "«zk» moves to the previous fold start"
+        "zj moves to the next fold start",
+        "zk moves to the previous fold start"
       ],
       "advanced": true
     },
@@ -535,20 +535,20 @@
       "category": [
         "navigation"
       ],
-      "summary": "Fold all / unfold all «zM» / «zR»",
+      "summary": "Fold all / unfold all zM / zR",
       "details": [
-        "«zM» closes all folds in view",
-        "«zR» opens all folds in view"
+        "zM closes all folds in view",
+        "zR opens all folds in view"
       ]
     },
     {
       "category": [
         "navigation"
       ],
-      "summary": "Control fold depth with «zr» / «zm»",
+      "summary": "Control fold depth with zr / zm",
       "details": [
-        "«zr» opens one fold level",
-        "«zm» closes one fold level"
+        "zr opens one fold level",
+        "zm closes one fold level"
       ],
       "advanced": true
     },
@@ -556,7 +556,7 @@
       "category": [
         "navigation"
       ],
-      "summary": "Open the URL under the cursor «gx»",
+      "summary": "Open the URL under the cursor gx",
       "details": [
         "Opens with your default browser",
         "Cursor can sit anywhere in it"

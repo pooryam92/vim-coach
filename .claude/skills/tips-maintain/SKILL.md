@@ -28,8 +28,8 @@ compiled into `tips/vim_tips_min.json` by `scripts/generate-tips.mjs`.
 **Style is taught by example, not rules: read [examples.md](examples.md) before
 authoring or rewording anything.** Each entry is a whole tip before → after with
 the principle it embodies. Everything else on-demand lives in one companion,
-[reference.md](reference.md): proving IdeaVim supports a claim, marking keys,
-`config` blocks and the .ideavimrc button, adding/renaming/removing a category.
+[reference.md](reference.md): proving IdeaVim supports a claim, `config`
+blocks and the .ideavimrc button, adding/renaming/removing a category.
 
 ## Every change — work this checklist
 
@@ -52,11 +52,10 @@ the principle it embodies. Everything else on-demand lives in one companion,
    its first category.
 5. **Validate:** `node scripts/generate-tips.mjs --check` must pass (it is the
    source of truth — run it, don't reason about it). It is strict on source
-   shape — unknown keys, a bad `config`, duplicate details, malformed `«key»`
-   markers, a `Plug` line without `plugins` all fail (docs/tips/tips-pipeline.md → Validation) — but
+   shape — unknown keys, a bad `config`, duplicate details, a `Plug` line
+   without `plugins` all fail (docs/tips/tips-pipeline.md → Validation) — but
    never on length. Then `node scripts/lint-tips.mjs` — advisory, and the only
-   length check (it also lists tips with no marked key and chords or
-   `:commands` left outside markers); eyeball each hit.
+   length check; eyeball each hit.
 6. **`git status --short`** — only intended files changed. Never commit
    `tips/vim_tips_min.json`: CI regenerates it (regenerate locally only on
    explicit request; build details: docs/tips/tips-pipeline.md). A modified
@@ -69,8 +68,8 @@ the principle it embodies. Everything else on-demand lives in one companion,
 ```json
 {
   "category": ["plugins", "editing"],
-  "summary": "Make a word camelCase «crc»",
-  "details": ["«crc» turns foo_bar into fooBar", "Cursor can sit anywhere in the word"],
+  "summary": "Make a word camelCase crc",
+  "details": ["crc turns foo_bar into fooBar", "Cursor can sit anywhere in the word"],
   "config": { "name": "Install vim-abolish", "lines": ["Plug 'tpope/vim-abolish'"] }
 }
 ```
@@ -85,11 +84,6 @@ Hard constraints:
   and a line past ~43 first (it clamps the whole balloon).
   Prefer 2 details, 3 at most (lint flags a 4th). Never number steps —
   line order already reads as the sequence.
-- **Keys** — wrap every key the reader types in `«…»` in the summary and
-  details (`«ciw»`, `«Ctrl-w h»`, `«:%s/a/b/g»`); the balloon renders them in
-  teal, in the balloon's own font. Read reference.md → "Marking keys" for what counts and
-  how to split spans. The generator strips the markers from the published text,
-  so they never count toward length and never change the hide key.
 - `config` — optional; read reference.md → "Config tips" before authoring or
   reviewing one.
 - `advanced` — optional boolean, **omitted by default**. Add `"advanced": true`
@@ -98,7 +92,7 @@ Hard constraints:
   rejects any non-boolean value. See "Tagging a tip advanced" below.
 - `mode` — optional string, **omitted by default**. One of `insert`, `visual`,
   `command` (Normal is the default and stays absent — never tag it). Names the
-  mode the reader must be in to press the keys; it renders as a plain
+  mode the reader must be in to press the keys; it renders as a dimmed
   `Vim Coach · Insert mode` title label (informational only — it does *not*
   hide, gate, or de-duplicate anything). The generator rejects any other value.
   See "Tagging a tip's mode" below.

@@ -2,7 +2,6 @@ package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
 import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
-import com.github.pooryam92.vimcoach.features.tips.domain.TipKeySpan
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMode
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.intellij.notification.Notification
@@ -59,16 +58,22 @@ class TipNotificationFactory {
         }
     }
 
-    // Labels stay plain text so the keys in the body are the balloon's only accent colour.
     private fun notificationTitle(tip: VimTip): String {
         val labels = buildList {
-            if (tip.advanced) add(ADVANCED_LABEL)
-            TipMode.fromWire(tip.mode)?.let { add(it.label) }
+            if (tip.advanced) add(ADVANCED_LABEL to ADVANCED_LABEL_COLOR)
+            TipMode.fromWire(tip.mode)?.let { add(it.label to modeLabelColor(it)) }
         }
         if (labels.isEmpty()) return APP_TITLE
         val separator = coloredSpan(TITLE_LABEL_SEPARATOR, titleSeparatorForeground())
-        val tail = labels.joinToString("") { label -> separator + escapeHtml(label) }
+        val tail = labels.joinToString("") { (label, color) -> separator + coloredSpan(label, color) }
         return "$HTML_OPEN${escapeHtml(APP_TITLE)}$tail$HTML_CLOSE"
+    }
+
+    // Hues match IdeaVim's default mode widget, where Command shares Normal's green.
+    private fun modeLabelColor(mode: TipMode): Color = when (mode) {
+        TipMode.INSERT -> INSERT_MODE_LABEL_COLOR
+        TipMode.VISUAL -> VISUAL_MODE_LABEL_COLOR
+        TipMode.COMMAND -> COMMAND_MODE_LABEL_COLOR
     }
 
     private fun coloredSpan(text: String, color: Color): String {
@@ -161,11 +166,8 @@ class TipNotificationFactory {
     }
 
     private fun renderTipAsHtml(tip: VimTip): String {
-        val linesHtml = tip.textLines().mapIndexed { index, line ->
-            renderLine(line, tip.keys.filter { it.line == index })
-        }
-        val summaryHtml = linesHtml.first()
-        val detailsHtml = linesHtml.drop(1).joinToString(DETAILS_SEPARATOR)
+        val summaryHtml = escapeHtml(tip.summary)
+        val detailsHtml = tip.details.joinToString(DETAILS_SEPARATOR) { escapeHtml(it) }
         val cleanSummary = "$SUMMARY_DIV_OPEN$SUMMARY_OPEN$summaryHtml$SUMMARY_CLOSE$SUMMARY_DIV_CLOSE"
 
         return buildString {
@@ -178,21 +180,6 @@ class TipNotificationFactory {
             append(WRAPPER_CLOSE)
             append(HTML_CLOSE)
         }
-    }
-
-    // Overlapping or out-of-range spans are skipped rather than trusted, so bad key data can only
-    // cost a key its styling, never garble the text.
-    private fun renderLine(text: String, keys: List<TipKeySpan>): String = buildString {
-        var cursor = 0
-        for (key in keys.sortedBy(TipKeySpan::start)) {
-            if (key.start < cursor || key.end > text.length || key.start >= key.end) continue
-            append(escapeHtml(text.substring(cursor, key.start)))
-            append(KEY_STYLE_OPEN.format(ColorUtil.toHex(KEY_COLOR)))
-            append(escapeHtml(text.substring(key.start, key.end)))
-            append(SPAN_CLOSE)
-            cursor = key.end
-        }
-        append(escapeHtml(text.substring(cursor)))
     }
 
     private fun titleSeparatorForeground(): Color {
@@ -218,12 +205,12 @@ class TipNotificationFactory {
         val ADVANCED_TIPS_AVAILABLE_TEXT: String = MyBundle.message("advancedTipsAvailableMessage")
         val ADVANCED_TIPS_OPEN_SETTINGS_ACTION_TEXT: String = MyBundle.message("advancedTipsOpenSettingsAction")
         const val ADVANCED_LABEL: String = "Advanced"
+        // Light variants are IdeaVim's hues darkened to 4.5:1 contrast on white.
+        private val ADVANCED_LABEL_COLOR = JBColor(0x60748E, 0x98A7B9)
+        private val INSERT_MODE_LABEL_COLOR = JBColor(0xA2640D, 0xF4BF75)
+        private val VISUAL_MODE_LABEL_COLOR = JBColor(0x46788D, 0x6A9FB5)
+        private val COMMAND_MODE_LABEL_COLOR = JBColor(0x67793F, 0x90A959)
         private const val TITLE_LABEL_SEPARATOR: String = " · "
-        // A soft teal at 4.5:1 contrast on both balloon backgrounds. Keys keep the balloon font: a wider
-        // code font pushed long summaries past the balloon width and got them truncated with "...".
-        internal val KEY_COLOR = JBColor(0x437C72, 0x75B5AA)
-        private const val KEY_STYLE_OPEN = "<span style=\"color:#%s;\">"
-        private const val SPAN_CLOSE = "</span>"
         val TIP_ADD_TO_IDEAVIMRC_ACTION_TEXT: String = MyBundle.message("tipAddToIdeaVimRcAction")
         val TIP_RELOAD_IDEAVIMRC_ACTION_TEXT: String = MyBundle.message("tipReloadIdeaVimRcAction")
         val TIP_ADDED_TO_IDEAVIMRC_TEXT: String = MyBundle.message("tipAddedToIdeaVimRcMessage")

@@ -5,11 +5,11 @@
         "files",
         "cmdline"
       ],
-      "summary": "Edit another file with «:edit {file}»",
+      "summary": "Edit another file with :edit {file}",
       "details": [
-        "«:e %:h/», press «Tab» to see files",
-        "«%:h» is this file's folder",
-        "Bare «:e» opens the Open File dialog"
+        ":e %:h/, press Tab to see files",
+        "%:h is this file's folder",
+        "Bare :e opens the Open File dialog"
       ]
     },
     {
@@ -17,10 +17,10 @@
         "files",
         "cmdline"
       ],
-      "summary": "Open a file by name «:find {file}»",
+      "summary": "Open a file by name :find {file}",
       "details": [
         "Searches the project, not 'path'",
-        "Bare «:find» triggers Go to File"
+        "Bare :find triggers Go to File"
       ]
     },
     {
@@ -28,20 +28,20 @@
         "files",
         "cmdline"
       ],
-      "summary": "List open buffers with «:ls»",
+      "summary": "List open buffers with :ls",
       "details": [
-        "«:ls» numbers every open file",
-        "«:b 3» then jumps to file number 3"
+        ":ls numbers every open file",
+        ":b 3 then jumps to file number 3"
       ]
     },
     {
       "category": [
         "files"
       ],
-      "summary": "Toggle last file «Ctrl-^»",
+      "summary": "Toggle last file Ctrl-^",
       "details": [
         "Back to the file you just left",
-        "«Ctrl-^» is «Ctrl-6» on many keyboards"
+        "Ctrl-^ is Ctrl-6 on many keyboards"
       ]
     },
     {
@@ -49,10 +49,10 @@
         "files",
         "cmdline"
       ],
-      "summary": "Next/previous buffer «:bn» / «:bp»",
+      "summary": "Next/previous buffer :bn / :bp",
       "details": [
-        "«:bn» goes to the next buffer",
-        "«:bp» goes to the previous buffer"
+        ":bn goes to the next buffer",
+        ":bp goes to the previous buffer"
       ]
     },
     {
@@ -60,11 +60,11 @@
         "files",
         "ideavim"
       ],
-      "summary": "Save every open file with «:w»",
+      "summary": "Save every open file with :w",
       "details": [
-        "«:w» saves all open files by default",
+        ":w saves all open files by default",
         "Fires IDE save hooks like reformat",
-        "«:set ideawrite=file» saves just one"
+        ":set ideawrite=file saves just one"
       ]
     },
     {
@@ -72,11 +72,11 @@
         "files",
         "cmdline"
       ],
-      "summary": "Save a copy with «:w {file}»",
+      "summary": "Save a copy with :w {file}",
       "details": [
-        "«:w bak.kt» writes a copy as bak.kt",
+        ":w bak.kt writes a copy as bak.kt",
         "You keep editing the original",
-        "«:w!» overwrites a file that exists"
+        ":w! overwrites a file that exists"
       ]
     },
     {
@@ -84,10 +84,10 @@
         "files",
         "cmdline"
       ],
-      "summary": "Save all files «:wa»",
+      "summary": "Save all files :wa",
       "details": [
-        "«:wa» runs the IDE's Save All",
-        "«:w» does too, unless «ideawrite=file»"
+        ":wa runs the IDE's Save All",
+        ":w does too, unless ideawrite=file"
       ]
     },
     {
@@ -95,9 +95,9 @@
         "files",
         "cmdline"
       ],
-      "summary": "Insert a file with «:read {file}»",
+      "summary": "Insert a file with :read {file}",
       "details": [
-        "«:r ~/a.txt» drops it below this line",
+        ":r ~/a.txt drops it below this line",
         "Use ~/ or a full path, not a name"
       ]
     },
@@ -106,9 +106,9 @@
         "files",
         "cmdline"
       ],
-      "summary": "Close this editor tab «:q»",
+      "summary": "Close this editor tab :q",
       "details": [
-        "«:q!», «ZQ» and «:bd» do the same",
+        ":q!, ZQ and :bd do the same",
         "Edits are kept, nothing discarded"
       ]
     },
@@ -117,10 +117,10 @@
         "files",
         "cmdline"
       ],
-      "summary": "Save and close a file «ZZ»",
+      "summary": "Save and close a file ZZ",
       "details": [
         "Closes only the tab, not the IDE",
-        "«:wq» and «:x» do exactly the same"
+        ":wq and :x do exactly the same"
       ]
     },
     {
@@ -128,9 +128,9 @@
         "files",
         "cmdline"
       ],
-      "summary": "Quit every editor with «:qa»",
+      "summary": "Quit every editor with :qa",
       "details": [
-        "«:qa!», «:wqa» and «:xa» do the same",
+        ":qa!, :wqa and :xa do the same",
         "The IDE stays open, edits kept"
       ]
     }

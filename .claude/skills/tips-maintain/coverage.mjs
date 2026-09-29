@@ -13,7 +13,6 @@
 // Paths are relative to the repo root; run it from there.
 
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs'
-import { stripKeyMarkers } from '../../../scripts/tip-keys.mjs'
 
 const IDEAVIM = 'external/ideavim'
 const ENGINE_KSP = `${IDEAVIM}/vim-engine/src/main/resources/ksp-generated`
@@ -102,7 +101,7 @@ for (const f of readdirSync(TIPS_DIR)) {
   const { tips = [] } = readJson(`${TIPS_DIR}/${f}`)
   for (const t of tips) {
     tipCount++
-    haystack += '\n' + stripKeyMarkers(t.summary || '') + '\n' + (t.details || []).map(stripKeyMarkers).join('\n')
+    haystack += '\n' + (t.summary || '') + '\n' + (t.details || []).join('\n')
     const lines = Array.isArray(t.config) ? t.config : t.config?.lines ?? []
     for (const line of lines) {
       haystack += '\n' + line

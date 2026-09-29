@@ -1,11 +1,9 @@
 package com.github.pooryam92.vimcoach.features.tips.application.loading.infra.parsing
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
-import com.github.pooryam92.vimcoach.features.tips.domain.TipKeySpan
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMode
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonArray
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -22,14 +20,11 @@ object TipJsonParser {
     private const val CONFIG_LINES_FIELD = "lines"
     private const val ADVANCED_FIELD = "advanced"
     private const val MODE_FIELD = "mode"
-    private const val KEYS_FIELD = "keys"
-    private const val KEY_SPAN_PARTS = 3
 
     private val logger = Logger.getInstance(TipJsonParser::class.java)
 
     private val gson = GsonBuilder()
         .registerTypeAdapter(TipConfig::class.java, TipConfigDeserializer)
-        .registerTypeAdapter(TipKeySpan::class.java, TipKeySpanDeserializer)
         .create()
 
     fun parseTipsJson(stream: InputStream): List<VimTip> {
@@ -49,7 +44,6 @@ object TipJsonParser {
         }
         element.asJsonArray.forEach(::dropMalformedAdvancedFlag)
         element.asJsonArray.forEach(::dropUnknownMode)
-        element.asJsonArray.forEach(::dropMalformedKeys)
         val tips = gson.fromJson(element, Array<VimTip>::class.java) ?: return emptyList()
         return dropDuplicateSummaries(tips.mapNotNull(::normalizeTip))
     }
@@ -82,25 +76,6 @@ object TipJsonParser {
         }
     }
 
-    // `keys` holds [line, start, end] integer triples. Anything else would make Gson abort the whole
-    // tips array, so malformed entries are dropped here and the tip keeps whichever keys are sound.
-    private fun dropMalformedKeys(tipElement: JsonElement) {
-        val tip = tipElement.takeIf(JsonElement::isJsonObject)?.asJsonObject ?: return
-        val keys = tip.get(KEYS_FIELD) ?: return
-        val entries = keys.takeIf(JsonElement::isJsonArray)?.asJsonArray ?: JsonArray()
-        val wellFormed = entries.filter(::isIntTriple)
-        if (keys.isJsonArray && wellFormed.size == entries.size()) return
-        logger.warn("Ignoring malformed \"$KEYS_FIELD\" entries on tip: $keys")
-        tip.add(KEYS_FIELD, JsonArray().apply { wellFormed.forEach(::add) })
-    }
-
-    private fun isIntTriple(element: JsonElement): Boolean {
-        val parts = element.takeIf(JsonElement::isJsonArray)?.asJsonArray ?: return false
-        return parts.size() == KEY_SPAN_PARTS && parts.all { part ->
-            part.isJsonPrimitive && part.asJsonPrimitive.isNumber && part.asDouble == part.asInt.toDouble()
-        }
-    }
-
     // A tip's trimmed summary is its identity downstream (see TipHash): it keys hidden-tip
     // filtering and hash->tip matching. Two tips sharing a summary would make one unreachable
     // and hiding one would hide both, so we keep the first and drop the rest loudly here.
@@ -130,25 +105,8 @@ object TipJsonParser {
             normalizedCategories,
             normalizedConfig,
             tip.advanced,
-            normalizedMode,
-            normalizeKeys(tip, VimTip(summary, details).textLines())
+            normalizedMode
         )
-    }
-
-    // Key offsets point into the text exactly as the generator wrote it. If normalizing moved any
-    // line (trimmed, blank or repeated details dropped), the offsets would land on the wrong
-    // characters, so the tip falls back to unstyled text instead.
-    private fun normalizeKeys(tip: VimTip, normalizedLines: List<String>): List<TipKeySpan> {
-        if (tip.keys.isEmpty()) return emptyList()
-        if (tip.textLines() != normalizedLines) {
-            logger.warn("Ignoring \"$KEYS_FIELD\" on a tip whose text needed normalizing: \"${tip.summary}\"")
-            return emptyList()
-        }
-        val (valid, invalid) = tip.keys.partition { it.fitsIn(normalizedLines) }
-        if (invalid.isNotEmpty()) {
-            logger.warn("Ignoring out-of-range \"$KEYS_FIELD\" entries on tip \"${tip.summary}\": $invalid")
-        }
-        return valid
     }
 
     private fun normalizeStrings(values: List<String>): List<String> {
@@ -199,18 +157,6 @@ object TipJsonParser {
             return element.asJsonArray.mapNotNull { line ->
                 line.takeIf { it.isJsonPrimitive }?.asString
             }
-        }
-    }
-
-    /** Reads the compact `[line, start, end]` wire form; entries were already checked by [dropMalformedKeys]. */
-    private object TipKeySpanDeserializer : JsonDeserializer<TipKeySpan> {
-        override fun deserialize(
-            json: JsonElement,
-            typeOfT: Type,
-            context: JsonDeserializationContext
-        ): TipKeySpan {
-            val (line, start, end) = json.asJsonArray.map(JsonElement::getAsInt)
-            return TipKeySpan(line, start, end)
         }
     }
 }

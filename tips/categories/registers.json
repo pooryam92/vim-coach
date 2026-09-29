@@ -4,51 +4,51 @@
       "category": [
         "registers"
       ],
-      "summary": "Yank inner/around word «yiw» / «yaw»",
+      "summary": "Yank inner/around word yiw / yaw",
       "details": [
-        "«yiw» copies just the word",
-        "«yaw» takes the trailing space too"
+        "yiw copies just the word",
+        "yaw takes the trailing space too"
       ]
     },
     {
       "category": [
         "registers"
       ],
-      "summary": "Yank whole line «yy»",
+      "summary": "Yank whole line yy",
       "details": [
-        "«yy» yanks the current line",
-        "«5yy» yanks five lines",
-        "«Y» does the same as «yy»"
+        "yy yanks the current line",
+        "5yy yanks five lines",
+        "Y does the same as yy"
       ]
     },
     {
       "category": [
         "registers"
       ],
-      "summary": "Yank line parts «y0» / «y$»",
+      "summary": "Yank line parts y0 / y$",
       "details": [
-        "«y0» yanks to start of line",
-        "«y$» yanks to end of line"
+        "y0 yanks to start of line",
+        "y$ yanks to end of line"
       ]
     },
     {
       "category": [
         "registers"
       ],
-      "summary": "Paste after/before «p» / «P»",
+      "summary": "Paste after/before p / P",
       "details": [
-        "«p» pastes after, or below for lines",
-        "«P» pastes before, or above for lines"
+        "p pastes after, or below for lines",
+        "P pastes before, or above for lines"
       ]
     },
     {
       "category": [
         "registers"
       ],
-      "summary": "Paste and move past it «gp» / «gP»",
+      "summary": "Paste and move past it gp / gP",
       "details": [
         "Cursor lands just past the paste",
-        "«gP» does it for paste-before"
+        "gP does it for paste-before"
       ],
       "advanced": true
     },
@@ -56,21 +56,21 @@
       "category": [
         "registers"
       ],
-      "summary": "Use the yank register «\"0»",
+      "summary": "Use the yank register \"0",
       "details": [
         "Yank text, then delete something",
-        "«p» now pastes the delete instead",
-        "«\"0p» still pastes what you yanked"
+        "p now pastes the delete instead",
+        "\"0p still pastes what you yanked"
       ]
     },
     {
       "category": [
         "registers"
       ],
-      "summary": "Recover the last delete with «\"1»",
+      "summary": "Recover the last delete with \"1",
       "details": [
-        "Deleted lines queue up in «\"1» to «\"9»",
-        "«\"1p» still works after a new yank"
+        "Deleted lines queue up in \"1 to \"9",
+        "\"1p still works after a new yank"
       ],
       "advanced": true
     },
@@ -78,10 +78,10 @@
       "category": [
         "registers"
       ],
-      "summary": "Delete without clobbering yanks «\"_»",
+      "summary": "Delete without clobbering yanks \"_",
       "details": [
-        "«\"_dd» deletes to the black hole",
-        "«p» still pastes your earlier yank"
+        "\"_dd deletes to the black hole",
+        "p still pastes your earlier yank"
       ],
       "advanced": true
     },
@@ -89,10 +89,10 @@
       "category": [
         "registers"
       ],
-      "summary": "Paste keeping indent «]p» / «[p»",
+      "summary": "Paste keeping indent ]p / [p",
       "details": [
-        "«]p» pastes below without reindenting",
-        "«[p» pastes above without reindenting"
+        "]p pastes below without reindenting",
+        "[p pastes above without reindenting"
       ],
       "advanced": true
     },
@@ -101,10 +101,10 @@
         "registers",
         "cmdline"
       ],
-      "summary": "Send a yank to top or end «:put»",
+      "summary": "Send a yank to top or end :put",
       "details": [
-        "«:0put» pastes your yank at the top",
-        "«:$put» pastes it at the bottom"
+        ":0put pastes your yank at the top",
+        ":$put pastes it at the bottom"
       ],
       "advanced": true
     },
@@ -112,11 +112,11 @@
       "category": [
         "registers"
       ],
-      "summary": "Yank into register a «\"ayy»",
+      "summary": "Yank into register a \"ayy",
       "details": [
-        "«\"ayy» yanks the line into a",
-        "«\"ap» pastes it back later",
-        "«\"Ayy» (capital) appends to a"
+        "\"ayy yanks the line into a",
+        "\"ap pastes it back later",
+        "\"Ayy (capital) appends to a"
       ]
     },
     {
@@ -124,9 +124,9 @@
         "registers",
         "cmdline"
       ],
-      "summary": "Inspect registers with «:reg»",
+      "summary": "Inspect registers with :reg",
       "details": [
-        "«:reg» lists registers and macros",
+        ":reg lists registers and macros",
         "Check what you yanked or recorded"
       ]
     },
@@ -134,10 +134,10 @@
       "category": [
         "registers"
       ],
-      "summary": "Copy to the OS clipboard «\"+yy»",
+      "summary": "Copy to the OS clipboard \"+yy",
       "details": [
         "Paste it into any other app",
-        "«\"+p» pastes what another app copied"
+        "\"+p pastes what another app copied"
       ]
     }
   ]

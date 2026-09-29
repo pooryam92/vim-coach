@@ -6,11 +6,11 @@
         "editing",
         "registers"
       ],
-      "summary": "Paste over a selection «p» / «P»",
+      "summary": "Paste over a selection p / P",
       "details": [
-        "Select, then «p» drops your yank in",
-        "«p» swaps the old text into your yank",
-        "«P» keeps your yank for the next spot"
+        "Select, then p drops your yank in",
+        "p swaps the old text into your yank",
+        "P keeps your yank for the next spot"
       ],
       "mode": "visual"
     },
@@ -20,18 +20,18 @@
       ],
       "summary": "Enter Visual mode three ways",
       "details": [
-        "«v» selects characters",
-        "«V» selects whole lines",
-        "«Ctrl-v» selects a block"
+        "v selects characters",
+        "V selects whole lines",
+        "Ctrl-v selects a block"
       ]
     },
     {
       "category": [
         "visual"
       ],
-      "summary": "Swap selection ends «o»",
+      "summary": "Swap selection ends o",
       "details": [
-        "«o» moves cursor to the other end",
+        "o moves cursor to the other end",
         "Grow or trim the start from there"
       ],
       "mode": "visual"
@@ -40,10 +40,10 @@
       "category": [
         "visual"
       ],
-      "summary": "Swap corner in Visual block «O»",
+      "summary": "Swap corner in Visual block O",
       "details": [
-        "«Ctrl-v» starts the block",
-        "«O» hops to the other end of the row",
+        "Ctrl-v starts the block",
+        "O hops to the other end of the row",
         "Now grow it from that side"
       ],
       "advanced": true
@@ -54,8 +54,8 @@
       ],
       "summary": "Select the last change you made",
       "details": [
-        "«`[» jumps to the change start",
-        "«v» then «`]» reaches the end"
+        "`[ jumps to the change start",
+        "v then `] reaches the end"
       ],
       "advanced": true
     },
@@ -63,10 +63,10 @@
       "category": [
         "visual"
       ],
-      "summary": "Reselect last selection «gv»",
+      "summary": "Reselect last selection gv",
       "details": [
-        "«Esc» dropped it? «gv» brings it back",
-        "Then act on it again, like «y» or «>»"
+        "Esc dropped it? gv brings it back",
+        "Then act on it again, like y or >"
       ]
     },
     {
@@ -74,11 +74,11 @@
         "visual",
         "pattern"
       ],
-      "summary": "Select search match «gn» / «gN»",
+      "summary": "Select search match gn / gN",
       "details": [
-        "«/foo», then «gn» selects the match",
-        "Attach an operator: «dgn», «cgn», «ygn»",
-        "«gN» grabs the previous match"
+        "/foo, then gn selects the match",
+        "Attach an operator: dgn, cgn, ygn",
+        "gN grabs the previous match"
       ],
       "advanced": true
     },
@@ -87,32 +87,32 @@
         "visual",
         "cmdline"
       ],
-      "summary": "Sort selected lines «:sort»",
+      "summary": "Sort selected lines :sort",
       "details": [
-        "Select lines, then run «:sort»",
-        "Use «:sort u» to keep unique lines",
-        "«:sort n» sorts by number"
+        "Select lines, then run :sort",
+        "Use :sort u to keep unique lines",
+        ":sort n sorts by number"
       ]
     },
     {
       "category": [
         "visual"
       ],
-      "summary": "Select a text object «viw»",
+      "summary": "Select a text object viw",
       "details": [
-        "«vi(» grabs the text inside parens",
-        "«vip» grabs the whole paragraph",
-        "Swap «i» for «a» to include the edges"
+        "vi( grabs the text inside parens",
+        "vip grabs the whole paragraph",
+        "Swap i for a to include the edges"
       ]
     },
     {
       "category": [
         "visual"
       ],
-      "summary": "Select the whole file «ggVG»",
+      "summary": "Select the whole file ggVG",
       "details": [
-        "«gg» goes top, «V» starts linewise",
-        "«G» extends to end of file"
+        "gg goes top, V starts linewise",
+        "G extends to end of file"
       ]
     },
     {
@@ -120,10 +120,10 @@
         "visual",
         "editing"
       ],
-      "summary": "Shift a selection «>» and «<»",
+      "summary": "Shift a selection > and <",
       "details": [
-        "«>» indents, «<» outdents",
-        "Then press «.» to repeat"
+        "> indents, < outdents",
+        "Then press . to repeat"
       ],
       "mode": "visual"
     },
@@ -132,11 +132,11 @@
         "visual",
         "editing"
       ],
-      "summary": "Keep selection after shift «>gv»",
+      "summary": "Keep selection after shift >gv",
       "details": [
-        "«>» on a selection drops it",
-        "«>gv» indents and reselects",
-        "«<gv» does the same outdenting"
+        "> on a selection drops it",
+        ">gv indents and reselects",
+        "<gv does the same outdenting"
       ],
       "mode": "visual"
     },
@@ -145,10 +145,10 @@
         "visual",
         "editing"
       ],
-      "summary": "Change case of a selection «u» / «U»",
+      "summary": "Change case of a selection u / U",
       "details": [
-        "Select, then «u» makes it lowercase",
-        "«U» makes it uppercase, «~» flips it"
+        "Select, then u makes it lowercase",
+        "U makes it uppercase, ~ flips it"
       ],
       "mode": "visual"
     },
@@ -157,9 +157,9 @@
         "visual",
         "editing"
       ],
-      "summary": "Reformat a selection «gq»",
+      "summary": "Reformat a selection gq",
       "details": [
-        "Select text then press «gq»",
+        "Select text then press gq",
         "Runs the IDE code reformat"
       ],
       "mode": "visual"
@@ -169,11 +169,11 @@
         "visual",
         "insert"
       ],
-      "summary": "Type on many lines at once «Ctrl-v»",
+      "summary": "Type on many lines at once Ctrl-v",
       "details": [
-        "«Ctrl-v», «j» to span lines, then «I»",
-        "Type, then «Esc» fills every line",
-        "«$A» instead adds at each line end"
+        "Ctrl-v, j to span lines, then I",
+        "Type, then Esc fills every line",
+        "$A instead adds at each line end"
       ]
     },
     {
@@ -183,9 +183,9 @@
       ],
       "summary": "Replace a block on many lines",
       "details": [
-        "«Ctrl-v» and «hjkl» mark the block",
-        "Press «c», type the new text",
-        "«Esc» fills every line"
+        "Ctrl-v and hjkl mark the block",
+        "Press c, type the new text",
+        "Esc fills every line"
       ]
     },
     {
@@ -193,11 +193,11 @@
         "visual",
         "editing"
       ],
-      "summary": "Fill a block with one char «r»",
+      "summary": "Fill a block with one char r",
       "details": [
-        "«Ctrl-v» starts Visual Block mode",
-        "«hjkl» extends the block",
-        "«rx» fills every cell with x"
+        "Ctrl-v starts Visual Block mode",
+        "hjkl extends the block",
+        "rx fills every cell with x"
       ],
       "mode": "visual"
     },
@@ -206,10 +206,10 @@
         "visual",
         "cmdline"
       ],
-      "summary": "Run «:» commands on a selection",
+      "summary": "Run : commands on a selection",
       "details": [
-        "Select lines, press «:», type «s/a/b/»",
-        "«Enter» edits only the selected lines"
+        "Select lines, press :, type s/a/b/",
+        "Enter edits only the selected lines"
       ],
       "mode": "visual"
     }

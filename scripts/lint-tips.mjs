@@ -11,7 +11,6 @@ import { spawnSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { KEY_OPEN, stripKeyMarkers } from "./tip-keys.mjs";
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repoRoot, "tips", "categories");
@@ -25,9 +24,6 @@ const DETAILS_MAX_COUNT = 3;
 const FILLER_OPENER = /^(Useful|Handy|Use it|Good for|Great)\b/;
 const SYMBOL_SLASH = /(?:^|\s)([^\sA-Za-z0-9]+) \/ ([^\sA-Za-z0-9]+)(?=\s|$)/;
 const NUMBERED_STEP = /^\d+\.\s/;
-// Chords and ex commands are unambiguous keys, so seeing one outside «…» means a marker is missing.
-const UNMARKED_KEY = /(?:^|[\s(])((?:Ctrl|Alt|Shift)-\S+|:[a-z%!][\w%!/]*)/;
-const MARKED_SPAN = /«[^»]*»/g;
 const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 function containsKeys(text, keys) {
@@ -88,26 +84,16 @@ const symbolSlashes = [];
 const fillerOpeners = [];
 const numberedSteps = [];
 const restatedKeys = [];
-const unmarkedTips = [];
-const unmarkedKeys = [];
 const allTips = [];
 
 for (const file of files) {
   const { tips } = JSON.parse(readFileSync(join(sourceDir, file), "utf8"));
   for (const tip of tips) {
-    const markedLines = [tip.summary, ...(tip.details ?? [])];
-    if (!markedLines.some((line) => line.includes(KEY_OPEN))) unmarkedTips.push([file, tip.summary]);
-    for (const line of markedLines) {
-      const outside = line.replace(MARKED_SPAN, "");
-      if (UNMARKED_KEY.test(outside)) unmarkedKeys.push([file, line]);
-    }
-
-    // Lengths and wording are judged on what readers see, without the «key» markers.
-    const s = stripKeyMarkers(tip.summary);
+    const s = tip.summary;
 
     if (s.length > SUMMARY_MAX) longSummaries.push([s.length, file, s]);
 
-    const details = (tip.details ?? []).map(stripKeyMarkers);
+    const details = tip.details ?? [];
     for (const d of details) {
       if (d.length > DETAIL_CLAMP) clampingDetails.push([d.length, file, d]);
       else if (d.length > DETAIL_MAX) longDetails.push([d.length, file, d]);
@@ -181,8 +167,6 @@ section("Numbered-step details (drop the 1. 2. prefixes; line order is the seque
 section("Possible stray separators in summaries (eyeball — `-` may be part of keys)", separators, fileRow);
 section('Slash between symbol keys (join symbol pairs with "and": { and })', symbolSlashes, fileRow);
 section("Details opening with filler (Useful/Handy/Use it/Good for/Great)", fillerOpeners, fileRow);
-section("Tips with no «key» marked (mark every key the reader types; a few tips genuinely have none)", unmarkedTips, fileRow);
-section("Chord or :command outside «…» (likely a missing key marker)", unmarkedKeys, fileRow);
 section("First detail repeats the summary's keys (spend the line on what they do)", restatedKeys, ([f, s, d]) =>
   `${fileRow([f, s])}\n      ${JSON.stringify(d)}`,
 );

@@ -4,11 +4,11 @@
       "category": [
         "mappings"
       ],
-      "summary": "List your mappings with «:map»",
+      "summary": "List your mappings with :map",
       "details": [
-        "«:map» shows Normal and Visual maps",
-        "«:imap» shows the Insert-mode ones",
-        "«:nmap gd» shows just «gd»'s mapping"
+        ":map shows Normal and Visual maps",
+        ":imap shows the Insert-mode ones",
+        ":nmap gd shows just gd's mapping"
       ]
     },
     {
@@ -16,10 +16,10 @@
         "mappings",
         "insert"
       ],
-      "summary": "Auto-expand text with «:iabbrev»",
+      "summary": "Auto-expand text with :iabbrev",
       "details": [
-        "«:iab teh the», then press «Enter»",
-        "Typing teh then «Space» gives the"
+        ":iab teh the, then press Enter",
+        "Typing teh then Space gives the"
       ]
     }
   ]

@@ -5,11 +5,11 @@
         "windows",
         "cmdline"
       ],
-      "summary": "Split horizontally «:sp»",
+      "summary": "Split horizontally :sp",
       "details": [
-        "«:sp» stacks a view above/below",
-        "«Ctrl-w s» does the same from Normal",
-        "«:sp Foo.kt» opens Foo.kt below"
+        ":sp stacks a view above/below",
+        "Ctrl-w s does the same from Normal",
+        ":sp Foo.kt opens Foo.kt below"
       ]
     },
     {
@@ -17,22 +17,22 @@
         "windows",
         "cmdline"
       ],
-      "summary": "Split vertically «:vs»",
+      "summary": "Split vertically :vs",
       "details": [
-        "«:vs» opens a side-by-side view",
-        "«Ctrl-w v» does the same from Normal",
-        "«:vs Foo.kt» opens Foo.kt beside it"
+        ":vs opens a side-by-side view",
+        "Ctrl-w v does the same from Normal",
+        ":vs Foo.kt opens Foo.kt beside it"
       ]
     },
     {
       "category": [
         "windows"
       ],
-      "summary": "Close a split «Ctrl-w c»",
+      "summary": "Close a split Ctrl-w c",
       "details": [
         "Closes this split and its tabs",
         "Files open elsewhere stay open",
-        "«Ctrl-w q» does the same"
+        "Ctrl-w q does the same"
       ]
     },
     {
@@ -40,30 +40,30 @@
         "windows",
         "cmdline"
       ],
-      "summary": "Keep only this split «:only»",
+      "summary": "Keep only this split :only",
       "details": [
         "Other splits close with their tabs",
-        "«Ctrl-w o» does the same from Normal"
+        "Ctrl-w o does the same from Normal"
       ]
     },
     {
       "category": [
         "windows"
       ],
-      "summary": "Cycle through splits «Ctrl-w w» / «W»",
+      "summary": "Cycle through splits Ctrl-w w / W",
       "details": [
-        "«Ctrl-w w» goes to the next split",
-        "«Ctrl-w W» goes to the previous split"
+        "Ctrl-w w goes to the next split",
+        "Ctrl-w W goes to the previous split"
       ]
     },
     {
       "category": [
         "windows"
       ],
-      "summary": "Move to a split «Ctrl-w h/j/k/l»",
+      "summary": "Move to a split Ctrl-w h/j/k/l",
       "details": [
-        "«Ctrl-w l» jumps to the right split",
-        "«h» left, «j» down, «k» up work the same"
+        "Ctrl-w l jumps to the right split",
+        "h left, j down, k up work the same"
       ]
     },
     {
@@ -72,8 +72,8 @@
       ],
       "summary": "Make a split taller or shorter",
       "details": [
-        "«Ctrl-w +» grows, «Ctrl-w -» shrinks",
-        "«10 Ctrl-w +» adds ten rows at once"
+        "Ctrl-w + grows, Ctrl-w - shrinks",
+        "10 Ctrl-w + adds ten rows at once"
       ]
     },
     {
@@ -82,35 +82,35 @@
       ],
       "summary": "Make a split wider or narrower",
       "details": [
-        "«Ctrl-w >» widens, «Ctrl-w <» narrows",
-        "«10 Ctrl-w >» adds ten columns"
+        "Ctrl-w > widens, Ctrl-w < narrows",
+        "10 Ctrl-w > adds ten columns"
       ]
     },
     {
       "category": [
         "windows"
       ],
-      "summary": "Even out all splits «Ctrl-w =»",
+      "summary": "Even out all splits Ctrl-w =",
       "details": [
         "Every split gets the same size",
-        "Undoes drags and «Ctrl-w +» tweaks"
+        "Undoes drags and Ctrl-w + tweaks"
       ]
     },
     {
       "category": [
         "windows"
       ],
-      "summary": "Next/previous tab «gt» / «gT»",
+      "summary": "Next/previous tab gt / gT",
       "details": [
-        "«gt» goes to the next tab",
-        "«gT» goes to the previous tab"
+        "gt goes to the next tab",
+        "gT goes to the previous tab"
       ]
     },
     {
       "category": [
         "windows"
       ],
-      "summary": "Jump to a tab by number «3gt»",
+      "summary": "Jump to a tab by number 3gt",
       "details": [
         "Tabs count from 1, left to right",
         "Counts only this split's tabs"
@@ -121,7 +121,7 @@
         "windows",
         "cmdline"
       ],
-      "summary": "Keep only this tab «:tabonly»",
+      "summary": "Keep only this tab :tabonly",
       "details": [
         "Closes the other tabs in this split",
         "Same as the IDE's Close Other Tabs"
@@ -132,10 +132,10 @@
         "windows",
         "cmdline"
       ],
-      "summary": "Reorder tabs «:tabmove»",
+      "summary": "Reorder tabs :tabmove",
       "details": [
-        "«:tabmove 0» moves it to the start",
-        "Bare «:tabmove» moves it to the end"
+        ":tabmove 0 moves it to the start",
+        "Bare :tabmove moves it to the end"
       ]
     },
     {
@@ -144,8 +144,8 @@
       ],
       "summary": "Maximize a split's height or width",
       "details": [
-        "«Ctrl-w _» maxes this split's height",
-        "«Ctrl-w |» maxes its width"
+        "Ctrl-w _ maxes this split's height",
+        "Ctrl-w | maxes its width"
       ]
     }
   ]

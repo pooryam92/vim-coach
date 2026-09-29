@@ -5,10 +5,10 @@
         "repeat",
         "editing"
       ],
-      "summary": "Repeat last change with «.»",
+      "summary": "Repeat last change with .",
       "details": [
         "Replays the last edit at the cursor",
-        "Counts work, e.g. «3.» repeats 3x"
+        "Counts work, e.g. 3. repeats 3x"
       ]
     },
     {
@@ -16,11 +16,11 @@
         "repeat",
         "editing"
       ],
-      "summary": "Add ; to line ends «A;» then «j.»",
+      "summary": "Add ; to line ends A; then j.",
       "details": [
-        "Press «A», type ;, press «Esc»",
-        "«j.» adds it to the next line too",
-        "«A» ignores the column, so «.» works"
+        "Press A, type ;, press Esc",
+        "j. adds it to the next line too",
+        "A ignores the column, so . works"
       ]
     },
     {
@@ -28,11 +28,11 @@
         "repeat",
         "navigation"
       ],
-      "summary": "Space out commas with «;.»",
+      "summary": "Space out commas with ;.",
       "details": [
-        "«f,» jumps to a comma",
-        "Press «a», «Space», «Esc» to add a space",
-        "Then «;.» «;.» does each next comma"
+        "f, jumps to a comma",
+        "Press a, Space, Esc to add a space",
+        "Then ;. ;. does each next comma"
       ]
     },
     {
@@ -40,10 +40,10 @@
         "repeat",
         "insert"
       ],
-      "summary": "Repeat last insert «Ctrl-a» / «Ctrl-@»",
+      "summary": "Repeat last insert Ctrl-a / Ctrl-@",
       "details": [
-        "«Ctrl-a» re-types it",
-        "«Ctrl-@» re-types it, then exits"
+        "Ctrl-a re-types it",
+        "Ctrl-@ re-types it, then exits"
       ],
       "advanced": true,
       "mode": "insert"
@@ -52,21 +52,21 @@
       "category": [
         "repeat"
       ],
-      "summary": "Record a macro «qa», replay «@a»",
+      "summary": "Record a macro qa, replay @a",
       "details": [
-        "«qa» records, do edits, «q» stops",
-        "«@a» replays it, «@@» repeats",
-        "«10@a» replays it ten times"
+        "qa records, do edits, q stops",
+        "@a replays it, @@ repeats",
+        "10@a replays it ten times"
       ]
     },
     {
       "category": [
         "repeat"
       ],
-      "summary": "Append to a macro «qA»",
+      "summary": "Append to a macro qA",
       "details": [
         "Uppercase register appends to it",
-        "Lowercase «q{reg}» would replace it"
+        "Lowercase q{reg} would replace it"
       ],
       "advanced": true
     },
@@ -75,10 +75,10 @@
         "repeat",
         "cmdline"
       ],
-      "summary": "Run a macro on lines «:normal @r»",
+      "summary": "Run a macro on lines :normal @r",
       "details": [
-        "Select lines with «V», then press «:»",
-        "Type «normal @r» to run r per line"
+        "Select lines with V, then press :",
+        "Type normal @r to run r per line"
       ],
       "advanced": true
     },
@@ -87,10 +87,10 @@
         "repeat",
         "cmdline"
       ],
-      "summary": "Repeat last «:» command with «@:»",
+      "summary": "Repeat last : command with @:",
       "details": [
-        "Run «:s/a/b/», go down a line, «@:»",
-        "Then «@@» repeats it once more"
+        "Run :s/a/b/, go down a line, @:",
+        "Then @@ repeats it once more"
       ],
       "advanced": true
     }

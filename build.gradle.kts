@@ -172,23 +172,21 @@ tasks {
 }
 
 // The committed tips/vim_tips_min.json only catches up with the sources after CI regenerates it on
-// main, so the tips contract test checks a fresh build of the sources instead.
-val generateTestTips = tasks.register<Exec>("generateTestTips") {
-    description = "Generates tips from tips/categories for the tips contract test."
-    val outputFile = layout.buildDirectory.file("generated/tips/vim_tips_min.json")
+// main, so the tips contract test and runIdeWithFileTips use a fresh build of the sources instead.
+val generatedTipsFile = layout.buildDirectory.file("generated/tips/vim_tips_min.json")
+val generateTips = tasks.register<Exec>("generateTips") {
+    description = "Generates tips from tips/categories for tests and runIdeWithFileTips."
+    val outputFile = generatedTipsFile
     inputs.dir("tips/categories")
-    inputs.files("scripts/generate-tips.mjs", "scripts/tip-keys.mjs")
+    inputs.files("scripts/generate-tips.mjs")
     outputs.file(outputFile)
     commandLine("node", "scripts/generate-tips.mjs", "--out", outputFile.get().asFile.absolutePath)
 }
 
 tasks.withType<Test>().configureEach {
     useJUnit()
-    dependsOn(generateTestTips)
-    systemProperty(
-        "vimcoach.test.tipsFile",
-        layout.buildDirectory.file("generated/tips/vim_tips_min.json").get().asFile.absolutePath
-    )
+    dependsOn(generateTips)
+    systemProperty("vimcoach.test.tipsFile", generatedTipsFile.get().asFile.absolutePath)
 }
 
 val requestedTasks = gradle.startParameter.taskNames
@@ -249,7 +247,8 @@ intellijPlatformTesting {
             task {
                 description = "Run IDE with file tip source"
                 group = "ide"
-                val tipsFilePath = layout.projectDirectory.file("tips/vim_tips_min.json").asFile.absolutePath
+                dependsOn(generateTips)
+                val tipsFilePath = generatedTipsFile.get().asFile.absolutePath
                 jvmArgumentProviders += CommandLineArgumentProvider {
                     listOf(
                         "-Dvimcoach.tip.source=file",

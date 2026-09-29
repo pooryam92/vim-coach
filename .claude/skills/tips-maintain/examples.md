@@ -3,8 +3,7 @@
 This file is how tip style is taught: **read it before authoring or rewording
 anything.** Each entry shows the tip ❌ before and ✅ after — trimmed to the
 fields the lesson touches (unchanged `category`/`config` are omitted;
-the canonical full shape lives in SKILL.md, and the `«key»` markers are left
-out so the wording stays easy to read; real sources always carry them) — then *why*. When the user corrects
+the canonical full shape lives in SKILL.md) — then *why*. When the user corrects
 or rejects a wording call, the lesson lands here as a new entry (or sharpens the
 one that failed) — this file is the skill's memory.
 

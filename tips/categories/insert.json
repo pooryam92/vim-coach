@@ -4,31 +4,31 @@
       "category": [
         "insert"
       ],
-      "summary": "Leave Insert mode with «Esc» / «Ctrl-[»",
+      "summary": "Leave Insert mode with Esc / Ctrl-[",
       "details": [
-        "«Esc» leaves Insert mode",
-        "«Ctrl-[» is the same command"
+        "Esc leaves Insert mode",
+        "Ctrl-[ is the same command"
       ]
     },
     {
       "category": [
         "insert"
       ],
-      "summary": "Insert before/after cursor «i» / «a»",
+      "summary": "Insert before/after cursor i / a",
       "details": [
-        "«i» inserts before cursor",
-        "«a» inserts after cursor"
+        "i inserts before cursor",
+        "a inserts after cursor"
       ]
     },
     {
       "category": [
         "insert"
       ],
-      "summary": "Pick completions «Ctrl-n» / «Ctrl-p»",
+      "summary": "Pick completions Ctrl-n / Ctrl-p",
       "details": [
         "As you type, completions pop up",
-        "«Ctrl-n» down, «Ctrl-p» up the list",
-        "«Ctrl-y» accepts, «Ctrl-e» dismisses"
+        "Ctrl-n down, Ctrl-p up the list",
+        "Ctrl-y accepts, Ctrl-e dismisses"
       ],
       "mode": "insert"
     },
@@ -36,19 +36,19 @@
       "category": [
         "insert"
       ],
-      "summary": "Insert at line start/end «I» / «A»",
+      "summary": "Insert at line start/end I / A",
       "details": [
-        "«I» inserts at first non-blank",
-        "«A» appends at end of line"
+        "I inserts at first non-blank",
+        "A appends at end of line"
       ]
     },
     {
       "category": [
         "insert"
       ],
-      "summary": "Type a char many times «80i-»",
+      "summary": "Type a char many times 80i-",
       "details": [
-        "Press «80i», type -, press «Esc»",
+        "Press 80i, type -, press Esc",
         "You get a line of 80 dashes"
       ]
     },
@@ -56,9 +56,9 @@
       "category": [
         "insert"
       ],
-      "summary": "Insert at true line start «gI»",
+      "summary": "Insert at true line start gI",
       "details": [
-        "«gI» inserts at column 1",
+        "gI inserts at column 1",
         "Starts before any leading spaces"
       ]
     },
@@ -67,9 +67,9 @@
         "insert",
         "navigation"
       ],
-      "summary": "Resume insert at last edit «gi»",
+      "summary": "Resume insert at last edit gi",
       "details": [
-        "Wander off to read code, then «gi»",
+        "Wander off to read code, then gi",
         "Resumes typing where you left off"
       ]
     },
@@ -77,20 +77,20 @@
       "category": [
         "insert"
       ],
-      "summary": "Open new lines «o» / «O»",
+      "summary": "Open new lines o / O",
       "details": [
-        "«o» opens below and enters Insert",
-        "«O» opens above and enters Insert"
+        "o opens below and enters Insert",
+        "O opens above and enters Insert"
       ]
     },
     {
       "category": [
         "insert"
       ],
-      "summary": "Run one Normal command with «Ctrl-o»",
+      "summary": "Run one Normal command with Ctrl-o",
       "details": [
         "One Normal command, back to Insert",
-        "e.g. «Ctrl-o dd» deletes the line"
+        "e.g. Ctrl-o dd deletes the line"
       ],
       "mode": "insert"
     },
@@ -98,10 +98,10 @@
       "category": [
         "insert"
       ],
-      "summary": "Delete a word «Ctrl-w»",
+      "summary": "Delete a word Ctrl-w",
       "details": [
         "Removes the word before the cursor",
-        "Faster than holding «backspace»"
+        "Faster than holding backspace"
       ],
       "mode": "insert"
     },
@@ -109,9 +109,9 @@
       "category": [
         "insert"
       ],
-      "summary": "Erase what you just typed «Ctrl-u»",
+      "summary": "Erase what you just typed Ctrl-u",
       "details": [
-        "Wipes what you typed since «i» or «a»",
+        "Wipes what you typed since i or a",
         "Press again to delete to the indent"
       ],
       "mode": "insert"
@@ -120,10 +120,10 @@
       "category": [
         "insert"
       ],
-      "summary": "Shift indent «Ctrl-t» / «Ctrl-d»",
+      "summary": "Shift indent Ctrl-t / Ctrl-d",
       "details": [
-        "«Ctrl-t» shifts the line right",
-        "«Ctrl-d» shifts it left"
+        "Ctrl-t shifts the line right",
+        "Ctrl-d shifts it left"
       ],
       "mode": "insert"
     },
@@ -132,11 +132,11 @@
         "insert",
         "registers"
       ],
-      "summary": "Insert a register «Ctrl-r»",
+      "summary": "Insert a register Ctrl-r",
       "details": [
-        "«Ctrl-r 0» inserts last yank",
-        "«Ctrl-r +» inserts clipboard",
-        "Works at the «:» prompt too"
+        "Ctrl-r 0 inserts last yank",
+        "Ctrl-r + inserts clipboard",
+        "Works at the : prompt too"
       ],
       "mode": "insert"
     },
@@ -145,10 +145,10 @@
         "insert",
         "registers"
       ],
-      "summary": "Do math while typing «Ctrl-r =»",
+      "summary": "Do math while typing Ctrl-r =",
       "details": [
-        "Type 19*7 at the «=» prompt",
-        "«Enter» inserts 133 at the cursor"
+        "Type 19*7 at the = prompt",
+        "Enter inserts 133 at the cursor"
       ],
       "advanced": true,
       "mode": "insert"
@@ -157,10 +157,10 @@
       "category": [
         "insert"
       ],
-      "summary": "Insert digraphs with «Ctrl-k»",
+      "summary": "Insert digraphs with Ctrl-k",
       "details": [
-        "«Ctrl-k a:» gives ä, «e'» gives é",
-        "«:digraphs» lists all the codes"
+        "Ctrl-k a: gives ä, e' gives é",
+        ":digraphs lists all the codes"
       ],
       "advanced": true,
       "mode": "insert"
@@ -170,11 +170,11 @@
         "insert",
         "editing"
       ],
-      "summary": "Enter Replace mode with «R»",
+      "summary": "Enter Replace mode with R",
       "details": [
         "Type to overwrite text",
-        "«Backspace» brings the old text back",
-        "«Esc» leaves Replace mode"
+        "Backspace brings the old text back",
+        "Esc leaves Replace mode"
       ]
     },
     {
@@ -183,8 +183,8 @@
       ],
       "summary": "Insert char above/below",
       "details": [
-        "«Ctrl-y» copies the char above you",
-        "«Ctrl-e» copies the char below you"
+        "Ctrl-y copies the char above you",
+        "Ctrl-e copies the char below you"
       ],
       "advanced": true,
       "mode": "insert"
@@ -193,10 +193,10 @@
       "category": [
         "insert"
       ],
-      "summary": "Insert a literal key «Ctrl-v»",
+      "summary": "Insert a literal key Ctrl-v",
       "details": [
-        "«Ctrl-v» then a key inserts it raw",
-        "«Ctrl-v Tab» adds a real tab"
+        "Ctrl-v then a key inserts it raw",
+        "Ctrl-v Tab adds a real tab"
       ],
       "advanced": true,
       "mode": "insert"
@@ -205,9 +205,9 @@
       "category": [
         "insert"
       ],
-      "summary": "Complete a whole line «Ctrl-x Ctrl-l»",
+      "summary": "Complete a whole line Ctrl-x Ctrl-l",
       "details": [
-        "Type its start, then «Ctrl-x Ctrl-l»",
+        "Type its start, then Ctrl-x Ctrl-l",
         "Finds a matching line in the file"
       ],
       "advanced": true,
@@ -217,7 +217,7 @@
       "category": [
         "insert"
       ],
-      "summary": "Complete a file path «Ctrl-x Ctrl-f»",
+      "summary": "Complete a file path Ctrl-x Ctrl-f",
       "details": [
         "Type part of a path, then the keys",
         "Completes it from the file system"

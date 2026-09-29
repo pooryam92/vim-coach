@@ -1,7 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.integration.persistence
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipCategories
-import com.github.pooryam92.vimcoach.features.tips.domain.TipKeySpan
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
@@ -118,8 +117,7 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
                     "insert-tip",
                     listOf("Ctrl-r pastes a register"),
                     advanced = true,
-                    mode = "insert",
-                    keys = listOf(TipKeySpan(line = 1, start = 0, end = 6))
+                    mode = "insert"
                 ),
                 VimTip("normal-tip", listOf("use %"))
             )
@@ -131,12 +129,10 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         val insertTip = restored.tips.single { it.summary == "insert-tip" }
         assertEquals("insert", insertTip.mode)
         assertTrue(insertTip.advanced)
-        assertEquals(listOf(TipKeySpan(line = 1, start = 0, end = 6)), insertTip.keys)
 
         val normalTip = restored.tips.single { it.summary == "normal-tip" }
         assertNull(normalTip.mode)
         assertFalse(normalTip.advanced)
-        assertEquals(emptyList<TipKeySpan>(), normalTip.keys)
     }
 
     fun testStoreStateWithLegacyMnemonicOptionStillDeserializes() {
