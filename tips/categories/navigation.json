@@ -18,7 +18,6 @@
       ],
       "summary": "Jump to a line number 120G",
       "details": [
-        "Handy for line numbers in errors",
         ":120 then Enter does the same"
       ]
     },

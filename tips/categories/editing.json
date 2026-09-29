@@ -186,8 +186,7 @@
       "summary": "Reindent a line ==",
       "details": [
         "== reindents the current line",
-        "=ip reindents a whole paragraph",
-        "Great after a paste"
+        "=ip reindents a whole paragraph"
       ]
     },
     {
