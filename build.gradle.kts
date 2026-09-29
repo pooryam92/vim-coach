@@ -35,7 +35,7 @@ kotlin {
 // Bake the plugin version into a bundled resource so runtime code can read its own version without
 // touching @ApiStatus.Internal plugin-registry APIs (PluginManagerCore.getPlugin /
 // PluginManager.findEnabledPlugin), which the IntelliJ Plugin Verifier rejects.
-val generateVersionResource by tasks.registering {
+val generateVersionResource = tasks.register("generateVersionResource") {
     val pluginVersion = providers.gradleProperty("pluginVersion")
     val outputFile = layout.buildDirectory.file("generated/vimcoach/vimcoach-version.txt")
     inputs.property("pluginVersion", pluginVersion)
@@ -171,8 +171,22 @@ tasks {
     }
 }
 
+// The committed tips/vim_tips_min.json only catches up with the sources after CI regenerates it on
+// main, so the tips contract test and runIdeWithFileTips use a fresh build of the sources instead.
+val generatedTipsFile = layout.buildDirectory.file("generated/tips/vim_tips_min.json")
+val generateTips = tasks.register<Exec>("generateTips") {
+    description = "Generates tips from tips/categories for tests and runIdeWithFileTips."
+    val outputFile = generatedTipsFile
+    inputs.dir("tips/categories")
+    inputs.files("scripts/generate-tips.mjs")
+    outputs.file(outputFile)
+    commandLine("node", "scripts/generate-tips.mjs", "--out", outputFile.get().asFile.absolutePath)
+}
+
 tasks.withType<Test>().configureEach {
     useJUnit()
+    dependsOn(generateTips)
+    systemProperty("vimcoach.test.tipsFile", generatedTipsFile.get().asFile.absolutePath)
 }
 
 val requestedTasks = gradle.startParameter.taskNames
@@ -233,7 +247,8 @@ intellijPlatformTesting {
             task {
                 description = "Run IDE with file tip source"
                 group = "ide"
-                val tipsFilePath = layout.projectDirectory.file("tips/vim_tips_min.json").asFile.absolutePath
+                dependsOn(generateTips)
+                val tipsFilePath = generatedTipsFile.get().asFile.absolutePath
                 jvmArgumentProviders += CommandLineArgumentProvider {
                     listOf(
                         "-Dvimcoach.tip.source=file",

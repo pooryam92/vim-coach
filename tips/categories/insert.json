@@ -8,8 +8,7 @@
       "details": [
         "Esc leaves Insert mode",
         "Ctrl-[ is the same command"
-      ],
-      "mode": "insert"
+      ]
     },
     {
       "category": [
@@ -29,19 +28,8 @@
       "summary": "Pick completions Ctrl-n / Ctrl-p",
       "details": [
         "As you type, completions pop up",
-        "Ctrl-n moves down the list",
-        "Ctrl-p moves up the list"
-      ],
-      "mode": "insert"
-    },
-    {
-      "category": [
-        "insert"
-      ],
-      "summary": "Accept a completion with Ctrl-y",
-      "details": [
-        "Ctrl-y takes the open popup item",
-        "Ctrl-e dismisses it, keeps typing"
+        "Ctrl-n down, Ctrl-p up the list",
+        "Ctrl-y accepts, Ctrl-e dismisses"
       ],
       "mode": "insert"
     },
@@ -59,11 +47,33 @@
       "category": [
         "insert"
       ],
+      "summary": "Type a char many times 80i-",
+      "details": [
+        "Press 80i, type -, press Esc",
+        "You get a line of 80 dashes"
+      ]
+    },
+    {
+      "category": [
+        "insert"
+      ],
       "summary": "Insert at true line start gI",
       "details": [
         "gI inserts at column 1",
         "Starts before any leading spaces"
       ]
+    },
+    {
+      "category": [
+        "insert",
+        "navigation"
+      ],
+      "summary": "Resume insert at last edit gi",
+      "details": [
+        "Wander off to read code, then gi",
+        "Resumes typing where you left off"
+      ],
+      "mnemonic": "go insert"
     },
     {
       "category": [
@@ -101,10 +111,10 @@
       "category": [
         "insert"
       ],
-      "summary": "Delete back to indent Ctrl-u",
+      "summary": "Erase what you just typed Ctrl-u",
       "details": [
-        "Deletes back to first non-blank",
-        "Keeps text after the cursor"
+        "Wipes what you typed since i or a",
+        "Press again to delete to the indent"
       ],
       "mode": "insert"
     },
@@ -127,14 +137,28 @@
       "summary": "Insert a register Ctrl-r",
       "details": [
         "Ctrl-r 0 inserts last yank",
-        "Ctrl-r + inserts clipboard"
+        "Ctrl-r + inserts clipboard",
+        "Works at the : prompt too"
       ],
+      "mnemonic": "register",
       "mode": "insert"
     },
     {
       "category": [
         "insert",
-        "cmdline"
+        "registers"
+      ],
+      "summary": "Do math while typing Ctrl-r =",
+      "details": [
+        "Type 19*7 at the = prompt",
+        "Enter inserts 133 at the cursor"
+      ],
+      "advanced": true,
+      "mode": "insert"
+    },
+    {
+      "category": [
+        "insert"
       ],
       "summary": "Insert digraphs with Ctrl-k",
       "details": [
@@ -162,9 +186,8 @@
       ],
       "summary": "Insert char above/below",
       "details": [
-        "Copy the char above or below",
-        "Ctrl-y grabs it from above",
-        "Ctrl-e grabs it from below"
+        "Ctrl-y copies the char above you",
+        "Ctrl-e copies the char below you"
       ],
       "advanced": true,
       "mode": "insert"
@@ -191,6 +214,7 @@
         "Type its start, then Ctrl-x Ctrl-l",
         "Finds a matching line in the file"
       ],
+      "advanced": true,
       "mode": "insert"
     },
     {
@@ -202,6 +226,7 @@
         "Type part of a path, then the keys",
         "Completes it from the file system"
       ],
+      "advanced": true,
       "mode": "insert"
     }
   ]
