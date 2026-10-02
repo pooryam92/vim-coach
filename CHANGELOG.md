@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Tip rotation progress now survives IDE restarts, so you see every tip once before any repeats instead of starting over each session. Progress is stored per machine and isn't synced with your settings. Tips that are reworded come back as new, and when you turn on a category, advanced tips, or a previously excluded tip, those tips mix in with the rest of the cycle instead of taking over the next several notifications
+
 ## [1.5.1] - 2026-07-11
 
 ### Added

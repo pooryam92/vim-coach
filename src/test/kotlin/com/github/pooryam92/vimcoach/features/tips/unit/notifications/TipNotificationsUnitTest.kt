@@ -12,6 +12,7 @@ import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeSettingsService
 import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeVimTipRepository
+import com.github.pooryam92.vimcoach.features.tips.testsupport.inMemoryTipRotation
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -37,7 +38,7 @@ class TipNotificationsUnitTest {
         recordTipNote: RecordTipNote? = null,
         openSettings: () -> Unit = {},
     ): TipNotifications {
-        val selectNextTip = SelectNextTip(repository, settings)
+        val selectNextTip = SelectNextTip(repository, inMemoryTipRotation(), settings)
         return TipNotifications(
             notifier = notifier,
             tipRepository = { repository },

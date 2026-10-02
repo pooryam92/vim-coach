@@ -49,9 +49,12 @@ Each call to `select()`:
    - **`configTipsFilter`**: `includeConfigTips` is `ideaVimAvailable()` — true only when IdeaVim is installed. When IdeaVim is absent, tips carrying an `.ideavimrc` snippet (`VimTip.config`) are dropped, since their only payoff is the "Add to .ideavimrc" button (see [Add to .ideavimrc](ideavimrc-button.md)), which is itself hidden without IdeaVim. This keeps users (e.g. WebStorm with no IdeaVim) from seeing tips they can't act on.
    - **`advancedTipsFilter`**: drops tips marked `VimTip.advanced` unless `SettingsRepository.isShowAdvancedTipsEnabled()` is on (default off). See [Settings](settings.md#advanced-tips-opt-in) for the toggle.
 
-4. **Draws via `TipRotation`** (owned by `SelectNextTip`, still deliberately in-memory and app-wide because `SelectNextTip` itself is an application service): a tip already shown this IDE session is not drawn again until every eligible tip has been shown once. The shown-tip memory is a set of `TipHash`es, so one rotation is shared across all projects and entry points. When the eligible pool is exhausted, only that pool's hashes are forgotten before redrawing, so cycling through one category filter never resets progress through another. Because rotation runs after the filter chain, an excluded tip can neither block the cycle nor be resurrected by a reset.
+4. **Draws via `pickNext`** against `TipRotationRepository`, which persists `timesShown` per tip plus the last shown key in its own non-roaming file (`vim-coach-tip-rotation.xml`), so progress survives restarts but is per machine. The draw picks at random among the pool's least-shown tips, never the last shown tip while the pool has two or more. Rotation runs after the filter chain, so excluded tips never block a cycle. Details that aren't obvious from the code:
+   - **Key** is `TipHash.fromContent` (summary + details only). Editing either brings the tip back as unseen; changing the mnemonic, config, category, `advanced` or `mode` keeps its progress. Changing the key definition resets everyone's rotation once — `TipHashUnitTest` pins a golden value to catch that.
+   - **Deficit cap**: a tip's effective count is `max(stored, poolMax − 1)`, and a show stores effective + 1. Tips joining the pool (re-enabled category, advanced opt-in, restored exclusion, new tips) mix in with this cycle's unseen tips instead of monopolising the next several draws.
+   - **Pruning** drops counts for keys no longer in the whole tip cache — not the filtered pool, so disabled or excluded tips keep their progress. It only runs alongside a real show, so an empty cache never prunes.
 
-5. **Falls back** when the pool is empty after filtering. Fallback tips bypass the rotation entirely.
+5. **Falls back** when the pool is empty after filtering. Fallback tips are never recorded in the rotation.
 
 | Condition | Fallback shown |
 |-----------|----------------|

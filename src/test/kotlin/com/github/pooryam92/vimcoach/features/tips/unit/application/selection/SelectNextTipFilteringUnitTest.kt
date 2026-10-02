@@ -8,6 +8,7 @@ import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepositor
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepositoryImpl
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
+import com.github.pooryam92.vimcoach.features.tips.testsupport.inMemoryTipRotation
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -23,7 +24,7 @@ class SelectNextTipFilteringUnitTest {
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(hiddenTip, visibleTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository, settingsService)
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation(), settingsService)
 
         repeat(20) {
             assertEquals("visible", selectNextTip.select(includeConfigTips = true).summary)
@@ -40,7 +41,7 @@ class SelectNextTipFilteringUnitTest {
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(configTip, plainTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository, SettingsRepositoryImpl(PersistentSettingsStore()))
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation(), SettingsRepositoryImpl(PersistentSettingsStore()))
 
         repeat(20) {
             assertEquals("plain", selectNextTip.select(includeConfigTips = false).summary)
@@ -54,7 +55,7 @@ class SelectNextTipFilteringUnitTest {
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(advancedTip, normalTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository, SettingsRepositoryImpl(PersistentSettingsStore()))
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation(), SettingsRepositoryImpl(PersistentSettingsStore()))
 
         repeat(20) {
             assertEquals("normal", selectNextTip.select(includeConfigTips = true).summary)
@@ -70,7 +71,7 @@ class SelectNextTipFilteringUnitTest {
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(advancedTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository, settingsService)
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation(), settingsService)
 
         repeat(20) {
             assertEquals("advanced", selectNextTip.select(includeConfigTips = true).summary)
@@ -83,7 +84,7 @@ class SelectNextTipFilteringUnitTest {
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(advancedTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository, SettingsRepositoryImpl(PersistentSettingsStore()))
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation(), SettingsRepositoryImpl(PersistentSettingsStore()))
 
         val selectedTip = selectNextTip.select(includeConfigTips = true)
 
@@ -99,7 +100,7 @@ class SelectNextTipFilteringUnitTest {
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(advancedTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository)
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation())
 
         assertEquals("No tips match the selected categories.", selectNextTip.select(includeConfigTips = true).summary)
     }
@@ -113,7 +114,7 @@ class SelectNextTipFilteringUnitTest {
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(hiddenTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository, settingsService)
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation(), settingsService)
 
         val selectedTip = selectNextTip.select(includeConfigTips = true)
 
