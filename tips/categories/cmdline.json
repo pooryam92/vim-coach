@@ -134,7 +134,8 @@
       "details": [
         ":r! date puts the date below you",
         "Try :r! uuidgen for a fresh UUID"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

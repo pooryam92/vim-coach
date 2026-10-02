@@ -6,12 +6,14 @@ a non-boolean `advanced` and a `mode` outside `insert` / `visual` / `command`.
 
 ## `advanced`
 
-`"advanced": true` hides a tip from newcomers' default rotation; users who opt
-in from settings still see it, under a `Vim Coach · Advanced` title. There is no
-fixed rubric — it **emerges from doing**. Bias hard toward normal: over-tagging
-shrinks newcomers' default pool, which is the harm. Tag a few at a time, and
-when a pattern for "too advanced for a newcomer's first week" starts to repeat,
-add it to the list below.
+`"advanced": true` hides a tip from the default rotation; users who opt in from
+settings still see it, under a `Vim Coach · Advanced` title. The default
+rotation is tuned for the **plateaued IdeaVim user** — knows the basics,
+stopped learning (personas: docs/TODO/audience-fit-backlog.md). The test: would
+that reader reach for this move weekly? If not, it's advanced. There is no
+fixed rubric beyond that — it **emerges from doing**. Bias toward normal:
+over-tagging shrinks the default pool, which is the harm. Tag a few at a time,
+and when a pattern starts to repeat, add it to the list below.
 
 - **Count the category's ratio before tagging** — the settled convention is in
   the rendered set (primary + secondary tags) and differs sharply by category.
@@ -25,7 +27,9 @@ add it to the list below.
   paste-cycling, `ysiw)`, `gcc`, `dam`). Tag only secondary or niche moves —
   `ysiwf`, `gciw`, `cxiw`, `:S`, `cin)`, `]=`/`]+` indent hops.
 - **`pattern` runs high** — a `:s`/search **flag** riding inside a pattern
-  (`gc`, `//`, `\c`, `\<\>`, `/n`) is reliably past a newcomer's first week.
+  (`//`, `\c`, `\<\>`, `/n`) is reliably past weekly use. Exception: the
+  everyday `:%s` companions stay normal — confirm with `gc`, and limiting `:s`
+  to a range or selection.
 - **Foundational base moves stay normal even when their variants are
   advanced** — macros (`qa` / `@a`), a named register (`"ayy`), `:action`, the
   Ctrl-v block. Hiding the base leaves newcomers seeing only its variants.
@@ -39,6 +43,9 @@ add it to the list below.
   marks `'[`/`']`. So are manual folds (`zf`), because the IDE already makes
   folds, and Insert-mode completion submodes (`Ctrl-x Ctrl-l`), because the IDE
   popup already handles the common case.
+- **Vim chrome the IDE already covers is advanced** — split resizing
+  (`Ctrl-w +`/`>`/`_`/`=`), `:tabmove`, `:read {file}`, `:r!`. Readers drag
+  borders and tabs, or never need the move inside an IDE.
 
 ## `mode`
 
