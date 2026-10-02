@@ -4,6 +4,8 @@ On-demand companion to `SKILL.md`. Open the section you need:
 
 - [Checking IdeaVim support](#checking-ideavim-support) — prove a
   command/behavior is supported before keeping a claim.
+  - [Is the key actually released?](#is-the-key-actually-released) — the
+    release gate; not optional when mining a changelog.
 - [Config tips — what's safe to ship](#config-tips--whats-safe-to-ship) —
   authoring or reviewing a tip's `config` block.
 - [Adding or changing a category](#adding-or-changing-a-category) — the coupled
@@ -86,9 +88,11 @@ workflow checks out submodules and no Gradle script reads the path, so the pin
 affects nothing but this local checkout. Leave it out of a tips commit; discard
 it with `git checkout -- external/ideavim` if you'd rather not carry it.
 
-**Is the key actually released?** A binding present in the submodule may be
-newer than the reader's plugin — `master` runs ahead of the marketplace build.
-Confirm before teaching a recently added key:
+### Is the key actually released?
+
+A binding present in the submodule may be newer than the reader's plugin —
+`master` runs ahead of the marketplace build. Confirm before teaching a recently
+added key:
 
 ```bash
 git -C external/ideavim log -1 --format=%h -S 'keys = ["zd"]' -- .  # commit that added it
@@ -127,9 +131,10 @@ git -C external/ideavim show 2.42.0-eap.1:<path/to/Ext.kt> | grep parseKeys
 This is how the `multiple-cursors` tip came to teach `<C-n>` while every shipped
 build still bound `<A-n>` (VIM-2178, then unreleased). When a tip's keys ride on
 an unreleased default, pin them in its `config` via the plugin's `<Plug>`
-targets — stable across versions, so the taught key holds on both builds. Lift
-the pin once the default ships, and re-read the gate whenever you refresh the
-submodule: a stale one hides a shipped change.
+targets — stable across versions, so the taught key holds on both builds. That
+tip still pins `nmap`/`xmap <C-n> <Plug>NextWholeOccurrence`; VIM-2178 shipped
+in 2.43.0, so the pin now only helps readers on older builds. Re-read the gate
+whenever you refresh the submodule: a stale one hides a shipped change.
 
 **Vim docs** (for *meaning*, not support): https://vimhelp.org/, user manual
 https://vimhelp.org/usr_toc.txt.html. Category → page: `editing`→editing.txt,
@@ -224,17 +229,13 @@ author them until the blocker is fixed.
   when IdeaVim emulates the plugin itself (surround, commentary, sneak, NERDTree,
   argtextobj, multiple-cursors…). The "Setup" block in
   `external/ideavim/doc/IdeaVim Plugins.md` reveals which need an extra install.
-  `multiple-cursors` is shippable. A past example of the release gate: VIM-2178
-  switched its defaults to upstream's `<C-n>` family while every shipped build
-  still bound `<A-n>`, so its tip pinned `<C-n>` with `nmap`/`xmap
-  <Plug>NextWholeOccurrence` — stable on both builds. VIM-2178 shipped in
-  2.43.0, so the pin is now optional; keeping it only helps readers still on an
-  older build.
+  `multiple-cursors` is shippable (its `<Plug>` pin: "Is the key actually
+  released?" above).
 
 ## Adding or changing a category
 
-The 14 current categories and picking rules are in `SKILL.md`. Coupled across
-code + docs — update together:
+The 14 current categories and picking rules are in `SKILL.md` → "Categories".
+Coupled across code + docs — update together:
 
 1. `tips/categories/<name>.json` — adding a category = a new file (its name is the
    category); removing one = migrate or delete its tips first.
