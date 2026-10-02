@@ -5,10 +5,12 @@
 //   node .claude/skills/tips-maintain/check-lengths.mjs
 
 import { readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const LIMITS = { summary: 42, detail: 42, mnemonic: 32 };
-const dir = 'tips/categories';
+const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
+const dir = join(repoRoot, 'tips', 'categories');
 
 const hits = [];
 for (const file of readdirSync(dir).filter((f) => f.endsWith('.json')).sort()) {

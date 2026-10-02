@@ -63,8 +63,9 @@ tip:
 - repeats a `summary` already used by another tip, in any file
 
 Length and wording limits (such as the 42-char line max) are not hard
-rules: `node .claude/skills/tips-maintain/check-lengths.mjs` lists lines over
-them and always exits 0. The limits come from the measured balloon layout in
+rules. Only length is checked: `node .claude/skills/tips-maintain/check-lengths.mjs`
+lists lines over the length targets and always exits 0. Wording rules are left
+to review. The limits come from the measured balloon layout in
 `.claude/skills/tips-maintain/balloon.md`. The runtime `TipJsonParser` stays lenient
 on all of these on purpose (see "Schema evolution" below). The strict checks
 guard only the authored sources.
