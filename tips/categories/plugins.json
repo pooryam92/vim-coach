@@ -719,6 +719,24 @@
           "set VimEverywhere"
         ]
       }
+    },
+    {
+      "category": [
+        "plugins",
+        "navigation"
+      ],
+      "summary": "Show marks in the gutter ma",
+      "details": [
+        "ma marks a spot, an a icon shows it",
+        "]' / [' hop between marked lines",
+        "Takes over the change marks, like '["
+      ],
+      "config": {
+        "name": "Install vim-signature",
+        "lines": [
+          "Plug 'kshenoy/vim-signature'"
+        ]
+      }
     }
   ]
 }

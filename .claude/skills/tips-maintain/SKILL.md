@@ -133,11 +133,11 @@ Score candidates on four axes; a tip earns its place by winning at least 3:
 
 The same axes prune: an existing tip losing on 3 is a removal candidate, and
 pure deletion is a legitimate density win. Niche-but-standalone stays; cut only
-redundant-with-a-stronger-sibling or actively counterproductive. Two gaps a
-grep can't see: a command cluster taught only through its flags with no
+redundant-with-a-stronger-sibling or actively counterproductive. A gap a grep
+can't see: a command cluster taught only through its flags with no
 foundational tip (29 tips taught `:s` trimmings before `:%s/foo/bar/g` itself
-existed), and theory — a concept earns at most one tip and it must still be
-tryable; otherwise fold one line into a concrete host. Advice about *writing*
+existed). A concept tip must still be tryable; otherwise fold one line into a
+concrete host. Advice about *writing*
 config (`<leader>`, `nnoremap`) is not a tip — nothing to press.
 
 Present a ranked shortlist (one-line rationale each, plus what you dropped),

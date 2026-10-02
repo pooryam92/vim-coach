@@ -88,6 +88,21 @@ workflow checks out submodules and no Gradle script reads the path, so the pin
 affects nothing but this local checkout. Leave it out of a tips commit; discard
 it with `git checkout -- external/ideavim` if you'd rather not carry it.
 
+**Registers and macros share storage, through text.** A yanked register is
+replayed by `@a` because `Register.kt` rebuilds its keys with
+`VimStringParserBase.stringToKeys`. The round-trip is lossy in one place:
+`Esc` pastes as a raw `\u001B` and comes back as `Ctrl-[` (same key), but
+`Enter` pastes as a real line break, so `0"ay$` saves back only the first line
+of a macro that pressed Enter. Worse, `finishRecording` in
+`VimRegisterGroupBase.kt` stores a macro `CHARACTER_WISE`, so `"ap` pastes it
+mid-line after the cursor and `0"ay$` then saves the surrounding code into the
+macro too. The `Fix a macro without re-recording` tip was cut for this. Check a
+register's `SelectionType` before teaching any paste-edit-yank loop:
+
+```bash
+grep -n 'SelectionType' external/ideavim/vim-engine/src/main/kotlin/com/maddyhome/idea/vim/register/VimRegisterGroupBase.kt
+```
+
 ### Is the key actually released?
 
 A binding present in the submodule may be newer than the reader's plugin —
@@ -191,6 +206,13 @@ Lines that satisfy both — the working examples:
   the upstream default `,` claims the built-in repeat-`f`/`t`-backwards motion. A
   tip shipping `,` was cut for exactly that; the plugin-free `[w` / `[b` motions
   cover the same ground.
+  A plugin whose **default** keys override a built-in that other tips teach
+  breaks those tips once installed — grep `tips/categories/` for each key it
+  binds and disclose the takeover in a detail line. vim-signature rebinds the
+  change marks `'[` `']` `` `[ `` `` `] `` — all four, and other tips teach all
+  four — so its tip says `Takes over the change marks, like '[`. Disclose every
+  key the plugin takes over, not just the first one you notice; name the family
+  when listing them would be a row of glyphs.
 - **Tune a built-in option** — e.g. `set scrolloff=5`, `hlsearch`. Primary
   `options`.
 - **IDE-bridge `set`** — e.g. `set ideajoin`, `set idearefactormode=keep`.

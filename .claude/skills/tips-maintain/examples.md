@@ -52,8 +52,34 @@ summary: `Keep only matching lines :v//d`
 ❌ `"details": ["v = non-matching lines, d = delete"]`
 ✅ `"details": [":v/foo/d deletes lines lacking foo", "What's left: only the foo lines"]`
 
+summary: `Show marks in the gutter ma` (vim-signature)
+❌ `"details": ["ma now draws an a icon in the gutter", …]`
+✅ `"details": ["ma marks a spot, an a icon shows it", …]`
+
 *Why:* token-naming assumes you already know `:g`. A typeable command plus a
-plain-words outcome teaches a reader who's never seen the concept.
+plain-words outcome teaches a reader who's never seen the concept. The same
+trap hides in a plugin tip built on a base key: `ma now draws…` only says what
+changed, so a reader who has never set a mark learns nothing. Say what the key
+does, then what the plugin adds.
+
+### Teach the payoff, not the mechanism — and no trick stacked on top
+
+❌ `"summary": "Recover the last delete with \"1"` · `["Deleted lines queue up in \"1 to \"9", "\"1p still works after a new yank", "Wrong one? u then . pastes \"2 instead"]`
+✅ `"summary": "Paste an older delete \"2p"` · `["Each dd pushes older deletes to \"2…\"9", "\"1p is the latest, \"2p the one before"]`
+
+❌ `"summary": "See a macro as text \"ap"`
+✅ `"summary": "Fix a macro without re-recording"` · `["\"ap pastes macro a as plain text", "Fix the keys, then 0\"ay$ saves them", "@a now runs the fixed version"]`
+→ then cut in review: the edit-and-save loop fails on IdeaVim (reference.md → "Registers and macros share storage").
+
+*Why:* "queue up" names a mechanism, and the true-but-cryptic `u .`
+redo-register trick piled a second lesson on top; a reader called it unclear.
+The summary now types the key that shows the payoff (`"2p`), and the details
+contrast neighbouring keys (`"1p` vs `"2p`). One idea per tip; a clever
+follow-on trick earns its own tip or nothing. Likewise "see a macro as text"
+told the reader what happens but not why they'd want it; the summary now
+names the job, and the last detail shows the result. Good wording didn't
+save it: a tip whose keys only work with an unstated setup step (a blank
+line) is cut, not padded with that step.
 
 ### One worked example beats a dump
 
@@ -274,14 +300,13 @@ N` → merged into `Search and hop through matches /` (`["/foo Enter jumps to
 the next foo", "n goes to the next one, N back", "? searches backward
 instead"]`).
 
-### Theory earns one tip at most — and it must still be tryable
+### A concept tip must still be tryable
 
 ❌ `"summary": "Change/delete with operator + motion"` · `["d{motion} deletes text", "c{motion} changes text"]`
 ✅ tip deleted; its rule folds into one host: `"summary": "Change/delete a word cw / dw"` · `["cw retypes the word, dw removes it", "Same d/c works with any motion"]`
 
 *Why:* `{motion}` gives the reader nothing to try, and rewording around it
-kept failing. Fold the rule into exactly *one* concrete host — never echo it
-across siblings.
+kept failing. Fold the rule into a concrete host instead.
 
 ### Cut a command you can't try cold — doubly so when the IDE already does it
 

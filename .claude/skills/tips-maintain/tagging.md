@@ -30,6 +30,10 @@ add it to the list below.
   advanced** — macros (`qa` / `@a`), a named register (`"ayy`), `:action`, the
   Ctrl-v block. Hiding the base leaves newcomers seeing only its variants.
   Untag a family together, never one member.
+- **A first-week trap's way out stays normal** — when a normal tip shows a
+  newcomer hitting a problem (a delete overwrites the yank `p` pastes), the
+  move that avoids it (`"_dd`) is normal too, not only the after-the-fact fix
+  (`"0p`).
 - **Refinements of a base move are advanced** — `g_` beside `$`, `gp`/`]p`
   beside `p`, `g0`/`g$` beside `gj`/`gk`, `O` in a Visual block, the change
   marks `'[`/`']`. So are manual folds (`zf`), because the IDE already makes
