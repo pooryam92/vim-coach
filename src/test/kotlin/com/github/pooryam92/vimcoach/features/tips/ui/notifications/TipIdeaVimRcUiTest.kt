@@ -4,7 +4,7 @@ import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipT
 import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.FindIdeaVimRc
 import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.TipIdeaVimRc
 import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
-import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 import com.intellij.notification.Notifications
@@ -32,28 +32,28 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
     fun testGetActionGatesOnConfigOnlyNotIdeaVimAvailability() {
         // getAction no longer checks IdeaVim: selection suppresses config tips when IdeaVim is
         // absent, so a config tip reaching getAction always gets its button.
-        val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
+        val tip = vimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
         val sut = sut(findService = { null })
 
         assertNotNull(sut.getAction(tip))
     }
 
     fun testGetActionReturnsNullWhenTipHasNoConfig() {
-        val tip = VimTip("surround", listOf("details"), config = null)
+        val tip = vimTip("surround", listOf("details"), config = null)
         val sut = sut(findService = { service(tempVimRc("")) })
 
         assertNull(sut.getAction(tip))
     }
 
     fun testGetActionReturnsNullWhenConfigHasNoLines() {
-        val tip = VimTip("surround", listOf("details"), config = TipConfig(name = "Install x", lines = emptyList()))
+        val tip = vimTip("surround", listOf("details"), config = TipConfig(name = "Install x", lines = emptyList()))
         val sut = sut(findService = { service(tempVimRc("")) })
 
         assertNull(sut.getAction(tip))
     }
 
     fun testGetActionShownWhenIdeaVimInstalledButNoVimRcFile() {
-        val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
+        val tip = vimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
         // IdeaVim installed (service present) but no file yet — the action shows so we can guide.
         val sut = sut(findService = { service(null) })
 
@@ -62,7 +62,7 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
 
     fun testHandleNoVimRcShowsCreateGuidanceAndNoWarning() {
         val shownNotifications = captureProjectNotifications()
-        val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
+        val tip = vimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
         val sut = sut(findService = { service(null) })
 
         sut.getAction(tip)?.invoke()
@@ -73,7 +73,7 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
 
     fun testHandleFailedShowsWarningNotification() {
         val shownNotifications = captureProjectNotifications()
-        val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
+        val tip = vimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
         // File path is reported, but VFS can't find it → Failed
         val sut = sut(findService = { service(Path("/nonexistent/path/.ideavimrc")) })
 
@@ -87,7 +87,7 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
         val configLine = "set surround"
         // The existing block sits on line 2, after two unrelated lines.
         val ideavimrcPath = tempVimRc("set a\nset b\n$configLine\n")
-        val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf(configLine)))
+        val tip = vimTip("surround", listOf("details"), config = TipConfig(lines = listOf(configLine)))
         val sut = sut(findService = { service(ideavimrcPath) })
 
         sut.getAction(tip)?.invoke()
@@ -100,7 +100,7 @@ class TipIdeaVimRcUiTest : BasePlatformTestCase() {
 
     fun testReloadCallbackInvokedAndReloadNotificationShownOnReloadButtonClick() {
         val shownNotifications = captureProjectNotifications()
-        val tip = VimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
+        val tip = vimTip("surround", listOf("details"), config = TipConfig(lines = listOf("set surround")))
         var reloadCalled = false
         val sut = sut(findService = { service(tempVimRc("")) }, reloadIdeaVimRc = { reloadCalled = true })
 

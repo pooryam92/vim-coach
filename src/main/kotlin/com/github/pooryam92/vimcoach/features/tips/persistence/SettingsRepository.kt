@@ -13,9 +13,9 @@ interface SettingsRepository {
     fun getEnabledTipCategories(availableCategories: List<String>): List<String>
     fun setEnabledTipCategories(availableCategories: List<String>, enabledCategories: List<String>)
 
-    fun getHiddenTipHashes(): List<String>
-    fun hideTip(hash: String)
-    fun restoreTip(hash: String)
+    fun getHiddenTipIds(): List<String>
+    fun hideTip(id: String)
+    fun restoreTip(id: String)
     fun consumeExcludedTipsManagementHint(): Boolean
 
     fun isShowAdvancedTipsEnabled(): Boolean

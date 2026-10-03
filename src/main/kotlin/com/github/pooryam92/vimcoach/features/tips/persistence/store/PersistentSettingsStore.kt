@@ -13,7 +13,7 @@ class PersistentSettingsStore :
         var periodicTipsEnabled: Boolean = false,
         var tipIntervalHours: Int = 1,
         var disabledTipCategories: List<String> = emptyList(),
-        var hiddenTipHashes: List<String> = emptyList(),
+        var hiddenTipIds: List<String> = emptyList(),
         var excludedTipsManagementHintShown: Boolean = false,
         // Off by default: a pre-feature store has no field and deserializes to off, so existing
         // users keep seeing only normal tips until they opt in.
@@ -40,8 +40,8 @@ class PersistentSettingsStore :
         updateState { it.copy(disabledTipCategories = categories.toList()) }
     }
 
-    fun setHiddenTipHashes(hashes: List<String>) {
-        updateState { it.copy(hiddenTipHashes = hashes.toList()) }
+    fun setHiddenTipIds(ids: List<String>) {
+        updateState { it.copy(hiddenTipIds = ids.toList()) }
     }
 
     fun setExcludedTipsManagementHintShown(shown: Boolean) {

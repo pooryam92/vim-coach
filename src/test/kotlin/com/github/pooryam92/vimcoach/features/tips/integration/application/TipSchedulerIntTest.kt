@@ -110,11 +110,11 @@ class TipSchedulerIntTest : BasePlatformTestCase() {
             enabledCategories: List<String>
         ) = Unit
 
-        override fun getHiddenTipHashes(): List<String> = emptyList()
+        override fun getHiddenTipIds(): List<String> = emptyList()
 
-        override fun hideTip(hash: String) = Unit
+        override fun hideTip(id: String) = Unit
 
-        override fun restoreTip(hash: String) = Unit
+        override fun restoreTip(id: String) = Unit
 
         override fun consumeExcludedTipsManagementHint(): Boolean = false
 

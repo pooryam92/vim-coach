@@ -12,12 +12,12 @@ on:
     branches: [ main ]
     paths:
       - 'tips/categories/**'
-      - 'scripts/generate-tips.mjs'
+      - 'scripts/**'
       - '.github/workflows/generate-tips.yml'
   pull_request:
     paths:
       - 'tips/categories/**'
-      - 'scripts/generate-tips.mjs'
+      - 'scripts/**'
       - '.github/workflows/generate-tips.yml'
 
 jobs:
@@ -30,6 +30,9 @@ jobs:
     steps:
       - name: Fetch Sources
         uses: actions/checkout@v7
+
+      - name: Test tip scripts
+        run: node --test scripts/*.test.mjs
 
       - name: Validate tips/categories
         run: node scripts/generate-tips.mjs --check
@@ -45,6 +48,9 @@ jobs:
         uses: actions/checkout@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Test tip scripts
+        run: node --test scripts/*.test.mjs
 
       - name: Generate vim_tips_min.json
         run: node scripts/generate-tips.mjs

@@ -12,6 +12,7 @@
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { tipId } from "./tip-id.mjs";
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repoRoot, "tips", "categories");
@@ -76,6 +77,7 @@ const ordered = [...sourceFiles].sort();
 
 const mergedTips = [];
 const summarySources = new Map();
+const idSources = new Map();
 
 for (const category of ordered) {
   const fileName = `${category}.json`;
@@ -125,7 +127,15 @@ for (const category of ordered) {
     }
     summarySources.set(summary, fileName);
 
-    const entry = { category: categories, summary, details };
+    // The id is generated, never authored: it is why `id` stays out of ALLOWED_KEYS.
+    const id = tipId(summary, details);
+    const clash = idSources.get(id);
+    if (clash !== undefined) {
+      fail(`${where} has the same id '${id}' as tip '${clash.summary}' in ${clash.fileName}; reword one of them`);
+    }
+    idSources.set(id, { summary, fileName });
+
+    const entry = { id, category: categories, summary, details };
     if (tip.mnemonic !== undefined) {
       if (typeof tip.mnemonic !== "string") fail(`${where} has a non-string mnemonic`);
       const mnemonic = tip.mnemonic.trim();

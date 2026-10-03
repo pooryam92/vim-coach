@@ -7,5 +7,6 @@ data class VimTip(
     var config: TipConfig? = null,
     var mnemonic: String? = null,
     var advanced: Boolean = false,
-    var mode: String? = null
+    var mode: String? = null,
+    var id: String = ""
 )

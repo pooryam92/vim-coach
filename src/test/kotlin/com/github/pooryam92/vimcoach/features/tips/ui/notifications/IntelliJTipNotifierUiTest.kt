@@ -2,7 +2,7 @@ package com.github.pooryam92.vimcoach.features.tips.ui.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.application.ideavimrc.AddTipToIdeaVimRc
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipActions
-import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 import com.intellij.notification.Notifications
@@ -154,7 +154,7 @@ class IntelliJTipNotifierUiTest : BasePlatformTestCase() {
         assertTrue(openedSettings)
     }
 
-    private fun tip(summary: String = "tip") = VimTip(summary, listOf("details"))
+    private fun tip(summary: String = "tip") = vimTip(summary, listOf("details"))
 
     private fun captureProjectNotifications(): MutableList<Notification> {
         val captured = mutableListOf<Notification>()
