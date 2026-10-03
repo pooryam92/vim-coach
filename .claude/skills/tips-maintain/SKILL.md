@@ -54,8 +54,8 @@ list below. Open the other companions only when their need comes up:
    over the length targets.
 6. **`git status --short`** — only intended files changed. Never commit
    `tips/vim_tips_min.json` (CI regenerates it; regenerate locally only on
-   request). `M external/ideavim` after a submodule refresh is expected — leave
-   it out of the commit.
+   request). `M external/ideavim` after a submodule refresh is intended —
+   commit it with the tips you checked against it.
 
 ## Tip shape
 

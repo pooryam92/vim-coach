@@ -83,10 +83,10 @@ master` in `.gitmodules` only names the branch `--remote` fast-forwards to; it
 does not float. Refresh it when mining a new IdeaVim release, then leave it.
 
 After a refresh `git status` shows `M external/ideavim` (the recorded commit
-moved). **That is expected and is not one of your intended files** — no
-workflow checks out submodules and no Gradle script reads the path, so the pin
-affects nothing but this local checkout. Leave it out of a tips commit; discard
-it with `git checkout -- external/ideavim` if you'd rather not carry it.
+moved). **Commit it with the tips you checked against it**, so the pin records
+which IdeaVim revision those tips were verified on. No workflow checks out
+submodules and no Gradle script reads the path, so the pin never affects the
+build.
 
 **Registers and macros share storage, through text.** A yanked register is
 replayed by `@a` because `Register.kt` rebuilds its keys with
