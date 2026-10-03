@@ -11,25 +11,31 @@ import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepositoryImpl
+import com.github.pooryam92.vimcoach.features.tips.persistence.TipRotationRepository
+import com.github.pooryam92.vimcoach.features.tips.persistence.TipRotationRepositoryImpl
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepositoryImpl
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
+import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentTipRotationStore
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.IntelliJTipNotifier
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.testFramework.registerServiceInstance
+import com.intellij.util.xmlb.XmlSerializer
 
 /**
  * Pins tip-selection behavior at the seam that survives the selection redesign
  * (docs/discover/tip-selection-redesign.md): production `ShowTips` wiring in front, the
- * `TipNotifier` port behind. Nothing here references where the filters or the rotation are
- * implemented, so this suite must pass unchanged before, during, and after the migration.
+ * `TipNotifier` port behind. Only the persistence ports are swapped for fresh instances; nothing
+ * here references where the filters or the rotation logic are implemented, so this suite must
+ * pass unchanged before, during, and after the migration.
  */
 class TipSelectionBehaviorIntTest : BasePlatformTestCase() {
 
     private lateinit var settings: SettingsRepository
     private lateinit var tipRepository: VimTipRepository
+    private lateinit var rotationStore: PersistentTipRotationStore
     private lateinit var notifier: RecordingTipNotifier
     private lateinit var showTips: ShowTips
 
@@ -39,6 +45,7 @@ class TipSelectionBehaviorIntTest : BasePlatformTestCase() {
         tipRepository = VimTipRepositoryImpl(PersistentVimTipStore())
         ApplicationManager.getApplication().registerServiceInstance(SettingsRepository::class.java, settings)
         ApplicationManager.getApplication().registerServiceInstance(VimTipRepository::class.java, tipRepository)
+        useRotationStore(PersistentTipRotationStore())
         notifier = RecordingTipNotifier()
         project.registerServiceInstance(TipNotifier::class.java, notifier)
         showTips = TipNotifications(project)
@@ -53,6 +60,10 @@ class TipSelectionBehaviorIntTest : BasePlatformTestCase() {
             ApplicationManager.getApplication().registerServiceInstance(
                 VimTipRepository::class.java,
                 VimTipRepositoryImpl()
+            )
+            ApplicationManager.getApplication().registerServiceInstance(
+                TipRotationRepository::class.java,
+                TipRotationRepositoryImpl()
             )
             project.registerServiceInstance(TipNotifier::class.java, IntelliJTipNotifier(project))
         } finally {
@@ -69,6 +80,18 @@ class TipSelectionBehaviorIntTest : BasePlatformTestCase() {
 
         assertEquals(tips.map { it.summary }.toSet(), firstCycle.toSet())
         assertEquals(tips.map { it.summary }.toSet(), secondCycle.toSet())
+        assertFalse("repeated a tip across the cycle boundary", firstCycle.last() == secondCycle.first())
+    }
+
+    fun testRotationProgressSurvivesARestart() {
+        val tips = (1..10).map { VimTip("tip-$it", listOf("details-$it")) }
+        tipRepository.saveTips(tips)
+        val beforeRestart = showTipSummaries(4)
+
+        restartWithSavedRotation()
+        val afterRestart = showTipSummaries(tips.size - beforeRestart.size)
+
+        assertEquals(tips.map { it.summary }.toSet() - beforeRestart.toSet(), afterRestart.toSet())
     }
 
     fun testExcludedTipIsNeverShownEvenAcrossCycleResets() {
@@ -138,6 +161,21 @@ class TipSelectionBehaviorIntTest : BasePlatformTestCase() {
         showTips.showRandomTip()
 
         assertEquals("No tips match the selected categories.", notifier.shownTips.single().summary)
+    }
+
+    private fun restartWithSavedRotation() {
+        val savedState = XmlSerializer.serialize(rotationStore.state)
+        val reloadedStore = PersistentTipRotationStore()
+        reloadedStore.loadState(XmlSerializer.deserialize(savedState, PersistentTipRotationStore.State::class.java))
+        useRotationStore(reloadedStore)
+    }
+
+    private fun useRotationStore(store: PersistentTipRotationStore) {
+        rotationStore = store
+        ApplicationManager.getApplication().registerServiceInstance(
+            TipRotationRepository::class.java,
+            TipRotationRepositoryImpl(store)
+        )
     }
 
     private fun showTipSummaries(count: Int): List<String> {
