@@ -22,7 +22,7 @@ The settings screen works with a `VimCoachSettingsScreenState` snapshot, not liv
 
 ## Per-Machine Storage
 
-`PersistentSettingsStore` uses `roamingType = DISABLED`, so `vim-coach-settings.xml` is never shared through Settings Sync, the same as the tip cache and the rotation file. Each machine keeps its own toggles, categories, exclusions and one-time hints. The file name and location didn't change, so existing local settings carry over. Before 1.5.2 the file roamed. Turning roaming off also stops a 1.5.2 machine, whose saved file has no `hiddenTipHashes`, from syncing that file to a machine still on 1.5.1 and wiping its exclusions.
+`PersistentSettingsStore` uses `roamingType = DISABLED`, so `vim-coach-settings.xml` is never shared through Settings Sync, the same as the tip cache and the rotation file. Each machine keeps its own toggles, categories, exclusions and one-time hints. The file name and location didn't change, so existing local settings carry over. Before 1.6.0 the file roamed. Turning roaming off also stops a 1.6.0 machine, whose saved file has no `hiddenTipHashes`, from syncing that file to a machine still on 1.5.1 and wiping its exclusions.
 
 ## Category Storage
 
