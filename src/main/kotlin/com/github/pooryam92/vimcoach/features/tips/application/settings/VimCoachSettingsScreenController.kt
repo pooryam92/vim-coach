@@ -53,6 +53,7 @@ class VimCoachSettingsScreenController() {
         }
 
         // Legacy caches from pre-category versions need a full reload to recover category data.
+        // TODO(1.6.0 upgrade bridge): unreachable since loadState drops pre-id (and so pre-category) caches.
         refreshTips().refetchTips()
         return tipService.getCategories().values
     }

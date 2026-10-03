@@ -106,7 +106,7 @@ boundaries count (`scripts/tip-id.mjs`). It exists only in the generated file;
   keeps only the first of tips sharing an id. This is the one exception to the
   leniency below: a plugin that reads ids must only ship once the published
   file on `main` carries them, or it drops every remote tip.
-- A tip cache written by a plugin version before ids holds id-less tips, which
+- <!-- TODO(1.6.0 upgrade bridge) --> A tip cache written by a plugin version before ids holds id-less tips, which
   `PersistentVimTipStore.loadState` drops (keeping categories). The tip shown
   is "No tips found." and the next update check refetches unconditionally; if
   that refetch fails, the next session retries.

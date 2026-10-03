@@ -4,6 +4,7 @@ import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepositor
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepositoryImpl
 
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -288,9 +289,61 @@ class SettingsRepositoryUnitTest {
         assertEquals(listOf("id-2"), service.getHiddenTipIds())
     }
 
+    // TODO(1.6.0 upgrade bridge)
+    @Test
+    fun migrateLegacyHiddenTipsHidesTheTipWithTheHashedSummary() {
+        val store = PersistentSettingsStore()
+        store.loadState(PersistentSettingsStore.State(hiddenTipHashes = listOf(SURROUND_A_WORD_HASH)))
+        val surroundTip = vimTip("Surround a word", listOf("ysiw\""))
+        val service = createService(store)
+
+        service.migrateLegacyHiddenTips(listOf(surroundTip, vimTip("Other tip", listOf("details"))))
+
+        assertEquals(listOf(surroundTip.id), service.getHiddenTipIds())
+        assertEquals(emptyList<String>(), store.state.hiddenTipHashes)
+    }
+
+    // TODO(1.6.0 upgrade bridge)
+    @Test
+    fun migrateLegacyHiddenTipsKeepsCurrentIdsAndForgetsUnmatchedHashes() {
+        val store = PersistentSettingsStore()
+        store.loadState(
+            PersistentSettingsStore.State(
+                hiddenTipIds = listOf("already-hidden"),
+                hiddenTipHashes = listOf(SURROUND_A_WORD_HASH, REMOVED_TIP_HASH)
+            )
+        )
+        val surroundTip = vimTip("Surround a word", listOf("ysiw\""))
+        val service = createService(store)
+
+        service.migrateLegacyHiddenTips(listOf(surroundTip))
+
+        assertEquals(listOf("already-hidden", surroundTip.id), service.getHiddenTipIds())
+        assertEquals(emptyList<String>(), store.state.hiddenTipHashes)
+    }
+
+    // TODO(1.6.0 upgrade bridge)
+    @Test
+    fun migrateLegacyHiddenTipsWaitsForTips() {
+        val store = PersistentSettingsStore()
+        store.loadState(PersistentSettingsStore.State(hiddenTipHashes = listOf(SURROUND_A_WORD_HASH)))
+        val service = createService(store)
+
+        service.migrateLegacyHiddenTips(emptyList())
+
+        assertEquals(listOf(SURROUND_A_WORD_HASH), store.state.hiddenTipHashes)
+        assertEquals(emptyList<String>(), service.getHiddenTipIds())
+    }
+
     private fun createService(
         store: PersistentSettingsStore = PersistentSettingsStore()
     ): SettingsRepository {
         return SettingsRepositoryImpl(store)
+    }
+
+    private companion object {
+        // TODO(1.6.0 upgrade bridge): SHA-256 of the summary, exactly as 1.5.x stored it.
+        const val SURROUND_A_WORD_HASH = "4e5464d16f024bd533c31046ad855e999adbf2aa7975213e7c454eaf6578d8b0"
+        const val REMOVED_TIP_HASH = "1d20c90830e51ecaba0b00f6298ffa6db2ec643fdb05016e1b34eb0263b7a14c"
     }
 }

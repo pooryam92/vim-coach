@@ -145,6 +145,7 @@ class VimCoachSettingsScreenControllerUnitTest {
         )
     }
 
+    // TODO(1.6.0 upgrade bridge)
     @Test
     fun loadStateRefetchesTipsWhenLegacyCacheHasNoCategories() {
         val settingsService = createSettingsService()

@@ -8,7 +8,9 @@ import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.application.loading.TipSourceService
 import com.github.pooryam92.vimcoach.features.tips.domain.TipSourceLoadResult
+import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
+import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
 import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import com.intellij.openapi.components.service
@@ -187,6 +189,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         assertEquals("existing", tipService.getTips().single().summary)
     }
 
+    // TODO(1.6.0 upgrade bridge)
     fun testCheckForUpdatesReloadsLegacyCachedTipsWithoutCategories() {
         val tipService = service<VimTipRepository>()
         tipService.saveTips(
@@ -224,6 +227,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         assertEquals(listOf("basics", "editing"), tipService.getCategories().values)
     }
 
+    // TODO(1.6.0 upgrade bridge)
     fun testCheckForUpdatesRefetchesUnconditionallyWhenCachedTipsLackIds() {
         val tipService = service<VimTipRepository>()
         service<PersistentVimTipStore>().loadState(
@@ -246,6 +250,22 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
         assertEquals(TipLoadResult.Updated(1), result)
         assertEquals("new-summary", tipService.getTips().single().summary)
+    }
+
+    // TODO(1.6.0 upgrade bridge)
+    fun testFetchedTipsCarryOverExclusionsSavedBeforeIds() {
+        val settingsStore = service<PersistentSettingsStore>()
+        settingsStore.loadState(PersistentSettingsStore.State(hiddenTipHashes = listOf(SURROUND_A_WORD_HASH)))
+        val surroundTip = vimTip("Surround a word", listOf("ysiw\""), listOf("motions"))
+        val fakeTipSource = FakeTipSource(TipSourceLoadResult.Success(listOf(surroundTip), TipMetadata()))
+
+        try {
+            registerLoader(fakeTipSource).refetchTips()
+
+            assertEquals(listOf(surroundTip.id), service<SettingsRepository>().getHiddenTipIds())
+        } finally {
+            settingsStore.loadState(PersistentSettingsStore.State())
+        }
     }
 
     fun testCheckForUpdatesNotModifiedRefreshesLastFetchTimestamp() {
@@ -369,6 +389,11 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
             tipSource = fakeTipSource,
             currentPluginVersion = { CURRENT_PLUGIN_VERSION }
         )
+    }
+
+    private companion object {
+        // TODO(1.6.0 upgrade bridge): SHA-256 of "Surround a word", the exclusion key 1.5.x stored.
+        const val SURROUND_A_WORD_HASH = "4e5464d16f024bd533c31046ad855e999adbf2aa7975213e7c454eaf6578d8b0"
     }
 
     private class FakeTipSource(

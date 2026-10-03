@@ -50,6 +50,8 @@ class VimTipRepositoryImpl() : VimTipRepository {
             return state.categories
         }
 
+        // TODO(1.6.0 upgrade bridge): only pre-category caches lack categories, and loadState already drops
+        // those tips as id-less. Return state.categories directly.
         return backfillCategories(state.tips)
     }
 

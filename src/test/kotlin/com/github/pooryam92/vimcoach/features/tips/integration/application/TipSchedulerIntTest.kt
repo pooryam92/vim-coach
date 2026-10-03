@@ -3,6 +3,7 @@ package com.github.pooryam92.vimcoach.features.tips.integration.application
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.ShowTips
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotifications
 import com.github.pooryam92.vimcoach.features.tips.application.scheduling.TipScheduler
+import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepositoryImpl
 import com.intellij.openapi.application.ApplicationManager
@@ -117,6 +118,9 @@ class TipSchedulerIntTest : BasePlatformTestCase() {
         override fun restoreTip(id: String) = Unit
 
         override fun consumeExcludedTipsManagementHint(): Boolean = false
+
+        // TODO(1.6.0 upgrade bridge)
+        override fun migrateLegacyHiddenTips(tips: List<VimTip>) = Unit
 
         override fun isShowAdvancedTipsEnabled(): Boolean = false
 

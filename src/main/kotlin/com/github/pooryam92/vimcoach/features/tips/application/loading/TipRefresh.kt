@@ -3,6 +3,7 @@ package com.github.pooryam92.vimcoach.features.tips.application.loading
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.TipSourceLoadResult
+import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 import com.intellij.openapi.components.service
 import com.intellij.openapi.diagnostic.Logger
@@ -12,15 +13,18 @@ class TipRefresh() : RefreshTips {
     private var injectedTipService: VimTipRepository? = null
     private var injectedTipSource: TipSourceService? = null
     private var injectedCurrentPluginVersion: (() -> String?)? = null
+    private var injectedSettingsService: SettingsRepository? = null
 
     internal constructor(
         tipService: VimTipRepository? = null,
         tipSource: TipSourceService? = null,
-        currentPluginVersion: (() -> String?)? = null
+        currentPluginVersion: (() -> String?)? = null,
+        settingsService: SettingsRepository? = null
     ) : this() {
         injectedTipService = tipService
         injectedTipSource = tipSource
         injectedCurrentPluginVersion = currentPluginVersion
+        injectedSettingsService = settingsService
     }
 
     private val updatesChecked = AtomicBoolean(false)
@@ -66,6 +70,7 @@ class TipRefresh() : RefreshTips {
             return false
         }
 
+        // TODO(1.6.0 upgrade bridge): the categories check only caught pre-category caches; the tip count is enough.
         val categories = tipService().getCategories()
         val hasCategories = categories.isNotEmpty()
         logger.info(
@@ -105,6 +110,8 @@ class TipRefresh() : RefreshTips {
     private fun saveFetchedTips(sourceResult: TipSourceLoadResult.Success): TipLoadResult {
         tipService().saveTips(sourceResult.tips)
         tipService().saveMetadata(stampPluginVersion(sourceResult.metadata))
+        // TODO(1.6.0 upgrade bridge): drop this call and the settingsService dependency.
+        settingsService().migrateLegacyHiddenTips(sourceResult.tips)
         logger.info("Saved ${sourceResult.tips.size} Vim tips from source")
         return TipLoadResult.Updated(sourceResult.tips.size)
     }
@@ -123,6 +130,8 @@ class TipRefresh() : RefreshTips {
     private fun tipService(): VimTipRepository = injectedTipService ?: service()
 
     private fun tipSource(): TipSourceService = injectedTipSource ?: service()
+
+    private fun settingsService(): SettingsRepository = injectedSettingsService ?: service()
 
     private fun currentPluginVersion(): String? =
         (injectedCurrentPluginVersion ?: ::resolvePluginVersion).invoke()

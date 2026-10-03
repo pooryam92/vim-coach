@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.testsupport
 
+import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 
 /**
@@ -28,6 +29,8 @@ class FakeSettingsService(
     override fun hideTip(id: String) { if (id !in hiddenTipIds) hiddenTipIds.add(id) }
     override fun restoreTip(id: String) { hiddenTipIds.remove(id) }
     override fun consumeExcludedTipsManagementHint(): Boolean = managementHint
+    // TODO(1.6.0 upgrade bridge)
+    override fun migrateLegacyHiddenTips(tips: List<VimTip>) = Unit
     override fun isShowAdvancedTipsEnabled(): Boolean = showAdvancedTips
     override fun setShowAdvancedTipsEnabled(enabled: Boolean) = Unit
 

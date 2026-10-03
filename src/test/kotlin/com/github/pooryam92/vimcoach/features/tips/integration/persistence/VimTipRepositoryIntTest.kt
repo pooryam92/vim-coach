@@ -65,6 +65,7 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         )
     }
 
+    // TODO(1.6.0 upgrade bridge)
     fun testGetCategoriesBackfillsStoredCategoriesWhenCategoryCacheIsEmpty() {
         tipStore().loadState(
             PersistentVimTipStore.State(
@@ -87,6 +88,7 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         )
     }
 
+    // TODO(1.6.0 upgrade bridge)
     fun testGetCategoriesReparsesStoredTipsWhenTipsExistWithoutCategories() {
         tipStore().loadState(
             PersistentVimTipStore.State(
@@ -112,6 +114,7 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
 
     // A cache written before generated ids holds id-less tips; they must load as no tips so the
     // "No tips found." fallback shows and the next update check refetches unconditionally.
+    // TODO(1.6.0 upgrade bridge)
     fun testIdLessCacheFromXmlLoadsAsNoTipsKeepingCategories() {
         tipStore().loadState(XmlSerializer.deserialize(JDOMUtil.load(PRE_ID_CACHE_XML), PersistentVimTipStore.State::class.java))
 

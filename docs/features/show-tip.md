@@ -39,7 +39,7 @@ graph LR
 
 Each call to `select()`:
 
-1. **Reads `VimTipRepository.getTips()`.** An empty cache short-circuits straight to the "No tips found." fallback — `VimTipRepository` is a plain query surface (`getTips`, `getTipsByIds`, `hasAdvancedTips`, `getCategories`, metadata) with no `SettingsRepository` dependency and no selection logic. Cached tips without an `id` (written by a plugin version before generated ids) count as absent, so such a cache also shows "No tips found." until the refetch lands; see [Tips pipeline](../tips/tips-pipeline.md#tip-ids).
+1. **Reads `VimTipRepository.getTips()`.** An empty cache short-circuits straight to the "No tips found." fallback — `VimTipRepository` is a plain query surface (`getTips`, `getTipsByIds`, `hasAdvancedTips`, `getCategories`, metadata) with no `SettingsRepository` dependency and no selection logic. <!-- TODO(1.6.0 upgrade bridge) --> Cached tips without an `id` (written by a plugin version before generated ids) count as absent, so such a cache also shows "No tips found." until the refetch lands; see [Tips pipeline](../tips/tips-pipeline.md#tip-ids).
 
 2. **Builds a `TipSelectionContext`** from `SettingsRepository`: enabled categories (`getEnabledTipCategories(availableCategories)`, skipped in favor of a pass-through when the cache has no categories at all yet — tips not loaded), hidden tip ids, the advanced-tips opt-in, and the caller's `includeConfigTips`.
 

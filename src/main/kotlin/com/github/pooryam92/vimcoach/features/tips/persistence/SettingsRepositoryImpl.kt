@@ -1,10 +1,13 @@
 package com.github.pooryam92.vimcoach.features.tips.persistence
 
 import com.github.pooryam92.vimcoach.features.tips.application.scheduling.ScheduleTips
+import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.ProjectManager
+import java.security.MessageDigest
 
 class SettingsRepositoryImpl() : SettingsRepository {
     private var injectedSettingsStore: PersistentSettingsStore? = null
@@ -92,6 +95,18 @@ class SettingsRepositoryImpl() : SettingsRepository {
         }
     }
 
+    // TODO(1.6.0 upgrade bridge): with legacySummaryHash below.
+    override fun migrateLegacyHiddenTips(tips: List<VimTip>) {
+        val legacyHashes = currentState().hiddenTipHashes.toSet()
+        if (legacyHashes.isEmpty() || tips.isEmpty()) {
+            return
+        }
+
+        val migratedIds = tips.filter { legacySummaryHash(it) in legacyHashes }.map(VimTip::id)
+        settingsStore().completeLegacyHiddenTipMigration((getHiddenTipIds() + migratedIds).distinct())
+        logger.info("Migrated ${migratedIds.size} of ${legacyHashes.size} excluded tips from summary hashes to tip ids")
+    }
+
     override fun consumeExcludedTipsManagementHint(): Boolean {
         if (currentState().excludedTipsManagementHintShown) {
             return false
@@ -177,8 +192,15 @@ class SettingsRepositoryImpl() : SettingsRepository {
         return id.trim().takeIf(String::isNotBlank)
     }
 
+    // TODO(1.6.0 upgrade bridge)
+    private fun legacySummaryHash(tip: VimTip): String {
+        val digest = MessageDigest.getInstance("SHA-256").digest(tip.summary.trim().toByteArray(Charsets.UTF_8))
+        return digest.joinToString("") { "%02x".format(it) }
+    }
+
     private companion object {
         const val MIN_TIP_INTERVAL_HOURS = 1
+        val logger = Logger.getInstance(SettingsRepositoryImpl::class.java)
     }
 
     private fun notifyPeriodicSchedulerSettingsChanged() {

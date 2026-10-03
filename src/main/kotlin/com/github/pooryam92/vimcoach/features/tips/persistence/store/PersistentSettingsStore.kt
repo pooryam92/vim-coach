@@ -16,6 +16,9 @@ class PersistentSettingsStore :
         var tipIntervalHours: Int = 1,
         var disabledTipCategories: List<String> = emptyList(),
         var hiddenTipIds: List<String> = emptyList(),
+        // TODO(1.6.0 upgrade bridge): exclusions saved before 1.6.0, keyed by a SHA-256 of the summary. Kept
+        // only until migrateLegacyHiddenTips converts them to tip ids.
+        var hiddenTipHashes: List<String> = emptyList(),
         var excludedTipsManagementHintShown: Boolean = false,
         // Off by default: a pre-feature store has no field and deserializes to off, so existing
         // users keep seeing only normal tips until they opt in.
@@ -44,6 +47,11 @@ class PersistentSettingsStore :
 
     fun setHiddenTipIds(ids: List<String>) {
         updateState { it.copy(hiddenTipIds = ids.toList()) }
+    }
+
+    // TODO(1.6.0 upgrade bridge): goes with hiddenTipHashes.
+    fun completeLegacyHiddenTipMigration(ids: List<String>) {
+        updateState { it.copy(hiddenTipIds = ids.toList(), hiddenTipHashes = emptyList()) }
     }
 
     fun setExcludedTipsManagementHintShown(shown: Boolean) {
