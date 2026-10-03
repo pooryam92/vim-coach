@@ -56,11 +56,18 @@ summary: `Show marks in the gutter ma` (vim-signature)
 ❌ `"details": ["ma now draws an a icon in the gutter", …]`
 ✅ `"details": ["ma marks a spot, an a icon shows it", …]`
 
+summary: `Give each split its own Ctrl-o` → `Keep Ctrl-o inside the current split` (`set ideawindowjumps`)
+❌ `"details": ["Ctrl-o no longer hops to other splits", "Each split keeps its own list, as in Vim"]`
+✅ `"details": ["Ctrl-o goes back after a jump like gd or /", "By default it can go back to another split", "With this on, it stays in this split"]`
+
 *Why:* token-naming assumes you already know `:g`. A typeable command plus a
 plain-words outcome teaches a reader who's never seen the concept. The same
-trap hides in a plugin tip built on a base key: `ma now draws…` only says what
-changed, so a reader who has never set a mark learns nothing. Say what the key
-does, then what the plugin adds.
+trap hides in a plugin or option tip built on a base key: `ma now draws…` or
+`Ctrl-o no longer…` only says what changed, so a reader who has never set a
+mark — or asked "what does Ctrl-o do?" — learns nothing. `its own list` names
+an unseen mechanism and `as in Vim` means nothing to an IDE-only reader. Line
+1 says what the key does with a concrete trigger (`like gd or /`), then what
+the plugin adds — for an option, the default's problem and the fix.
 
 ### Teach the payoff, not the mechanism — and no trick stacked on top
 

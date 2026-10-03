@@ -245,8 +245,9 @@ author them until the blocker is fixed.
   leader safely.
 - **Plugins that need a separate Marketplace IDE plugin** — fail test 1: the
   button appends only the config line, so a `config` that looks complete would
-  silently do nothing. EasyMotion (needs IdeaVim-EasyMotion + AceJump) and
-  which-key (needs the Which-Key IDE plugin) are deferred — see
+  silently do nothing. EasyMotion (needs IdeaVim-EasyMotion + AceJump),
+  which-key (needs the Which-Key IDE plugin) and quick-scope (needs
+  IdeaVim-Quickscope) are deferred — see
   `docs/discover/config-tips-roadmap.md`. A `Plug`/`set` line is only shippable
   when IdeaVim emulates the plugin itself (surround, commentary, sneak, NERDTree,
   argtextobj, multiple-cursors…). The "Setup" block in

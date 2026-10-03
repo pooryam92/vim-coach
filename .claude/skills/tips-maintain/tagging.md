@@ -9,11 +9,11 @@ a non-boolean `advanced` and a `mode` outside `insert` / `visual` / `command`.
 `"advanced": true` hides a tip from the default rotation; users who opt in from
 settings still see it, under a `Vim Coach · Advanced` title. The default
 rotation is tuned for the **plateaued IdeaVim user** — knows the basics,
-stopped learning (personas: docs/TODO/audience-fit-backlog.md). The test: would
-that reader reach for this move weekly? If not, it's advanced. There is no
-fixed rubric beyond that — it **emerges from doing**. Bias toward normal:
-over-tagging shrinks the default pool, which is the harm. Tag a few at a time,
-and when a pattern starts to repeat, add it to the list below.
+stopped learning. The test: would that reader reach for this move weekly? If
+not, it's advanced. There is no fixed rubric beyond that — it **emerges from
+doing**. Bias toward normal: over-tagging shrinks the default pool, which is the
+harm. Tag a few at a time, and when a pattern starts to repeat, add it to the
+list below.
 
 - **Count the category's ratio before tagging** — the settled convention is in
   the rendered set (primary + secondary tags) and differs sharply by category.

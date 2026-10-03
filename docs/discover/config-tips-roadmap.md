@@ -69,11 +69,13 @@ Some IdeaVim "plugins" aren't pure emulation — they only work if the user *als
 installs a separate JetBrains Marketplace plugin. The **Add to .ideavimrc**
 button can only append the config line, not install a Marketplace plugin, so a
 tip whose `config` looks complete would silently do nothing. Deferred until the
-button (or the tip UI) can surface the external dependency.
+button (or the tip UI) can surface the external dependency — ideas in
+[marketplace-plugin-tips.md](marketplace-plugin-tips.md).
 
 - **EasyMotion** — `Plug 'easymotion/vim-easymotion'`; needs the
   IdeaVim-EasyMotion **and** AceJump IDE plugins.
 - **which-key** — `set which-key`; needs the Which-Key IDE plugin.
+- **quick-scope** — `set quickscope`; needs the IdeaVim-Quickscope IDE plugin.
 - **FunctionTextObj** (`if`/`af` on functions, by Julien Phalip) — `set
   functiontextobj`; needs the separate vim-functiontextobj Marketplace plugin.
   Distinct from `functextobj` (the built-in `am`/`aM`/`im` extension, already
