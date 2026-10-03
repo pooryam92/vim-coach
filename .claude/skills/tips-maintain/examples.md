@@ -56,7 +56,7 @@ summary: `Show marks in the gutter ma` (vim-signature)
 ❌ `"details": ["ma now draws an a icon in the gutter", …]`
 ✅ `"details": ["ma marks a spot, an a icon shows it", …]`
 
-summary: `Give each split its own Ctrl-o` → `Keep Ctrl-o inside the current split` (`set ideawindowjumps`)
+summary: `Give each split its own Ctrl-o` → `Keep Ctrl-o inside the current split` (`set ideawindowjumps`; tip later pulled — the option is `isHidden`)
 ❌ `"details": ["Ctrl-o no longer hops to other splits", "Each split keeps its own list, as in Vim"]`
 ✅ `"details": ["Ctrl-o goes back after a jump like gd or /", "By default it can go back to another split", "With this on, it stays in this split"]`
 
