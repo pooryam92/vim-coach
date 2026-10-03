@@ -11,8 +11,9 @@ IDE's bundled Inter 13, plus a screenshot of a live balloon. Platform sources:
 
 A balloon with a title *and* actions shows only **2 lines of body (34px)**
 before the reader clicks the expand chevron (`lines = 4 − title − actions`).
-Every tip is taller than that (summary + 2 details ≈ 77px), so **every tip
-opens collapsed**:
+A tip with 2+ details is taller than that (summary + 2 details ≈ 77px), so
+**it opens collapsed**; a one-detail tip fits in 34px and opens fully
+expanded:
 
 ```
 ┌──────────────────────────────────────────┐

@@ -77,7 +77,8 @@ list below. Open the other companions only when their need comes up:
   for a real improvement.
 - `details` — prefer 2, 3 at most.
 - `mnemonic` — optional, **omitted by default**; only when the decoded words
-  make the keys stick; skip on 3-detail tips (examples.md → "Mnemonics").
+  make the keys stick; skip on 3-detail tips. Examples: examples.md →
+  "Mnemonics".
 - `config` — optional; read reference.md → "Config tips" first.
 - `advanced`, `mode` — optional, **omitted by default**; read tagging.md first.
 

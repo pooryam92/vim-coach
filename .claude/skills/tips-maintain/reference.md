@@ -68,6 +68,7 @@ If the submodule needs refreshing or a wider checkout:
 git submodule update --init external/ideavim
 git -C external/ideavim sparse-checkout init --cone
 git -C external/ideavim sparse-checkout set \
+  doc \
   src/main/resources/ksp-generated \
   vim-engine/src/main/resources/ksp-generated
 git submodule update --remote external/ideavim   # refresh to latest master
@@ -215,8 +216,20 @@ Lines that satisfy both — the working examples:
   when listing them would be a row of glyphs.
 - **Tune a built-in option** — e.g. `set scrolloff=5`, `hlsearch`. Primary
   `options`.
-- **IDE-bridge `set`** — e.g. `set ideajoin`, `set idearefactormode=keep`.
-  Primary `ideavim`.
+- **IDE-bridge `set`** — an `idea…` option that hands work to the IDE, e.g.
+  `set ideajoin`. Primary `ideavim`. An `idea…` option that only restores
+  Vim's own behaviour (a per-split jump list) takes its topic's category
+  instead. Never ship an option declared `isHidden = true` — IdeaVim marks
+  those as feature toggles "reviewed in future releases", so they may vanish
+  and break the reader's rc; `ideawindowjumps` was pulled for this:
+  ```bash
+  grep -rn '"<option>"' external/ideavim/vim-engine/src/main/kotlin/com/maddyhome/idea/vim/api/Options.kt \
+    external/ideavim/src/main/java/com/maddyhome/idea/vim/group/IjOptions.kt | grep isHidden
+  ```
+- **Autocommand** — wrap it in an `augroup` with `autocmd!` first, as IdeaVim's
+  `doc/autocmd.md` does. Reloading `.ideavimrc` clears plugins but not
+  autocommands (`VimRcService.executeIdeaVimRc`), so a bare `autocmd` line
+  adds another copy of the handler on every reload.
 - **IDE-bridge action mapping** — `nmap <keys> <Action>(ActionId)`. Use a
   recursive `map`/`nmap`, never `noremap` (`<Action>()` needs a recursive map).
   Primary `ideavim`; short button label, e.g. `Map errors`. This is the one

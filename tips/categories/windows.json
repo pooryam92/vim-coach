@@ -153,25 +153,6 @@
         "Ctrl-w | maxes its width"
       ],
       "advanced": true
-    },
-    {
-      "category": [
-        "windows",
-        "navigation"
-      ],
-      "summary": "Keep Ctrl-o inside the current split",
-      "details": [
-        "Ctrl-o goes back after a jump like gd or /",
-        "By default it can go back to another split",
-        "With this on, it stays in this split"
-      ],
-      "advanced": true,
-      "config": {
-        "name": "Enable ideawindowjumps",
-        "lines": [
-          "set ideawindowjumps"
-        ]
-      }
     }
   ]
 }

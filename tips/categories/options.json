@@ -150,7 +150,10 @@
       "config": {
         "name": "Stop Insert on switch",
         "lines": [
-          "autocmd BufEnter * stopinsert"
+          "augroup stopinsert_on_switch",
+          "  autocmd!",
+          "  autocmd BufEnter * stopinsert",
+          "augroup END"
         ]
       }
     }

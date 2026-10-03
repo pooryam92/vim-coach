@@ -189,7 +189,8 @@ both rules at once. `to` in `go to tab` maps to no key and dilutes the hook.
 `n/i/v` taught nothing and restated a detail line. For a prefix family, decode
 the prefix too, from the documented hook (Vim's `usr_28`: *"z looks like a
 folded piece of paper"*) — and a *shape* hook must name the key it depicts,
-since the glyph doesn't map from the letter.
+since the glyph doesn't map from the letter. That fold mnemonic runs 35 chars,
+over the 32 target: the limit is advisory, and a hook that sticks wins.
 
 ## Truth — verify against IdeaVim
 

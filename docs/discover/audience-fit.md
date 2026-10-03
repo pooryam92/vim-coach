@@ -14,13 +14,15 @@ From the 2026-10-02 audience review. Target personas, in priority order:
 The advanced pool is mostly deeper vanilla Vim, which veterans already know.
 2026-10-03 pass:
 
-- [x] `ideawindowjumps` — per-split jump list (`windows.json`, advanced)
 - [ ] Vim keys in the run/debug console (`ideaeditor`, on by default since
       2.47.0) — maybe; only tryable while a run is open
 - [ ] CamelCaseMotion — built in, but its keys hang off `<leader>`, which
       config tips can't ship yet
 
 Ruled out:
+
+- `ideawindowjumps` — IdeaVim declares it `isHidden`, a feature toggle
+  "reviewed in future releases"; shipped briefly, then pulled
 
 - `idearefactormode` — the default Select mode already replaces the name as
   you type (skill examples.md, "A config button that sets the default")
