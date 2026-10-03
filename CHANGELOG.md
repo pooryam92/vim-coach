@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-10-03
+
 ### Changed
 
 - Tip rotation now remembers which tips you've seen across IDE restarts, so every tip shows once before any repeats
@@ -140,7 +142,8 @@
 - Support for remote tip sources
 - Action to refetch tips from remote source for updating the local tip library
 
-[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.5.1...HEAD
+[Unreleased]: https://github.com/pooryam92/vim-coach/compare/1.6.0...HEAD
+[1.6.0]: https://github.com/pooryam92/vim-coach/compare/1.5.1...1.6.0
 [1.5.1]: https://github.com/pooryam92/vim-coach/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/pooryam92/vim-coach/compare/1.4.1...1.5.0
 [1.4.1]: https://github.com/pooryam92/vim-coach/compare/1.4.0...1.4.1
