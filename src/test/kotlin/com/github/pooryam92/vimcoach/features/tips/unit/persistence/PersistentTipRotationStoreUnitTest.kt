@@ -12,7 +12,7 @@ class PersistentTipRotationStoreUnitTest {
     @Test
     fun progressSurvivesASaveAndLoad() {
         val saved = PersistentTipRotationStore()
-        saved.setProgress(mapOf("a" to 2, "b" to 1), lastShownKey = "a")
+        saved.updateProgress { PersistentTipRotationStore.State(mapOf("a" to 2, "b" to 1), lastShownKey = "a") }
 
         val loaded = PersistentTipRotationStore()
         loaded.loadState(saveAndReload(saved.state))

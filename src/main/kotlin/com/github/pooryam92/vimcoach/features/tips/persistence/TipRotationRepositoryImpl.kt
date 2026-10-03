@@ -17,10 +17,13 @@ class TipRotationRepositoryImpl() : TipRotationRepository {
     }
 
     override fun recordShown(key: String, count: Int, cachedKeys: Set<String>) {
-        val current = currentState().timesShown
-        val retained = current.filterKeys { it in cachedKeys }
-        logPruned(current.size - retained.size)
-        rotationStore().setProgress(retained + (key to count), lastShownKey = key)
+        var prunedCount = 0
+        rotationStore().updateProgress { state ->
+            val retained = state.timesShown.filterKeys { it in cachedKeys }
+            prunedCount = state.timesShown.size - retained.size
+            state.copy(timesShown = retained + (key to count), lastShownKey = key)
+        }
+        logPruned(prunedCount)
     }
 
     private fun logPruned(count: Int) {

@@ -15,7 +15,8 @@ class PersistentTipRotationStore :
         var lastShownKey: String? = null
     )
 
-    fun setProgress(timesShown: Map<String, Int>, lastShownKey: String) {
-        updateState { it.copy(timesShown = timesShown.toMap(), lastShownKey = lastShownKey) }
+    /** [transform] may run more than once under contention; only its last run is saved. */
+    fun updateProgress(transform: (State) -> State) {
+        updateState(transform)
     }
 }

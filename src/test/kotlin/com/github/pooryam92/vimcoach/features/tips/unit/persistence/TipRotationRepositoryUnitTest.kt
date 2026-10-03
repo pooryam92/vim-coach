@@ -5,6 +5,7 @@ import com.github.pooryam92.vimcoach.features.tips.persistence.TipRotationReposi
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentTipRotationStore
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import kotlin.concurrent.thread
 
 class TipRotationRepositoryUnitTest {
 
@@ -47,5 +48,18 @@ class TipRotationRepositoryUnitTest {
         repository.recordShown("a", 2, cachedKeys = setOf("a"))
 
         assertEquals(mapOf("a" to 2), repository.getProgress().timesShown)
+    }
+
+    @Test
+    fun concurrentShowsKeepEveryCount() {
+        val repository = TipRotationRepositoryImpl(store)
+        val keys = (1..2000).map { "k$it" }
+        val cachedKeys = keys.toSet()
+
+        keys.chunked(250)
+            .map { chunk -> thread { chunk.forEach { repository.recordShown(it, 1, cachedKeys) } } }
+            .forEach(Thread::join)
+
+        assertEquals(cachedKeys, repository.getProgress().timesShown.keys)
     }
 }
