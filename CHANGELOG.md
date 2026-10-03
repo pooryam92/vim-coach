@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Tip rotation now remembers which tips you've seen across IDE restarts, so every tip shows once before any repeats
+- Editing a tip's summary or details now makes it a new tip, so a reworded tip you excluded shows again (previously only a summary change did that)
+- Vim Coach settings are no longer shared between machines through Settings Sync; each machine keeps its own
+
 ## [1.5.1] - 2026-07-11
 
 ### Added

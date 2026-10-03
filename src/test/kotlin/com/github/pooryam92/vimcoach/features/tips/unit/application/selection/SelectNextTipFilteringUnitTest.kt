@@ -2,12 +2,12 @@ package com.github.pooryam92.vimcoach.features.tips.unit.application.selection
 
 import com.github.pooryam92.vimcoach.features.tips.application.selection.SelectNextTip
 import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
-import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepositoryImpl
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepositoryImpl
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
+import com.github.pooryam92.vimcoach.features.tips.testsupport.inMemoryTipRotation
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -15,15 +15,15 @@ class SelectNextTipFilteringUnitTest {
 
     @Test
     fun hiddenTipsAreExcludedFromSelection() {
-        val hiddenTip = VimTip("hidden", listOf("hidden-details"), listOf("editing"))
-        val visibleTip = VimTip("visible", listOf("visible-details"), listOf("editing"))
+        val hiddenTip = vimTip("hidden", listOf("hidden-details"), listOf("editing"))
+        val visibleTip = vimTip("visible", listOf("visible-details"), listOf("editing"))
         val settingsService = SettingsRepositoryImpl(PersistentSettingsStore()).apply {
-            hideTip(TipHash.fromTip(hiddenTip).value)
+            hideTip(hiddenTip.id)
         }
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(hiddenTip, visibleTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository, settingsService)
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation(), settingsService)
 
         repeat(20) {
             assertEquals("visible", selectNextTip.select(includeConfigTips = true).summary)
@@ -31,16 +31,31 @@ class SelectNextTipFilteringUnitTest {
     }
 
     @Test
+    fun aHiddenTipIsShownAgainOnceItsIdChanges() {
+        val hiddenTip = vimTip("reworded", listOf("old-details"), listOf("editing"))
+        val settingsService = SettingsRepositoryImpl(PersistentSettingsStore()).apply {
+            hideTip(hiddenTip.id)
+        }
+        val rewordedTip = vimTip("reworded", listOf("new-details"), listOf("editing"))
+        val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
+            saveTips(listOf(rewordedTip))
+        }
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation(), settingsService)
+
+        assertEquals(rewordedTip, selectNextTip.select(includeConfigTips = true))
+    }
+
+    @Test
     fun configTipsAreExcludedWhenIncludeConfigTipsIsFalse() {
-        val configTip = VimTip(
+        val configTip = vimTip(
             "config", listOf("config-details"), listOf("editing"),
             config = TipConfig(lines = listOf("set scrolloff=5"))
         )
-        val plainTip = VimTip("plain", listOf("plain-details"), listOf("editing"))
+        val plainTip = vimTip("plain", listOf("plain-details"), listOf("editing"))
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(configTip, plainTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository, SettingsRepositoryImpl(PersistentSettingsStore()))
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation(), SettingsRepositoryImpl(PersistentSettingsStore()))
 
         repeat(20) {
             assertEquals("plain", selectNextTip.select(includeConfigTips = false).summary)
@@ -49,12 +64,12 @@ class SelectNextTipFilteringUnitTest {
 
     @Test
     fun advancedTipsAreExcludedFromSelectionWhenSettingIsOff() {
-        val advancedTip = VimTip("advanced", listOf("advanced-details"), listOf("editing"), advanced = true)
-        val normalTip = VimTip("normal", listOf("normal-details"), listOf("editing"))
+        val advancedTip = vimTip("advanced", listOf("advanced-details"), listOf("editing"), advanced = true)
+        val normalTip = vimTip("normal", listOf("normal-details"), listOf("editing"))
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(advancedTip, normalTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository, SettingsRepositoryImpl(PersistentSettingsStore()))
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation(), SettingsRepositoryImpl(PersistentSettingsStore()))
 
         repeat(20) {
             assertEquals("normal", selectNextTip.select(includeConfigTips = true).summary)
@@ -63,14 +78,14 @@ class SelectNextTipFilteringUnitTest {
 
     @Test
     fun advancedTipsAreIncludedInSelectionWhenSettingIsOn() {
-        val advancedTip = VimTip("advanced", listOf("advanced-details"), listOf("editing"), advanced = true)
+        val advancedTip = vimTip("advanced", listOf("advanced-details"), listOf("editing"), advanced = true)
         val settingsService = SettingsRepositoryImpl(PersistentSettingsStore()).apply {
             setShowAdvancedTipsEnabled(true)
         }
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(advancedTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository, settingsService)
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation(), settingsService)
 
         repeat(20) {
             assertEquals("advanced", selectNextTip.select(includeConfigTips = true).summary)
@@ -79,11 +94,11 @@ class SelectNextTipFilteringUnitTest {
 
     @Test
     fun filteredFallbackIsReturnedWhenOnlyAdvancedTipsMatchAndSettingIsOff() {
-        val advancedTip = VimTip("advanced", listOf("advanced-details"), listOf("editing"), advanced = true)
+        val advancedTip = vimTip("advanced", listOf("advanced-details"), listOf("editing"), advanced = true)
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(advancedTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository, SettingsRepositoryImpl(PersistentSettingsStore()))
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation(), SettingsRepositoryImpl(PersistentSettingsStore()))
 
         val selectedTip = selectNextTip.select(includeConfigTips = true)
 
@@ -95,25 +110,25 @@ class SelectNextTipFilteringUnitTest {
     // lookup fails in a plain unit test, so this exercises exactly that null fallback.
     @Test
     fun hidesAdvancedTipsWhenSettingsServiceUnavailable() {
-        val advancedTip = VimTip("advanced", listOf("advanced-details"), listOf("editing"), advanced = true)
+        val advancedTip = vimTip("advanced", listOf("advanced-details"), listOf("editing"), advanced = true)
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(advancedTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository)
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation())
 
         assertEquals("No tips match the selected categories.", selectNextTip.select(includeConfigTips = true).summary)
     }
 
     @Test
     fun filteredFallbackIsReturnedWhenAllTipsAreHidden() {
-        val hiddenTip = VimTip("hidden", listOf("hidden-details"), listOf("editing"))
+        val hiddenTip = vimTip("hidden", listOf("hidden-details"), listOf("editing"))
         val settingsService = SettingsRepositoryImpl(PersistentSettingsStore()).apply {
-            hideTip(TipHash.fromTip(hiddenTip).value)
+            hideTip(hiddenTip.id)
         }
         val tipRepository = VimTipRepositoryImpl(PersistentVimTipStore()).apply {
             saveTips(listOf(hiddenTip))
         }
-        val selectNextTip = SelectNextTip(tipRepository, settingsService)
+        val selectNextTip = SelectNextTip(tipRepository, inMemoryTipRotation(), settingsService)
 
         val selectedTip = selectNextTip.select(includeConfigTips = true)
 

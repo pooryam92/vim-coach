@@ -6,6 +6,7 @@
 - Always write or update tests when adding or changing behavior.
 - Always update relevant docs when adding or changing behavior.
 - Comment sparingly. Prefer self-explanatory names over comments. Add one only when it explains the non-obvious *why* — intent, a design decision, or a gotcha — never to restate what the code already says.
+- Tag code, tests and doc sections that only bridge an upgrade from an older version with `TODO(X.Y.Z upgrade bridge)`, X.Y.Z being the release that adds it. Starting the release after X.Y.Z, grep the tag and delete everything it marks.
 - Use logging when it adds value for debugging, observability, or diagnosing user/plugin issues.
 - Verify changes with: `./gradlew test && ./gradlew buildPlugin`
 

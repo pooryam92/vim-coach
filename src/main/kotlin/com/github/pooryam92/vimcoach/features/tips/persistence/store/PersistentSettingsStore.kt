@@ -1,10 +1,12 @@
 package com.github.pooryam92.vimcoach.features.tips.persistence.store
 
+import com.intellij.openapi.components.RoamingType
 import com.intellij.openapi.components.SerializablePersistentStateComponent
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 
-@State(name = "VimCoachSettings", storages = [Storage("vim-coach-settings.xml")])
+@State(name = "VimCoachSettings",
+    storages = [Storage("vim-coach-settings.xml", roamingType = RoamingType.DISABLED)])
 class PersistentSettingsStore :
     SerializablePersistentStateComponent<PersistentSettingsStore.State>(State()) {
 
@@ -13,6 +15,9 @@ class PersistentSettingsStore :
         var periodicTipsEnabled: Boolean = false,
         var tipIntervalHours: Int = 1,
         var disabledTipCategories: List<String> = emptyList(),
+        var hiddenTipIds: List<String> = emptyList(),
+        // TODO(1.6.0 upgrade bridge): exclusions saved before 1.6.0, keyed by a SHA-256 of the summary. Kept
+        // only until migrateLegacyHiddenTips converts them to tip ids.
         var hiddenTipHashes: List<String> = emptyList(),
         var excludedTipsManagementHintShown: Boolean = false,
         // Off by default: a pre-feature store has no field and deserializes to off, so existing
@@ -40,8 +45,13 @@ class PersistentSettingsStore :
         updateState { it.copy(disabledTipCategories = categories.toList()) }
     }
 
-    fun setHiddenTipHashes(hashes: List<String>) {
-        updateState { it.copy(hiddenTipHashes = hashes.toList()) }
+    fun setHiddenTipIds(ids: List<String>) {
+        updateState { it.copy(hiddenTipIds = ids.toList()) }
+    }
+
+    // TODO(1.6.0 upgrade bridge): goes with hiddenTipHashes.
+    fun completeLegacyHiddenTipMigration(ids: List<String>) {
+        updateState { it.copy(hiddenTipIds = ids.toList(), hiddenTipHashes = emptyList()) }
     }
 
     fun setExcludedTipsManagementHintShown(shown: Boolean) {

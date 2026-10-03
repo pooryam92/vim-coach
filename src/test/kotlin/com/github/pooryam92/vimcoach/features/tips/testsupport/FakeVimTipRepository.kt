@@ -1,7 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.testsupport
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipCategories
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
@@ -35,9 +34,9 @@ class FakeVimTipRepository(
         return tips.any { it.advanced }
     }
 
-    override fun getTipsByHashes(hashes: List<String>): List<VimTip> {
-        val tipsByHash = tips.associateBy { TipHash.fromTip(it).value }
-        return hashes.mapNotNull(tipsByHash::get)
+    override fun getTipsByIds(ids: List<String>): List<VimTip> {
+        val tipsById = tips.associateBy(VimTip::id)
+        return ids.mapNotNull(tipsById::get)
     }
 
     override fun getCategories(): TipCategories {
@@ -53,7 +52,7 @@ class FakeVimTipRepository(
     }
 
     private companion object {
-        val DEFAULT_TIP = VimTip(
+        val DEFAULT_TIP = vimTip(
             summary = "fallback",
             details = listOf("fallback-details")
         )

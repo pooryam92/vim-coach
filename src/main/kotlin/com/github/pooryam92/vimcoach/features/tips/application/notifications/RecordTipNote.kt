@@ -1,6 +1,5 @@
 package com.github.pooryam92.vimcoach.features.tips.application.notifications
 
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import java.nio.file.Files
 import java.nio.file.Path
@@ -35,7 +34,7 @@ class RecordTipNote(private val file: Path) {
         return buildString {
             append('\n')
             append("## ").append(TIMESTAMP.format(at)).append(" — ").append(summary).append('\n')
-            append("- **Hash:** `").append(TipHash.fromTip(tip).value).append("`\n")
+            append("- **Id:** `").append(tip.id).append("`\n")
             append("- **Note:** ").append(note).append('\n')
         }
     }

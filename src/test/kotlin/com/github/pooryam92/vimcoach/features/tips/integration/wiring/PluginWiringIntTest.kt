@@ -7,8 +7,10 @@ import com.github.pooryam92.vimcoach.features.tips.application.selection.SelectN
 import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenController
 import com.github.pooryam92.vimcoach.features.tips.application.loading.TipSourceService
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
+import com.github.pooryam92.vimcoach.features.tips.persistence.TipRotationRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
+import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentTipRotationStore
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
@@ -28,6 +30,8 @@ class PluginWiringIntTest : BasePlatformTestCase() {
         val settingsStore = service<PersistentSettingsStore>()
         val tipService = service<VimTipRepository>()
         val settingsService = service<SettingsRepository>()
+        val rotationStore = service<PersistentTipRotationStore>()
+        val rotationRepository = service<TipRotationRepository>()
         val selectNextTip = service<SelectNextTip>()
         val sourceService = service<TipSourceService>()
         val refreshTips = service<RefreshTips>()
@@ -37,6 +41,8 @@ class PluginWiringIntTest : BasePlatformTestCase() {
         assertNotNull(settingsStore)
         assertNotNull(tipService)
         assertNotNull(settingsService)
+        assertNotNull(rotationStore)
+        assertNotNull(rotationRepository)
         assertNotNull(selectNextTip)
         assertNotNull(sourceService)
         assertNotNull(refreshTips)

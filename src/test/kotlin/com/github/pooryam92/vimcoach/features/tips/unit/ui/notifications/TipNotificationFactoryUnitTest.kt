@@ -2,7 +2,7 @@ package com.github.pooryam92.vimcoach.features.tips.unit.ui.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMode
-import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationActions
 import com.github.pooryam92.vimcoach.features.tips.ui.notifications.TipNotificationFactory
 import org.junit.Assert.assertEquals
@@ -17,7 +17,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun createNotificationUsesAppTitleAndContent() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(
+        val tip = vimTip(
             summary = "Move by word with w/b/e.",
             details = listOf("w next word start.")
         )
@@ -32,7 +32,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun createNotificationLeavesTitlePlainWhenNoLabels() {
         val notifier = TipNotificationFactory()
-        val normalTip = VimTip(summary = "jump", details = listOf("use %"))
+        val normalTip = vimTip(summary = "jump", details = listOf("use %"))
 
         val notification = notifier.createNotification(normalTip)
 
@@ -42,7 +42,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun createNotificationMarksAdvancedTipsInTheTitle() {
         val notifier = TipNotificationFactory()
-        val advancedTip = VimTip(
+        val advancedTip = vimTip(
             summary = "Paste last search Ctrl-r /",
             details = listOf("Ctrl-r / pastes the last search"),
             advanced = true
@@ -60,7 +60,7 @@ class TipNotificationFactoryUnitTest {
     fun createNotificationLabelsTheModeInTheTitle() {
         val notifier = TipNotificationFactory()
         for (mode in TipMode.entries) {
-            val tip = VimTip(summary = "tip ${mode.wireValue}", details = listOf("d"), mode = mode.wireValue)
+            val tip = vimTip(summary = "tip ${mode.wireValue}", details = listOf("d"), mode = mode.wireValue)
 
             val title = notifier.createNotification(tip).title
 
@@ -72,7 +72,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun createNotificationOrdersAdvancedBeforeMode() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(
+        val tip = vimTip(
             summary = "Paste register Ctrl-r",
             details = listOf("Ctrl-r pastes a register in Insert"),
             advanced = true,
@@ -90,7 +90,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun createNotificationLeavesTitlePlainForUnknownMode() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(summary = "jump", details = listOf("use %"), mode = "normal")
+        val tip = vimTip(summary = "jump", details = listOf("use %"), mode = "normal")
 
         val notification = notifier.createNotification(tip)
 
@@ -114,7 +114,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun createNotificationEscapesHtmlInTipContent() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(
+        val tip = vimTip(
             summary = "Indent/outdent lines >> - <<",
             details = listOf(">> indents current line, << outdents", "<em>test</em> & \"quotes\"")
         )
@@ -131,7 +131,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun createNotificationKeepsUnicodeLiteralsAndEscapesHtmlOnly() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(
+        val tip = vimTip(
             summary = "Repeat last change .",
             details = listOf("5j → move down 5 lines", "literal <tag>")
         )
@@ -147,7 +147,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun createNotificationDimsOnlyTheMnemonic() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(
+        val tip = vimTip(
             summary = "Change inner word ciw",
             details = listOf("ciw replaces the word under the cursor"),
             mnemonic = "change inner word"
@@ -163,7 +163,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun createNotificationRendersMnemonicInItalicWhenPresent() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(
+        val tip = vimTip(
             summary = "Change inner word ciw",
             details = listOf("ciw replaces the word under the cursor"),
             mnemonic = "change inner word"
@@ -179,7 +179,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun createNotificationEscapesHtmlInMnemonic() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(
+        val tip = vimTip(
             summary = "Delete to end D",
             details = listOf("D deletes to end of line"),
             mnemonic = "<Delete> & \"go\""
@@ -195,7 +195,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun createNotificationOmitsMnemonicBlockWhenAbsent() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(summary = "jump", details = listOf("use %"))
+        val tip = vimTip(summary = "jump", details = listOf("use %"))
 
         val notification = notifier.createNotification(tip)
 
@@ -204,7 +204,7 @@ class TipNotificationFactoryUnitTest {
 
     @Test
     fun notificationHasCorrectGroupIdAndIcon() {
-        val tip = VimTip(summary = "Test", details = listOf("Test details"))
+        val tip = vimTip(summary = "Test", details = listOf("Test details"))
         val notifier = TipNotificationFactory()
 
         val notification = notifier.createNotification(tip)
@@ -217,7 +217,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun notificationWithIdeaVimRcCallbackShowsThreeActionButtons() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(summary = "surround", details = listOf("edit surroundings"))
+        val tip = vimTip(summary = "surround", details = listOf("edit surroundings"))
 
         val notification = notifier.createNotificationWithActions(
             tip,
@@ -237,7 +237,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun namedConfigApplyButtonShowsTheNameVerbatim() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(
+        val tip = vimTip(
             summary = "Add surroundings ys{motion}",
             details = listOf("ysiw) wraps a word in parens"),
             category = listOf("plugins", "editing"),
@@ -255,7 +255,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun unnamedConfigApplyButtonUsesGenericLabel() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(
+        val tip = vimTip(
             summary = "Keep lines visible while scrolling",
             details = listOf("set scrolloff=5"),
             category = listOf("options"),
@@ -276,7 +276,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun noteActionIsAddedLastWhenRecordNoteCallbackProvided() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(summary = "surround", details = listOf("edit surroundings"))
+        val tip = vimTip(summary = "surround", details = listOf("edit surroundings"))
 
         val notification = notifier.createNotificationWithActions(
             tip,
@@ -292,7 +292,7 @@ class TipNotificationFactoryUnitTest {
         val notifier = TipNotificationFactory()
 
         val notification = notifier.createNotificationWithActions(
-            VimTip(summary = "tip"),
+            vimTip(summary = "tip"),
             TipNotificationActions(onShowNextTip = {}, onExcludeTip = {})
         )
 
@@ -302,7 +302,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun notificationWithoutIdeaVimRcCallbackHasTwoActionButtons() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(summary = "jump", details = listOf("use %"))
+        val tip = vimTip(summary = "jump", details = listOf("use %"))
 
         val notification = notifier.createNotificationWithActions(
             tip,
@@ -316,7 +316,7 @@ class TipNotificationFactoryUnitTest {
     @Test
     fun categoriesAreNotRenderedInContent() {
         val notifier = TipNotificationFactory()
-        val tip = VimTip(
+        val tip = vimTip(
             summary = "Add, change, delete surroundings",
             details = listOf("ys/cs/ds add, change, delete"),
             category = listOf("plugin", "editing"),

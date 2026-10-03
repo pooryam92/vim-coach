@@ -8,7 +8,11 @@ import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.application.loading.TipSourceService
 import com.github.pooryam92.vimcoach.features.tips.domain.TipSourceLoadResult
+import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
+import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
+import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
@@ -18,11 +22,11 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
 
     fun testRefetchTipsReloadsEvenWhenTipsExist() {
         val tipService = service<VimTipRepository>()
-        tipService.saveTips(listOf(VimTip("old-summary", listOf("old-details"))))
+        tipService.saveTips(listOf(vimTip("old-summary", listOf("old-details"))))
 
         val remoteTips = listOf(
-            VimTip("new-summary-1", listOf("new-details-1"), listOf("motions")),
-            VimTip("new-summary-2", listOf("new-details-2"), listOf("editing", "motions"))
+            vimTip("new-summary-1", listOf("new-details-1"), listOf("motions")),
+            vimTip("new-summary-2", listOf("new-details-2"), listOf("editing", "motions"))
         )
         val fakeTipSource = FakeTipSource(
             TipSourceLoadResult.Success(remoteTips, TipMetadata())
@@ -43,14 +47,14 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         val tipService = service<VimTipRepository>()
         tipService.saveTips(
             listOf(
-                VimTip("initial-1", listOf("initial-details-1")),
-                VimTip("initial-2", listOf("initial-details-2")),
-                VimTip("initial-3", listOf("initial-details-3"))
+                vimTip("initial-1", listOf("initial-details-1")),
+                vimTip("initial-2", listOf("initial-details-2")),
+                vimTip("initial-3", listOf("initial-details-3"))
             )
         )
         assertEquals(3, tipService.countTips())
 
-        val updatedTips = listOf(VimTip("updated-1", listOf("updated-details-1")))
+        val updatedTips = listOf(vimTip("updated-1", listOf("updated-details-1")))
         val fakeTipSource = FakeTipSource(
             TipSourceLoadResult.Success(updatedTips, TipMetadata())
         )
@@ -67,7 +71,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
 
     fun testRefetchTipsDoesNotSaveWhenRemoteReturnsFailure() {
         val tipService = service<VimTipRepository>()
-        tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
+        tipService.saveTips(listOf(vimTip("existing", listOf("existing-details"))))
 
         val fakeTipSource = FakeTipSource(TipSourceLoadResult.Failure("connection timeout"))
         val loader = registerLoader(fakeTipSource)
@@ -83,7 +87,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
 
     fun testRefetchTipsDoesNotSaveWhenRemoteReturnsEmpty() {
         val tipService = service<VimTipRepository>()
-        tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
+        tipService.saveTips(listOf(vimTip("existing", listOf("existing-details"))))
 
         val fakeTipSource = FakeTipSource(TipSourceLoadResult.Empty)
         val loader = registerLoader(fakeTipSource)
@@ -100,7 +104,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
     fun testRefetchTipsReturnsNotModifiedWhenNoChanges() {
         val tipService = service<VimTipRepository>()
         tipService.saveTips(
-            listOf(VimTip("existing", listOf("existing-details"), listOf("motions")))
+            listOf(vimTip("existing", listOf("existing-details"), listOf("motions")))
         )
 
         val fakeTipSource = FakeTipSource(TipSourceLoadResult.NotModified)
@@ -118,7 +122,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
 
     fun testRefetchTipsAlwaysForcesReload() {
         val tipService = service<VimTipRepository>()
-        tipService.saveTips(listOf(VimTip("existing", listOf("existing-details"))))
+        tipService.saveTips(listOf(vimTip("existing", listOf("existing-details"))))
         tipService.saveMetadata(
             TipMetadata(
                 etag = "abc123",
@@ -127,7 +131,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
             )
         )
 
-        val updatedTips = listOf(VimTip("new", listOf("new-details")))
+        val updatedTips = listOf(vimTip("new", listOf("new-details")))
         val fakeTipSource = FakeTipSource(
             TipSourceLoadResult.Success(updatedTips, TipMetadata())
         )
@@ -147,7 +151,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         tipService.saveTips(emptyList())
 
         val fakeTipSource = FakeTipSource(
-            TipSourceLoadResult.Success(listOf(VimTip("new-tip", listOf("new-details"))), TipMetadata())
+            TipSourceLoadResult.Success(listOf(vimTip("new-tip", listOf("new-details"))), TipMetadata())
         )
         val loader = registerLoader(fakeTipSource)
 
@@ -162,7 +166,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
     fun testCheckForUpdatesUsesConditionalWhenCachedCategoriesExist() {
         val tipService = service<VimTipRepository>()
         tipService.saveTips(
-            listOf(VimTip("existing", listOf("existing-details"), listOf("motions")))
+            listOf(vimTip("existing", listOf("existing-details"), listOf("motions")))
         )
         tipService.saveMetadata(
             TipMetadata(
@@ -185,12 +189,13 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         assertEquals("existing", tipService.getTips().single().summary)
     }
 
+    // TODO(1.6.0 upgrade bridge)
     fun testCheckForUpdatesReloadsLegacyCachedTipsWithoutCategories() {
         val tipService = service<VimTipRepository>()
         tipService.saveTips(
             listOf(
-                VimTip("legacy-summary-1", listOf("legacy-details-1")),
-                VimTip("legacy-summary-2", listOf("legacy-details-2"))
+                vimTip("legacy-summary-1", listOf("legacy-details-1")),
+                vimTip("legacy-summary-2", listOf("legacy-details-2"))
             )
         )
         tipService.saveMetadata(
@@ -202,8 +207,8 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         )
 
         val refreshedTips = listOf(
-            VimTip("new-summary-1", listOf("new-details-1"), listOf("basics")),
-            VimTip("new-summary-2", listOf("new-details-2"), listOf("editing", "basics"))
+            vimTip("new-summary-1", listOf("new-details-1"), listOf("basics")),
+            vimTip("new-summary-2", listOf("new-details-2"), listOf("editing", "basics"))
         )
         val fakeTipSource = FakeTipSource(
             loadTipsResult = TipSourceLoadResult.Success(
@@ -222,10 +227,51 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         assertEquals(listOf("basics", "editing"), tipService.getCategories().values)
     }
 
+    // TODO(1.6.0 upgrade bridge)
+    fun testCheckForUpdatesRefetchesUnconditionallyWhenCachedTipsLackIds() {
+        val tipService = service<VimTipRepository>()
+        service<PersistentVimTipStore>().loadState(
+            PersistentVimTipStore.State(
+                tips = listOf(VimTip("pre-id-summary", listOf("pre-id-details"), listOf("motions"))),
+                metadata = TipMetadata(etag = "etag", githubSha = "sha", pluginVersion = CURRENT_PLUGIN_VERSION)
+            )
+        )
+        val fakeTipSource = FakeTipSource(
+            loadTipsResult = TipSourceLoadResult.Success(
+                listOf(vimTip("new-summary", listOf("new-details"), listOf("motions"))),
+                TipMetadata(etag = "new-etag", githubSha = "new-sha")
+            ),
+            loadTipsConditionalResult = TipSourceLoadResult.NotModified
+        )
+
+        val result = registerLoader(fakeTipSource).checkForUpdates()
+
+        assertEquals(1, fakeTipSource.loadTipsCalls)
+        assertEquals(0, fakeTipSource.loadTipsConditionalCalls)
+        assertEquals(TipLoadResult.Updated(1), result)
+        assertEquals("new-summary", tipService.getTips().single().summary)
+    }
+
+    // TODO(1.6.0 upgrade bridge)
+    fun testFetchedTipsCarryOverExclusionsSavedBeforeIds() {
+        val settingsStore = service<PersistentSettingsStore>()
+        settingsStore.loadState(PersistentSettingsStore.State(hiddenTipHashes = listOf(SURROUND_A_WORD_HASH)))
+        val surroundTip = vimTip("Surround a word", listOf("ysiw\""), listOf("motions"))
+        val fakeTipSource = FakeTipSource(TipSourceLoadResult.Success(listOf(surroundTip), TipMetadata()))
+
+        try {
+            registerLoader(fakeTipSource).refetchTips()
+
+            assertEquals(listOf(surroundTip.id), service<SettingsRepository>().getHiddenTipIds())
+        } finally {
+            settingsStore.loadState(PersistentSettingsStore.State())
+        }
+    }
+
     fun testCheckForUpdatesNotModifiedRefreshesLastFetchTimestamp() {
         val tipService = service<VimTipRepository>()
         tipService.saveTips(
-            listOf(VimTip("existing", listOf("existing-details"), listOf("motions")))
+            listOf(vimTip("existing", listOf("existing-details"), listOf("motions")))
         )
         val initialTimestamp = 1_000L
         tipService.saveMetadata(
@@ -251,13 +297,13 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
     fun testCheckForUpdatesUpdatesWhenChangesDetected() {
         val tipService = service<VimTipRepository>()
         tipService.saveTips(
-            listOf(VimTip("old", listOf("old-details"), listOf("motions")))
+            listOf(vimTip("old", listOf("old-details"), listOf("motions")))
         )
         tipService.saveMetadata(TipMetadata(etag = "old-etag", pluginVersion = CURRENT_PLUGIN_VERSION))
 
         val updatedTips = listOf(
-            VimTip("new-1", listOf("new-details-1")),
-            VimTip("new-2", listOf("new-details-2"))
+            vimTip("new-1", listOf("new-details-1")),
+            vimTip("new-2", listOf("new-details-2"))
         )
         val fakeTipSource = FakeTipSource(
             TipSourceLoadResult.Success(updatedTips, TipMetadata(etag = "new-etag"))
@@ -275,7 +321,7 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
     fun testCheckForUpdatesRunsOnlyOncePerLoaderInstance() {
         val tipService = service<VimTipRepository>()
         tipService.saveTips(
-            listOf(VimTip("existing", listOf("existing-details"), listOf("motions")))
+            listOf(vimTip("existing", listOf("existing-details"), listOf("motions")))
         )
         tipService.saveMetadata(TipMetadata(pluginVersion = CURRENT_PLUGIN_VERSION))
         val fakeTipSource = FakeTipSource(TipSourceLoadResult.NotModified)
@@ -311,11 +357,11 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
         val tipService = service<VimTipRepository>()
         val summary = "Enable OS clipboard"
         // (1) Old plugin cached this tip parsed WITHOUT a config, plus the remote's ETag/SHA.
-        tipService.saveTips(listOf(VimTip(summary, listOf("yank to system clipboard"), listOf("clipboard"))))
+        tipService.saveTips(listOf(vimTip(summary, listOf("yank to system clipboard"), listOf("clipboard"))))
         tipService.saveMetadata(TipMetadata(etag = "remote-etag", githubSha = "remote-sha"))
 
         // The config-aware parser produces the SAME remote tip WITH a config.
-        val configAwareTip = VimTip(
+        val configAwareTip = vimTip(
             summary,
             listOf("yank to system clipboard"),
             listOf("clipboard"),
@@ -343,6 +389,11 @@ class TipRefreshRefetchIntTest : BasePlatformTestCase() {
             tipSource = fakeTipSource,
             currentPluginVersion = { CURRENT_PLUGIN_VERSION }
         )
+    }
+
+    private companion object {
+        // TODO(1.6.0 upgrade bridge): SHA-256 of "Surround a word", the exclusion key 1.5.x stored.
+        const val SURROUND_A_WORD_HASH = "4e5464d16f024bd533c31046ad855e999adbf2aa7975213e7c454eaf6578d8b0"
     }
 
     private class FakeTipSource(

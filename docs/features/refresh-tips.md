@@ -46,7 +46,7 @@ adapters share `TipJsonParser`.
 
 `checkForUpdates()` falls back to unconditional if any of these hold:
 - cached tip count is zero
-- cached categories are empty (indicates a pre-category legacy cache)
+- cached categories are empty (indicates a pre-category legacy cache) <!-- TODO(1.6.0 upgrade bridge) -->
 - the cache was parsed by a different plugin version than the one running
   (`metadata.pluginVersion` mismatch — see [Plugin-version staleness](#plugin-version-staleness))
 

@@ -20,6 +20,16 @@ class PersistentVimTipStore :
         var metadata: TipMetadata = TipMetadata()
     )
 
+    // A cache written before generated ids holds id-less tips; reading them as no tips shows
+    // "No tips found." until the upgrade refetch lands. Categories stay so Settings → Apply
+    // can't wipe the user's disabled categories while that refetch is failing.
+    // TODO(1.6.0 upgrade bridge): a user skipping 1.6.0 then keeps id-less tips for one session, until the
+    // version-mismatch refetch replaces them.
+    override fun loadState(state: State) {
+        val hasIdLessTips = state.tips.any { it.id.isBlank() }
+        super.loadState(if (hasIdLessTips) state.copy(tips = emptyList()) else state)
+    }
+
     fun setTipCache(tips: List<VimTip>, categories: TipCategories) {
         updateState { it.copy(tips = tips.toList(), categories = categories.copy()) }
     }

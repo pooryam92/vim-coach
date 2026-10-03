@@ -42,7 +42,7 @@ class BundledTipsContractUnitTest {
     fun everyModeMapsToATipMode() {
         val violations = rawTips.filter { it.has("mode") }.mapNotNull { tip ->
             val mode = tip.get("mode")
-            val wire = mode.takeIf { it.isJsonPrimitive && it.asJsonPrimitive.isString }?.asString
+            val wire = rawString(tip, "mode")
             if (TipMode.fromWire(wire) == null) "${rawSummary(tip)}: $mode" else null
         }
         assertNoViolations("tips with an unknown mode", violations)
@@ -68,12 +68,32 @@ class BundledTipsContractUnitTest {
     }
 
     @Test
+    fun everyTipHasAnEightHexId() {
+        val violations = rawTips.mapNotNull { tip ->
+            val id = rawString(tip, "id")
+            if (id != null && ID_FORMAT.matches(id)) null else "${rawSummary(tip)}: ${tip.get("id")}"
+        }
+        assertNoViolations("tips without an 8-lowercase-hex id", violations)
+    }
+
+    @Test
+    fun idsAreUnique() {
+        val violations = rawTips.groupBy { rawString(it, "id") }
+            .filterValues { it.size > 1 }
+            .map { (id, tips) -> "$id is shared by ${tips.map(::rawSummary)}" }
+        assertNoViolations("duplicate ids", violations)
+    }
+
+    @Test
     fun everyCategoryIsKnown() {
         val violations = parsedTips.flatMap { tip ->
             tip.category.filterNot(KNOWN_CATEGORIES::contains).map { "${tip.summary}: $it" }
         }
         assertNoViolations("tips with an unknown category", violations)
     }
+
+    private fun rawString(tip: JsonObject, field: String): String? =
+        tip.get(field)?.takeIf { it.isJsonPrimitive && it.asJsonPrimitive.isString }?.asString
 
     private fun rawSummary(tip: JsonObject): String =
         tip.get("summary")?.takeIf { it.isJsonPrimitive }?.asString?.trim().orEmpty()
@@ -86,6 +106,8 @@ class BundledTipsContractUnitTest {
     }
 
     private companion object {
+        val ID_FORMAT = Regex("[0-9a-f]{8}")
+
         val KNOWN_CATEGORIES = setOf(
             "cmdline", "editing", "files", "ideavim", "insert", "mappings", "navigation",
             "options", "pattern", "plugins", "registers", "repeat", "visual", "windows",

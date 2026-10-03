@@ -20,6 +20,7 @@ object TipJsonParser {
     private const val CONFIG_LINES_FIELD = "lines"
     private const val ADVANCED_FIELD = "advanced"
     private const val MODE_FIELD = "mode"
+    private const val ID_FIELD = "id"
 
     private val logger = Logger.getInstance(TipJsonParser::class.java)
 
@@ -44,8 +45,9 @@ object TipJsonParser {
         }
         element.asJsonArray.forEach(::dropMalformedAdvancedFlag)
         element.asJsonArray.forEach(::dropUnknownMode)
+        element.asJsonArray.forEach(::dropNonStringId)
         val tips = gson.fromJson(element, Array<VimTip>::class.java) ?: return emptyList()
-        return dropDuplicateSummaries(tips.mapNotNull(::normalizeTip))
+        return dropDuplicateIds(tips.mapNotNull(::normalizeTip))
     }
 
     // `advanced` is the only strictly-typed known field: Gson aborts the whole tips array on a
@@ -76,15 +78,24 @@ object TipJsonParser {
         }
     }
 
-    // A tip's trimmed summary is its identity downstream (see TipHash): it keys hidden-tip
-    // filtering and hash->tip matching. Two tips sharing a summary would make one unreachable
-    // and hiding one would hide both, so we keep the first and drop the rest loudly here.
-    private fun dropDuplicateSummaries(tips: List<VimTip>): List<VimTip> {
-        val seenSummaries = HashSet<String>(tips.size)
+    // Gson would coerce a number to a string id and abort the whole tips array on an object or
+    // array, so any non-string id is stripped here; the tip is then dropped for having no id.
+    private fun dropNonStringId(tipElement: JsonElement) {
+        val tip = tipElement.takeIf(JsonElement::isJsonObject)?.asJsonObject ?: return
+        val id = tip.get(ID_FIELD) ?: return
+        if (!id.isJsonPrimitive || !id.asJsonPrimitive.isString) {
+            tip.remove(ID_FIELD)
+        }
+    }
+
+    // The generated id keys exclusions and rotation, so a duplicate would make one tip unreachable
+    // and hiding one would hide both. Keep the first and drop the rest loudly.
+    private fun dropDuplicateIds(tips: List<VimTip>): List<VimTip> {
+        val seenIds = HashSet<String>(tips.size)
         return tips.filter { tip ->
-            seenSummaries.add(tip.summary).also { isUnique ->
+            seenIds.add(tip.id).also { isUnique ->
                 if (!isUnique) {
-                    logger.warn("Dropping Vim tip with duplicate summary: \"${tip.summary}\"")
+                    logger.warn("Dropping Vim tip with duplicate id ${tip.id}: \"${tip.summary}\"")
                 }
             }
         }
@@ -94,6 +105,11 @@ object TipJsonParser {
         val summary = tip.summary.trim()
         val details = normalizeStrings(tip.details)
         if (summary.isBlank() || details.isEmpty()) {
+            return null
+        }
+        val id = tip.id.trim()
+        if (id.isBlank()) {
+            logger.warn("Dropping Vim tip with no id: \"$summary\"")
             return null
         }
         val normalizedCategories = normalizeStrings(tip.category)
@@ -107,7 +123,8 @@ object TipJsonParser {
             normalizedConfig,
             normalizedMnemonic,
             tip.advanced,
-            normalizedMode
+            normalizedMode,
+            id = id
         )
     }
 

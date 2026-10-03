@@ -1,5 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.testsupport
 
+import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 
 /**
@@ -12,7 +13,7 @@ class FakeSettingsService(
     private val managementHint: Boolean = false,
     private val showAdvancedTips: Boolean = false,
 ) : SettingsRepository {
-    private val hiddenTipHashes = mutableListOf<String>()
+    private val hiddenTipIds = mutableListOf<String>()
     private var advancedTipsHintShown = false
     private var tipsShownForAdvancedNudge = 0
 
@@ -24,10 +25,12 @@ class FakeSettingsService(
     override fun setTipIntervalHours(hours: Int) = Unit
     override fun getEnabledTipCategories(availableCategories: List<String>): List<String> = enabledCategories
     override fun setEnabledTipCategories(availableCategories: List<String>, enabledCategories: List<String>) = Unit
-    override fun getHiddenTipHashes(): List<String> = hiddenTipHashes.toList()
-    override fun hideTip(hash: String) { if (hash !in hiddenTipHashes) hiddenTipHashes.add(hash) }
-    override fun restoreTip(hash: String) { hiddenTipHashes.remove(hash) }
+    override fun getHiddenTipIds(): List<String> = hiddenTipIds.toList()
+    override fun hideTip(id: String) { if (id !in hiddenTipIds) hiddenTipIds.add(id) }
+    override fun restoreTip(id: String) { hiddenTipIds.remove(id) }
     override fun consumeExcludedTipsManagementHint(): Boolean = managementHint
+    // TODO(1.6.0 upgrade bridge)
+    override fun migrateLegacyHiddenTips(tips: List<VimTip>) = Unit
     override fun isShowAdvancedTipsEnabled(): Boolean = showAdvancedTips
     override fun setShowAdvancedTipsEnabled(enabled: Boolean) = Unit
 

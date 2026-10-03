@@ -1,5 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.persistence
 
+import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+
 interface SettingsRepository {
     fun isShowTipsOnStartupEnabled(): Boolean
     fun setShowTipsOnStartupEnabled(enabled: Boolean)
@@ -13,10 +15,18 @@ interface SettingsRepository {
     fun getEnabledTipCategories(availableCategories: List<String>): List<String>
     fun setEnabledTipCategories(availableCategories: List<String>, enabledCategories: List<String>)
 
-    fun getHiddenTipHashes(): List<String>
-    fun hideTip(hash: String)
-    fun restoreTip(hash: String)
+    fun getHiddenTipIds(): List<String>
+    fun hideTip(id: String)
+    fun restoreTip(id: String)
     fun consumeExcludedTipsManagementHint(): Boolean
+
+    /**
+     * Converts exclusions saved before tip ids into the ids of [tips] with the same summary, then
+     * forgets them. Does nothing for an empty [tips], so an unfetched cache can't drop them.
+     *
+     * TODO(1.6.0 upgrade bridge): carries 1.5.x exclusions over.
+     */
+    fun migrateLegacyHiddenTips(tips: List<VimTip>)
 
     fun isShowAdvancedTipsEnabled(): Boolean
     fun setShowAdvancedTipsEnabled(enabled: Boolean)

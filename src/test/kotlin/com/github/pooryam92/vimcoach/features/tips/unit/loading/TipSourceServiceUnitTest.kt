@@ -1,12 +1,12 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.loading
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
-import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.application.loading.TipSourceService
 import com.github.pooryam92.vimcoach.features.tips.application.loading.TipSourceServiceImpl
 import com.github.pooryam92.vimcoach.features.tips.domain.TipSourceLoadResult
 import com.github.pooryam92.vimcoach.features.tips.application.loading.infra.file.FileTipSourceService
 import com.github.pooryam92.vimcoach.features.tips.application.loading.infra.remote.RemoteTipSourceService
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -16,10 +16,10 @@ class TipSourceServiceUnitTest {
     @Test
     fun usesRemoteSourceByDefault() {
         val fakeRemote = FakeRemoteTipSource(
-            TipSourceLoadResult.Success(listOf(VimTip("r", listOf("d"))), TipMetadata())
+            TipSourceLoadResult.Success(listOf(vimTip("r", listOf("d"))), TipMetadata())
         )
         val fakeFile = FakeFileTipSource(
-            TipSourceLoadResult.Success(listOf(VimTip("f", listOf("d"))), TipMetadata())
+            TipSourceLoadResult.Success(listOf(vimTip("f", listOf("d"))), TipMetadata())
         )
         val sourceService = createSourceService(fakeRemote, fakeFile) { null }
 
@@ -34,10 +34,10 @@ class TipSourceServiceUnitTest {
     @Test
     fun usesFileSourceWhenModeIsFile() {
         val fakeRemote = FakeRemoteTipSource(
-            TipSourceLoadResult.Success(listOf(VimTip("r", listOf("d"))), TipMetadata())
+            TipSourceLoadResult.Success(listOf(vimTip("r", listOf("d"))), TipMetadata())
         )
         val fakeFile = FakeFileTipSource(
-            TipSourceLoadResult.Success(listOf(VimTip("f", listOf("d"))), TipMetadata())
+            TipSourceLoadResult.Success(listOf(vimTip("f", listOf("d"))), TipMetadata())
         )
         val sourceService = createSourceService(fakeRemote, fakeFile) { "file" }
 

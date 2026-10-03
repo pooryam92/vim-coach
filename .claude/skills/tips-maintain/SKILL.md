@@ -72,10 +72,11 @@ list below. Open the other companions only when their need comes up:
 - `category` — first entry is primary and matches the file name; add a 2nd/3rd
   only when it genuinely aids discovery.
 - `summary` — command-first; at most one key or one clean pair (`gj / gk`).
-  3+ keys: name the outcome, map each key in the details. **Renaming a summary
-  resets that tip's hide preference** (the hide key hashes it) — reword only
-  for a real improvement.
+  3+ keys: name the outcome, map each key in the details.
 - `details` — prefer 2, 3 at most.
+- **Any summary or detail edit makes it a new tip** (the generated id hashes
+  both): it resets the tip's hide preference and rotation progress — reword
+  only for a real improvement.
 - `mnemonic` — optional, **omitted by default**; only when the decoded words
   make the keys stick; skip on 3-detail tips. Examples: examples.md →
   "Mnemonics".

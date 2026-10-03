@@ -5,14 +5,13 @@ import com.github.pooryam92.vimcoach.features.tips.application.settings.Excluded
 import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenController
 import com.github.pooryam92.vimcoach.features.tips.application.settings.VimCoachSettingsScreenState
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
-import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepositoryImpl
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepositoryImpl
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -34,8 +33,8 @@ class VimCoachSettingsScreenControllerUnitTest {
         val tipService = createTipService().apply {
             saveTips(
                 listOf(
-                    VimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
-                    VimTip("summary-2", listOf("details-2"), listOf("search"))
+                    vimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
+                    vimTip("summary-2", listOf("details-2"), listOf("search"))
                 )
             )
         }
@@ -52,10 +51,10 @@ class VimCoachSettingsScreenControllerUnitTest {
 
     @Test
     fun loadStateIncludesExcludedTipsBySummary() {
-        val excludedTip = VimTip("Excluded motion tip", listOf("details"), listOf("basics"))
-        val visibleTip = VimTip("Visible search tip", listOf("details"), listOf("search"))
+        val excludedTip = vimTip("Excluded motion tip", listOf("details"), listOf("basics"))
+        val visibleTip = vimTip("Visible search tip", listOf("details"), listOf("search"))
         val settingsService = createSettingsService().apply {
-            hideTip(TipHash.fromTip(excludedTip).value)
+            hideTip(excludedTip.id)
         }
         val tipService = createTipService().apply {
             saveTips(listOf(excludedTip, visibleTip))
@@ -67,7 +66,7 @@ class VimCoachSettingsScreenControllerUnitTest {
         assertEquals(
             listOf(
                 ExcludedTipSettingsItem(
-                    hash = TipHash.fromTip(excludedTip).value,
+                    id = excludedTip.id,
                     summary = "Excluded motion tip"
                 )
             ),
@@ -102,10 +101,10 @@ class VimCoachSettingsScreenControllerUnitTest {
 
     @Test
     fun saveStateRestoresExplicitlyRestoredExcludedTips() {
-        val excludedTip = VimTip("Excluded motion tip", listOf("details"), listOf("basics"))
-        val excludedHash = TipHash.fromTip(excludedTip).value
+        val excludedTip = vimTip("Excluded motion tip", listOf("details"), listOf("basics"))
+        val excludedId = excludedTip.id
         val settingsService = createSettingsService().apply {
-            hideTip(excludedHash)
+            hideTip(excludedId)
         }
         val tipService = createTipService().apply {
             saveTips(listOf(excludedTip))
@@ -116,52 +115,53 @@ class VimCoachSettingsScreenControllerUnitTest {
         service.saveState(
             state.copy(
                 excludedTips = emptyList(),
-                restoredExcludedTipHashes = listOf(excludedHash)
+                restoredExcludedTipIds = listOf(excludedId)
             )
         )
 
-        assertEquals(emptyList<String>(), settingsService.getHiddenTipHashes())
+        assertEquals(emptyList<String>(), settingsService.getHiddenTipIds())
     }
 
     @Test
     fun saveStateDoesNotRestoreTipExcludedAfterStateWasLoaded() {
-        val initiallyExcludedTip = VimTip("Initially excluded tip", listOf("details"), listOf("basics"))
-        val laterExcludedTip = VimTip("Later excluded tip", listOf("details"), listOf("editing"))
+        val initiallyExcludedTip = vimTip("Initially excluded tip", listOf("details"), listOf("basics"))
+        val laterExcludedTip = vimTip("Later excluded tip", listOf("details"), listOf("editing"))
         val settingsService = createSettingsService().apply {
-            hideTip(TipHash.fromTip(initiallyExcludedTip).value)
+            hideTip(initiallyExcludedTip.id)
         }
         val tipService = createTipService().apply {
             saveTips(listOf(initiallyExcludedTip, laterExcludedTip))
         }
         val service = createScreenService(settingsService, tipService)
         val state = service.loadState()
-        val laterExcludedHash = TipHash.fromTip(laterExcludedTip).value
+        val laterExcludedId = laterExcludedTip.id
 
-        settingsService.hideTip(laterExcludedHash)
+        settingsService.hideTip(laterExcludedId)
         service.saveState(state)
 
         assertEquals(
-            listOf(TipHash.fromTip(initiallyExcludedTip).value, laterExcludedHash),
-            settingsService.getHiddenTipHashes()
+            listOf(initiallyExcludedTip.id, laterExcludedId),
+            settingsService.getHiddenTipIds()
         )
     }
 
+    // TODO(1.6.0 upgrade bridge)
     @Test
     fun loadStateRefetchesTipsWhenLegacyCacheHasNoCategories() {
         val settingsService = createSettingsService()
         val tipService = createTipService().apply {
             saveTips(
                 listOf(
-                    VimTip("legacy-summary-1", listOf("legacy-details-1")),
-                    VimTip("legacy-summary-2", listOf("legacy-details-2"))
+                    vimTip("legacy-summary-1", listOf("legacy-details-1")),
+                    vimTip("legacy-summary-2", listOf("legacy-details-2"))
                 )
             )
         }
         val loader = FakeRefreshTips {
             tipService.saveTips(
                 listOf(
-                    VimTip("summary-1", listOf("details-1"), listOf("basics")),
-                    VimTip("summary-2", listOf("details-2"), listOf("editing", "basics"))
+                    vimTip("summary-1", listOf("details-1"), listOf("basics")),
+                    vimTip("summary-2", listOf("details-2"), listOf("editing", "basics"))
                 )
             )
             TipLoadResult.Updated(2)
@@ -186,8 +186,8 @@ class VimCoachSettingsScreenControllerUnitTest {
         val tipService = createTipService().apply {
             saveTips(
                 listOf(
-                    VimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
-                    VimTip("summary-2", listOf("details-2"), listOf("search"))
+                    vimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
+                    vimTip("summary-2", listOf("details-2"), listOf("search"))
                 )
             )
         }

@@ -1,7 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.persistence
 
 import com.github.pooryam92.vimcoach.features.tips.domain.TipCategories
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
@@ -30,19 +29,19 @@ class VimTipRepositoryImpl() : VimTipRepository {
         return currentState().tips.any { it.advanced }
     }
 
-    override fun getTipsByHashes(hashes: List<String>): List<VimTip> {
-        val requestedHashes = hashes
+    override fun getTipsByIds(ids: List<String>): List<VimTip> {
+        val requestedIds = ids
             .asSequence()
             .map(String::trim)
             .filter(String::isNotBlank)
             .distinct()
             .toList()
-        if (requestedHashes.isEmpty()) {
+        if (requestedIds.isEmpty()) {
             return emptyList()
         }
 
-        val tipsByHash = currentState().tips.associateBy { TipHash.fromTip(it).value }
-        return requestedHashes.mapNotNull(tipsByHash::get)
+        val tipsById = currentState().tips.associateBy(VimTip::id)
+        return requestedIds.mapNotNull(tipsById::get)
     }
 
     override fun getCategories(): TipCategories {
@@ -51,6 +50,8 @@ class VimTipRepositoryImpl() : VimTipRepository {
             return state.categories
         }
 
+        // TODO(1.6.0 upgrade bridge): only pre-category caches lack categories, and loadState already drops
+        // those tips as id-less. Return state.categories directly.
         return backfillCategories(state.tips)
     }
 
