@@ -20,6 +20,10 @@ graph LR
 
 The settings screen works with a `VimCoachSettingsScreenState` snapshot, not live repository reads. `createComponent()` calls `loadState()` once and stores the snapshot. `apply()` gathers the current UI values via `currentScreenState()` and calls `saveState()`. `reset()` reloads from the controller and re-syncs UI components. `isModified()` compares the current UI snapshot to the last-saved one to drive the Apply button.
 
+## Per-Machine Storage
+
+`PersistentSettingsStore` uses `roamingType = DISABLED`, so `vim-coach-settings.xml` is never shared through Settings Sync, the same as the tip cache and the rotation file. Each machine keeps its own toggles, categories, exclusions and one-time hints. The file name and location didn't change, so existing local settings carry over. Before 1.5.2 the file roamed. Turning roaming off also stops a 1.5.2 machine, whose saved file has no `hiddenTipHashes`, from syncing that file to a machine still on 1.5.1 and wiping its exclusions.
+
 ## Category Storage
 
 Categories are stored as a **disabled** list, not an enabled list. `getEnabledTipCategories()` computes:

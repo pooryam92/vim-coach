@@ -6,9 +6,10 @@
 
 ### Changed
 
-- Tip rotation progress now survives IDE restarts, so you see every tip once before any repeats instead of starting over each session. Progress is stored per machine and isn't synced with your settings. Tips that are reworded come back as new, and when you turn on a category, advanced tips, or a previously excluded tip, those tips mix in with the rest of the cycle instead of taking over the next several notifications
+- Tip rotation progress now survives IDE restarts, so you see every tip once before any repeats instead of starting over each session. Progress is stored per machine. Tips that are reworded come back as new, and when you turn on a category, advanced tips, or a previously excluded tip, those tips mix in with the rest of the cycle instead of taking over the next several notifications
 - Excluded tips now follow a tip's summary and details, the same as rotation progress. Any edit to either makes it a new tip, so a reworded tip you excluded shows again (previously only a summary change did that)
 - Your list of excluded tips resets once when you upgrade to this version; exclude any unwanted tips again
+- Vim Coach settings are no longer shared between machines through Settings Sync; each machine keeps its own
 
 ## [1.5.1] - 2026-07-11
 

@@ -1,10 +1,12 @@
 package com.github.pooryam92.vimcoach.features.tips.persistence.store
 
+import com.intellij.openapi.components.RoamingType
 import com.intellij.openapi.components.SerializablePersistentStateComponent
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 
-@State(name = "VimCoachSettings", storages = [Storage("vim-coach-settings.xml")])
+@State(name = "VimCoachSettings",
+    storages = [Storage("vim-coach-settings.xml", roamingType = RoamingType.DISABLED)])
 class PersistentSettingsStore :
     SerializablePersistentStateComponent<PersistentSettingsStore.State>(State()) {
 
