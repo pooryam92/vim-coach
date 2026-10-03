@@ -1,7 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.application.selection
 
 import com.github.pooryam92.vimcoach.features.tips.application.selection.SelectNextTip
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.RotationProgress
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepositoryImpl
@@ -10,6 +9,7 @@ import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepositoryI
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentTipRotationStore
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -51,7 +51,7 @@ class SelectNextTipRotationUnitTest {
         tipRepository.saveTips(tips)
         val seen = draw(selectNextTip(), times = 3)
         val edited = tips.single { it.summary == seen.first() }
-        tipRepository.saveTips(tips - edited + edited.copy(details = listOf("reworded")))
+        tipRepository.saveTips(tips - edited + vimTip(edited.summary, listOf("reworded"), edited.category))
 
         val restOfCycle = draw(selectNextTip(), times = tips.size - seen.size + 1)
 
@@ -95,9 +95,9 @@ class SelectNextTipRotationUnitTest {
         val selectNextTip = selectNextTip()
         val seen = draw(selectNextTip, times = 2)
         val excluded = tips.single { it.summary == seen.first() }
-        settings.hideTip(TipHash.fromTip(excluded).value)
+        settings.hideTip(excluded.id)
         val drawnWhileExcluded = draw(selectNextTip, times = 1)
-        settings.restoreTip(TipHash.fromTip(excluded).value)
+        settings.restoreTip(excluded.id)
 
         val restOfCycle = draw(selectNextTip, times = 1)
 
@@ -115,7 +115,7 @@ class SelectNextTipRotationUnitTest {
 
         draw(selectNextTip(), times = 1)
 
-        assertFalse(TipHash.fromContent(removed).value in rotationRepository().getProgress().timesShown)
+        assertFalse(removed.id in rotationRepository().getProgress().timesShown)
     }
 
     @Test
@@ -143,7 +143,7 @@ class SelectNextTipRotationUnitTest {
 
         val shown = selectNextTip().select(includeConfigTips = true)
 
-        val key = TipHash.fromContent(shown).value
+        val key = shown.id
         assertEquals(RotationProgress(mapOf(key to 1), key), rotationRepository().getProgress())
     }
 
@@ -163,11 +163,11 @@ class SelectNextTipRotationUnitTest {
 
     private fun timesShown(tips: List<VimTip>): List<Int?> {
         val counts = rotationRepository().getProgress().timesShown
-        return tips.map { counts[TipHash.fromContent(it).value] }
+        return tips.map { counts[it.id] }
     }
 
     private fun tips(count: Int, category: String = "editing"): List<VimTip> {
-        return (1..count).map { VimTip("$category-$it", listOf("$category-details-$it"), listOf(category)) }
+        return (1..count).map { vimTip("$category-$it", listOf("$category-details-$it"), listOf(category)) }
     }
 
     private fun summaries(tips: List<VimTip>): Set<String> = tips.map { it.summary }.toSet()

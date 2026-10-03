@@ -9,7 +9,7 @@ package com.github.pooryam92.vimcoach.features.tips.application.selection
 internal data class TipSelectionContext(
     val availableCategories: List<String>,
     val enabledCategories: List<String>,
-    val hiddenTipHashes: Set<String>,
+    val hiddenTipIds: Set<String>,
     val showAdvancedTips: Boolean,
     val includeConfigTips: Boolean,
 )

@@ -32,9 +32,9 @@ This means any category that appears in the tip corpus but is absent from the di
 
 ## Excluded Tips
 
-The UI shows tip summaries, but the store only holds SHA-256 hashes (`PersistentSettingsStore.hiddenTipHashes`). `loadExcludedTips()` resolves hashes back to summaries via `VimTipRepository.getTipsByHashes()`. Tips whose hashes no longer match any stored tip (e.g. deleted from the corpus) are silently dropped — `mapNotNull` discards them.
+The UI shows tip summaries, but the store only holds generated tip ids (`PersistentSettingsStore.hiddenTipIds`). `loadExcludedTips()` resolves ids back to summaries via `VimTipRepository.getTipsByIds()`. Ids that no longer match any stored tip (deleted from the corpus, or reworded so the id changed) are silently dropped — `mapNotNull` discards them. The field was renamed from `hiddenTipHashes` when ids replaced summary hashes; the rename deliberately reset existing exclusions once, with no migration.
 
-Restoring an excluded tip from the UI does **not** call the repository immediately. `ExcludedTipsListPanel` accumulates restored hashes in `restoredExcludedTipHashes` on the screen state. The actual `restoreTip()` calls happen inside `saveState()` when the user clicks Apply.
+Restoring an excluded tip from the UI does **not** call the repository immediately. `ExcludedTipsListPanel` accumulates restored ids in `restoredExcludedTipIds` on the screen state. The actual `restoreTip()` calls happen inside `saveState()` when the user clicks Apply.
 
 ## Advanced Tips Opt-In
 

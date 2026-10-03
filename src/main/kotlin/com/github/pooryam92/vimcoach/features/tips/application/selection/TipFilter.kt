@@ -1,6 +1,5 @@
 package com.github.pooryam92.vimcoach.features.tips.application.selection
 
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 
 internal fun interface TipFilter {
@@ -17,7 +16,7 @@ internal val categoryFilter = TipFilter { pool, context ->
 }
 
 internal val excludedTipsFilter = TipFilter { pool, context ->
-    pool.filterNot { TipHash.fromTip(it).value in context.hiddenTipHashes }
+    pool.filterNot { it.id in context.hiddenTipIds }
 }
 
 /**

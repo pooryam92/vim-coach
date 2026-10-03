@@ -1,8 +1,8 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.application.selection
 
 import com.github.pooryam92.vimcoach.features.tips.application.selection.pickNext
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
@@ -45,7 +45,7 @@ class PickNextTipUnitTest {
     fun joiningTipsCatchUpInOneShowThenMixIn() {
         val old = tips("old1", "old2", "old3")
         val joining = tips("new1", "new2", "new3")
-        old.forEach { counts[key(it)] = 5 }
+        old.forEach { counts[it.id] = 5 }
 
         val drawn = draw(old + joining, times = 9)
 
@@ -58,10 +58,10 @@ class PickNextTipUnitTest {
     fun joiningTipsMixInWithTheTipsStillUnseenThisCycle() {
         val (seen1, seen2, unseen1, unseen2) = tips("seen1", "seen2", "unseen1", "unseen2")
         val joining = tips("new1", "new2")
-        counts[key(seen1)] = 5
-        counts[key(seen2)] = 5
-        counts[key(unseen1)] = 4
-        counts[key(unseen2)] = 4
+        counts[seen1.id] = 5
+        counts[seen2.id] = 5
+        counts[unseen1.id] = 4
+        counts[unseen2.id] = 4
 
         val drawn = draw(listOf(seen1, seen2, unseen1, unseen2) + joining, times = 4)
 
@@ -71,11 +71,11 @@ class PickNextTipUnitTest {
     @Test
     fun fallsBackToAHigherCountWhenTheOnlyLeastShownTipWasLastShown() {
         val (a, b) = tips("a", "b")
-        counts[key(a)] = 3
-        counts[key(b)] = 7
+        counts[a.id] = 3
+        counts[b.id] = 7
 
         repeat(20) { seed ->
-            val pick = pickNext(listOf(a, b), counts, key(a), Random(seed))!!
+            val pick = pickNext(listOf(a, b), counts, a.id, Random(seed))!!
 
             assertEquals("b", pick.tip.summary)
             assertEquals(8, pick.countToStore)
@@ -85,15 +85,13 @@ class PickNextTipUnitTest {
     private fun draw(pool: List<VimTip>, times: Int): List<String> {
         return (1..times).map {
             val pick = pickNext(pool, counts, lastShownKey, random)!!
-            counts[pick.key] = pick.countToStore
-            lastShownKey = pick.key
+            counts[pick.tip.id] = pick.countToStore
+            lastShownKey = pick.tip.id
             pick.tip.summary
         }
     }
 
-    private fun key(tip: VimTip): String = TipHash.fromContent(tip).value
-
     private fun tips(vararg summaries: String): List<VimTip> {
-        return summaries.map { VimTip(it, listOf("$it-details")) }
+        return summaries.map { vimTip(it, listOf("$it-details")) }
     }
 }

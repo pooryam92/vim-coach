@@ -8,11 +8,11 @@ import com.github.pooryam92.vimcoach.features.tips.application.notifications.Tip
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.TipNotifier
 import com.github.pooryam92.vimcoach.features.tips.application.selection.SelectNextTip
 import com.github.pooryam92.vimcoach.features.tips.domain.TipConfig
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeSettingsService
 import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeVimTipRepository
 import com.github.pooryam92.vimcoach.features.tips.testsupport.inMemoryTipRotation
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -53,7 +53,7 @@ class TipNotificationsUnitTest {
 
     @Test
     fun showRandomTipShowsConfigTipsWhenIdeaVimIsAvailable() {
-        val configTip = VimTip("config tip", listOf("details"), config = TipConfig(lines = listOf("set number")))
+        val configTip = vimTip("config tip", listOf("details"), config = TipConfig(lines = listOf("set number")))
         val repository = FakeVimTipRepository(initialTips = listOf(configTip))
 
         controller(repository, ideaVimAvailable = { true }).showRandomTip()
@@ -63,7 +63,7 @@ class TipNotificationsUnitTest {
 
     @Test
     fun showRandomTipHidesConfigTipsWhenIdeaVimIsUnavailable() {
-        val configTip = VimTip("config tip", listOf("details"), config = TipConfig(lines = listOf("set number")))
+        val configTip = vimTip("config tip", listOf("details"), config = TipConfig(lines = listOf("set number")))
         val repository = FakeVimTipRepository(initialTips = listOf(configTip))
 
         controller(repository, ideaVimAvailable = { false }).showRandomTip()
@@ -103,14 +103,14 @@ class TipNotificationsUnitTest {
 
     @Test
     fun excludeActionHidesTipWithoutShowingAnotherTip() {
-        val tip = VimTip("tip", listOf("details"))
+        val tip = vimTip("tip", listOf("details"))
         val repository = FakeVimTipRepository(initialTips = listOf(tip))
         val settings = FakeSettingsService()
         controller(repository, settings).showRandomTip()
 
         notifier.lastActions!!.onExcludeTip()
 
-        assertEquals(listOf(TipHash.fromTip(tip).value), settings.getHiddenTipHashes())
+        assertEquals(listOf(tip.id), settings.getHiddenTipIds())
         assertEquals(1, notifier.shownTips.size)
     }
 
@@ -137,7 +137,7 @@ class TipNotificationsUnitTest {
     @Test
     fun recordNoteAppendsToConfiguredFileWithTheShownTip() {
         val file = tempFolder.root.toPath().resolve("notes.md")
-        val tip = VimTip("editing tip", listOf("details"), listOf("editing"))
+        val tip = vimTip("editing tip", listOf("details"), listOf("editing"))
         val repository = FakeVimTipRepository(initialTips = listOf(tip))
         controller(
             repository = repository,
@@ -159,7 +159,7 @@ class TipNotificationsUnitTest {
     fun nudgesAdvancedTipsWithOpenSettingsWhenNudgeIsEligible() {
         val openSettings = {}
         val repository = FakeVimTipRepository(
-            initialTips = listOf(VimTip("advanced tip", listOf("details"), advanced = true))
+            initialTips = listOf(vimTip("advanced tip", listOf("details"), advanced = true))
         )
         val controller = controller(
             repository,
@@ -176,7 +176,7 @@ class TipNotificationsUnitTest {
     @Test
     fun doesNotNudgeAdvancedTipsWhenNudgeIsIneligible() {
         val repository = FakeVimTipRepository(
-            initialTips = listOf(VimTip("advanced tip", listOf("details"), advanced = true))
+            initialTips = listOf(vimTip("advanced tip", listOf("details"), advanced = true))
         )
 
         repeat(5) { controller(repository, FakeSettingsService(showAdvancedTips = true)).showRandomTip() }

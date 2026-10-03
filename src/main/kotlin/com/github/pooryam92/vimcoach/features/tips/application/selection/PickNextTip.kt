@@ -1,10 +1,9 @@
 package com.github.pooryam92.vimcoach.features.tips.application.selection
 
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import kotlin.random.Random
 
-internal data class TipPick(val tip: VimTip, val key: String, val countToStore: Int)
+internal data class TipPick(val tip: VimTip, val countToStore: Int)
 
 internal fun pickNext(
     pool: List<VimTip>,
@@ -14,10 +13,10 @@ internal fun pickNext(
 ): TipPick? {
     if (pool.isEmpty()) return null
 
-    val tipsByKey = pool.associateBy { TipHash.fromContent(it).value }
+    val tipsByKey = pool.associateBy(VimTip::id)
     val effectiveCounts = capDeficit(tipsByKey.keys.associateWith { counts[it] ?: 0 })
     val key = candidates(effectiveCounts, lastShownKey).random(random)
-    return TipPick(tipsByKey.getValue(key), key, effectiveCounts.getValue(key) + 1)
+    return TipPick(tipsByKey.getValue(key), effectiveCounts.getValue(key) + 1)
 }
 
 private fun capDeficit(counts: Map<String, Int>): Map<String, Int> {

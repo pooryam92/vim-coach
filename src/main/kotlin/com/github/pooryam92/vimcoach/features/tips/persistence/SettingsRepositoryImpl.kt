@@ -70,25 +70,25 @@ class SettingsRepositoryImpl() : SettingsRepository {
         settingsStore().setDisabledTipCategories(normalizedDisabled)
     }
 
-    override fun getHiddenTipHashes(): List<String> {
-        return normalizeHashes(currentState().hiddenTipHashes)
+    override fun getHiddenTipIds(): List<String> {
+        return normalizeIds(currentState().hiddenTipIds)
     }
 
-    override fun hideTip(hash: String) {
-        val normalizedHash = normalizeHash(hash) ?: return
-        val current = getHiddenTipHashes()
-        val updated = (current + normalizedHash).distinct()
+    override fun hideTip(id: String) {
+        val normalizedId = normalizeId(id) ?: return
+        val current = getHiddenTipIds()
+        val updated = (current + normalizedId).distinct()
         if (updated != current) {
-            settingsStore().setHiddenTipHashes(updated)
+            settingsStore().setHiddenTipIds(updated)
         }
     }
 
-    override fun restoreTip(hash: String) {
-        val normalizedHash = normalizeHash(hash) ?: return
-        val current = getHiddenTipHashes()
-        val updated = current.filterNot { it == normalizedHash }
+    override fun restoreTip(id: String) {
+        val normalizedId = normalizeId(id) ?: return
+        val current = getHiddenTipIds()
+        val updated = current.filterNot { it == normalizedId }
         if (updated != current) {
-            settingsStore().setHiddenTipHashes(updated)
+            settingsStore().setHiddenTipIds(updated)
         }
     }
 
@@ -169,12 +169,12 @@ class SettingsRepositoryImpl() : SettingsRepository {
             .toList()
     }
 
-    private fun normalizeHashes(hashes: List<String>): List<String> {
-        return hashes.mapNotNull(::normalizeHash).distinct()
+    private fun normalizeIds(ids: List<String>): List<String> {
+        return ids.mapNotNull(::normalizeId).distinct()
     }
 
-    private fun normalizeHash(hash: String): String? {
-        return hash.trim().takeIf(String::isNotBlank)
+    private fun normalizeId(id: String): String? {
+        return id.trim().takeIf(String::isNotBlank)
     }
 
     private companion object {

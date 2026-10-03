@@ -5,7 +5,9 @@ import com.github.pooryam92.vimcoach.features.tips.domain.TipMetadata
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentVimTipStore
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import com.intellij.openapi.components.service
+import com.intellij.openapi.util.JDOMUtil
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.util.xmlb.XmlSerializer
 
@@ -18,8 +20,8 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
 
     fun testCountTipsAfterSave() {
         val tips = listOf(
-            VimTip("summary-1", listOf("details-1")),
-            VimTip("summary-2", listOf("details-2"))
+            vimTip("summary-1", listOf("details-1")),
+            vimTip("summary-2", listOf("details-2"))
         )
         tipService().saveTips(tips)
 
@@ -28,8 +30,8 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
 
     fun testGetTipsReturnsSavedTips() {
         val tips = listOf(
-            VimTip("summary-1", listOf("details-1")),
-            VimTip("summary-2", listOf("details-2"))
+            vimTip("summary-1", listOf("details-1")),
+            vimTip("summary-2", listOf("details-2"))
         )
         tipService().saveTips(tips)
 
@@ -38,11 +40,11 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
 
     fun testLoadStateReplacesTips() {
         val service = tipService()
-        service.saveTips(listOf(VimTip("old-summary", listOf("old-details"))))
+        service.saveTips(listOf(vimTip("old-summary", listOf("old-details"))))
 
         tipStore().loadState(
             PersistentVimTipStore.State(
-                tips = listOf(VimTip("new-summary", listOf("new-details")))
+                tips = listOf(vimTip("new-summary", listOf("new-details")))
             )
         )
 
@@ -51,8 +53,8 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
 
     fun testSaveTipsStoresDerivedCategories() {
         val tips = listOf(
-            VimTip("summary-1", listOf("details-1"), listOf("motions", "editing")),
-            VimTip("summary-2", listOf("details-2"), listOf("editing", "search"))
+            vimTip("summary-1", listOf("details-1"), listOf("motions", "editing")),
+            vimTip("summary-2", listOf("details-2"), listOf("editing", "search"))
         )
 
         tipService().saveTips(tips)
@@ -67,8 +69,8 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         tipStore().loadState(
             PersistentVimTipStore.State(
                 tips = listOf(
-                    VimTip("summary-1", listOf("details-1"), listOf("motions")),
-                    VimTip("summary-2", listOf("details-2"), listOf("editing", "motions"))
+                    vimTip("summary-1", listOf("details-1"), listOf("motions")),
+                    vimTip("summary-2", listOf("details-2"), listOf("editing", "motions"))
                 ),
                 categories = TipCategories(),
                 metadata = TipMetadata()
@@ -89,8 +91,8 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         tipStore().loadState(
             PersistentVimTipStore.State(
                 tips = listOf(
-                    VimTip("summary-1", listOf("details-1"), listOf("basics")),
-                    VimTip("summary-2", listOf("details-2"), listOf("editing", "basics"))
+                    vimTip("summary-1", listOf("details-1"), listOf("basics")),
+                    vimTip("summary-2", listOf("details-2"), listOf("editing", "basics"))
                 ),
                 categories = TipCategories()
             )
@@ -108,6 +110,24 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         )
     }
 
+    // A cache written before generated ids holds id-less tips; they must load as no tips so the
+    // "No tips found." fallback shows and the next update check refetches unconditionally.
+    fun testIdLessCacheFromXmlLoadsAsNoTipsKeepingCategories() {
+        tipStore().loadState(XmlSerializer.deserialize(JDOMUtil.load(PRE_ID_CACHE_XML), PersistentVimTipStore.State::class.java))
+
+        assertEquals(emptyList<VimTip>(), tipStore().state.tips)
+        assertEquals(0, tipService().countTips())
+        assertEquals(TipCategories(listOf("motions")), tipService().getCategories())
+    }
+
+    fun testGetTipsByIdsReturnsTipsInRequestedOrder() {
+        val first = vimTip("summary-1", listOf("details-1"), id = "id-1")
+        val second = vimTip("summary-2", listOf("details-2"), id = "id-2")
+        tipService().saveTips(listOf(first, second))
+
+        assertEquals(listOf(second, first), tipService().getTipsByIds(listOf(" id-2 ", "missing", "id-1")))
+    }
+
     // The optional `mode`, `advanced`, and `mnemonic` fields are persisted only via reflective
     // whole-object serialization of the tip cache (no explicit field wiring in PersistentVimTipStore).
     // This round-trips the store State through the same xmlb serializer the platform uses for @State
@@ -116,14 +136,15 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
     fun testOptionalTipFieldsSurviveStoreStateSerializationRoundTrip() {
         tipService().saveTips(
             listOf(
-                VimTip(
+                vimTip(
                     "insert-tip",
                     listOf("Ctrl-r pastes a register"),
                     mnemonic = "control register",
                     advanced = true,
-                    mode = "insert"
+                    mode = "insert",
+                    id = "insert-id"
                 ),
-                VimTip("normal-tip", listOf("use %"))
+                vimTip("normal-tip", listOf("use %"))
             )
         )
 
@@ -131,6 +152,7 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
         val restored = XmlSerializer.deserialize(serialized, PersistentVimTipStore.State::class.java)
 
         val insertTip = restored.tips.single { it.summary == "insert-tip" }
+        assertEquals("insert-id", insertTip.id)
         assertEquals("insert", insertTip.mode)
         assertTrue(insertTip.advanced)
         assertEquals("control register", insertTip.mnemonic)
@@ -144,4 +166,38 @@ class VimTipRepositoryIntTest : BasePlatformTestCase() {
     private fun tipService(): VimTipRepository = service()
 
     private fun tipStore(): PersistentVimTipStore = service()
+
+    private companion object {
+        // A tip cache as written by a plugin version before generated ids: no `id` option.
+        val PRE_ID_CACHE_XML = """
+            <State>
+              <option name="categories">
+                <TipCategories>
+                  <option name="values">
+                    <list>
+                      <option value="motions" />
+                    </list>
+                  </option>
+                </TipCategories>
+              </option>
+              <option name="tips">
+                <list>
+                  <VimTip>
+                    <option name="category">
+                      <list>
+                        <option value="motions" />
+                      </list>
+                    </option>
+                    <option name="details">
+                      <list>
+                        <option value="pre-id-details" />
+                      </list>
+                    </option>
+                    <option name="summary" value="pre-id-summary" />
+                  </VimTip>
+                </list>
+              </option>
+            </State>
+        """.trimIndent()
+    }
 }

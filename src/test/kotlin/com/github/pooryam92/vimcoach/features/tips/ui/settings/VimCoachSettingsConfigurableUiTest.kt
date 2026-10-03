@@ -1,11 +1,10 @@
 package com.github.pooryam92.vimcoach.features.tips.ui.settings
 
 import com.github.pooryam92.vimcoach.core.shared.i18n.MyBundle
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
-import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import java.awt.Container
@@ -110,8 +109,8 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
     fun testCreateComponentShowsCategoryCheckboxes() {
         tipService().saveTips(
             listOf(
-                VimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
-                VimTip("summary-2", listOf("details-2"), listOf("search", "basics"))
+                vimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
+                vimTip("summary-2", listOf("details-2"), listOf("search", "basics"))
             )
         )
         val configurable = VimCoachSettingsConfigurable()
@@ -133,8 +132,8 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
     fun testApplyPersistsCategorySelection() {
         tipService().saveTips(
             listOf(
-                VimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
-                VimTip("summary-2", listOf("details-2"), listOf("search"))
+                vimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
+                vimTip("summary-2", listOf("details-2"), listOf("search"))
             )
         )
         val configurable = VimCoachSettingsConfigurable()
@@ -165,9 +164,9 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
     fun testCategoryToggleButtonSelectsAndDeselectsAllCategories() {
         tipService().saveTips(
             listOf(
-                VimTip("summary-1", listOf("details-1"), listOf("basics")),
-                VimTip("summary-2", listOf("details-2"), listOf("editing")),
-                VimTip("summary-3", listOf("details-3"), listOf("search"))
+                vimTip("summary-1", listOf("details-1"), listOf("basics")),
+                vimTip("summary-2", listOf("details-2"), listOf("editing")),
+                vimTip("summary-3", listOf("details-3"), listOf("search"))
             )
         )
         val configurable = VimCoachSettingsConfigurable()
@@ -206,8 +205,8 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
         )
         tipService().saveTips(
             listOf(
-                VimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
-                VimTip("summary-2", listOf("details-2"), listOf("search"))
+                vimTip("summary-1", listOf("details-1"), listOf("basics", "editing")),
+                vimTip("summary-2", listOf("details-2"), listOf("search"))
             )
         )
         val configurable = VimCoachSettingsConfigurable()
@@ -227,10 +226,10 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
     }
 
     fun testCreateComponentShowsExcludedTipsWithUndoButton() {
-        val excludedTip = VimTip("Excluded motion tip", listOf("excluded-details"), listOf("basics"))
-        val visibleTip = VimTip("Visible search tip", listOf("visible-details"), listOf("search"))
+        val excludedTip = vimTip("Excluded motion tip", listOf("excluded-details"), listOf("basics"))
+        val visibleTip = vimTip("Visible search tip", listOf("visible-details"), listOf("search"))
         tipService().saveTips(listOf(excludedTip, visibleTip))
-        settingsService().hideTip(TipHash.fromTip(excludedTip).value)
+        settingsService().hideTip(excludedTip.id)
         val configurable = VimCoachSettingsConfigurable()
 
         try {
@@ -246,10 +245,10 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
     }
 
     fun testUndoExcludedTipRestoresTipOnApply() {
-        val excludedTip = VimTip("Excluded motion tip", listOf("excluded-details"), listOf("basics"))
+        val excludedTip = vimTip("Excluded motion tip", listOf("excluded-details"), listOf("basics"))
         tipService().saveTips(listOf(excludedTip))
-        val excludedHash = TipHash.fromTip(excludedTip).value
-        settingsService().hideTip(excludedHash)
+        val excludedId = excludedTip.id
+        settingsService().hideTip(excludedId)
         val configurable = VimCoachSettingsConfigurable()
 
         try {
@@ -263,7 +262,7 @@ class VimCoachSettingsConfigurableUiTest : BasePlatformTestCase() {
 
             configurable.apply()
 
-            assertEquals(emptyList<String>(), settingsService().getHiddenTipHashes())
+            assertEquals(emptyList<String>(), settingsService().getHiddenTipIds())
             assertFalse(configurable.isModified())
         } finally {
             configurable.disposeUIResources()

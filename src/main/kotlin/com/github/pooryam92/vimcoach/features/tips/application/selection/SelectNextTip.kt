@@ -1,6 +1,5 @@
 package com.github.pooryam92.vimcoach.features.tips.application.selection
 
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.TipRotationRepository
@@ -47,13 +46,13 @@ class SelectNextTip() {
         val progress = rotation.getProgress()
         val pick = pickNext(pool, progress.timesShown, progress.lastShownKey, Random) ?: return null
 
-        rotation.recordShown(pick.key, pick.countToStore, contentKeys(allTips))
+        rotation.recordShown(pick.tip.id, pick.countToStore, tipIds(allTips))
         return pick.tip
     }
 
     // Whole cache, not the filtered pool: disabled or excluded tips keep their progress.
-    private fun contentKeys(tips: List<VimTip>): Set<String> {
-        return tips.mapTo(mutableSetOf()) { TipHash.fromContent(it).value }
+    private fun tipIds(tips: List<VimTip>): Set<String> {
+        return tips.mapTo(mutableSetOf(), VimTip::id)
     }
 
     private fun buildContext(includeConfigTips: Boolean): TipSelectionContext {
@@ -68,7 +67,7 @@ class SelectNextTip() {
         return TipSelectionContext(
             availableCategories = availableCategories,
             enabledCategories = enabledCategories,
-            hiddenTipHashes = settings?.getHiddenTipHashes()?.toSet() ?: emptySet(),
+            hiddenTipIds = settings?.getHiddenTipIds()?.toSet() ?: emptySet(),
             showAdvancedTips = settings?.isShowAdvancedTipsEnabled() ?: false,
             includeConfigTips = includeConfigTips,
         )

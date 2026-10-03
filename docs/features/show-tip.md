@@ -39,18 +39,18 @@ graph LR
 
 Each call to `select()`:
 
-1. **Reads `VimTipRepository.getTips()`.** An empty cache short-circuits straight to the "No tips found." fallback — `VimTipRepository` is a plain query surface (`getTips`, `getTipsByHashes`, `hasAdvancedTips`, `getCategories`, metadata) with no `SettingsRepository` dependency and no selection logic.
+1. **Reads `VimTipRepository.getTips()`.** An empty cache short-circuits straight to the "No tips found." fallback — `VimTipRepository` is a plain query surface (`getTips`, `getTipsByIds`, `hasAdvancedTips`, `getCategories`, metadata) with no `SettingsRepository` dependency and no selection logic. Cached tips without an `id` (written by a plugin version before generated ids) count as absent, so such a cache also shows "No tips found." until the refetch lands; see [Tips pipeline](../tips/tips-pipeline.md#tip-ids).
 
-2. **Builds a `TipSelectionContext`** from `SettingsRepository`: enabled categories (`getEnabledTipCategories(availableCategories)`, skipped in favor of a pass-through when the cache has no categories at all yet — tips not loaded), hidden tip hashes, the advanced-tips opt-in, and the caller's `includeConfigTips`.
+2. **Builds a `TipSelectionContext`** from `SettingsRepository`: enabled categories (`getEnabledTipCategories(availableCategories)`, skipped in favor of a pass-through when the cache has no categories at all yet — tips not loaded), hidden tip ids, the advanced-tips opt-in, and the caller's `includeConfigTips`.
 
 3. **Runs the `TipFilter` chain**, left to right — `fun interface TipFilter { fun apply(pool, context): List<VimTip> }`, so adding a filter is adding one list element:
    - **`categoryFilter`**: keeps tips in an enabled category; passes every tip through untouched when no categories exist yet.
-   - **`excludedTipsFilter`**: drops tips whose SHA-256 hash of the summary (`TipHash.fromTip()`) is in the hidden-hashes list.
+   - **`excludedTipsFilter`**: drops tips whose `VimTip.id` is in the hidden-ids list.
    - **`configTipsFilter`**: `includeConfigTips` is `ideaVimAvailable()` — true only when IdeaVim is installed. When IdeaVim is absent, tips carrying an `.ideavimrc` snippet (`VimTip.config`) are dropped, since their only payoff is the "Add to .ideavimrc" button (see [Add to .ideavimrc](ideavimrc-button.md)), which is itself hidden without IdeaVim. This keeps users (e.g. WebStorm with no IdeaVim) from seeing tips they can't act on.
    - **`advancedTipsFilter`**: drops tips marked `VimTip.advanced` unless `SettingsRepository.isShowAdvancedTipsEnabled()` is on (default off). See [Settings](settings.md#advanced-tips-opt-in) for the toggle.
 
 4. **Draws via `pickNext`** against `TipRotationRepository`, which persists `timesShown` per tip plus the last shown key in its own non-roaming file (`vim-coach-tip-rotation.xml`), so progress survives restarts but is per machine. The draw picks at random among the pool's least-shown tips, never the last shown tip while the pool has two or more. Rotation runs after the filter chain, so excluded tips never block a cycle. Details that aren't obvious from the code:
-   - **Key** is `TipHash.fromContent` (summary + details only). Editing either brings the tip back as unseen; changing the mnemonic, config, category, `advanced` or `mode` keeps its progress. Changing the key definition resets everyone's rotation once — `TipHashUnitTest` pins a golden value to catch that.
+   - **Key** is the generated `VimTip.id` (summary + details only). Editing either brings the tip back as unseen; changing the mnemonic, config, category, `advanced` or `mode` keeps its progress. The id formula and its golden test live in the generator; see [Tips pipeline](../tips/tips-pipeline.md#tip-ids).
    - **Deficit cap**: a tip's effective count is `max(stored, poolMax − 1)`, and a show stores effective + 1. Tips joining the pool (re-enabled category, advanced opt-in, restored exclusion, new tips) mix in with this cycle's unseen tips instead of monopolising the next several draws.
    - **Pruning** drops counts for keys no longer in the whole tip cache — not the filtered pool, so disabled or excluded tips keep their progress. It only runs alongside a real show, so an empty cache never prunes.
 
@@ -71,9 +71,8 @@ The filtered fallback's detail line points at both remedies — enabling a match
 
 Clicking "Don't show again" runs `TipNotifications`' exclude callback, which applies the business rule via `ExcludeTipFromNotifications.exclude()`:
 
-1. Computes `TipHash.fromTip(tip)` (SHA-256 of the trimmed summary).
-2. Calls `settingsService.hideTip(hash)` — adds the hash to the persistent hidden list.
-3. Calls `settingsService.consumeExcludedTipsManagementHint()`. This returns `true` exactly once (on the first-ever exclusion) and flips a persistent flag. When it returns `true`, `TipNotifier.showTipExcluded()` presents a secondary notification prompting the user to manage excluded tips in Settings.
+1. Calls `settingsService.hideTip(tip.id)` — adds the id to the persistent hidden list. Because the id covers the summary and details, editing either brings a hidden tip back.
+2. Calls `settingsService.consumeExcludedTipsManagementHint()`. This returns `true` exactly once (on the first-ever exclusion) and flips a persistent flag. When it returns `true`, `TipNotifier.showTipExcluded()` presents a secondary notification prompting the user to manage excluded tips in Settings.
 
 Dismissing the tip balloon is the adapter's responsibility: `IntelliJTipNotifier` wires the action to run the application callback and then expire that notification, keeping `Notification` handling out of the application layer.
 
@@ -106,4 +105,4 @@ Actions are standard `NotificationAction` buttons appended to the balloon, in or
 
 - **"Next tip"** and **"Exclude tip"** — always present.
 - **Apply-to-`.ideavimrc`** — when `tip.config?.lines` is non-empty; labelled by `config.name` or the generic "Apply".
-- **"Note…"** — a **dev-only** action for flagging a tip for maintainers. It appears only when the `vimcoach.tip.notes.file` system property is set, which the `runIdeWithFileTips` and `runIdeWithMinuteTipSchedule` Gradle tasks do (pointing at the git-ignored `docs/tips/tip-feedback.md`). Released builds never set it, so the action is absent. Clicking it opens a multiline input dialog and appends a timestamped markdown entry — summary, tip hash, and the note — to that file (see `RecordTipNote`). See [Tips pipeline](../tips/tips-pipeline.md) for the maintainer workflow.
+- **"Note…"** — a **dev-only** action for flagging a tip for maintainers. It appears only when the `vimcoach.tip.notes.file` system property is set, which the `runIdeWithFileTips` and `runIdeWithMinuteTipSchedule` Gradle tasks do (pointing at the git-ignored `docs/tips/tip-feedback.md`). Released builds never set it, so the action is absent. Clicking it opens a multiline input dialog and appends a timestamped markdown entry — summary, tip id, and the note — to that file (see `RecordTipNote`). See [Tips pipeline](../tips/tips-pipeline.md) for the maintainer workflow.

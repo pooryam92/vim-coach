@@ -178,7 +178,7 @@ val generateTips = tasks.register<Exec>("generateTips") {
     description = "Generates tips from tips/categories for tests and runIdeWithFileTips."
     val outputFile = generatedTipsFile
     inputs.dir("tips/categories")
-    inputs.files("scripts/generate-tips.mjs")
+    inputs.files("scripts/generate-tips.mjs", "scripts/tip-id.mjs")
     outputs.file(outputFile)
     commandLine("node", "scripts/generate-tips.mjs", "--out", outputFile.get().asFile.absolutePath)
 }

@@ -214,7 +214,7 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
             enabledCategories = emptyList(),
             showAdvancedTips = false,
             excludedTips = emptyList(),
-            restoredExcludedTipHashes = emptyList()
+            restoredExcludedTipIds = emptyList()
         )
     }
 
@@ -227,8 +227,8 @@ class VimCoachSettingsConfigurable : SearchableConfigurable {
             enabledCategories = selectedCategories(),
             showAdvancedTips = advancedTipsCheckBox?.isSelected ?: screenState.showAdvancedTips,
             excludedTips = excludedTipsListPanel?.currentTips() ?: screenState.excludedTips,
-            restoredExcludedTipHashes = excludedTipsListPanel?.restoredTipHashes()
-                ?: screenState.restoredExcludedTipHashes
+            restoredExcludedTipIds = excludedTipsListPanel?.restoredTipIds()
+                ?: screenState.restoredExcludedTipIds
         )
     }
 

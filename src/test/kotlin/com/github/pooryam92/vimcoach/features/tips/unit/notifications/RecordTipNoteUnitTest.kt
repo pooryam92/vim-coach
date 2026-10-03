@@ -1,8 +1,7 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.RecordTipNote
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
-import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -28,15 +27,15 @@ class RecordTipNoteUnitTest {
     }
 
     @Test
-    fun recordWritesSummaryHashAndNote() {
+    fun recordWritesSummaryIdAndNote() {
         val file = tempFolder.root.toPath().resolve("notes.md")
-        val tip = VimTip(summary = "Move by word with w/b/e.")
+        val tip = vimTip(summary = "Move by word with w/b/e.")
 
         RecordTipNote(file).record(tip, "wording is ambiguous", at = at)
 
         val content = Files.readString(file)
         assertTrue(content.contains("## 2026-07-04T14:22:01 — Move by word with w/b/e."))
-        assertTrue(content.contains("**Hash:** `${TipHash.fromTip(tip).value}`"))
+        assertTrue(content.contains("**Id:** `${tip.id}`"))
         assertTrue(content.contains("**Note:** wording is ambiguous"))
     }
 
@@ -44,7 +43,7 @@ class RecordTipNoteUnitTest {
     fun recordCreatesMissingParentDirectories() {
         val file = tempFolder.root.toPath().resolve("nested/dir/notes.md")
 
-        RecordTipNote(file).record(VimTip(summary = "tip"), "note")
+        RecordTipNote(file).record(vimTip(summary = "tip"), "note")
 
         assertTrue(Files.exists(file))
     }
@@ -54,8 +53,8 @@ class RecordTipNoteUnitTest {
         val file = tempFolder.root.toPath().resolve("notes.md")
         val recorder = RecordTipNote(file)
 
-        recorder.record(VimTip(summary = "first tip"), "first note", at = at)
-        recorder.record(VimTip(summary = "second tip"), "second note", at = at)
+        recorder.record(vimTip(summary = "first tip"), "first note", at = at)
+        recorder.record(vimTip(summary = "second tip"), "second note", at = at)
 
         val content = Files.readString(file)
         assertTrue(content.contains("first tip"))
@@ -68,7 +67,7 @@ class RecordTipNoteUnitTest {
     fun recordTrimsTheNote() {
         val file = tempFolder.root.toPath().resolve("notes.md")
 
-        RecordTipNote(file).record(VimTip(summary = "tip"), "  spaced note  ")
+        RecordTipNote(file).record(vimTip(summary = "tip"), "  spaced note  ")
 
         assertTrue(Files.readString(file).contains("**Note:** spaced note\n"))
     }

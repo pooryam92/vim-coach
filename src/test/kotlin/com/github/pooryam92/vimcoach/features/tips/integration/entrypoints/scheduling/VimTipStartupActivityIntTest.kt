@@ -4,12 +4,12 @@ import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTi
 import com.github.pooryam92.vimcoach.features.tips.application.loading.TipRefresh
 import com.github.pooryam92.vimcoach.features.tips.application.scheduling.ScheduleTips
 import com.github.pooryam92.vimcoach.features.tips.domain.TipLoadResult
-import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.entrypoints.scheduling.VimTipStartupActivity
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepositoryImpl
 import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeVimTipRepository
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.PlatformTestUtil
@@ -88,7 +88,7 @@ class VimTipStartupActivityIntTest : BasePlatformTestCase() {
 
     private fun registerFakeTipService(): FakeVimTipRepository {
         val fakeTipService = FakeVimTipRepository(
-            initialTips = listOf(VimTip("startup-tip", listOf("startup-details")))
+            initialTips = listOf(vimTip("startup-tip", listOf("startup-details")))
         )
         ApplicationManager.getApplication().registerServiceInstance(
             VimTipRepository::class.java,

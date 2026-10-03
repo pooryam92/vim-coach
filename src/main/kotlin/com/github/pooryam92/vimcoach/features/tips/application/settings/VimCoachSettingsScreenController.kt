@@ -1,7 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.application.settings
 
 import com.github.pooryam92.vimcoach.features.tips.application.loading.RefreshTips
-import com.github.pooryam92.vimcoach.features.tips.domain.TipHash
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.VimTipRepository
 import com.intellij.openapi.components.service
@@ -32,7 +31,7 @@ class VimCoachSettingsScreenController() {
             availableCategories = availableCategories,
             enabledCategories = settingsService.getEnabledTipCategories(availableCategories),
             showAdvancedTips = settingsService.isShowAdvancedTipsEnabled(),
-            excludedTips = loadExcludedTips(settingsService.getHiddenTipHashes())
+            excludedTips = loadExcludedTips(settingsService.getHiddenTipIds())
         )
     }
 
@@ -43,7 +42,7 @@ class VimCoachSettingsScreenController() {
         settingsService.setPeriodicTipsEnabled(state.periodicTipsEnabled)
         settingsService.setEnabledTipCategories(state.availableCategories, state.enabledCategories)
         settingsService.setShowAdvancedTipsEnabled(state.showAdvancedTips)
-        restoreTipsFromSettings(state.restoredExcludedTipHashes)
+        restoreTipsFromSettings(state.restoredExcludedTipIds)
     }
 
     private fun loadAvailableCategories(): List<String> {
@@ -58,18 +57,18 @@ class VimCoachSettingsScreenController() {
         return tipService.getCategories().values
     }
 
-    private fun loadExcludedTips(hiddenTipHashes: List<String>): List<ExcludedTipSettingsItem> {
-        return tipService().getTipsByHashes(hiddenTipHashes).map { tip ->
+    private fun loadExcludedTips(hiddenTipIds: List<String>): List<ExcludedTipSettingsItem> {
+        return tipService().getTipsByIds(hiddenTipIds).map { tip ->
             ExcludedTipSettingsItem(
-                hash = TipHash.fromTip(tip).value,
+                id = tip.id,
                 summary = tip.summary
             )
         }
     }
 
-    private fun restoreTipsFromSettings(hashes: List<String>) {
+    private fun restoreTipsFromSettings(ids: List<String>) {
         val settingsService = settingsService()
-        hashes
+        ids
             .asSequence()
             .map(String::trim)
             .filter(String::isNotBlank)

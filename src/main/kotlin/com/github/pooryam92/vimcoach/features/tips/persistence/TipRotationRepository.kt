@@ -1,6 +1,6 @@
 package com.github.pooryam92.vimcoach.features.tips.persistence
 
-/** Per-machine rotation progress, keyed by [com.github.pooryam92.vimcoach.features.tips.domain.TipHash.fromContent]. */
+/** Per-machine rotation progress, keyed by [com.github.pooryam92.vimcoach.features.tips.domain.VimTip.id]. */
 interface TipRotationRepository {
     fun getProgress(): RotationProgress
 

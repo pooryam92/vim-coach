@@ -61,6 +61,8 @@ tip:
 - has a non-boolean `advanced` or a `mode` outside `insert`, `visual` and
   `command`
 - repeats a `summary` already used by another tip, in any file
+- gets the same generated `id` as another tip (a hash collision; reword one of
+  the two)
 
 Length and wording limits (such as the 42-char line max) are not hard
 rules. Only length is checked: `node .claude/skills/tips-maintain/check-lengths.mjs`
@@ -85,6 +87,29 @@ The optional `mode` field is emitted only when set and must be one of `insert`,
 which is never stored or labelled). The output is compact JSON with non-ASCII
 characters escaped as `\uXXXX`, so the published file is deterministic and stays
 plain ASCII.
+
+### Tip ids
+
+Every generated tip starts with an `id`: the first 8 hex characters of SHA-256
+over the normalized summary and details, length-prefixed per field so field
+boundaries count (`scripts/tip-id.mjs`). It exists only in the generated file;
+`id` is not an allowed source key, so authors never write one.
+
+- The id is the tip's identity for exclusions and rotation progress. Any edit
+  to the summary or a detail makes it a new tip; the mnemonic, config,
+  category, `advanced` and `mode` don't affect it.
+- Changing the formula resets every user's exclusions and rotation.
+  `scripts/tip-id.test.mjs` pins a golden value, and
+  `scripts/generate-tips.test.mjs` pins the duplicate-id failure with a real
+  collision; run both with `node --test scripts/*.test.mjs`.
+- `TipJsonParser` drops a tip whose id is missing, blank or not a string, and
+  keeps only the first of tips sharing an id. This is the one exception to the
+  leniency below: a plugin that reads ids must only ship once the published
+  file on `main` carries them, or it drops every remote tip.
+- A tip cache written by a plugin version before ids holds id-less tips, which
+  `PersistentVimTipStore.loadState` drops (keeping categories). The tip shown
+  is "No tips found." and the next update check refetches unconditionally; if
+  that refetch fails, the next session retries.
 
 ### Schema evolution and the `advanced` field
 
@@ -134,15 +159,16 @@ automatically. It runs on pushes to `main` and on pull requests, but only when
 one of these changes:
 
 - `tips/categories/**`
-- `scripts/generate-tips.mjs`
+- `scripts/generate-tips.mjs`, `scripts/tip-id.mjs`, or a `scripts/*.test.mjs` test
 - the workflow file itself
 
 What it does depends on the event:
 
-- **On a pull request** it only validates:
-  `node scripts/generate-tips.mjs --check`, with read-only permissions. It
+- **On a pull request** it only validates: `node --test scripts/*.test.mjs`
+  then `node scripts/generate-tips.mjs --check`, with read-only permissions. It
   never pushes, because `GITHUB_TOKEN` is read-only on pull requests from forks.
-- **On a push to `main`** it runs `node scripts/generate-tips.mjs` and, if the
+- **On a push to `main`** it runs the id tests, then
+  `node scripts/generate-tips.mjs` and, if the
   regenerated `tips/vim_tips_min.json` differs from what is committed, commits
   the result to `main` with `[skip ci]`.
 
@@ -169,7 +195,7 @@ overwritten on the next run.
 While a tip balloon is open during a dev IDE run, a **"Note…"** action appears
 alongside the other actions. Clicking it opens a text box; whatever you type is
 appended to `docs/tips/tip-feedback.md` — an append-only markdown log stamped
-with a timestamp, the tip's summary, and its `TipHash`. That file is
+with a timestamp, the tip's summary, and its id. That file is
 `.gitignore`d and is where the maintainer (or an agent) later picks up which
 tips to revise.
 

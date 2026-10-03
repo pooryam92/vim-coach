@@ -1,18 +1,18 @@
 package com.github.pooryam92.vimcoach.features.tips.unit.notifications
 
 import com.github.pooryam92.vimcoach.features.tips.application.notifications.AdvancedTipsNudge
-import com.github.pooryam92.vimcoach.features.tips.domain.VimTip
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepository
 import com.github.pooryam92.vimcoach.features.tips.persistence.SettingsRepositoryImpl
 import com.github.pooryam92.vimcoach.features.tips.persistence.store.PersistentSettingsStore
 import com.github.pooryam92.vimcoach.features.tips.testsupport.FakeVimTipRepository
+import com.github.pooryam92.vimcoach.features.tips.testsupport.vimTip
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class AdvancedTipsNudgeUnitTest {
 
-    private val advancedTip = VimTip("advanced tip", listOf("details"), advanced = true)
+    private val advancedTip = vimTip("advanced tip", listOf("details"), advanced = true)
 
     @Test
     fun nudgesOnceOnTheThirdEligibleTip() {
@@ -49,7 +49,7 @@ class AdvancedTipsNudgeUnitTest {
     fun neverNudgesWhenCacheHasNoAdvancedTips() {
         val nudge = AdvancedTipsNudge(
             settings(),
-            FakeVimTipRepository(initialTips = listOf(VimTip("normal tip", listOf("details"))))
+            FakeVimTipRepository(initialTips = listOf(vimTip("normal tip", listOf("details"))))
         )
 
         repeat(5) { assertFalse(nudge.shouldNudgeAfterTipShown()) }
@@ -58,7 +58,7 @@ class AdvancedTipsNudgeUnitTest {
     @Test
     fun doesNotSpendTheCountWhileNoAdvancedTipsAreAvailable() {
         val settings = settings()
-        val repository = FakeVimTipRepository(initialTips = listOf(VimTip("normal tip", listOf("details"))))
+        val repository = FakeVimTipRepository(initialTips = listOf(vimTip("normal tip", listOf("details"))))
         val nudge = AdvancedTipsNudge(settings, repository)
         repeat(5) { nudge.shouldNudgeAfterTipShown() }
 
