@@ -74,7 +74,8 @@
       "details": [
         "Ctrl-w + grows, Ctrl-w - shrinks",
         "10 Ctrl-w + adds ten rows at once"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -84,7 +85,8 @@
       "details": [
         "Ctrl-w > widens, Ctrl-w < narrows",
         "10 Ctrl-w > adds ten columns"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -94,7 +96,8 @@
       "details": [
         "Every split gets the same size",
         "Undoes drags and Ctrl-w + tweaks"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -137,7 +140,8 @@
       "details": [
         ":tabmove 0 moves it to the start",
         "Bare :tabmove moves it to the end"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [
@@ -147,7 +151,8 @@
       "details": [
         "Ctrl-w _ maxes this split's height",
         "Ctrl-w | maxes its width"
-      ]
+      ],
+      "advanced": true
     }
   ]
 }

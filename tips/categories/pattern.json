@@ -157,8 +157,7 @@
         ":%s/foo/bar/gc stops at each foo",
         "y replaces it, n skips it",
         "a replaces all, q quits"
-      ],
-      "advanced": true
+      ]
     },
     {
       "category": [
@@ -195,8 +194,7 @@
       "details": [
         ":10,20s/a/b/g edits lines 10 to 20",
         "Or select lines first, then :s"
-      ],
-      "advanced": true
+      ]
     },
     {
       "category": [

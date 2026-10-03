@@ -4,6 +4,8 @@ On-demand companion to `SKILL.md`. Open the section you need:
 
 - [Checking IdeaVim support](#checking-ideavim-support) — prove a
   command/behavior is supported before keeping a claim.
+  - [Is the key actually released?](#is-the-key-actually-released) — the
+    release gate; not optional when mining a changelog.
 - [Config tips — what's safe to ship](#config-tips--whats-safe-to-ship) —
   authoring or reviewing a tip's `config` block.
 - [Adding or changing a category](#adding-or-changing-a-category) — the coupled
@@ -66,6 +68,7 @@ If the submodule needs refreshing or a wider checkout:
 git submodule update --init external/ideavim
 git -C external/ideavim sparse-checkout init --cone
 git -C external/ideavim sparse-checkout set \
+  doc \
   src/main/resources/ksp-generated \
   vim-engine/src/main/resources/ksp-generated
 git submodule update --remote external/ideavim   # refresh to latest master
@@ -81,14 +84,31 @@ master` in `.gitmodules` only names the branch `--remote` fast-forwards to; it
 does not float. Refresh it when mining a new IdeaVim release, then leave it.
 
 After a refresh `git status` shows `M external/ideavim` (the recorded commit
-moved). **That is expected and is not one of your intended files** — no
-workflow checks out submodules and no Gradle script reads the path, so the pin
-affects nothing but this local checkout. Leave it out of a tips commit; discard
-it with `git checkout -- external/ideavim` if you'd rather not carry it.
+moved). **Commit it with the tips you checked against it**, so the pin records
+which IdeaVim revision those tips were verified on. No workflow checks out
+submodules and no Gradle script reads the path, so the pin never affects the
+build.
 
-**Is the key actually released?** A binding present in the submodule may be
-newer than the reader's plugin — `master` runs ahead of the marketplace build.
-Confirm before teaching a recently added key:
+**Registers and macros share storage, through text.** A yanked register is
+replayed by `@a` because `Register.kt` rebuilds its keys with
+`VimStringParserBase.stringToKeys`. The round-trip is lossy in one place:
+`Esc` pastes as a raw `\u001B` and comes back as `Ctrl-[` (same key), but
+`Enter` pastes as a real line break, so `0"ay$` saves back only the first line
+of a macro that pressed Enter. Worse, `finishRecording` in
+`VimRegisterGroupBase.kt` stores a macro `CHARACTER_WISE`, so `"ap` pastes it
+mid-line after the cursor and `0"ay$` then saves the surrounding code into the
+macro too. The `Fix a macro without re-recording` tip was cut for this. Check a
+register's `SelectionType` before teaching any paste-edit-yank loop:
+
+```bash
+grep -n 'SelectionType' external/ideavim/vim-engine/src/main/kotlin/com/maddyhome/idea/vim/register/VimRegisterGroupBase.kt
+```
+
+### Is the key actually released?
+
+A binding present in the submodule may be newer than the reader's plugin —
+`master` runs ahead of the marketplace build. Confirm before teaching a recently
+added key:
 
 ```bash
 git -C external/ideavim log -1 --format=%h -S 'keys = ["zd"]' -- .  # commit that added it
@@ -127,9 +147,10 @@ git -C external/ideavim show 2.42.0-eap.1:<path/to/Ext.kt> | grep parseKeys
 This is how the `multiple-cursors` tip came to teach `<C-n>` while every shipped
 build still bound `<A-n>` (VIM-2178, then unreleased). When a tip's keys ride on
 an unreleased default, pin them in its `config` via the plugin's `<Plug>`
-targets — stable across versions, so the taught key holds on both builds. Lift
-the pin once the default ships, and re-read the gate whenever you refresh the
-submodule: a stale one hides a shipped change.
+targets — stable across versions, so the taught key holds on both builds. That
+tip still pins `nmap`/`xmap <C-n> <Plug>NextWholeOccurrence`; VIM-2178 shipped
+in 2.43.0, so the pin now only helps readers on older builds. Re-read the gate
+whenever you refresh the submodule: a stale one hides a shipped change.
 
 **Vim docs** (for *meaning*, not support): https://vimhelp.org/, user manual
 https://vimhelp.org/usr_toc.txt.html. Category → page: `editing`→editing.txt,
@@ -186,10 +207,29 @@ Lines that satisfy both — the working examples:
   the upstream default `,` claims the built-in repeat-`f`/`t`-backwards motion. A
   tip shipping `,` was cut for exactly that; the plugin-free `[w` / `[b` motions
   cover the same ground.
+  A plugin whose **default** keys override a built-in that other tips teach
+  breaks those tips once installed — grep `tips/categories/` for each key it
+  binds and disclose the takeover in a detail line. vim-signature rebinds the
+  change marks `'[` `']` `` `[ `` `` `] `` — all four, and other tips teach all
+  four — so its tip says `Takes over the change marks, like '[`. Disclose every
+  key the plugin takes over, not just the first one you notice; name the family
+  when listing them would be a row of glyphs.
 - **Tune a built-in option** — e.g. `set scrolloff=5`, `hlsearch`. Primary
   `options`.
-- **IDE-bridge `set`** — e.g. `set ideajoin`, `set idearefactormode=keep`.
-  Primary `ideavim`.
+- **IDE-bridge `set`** — an `idea…` option that hands work to the IDE, e.g.
+  `set ideajoin`. Primary `ideavim`. An `idea…` option that only restores
+  Vim's own behaviour (a per-split jump list) takes its topic's category
+  instead. Never ship an option declared `isHidden = true` — IdeaVim marks
+  those as feature toggles "reviewed in future releases", so they may vanish
+  and break the reader's rc; `ideawindowjumps` was pulled for this:
+  ```bash
+  grep -rn '"<option>"' external/ideavim/vim-engine/src/main/kotlin/com/maddyhome/idea/vim/api/Options.kt \
+    external/ideavim/src/main/java/com/maddyhome/idea/vim/group/IjOptions.kt | grep isHidden
+  ```
+- **Autocommand** — wrap it in an `augroup` with `autocmd!` first, as IdeaVim's
+  `doc/autocmd.md` does. Reloading `.ideavimrc` clears plugins but not
+  autocommands (`VimRcService.executeIdeaVimRc`), so a bare `autocmd` line
+  adds another copy of the handler on every reload.
 - **IDE-bridge action mapping** — `nmap <keys> <Action>(ActionId)`. Use a
   recursive `map`/`nmap`, never `noremap` (`<Action>()` needs a recursive map).
   Primary `ideavim`; short button label, e.g. `Map errors`. This is the one
@@ -218,23 +258,20 @@ author them until the blocker is fixed.
   leader safely.
 - **Plugins that need a separate Marketplace IDE plugin** — fail test 1: the
   button appends only the config line, so a `config` that looks complete would
-  silently do nothing. EasyMotion (needs IdeaVim-EasyMotion + AceJump) and
-  which-key (needs the Which-Key IDE plugin) are deferred — see
+  silently do nothing. EasyMotion (needs IdeaVim-EasyMotion + AceJump),
+  which-key (needs the Which-Key IDE plugin) and quick-scope (needs
+  IdeaVim-Quickscope) are deferred — see
   `docs/discover/config-tips-roadmap.md`. A `Plug`/`set` line is only shippable
   when IdeaVim emulates the plugin itself (surround, commentary, sneak, NERDTree,
   argtextobj, multiple-cursors…). The "Setup" block in
   `external/ideavim/doc/IdeaVim Plugins.md` reveals which need an extra install.
-  `multiple-cursors` is shippable. A past example of the release gate: VIM-2178
-  switched its defaults to upstream's `<C-n>` family while every shipped build
-  still bound `<A-n>`, so its tip pinned `<C-n>` with `nmap`/`xmap
-  <Plug>NextWholeOccurrence` — stable on both builds. VIM-2178 shipped in
-  2.43.0, so the pin is now optional; keeping it only helps readers still on an
-  older build.
+  `multiple-cursors` is shippable (its `<Plug>` pin: "Is the key actually
+  released?" above).
 
 ## Adding or changing a category
 
-The 14 current categories and picking rules are in `SKILL.md`. Coupled across
-code + docs — update together:
+The 14 current categories and picking rules are in `SKILL.md` → "Categories".
+Coupled across code + docs — update together:
 
 1. `tips/categories/<name>.json` — adding a category = a new file (its name is the
    category); removing one = migrate or delete its tips first.

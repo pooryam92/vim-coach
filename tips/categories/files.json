@@ -101,7 +101,8 @@
       "details": [
         ":r ~/a.txt drops it below this line",
         "Use ~/ or a full path, not a name"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

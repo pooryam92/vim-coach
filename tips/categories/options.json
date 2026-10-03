@@ -136,6 +136,26 @@
           "set visualbell"
         ]
       }
+    },
+    {
+      "category": [
+        "options",
+        "files"
+      ],
+      "summary": "Leave Insert mode on file switch",
+      "details": [
+        "Come back to a file: you're in Normal",
+        "Pressing j to move won't type a j"
+      ],
+      "config": {
+        "name": "Stop Insert on switch",
+        "lines": [
+          "augroup stopinsert_on_switch",
+          "  autocmd!",
+          "  autocmd BufEnter * stopinsert",
+          "augroup END"
+        ]
+      }
     }
   ]
 }
