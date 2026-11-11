@@ -95,7 +95,8 @@
         "Select lines, then run :sort",
         "Use :sort u to keep unique lines",
         ":sort n sorts by number"
-      ]
+      ],
+      "mode": "visual"
     },
     {
       "category": [
@@ -201,8 +202,7 @@
         "Ctrl-v starts Visual Block mode",
         "hjkl extends the block",
         "rx fills every cell with x"
-      ],
-      "mode": "visual"
+      ]
     },
     {
       "category": [

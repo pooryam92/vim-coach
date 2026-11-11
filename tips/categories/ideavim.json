@@ -46,13 +46,13 @@
     {
       "category": [
         "ideavim",
-        "options"
+        "cmdline"
       ],
-      "summary": "Test options live with :set",
+      "summary": "Run any IDE action with :action",
       "details": [
-        ":set nonumber hides line numbers",
-        ":set invnumber flips them back",
-        "Add to .ideavimrc to keep it"
+        ":action ReformatCode reformats now",
+        ":actionlist format finds more IDs",
+        "Tab after :action cycles matching IDs"
       ]
     },
     {
@@ -60,10 +60,10 @@
         "ideavim",
         "cmdline"
       ],
-      "summary": "Run any IDE action with :action",
+      "summary": "Look up any command with :help",
       "details": [
-        ":action ReformatCode reformats now",
-        ":actionlist format finds more IDs"
+        ":help :s shows its docs in the IDE",
+        "Prefix i_ for Insert keys: :help i_CTRL-W"
       ]
     },
     {

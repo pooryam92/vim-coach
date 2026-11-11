@@ -135,7 +135,9 @@ Score candidates on four axes; a tip earns its place by winning at least 3:
 
 The same axes prune: an existing tip losing on 3 is a removal candidate, and
 pure deletion is a legitimate density win. Niche-but-standalone stays; cut only
-redundant-with-a-stronger-sibling or actively counterproductive. A gap a grep
+redundant-with-a-stronger-sibling or actively counterproductive. A Vim command
+readers type from habit (`:wa`) stays even when a sibling covers it — confirming
+what it does in IdeaVim is the value; a cut of `:wa` was reverted. A gap a grep
 can't see: a command cluster taught only through its flags with no
 foundational tip (29 tips taught `:s` trimmings before `:%s/foo/bar/g` itself
 existed). A concept tip must still be tryable; otherwise fold one line into a
