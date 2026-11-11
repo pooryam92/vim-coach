@@ -18,7 +18,8 @@
       ],
       "summary": "Jump to a line number 120G",
       "details": [
-        ":120 then Enter does the same"
+        ":120 then Enter does the same",
+        "Ctrl-o jumps back afterward"
       ]
     },
     {
@@ -143,7 +144,7 @@
       "category": [
         "navigation"
       ],
-      "summary": "Jump by file percentage N%",
+      "summary": "Jump halfway down a file 50%",
       "details": [
         "50% jumps halfway down the file",
         "10% jumps near the top"
@@ -525,7 +526,7 @@
         "zO opens every nested level",
         "zC closes every nested level"
       ],
-      "mnemonic": "zO open all, zC close all",
+      "mnemonic": "z = a folded page; capital = all",
       "advanced": true
     },
     {

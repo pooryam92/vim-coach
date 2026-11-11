@@ -62,7 +62,7 @@
         "plugins",
         "editing"
       ],
-      "summary": "yss) wraps the whole line",
+      "summary": "Surround the whole line yss)",
       "details": [
         "yss) surrounds the line with ( )",
         "Any non-letter works, like yss*"
@@ -485,6 +485,24 @@
         "name": "Install vim-sneak",
         "lines": [
           "Plug 'justinmk/vim-sneak'"
+        ]
+      }
+    },
+    {
+      "category": [
+        "plugins",
+        "navigation"
+      ],
+      "summary": "Repeat f by pressing f again",
+      "details": [
+        "fx, then f f hops to each next x",
+        "F steps back; it crosses lines too"
+      ],
+      "advanced": true,
+      "config": {
+        "name": "Install clever-f",
+        "lines": [
+          "Plug 'rhysd/clever-f.vim'"
         ]
       }
     },

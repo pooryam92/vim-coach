@@ -2,6 +2,17 @@
   "tips": [
     {
       "category": [
+        "options"
+      ],
+      "summary": "Test options live with :set",
+      "details": [
+        ":set nonumber hides line numbers",
+        ":set invnumber flips them back",
+        "Add to .ideavimrc to keep it"
+      ]
+    },
+    {
+      "category": [
         "options",
         "navigation"
       ],
@@ -154,6 +165,23 @@
           "  autocmd!",
           "  autocmd BufEnter * stopinsert",
           "augroup END"
+        ]
+      }
+    },
+    {
+      "category": [
+        "options",
+        "ideavim"
+      ],
+      "summary": "Use Vim keys in AI Assistant chat",
+      "details": [
+        "The chat box starts in Insert mode",
+        "Esc to edit the prompt with motions"
+      ],
+      "config": {
+        "name": "Enable Vim in AI chat",
+        "lines": [
+          "set ideaeditor+=chat"
         ]
       }
     }

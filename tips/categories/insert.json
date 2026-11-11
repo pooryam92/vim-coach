@@ -4,10 +4,10 @@
       "category": [
         "insert"
       ],
-      "summary": "Leave Insert mode with Esc / Ctrl-[",
+      "summary": "Leave Insert without reaching Ctrl-[",
       "details": [
-        "Esc leaves Insert mode",
-        "Ctrl-[ is the same command"
+        "Ctrl-[ does exactly what Esc does",
+        "Saves the stretch to the far corner"
       ]
     },
     {
@@ -61,7 +61,8 @@
       "details": [
         "gI inserts at column 1",
         "Starts before any leading spaces"
-      ]
+      ],
+      "advanced": true
     },
     {
       "category": [

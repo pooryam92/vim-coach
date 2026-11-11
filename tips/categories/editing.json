@@ -98,6 +98,17 @@
     {
       "category": [
         "editing",
+        "registers"
+      ],
+      "summary": "Duplicate a line yyp",
+      "details": [
+        "yy copies the line, p puts it below",
+        "ddp instead swaps it with the next line"
+      ]
+    },
+    {
+      "category": [
+        "editing",
         "cmdline"
       ],
       "summary": "Move a line with :m {address}",
@@ -261,8 +272,8 @@
       ],
       "summary": "Change whole line cc",
       "details": [
-        "cc clears the line",
-        "Keeps indent and enters Insert",
+        "Clears it, keeps indent, enters Insert",
+        "On a blank line it indents to fit code",
         "S does exactly the same"
       ]
     },
@@ -272,8 +283,8 @@
       ],
       "summary": "Replace one character r{char}",
       "details": [
-        "r replaces the char under cursor",
-        "Stays in Normal mode"
+        "ra turns the char under you into a",
+        "Stays in Normal, no Esc needed"
       ]
     },
     {

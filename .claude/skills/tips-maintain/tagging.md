@@ -25,7 +25,9 @@ list below.
 - **`plugins` stays low** — needing a `config` block is *itself* the opt-in, so
   a plugin's headline move is normal even when its concept is deep (YankRing's
   paste-cycling, `ysiw)`, `gcc`, `dam`). Tag only secondary or niche moves —
-  `ysiwf`, `gciw`, `cxiw`, `:S`, `cin)`, `]=`/`]+` indent hops.
+  `ysiwf`, `gciw`, `cxiw`, `:S`, `cin)`, `]=`/`]+` indent hops. Also tag a
+  plugin whose headline move only re-keys a built-in the reader already has —
+  clever-f's `f` again does what `;` does (user call).
 - **`pattern` runs high** — a `:s`/search **flag** riding inside a pattern
   (`//`, `\c`, `\<\>`, `/n`) is reliably past weekly use. Exception: the
   everyday `:%s` companions stay normal — confirm with `gc`, and limiting `:s`
